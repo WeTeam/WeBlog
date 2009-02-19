@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Sitecore.Modules.Eviblog" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="EntryTemplateID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}</Value>
+    </Setting>
+    <Setting Name="BlogTemplateID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{46663E05-A6B8-422A-8E13-36CD2B041278}</Value>
+    </Setting>
+    <Setting Name="CategoryTemplateID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{61FF8D49-90D7-4E59-878D-DF6E03400D3B}</Value>
+    </Setting>
+    <Setting Name="CommentTemplateID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{70949D4E-35D8-4581-A7A2-52928AA119D5}</Value>
+    </Setting>
+    <Setting Name="BlogBranchTemplateID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{6FC4278C-E043-458B-9D5D-BBA775A9C386}</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
