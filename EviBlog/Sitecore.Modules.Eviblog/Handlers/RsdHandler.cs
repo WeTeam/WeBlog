@@ -14,7 +14,7 @@ using System.Text;
 using Sitecore.Links;
 using Sitecore.Web;
 
-namespace Sitecore.Modules.EviBlog.Handlers
+namespace Sitecore.Modules.Eviblog.Handlers
 {
     /// <summary>
     /// RSD (Really Simple Discoverability) Handler

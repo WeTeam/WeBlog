@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Services;
 using System.Web.SessionState;
 
-namespace Sitecore.Modules.EviBlog.Handlers
+namespace Sitecore.Modules.Eviblog.Handlers
 {
     /// <summary>
     /// Summary description for CaptchaHandler

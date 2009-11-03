@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" Class="Sitecore.Modules.EviBlog.Handlers.RsdHandler" %>
+﻿<%@ WebHandler Language="C#" Class="Sitecore.Modules.Eviblog.Handlers.RsdHandler" %>

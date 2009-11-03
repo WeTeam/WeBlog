@@ -1,58 +1,57 @@
 ﻿using System;
 using System.Web.UI;
 
-// You have to impliment "INamingContainer" if you want
-// to use a class as a container for any ITemplate field.
-public class EntryListingItem : Control, INamingContainer, IDataItemContainer
+namespace Sitecore.Modules.Eviblog.Webcontrols
 {
-	internal EntryListingItem(object dataItem, int itemIndex)
-	{
-		this._dataItem = dataItem;
+    public class EntryListingItem : Control, INamingContainer, IDataItemContainer
+    {
+        internal EntryListingItem(object dataItem, int itemIndex)
+        {
+            this._dataItem = dataItem;
+            this._dataItemIndex = _dataItemIndex;
+            this._displayIndex = _displayIndex;
+        }
 
-		this._dataItemIndex = _dataItemIndex;
+        #region DataItem
 
-		this._displayIndex = _displayIndex;
-	}
+        private object _dataItem;
 
-	#region DataItem
+        public object DataItem
+        {
+            get
+            {
+                return this._dataItem;
+            }
+        }
 
-	private object _dataItem;
+        #endregion DataItem
 
-	public object DataItem
-	{
-		get
-		{
-			return this._dataItem;
-		}
-	}
+        #region DataItemIndex
 
-	#endregion DataItem
+        private int _dataItemIndex;
 
-	#region DataItemIndex
+        public int DataItemIndex
+        {
+            get
+            {
+                return this._dataItemIndex;
+            }
+        }
 
-	private int _dataItemIndex;
+        #endregion DataItemIndex
 
-	public int DataItemIndex
-	{
-		get
-		{
-			return this._dataItemIndex;
-		}
-	}
+        #region DisplayIndex
 
-	#endregion DataItemIndex
+        private int _displayIndex;
 
-	#region DisplayIndex
+        public int DisplayIndex
+        {
+            get
+            {
+                return this._displayIndex;
+            }
+        }
 
-	private int _displayIndex;
-
-	public int DisplayIndex
-	{
-		get
-		{
-			return this._displayIndex;
-		}
-	}
-
-	#endregion DisplayIndex
+        #endregion DisplayIndex
+    }
 }

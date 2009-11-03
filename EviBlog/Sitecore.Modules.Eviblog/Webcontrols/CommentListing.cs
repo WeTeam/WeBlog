@@ -11,6 +11,7 @@ using Sitecore.Web.UI.WebControls;
 using Sitecore.Collections;
 using Sitecore.Links;
 using Sitecore.Modules.Eviblog.Items;
+using Sitecore.Modules.Eviblog.Webcontrols;
 
 namespace Sitecore.Modules.Eviblog.Webcontrols
 {

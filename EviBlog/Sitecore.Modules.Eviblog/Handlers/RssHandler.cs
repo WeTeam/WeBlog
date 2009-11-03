@@ -10,7 +10,7 @@ using Sitecore.Data;
 using Sitecore.Modules.Eviblog.Items;
 using Sitecore.Data.Items;
 
-namespace Sitecore.Modules.EviBlog.Handlers
+namespace Sitecore.Modules.Eviblog.Handlers
 {
     public class RssHandler : RssToolkit.Rss.RssDocumentHttpHandler, IRequiresSessionState
     {
