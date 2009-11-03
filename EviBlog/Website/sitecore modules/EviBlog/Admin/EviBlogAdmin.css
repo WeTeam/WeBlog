@@ -1,0 +1,36 @@
+﻿body
+{
+    background: #e1e1e1;
+    font-family: Tahoma;
+    font-size: 11px;
+    padding: 10px;
+}
+
+h1 { font-weight: normal; font-size: 24px }
+
+fieldset 
+{
+    width: 400px;
+    padding: 5px 5px 5px 10px;
+    clear: left;
+}
+    fieldset label
+    {
+        width: 150px;
+        display: block;
+        clear: left;
+        float: left;
+        margin-top: 10px;
+    }
+    fieldset input
+    {
+        margin-top: 7px;
+        float: left;
+        width: 230px;
+    }
+    fieldset input.checkbox
+    {
+        margin-top: 7px;
+        float: left;
+        width: auto;
+    }

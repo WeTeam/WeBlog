@@ -1,0 +1,95 @@
+﻿body
+{
+	background: #f0f1f2;
+	margin: 0px;
+	font: Franklin Gothic Medium;
+}
+
+h1
+{
+	font: 14pt Franklin Gothic Medium;
+	color: #072d6b;
+	background: #ffffff;
+	width: 100%;
+	display: block;
+}
+	h1.entry
+	{
+		background: #ffffff url("/sitecore/shell/Themes/Standard/Business/32x32/address_book.png") no-repeat 10px 5px;
+		height: 40px;
+		padding: 10px 0px 0px 50px;
+	}
+h2
+{
+	font: 14pt Franklin Gothic Medium;
+	color: #072d6b;
+}
+
+	
+div#wrapper
+{
+	padding: 10px;
+	width: 960px;
+}
+	div#wrapper div#left
+	{
+		width: 730px;
+		float: left;
+		
+	}
+	div#wrapper div#right
+	{
+		width: 200px;
+		float: left;
+		padding-left: 10px;
+	}
+.title
+{
+	font-size: 22px;
+	border: 1px solid #d9d9d9;
+	padding: 2px;
+}
+
+/* Tagging */
+fieldset 
+{
+	border: 0; 
+}
+.tagger 
+{ 
+	float: left; 
+}
+.tagAdd 
+{ 
+	margin:0 0 0 6px;
+}
+.tagList 
+{ 
+	list-style: none; 
+	padding: 0; 
+	margin: 0; 
+	clear: both;
+	border-left: 3px solid #ddd; 
+	padding-left: 4px;
+	float: left; 
+	margin: 5px 10px;
+}
+.tagName 
+{ 
+	cursor: pointer; 
+	float: left; 
+	clear: both; 
+	padding: 0.1em 1.5em 0.1em 0.4em;
+}
+.tagName:hover 
+{ 
+	background:#efefef url("/sitecore modules/EviBlog/Images/bullet_toggle_minus.png") right 2px no-repeat; 
+	-moz-border-radius: 4px;
+}
+.updatepost
+{
+    background: url("/sitecore/shell/Themes/Standard/Applications/24x24/disk_blue.png") no-repeat;
+    border: 1px solid bbb;
+    background: #f2f2f2;
+    padding-left: 20px;
+}

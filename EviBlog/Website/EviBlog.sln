@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eviblog.Web", "Eviblog.Web.csproj", "{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.Eviblog", "..\Sitecore.Modules.Eviblog\Sitecore.Modules.Eviblog.csproj", "{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{B805ABFB-4E96-4F94-B409-02DF34AE0CF6}.Release|x86.ActiveCfg = Release|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+EndGlobal
