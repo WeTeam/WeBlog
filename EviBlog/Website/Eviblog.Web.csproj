@@ -121,7 +121,6 @@
     <Content Include="sitecore modules\EviBlog\MetaBlogApi.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sitecore modules\EviBlog\Includes\functions.js" />
     <Content Include="sitecore modules\EviBlog\rsd.ashx" />
     <Content Include="sitecore modules\EviBlog\Themes\Blue.css" />
     <Content Include="sitecore modules\EviBlog\Themes\Red.css" />
@@ -129,10 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore modules\EviBlog\Includes\Editors.css" />
-    <Content Include="sitecore modules\EviBlog\Includes\jquery-1.3.2.min.js" />
-    <Content Include="sitecore modules\EviBlog\Includes\jquery.tagger.js" />
-    <Content Include="sitecore modules\EviBlog\Includes\jquery.tagger.uncompressed.js" />
-    <Content Include="sitecore modules\EviBlog\Includes\RichText.js" />
     <Content Include="sitecore modules\EviBlog\Themes\Sample\BlogEntry.aspx" />
     <Content Include="sitecore modules\EviBlog\Themes\Sample\BlogList.aspx" />
     <Content Include="sitecore modules\EviBlog\Themes\Sample\default.css" />
