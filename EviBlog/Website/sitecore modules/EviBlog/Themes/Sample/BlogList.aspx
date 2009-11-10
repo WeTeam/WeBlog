@@ -6,6 +6,7 @@
 <head runat="server">
     <title><blog:BlogPageTitle runat="server" /></title>
     <link rel="stylesheet" type="text/css" href="default.css" media="screen"/>
+    <blog:BlogMetaInfo ID="BlogMetaInfo1" runat="server" />
 </head>
 <body>
     <form id="form1" runat="server">
