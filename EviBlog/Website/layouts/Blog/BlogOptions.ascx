@@ -17,11 +17,6 @@
         <sc:Text ID="txtCheckBoxEnableRSS" Field="CheckBoxEnableRSS" runat="server" /></td>
     </tr>
     <tr>
-        <td>Enable comments</td>
-        <td><%--<asp:CheckBox ID="CheckBoxEnableComments" runat="server" />--%>
-        <sc:Text ID="txtCheckBoxEnableComments" Field="CheckBoxEnableComments" runat="server" /></td>
-    </tr>
-    <tr>
         <td>Show email in  comments</td>
         <td><%--<asp:CheckBox ID="CheckBoxCommentsEmail" runat="server" />--%>
             <sc:Text ID="txtCheckBoxCommentsEmail" Field="CheckBoxCommentsEmail" runat="server" />

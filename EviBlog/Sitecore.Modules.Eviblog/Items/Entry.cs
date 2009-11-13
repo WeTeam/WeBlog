@@ -145,6 +145,37 @@ namespace Sitecore.Modules.Eviblog.Items
         }
 
         /// <summary>
+        /// Gets or sets the disable comments.
+        /// </summary>
+        /// <value>The enable comments.</value>
+        public bool DisableComments
+        {
+            get
+            {
+                if (InnerItem["Disable comments"] == "1")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            set
+            {
+                switch (value)
+                {
+                    case true:
+                        InnerItem["Disable comments"] = "1";
+                        break;
+                    case false:
+                        InnerItem["Disable comments"] = "0";
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the created.
         /// </summary>
         /// <value>The created.</value>

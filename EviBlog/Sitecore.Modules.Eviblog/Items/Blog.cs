@@ -127,37 +127,6 @@ namespace Sitecore.Modules.Eviblog.Items
         }
         
         /// <summary>
-        /// Gets or sets the enable comments.
-        /// </summary>
-        /// <value>The enable comments.</value>
-        public bool EnableComments
-        {
-            get
-            {
-                if(InnerItem["Enable Comments"] == "1")
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            set
-            {
-                switch (value)
-                {
-	                case true:
-                        InnerItem["Enable Comments"] = "1";
-                        break;
-                    case false:
-                        InnerItem["Enable Comments"] = "0";
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether [show email within comments].
         /// </summary>
         /// <value>

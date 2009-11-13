@@ -55,8 +55,10 @@ namespace Sitecore.Modules.Eviblog.Webcontrols
                 Controls.Add(category);
                 Controls.Add(new LiteralControl("</li>"));
             }
-                
-            if (currentBlog.EnableComments)
+             
+            Items.Entry current = new Items.Entry(currentEntry);
+
+            if (!current.DisableComments)
             {
                 BuildAddComments();
                 GetComments();

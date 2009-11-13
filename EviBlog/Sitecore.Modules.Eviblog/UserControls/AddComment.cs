@@ -29,12 +29,21 @@ namespace Sitecore.Modules.Eviblog.UserControls
         #region Page methods
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Create a random integer to prevent caching of captcha image
-            Random RandomClass = new Random();
-            int randomNumber = RandomClass.Next(1000);
-            CaptchaImage.ImageUrl = "~/sitecore modules/EviBlog/CaptchaHandler.ashx?=" + randomNumber;
+            Entry currentEntry = new Entry(Sitecore.Context.Item);
 
-            txtAddYourComment.Item = BlogManager.GetCurrentBlogItem();
+            if (!currentEntry.DisableComments)
+            {
+                //Create a random integer to prevent caching of captcha image
+                Random RandomClass = new Random();
+                int randomNumber = RandomClass.Next(1000);
+                CaptchaImage.ImageUrl = "~/sitecore modules/EviBlog/CaptchaHandler.ashx?=" + randomNumber;
+
+                txtAddYourComment.Item = BlogManager.GetCurrentBlogItem();
+            }
+            else
+            {
+                Controls.Clear();
+            }
         }
 
         protected void buttonSaveComment_Click(object sender, EventArgs e)

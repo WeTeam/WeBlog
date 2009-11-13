@@ -26,7 +26,6 @@ namespace Sitecore.Modules.Eviblog.Commands.UI
         protected Label lbEnableRss;
         protected CheckBox chkEnableRSS;
         protected Label lbEnableComments;
-        protected CheckBox chkEnableComments;
         protected Label lbShowEmailInComments;
         protected CheckBox chkShowEmailInComments;
         protected Label lbEnableLiveWriter;
@@ -77,7 +76,6 @@ namespace Sitecore.Modules.Eviblog.Commands.UI
 
                 // Fill the blog item with the entered values
                 createdBlog.BeginEdit();
-                createdBlog.EnableComments = chkEnableComments.Checked;
                 createdBlog.EnableRSS = chkEnableRSS.Checked;
                 createdBlog.ShowEmailWithinComments = chkShowEmailInComments.Checked;
                 createdBlog.EnableLiveWriter = chkEnableLiveWriter.Checked;

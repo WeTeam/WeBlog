@@ -16,6 +16,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
         protected TextBox CaptchaText;
         protected Panel CommentsPanel;
         public Items.Blog currentBlog = BlogManager.GetCurrentBlog();
+        public Items.Entry currentEntry = new Entry(Sitecore.Context.Item);
         protected ListView ListViewCategories;
         protected ListView ListViewComments;
         protected LoginView LoginViewTags;
@@ -58,7 +59,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
             #region Comments
 
             // Comments enabled?
-            if (currentBlog.EnableComments == false)
+            if (currentEntry.DisableComments == true)
             {
                 ListViewComments.Visible = false;
                 CommentsPanel.Visible = false;

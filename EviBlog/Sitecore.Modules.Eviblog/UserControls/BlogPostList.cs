@@ -58,7 +58,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
             HyperLink postLink = (HyperLink) e.Item.FindControl("BlogPostLink");
             postLink.NavigateUrl = LinkManager.GetItemUrl(Sitecore.Context.Database.GetItem(objEntry.ID));
 
-            if (currentBlog.EnableComments)
+            if (!objEntry.DisableComments)
             {
                 PlaceHolder commentsPlaceholder = (PlaceHolder) e.Item.FindControl("CommentsPlaceholder");
                 commentsPlaceholder.Controls.Add(

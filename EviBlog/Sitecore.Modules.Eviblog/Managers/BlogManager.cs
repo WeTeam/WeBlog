@@ -218,17 +218,6 @@ namespace Sitecore.Modules.Eviblog.Managers
         }
 
         /// <summary>
-        /// Enables the comments.
-        /// </summary>
-        /// <returns></returns>
-        public static bool EnableComments()
-        {
-            Blog current = GetCurrentBlog();
-
-            return current.EnableComments;
-        }
-
-        /// <summary>
         /// Shows the email within comments.
         /// </summary>
         /// <returns></returns>

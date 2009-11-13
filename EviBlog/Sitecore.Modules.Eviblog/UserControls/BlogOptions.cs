@@ -26,7 +26,6 @@ namespace Sitecore.Modules.Eviblog.UserControls
                 EditModePanel.Visible = true;
 
                 CheckBoxEnableRSS.Checked = currentBlog.EnableRSS;
-                CheckBoxEnableComments.Checked = currentBlog.EnableComments;
                 CheckBoxCommentsEmail.Checked = currentBlog.ShowEmailWithinComments;
             }
         }

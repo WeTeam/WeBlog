@@ -437,10 +437,15 @@ namespace Sitecore.Modules.Eviblog.Webcontrols
         {
             Controls.Clear();
 
-            this.DataSource = GetComments();
-            this.DataBind();
-        
-            base.CreateChildControls();
+            Items.Entry currentEntry = new Items.Entry(Sitecore.Context.Item);
+
+            if (!currentEntry.DisableComments)
+            {
+                this.DataSource = GetComments();
+                this.DataBind();
+
+                base.CreateChildControls();
+            }
         }
 
         private List<Item> GetComments()

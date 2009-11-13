@@ -13,6 +13,7 @@ using Sitecore.Data.Items;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Links;
+using Sitecore.Syndication;
 
 namespace Sitecore.Modules.Eviblog.Webcontrols
 {
@@ -30,18 +31,27 @@ namespace Sitecore.Modules.Eviblog.Webcontrols
                 writer.Write(rsdLink);
                 writer.Write(Environment.NewLine);
             }
+
             // If RSS is enabled then add rss links
             if (currentBlog.EnableRSS == true)
             {
-                string rsslinkUserBlog = "<link rel=\"alternate\" title=\"" + currentBlog.Title + "\"  type=\"application/rss+xml\" href=\"http://" + WebUtil.GetHostName() + "/sitecore modules/EviBlog/Rss.ashx?blogid=" + currentBlog.ID + "&count=10" + "\" />" + Environment.NewLine;
-                string rsslinkAllBlogs = "<link rel=\"alternate\" title=\"10 Latest blog entries\"  type=\"application/rss+xml\" href=\"http://" + WebUtil.GetHostName() + "/sitecore modules/EviBlog/Rss.ashx" + "\" />" + Environment.NewLine;
-
-                writer.Write(rsslinkUserBlog);
-                writer.Write(Environment.NewLine);
-                writer.Write(rsslinkAllBlogs);
-                writer.Write(Environment.NewLine);
+                Item currentBlogItem = BlogManager.GetCurrentBlogItem();
+                Item[] feedItem = currentBlogItem.Axes.SelectItems("./*[@@templatename='RSS Feed']");
+                
+                foreach (Item item in feedItem)
+                {
+                    PublicFeed feed = FeedManager.GetFeed(item);
+                    
+                    string rsslink = "<link rel=\"alternate\" title=" + feed.FeedItem.Name + "  type=\"application/rss+xml\" href=\"" + FeedManager.GetFeedUrl(item, false) + "\" />" + Environment.NewLine;
+                    writer.Write(rsslink);
+                    writer.Write(Environment.NewLine);
+                }
             }
 
+            // Add the xml-rpc link
+            string xmlRpc = "<link rel=\"pingback\" href=\"http://" + WebUtil.GetHostName() + "/sitecore modules/EviBlog/MetaBlogApi.ashx?entryId=" + Sitecore.Context.Item.ID + "\" />" + Environment.NewLine;
+            writer.Write(xmlRpc);
+            writer.Write(Environment.NewLine);
         }
 
     }

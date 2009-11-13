@@ -49,7 +49,6 @@
     <fieldset>
         <legend>Options</legend>
         <asp:Label ID="lbEnableRss" runat="server" Text="Enable RSS" AssociatedControlID="chkEnableRSS" /><asp:CheckBox ID="chkEnableRSS" runat="server" CssClass="checkbox" />
-        <asp:Label ID="lbEnableComments" runat="server" Text="Enable Comments" AssociatedControlID="chkEnableComments"/><asp:CheckBox ID="chkEnableComments" runat="server" CssClass="checkbox" />
         <asp:Label ID="lbShowEmailInComments" runat="server" Text="Show email in comments" AssociatedControlID="chkShowEmailInComments" /><asp:CheckBox ID="chkShowEmailInComments" runat="server" CssClass="checkbox" />
         <asp:Label ID="lbEnableLiveWriter" runat="server" Text="Enable Windows Live Writer integration" AssociatedControlID="chkEnableLiveWriter" /><asp:CheckBox ID="chkEnableLiveWriter" runat="server" CssClass="checkbox" />
     </fieldset>

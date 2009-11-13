@@ -7,6 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Modules.Eviblog.Items;
 using System.Web.UI;
+using Sitecore.Syndication;
 
 namespace Sitecore.Modules.Eviblog.UserControls
 {
@@ -40,14 +41,19 @@ namespace Sitecore.Modules.Eviblog.UserControls
             // If RSS is enabled then add the links to the page
             if (phEviblog != null && currentBlog.EnableRSS == true)
             {
-                Literal rsslinkUserBlog = new Literal();
-                Literal rsslinkAllBlogs = new Literal();
+                Item currentBlogItem = BlogManager.GetCurrentBlogItem();
+                Item[] feedItem = currentBlogItem.Axes.SelectItems("./*[@@templatename='RSS Feed']");
 
-                rsslinkUserBlog.Text = "<link rel=\"alternate\" title=\"" + currentBlog.Title + "\"  type=\"application/rss+xml\" href=\"http://" + WebUtil.GetHostName() + "/sitecore modules/EviBlog/Rss.ashx?blogid=" + currentBlog.ID + "&count=10" + "\" />" + Environment.NewLine;
-                rsslinkAllBlogs.Text = "<link rel=\"alternate\" title=\"10 Latest blog entries\"  type=\"application/rss+xml\" href=\"http://" + WebUtil.GetHostName() + "/sitecore modules/EviBlog/Rss.ashx" + "\" />" + Environment.NewLine;
+                foreach (Item item in feedItem)
+                {
+                    PublicFeed feed = FeedManager.GetFeed(item);
 
-                phEviblog.Controls.Add(rsslinkUserBlog);
-                phEviblog.Controls.Add(rsslinkAllBlogs);
+                    Literal rssLink = new Literal();
+                    rssLink.Text = "<link rel=\"alternate\" title=" + feed.FeedItem.Name + "  type=\"application/rss+xml\" href=\"" + FeedManager.GetFeedUrl(item, false) + "\" />" + Environment.NewLine;
+                    phEviblog.Controls.Add(rssLink);
+                }
+
+                
             }
 
             // Set the correct theme file

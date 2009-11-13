@@ -54,9 +54,8 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
 
             Account account = Account.FromName(username, AccountType.User);
 
-            if (blog != null)
-                if (blog.Security.CanWrite(account))
-                    throw new System.Security.Authentication.InvalidCredentialException("Invalid credentials. Access denied");
+            if (blog != null && !blog.Security.CanWrite(account))
+                    throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");
         }
 
         /// <summary>
@@ -75,22 +74,29 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
             {
                 string selectedCategories = string.Empty;
 
-                string[] categories = (string[])rpcstruct["categories"];
-
-                foreach (string category in categories)
+                try
                 {
-                    foreach (Category cat in categoryList)
+                    string[] categories = (string[])rpcstruct["categories"];
+
+                    foreach (string category in categories)
                     {
-                        if (category == cat.Title)
+                        foreach (Category cat in categoryList)
                         {
-                            selectedCategories += cat.ID.ToString();
+                            if (category == cat.Title)
+                            {
+                                selectedCategories += cat.ID.ToString();
+                            }
                         }
                     }
+
+                    string result = selectedCategories.Replace("}{", "}|{");
+
+                    return result;
                 }
-
-                string result = selectedCategories.Replace("}{", "}|{");
-
-                return result;
+                catch
+                {
+                    return string.Empty;
+                }
             }
             return string.Empty;
         }
@@ -111,22 +117,25 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
             {
                 string selectedCategories = string.Empty;
 
-                string[] categories = (string[])rpcstruct["categories"];
-
-                foreach (string category in categories)
+                if (rpcstruct["categories"] != null)
                 {
-                    foreach (Category cat in categoryList)
+                    string[] categories = (string[])rpcstruct["categories"];
+
+                    foreach (string category in categories)
                     {
-                        if (category == cat.Title)
+                        foreach (Category cat in categoryList)
                         {
-                            selectedCategories += cat.ID.ToString();
+                            if (category == cat.Title)
+                            {
+                                selectedCategories += cat.ID.ToString();
+                            }
                         }
                     }
+
+                    string result = selectedCategories.Replace("}{", "}|{");
+
+                    return result;
                 }
-
-                string result = selectedCategories.Replace("}{", "}|{");
-
-                return result;
             }
             return string.Empty;
         }
@@ -504,5 +513,38 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
 
         }
         #endregion
+
+        [XmlRpcMethod("pingback.ping")]
+        public string pingback(string sourceUri, string targetUri)
+        {
+            try
+            {
+                using (new SecurityDisabler())
+                {
+                    string entryId = HttpContext.Current.Request.QueryString["entryId"].ToString();
+
+                    Database db = Sitecore.Context.Database;
+                    ID currentID = ID.Parse(entryId);
+                    TemplateID templateID = new TemplateID(new ID(Settings.Default.CommentTemplateID));
+                    Item currentItem = db.GetItem(currentID);
+
+                    Item newPingbackItem = currentItem.Add("Pingback", templateID);//ItemManager.AddFromTemplate("Pingback", templateID, currentItem);
+                    
+                    Comment newPingbackComment = new Comment(newPingbackItem);
+                    newPingbackComment.BeginEdit();
+                    newPingbackComment.CommentText = string.Format("Pingkback from {0}", sourceUri);
+                    newPingbackComment.Website = sourceUri;
+                    newPingbackComment.UserName = "Automatic pingback";
+                    newPingbackComment.EndEdit();
+                }
+            }
+            catch(Exception ex)
+            {
+                //throw new XmlRpcFaultException(1, "Invalid sourceUri parameter.");
+                throw new Exception(ex.Message);
+            }
+
+            return "Your ping request has been received successfully.";
+        }
     }
 }
