@@ -50,22 +50,13 @@ namespace Sitecore.Modules.Eviblog.Commands
                 Sitecore.Diagnostics.Log.Error(string.Format("Could not initialize blogentry fieldeditor. Error {0}, Stacktrace; {1}", ex.Message, ex.StackTrace), this);
             }
 
-            
-
             // Field editor options.
             Sitecore.Shell.Applications.WebEdit.PageEditFieldEditorOptions options = new Sitecore.Shell.Applications.WebEdit.PageEditFieldEditorOptions(form, fields);
-
-            // The default single section:
-            //options.Title = "Field Editor : " + item.Paths.ContentPath;
-            //// or (instead of setting Title): 
-            options.PreserveSections = true;
+            options.PreserveSections = false;
             options.DialogTitle = "Assign categories to the current entry";
             options.Icon = item.Appearance.Icon;
             
             return options;
-
-            
-        
         }
         
             

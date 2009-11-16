@@ -58,11 +58,7 @@ namespace Sitecore.Modules.Eviblog.Commands
 
             // Field editor options.
             Sitecore.Shell.Applications.WebEdit.PageEditFieldEditorOptions options = new Sitecore.Shell.Applications.WebEdit.PageEditFieldEditorOptions(form, fields);
-
-            // The default single section:
-            //options.Title = "Field Editor : " + item.Paths.ContentPath;
-            //// or (instead of setting Title): 
-            options.PreserveSections = true;
+            options.PreserveSections = false;
             options.DialogTitle = "Blog settings";
             options.Icon = item.Appearance.Icon;
             return options;
