@@ -38,10 +38,17 @@ namespace Sitecore.Modules.Eviblog.Commands
 
             try
             {
-                // Fields to display in the field editor.
-                fields.Add(new Sitecore.Data.FieldDescriptor(item, item.Fields["Category"].Name));
+                string[] fieldNames = new string[] { "Category", "Disable comments" };
+
+                foreach (string fieldName in fieldNames)
+                {
+                    fields.Add(new Sitecore.Data.FieldDescriptor(item, item.Fields[fieldName].Name));
+                }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Sitecore.Diagnostics.Log.Error(string.Format("Could not initialize blogentry fieldeditor. Error {0}, Stacktrace; {1}", ex.Message, ex.StackTrace), this);
+            }
 
             
 

@@ -51,7 +51,10 @@ namespace Sitecore.Modules.Eviblog.Commands
                     fields.Add(new Sitecore.Data.FieldDescriptor(item, item.Fields[fieldName].Name));
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Sitecore.Diagnostics.Log.Error(string.Format("Could not initialize blogsettings fieldeditor. Error {0}, Stacktrace; {1}", ex.Message, ex.StackTrace), this);
+            }
 
             // Field editor options.
             Sitecore.Shell.Applications.WebEdit.PageEditFieldEditorOptions options = new Sitecore.Shell.Applications.WebEdit.PageEditFieldEditorOptions(form, fields);
