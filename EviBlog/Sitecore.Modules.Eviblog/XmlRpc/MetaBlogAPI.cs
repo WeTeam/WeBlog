@@ -1,27 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CookComputing.XmlRpc;
-using System.Xml.Xsl;
-using System.Xml.XPath;
-using System.Xml;
-using Sitecore.Security.Authentication;
-using Sitecore.Modules.Eviblog.Managers;
-using Sitecore.Modules.Eviblog.Items;
-using Sitecore.Links;
-using Sitecore.Data.Items;
-using Sitecore.Data;
-using Sitecore.Modules.Eviblog.Utilities;
-using Sitecore.Data.Managers;
-using Sitecore.SecurityModel;
-using Sitecore.Configuration;
-using Sitecore.Resources.Media;
 using System.IO;
-using Sitecore.Web;
+using System.Linq;
 using System.Web;
-using Sitecore.Security;
+using CookComputing.XmlRpc;
+using Sitecore.Configuration;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
+using Sitecore.Modules.Eviblog.Items;
+using Sitecore.Modules.Eviblog.Managers;
+using Sitecore.Modules.Eviblog.Utilities;
+using Sitecore.Resources.Media;
 using Sitecore.Security.Accounts;
+using Sitecore.Security.Authentication;
+using Sitecore.SecurityModel;
 
 namespace Sitecore.Modules.Eviblog.XmlRpc
 {
@@ -515,7 +508,7 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
         #endregion
 
         [XmlRpcMethod("pingback.ping")]
-        public string pingback(string sourceUri, string targetUri)
+        public void pingback(string sourceUri, string targetUri)
         {
             try
             {
@@ -523,12 +516,12 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
                 {
                     string entryId = HttpContext.Current.Request.QueryString["entryId"].ToString();
 
-                    Database db = Sitecore.Context.Database;
+                    Database db = Factory.GetDatabase("master");
                     ID currentID = ID.Parse(entryId);
                     TemplateID templateID = new TemplateID(new ID(Settings.Default.CommentTemplateID));
                     Item currentItem = db.GetItem(currentID);
 
-                    Item newPingbackItem = currentItem.Add("Pingback", templateID);//ItemManager.AddFromTemplate("Pingback", templateID, currentItem);
+                    Item newPingbackItem = currentItem.Add("Pingback", templateID);
                     
                     Comment newPingbackComment = new Comment(newPingbackItem);
                     newPingbackComment.BeginEdit();
@@ -536,15 +529,16 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
                     newPingbackComment.Website = sourceUri;
                     newPingbackComment.UserName = "Automatic pingback";
                     newPingbackComment.EndEdit();
+
+                    Publish.PublishItem(newPingbackItem);
                 }
             }
             catch(Exception ex)
             {
-                //throw new XmlRpcFaultException(1, "Invalid sourceUri parameter.");
-                throw new Exception(ex.Message);
+                throw new XmlRpcFaultException(1, "Invalid sourceUri parameter.");
             }
 
-            return "Your ping request has been received successfully.";
+           // return "Your ping request has been received successfully.";
         }
     }
 }
