@@ -5,6 +5,10 @@ using System.Text;
 using System.Collections.Specialized;
 using Sitecore.Data.Items;
 using Sitecore.Modules.Eviblog.Managers;
+using Sitecore.Shell.Framework.Commands;
+using Sitecore.Diagnostics;
+using Sitecore.Web.UI.Sheer;
+using Sitecore.Data;
 
 namespace Sitecore.Modules.Eviblog.Commands
 {
@@ -15,6 +19,25 @@ namespace Sitecore.Modules.Eviblog.Commands
         /// Sitecore item identification information.
         /// </summary>
         private const string URI = "uri";
+
+        public override void Execute(CommandContext context)
+        {
+            Assert.ArgumentNotNull(context, "context");
+            if (context.Items.Length >= 1)
+            {
+                ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
+                args.Parameters.Add("uri", context.Items[0].Uri.ToString());
+                if (context.Items[0].TemplateID == new ID(Settings.Default.EntryTemplateID))
+                {
+                    Context.ClientPage.Start(this, "StartFieldEditor", args);
+                }
+                else
+                {
+                    Context.ClientPage.ClientResponse.Alert("Please select an entry first");
+                }
+            }
+
+        }
 
         /// <summary>
         /// Retrieve field editor options controlling the field editor,

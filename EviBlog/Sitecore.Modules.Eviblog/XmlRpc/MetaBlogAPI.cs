@@ -106,31 +106,31 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
             Item blog = BlogManager.GetBlogByID(BlogID);
             List<Category> categoryList = CategoryManager.GetCategories(blog.ID.ToString());
 
-            if (categoryList.Count() != 0)
+            string selectedCategories = string.Empty;
+
+            if (((object[])rpcstruct["categories"]).Count() != 0)
             {
-                string selectedCategories = string.Empty;
+                string[] categories = (string[])rpcstruct["categories"];
 
-                if (rpcstruct["categories"] != null)
+                foreach (string category in categories)
                 {
-                    string[] categories = (string[])rpcstruct["categories"];
-
-                    foreach (string category in categories)
+                    foreach (Category cat in categoryList)
                     {
-                        foreach (Category cat in categoryList)
+                        if (category == cat.Title)
                         {
-                            if (category == cat.Title)
-                            {
-                                selectedCategories += cat.ID.ToString();
-                            }
+                            selectedCategories += cat.ID.ToString();
                         }
                     }
-
-                    string result = selectedCategories.Replace("}{", "}|{");
-
-                    return result;
                 }
+
+                string result = selectedCategories.Replace("}{", "}|{");
+
+                return result;
             }
-            return string.Empty;
+            else
+            {
+                return string.Empty;
+            }
         }
         #endregion
 
