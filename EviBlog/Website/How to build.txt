@@ -1,0 +1,15 @@
+EviBlog Build Guide
+===================
+
+You may either host the source control folders under a Sitecore path, or outside the path.
+
+Under Sitecore Path
+-------------------
+If hosted under a Sitecore path then all you need to do is ensure the Website source control folder lines up with your Sitecore website folder.
+
+Outside Sitecore Path
+---------------------
+Create a file named "deploy.txt" under the web project and place the path to the Sitecore website folder in the file as the onlt content of the file. When you build the required files are copied over to your Sitecore folder automatically.
+
+deploy.txt:
+c:\inetpub\Sitecore 6.3\Website

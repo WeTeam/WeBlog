@@ -33,7 +33,7 @@ namespace Sitecore.Modules.Eviblog.Utilities
         /// <returns>
         /// 	<c>true</c> if the specified input is GUID; otherwise, <c>false</c>.
         /// </returns>
-        public static bool IsGuid(this string input)
+        /*public static bool IsGuid(this string input)
         {
             Regex isGuid = new Regex(@"^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$", RegexOptions.Compiled);
             bool isValid = false;
@@ -45,7 +45,6 @@ namespace Sitecore.Modules.Eviblog.Utilities
                 }
             }
             return isValid;
-        }
-
+        }*/
     }
 }

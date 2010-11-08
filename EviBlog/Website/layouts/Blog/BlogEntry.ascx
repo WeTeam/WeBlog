@@ -37,7 +37,7 @@
         <asp:Panel ID="CommentsPanel" runat="server"  CssClass="entry-comments">
             <h3><sc:Text ID="txtAddYourComment" Field="titleAddYourComment" runat="server" /></h3>
             <asp:validationsummary id="ValidationSummaryComments" runat="server" headertext="The following fields are not filled in:" forecolor="Red" EnableClientScript="true" CssClass="error"  />
-            <asp:PlaceHolder ID="CaptchaErrorText" runat="server"></asp:PlaceHolder>
+            <asp:PlaceHolder ID="Message" runat="server"></asp:PlaceHolder>
             <asp:Label ID="lblCommentName" runat="server" Text="Name" AssociatedControlID="txtCommentName" />
             <asp:TextBox ID="txtCommentName" runat="server" CssClass="textbox" Width="220"></asp:TextBox>
             <asp:RequiredFieldValidator ID="rfvCommentName" runat="server" Text="*" ErrorMessage="Username" ControlToValidate="txtCommentName" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
@@ -79,7 +79,7 @@
                     <li>
                         <asp:HyperLink ID="hyperlinkUsername" runat="server"></asp:HyperLink> <span class="comment-email"><sc:Text ID="txtCommentEmail" Field="Email" runat="server" /></span><div class="datetime"><asp:Literal ID="LiteralDate" runat="server"></asp:Literal></div>
                         <p>
-                            <sc:Text ID="txtCommentText" Field="Comment" runat="server" />
+                            <asp:Literal runat="server" ID="commentText" />
                         </p>
                     </li>
                 </ItemTemplate>
@@ -87,7 +87,7 @@
                     <li class="comment-alternate">
                         <asp:HyperLink ID="hyperlinkUsername" runat="server"></asp:HyperLink> <span class="comment-email"><sc:Text ID="txtCommentEmail" Field="Email" runat="server" /></span><div class="datetime"><asp:Literal ID="LiteralDate" runat="server"></asp:Literal></div>
                         <p>
-                            <sc:Text ID="txtCommentText" Field="Comment" runat="server" />
+                            <asp:Literal runat="server" ID="commentText" />
                         </p>
                     </li>
                 </AlternatingItemTemplate>

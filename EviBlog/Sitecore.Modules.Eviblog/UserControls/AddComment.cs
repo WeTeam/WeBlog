@@ -13,7 +13,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
     public class AddComment : System.Web.UI.UserControl
     {
         #region Fields
-        protected PlaceHolder CaptchaErrorText;
+        protected PlaceHolder Message;
         protected Image CaptchaImage;
         protected TextBox CaptchaText;
         public Items.Blog currentBlog = BlogManager.GetCurrentBlog();
@@ -50,16 +50,21 @@ namespace Sitecore.Modules.Eviblog.UserControls
         {
             if (CaptchaText.Text == Session["CaptchaText"].ToString())
             {
-                string UserName = txtCommentName.Text;
-                string Email = txtCommentEmail.Text;
-                string Website = txtCommentWebsite.Text;
-                string Comment = txtCommentText.Text;
-
-                CommentManager.AddCommentToEntry(UserName, Email, Website, Comment);
+                Model.Comment comment = new Model.Comment()
+                {
+                    AuthorName = txtCommentName.Text,
+                    AuthorEmail = txtCommentEmail.Text,
+                    AuthorWebsite = txtCommentWebsite.Text,
+                    AuthorIP = Context.Request.UserHostAddress,
+                    Text = txtCommentText.Text
+                };
+                bool submissionResult = CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment);
+                if (!submissionResult)
+                    Message.Controls.Add(new LiteralControl("<span class='errortext'>An error occurred during comment submission. Please try again later.</span>"));
             }
             else
             {
-                CaptchaErrorText.Controls.Add(new LiteralControl("<span class='errortext'>Captcha text is not valid</span>"));
+                Message.Controls.Add(new LiteralControl("<span class='errortext'>Captcha text is not valid</span>"));
             }
         }
         #endregion

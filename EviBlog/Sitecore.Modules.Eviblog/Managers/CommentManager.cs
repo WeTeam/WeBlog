@@ -8,41 +8,79 @@ using Sitecore.Modules.Eviblog.Items;
 using Sitecore.SecurityModel;
 using Sitecore.Modules.Eviblog.Utilities;
 using Sitecore.Web;
+using Sitecore.Modules.Eviblog.Services;
+using System.ServiceModel;
+using Sitecore.Diagnostics;
 
 namespace Sitecore.Modules.Eviblog.Managers
 {
     public class CommentManager
     {
-        public static void AddCommentToEntry(string Name, string Email, string Website, string CommentText)
+        public static bool AddCommentToEntry(ID EntryId, Model.Comment comment)
         {
-            SecurityDisabler securitydisabler = new SecurityDisabler();
-            // Get database
-            Database database = Factory.GetDatabase("master");
-            
-            // Create item
-            TemplateItem template = database.GetTemplate(Settings.Default.CommentTemplateID);
-            string itemName = "Comment by " + Name + " at " + DateTime.Now.ToString("MM-dd-yyyy");
-            Item currentItem = Context.Item;
-            Item currentMasterItem = database.GetItem(currentItem.ID);
-
-            // Create comment item
-            if (currentMasterItem != null)
+            using (new SecurityDisabler())
             {
-                Item newItem = currentMasterItem.Add(itemName, template);
+                // Get database
+                Database database = Factory.GetDatabase("master");
 
-                Comment newComment = new Comment(newItem);
-                newComment.BeginEdit();
-                newComment.UserName = Name;
-                newComment.Email = Email;
-                newComment.Website = Website;
-                newComment.CommentText = CommentText;
-                newComment.EndEdit();
-                SecurityEnabler securityenabler = new SecurityEnabler();
+                // Create item
+                TemplateItem template = database.GetTemplate(Settings.Default.CommentTemplateID);
+                string itemName = Utilities.Items.MakeSafeItemName("Comment by " + comment.AuthorName + " at " + DateTime.Now.ToString("d"));
 
-                Publish.PublishItem(newItem);
+                Item currentMasterItem = database.GetItem(EntryId);
 
-                WebUtil.ReloadPage();
+                // Create comment item
+                if (currentMasterItem != null)
+                {
+                    Item newItem = currentMasterItem.Add(itemName, template);
+
+                    Comment newComment = new Comment(newItem);
+                    newComment.BeginEdit();
+                    newComment.UserName = comment.AuthorName;
+                    newComment.Email = comment.AuthorEmail;
+                    newComment.Website = comment.AuthorWebsite;
+                    newComment.IPAddress = comment.AuthorIP;
+                    newComment.CommentText = comment.Text;
+                    newComment.EndEdit();
+
+                    Publish.PublishItem(newItem);
+
+                    WebUtil.ReloadPage();
+                }
+                else
+                {
+                    string message = "EviBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', website='{3}', commentText='{4}', IP='{5}'";
+                    Log.Error(string.Format(message, EntryId, comment.AuthorName, comment.AuthorEmail, comment.AuthorWebsite, comment.Text, comment.AuthorIP), typeof(CommentManager));
+                    return false;
+                }
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Submit a comment for inclusion on a post. This method will either update Sitecore or submit the comment through the comment service, depending on settings
+        /// </summary>
+        /// <param name="Name">The name of the user submitting the comment</param>
+        /// <param name="Email">The user's email address</param>
+        /// <param name="Website">The user's URL</param>
+        /// <param name="CommentText">The comment text being submitted</param>
+        public static bool SubmitComment(ID EntryId, Model.Comment comment)
+        {
+            if (Configuration.Settings.GetBoolSetting("EviBlog.CommentService.Enable", false))
+            {
+                // Submit comment through WCF service
+                ChannelFactory<ICommentService> commentProxy = new ChannelFactory<ICommentService>("EviBlogCommentService");
+                commentProxy.Open();
+                ICommentService service = commentProxy.CreateChannel();
+                bool result = service.SubmitComment(Context.Item.ID, comment);
+                commentProxy.Close();
+                if (!result)
+                    Log.Error("EviBlog.CommentManager: Comment submission through WCF failed. Check server Sitecore log for details", typeof(CommentManager));
+                return result;
+            }
+            else
+                return AddCommentToEntry(Context.Item.ID, comment);
         }
 
         /// <summary>

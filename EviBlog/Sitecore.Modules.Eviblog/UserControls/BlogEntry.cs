@@ -4,6 +4,9 @@ using System.Web.UI.WebControls;
 using Sitecore.Links;
 using Sitecore.Modules.Eviblog.Items;
 using Sitecore.Modules.Eviblog.Managers;
+using Sitecore.Data.Items;
+using Microsoft.Security.Application;
+using System.Text;
 
 namespace Sitecore.Modules.Eviblog.UserControls
 {
@@ -11,7 +14,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
     {
         #region Fields
 
-        protected PlaceHolder CaptchaErrorText;
+        protected PlaceHolder Message;
         protected Image CaptchaImage;
         protected TextBox CaptchaText;
         protected Panel CommentsPanel;
@@ -124,21 +127,22 @@ namespace Sitecore.Modules.Eviblog.UserControls
             Literal litDate = (Literal) e.Item.FindControl("LiteralDate");
             litDate.Text = objComment.Created.ToShortDateString() + " " + objComment.Created.ToShortTimeString();
 
+            Web.UI.WebControls.Text txtEmail = (Web.UI.WebControls.Text)e.Item.FindControl("txtCommentEmail");
+
             if (currentBlog.ShowEmailWithinComments)
-            {
-                Web.UI.WebControls.Text txtEmail = (Web.UI.WebControls.Text) e.Item.FindControl("txtCommentEmail");
+            {   
                 txtEmail.DataSource = objComment.ID.ToString();
                 txtEmail.Visible = true;
             }
             else
             {
-                Web.UI.WebControls.Text txtEmail = (Web.UI.WebControls.Text) e.Item.FindControl("txtCommentEmail");
                 rfvCommentEmail.Enabled = false;
                 txtEmail.Visible = false;
             }
 
-            Web.UI.WebControls.Text txtComment = (Web.UI.WebControls.Text) e.Item.FindControl("txtCommentText");
-            txtComment.DataSource = objComment.ID.ToString();
+            Literal commentText = e.Item.FindControl("commentText") as Literal;
+            if (commentText != null)
+                commentText.Text = objComment.CommentText;
         }
 
         private void ListViewCategories_ItemDataBound(object sender, ListViewItemEventArgs e)
@@ -154,19 +158,37 @@ namespace Sitecore.Modules.Eviblog.UserControls
 
         protected void buttonSaveComment_Click(object sender, EventArgs e)
         {
-            if (CaptchaText.Text == Session["CaptchaText"].ToString())
+            if (Session["CaptchaText"] != null && CaptchaText.Text == Session["CaptchaText"].ToString())
             {
-                string UserName = txtCommentName.Text;
-                string Email = txtCommentEmail.Text;
-                string Website = txtCommentWebsite.Text;
-                string Comment = txtCommentText.Text;
-
-                CommentManager.AddCommentToEntry(UserName, Email, Website, Comment);
+                Model.Comment comment = new Model.Comment()
+                {
+                    AuthorName = txtCommentName.Text,
+                    AuthorEmail = txtCommentEmail.Text,
+                    AuthorWebsite = txtCommentWebsite.Text,
+                    AuthorIP = Context.Request.UserHostAddress,
+                    Text = txtCommentText.Text
+                };
+                bool submissionResult = CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment); ;
+                if (!submissionResult)
+                    Message.Controls.Add(new LiteralControl("<div class='errortext'>An error occurred during comment submission. Please try again later.</div>"));
+                else
+                {
+                    Message.Controls.Add(new LiteralControl("<div class='successtext'>Thank you for your comment</div>"));
+                    ResetCommentFields();
+                }
             }
             else
             {
-                CaptchaErrorText.Controls.Add(new LiteralControl("<span class='errortext'>Captcha text is not valid</span>"));
+                Message.Controls.Add(new LiteralControl("<div class='errortext'>Captcha text is not valid</div>"));
             }
+        }
+
+        private void ResetCommentFields()
+        {
+            txtCommentName.Text = string.Empty;
+            txtCommentEmail.Text = string.Empty;
+            txtCommentWebsite.Text = string.Empty;
+            txtCommentText.Text = string.Empty;
         }
 
         #endregion

@@ -101,7 +101,16 @@ namespace Sitecore.Modules.Eviblog.Webcontrols
         void addComment_Click(object sender, EventArgs e)
         {
             //TODO werkt nog niet
-            CommentManager.AddCommentToEntry(name.Text, email.Text, website.Text, text.Text);
+            //CommentManager.AddCommentToEntry(name.Text, email.Text, website.Text, text.Text);
+            Model.Comment comment = new Model.Comment()
+            {
+                AuthorName = name.Text,
+                AuthorEmail = email.Text,
+                AuthorWebsite = website.Text,
+                AuthorIP = Context.Request.UserHostAddress,
+                Text = text.Text
+            };
+            CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment);
         }
 
         private void GetComments()

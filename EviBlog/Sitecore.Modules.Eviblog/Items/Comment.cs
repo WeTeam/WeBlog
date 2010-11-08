@@ -1,5 +1,7 @@
 ﻿using System;
 using Sitecore.Data.Items;
+using System.Text;
+using Microsoft.Security.Application;
 
 namespace Sitecore.Modules.Eviblog.Items
 {
@@ -63,6 +65,21 @@ namespace Sitecore.Modules.Eviblog.Items
         }
 
         /// <summary>
+        /// Gets or sets the author's IP address
+        /// </summary>
+        public string IPAddress
+        {
+            get
+            {
+                return InnerItem["IP Address"];
+            }
+            set
+            {
+                InnerItem["IP Address"] = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the comment.
         /// </summary>
         /// <value>The comment.</value>
@@ -70,7 +87,7 @@ namespace Sitecore.Modules.Eviblog.Items
         {
             get
             {
-                return InnerItem["Comment"];
+                return GetSafeCommentText();
             }
             set
             {
@@ -88,6 +105,28 @@ namespace Sitecore.Modules.Eviblog.Items
             {
                 return InnerItem.Statistics.Created;
             }
+        }
+
+        /// <summary>
+        /// Gets the comment text safe for displaying on the web
+        /// </summary>
+        private string GetSafeCommentText()
+        {
+            if (InnerItem != null)
+            {
+                string text = InnerItem["Comment"];
+                string[] lines = text.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+                StringBuilder output = new StringBuilder();
+                foreach (string line in lines)
+                {
+                    output.Append(AntiXss.HtmlEncode(line));
+                    output.Append("<br/>");
+                }
+
+                return output.ToString();
+            }
+            else
+                return string.Empty;
         }
     }
 }
