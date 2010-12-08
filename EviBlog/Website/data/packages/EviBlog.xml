@@ -16,76 +16,11 @@
   </Metadata>
   <SaveProject>True</SaveProject>
   <Sources>
-    <xitems>
-      <Entries>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/{3981BFA6-551C-4896-B678-007AF3D84266}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Edit/{D6C3466F-44DA-48D6-810E-FC01BE24955C}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Edit/Delete/{A73745C2-399E-445B-AE52-83E048C59560}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Edit/NewBlog/{023895FE-8710-4FCC-A762-EC5A2ECCC1BB}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Edit/NewCategory/{490622D1-E333-488B-8D99-27D56436D0C8}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Edit/NewEntry/{75A99088-A802-4C4A-A4E0-9E3E2EFDAE51}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Settings/{5063556D-AA3B-42B7-8E8F-1E83D2CDD4E5}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Settings/Blog/{D7EEA732-874A-4C6D-BE0E-6404B809A893}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Applications/WebEdit/Ribbons/WebEdit/EviBlog/Settings/Entry/{CA6E6256-1328-4978-958A-24DD0E1866F1}/invariant/0</x-item>
-      </Entries>
-      <SkipVersions>False</SkipVersions>
-      <Converter>
-        <ItemToEntryConverter>
-          <Transforms>
-            <InstallerConfigurationTransform>
-              <Options>
-                <BehaviourOptions>
-                  <ItemMode>Undefined</ItemMode>
-                  <ItemMergeMode>Undefined</ItemMergeMode>
-                </BehaviourOptions>
-              </Options>
-            </InstallerConfigurationTransform>
-          </Transforms>
-        </ItemToEntryConverter>
-      </Converter>
-      <Include />
-      <Exclude />
-      <Name>core</Name>
-    </xitems>
     <xfiles>
       <Entries>
-        <x-item>/App_Config/Include/EviBlog.config</x-item>
         <x-item>/bin/CookComputing.XmlRpcV2.dll</x-item>
         <x-item>/bin/Sitecore.Modules.Eviblog.dll</x-item>
-        <x-item>/layouts/Blog/Blog.ascx</x-item>
-        <x-item>/layouts/Blog/BlogAdministrator.ascx</x-item>
-        <x-item>/layouts/Blog/BlogArchive.ascx</x-item>
-        <x-item>/layouts/Blog/BlogCategories.ascx</x-item>
-        <x-item>/layouts/Blog/BlogEntry.ascx</x-item>
-        <x-item>/layouts/Blog/BlogEntryByCategorie.ascx</x-item>
-        <x-item>/layouts/Blog/BlogLayout.aspx</x-item>
-        <x-item>/layouts/Blog/BlogOptions.ascx</x-item>
-        <x-item>/layouts/Blog/BlogPostList.ascx</x-item>
-        <x-item>/layouts/Blog/BlogRecentComments.ascx</x-item>
-        <x-item>/layouts/Blog/BlogTagcloud.ascx</x-item>
-        <x-item>/sitecore modules/EviBlog/Admin/EviBlogAdmin.css</x-item>
-        <x-item>/sitecore modules/EviBlog/Admin/NewBlog.aspx</x-item>
-        <x-item>/sitecore modules/EviBlog/CaptchaHandler.ashx</x-item>
-        <x-item>/sitecore modules/EviBlog/Controls/AddComment.ascx</x-item>
-        <x-item>/sitecore modules/EviBlog/Includes/Common.css</x-item>
-        <x-item>/sitecore modules/EviBlog/MetaBlogApi.ashx</x-item>
-        <x-item>/sitecore modules/EviBlog/rsd.ashx</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/BlogEntry.aspx</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/BlogList.aspx</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/default.css</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/bg.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/bgcode.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/bgcontainer.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/bgul.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/header.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/li.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/quote.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Sample/img/search.gif</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Blue.css</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Green.css</x-item>
-        <x-item>/sitecore modules/EviBlog/Themes/Red.css</x-item>
         <x-item>/bin/AntiXSSLibrary.dll</x-item>
-        <x-item>/sitecore modules/EviBlog/Comment.svc</x-item>
         <x-item>/bin/RssToolkit.dll</x-item>
       </Entries>
       <Converter>
@@ -105,98 +40,11 @@
       </Converter>
       <Include />
       <Exclude />
-      <Name>files</Name>
+      <Name>Binary Files</Name>
     </xfiles>
     <xitems>
       <Entries>
-        <x-item>/master/sitecore/layout/Layouts/Blog/{214B605C-0AB7-47B4-AB9F-62FDA58A9FD9}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Layouts/Blog/BlogLayout/{AD8B138E-A58A-4A24-8A5A-22722F1907E9}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Layouts/Blog/Sample Theme/{5A17767F-D0B9-49A4-8DB3-32A62E27ADC8}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Layouts/Blog/Sample Theme/BlogEntry/{B29AA421-BAD2-44A1-8CB9-D9EF60D530AA}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Layouts/Blog/Sample Theme/BlogList/{E99B9BCC-B670-481A-9A0C-D76A5B5C67D6}/invariant/0</x-item>
         <x-item>/master/sitecore/layout/Placeholder Settings/phBlogSidebar/{8C2C07C1-9CEE-49F5-BFB8-3033B8A48FEC}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/{2068AD29-9223-480A-8E98-B1B85EC9470B}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/Blog/{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogAdministrator/{1A04F0F4-94E3-4E6A-AD85-CEFF6F338296}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogArchive/{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogCategories/{9773C9D7-989D-4807-A834-10A10336BF27}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogEntry/{80DFF945-FF0C-460F-A669-1F66EEE4FAA4}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogEntryByCategorie/{8C5E8488-783C-4FAC-8832-C797B4EB4E89}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogOptions/{0DB96573-4D3B-45BE-9C54-68A21B31F9DA}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogPostList/{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogRecentComments/{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}/invariant/0</x-item>
-        <x-item>/master/sitecore/layout/Sublayouts/Blog/BlogTagcloud/{C987F2EB-6416-4E15-9EDA-B9F016918832}/invariant/0</x-item>
-        <x-item>/master/sitecore/system/Modules/EviBlog/{6A635C75-F807-4FEC-A67D-B90DD7C39B44}/invariant/0</x-item>
-        <x-item>/master/sitecore/system/Modules/EviBlog/Blogs/{70D39EE5-7F70-425D-85C2-E2A4490F0A06}/invariant/0</x-item>
-        <x-item>/master/sitecore/system/Modules/EviBlog/Themes/{2E68D26C-5138-4E08-8056-717ACFF80C5E}/invariant/0</x-item>
-        <x-item>/master/sitecore/system/Modules/EviBlog/Themes/Blue/{03C5F892-AEAA-4D33-B73B-B2C4D9C3C456}/invariant/0</x-item>
-        <x-item>/master/sitecore/system/Modules/EviBlog/Themes/Green/{007B0F91-DE44-404F-9A06-D4AD595F1C52}/invariant/0</x-item>
-        <x-item>/master/sitecore/system/Modules/EviBlog/Themes/Red/{FF87796E-62F7-437E-86E0-25AC1FD979AC}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Branches/Modules/{2024A662-C4AB-4245-9D60-0A52CC8E5F8D}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Branches/Modules/EviBlog/{953EDE24-CB86-4CF5-92DD-E768B18639F5}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Branches/Modules/EviBlog/Blog/$name/{6BBB4908-D15C-4937-9E20-40A217A2597B}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Branches/Modules/EviBlog/Blog/$name/Blog entries/{ABB4393A-2EB8-4C82-8863-E95F52C9E05F}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Branches/Modules/EviBlog/Blog/$name/Categories/{397416E1-B011-4C0E-A557-07EEB2F2BD70}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Branches/Modules/EviBlog/Blog/{6FC4278C-E043-458B-9D5D-BBA775A9C386}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/{6EECAC97-4722-4D9E-9C89-4DCA751A2958}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/{086114A3-C0BC-4C50-ACD7-8E6F9742F728}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogCategory/__Standard Values/{00EE778C-6559-4C9E-8ABB-D3DA41149051}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogCategory/{61FF8D49-90D7-4E59-878D-DF6E03400D3B}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogCategory/Category/{F4512FFC-3C81-4F01-B076-F0F0A642D3FB}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogCategory/Category/Title/{E6ACFE8B-F489-4955-BE43-1A831556A463}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/{70949D4E-35D8-4581-A7A2-52928AA119D5}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/{5A6B449B-74C6-4585-800F-70CF7551EFE0}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Comment/{69A9069F-0379-4770-9710-1A25EF7D0021}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Email/{F9A0C52C-3CA5-47D7-B0CE-F5680318D0B3}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Name/{06CE0006-735A-42C5-B615-954A31EC7CBD}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Website/{501E0868-FE22-4828-928E-801849DABC8B}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/__Standard Values/{E28B2E5F-690E-4CE2-B075-5ACF789496DF}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Entry/{0297A5B4-EAF4-4B5B-BDAD-23D802F6F9CB}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Entry/Content/{3AD9A29C-8FD7-43B0-8C21-5609AF09B52A}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Entry/Introduction/{4346D2E6-05AA-491A-8D89-5D5B369CFD26}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Entry/Title/{A99A1591-F367-48A0-8900-E5DCBC8B528F}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Metadata/{A0517F70-3A34-4107-8DED-E202E994FA97}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Metadata/Category/{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Metadata/Tags/{840045E6-AA3F-417C-B53C-0B9841D33B2B}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Options/{794DAA33-0F94-4876-8645-23D1210BD87B}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogEntry/Options/Disable comments/{8CD58DFF-C6B9-4F68-8690-6D349AEB251E}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/__Standard Values/{DDC95874-E214-4739-9C29-BFB8D184F28D}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/{46663E05-A6B8-422A-8E13-36CD2B041278}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/{3CD38631-E3D1-4582-B1AE-20BC3CDEE322}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/titleAddYourComment/{E9EACFFA-7CB1-4A0F-BAF2-D3EDAD2A4185}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/titleAdministration/{D0583325-B7ED-4145-B84C-6D1A9BAA2413}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/titleCategories/{599DBAD9-D3E7-411C-A1AD-3E8DA6B0D0D5}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/titleComments/{A6C9390F-F269-43F7-8F86-E972329EAA12}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/titleRecentComments/{AF91DFD8-42BE-4F3F-A650-17BF6D348D36}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog headers/titleTagcloud/{686044E5-4C15-4537-9EBB-F41F4F70921C}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog options/{A9972BCC-DD50-46C6-813B-8F2CC74250F1}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog options/Enable Comments/{85184F37-810A-4A0C-BE78-FF6B60034C15}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog options/Enable RSS/{77BA5A31-EB0E-47A4-A7B9-14D195C0B461}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog options/EnableLiveWriter/{B6627A96-6333-4760-AD2D-7E8655D1C2B5}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog options/Show Email Within Comments/{86B6C013-4101-4463-8A44-C2C81A1BF624}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog settings/{A47D8623-99E0-4B9C-BF9E-D6424D8DE0E6}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog settings/DisplayCommentSidebarCount/{04AAD5FA-BA6B-4E0E-9540-E75E53B23F34}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog settings/DisplayItemCount/{BAD8E75C-BD7C-475A-A7B8-8B3600BAA26C}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog settings/Email/{94F5C96C-DF5C-4F3E-838F-47DE86070479}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog settings/Theme/{DF7CAB47-015F-430F-8BAE-452A4D2D7A17}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogHome/Blog settings/Title/{758CA141-3F6A-4806-A511-2953F5B54F3E}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Create new blog/{E541FEBF-DEF7-42DC-BDCE-AFBE9393BDAC}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Settings/{B825C57D-3FC9-46F5-8108-CD139637C88D}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Settings/Blog settings/{64408D54-4E4A-4A6F-8B04-A66A7304CAB3}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Settings/Blog settings/BlogID/{B7138882-67C3-4800-B1C6-CE2CBF2593CF}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Theme/{1BF19354-D79F-4F32-80F0-5A644811C137}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Theme/Theme/{FB549DA9-6D4E-4418-A9CF-36122DBE9B1A}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/Theme/Theme/File location/{A6E2EF56-AA51-440F-86FC-7C71A0BB1EDB}/invariant/0</x-item>
-        <x-item>/master/sitecore/media library/Modules/{9603D29F-3B06-46C0-974F-3260726CF8AA}/invariant/0</x-item>
-        <x-item>/master/sitecore/media library/Modules/EviBlog/{B1B49CA9-AEA7-452A-8340-055B9547AFFD}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/{70949D4E-35D8-4581-A7A2-52928AA119D5}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/{5A6B449B-74C6-4585-800F-70CF7551EFE0}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Comment/{69A9069F-0379-4770-9710-1A25EF7D0021}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Email/{F9A0C52C-3CA5-47D7-B0CE-F5680318D0B3}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/IP Address/{17B501F9-657F-455F-B753-024FB2A440F4}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Name/{06CE0006-735A-42C5-B615-954A31EC7CBD}/invariant/0</x-item>
-        <x-item>/master/sitecore/templates/Modules/EviBlog/BlogComment/BlogComment/Website/{501E0868-FE22-4828-928E-801849DABC8B}/invariant/0</x-item>
       </Entries>
       <SkipVersions>False</SkipVersions>
       <Converter>
@@ -215,8 +63,368 @@
       </Converter>
       <Include />
       <Exclude />
-      <Name>master</Name>
+      <Name>Placeholder Settings</Name>
     </xitems>
+    <items>
+      <Database>core</Database>
+      <Root>{3981BFA6-551C-4896-B678-007AF3D84266}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>WebEdit Ribbon</Name>
+    </items>
+    <files>
+      <Root>/layouts/Blog</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include>
+        <FileNameFilter>
+          <Pattern />
+          <AcceptDirectories>False</AcceptDirectories>
+        </FileNameFilter>
+        <FileDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+        <FileDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+      </Include>
+      <Exclude />
+      <Name>Layout Files</Name>
+    </files>
+    <files>
+      <Root>/sitecore modules/EviBlog</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include>
+        <FileNameFilter>
+          <Pattern />
+          <AcceptDirectories>False</AcceptDirectories>
+        </FileNameFilter>
+        <FileDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+        <FileDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+      </Include>
+      <Exclude />
+      <Name>Sitecore Modules Files</Name>
+    </files>
+    <xfiles>
+      <Entries>
+        <x-item>/App_Config/Include/EviBlog.config</x-item>
+      </Entries>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Config Files</Name>
+    </xfiles>
+    <items>
+      <Database>master</Database>
+      <Root>{214B605C-0AB7-47B4-AB9F-62FDA58A9FD9}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>Layouts</Name>
+    </items>
+    <items>
+      <Database>master</Database>
+      <Root>{2068AD29-9223-480A-8E98-B1B85EC9470B}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>Sublayouts</Name>
+    </items>
+    <items>
+      <Database>master</Database>
+      <Root>{6A635C75-F807-4FEC-A67D-B90DD7C39B44}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>Settings</Name>
+    </items>
+    <items>
+      <Database>master</Database>
+      <Root>{953EDE24-CB86-4CF5-92DD-E768B18639F5}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>Branches</Name>
+    </items>
+    <items>
+      <Database>master</Database>
+      <Root>{086114A3-C0BC-4C50-ACD7-8E6F9742F728}</Root>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include>
+        <ItemNameFilter>
+          <Pattern />
+          <FilterSearchType>Simple</FilterSearchType>
+        </ItemNameFilter>
+        <ItemDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <NotOlderThan />
+          <ActionDateTo />
+          <ActionDateFrom />
+        </ItemDateFilter>
+        <ItemPublishFilter>
+          <PublishDate />
+          <CheckWorkflow>True</CheckWorkflow>
+        </ItemPublishFilter>
+        <ItemTemplateFilter>
+          <Templates />
+        </ItemTemplateFilter>
+        <ItemUserFilter>
+          <FilterType>Created</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemUserFilter>
+          <FilterType>Modified</FilterType>
+          <Accounts />
+        </ItemUserFilter>
+        <ItemLanguageFilter>
+          <Languages />
+        </ItemLanguageFilter>
+      </Include>
+      <Exclude />
+      <Name>Templates</Name>
+    </items>
   </Sources>
   <Converter>
     <TrivialConverter>
