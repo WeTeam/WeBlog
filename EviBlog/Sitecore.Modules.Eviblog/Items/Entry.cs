@@ -2,11 +2,14 @@
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Web;
+using Sitecore.Modules.Eviblog.Managers;
 
 namespace Sitecore.Modules.Eviblog.Items
 {
     public class Entry : CustomItemBase
     {
+		private const int DEFAULT_MAX_GENERATED_INTRO_CHARS = 300;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Entry"/> class.
         /// </summary>
@@ -40,7 +43,7 @@ namespace Sitecore.Modules.Eviblog.Items
         {
             get
             {
-                return InnerItem["Introduction"];
+				return string.IsNullOrEmpty(InnerItem["Introduction"]) ? GetIntroductionFromText() : InnerItem["Introduction"];
             }
             set
             {
@@ -253,5 +256,27 @@ namespace Sitecore.Modules.Eviblog.Items
             }
             return (string[])result.ToArray(typeof(string));
         }
+
+		/// <summary>
+		/// Generates an introduction from the text of the entry
+		/// </summary>
+		/// <returns>The generated introduction</returns>
+		private string GetIntroductionFromText()
+		{
+			var max = 0;
+			var currentBlog = BlogManager.GetCurrentBlog();
+			if (currentBlog != null)
+				max = currentBlog.MaximumGeneratedIntroductionCharacters;
+
+			if (max == 0)
+				max = DEFAULT_MAX_GENERATED_INTRO_CHARS;
+
+			var strippedText = StringUtil.RemoveTags(Text);
+
+			if (strippedText.Length > max)
+				return "<p>" + strippedText.Substring(0, max) + "...</p>";
+			else
+				return "<p>" + strippedText + "</p>";
+		}
     }
 }

@@ -62,6 +62,24 @@ namespace Sitecore.Modules.Eviblog.Items
             }
         }
 
+		/// <summary>
+		/// Gets or sets the maximum number of characters for a generated introduction
+		/// </summary>
+		public int MaximumGeneratedIntroductionCharacters
+		{
+			get
+			{
+				var num = 0;
+				int.TryParse(InnerItem["Maximum Generated Introduction Characters"], out num);
+				return num;
+			}
+
+			set
+			{
+				InnerItem["Maximum Generated Introduction Characters"] = value.ToString();
+			}
+		}
+
         /// <summary>
         /// Gets or sets the theme.
         /// </summary>

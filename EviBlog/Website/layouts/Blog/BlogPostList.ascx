@@ -9,7 +9,7 @@
         <h2><sc:Text ID="txtTitle" Field="Title" runat="server" /></h2>
         <div class="details">Posted on: <asp:PlaceHolder ID="PostedDate" runat="server"></asp:PlaceHolder></div>
         
-        <sc:Text ID="txtIntroduction" Field="Introduction" runat="server" />
+        <asp:Literal runat="server" ID="txtIntroduction" />
         
         <br /><br />
         

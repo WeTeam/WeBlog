@@ -335,7 +335,7 @@ namespace Sitecore.Modules.Eviblog.XmlRpc
             Entry createdEntry = new Entry(newItem);
             createdEntry.BeginEdit();
             createdEntry.Title = EntryTitle;
-            createdEntry.Introduction = EntryDescription;
+            createdEntry.Text = EntryDescription;
             createdEntry.Categories = GetCategoriesAsString(currentBlog.ID, rpcstruct);
             createdEntry.EndEdit();
 

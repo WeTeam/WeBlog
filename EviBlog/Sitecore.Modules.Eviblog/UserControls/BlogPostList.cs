@@ -52,8 +52,8 @@ namespace Sitecore.Modules.Eviblog.UserControls
             Web.UI.WebControls.Text txtTitle = (Web.UI.WebControls.Text) e.Item.FindControl("txtTitle");
             txtTitle.DataSource = objEntry.ID.ToString();
 
-            Web.UI.WebControls.Text txtIntroduction = (Web.UI.WebControls.Text) e.Item.FindControl("txtIntroduction");
-            txtIntroduction.DataSource = objEntry.ID.ToString();
+			Literal txtIntroduction = (Literal)e.Item.FindControl("txtIntroduction");
+			txtIntroduction.Text = objEntry.Introduction;
 
             HyperLink postLink = (HyperLink) e.Item.FindControl("BlogPostLink");
             postLink.NavigateUrl = LinkManager.GetItemUrl(Sitecore.Context.Database.GetItem(objEntry.ID));
