@@ -8,6 +8,6 @@
       document.getElementById(elementId).style.display = "block";
       break;
     default:
-        document.getElementById(elementId).style.display = "block";
+        document.getElementById(elementId).style.display = "none";
     }
 }
