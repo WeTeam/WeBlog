@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Sitecore.Configuration;
 using Sitecore.Data;
@@ -112,26 +113,13 @@ namespace Sitecore.Modules.Eviblog.Managers
         {
             List<Comment> CommentList = new List<Comment>();
             
-            int count = 0;
-
+            //refactored to run as sitecore query. inefficient but gets most recent from ALL comments
+            //could be refactored again to use Lucene?
             Item currentBlog = Context.Database.GetItem(BlogID);
-
-            foreach (Item itm in currentBlog.Children)
-            {
-                if (itm.TemplateID.ToString() == Settings.Default.EntryTemplateID)
-                {
-                    foreach (Comment entry in MakeSortedCommentsList(itm.Children.ToArray()))
-                    {
-                        if (count < Total)
-                        {
-                            CommentList.Add(entry);
-                            count++;
-                        }
-                    }
-                }
-            }
-
-            return CommentList;
+            Item[] comments = currentBlog.Axes.SelectItems(string.Format(".//*[@@templateid='{0}']", Settings.Default.CommentTemplateID));
+            CommentList = MakeSortedCommentsList(comments.ToList());
+            CommentList.Reverse();
+            return CommentList.Take(Total).ToList();
         }
 
         /// <summary>
@@ -146,7 +134,8 @@ namespace Sitecore.Modules.Eviblog.Managers
 
             Item currentBlog = Context.Database.GetItem(BlogID);
 
-            foreach (Item itm in currentBlog.Children)
+            //reverse entries so we get the most recent comments
+            foreach (Item itm in currentBlog.Children.Reverse())
             {
                 if (itm.TemplateID.ToString() == Settings.Default.EntryTemplateID)
                 {

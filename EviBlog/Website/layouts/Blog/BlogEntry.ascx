@@ -2,7 +2,8 @@
 
 <div class="entry">
         <h2><sc:Text ID="txtTitle" Field="Title" runat="server" /></h2>
-        <div class="details">Posted on: <asp:PlaceHolder ID="PostedDate" runat="server"></asp:PlaceHolder></div>
+        <div class="details">Posted on: <asp:PlaceHolder ID="PostedDate" runat="server"></asp:PlaceHolder>
+        by <asp:PlaceHolder ID="PostedBy" runat="server"></asp:PlaceHolder></div>
         <p><sc:Text ID="txtIntroduction" Field="Introduction" runat="server" /></p>
         <p><sc:Text ID="txtContent" Field="Content" runat="server" /></p>
         
@@ -18,7 +19,7 @@
                 <asp:HyperLink ID="hyperlinkCategory" runat="server"><sc:Text ID="txtCategorie" Field="Title" runat="server" /></asp:HyperLink>
             </li>
         </ItemTemplate>
-        <ItemSeparatorTemplate>,&nbsp;</ItemSeparatorTemplate>
+        <ItemSeparatorTemplate><li>,&nbsp;</li></ItemSeparatorTemplate>
         </asp:ListView>
         
         <p>&nbsp;</p>
@@ -51,15 +52,10 @@
             <asp:TextBox ID="txtCommentWebsite" runat="server" CssClass="textbox" Text="http://" Width="220"></asp:TextBox>
             <br />            
             <asp:Label ID="lblCommentText" runat="server" Text="Comment" AssociatedControlID="txtCommentText" />
-            <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
             <asp:TextBox ID="txtCommentText" runat="server" TextMode="MultiLine" Rows="10" Columns="60"></asp:TextBox>
-             <br />
-             <asp:Image Height="30" Width="80" ID="CaptchaImage" runat="server" /><br />
-             <asp:Label ID="lblCaptcha" runat="server" Text="Fill in the code shown above" AssociatedControlID="CaptchaText" />
-             <asp:TextBox ID="CaptchaText" runat="server" CssClass="captcha"></asp:TextBox>
-            
-             <p>&nbsp;</p>
-            <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" />
+            <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+            <sc:PlaceHolder runat="server" key="phBlogCommentForm" />
+            <asp:Button ID="buttonSaveComment" runat="server" Text="Post Your Comment" onclick="buttonSaveComment_Click" CssClass="commentSubmit" />
         </asp:Panel>
         
         <asp:Panel ID="CommentList" runat="server">

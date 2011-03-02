@@ -3,6 +3,7 @@ using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Web;
 using Sitecore.Modules.Eviblog.Managers;
+using Sitecore.Security.Accounts;
 
 namespace Sitecore.Modules.Eviblog.Items
 {
@@ -187,6 +188,23 @@ namespace Sitecore.Modules.Eviblog.Items
             get
             {
                 return InnerItem.Statistics.Created;
+            }
+        }
+
+        /// <summary>
+        /// Gets the Sitecore User who created the blog entry.
+        /// </summary>
+        public User CreatedBy
+        {
+            get
+            {
+                //go direct to field since ItemStatistics ignores standard values
+                string createdBy = InnerItem[Sitecore.FieldIDs.CreatedBy];
+                if (!string.IsNullOrEmpty(createdBy))
+                {
+                    return User.FromName(createdBy, AccountType.User) as User;
+                }
+                return null;
             }
         }
 

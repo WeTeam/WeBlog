@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.HtmlControls;
 using Sitecore.Links;
 using Sitecore.Modules.Eviblog.Items;
 using Sitecore.Modules.Eviblog.Managers;
@@ -10,11 +13,12 @@ namespace Sitecore.Modules.Eviblog.UserControls
 {
     public class BlogPostList : UserControl
     {
+
         #region Fields
 
         public Items.Blog currentBlog = BlogManager.GetCurrentBlog();
         protected ListView ListView1;
-        public int TotalToShow;
+        protected HtmlAnchor ancViewMore;
 
         #endregion
 
@@ -22,19 +26,22 @@ namespace Sitecore.Modules.Eviblog.UserControls
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            TotalToShow = currentBlog.DisplayItemCount == 0 ? 0 : currentBlog.DisplayItemCount;
+            string totalToShowStr = Request.QueryString["count"] ?? currentBlog.DisplayItemCount.ToString();
+            int totalToShow = 0;
+            int.TryParse(totalToShowStr, out totalToShow);
 
-            if (!Page.IsPostBack && Request.QueryString["tag"].HasValue())
+            string startIndexStr = Request.QueryString["startIndex"] ?? "0";
+            int startIndex = 0;
+            int.TryParse(startIndexStr, out startIndex);
+
+            string tag = Request.QueryString["tag"];
+            BindEntries(startIndex, totalToShow, tag);
+
+            string blogUrl = Sitecore.Links.LinkManager.GetItemUrl(Sitecore.Context.Item);
+            ancViewMore.HRef = blogUrl + "?count=" + (totalToShow + currentBlog.DisplayItemCount);
+            if (tag != null)
             {
-                ListView1.DataSource = EntryManager.GetBlogEntries(Request.QueryString["tag"], TotalToShow);
-                ListView1.ItemDataBound += ListView1_ItemDataBound;
-                ListView1.DataBind();
-            }
-            else
-            {
-                ListView1.DataSource = EntryManager.GetBlogEntries(Sitecore.Context.Item.ID, TotalToShow);
-                ListView1.ItemDataBound += ListView1_ItemDataBound;
-                ListView1.DataBind();
+                ancViewMore.HRef += "&tag=" + Server.UrlEncode(tag);
             }
         }
 
@@ -48,15 +55,18 @@ namespace Sitecore.Modules.Eviblog.UserControls
 
             PlaceHolder PostedDate = (PlaceHolder) e.Item.FindControl("PostedDate");
             PostedDate.Controls.Add(new LiteralControl(objEntry.Created.ToString("dddd, MMMM d, yyyy")));
+            PlaceHolder PostedBy = (PlaceHolder)e.Item.FindControl("PostedBy");
+            PostedBy.Controls.Add(new LiteralControl(objEntry.CreatedBy.LocalName));
 
-            Web.UI.WebControls.Text txtTitle = (Web.UI.WebControls.Text) e.Item.FindControl("txtTitle");
-            txtTitle.DataSource = objEntry.ID.ToString();
+            HyperLink postTitle = (HyperLink)e.Item.FindControl("lnkBlogPostTitle");
+            postTitle.Text = objEntry.Title;
+            postTitle.NavigateUrl = objEntry.Url;
 
 			Literal txtIntroduction = (Literal)e.Item.FindControl("txtIntroduction");
 			txtIntroduction.Text = objEntry.Introduction;
 
             HyperLink postLink = (HyperLink) e.Item.FindControl("BlogPostLink");
-            postLink.NavigateUrl = LinkManager.GetItemUrl(Sitecore.Context.Database.GetItem(objEntry.ID));
+            postLink.NavigateUrl = objEntry.Url;
 
             if (!objEntry.DisableComments)
             {
@@ -64,6 +74,39 @@ namespace Sitecore.Modules.Eviblog.UserControls
                 commentsPlaceholder.Controls.Add(
                     new LiteralControl("Comments " + "(" + CommentManager.GetCommentsCount(objEntry.ID) + ")"));
             }
+        }
+
+        #endregion
+
+        #region Utility
+
+        private void BindEntries(int startIndex, int totalToShow, string tag)
+        {
+            IEnumerable<Entry> entries;
+            if (Sitecore.Context.Item.TemplateID == ItemConstants.Templates.Category)
+            {
+                entries = EntryManager.GetBlogEntryByCategorie(Sitecore.Context.Item.ID);
+            }
+            else if (tag.HasValue())
+            {
+                entries = EntryManager.GetBlogEntries(tag);
+            }
+            else
+            {
+                entries = EntryManager.GetBlogEntries(Sitecore.Context.Item.ID);
+            }
+            if (totalToShow == 0)
+            {
+                totalToShow = entries.Count();
+            }
+            if ((startIndex + totalToShow) >= entries.Count())
+            {
+                ancViewMore.Visible = false;
+            }
+            entries = entries.Skip(startIndex).Take(totalToShow);
+            ListView1.DataSource = entries;
+            ListView1.ItemDataBound += ListView1_ItemDataBound;
+            ListView1.DataBind();
         }
 
         #endregion

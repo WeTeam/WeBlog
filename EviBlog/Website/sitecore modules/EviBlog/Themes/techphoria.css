@@ -1,42 +1,72 @@
 ﻿body
 {
-    font: Verdana,Helvetica,Arial,Geneva,Helvetica,sans-serif;   
-    background: #73141B;
+    font-family: 'Lucida Grande', Verdana, Arial, sans-serif;  
+    background: #000000;
+}
+h1, h2, h3
+{
+    font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;  
+}
+a
+{
+    color: #336699;  
 }
 /*************************************************************************************
 Main layout
 *************************************************************************************/
 div.eviblog-header 
 {
-    width: 800px;
-    margin: 0 auto;
-    font-size: 48px;
-    text-transform: lowercase;
-    font-variant: small-caps;
+    width: 900px;
+    height: 50px;
+    padding-top: 10px;
+    margin:0 auto;
 }
     div.eviblog-header a 
     {
-        color: #F2DB94
+        text-decoration: none;
+        color: #ffffff;
     }
 div.eviblog 
 {
-    width: 800px;
-    border-left: 1px solid #2A160B;
-    border-right: 1px solid #2A160B;
-    border-top: 5px solid #2A160B;
-    background: #D9A362;
+    width: 900px;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 1px solid #000000;
+    background-color: #ffffff;
+    background-image: url(./techphoria/images/body-2col-bg.png);
+    background-repeat: repeat-y;
  }
+div.eviblog div.eviblog-leftcolumn
+{
+    padding: 15px;
+    width: 650px;    
+}
 /*************************************************************************************
 Blog entry
 *************************************************************************************/
 div.entry
 {
-    font-size: 0.9em;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    font-size: 0.8em;
+    line-height: 175%;
+    background-image: url(./techphoria/images/entry-list-separator.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
 }
     div.entry h2 
     {
-        font-size: 18px;
-        color: #000000;
+        font-size: 19px;
+    }
+    div.entry h2 a
+    {
+        color: #333333;
+        text-decoration: none;   
+    }
+    div.entry h2 a:hover
+    {
+        color: #336699;
+        text-decoration: none;   
     }
     ul.entry-categories 
     {
@@ -48,9 +78,9 @@ div.entry
                 {
                     text-decoration: underline;
                 }
-    div.entry a.readmore
+    div.entry readmore a
     {
-        color: #384001;
+        color: #336699;
     }
 
 /*************************************************************************************
@@ -74,6 +104,12 @@ div#entry-comment ul
 /*************************************************************************************
 Blog Sidebar
 *************************************************************************************/
+div.eviblog div.eviblog-rightcolumn
+{
+    width: 215px;
+    margin-left: 0px;
+    padding-left: 5px;  
+}
 div.eviblog-rightcolumn ul
 {
     list-style: none;    
@@ -82,29 +118,40 @@ div.eviblog-rightcolumn ul
 }
     div.eviblog-rightcolumn ul li
     {
-        border-bottom: 1px solid #2A160B;
         padding: 2px 0px 2px 0px;
     }
         div.eviblog-rightcolumn ul.sidebar li a
         {
-            color: #222601;
-            text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
+        }
+        div.eviblog-rightcolumn ul.sidebar li a.current
+        {
+            font-weight: bold;
+        }
+        div.eviblog-rightcolumn ul.sidebar li a.year
+        {
+            color: #000000;
+            font-style: italic;
         }
         div.eviblog-rightcolumn ul li ul
         {
             margin: 0;
         }
-            div.eviblog-rightcolumn ul li ul li
+            div.eviblog-rightcolumn ul ul li
             {
+                padding-left: 4px;
+                padding-right: 2px;
                 border: none;
+            }
+            div.eviblog-rightcolumn ul ul ul li
+            {
+                padding-bottom: 5px;
             }
 div.eviblog-rightcolumn h3
 {   
     margin: 10px 0px 0px 0px;
     border-bottom: 3px solid #2A160B;
 }
-
 
 div.eviblog-rightcolumn ul#blog-feeds a.feedImage img
 {

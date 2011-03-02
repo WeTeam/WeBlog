@@ -6,11 +6,16 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.Eviblog", "..\Sitecore.Modules.Eviblog\Sitecore.Modules.Eviblog.csproj", "{88A9F0BD-B2B2-4EB2-8CFF-9877D7CD5150}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{A9588279-D26E-4660-9F57-4D259BE36BE3}"
+	ProjectSection(SolutionItems) = preProject
+		..\Dependencies\Recaptcha.dll = ..\Dependencies\Recaptcha.dll
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sitecore", "Sitecore", "{8B398304-CD69-42EF-9933-12D89E113F03}"
 	ProjectSection(SolutionItems) = preProject
+		..\Dependencies\Sitecore\MSCaptcha.dll = ..\Dependencies\Sitecore\MSCaptcha.dll
 		..\Dependencies\Sitecore\RadEditor.Net2.dll = ..\Dependencies\Sitecore\RadEditor.Net2.dll
 		..\Dependencies\Sitecore\RadSpell.NET2.dll = ..\Dependencies\Sitecore\RadSpell.NET2.dll
+		..\Dependencies\Sitecore\Sitecore.Captcha.dll = ..\Dependencies\Sitecore\Sitecore.Captcha.dll
 		..\Dependencies\Sitecore\Sitecore.Client.dll = ..\Dependencies\Sitecore\Sitecore.Client.dll
 		..\Dependencies\Sitecore\Sitecore.Kernel.dll = ..\Dependencies\Sitecore\Sitecore.Kernel.dll
 	EndProjectSection

@@ -109,3 +109,15 @@ div.eviblog-rightcolumn h3
     margin: 10px 0px 0px 0px;
     border-bottom: 3px solid #183152;
 }
+
+
+div.eviblog-rightcolumn ul#blog-feeds a.feedImage img
+{
+    padding: 2px;
+    vertical-align: middle;
+}
+
+div.eviblog-rightcolumn ul#blog-feeds a.feedText
+{
+    padding: 2px;
+}

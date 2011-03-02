@@ -35,6 +35,10 @@ div.eviblog
         margin: 0px 0px 0px 5px;
         float: left;
     }
+div.eviblog .pagination
+{
+    text-align: center;   
+}
 div.eviblog-footer 
 {
     clear: both;
@@ -121,6 +125,10 @@ div.entry
                 {
                     text-decoration: underline;
                 }
+    div.entry div.readmore
+    {
+        margin-top: 15px;
+    }
     div#entry-tags
     {
         
@@ -190,6 +198,7 @@ Add Comment
 div.entry-comments
 {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
     div.entry-comments label
     {
@@ -200,10 +209,21 @@ div.entry-comments
         margin: 4px 0px 4px 0px;
     }
     
+    div.entry-comments label.captchaLabel
+    {
+        width: 100%;
+        float: none;
+    }
+    
     div.entry-comments input.textbox
     {
         float: left;
         margin: 4px 0px 4px 0px;
+    }
+    
+    div.entry-comments input.commentSubmit
+    {
+        margin-top: 10px;
     }
      
 /*************************************************************************************
@@ -282,7 +302,20 @@ div.eviblog-rightcolumn ul#blog-archive ul li
 {
     border: none;
 }
+div.eviblog-rightcolumn ul#blog-archive ul.entries
+{
+    display: none;
+}
 div.eviblog-rightcolumn ul#blog-archive ul.entries li
 {
     padding-left: 10px;
+}
+
+.viewMoreWrapper
+{
+    text-align: center;   
+}
+.loadingAnimation
+{
+    display: none;   
 }

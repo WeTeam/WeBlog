@@ -71,14 +71,19 @@
     <Reference Include="RadSpell.NET2">
       <HintPath>..\Dependencies\Sitecore\RadSpell.NET2.dll</HintPath>
     </Reference>
+    <Reference Include="Recaptcha">
+      <HintPath>..\Dependencies\Recaptcha.dll</HintPath>
+    </Reference>
     <Reference Include="RssToolkit">
       <HintPath>Dependencies\RssToolkit.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Client">
       <HintPath>..\Dependencies\Sitecore\Sitecore.Client.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\Dependencies\Sitecore\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -109,6 +114,8 @@
     <Compile Include="Comparers\TagWeightComparer.cs" />
     <Compile Include="Handlers\CaptchaHandler.cs" />
     <Compile Include="Handlers\RssHandler.cs" />
+    <Compile Include="Items\Feed.cs" />
+    <Compile Include="Managers\BlogFeedManager.cs" />
     <Compile Include="Managers\BlogManager.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Items\Category.cs" />
@@ -137,6 +144,9 @@
     <Compile Include="UserControls\AddComment.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="UserControls\BlogFeeds.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Utilities\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -162,9 +172,6 @@
     <Compile Include="UserControls\BlogEntry.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="UserControls\BlogEntryByCategorie.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="UserControls\BlogOptions.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -177,6 +184,7 @@
     <Compile Include="UserControls\BlogTagcloud.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Utilities\ItemConstants.cs" />
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="Utilities\Presentation.cs" />
     <Compile Include="Utilities\Publish.cs" />

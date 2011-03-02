@@ -24,6 +24,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
         protected ListView ListViewComments;
         protected LoginView LoginViewTags;
         protected PlaceHolder PostedDate;
+        protected PlaceHolder PostedBy;
         protected RequiredFieldValidator rfvCommentEmail;
         protected Web.UI.WebControls.Text titleComments;
         protected Web.UI.WebControls.Text txtAddYourComment;
@@ -49,13 +50,22 @@ namespace Sitecore.Modules.Eviblog.UserControls
             // Create entry of current item
             Entry current = new Entry(Sitecore.Context.Item);
 
-            // Set creation date of entry
+            // Set creation date and created by of entry
             PostedDate.Controls.Add(new LiteralControl(current.Created.ToString("dddd, MMMM d, yyyy")));
+            PostedBy.Controls.Add(new LiteralControl(current.CreatedBy.LocalName));
 
             // Fill categories
             ListViewCategories.DataSource = CategoryManager.GetCategoriesByEntryID(current.ID);
             ListViewCategories.ItemDataBound += ListViewCategories_ItemDataBound;
             ListViewCategories.DataBind();
+
+            // Update the title of the page
+            PlaceHolder phEviblogTitle = (PlaceHolder)Page.FindControl("phEviblogTitle");
+            if (phEviblogTitle != null)
+            {
+                phEviblogTitle.Controls.Clear();
+                phEviblogTitle.Controls.Add(new LiteralControl(current.Title + " | " + currentBlog.Name));
+            }
 
             //TODO Create edit possibilities for assigning categories on frontend
 
@@ -69,11 +79,6 @@ namespace Sitecore.Modules.Eviblog.UserControls
             }
             else
             {
-                //Create a random integer to prevent caching of captcha image
-                Random RandomClass = new Random();
-                int randomNumber = RandomClass.Next(1000);
-                CaptchaImage.ImageUrl = "~/sitecore modules/EviBlog/CaptchaHandler.ashx?=" + randomNumber;
-
                 txtAddYourComment.Item = BlogManager.GetCurrentBlogItem();
             }
 
@@ -158,7 +163,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
 
         protected void buttonSaveComment_Click(object sender, EventArgs e)
         {
-            if (Session["CaptchaText"] != null && CaptchaText.Text == Session["CaptchaText"].ToString())
+            if (Page.IsValid)
             {
                 Model.Comment comment = new Model.Comment()
                 {
@@ -176,10 +181,6 @@ namespace Sitecore.Modules.Eviblog.UserControls
                     Message.Controls.Add(new LiteralControl("<div class='successtext'>Thank you for your comment</div>"));
                     ResetCommentFields();
                 }
-            }
-            else
-            {
-                Message.Controls.Add(new LiteralControl("<div class='errortext'>Captcha text is not valid</div>"));
             }
         }
 

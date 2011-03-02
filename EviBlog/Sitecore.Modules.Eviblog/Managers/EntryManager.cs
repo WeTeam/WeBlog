@@ -305,15 +305,15 @@ namespace Sitecore.Modules.Eviblog.Managers
         /// <param name="BlogID">The blog ID.</param>
         /// <param name="CategorieName">Name of the categorie.</param>
         /// <returns></returns>
-        public static List<Entry> GetBlogEntryByCategorie(ID BlogID, string CategorieName)
+        public static List<Entry> GetBlogEntryByCategorie(ID CategorieID)
         {
             List<Entry> BlogPostList = new List<Entry>();
 
-            Item Blog = BlogManager.GetBlogByID(BlogID);
+            Item Blog = BlogManager.GetBlogByID(BlogManager.GetCurrentBlogID());
 
             foreach (Entry entry in MakeSortedEntriesList(Blog.Children.ToArray()))
             {
-                if (entry.CategoriesText.Contains(CategorieName))
+                if (entry.CategoriesID.Contains(CategorieID.ToString()))
                 {
                     BlogPostList.Add(entry);
                 }

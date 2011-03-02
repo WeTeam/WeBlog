@@ -106,3 +106,14 @@ div.eviblog-rightcolumn ul.month
     div.eviblog-rightcolumn ul.entries
     {
     }
+
+div.eviblog-rightcolumn ul#blog-feeds a.feedImage img
+{
+    padding: 2px;
+    vertical-align: middle;
+}
+
+div.eviblog-rightcolumn ul#blog-feeds a.feedText
+{
+    padding: 2px;
+}
