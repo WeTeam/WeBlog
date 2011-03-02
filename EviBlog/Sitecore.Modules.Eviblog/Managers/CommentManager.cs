@@ -117,9 +117,13 @@ namespace Sitecore.Modules.Eviblog.Managers
             //could be refactored again to use Lucene?
             Item currentBlog = Context.Database.GetItem(BlogID);
             Item[] comments = currentBlog.Axes.SelectItems(string.Format(".//*[@@templateid='{0}']", Settings.Default.CommentTemplateID));
-            CommentList = MakeSortedCommentsList(comments.ToList());
-            CommentList.Reverse();
-            return CommentList.Take(Total).ToList();
+            if (comments != null)
+            {
+                CommentList = MakeSortedCommentsList(comments.ToList());
+                CommentList.Reverse();
+                return CommentList.Take(Total).ToList();
+            }
+            return CommentList;
         }
 
         /// <summary>
