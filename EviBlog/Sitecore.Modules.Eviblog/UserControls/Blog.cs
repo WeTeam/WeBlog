@@ -44,16 +44,17 @@ namespace Sitecore.Modules.Eviblog.UserControls
                 Item currentBlogItem = BlogManager.GetCurrentBlogItem();
                 Item[] feedItem = currentBlogItem.Axes.SelectItems("./*[@@templatename='RSS Feed']");
 
-                foreach (Item item in feedItem)
+                if (feedItem != null)
                 {
-                    PublicFeed feed = FeedManager.GetFeed(item);
+                    foreach (Item item in feedItem)
+                    {
+                        PublicFeed feed = FeedManager.GetFeed(item);
 
-                    Literal rssLink = new Literal();
-                    rssLink.Text = "<link rel=\"alternate\" title=" + feed.FeedItem.Name + "  type=\"application/rss+xml\" href=\"" + FeedManager.GetFeedUrl(item, false) + "\" />" + Environment.NewLine;
-                    phEviblog.Controls.Add(rssLink);
+                        Literal rssLink = new Literal();
+                        rssLink.Text = "<link rel=\"alternate\" title=" + feed.FeedItem.Name + "  type=\"application/rss+xml\" href=\"" + FeedManager.GetFeedUrl(item, false) + "\" />" + Environment.NewLine;
+                        phEviblog.Controls.Add(rssLink);
+                    }
                 }
-
-                
             }
 
             // Set the correct theme file
@@ -81,7 +82,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
             // Add the title to the page
             if (phEviblogTitle != null)
             {
-                phEviblogTitle.Controls.Add(new LiteralControl(currentBlog.Name));
+                phEviblogTitle.Controls.Add(new LiteralControl(currentBlog.Title));
             }
         }
         #endregion

@@ -64,7 +64,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
             if (phEviblogTitle != null)
             {
                 phEviblogTitle.Controls.Clear();
-                phEviblogTitle.Controls.Add(new LiteralControl(current.Title + " | " + currentBlog.Name));
+                phEviblogTitle.Controls.Add(new LiteralControl(current.Title + " | " + currentBlog.Title));
             }
 
             //TODO Create edit possibilities for assigning categories on frontend

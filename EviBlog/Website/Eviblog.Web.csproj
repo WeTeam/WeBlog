@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\packages\EviBlog.xml" />
+    <Content Include="data\packages\SampleBlog.xml" />
     <Content Include="layouts\Blog\BlogFeeds.ascx" />
     <Content Include="layouts\Blog\BlogLayout.aspx" />
   </ItemGroup>
@@ -199,6 +200,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\packages\EviBlog-1.7.1.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\packages\EviBlog-1.7.2.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\packages\SampleBlog-EviBlog-1.7.2.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
