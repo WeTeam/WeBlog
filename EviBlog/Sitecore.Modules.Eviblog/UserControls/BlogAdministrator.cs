@@ -39,7 +39,7 @@ namespace Sitecore.Modules.Eviblog.UserControls
         {
             titleAdministration.Item = BlogManager.GetCurrentBlogItem();
 
-            if (Sitecore.Context.User.IsAuthenticated)
+            if (Sitecore.Context.User.IsAuthenticated && !Page.IsPostBack)
             {
                 LoggedInPanel.Visible = true;
 
