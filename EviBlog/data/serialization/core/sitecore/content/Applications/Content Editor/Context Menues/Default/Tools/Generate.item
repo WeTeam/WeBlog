@@ -1,0 +1,326 @@
+----item----
+version: 1
+id: {90B721FD-62AD-49C6-84A7-2D7C3587E55C}
+database: core
+path: /sitecore/content/Applications/Content Editor/Context Menues/Default/Tools/Generate
+parent: {82F7AD45-00BD-4C80-8F33-05C8A6C6048A}
+name: Generate
+master: {00000000-0000-0000-0000-000000000000}
+template: {998B965E-6AB8-4568-810F-8101D60D0CC3}
+templatekey: Menu item
+
+----field----
+field: {56776EDF-261C-4ABC-9FE7-70C618795239}
+name: __Help link
+key: __help link
+content-length: 0
+
+
+----field----
+field: {A4F985D9-98B3-4B52-AAAF-4344F6E747C6}
+name: __Workflow
+key: __workflow
+content-length: 0
+
+
+----field----
+field: {335C6760-6C0E-4C6C-814C-A53D203F553E}
+name: Icon
+key: icon
+content-length: 32
+
+Applications/32x32/gears_run.png
+----field----
+field: {CAB694FC-E37C-44EB-9012-488B775CF638}
+name: Message
+key: message
+content-length: 39
+
+devtools:generatecustomitem(id=$Target)
+----version----
+language: da
+version: 1
+revision: 056615cb-ba6f-4445-87b7-57374790030f
+
+----field----
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
+
+20060215T104916
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20060215T104916
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+056615cb-ba6f-4445-87b7-57374790030f
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 15
+
+20061013T112545
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}
+name: __Workflow state
+key: __workflow state
+content-length: 0
+
+
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 10
+
+Kopier til
+----version----
+language: de
+version: 1
+revision: 1f315871-a17b-40d3-bd65-85508efc19f7
+
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+1f315871-a17b-40d3-bd65-85508efc19f7
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 15
+
+20061025T153712
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 13
+
+Kopieren nach
+----version----
+language: en
+version: 1
+revision: 91a10ec3-8bcc-4475-8bf8-8b5bec2ef0a5
+
+----field----
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
+
+20060215T104900
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20060215T104900
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+91a10ec3-8bcc-4475-8bf8-8b5bec2ef0a5
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20100519T110844:634098641248684454
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}
+name: __Workflow state
+key: __workflow state
+content-length: 0
+
+
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 23
+
+Generate Custom Item(s)
+----version----
+language: fr-CA
+version: 1
+revision: df7eaeaf-4225-4163-a6d6-e0b8b00bcdef
+
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+df7eaeaf-4225-4163-a6d6-e0b8b00bcdef
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 15
+
+20070424T123501
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+sitecore\anonymous
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 11
+
+Copier vers
+----version----
+language: nb-NO
+version: 1
+revision: 65118af9-fbaa-4e5c-bf0e-de2d4859f5a4
+
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+65118af9-fbaa-4e5c-bf0e-de2d4859f5a4
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 15
+
+20061025T153537
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 10
+
+Kopier til
+----version----
+language: nl-NL
+version: 1
+revision: 6d3cfb17-24f1-4133-9dcc-bcc4a55f675f
+
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+6d3cfb17-24f1-4133-9dcc-bcc4a55f675f
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 15
+
+20070424T163445
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+sitecore\anonymous
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 13
+
+Kopiëren naar
+----version----
+language: sv-SE
+version: 1
+revision: 7947667e-5cc6-4b08-9773-f9a938ec18f0
+
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+7947667e-5cc6-4b08-9773-f9a938ec18f0
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 15
+
+20061025T154058
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {9B72A62B-2775-423D-B17A-EC34A9F31AF8}
+name: Display name
+key: display name
+content-length: 12
+
+Kopiera till
