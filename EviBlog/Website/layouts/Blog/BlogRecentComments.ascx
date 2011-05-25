@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true"  Inherits="Sitecore.Modules.Eviblog.UserControls.BlogRecentComments, Sitecore.Modules.Eviblog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogRecentComments.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogRecentComments" %>
+<%@ Import Namespace="Sitecore.Modules.Blog.Items.Blog" %>
 
 <asp:Panel ID="PanelRecentComments" runat="server">
     <h3><sc:Text ID="titleRecentComments" runat="server" Field="titleRecentComments" /></h3>
@@ -10,7 +11,9 @@
     </LayoutTemplate>
     <ItemTemplate>
         <li>
-            <asp:HyperLink ID="hyperlinkComment" runat="server"></asp:HyperLink>
+            <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# GetEntryUrlForComment(Container.DataItem as CommentItem) %>'>
+                <%#(Container.DataItem as CommentItem).Name.Rendered%> wrote: <%#(Container.DataItem as CommentItem).Comment.Rendered%>
+            </asp:HyperLink>
         </li>
     </ItemTemplate>
     </asp:ListView>

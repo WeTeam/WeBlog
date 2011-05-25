@@ -1,0 +1,74 @@
+﻿using System;
+using Sitecore.Data.Items;
+using System.Collections.Generic;
+using Sitecore.Data.Fields;
+using Sitecore.Web.UI.WebControls;
+using CustomItemGenerator.Fields.LinkTypes;
+using CustomItemGenerator.Fields.ListTypes;
+using CustomItemGenerator.Fields.SimpleTypes;
+#foreach($using in $Usings)
+using ${using};
+#end
+
+namespace ${CustomItemInformation.FullNameSpace}
+{
+public partial class ${CustomItemInformation.ClassName} : CustomItem
+{
+
+public static readonly string TemplateId = "${CustomItemInformation.Template.ID}";
+
+#if($BaseTemplates.Count > 0)
+#region Inherited Base Templates
+
+#foreach($baseTemplate in $BaseTemplates)
+private readonly ${baseTemplate.ClassName} _$baseTemplate.ClassName;
+public ${baseTemplate.ClassName} $baseTemplate.PropertyName { get { return _$baseTemplate.ClassName; } }
+#end
+
+#endregion
+#end
+
+#region Boilerplate CustomItem Code
+
+public ${CustomItemInformation.ClassName}(Item innerItem) : base(innerItem)
+{
+#foreach($baseTemplate in $BaseTemplates)
+	_$baseTemplate.ClassName = new ${baseTemplate.ClassName}(innerItem);
+#end
+
+}
+
+public static implicit operator ${CustomItemInformation.ClassName}(Item innerItem)
+{
+	return innerItem != null ? new ${CustomItemInformation.ClassName}(innerItem) : null;
+}
+
+public static implicit operator Item(${CustomItemInformation.ClassName} customItem)
+{
+	return customItem != null ? customItem.InnerItem : null;
+}
+
+#endregion //Boilerplate CustomItem Code
+
+
+#region Field Instance Methods
+
+#foreach($field in $CustomItemFields)
+
+#if($field.FieldType == "")
+//Could not find Field Type for $field.FieldName
+#else
+public $field.FieldType $field.MethodName
+{
+	get
+	{
+		return new ${field.FieldType}(InnerItem, InnerItem.Fields["${field.FieldName}"]);
+	}
+}
+#end
+
+#end
+
+#endregion //Field Instance Methods
+}
+}

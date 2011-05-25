@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<!--=============================================================
+    File: xmlGenerateCustomItemByFolder.xml                                              
+    Created by: Velir Studios                                       
+    Overview: The XAML definition fo the form used for creating custom items for a specific template                                                
+==============================================================-->
+
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+	<xmlGenerateCustomItemByFolder>
+    <FormDialog Icon="Applications/32x32/gears_run.png" Header="Custom Item Generator" Text="Generate the Custom Item for this folder of Templates." OKButton="Generate" CancelButton="Cancel">
+
+			<CodeBeside Type="CustomItemGenerator.SitecoreApp.CustomItemFolderCodeBeside,CustomItemGenerator"/>
+
+			<GridPanel Columns="1" >
+        <Border Height="50%">
+					Choose your Namespace and File Path to generate the custom item for this Template.  You can auto-populate these fields by editing the "Base.Namespace" and "Base.FileOutputPath" settings in
+					~/App_Config/Include/CustomItem.config<br/>
+				<br/>
+				Namespace:
+				<Edit ID="CustomItemNamespace" Width="100%"/>
+				<br/><br/>
+				Custom Item Root Path: (Note: It is important that this is your custom item root folder.  This generator will automatically add folders based on the location of your template.)
+				<Edit ID="CustomItemFilePath" Width="100%"/>
+				</Border>
+				<Border GridPanel.Width="100%"  GridPanel.Height="50%">
+					Generate Files:
+					<Checkbox ID="GenerateBaseFile" Checked="true" />.base.cs
+					<Checkbox ID="GenerateInstanceFile" />.instance.cs
+					<Checkbox ID="GenerateInterfaceFile" />.interface.cs
+					<Checkbox ID="GenerateStaticFile" />.static.cs<br/>
+					(Note: Only the .base.cs file will be overwritten if it exists)
+				</Border>
+				<br/>
+				<Checklist ID="TemplateList" Multiple="true" Height="325" />
+
+      </GridPanel>
+
+    </FormDialog>
+  </xmlGenerateCustomItemByFolder>
+</control>

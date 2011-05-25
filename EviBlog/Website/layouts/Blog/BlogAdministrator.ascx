@@ -1,6 +1,6 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true"  Inherits="Sitecore.Modules.Eviblog.UserControls.BlogAdministrator, Sitecore.Modules.Eviblog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogAdministrator.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogAdministrator" %>
 
-<div id="eviblog-administration">
+<div id="blog-administration">
     
     <asp:Panel ID="LoggedInPanel" runat="server" Visible="false">
         <h3><sc:Text ID="titleAdministration" runat="server" Field="titleAdministration" /></h3>

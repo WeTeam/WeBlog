@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true"  Inherits="Sitecore.Modules.Eviblog.UserControls.BlogOptions, Sitecore.Modules.Eviblog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogOptions.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogOptions" %>
 
 <asp:Panel ID="EditModePanel" Visible="false" runat="server" CssClass="settings">
     <b>Settings</b><br />
@@ -18,7 +18,7 @@
     </tr>
     <tr>
         <td>Show email in  comments</td>
-        <td><%--<asp:CheckBox ID="CheckBoxCommentsEmail" runat="server" />--%>
+        <td><asp:CheckBox ID="CheckBoxCommentsEmail" runat="server" />
             <sc:Text ID="txtCheckBoxCommentsEmail" Field="CheckBoxCommentsEmail" runat="server" />
         </td>
     </tr>

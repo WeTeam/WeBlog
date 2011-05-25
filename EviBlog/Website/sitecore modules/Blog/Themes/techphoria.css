@@ -1,0 +1,182 @@
+﻿body
+{
+    font-family: 'Lucida Grande', Verdana, Arial, sans-serif;  
+    background: #000000;
+}
+h1, h2, h3
+{
+    font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;  
+}
+a
+{
+    color: #336699;  
+}
+/*************************************************************************************
+Main layout
+*************************************************************************************/
+div.blog-header 
+{
+    width: 900px;
+    height: 50px;
+    padding-top: 10px;
+    margin:0 auto;
+}
+    div.blog-header a 
+    {
+        text-decoration: none;
+        color: #ffffff;
+    }
+div.blog 
+{
+    width: 900px;
+    border-left: 1px solid #000000;
+    border-right: 1px solid #000000;
+    border-top: 1px solid #000000;
+    background-color: #ffffff;
+    background-image: url(./techphoria/images/body-2col-bg.png);
+    background-repeat: repeat-y;
+ }
+div.blog div.blog-leftcolumn
+{
+    padding: 15px;
+    width: 650px;    
+}
+/*************************************************************************************
+Blog entry
+*************************************************************************************/
+div.entry
+{
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    font-size: 0.8em;
+    line-height: 175%;
+    background-image: url(./techphoria/images/entry-list-separator.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+    div.entry h2 
+    {
+        font-size: 19px;
+    }
+    div.entry h2 a
+    {
+        color: #333333;
+        text-decoration: none;   
+    }
+    div.entry h2 a:hover
+    {
+        color: #336699;
+        text-decoration: none;   
+    }
+    ul.entry-categories 
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+                ul.entry-categories li a:hover
+                {
+                    text-decoration: underline;
+                }
+    div.entry readmore a
+    {
+        color: #336699;
+    }
+
+/*************************************************************************************
+Comment List
+*************************************************************************************/
+div#entry-comment ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+    div#entry-comment ul li
+    {
+        padding: 4px;
+        background-color: #F2DB94;
+    }
+        div#entry-comment ul li.comment-alternate
+        {
+            background-color: #D9A362;
+        }
+/*************************************************************************************
+Blog Sidebar
+*************************************************************************************/
+div.blog div.blog-rightcolumn
+{
+    width: 215px;
+    margin-left: 0px;
+    padding-left: 5px;  
+}
+div.blog-rightcolumn ul
+{
+    list-style: none;    
+    margin: 0px 0px 15px 0px;
+    padding: 0px;
+}
+    div.blog-rightcolumn ul li
+    {
+        padding: 2px 0px 2px 0px;
+    }
+        div.blog-rightcolumn ul.sidebar li a
+        {
+            font-size: 11px;
+        }
+        div.blog-rightcolumn ul.sidebar li a.current
+        {
+            font-weight: bold;
+        }
+        div.blog-rightcolumn ul.sidebar li a.year
+        {
+            color: #000000;
+            font-style: italic;
+        }
+        div.blog-rightcolumn ul li ul
+        {
+            margin: 0;
+        }
+            div.blog-rightcolumn ul ul li
+            {
+                padding-left: 4px;
+                padding-right: 2px;
+                border: none;
+            }
+            div.blog-rightcolumn ul ul ul li
+            {
+                padding-bottom: 5px;
+            }
+div.blog-rightcolumn h3
+{   
+    margin: 10px 0px 0px 0px;
+    border-bottom: 3px solid #2A160B;
+}
+
+div.blog-rightcolumn ul#blog-feeds a.feedImage img
+{
+    padding: 2px;
+    vertical-align: middle;
+}
+
+div.blog-rightcolumn ul#blog-feeds a.feedText
+{
+    padding: 2px;
+}
+
+.entry-image
+{
+    float: right;
+    margin: 0 0 15px 15px;
+}
+
+.entry-list-image
+{
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+.entry-detail
+{
+    margin-left: 65px;
+}

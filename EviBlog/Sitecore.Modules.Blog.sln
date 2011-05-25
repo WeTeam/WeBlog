@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.Blog", "Website\Sitecore.Modules.Blog.csproj", "{26FE5F3A-F140-40C4-85A0-C1866DA26F16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{720A7BEF-0695-49FD-95FC-15BEF4822B59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party", "Third-party", "{0CDFF1D0-EB1E-44DF-A49C-EA83F3DAC88E}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\Third-party\AntiXSSLibrary.dll = Dependencies\Third-party\AntiXSSLibrary.dll
+		Dependencies\Third-party\CookComputing.XmlRpcV2.dll = Dependencies\Third-party\CookComputing.XmlRpcV2.dll
+		Dependencies\Third-party\CustomItemGenerator.dll = Dependencies\Third-party\CustomItemGenerator.dll
+		Dependencies\Third-party\MSCaptcha.dll = Dependencies\Third-party\MSCaptcha.dll
+		Dependencies\Third-party\Recaptcha.dll = Dependencies\Third-party\Recaptcha.dll
+		Dependencies\Third-party\RssToolkit.dll = Dependencies\Third-party\RssToolkit.dll
+		Dependencies\Third-party\Sitecore.Captcha.dll = Dependencies\Third-party\Sitecore.Captcha.dll
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F396E96E-04A0-44D9-8EE9-9266AA85B4B5}"
+	ProjectSection(SolutionItems) = preProject
+		deploy.targets = deploy.targets
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0CDFF1D0-EB1E-44DF-A49C-EA83F3DAC88E} = {720A7BEF-0695-49FD-95FC-15BEF4822B59}
+	EndGlobalSection
+EndGlobal

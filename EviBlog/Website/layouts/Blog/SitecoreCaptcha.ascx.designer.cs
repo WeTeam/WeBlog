@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Eviblog.layouts.Blog {
+namespace Sitecore.Modules.Blog.Layouts {
     
     
     public partial class SitecoreCaptcha {

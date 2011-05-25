@@ -7,10 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Eviblog.layouts.Blog {
-    
-    
-    public partial class reCAPTCHA {
+namespace Sitecore.Modules.Blog.Layouts {
+
+
+    public partial class reCaptcha
+    {
         
         /// <summary>
         /// lblCaptcha control.

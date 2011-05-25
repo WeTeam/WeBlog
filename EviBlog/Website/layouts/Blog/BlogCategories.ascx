@@ -1,4 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true"  Inherits="Sitecore.Modules.Eviblog.UserControls.BlogCategories, Sitecore.Modules.Eviblog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogCategories.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogCategories" %>
+<%@ Import Namespace="Sitecore.Modules.Blog.Items.Blog" %>
 
 <asp:Panel ID="PanelCategories" runat="server">
     <h3><sc:Text ID="titleCategories" runat="server" Field="titleCategories" /></h3>
@@ -10,7 +11,9 @@
     </LayoutTemplate>
     <ItemTemplate>
         <li>
-            <asp:HyperLink ID="hyperlinkCategory" runat="server"><sc:Text ID="txtCategorie" Field="Title" runat="server" /></asp:HyperLink>
+            <asp:HyperLink ID="hyperlinkCategory" runat="server" NavigateUrl="<%# GetCategoryUrl(Container.DataItem as CategoryItem) %>">
+                <sc:Text ID="txtCategorie" Field="Title" runat="server" DataSource="<%# (Container.DataItem as CategoryItem).ID %>" />
+            </asp:HyperLink>
         </li>
     </ItemTemplate>
     </asp:ListView>

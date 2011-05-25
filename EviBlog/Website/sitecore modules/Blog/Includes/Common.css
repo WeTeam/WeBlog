@@ -1,0 +1,307 @@
+﻿body
+{
+    font-family: Arial;
+    margin: 0px;
+}
+/*************************************************************************************
+Main layout
+*************************************************************************************/
+
+div.blog 
+{
+    width: 800px;
+    margin: -11px auto 0px auto;
+ }
+        div.blog-header a
+        {
+            color: #000000;
+            text-decoration: none;
+        }
+        div.blog-header a:hover
+        {
+            color: #F2EEAC;
+            text-decoration: none;
+        }
+    div.blog div.blog-leftcolumn
+    {
+        width: 70%;
+        padding: 5px;
+        float: left;
+    }
+    
+    div.blog div.blog-rightcolumn
+    {
+        width: 25%;
+        margin: 0px 0px 0px 5px;
+        float: left;
+    }
+div.blog-footer 
+{
+    clear: both;
+    background: #000000;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 3px;
+    text-align: right;
+}
+
+/*************************************************************************************
+Generic classes
+*************************************************************************************/
+div.settings
+{
+    border: 1px solid #000;
+    background-color: #FFFFC6;
+    font-size: 12px;
+    padding: 3px;
+}
+    div.settings label
+    {
+        width: 200px;
+        display: block;
+    }
+    
+
+div.error
+{
+    border: 3px solid #FF0000;
+    background-color: #FFFFC6;
+    font-size: 12px;
+    padding: 3px;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+div.details 
+{
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-style: italic;
+}
+.errortext 
+{
+    color: #ff0000;
+}
+
+.successtext
+{
+	color: #0000ff;
+}
+
+/*************************************************************************************
+Blog entry
+*************************************************************************************/
+
+div.entry
+{
+    margin-bottom: 10px;
+    font-size: 0.9em;
+}
+    div.entry h2 
+    {
+        margin: 0;
+    }
+    ul.entry-categories 
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 400px;
+    }
+        ul.entry-categories li
+        {
+            float: left;
+            font-size: 12px;
+        }
+                ul.entry-categories li a
+                {
+                    text-decoration: none;
+                }
+                ul.entry-categories li a:hover
+                {
+                    text-decoration: underline;
+                }
+    div#entry-tags
+    {
+        clear: both;
+    }
+        div#entry-tags a
+        {
+            margin-right: 5px;
+            text-decoration: none;
+        }
+            div#entry-tags a:hover
+            {
+                text-decoration: underline
+            }
+   div.entry-share
+   {
+       padding-top: 15px;   
+   }
+/*************************************************************************************
+TagCloud
+*************************************************************************************/
+div#tagCloud
+{
+	width: 200px;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+div#tagCloud a
+{
+	text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-transform: lowercase;
+    color: #000000;
+}
+
+div#tagCloud a:hover
+{
+    text-decoration:underline;
+}
+
+div#tagCloud a.weight1  {	font-size: 1.9em }
+div#tagCloud a.weight2  {	font-size: 1.5em }
+div#tagCloud a.weight3  {	font-size: 1.4em }
+div#tagCloud a.weight4  {   font-size: 1.2em }
+div#tagCloud a.weight5  {   font-size: 1.0em }   
+
+/*************************************************************************************
+Administration
+*************************************************************************************/
+
+div#blog-administration
+{
+}
+
+    div#blog-administration label
+    {
+        font-size: 12px;
+        width: 70px;
+        display: block;
+        float: left;
+        clear: right;
+        margin-top: 4px;
+    }
+
+/*************************************************************************************
+Add Comment
+*************************************************************************************/
+    
+div.entry-comments
+{
+    margin-top: 20px;
+}
+    div.entry-comments label
+    {
+        width: 100px;
+        display: block;
+        clear: left;
+        float: left;
+        margin: 4px 0px 4px 0px;
+    }
+    
+    div.entry-comments label.captchaLabel
+    {
+        width: 100%;
+        float: none;
+    }
+    
+    div.entry-comments input.textbox
+    {
+        float: left;
+        margin: 4px 0px 4px 0px;
+    }
+     
+/*************************************************************************************
+Comment List
+*************************************************************************************/
+        
+div#entry-comment
+{
+    
+}
+    div#entry-comment ul
+    {
+        list-style: none;
+        margin: 0;
+    }
+        div#entry-comment ul li
+        {
+            padding: 4px;
+            background-color: #F2EDE4;
+        }
+            div#entry-comment ul li a
+            {
+                text-decoration: none;
+                color: #000000;
+                font-weight: bold;
+            }
+                div#entry-comment ul li a:hover
+                {
+                    text-decoration: underline;
+                }
+            div#entry-comment ul li hr
+            {
+                height: 1px;
+                color: #000000;
+            }
+            div#entry-comment ul li div.datetime
+            {
+                float: right
+            }
+            div#entry-comment ul li span.comment-email
+            {
+                font-style: italic;
+            }
+            div#entry-comment ul li span.comment-text
+            {
+                
+            }
+            div#entry-comment ul li.comment-alternate
+            {
+                background-color: #ffffff;
+            }
+
+/*************************************************************************************
+Blog Sidebar
+*************************************************************************************/
+
+div#blog-administration p
+{
+    font-size: 12px;
+}
+ul#blog-archive a.year, ul#blog-archive a.month
+{
+    cursor: pointer;
+}
+/*************************************************************************************
+Blog Sidebar Archive
+*************************************************************************************/
+
+div.blog-rightcolumn ul#blog-archive
+{
+}
+div.blog-rightcolumn ul#blog-archive ul
+{
+}
+div.blog-rightcolumn ul#blog-archive ul li
+{
+    border: none;
+}
+div.blog-rightcolumn ul#blog-archive ul.entries li
+{
+    padding-left: 10px;
+}
+
+.viewMoreWrapper
+{
+    text-align: center;   
+}
+.loadingAnimation
+{
+    display: none;   
+}

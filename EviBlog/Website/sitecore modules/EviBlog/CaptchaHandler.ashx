@@ -1,1 +1,0 @@
-﻿<%@ WebHandler Language="C#" Class="Sitecore.Modules.Eviblog.Handlers.CaptchaHandler" %>

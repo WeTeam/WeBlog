@@ -1,0 +1,13 @@
+﻿using System;
+using Sitecore.Data.Items;
+using System.Collections.Generic;
+using Sitecore.Data.Fields;
+using Sitecore.Web.UI.WebControls;
+
+namespace ${CustomItemInformation.FullNameSpace}
+{
+public partial class ${CustomItemInformation.ClassName} 
+{
+
+}
+}

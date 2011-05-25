@@ -4,12 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.Eviblog.Managers;
 using Sitecore.Configuration;
 
-namespace Eviblog.layouts.Blog
+namespace Sitecore.Modules.Blog.Layouts
 {
-    public partial class reCAPTCHA : System.Web.UI.UserControl
+    public partial class reCaptcha : System.Web.UI.UserControl
     {
         const string SETTING_PRIVATE_KEY = "EviBlog.reCAPTCHA.PrivateKey";
         const string SETTING_PUBLIC_KEY = "EviBlog.reCAPTCHA.PublicKey";

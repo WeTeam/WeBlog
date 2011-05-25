@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="reCAPTCHA.ascx.cs" Inherits="Eviblog.layouts.Blog.reCAPTCHA" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="reCaptcha.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.reCaptcha" %>
 <%@ Register TagPrefix="recaptcha" Namespace="Recaptcha" Assembly="Recaptcha" %>
 
 <div class="captcha">
