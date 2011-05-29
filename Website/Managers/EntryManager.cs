@@ -145,7 +145,9 @@ namespace Sitecore.Modules.Blog.Managers
 
             if (blog != null)
             {
-                foreach (var entry in MakeSortedEntriesList(blog.GetChildren().ToArray()))
+                var entries = blog.Axes.SelectItems(".//*");
+
+                foreach (var entry in MakeSortedEntriesList(entries))
                 {
                     if ((string.IsNullOrEmpty(tag) || entry.TagsSplit.Contains(tag)) && (string.IsNullOrEmpty(category) || entry.Category.ListItems.Select(item => item.Name).Contains(category)))
                         if (blogPostList.Count < maxNumber)
