@@ -4,6 +4,7 @@ using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Data.Managers;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -74,6 +75,55 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return GetCategories(item);
             else
                 return new CategoryItem[0];
+        }
+
+        /// <summary>
+        /// Adds a new category.
+        /// </summary>
+        /// <param name="categoryName">Name of the category.</param>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
+        public static CategoryItem Add(string categoryName, Item item)
+        {
+            Item blogItem = item;
+            var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            
+
+            if (template != null)
+            {
+                //Check if current item equals blogroot
+                while (blogItem != null && !Utilities.Items.TemplateIsOrBasedOn(blogItem, template))
+                {
+                    blogItem = blogItem.Parent;
+                }
+
+                // Get all categories from current blog                
+                CategoryItem[] categories = GetCategories(blogItem);
+                
+                // If there are categories, check if it already contains the categoryName
+                if (categories != null)
+                {
+                    var resultList = categories.Where(x => x.Title.Raw.ToLower() == categoryName.ToLower());
+                    var result = resultList == null ? null : resultList.First();
+                    
+                    // If category is found return ID
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                }
+
+                // Category doesn't exist so create it
+                var categoriesFolder = blogItem.Axes.GetChild("Categories");
+                
+                CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, new ID(CategoryItem.TemplateId), categoriesFolder);
+                newCategory.BeginEdit();
+                newCategory.Title.Field.Value = categoryName;
+                newCategory.EndEdit();
+                
+                return newCategory;
+            }
+            return null;
         }
 
         /// <summary>

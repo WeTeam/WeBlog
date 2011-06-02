@@ -7,11 +7,12 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.SecurityModel;
 using Sitecore.Web;
+using Sitecore.Modules.Blog.Import;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -74,6 +75,20 @@ namespace Sitecore.Modules.WeBlog.Managers
             
             // Something went wrong if we fall through to here
             return ID.Null;
+        }
+
+        internal static void AddComment(EntryItem entryItem, WpComment wpComment)
+        {
+            string itemName = Utilities.Items.MakeSafeItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
+
+            CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID(CommentItem.TemplateId)));
+            commentItem.BeginEdit();
+            commentItem.Comment.Field.Value = wpComment.Content;
+            commentItem.Email.Field.Value = wpComment.Email;
+            commentItem.IPAddress.Field.Value = wpComment.IP;
+            commentItem.Website.Field.Value = wpComment.Url;
+            commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
+            commentItem.EndEdit();
         }
 
         /// <summary>

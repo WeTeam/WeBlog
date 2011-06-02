@@ -85,6 +85,7 @@
     <Reference Include="System.Web.Mobile" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\Import.cs" />
     <Compile Include="Commands\EditBlogSettings.cs" />
     <Compile Include="Commands\EditEntrySettings.cs" />
     <Compile Include="Commands\NewBlog.cs" />
@@ -92,6 +93,9 @@
     <Compile Include="Commands\NewEntry.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
+    <Compile Include="Import\WpComment.cs" />
+    <Compile Include="Import\WpImportManager.cs" />
+    <Compile Include="Import\WpPost.cs" />
     <Compile Include="Items\Blog\BlogItem.base.cs" />
     <Compile Include="Items\Blog\BlogItem.custom.cs" />
     <Compile Include="Items\Blog\CategoryItem.base.cs" />
@@ -102,110 +106,93 @@
     <Compile Include="Items\Blog\ThemeItem.base.cs" />
     <Compile Include="Items\Feeds\RSSFeedItem.base.cs" />
     <Compile Include="Items\Feeds\RSSFeedItem.custom.cs" />
-    <Compile Include="layouts\Blog\BaseSublayout.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="layouts\Blog\BaseSublayout.cs" />
     <Compile Include="layouts\Blog\Blog.ascx.cs">
       <DependentUpon>Blog.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\Blog.ascx.designer.cs">
       <DependentUpon>Blog.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogAdministrator.ascx.cs">
       <DependentUpon>BlogAdministrator.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogAdministrator.ascx.designer.cs">
       <DependentUpon>BlogAdministrator.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogArchive.ascx.cs">
       <DependentUpon>BlogArchive.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogArchive.ascx.designer.cs">
       <DependentUpon>BlogArchive.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogCategories.ascx.cs">
       <DependentUpon>BlogCategories.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogCategories.ascx.designer.cs">
       <DependentUpon>BlogCategories.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogEntry.ascx.cs">
       <DependentUpon>BlogEntry.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogEntry.ascx.designer.cs">
       <DependentUpon>BlogEntry.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogFeeds.ascx.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogFeeds.ascx.designer.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogLayout.aspx.cs">
       <DependentUpon>BlogLayout.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogLayout.aspx.designer.cs">
       <DependentUpon>BlogLayout.aspx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogOptions.ascx.cs">
       <DependentUpon>BlogOptions.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogOptions.ascx.designer.cs">
       <DependentUpon>BlogOptions.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogPostList.ascx.cs">
       <DependentUpon>BlogPostList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogPostList.ascx.designer.cs">
       <DependentUpon>BlogPostList.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogRecentComments.ascx.cs">
       <DependentUpon>BlogRecentComments.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogRecentComments.ascx.designer.cs">
       <DependentUpon>BlogRecentComments.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\BlogTagCloud.ascx.cs">
       <DependentUpon>BlogTagcloud.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\BlogTagCloud.ascx.designer.cs">
       <DependentUpon>BlogTagcloud.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\reCaptcha.ascx.cs">
       <DependentUpon>reCaptcha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\reCaptcha.ascx.designer.cs">
       <DependentUpon>reCaptcha.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\ShareEntry-AddThis.ascx.cs">
       <DependentUpon>ShareEntry-AddThis.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\ShareEntry-AddThis.ascx.designer.cs">
       <DependentUpon>ShareEntry-AddThis.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\ShareEntry-ShareThis.ascx.cs">
       <DependentUpon>ShareEntry-ShareThis.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\ShareEntry-ShareThis.ascx.designer.cs">
       <DependentUpon>ShareEntry-ShareThis.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\Blog\SitecoreCaptcha.ascx.cs">
       <DependentUpon>SitecoreCaptcha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\Blog\SitecoreCaptcha.ascx.designer.cs">
       <DependentUpon>SitecoreCaptcha.ascx</DependentUpon>
@@ -220,7 +207,6 @@
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="sitecore modules\Blog\Admin\NewBlog.aspx.cs">
       <DependentUpon>NewBlog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sitecore modules\Blog\Admin\NewBlog.aspx.designer.cs">
       <DependentUpon>NewBlog.aspx</DependentUpon>
@@ -230,7 +216,6 @@
     </Compile>
     <Compile Include="sitecore modules\Blog\Controls\AddComment.ascx.cs">
       <DependentUpon>AddComment.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="sitecore modules\Blog\Controls\AddComment.ascx.designer.cs">
       <DependentUpon>AddComment.ascx</DependentUpon>
@@ -244,6 +229,7 @@
     <Compile Include="sitecore modules\Blog\Rss.ashx.cs">
       <DependentUpon>Rss.ashx</DependentUpon>
     </Compile>
+    <Compile Include="sitecore\shell\Applications\WeBlog\WordpressImport.cs" />
     <Compile Include="Utilities\Crypto.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Items.cs" />
@@ -292,6 +278,9 @@
     <Content Include="sitecore modules\Blog\Themes\techphoria\images\entry-list-separator.png" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItem.xml" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItemByFolder.xml" />
+    <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="sitecore modules\Blog\rsd.ashx" />
     <Content Include="sitecore modules\Blog\Rss.ashx" />
@@ -362,7 +351,7 @@
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="App_Config\**\*.*;bin\*.dll;layouts\**\*.aspx;layouts\**\*.ascx;sitecore modules\**\*.aspx;sitecore modules\**\*.ashx;sitecore modules\**\*.ascx;sitecore modules\**\*.svc;sitecore modules\**\*.js;sitecore modules\**\*.css;sitecore modules\**\*.xml;sitecore modules\**\*.vm;sitecore modules\**\*.gif;sitecore modules\**\*.png" Exclude="**\.svn\**\*.*">
+    <CreateItem Include="App_Config\**\*.*;bin\*.dll;layouts\**\*.aspx;layouts\**\*.ascx;sitecore modules\**\*.aspx;sitecore\**\*.xml;sitecore modules\**\*.ashx;sitecore modules\**\*.ascx;sitecore modules\**\*.svc;sitecore modules\**\*.js;sitecore modules\**\*.css;sitecore modules\**\*.xml;sitecore modules\**\*.vm;sitecore modules\**\*.gif;sitecore modules\**\*.png" Exclude="**\.svn\**\*.*">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />

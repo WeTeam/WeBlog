@@ -1,0 +1,229 @@
+----item----
+version: 1
+id: {26859657-2389-4066-9D56-463089DBD7FE}
+database: core
+path: /sitecore/content/Documents and settings/All users/Start menu/Programs/WeBlog/Import Wordpress Blog
+parent: {CA1347F6-7F5B-4280-9E76-03552CD6D2DF}
+name: Import Wordpress Blog
+master: {A28303B4-F2D5-42E6-A3C6-79F1D06F40D4}
+template: {F58958D2-555B-4F56-946C-589E8866880C}
+templatekey: Start menu action
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 28
+
+Business/32x32/data_into.png
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+675
+----field----
+field: {9EFED9BB-2EC8-498A-91B9-655091224E4D}
+name: Icon
+key: icon
+content-length: 24
+
+Custom/16x16/publish.png
+----field----
+field: {6BA1018F-9794-4798-963E-601D413B9CA3}
+name: Message
+key: message
+content-length: 11
+
+blog:import
+----field----
+field: {DEC8D2D5-E3CF-48B6-A653-8E69E2716641}
+name: __Security
+key: __security
+content-length: 67
+
+ar|sitecore\Sitecore Client Publishing|pd|+item:read|pe|+item:read|
+----version----
+language: da
+version: 1
+revision: 12cbcb9f-7b4a-4966-856d-ae0b4fa54528
+
+----field----
+field: {326CD362-CB1C-4E81-B5F2-5EFA940351F7}
+name: Display name
+key: display name
+content-length: 16
+
+Udgiv hjemmeside
+----field----
+field: {E7D3348B-8323-42BA-BC9C-48E1F4E994DC}
+name: Tool tip
+key: tool tip
+content-length: 21
+
+Publicer dit indhold.
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110203T173233:634323511538568097
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+12cbcb9f-7b4a-4966-856d-ae0b4fa54528
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110203T173233:634323511539036859
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: 8f89605e-01c2-45b2-852a-3351266197f5
+
+----field----
+field: {326CD362-CB1C-4E81-B5F2-5EFA940351F7}
+name: Display name
+key: display name
+content-length: 21
+
+Import Wordpress Blog
+----field----
+field: {E7D3348B-8323-42BA-BC9C-48E1F4E994DC}
+name: Tool tip
+key: tool tip
+content-length: 54
+
+Create a blog based on your Wordpress Export XML file.
+----field----
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
+
+20060322T132239
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20060322T132239
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+8f89605e-01c2-45b2-852a-3351266197f5
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110603T011305:634426603853223075
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: ja-JP
+version: 1
+revision: be8a0044-8715-4f4a-b369-3b72f13dbcc5
+
+----field----
+field: {326CD362-CB1C-4E81-B5F2-5EFA940351F7}
+name: Display name
+key: display name
+content-length: 12
+
+パブリッシュ ウィザード
+----field----
+field: {E7D3348B-8323-42BA-BC9C-48E1F4E994DC}
+name: Tool tip
+key: tool tip
+content-length: 10
+
+サイトをパブリッシュ
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110203T173447:634323512872195987
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+be8a0044-8715-4f4a-b369-3b72f13dbcc5
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110203T173447:634323512872195987
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

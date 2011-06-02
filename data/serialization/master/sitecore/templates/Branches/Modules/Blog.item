@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {953EDE24-CB86-4CF5-92DD-E768B18639F5}
+database: master
+path: /sitecore/templates/Branches/Modules/Blog
+parent: {CE046FCE-B204-497D-BBCE-FD7F2DC21456}
+name: Blog
+master: {00000000-0000-0000-0000-000000000000}
+template: {85ADBF5B-E836-4932-A333-FE0F9FA1ED1E}
+templatekey: Branch Folder
+
