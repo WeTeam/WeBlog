@@ -1,0 +1,111 @@
+﻿body
+{
+    font: Verdana,Helvetica,Arial,Geneva,Helvetica,sans-serif;   
+    background: #375D81;
+}
+/*************************************************************************************
+Main layout
+*************************************************************************************/
+div.blog-header 
+{
+    width: 800px;
+    margin: 0 auto;
+    font-size: 48px;
+    text-transform: lowercase;
+    font-variant: small-caps;
+}
+    div.blog-header a 
+    {
+        color: #E1E6FA;
+    }
+        div.blog-header a:hover
+        {
+            color: #ABC8E2;
+        }
+div.blog 
+{
+    width: 800px;
+    border-left: 1px solid #183152;
+    border-right: 1px solid #183152;
+    border-top: 5px solid #183152;
+    background: #C4D7ED;
+ }
+/*************************************************************************************
+Blog entry
+*************************************************************************************/
+div.entry
+{
+    font-size: 0.9em;
+}
+    div.entry h2 
+    {
+        font-size: 18px;
+        color: #183152;
+    }
+    ul.entry-categories 
+    {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+                ul.entry-categories li a:hover
+                {
+                    text-decoration: underline;
+                }
+    div.entry a.readmore
+    {
+        color: #384001;
+    }
+
+/*************************************************************************************
+Comment List
+*************************************************************************************/
+div#entry-comment ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+    div#entry-comment ul li
+    {
+        padding: 4px;
+        background-color: #E1E6FA;
+    }
+        div#entry-comment ul li.comment-alternate
+        {
+            background-color: #C4D7ED;
+        }
+/*************************************************************************************
+Blog Sidebar
+*************************************************************************************/
+div.blog-rightcolumn ul
+{
+    list-style: none;    
+    margin: 0px 0px 15px 0px;
+    padding: 0px;
+}
+    div.blog-rightcolumn ul li
+    {
+        border-bottom: 1px solid #384001;
+        padding: 2px 0px 2px 0px;
+    }
+        div.blog-rightcolumn ul.sidebar li a
+        {
+            color: #222601;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        div.blog-rightcolumn ul li ul
+        {
+            margin: 0;
+        }
+            div.blog-rightcolumn ul li ul li
+            {
+                border: none;
+            }
+div.blog-rightcolumn h3
+{   
+    color: #183152;
+    margin: 10px 0px 0px 0px;
+    border-bottom: 3px solid #183152;
+}
