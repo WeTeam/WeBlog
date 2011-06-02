@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using Sitecore.Data.Items;
 
-namespace Sitecore.Modules.Blog.Utilities
+namespace Sitecore.Modules.WeBlog.Utilities
 {
     /// <summary>
     /// Provides utilities for working with Sitecore items

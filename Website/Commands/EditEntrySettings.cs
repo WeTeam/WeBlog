@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Collections.Specialized;
-using Sitecore.Data.Items;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Shell.Framework.Commands;
-using Sitecore.Diagnostics;
-using Sitecore.Web.UI.Sheer;
 using Sitecore.Data;
-using System.Configuration;
+using Sitecore.Diagnostics;
+using Sitecore.Shell.Framework.Commands;
+using Sitecore.Web.UI.Sheer;
 
-namespace Sitecore.Modules.Blog.Commands
+namespace Sitecore.Modules.WeBlog.Commands
 {
     class EditEntrySettings : Sitecore.Shell.Applications.WebEdit.Commands.FieldEditorCommand
     {

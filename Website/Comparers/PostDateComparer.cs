@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Sitecore.Modules.Blog.Items.Blog;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Items.Blog;
 
-namespace Sitecore.Modules.Blog.Comparers
+namespace Sitecore.Modules.WeBlog.Comparers
 {
     public class PostDateComparerDesc : IComparer<EntryItem>
     {

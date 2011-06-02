@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Sitecore.Modules.Blog.Comparers
+namespace Sitecore.Modules.WeBlog.Comparers
 {
    public class TagWeightComparer : IComparer<KeyValuePair<string, int>>
    {

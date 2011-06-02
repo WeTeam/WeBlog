@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AddComment.ascx.cs" Inherits="Sitecore.Modules.Blog.Controls.AddComment" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AddComment.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Controls.AddComment" %>
 
 <div id="addcomment">
     <h3><sc:Text ID="txtAddYourComment" Field="titleAddYourComment" runat="server" /></h3>

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
+﻿using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
 	public partial class SitecoreCaptcha : System.Web.UI.UserControl
 	{

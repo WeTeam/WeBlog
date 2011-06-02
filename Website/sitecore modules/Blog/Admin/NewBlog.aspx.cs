@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Web.UI.WebControls;
-using System.Web.UI.HtmlControls;
-using Sitecore.Data.Items;
-using Sitecore.Data;
-using Sitecore.Diagnostics;
-using Sitecore.Web;
 using Sitecore.Configuration;
-using Sitecore.Modules.Blog.Items.Blog;
+using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
-using Sitecore.Modules.Blog.Utilities;
-using System.Configuration;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Utilities;
+using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog.Admin
+namespace Sitecore.Modules.WeBlog.Admin
 {
     public partial class NewBlog : System.Web.UI.Page
     {
@@ -54,7 +50,7 @@ namespace Sitecore.Modules.Blog.Admin
                 Item blogItem = db.GetItem(BlogID);
 
                 // Convert item to Blog
-                Sitecore.Modules.Blog.Items.Blog.BlogItem createdBlog = new Sitecore.Modules.Blog.Items.Blog.BlogItem(blogItem);
+                Sitecore.Modules.WeBlog.Items.Blog.BlogItem createdBlog = new Sitecore.Modules.WeBlog.Items.Blog.BlogItem(blogItem);
 
                 // Fill the blog item with the entered values
                 createdBlog.BeginEdit();

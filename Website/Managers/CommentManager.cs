@@ -6,14 +6,14 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.Blog.Comparers;
-using Sitecore.Modules.Blog.Items.Blog;
-using Sitecore.Modules.Blog.Services;
-using Sitecore.Modules.Blog.Utilities;
+using Sitecore.Modules.WeBlog.Comparers;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Services;
+using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.SecurityModel;
 using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog.Managers
+namespace Sitecore.Modules.WeBlog.Managers
 {
     /// <summary>
     /// Provides utilities for working with comments
@@ -63,13 +63,13 @@ namespace Sitecore.Modules.Blog.Managers
                 }
                 else
                 {
-                    string message = "EviBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', website='{3}', commentText='{4}', IP='{5}'";
+                    string message = "WeBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', website='{3}', commentText='{4}', IP='{5}'";
                     Log.Error(string.Format(message, entryId, comment.AuthorName, comment.AuthorEmail, comment.AuthorWebsite, comment.Text, comment.AuthorIP), typeof(CommentManager));
                 }
             }
             else
             {
-                Log.Error("EviBlog.CommentManager: Failed to find comment template", typeof(CommentManager));
+                Log.Error("WeBlog.CommentManager: Failed to find comment template", typeof(CommentManager));
             }
             
             // Something went wrong if we fall through to here
@@ -85,16 +85,16 @@ namespace Sitecore.Modules.Blog.Managers
         /// <param name="CommentText">The comment text being submitted</param>
         public static ID SubmitComment(ID EntryId, Model.Comment comment)
         {
-            if (Configuration.Settings.GetBoolSetting("EviBlog.CommentService.Enable", false))
+            if (Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false))
             {
                 // Submit comment through WCF service
-                ChannelFactory<ICommentService> commentProxy = new ChannelFactory<ICommentService>("EviBlogCommentService");
+                ChannelFactory<ICommentService> commentProxy = new ChannelFactory<ICommentService>("WeBlogCommentService");
                 commentProxy.Open();
                 ICommentService service = commentProxy.CreateChannel();
                 var result = service.SubmitComment(Context.Item.ID, comment);
                 commentProxy.Close();
                 if (result == ID.Null)
-                    Log.Error("EviBlog.CommentManager: Comment submission through WCF failed. Check server Sitecore log for details", typeof(CommentManager));
+                    Log.Error("WeBlog.CommentManager: Comment submission through WCF failed. Check server Sitecore log for details", typeof(CommentManager));
                 return result;
             }
             else

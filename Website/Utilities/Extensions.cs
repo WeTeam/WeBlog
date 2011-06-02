@@ -1,6 +1,5 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Sitecore.Modules.Blog.Utilities
+﻿
+namespace Sitecore.Modules.WeBlog.Utilities
 {
     public static class Extensions
     {

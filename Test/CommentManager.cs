@@ -6,10 +6,10 @@ using Sitecore.Data.Items;
 using System.IO;
 using System.Web;
 using Sitecore;
-using Mod = Sitecore.Modules.Blog.Managers;
+using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 
-namespace Sitecore.Modules.Blog.Test
+namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("CommentManager")]
@@ -439,7 +439,7 @@ namespace Sitecore.Modules.Blog.Test
 
             try
             {
-                var comment = new Sitecore.Modules.Blog.Model.Comment()
+                var comment = new Sitecore.Modules.WeBlog.Model.Comment()
                 {
                     AuthorEmail = "a@b.com",
                     AuthorName = "commentor",
@@ -457,7 +457,7 @@ namespace Sitecore.Modules.Blog.Test
                 var commentItem = db.GetItem(commentId);
                 Assert.IsNotNull(commentItem);
 
-                var commentAsComment = new Sitecore.Modules.Blog.Items.Blog.CommentItem(commentItem);
+                var commentAsComment = new Sitecore.Modules.WeBlog.Items.Blog.CommentItem(commentItem);
                 Assert.AreEqual("a@b.com", commentAsComment.Email.Text);
                 Assert.AreEqual("commentor", commentAsComment.Name.Text);
                 Assert.AreEqual("127.0.0.1", commentAsComment.IPAddress.Text);

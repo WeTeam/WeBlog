@@ -1,4 +1,4 @@
-<item name="eviblog testroot" key="eviblog testroot" id="{83C7A415-843E-4C6D-9377-00F10A3E497B}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
+<item name="weblog testroot" key="weblog testroot" id="{83C7A415-843E-4C6D-9377-00F10A3E497B}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
   <version language="en" version="1">
     <fields>
       <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">

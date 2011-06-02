@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.Blog.Layouts {
+namespace Sitecore.Modules.WeBlog.Layouts {
     
     
     public partial class BlogArchive {

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Sitecore.Links;
 using Sitecore.Syndication;
-using Sitecore.Links;
 
-namespace Sitecore.Modules.Blog.Items.Feeds
+namespace Sitecore.Modules.WeBlog.Items.Feeds
 {
     public partial class RSSFeedItem
     {

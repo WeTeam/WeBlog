@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.Blog.Items.Blog;
-using Sitecore.Modules.Blog.Managers;
-using System.Globalization;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogArchive : BaseSublayout
     {

@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="BlogFeeds.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogFeeds" %>
-<%@ Import Namespace="Sitecore.Modules.Blog.Items.Feeds" %>
+﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="BlogFeeds.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogFeeds" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Feeds" %>
 
 <asp:ListView ID="FeedList" runat="server">
     <LayoutTemplate>

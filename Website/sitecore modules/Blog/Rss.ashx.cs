@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
-using System.Web.Services;
-using RssToolkit.Rss;
 using System.Web.SessionState;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Data;
-using Sitecore.Modules.Blog.Items.Blog;
+using RssToolkit.Rss;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.Blog
+namespace Sitecore.Modules.WeBlog
 {
     public class RssHandler : RssToolkit.Rss.RssDocumentHttpHandler, IRequiresSessionState
     {
@@ -42,7 +39,7 @@ namespace Sitecore.Modules.Blog
             Item currentBlogItem = Sitecore.Context.Database.GetItem(blogID);
             if (currentBlogItem != null)
             {
-                Sitecore.Modules.Blog.Items.Blog.BlogItem currentBlog = new Sitecore.Modules.Blog.Items.Blog.BlogItem(currentBlogItem);
+                Sitecore.Modules.WeBlog.Items.Blog.BlogItem currentBlog = new Sitecore.Modules.WeBlog.Items.Blog.BlogItem(currentBlogItem);
 
                 Rss.Channel = new RssChannel();
                 Rss.Version = "2.0";

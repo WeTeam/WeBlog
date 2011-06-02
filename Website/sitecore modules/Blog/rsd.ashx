@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="rsd.ashx.cs" Class="Sitecore.Modules.Blog.RsdHandler" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="rsd.ashx.cs" Class="Sitecore.Modules.WeBlog.RsdHandler" %>

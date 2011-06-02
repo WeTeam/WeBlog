@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ShareEntry-AddThis.ascx.cs" Inherits="Sitecore.Modules.Blog.layouts.Blog.ShareEntry_AddThis" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ShareEntry-AddThis.ascx.cs" Inherits="Sitecore.Modules.WeBlog.layouts.Blog.ShareEntry_AddThis" %>
 <div class="entry-share">
     <%-- Data binding syntax needed to avoid parser error from fb:like:layout --%>
     <!-- AddThis Button BEGIN -->

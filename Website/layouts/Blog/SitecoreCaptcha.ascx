@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SitecoreCaptcha.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.SitecoreCaptcha" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SitecoreCaptcha.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.SitecoreCaptcha" %>
 <%@ Register TagPrefix="scc" Namespace="Sitecore.Captcha.WebControls" Assembly="Sitecore.Captcha" %>
 <div class="blog-captcha">
     <asp:Label ID="lblCaptcha" runat="server" Text="Please confirm you are human by typing the text you see in this image:" AssociatedControlID="uxCaptchaCode" CssClass="captchaLabel" />

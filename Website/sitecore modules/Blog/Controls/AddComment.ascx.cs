@@ -1,14 +1,10 @@
 ﻿using System;
-using Sitecore.Links;
-using Sitecore.Modules.Blog.Managers;
-using System.Web.UI.WebControls;
-using Sitecore.Web;
-using Sitecore.Data.Items;
-using Sitecore.Data;
-using Sitecore.Modules.Blog.Items.Blog;
 using System.Web.UI;
+using Sitecore.Data;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.Blog.Controls
+namespace Sitecore.Modules.WeBlog.Controls
 {
     public partial class AddComment : System.Web.UI.UserControl
     {

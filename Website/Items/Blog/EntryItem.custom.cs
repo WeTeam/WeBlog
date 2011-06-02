@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.Web;
 using Sitecore.Links;
-using Sitecore.Modules.Blog.Managers;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.Accounts;
+using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.Blog
 {
     public partial class EntryItem
     {

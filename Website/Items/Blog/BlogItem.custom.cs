@@ -1,16 +1,11 @@
 ﻿using System;
-using Sitecore.Data.Items;
 using System.Collections.Generic;
-using Sitecore.Data.Fields;
-using Sitecore.Web.UI.WebControls;
-using CustomItemGenerator.Fields.LinkTypes;
-using CustomItemGenerator.Fields.ListTypes;
-using CustomItemGenerator.Fields.SimpleTypes;
-using Sitecore.Web;
-using Sitecore.Links;
 using System.Drawing;
+using Sitecore.Data.Items;
+using Sitecore.Links;
+using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.Blog
 {
     public partial class BlogItem : CustomItem
     {

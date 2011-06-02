@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Data;
-using Sitecore.Web;
-using Sitecore.Collections;
-using Sitecore.Data.Items;
 using Sitecore.Configuration;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogAdministrator : BaseSublayout
     {

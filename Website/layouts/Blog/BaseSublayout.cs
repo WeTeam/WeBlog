@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Modules.Blog.Items.Blog;
+﻿using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public class BaseSublayout : System.Web.UI.UserControl
     {

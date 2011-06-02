@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Linq;
-using Sitecore.Links;
-using Sitecore.Modules.Blog.Managers;
-using System.Web.UI.WebControls;
-using Sitecore.Web;
-using Sitecore.Data.Items;
-using Sitecore.Data;
-using Sitecore.Modules.Blog.Items.Blog;
 using System.Web.UI;
-using Sitecore.Syndication;
-using Sitecore.Modules.Blog.Items.Feeds;
+using System.Web.UI.WebControls;
+using Sitecore.Data.Items;
+using Sitecore.Links;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.Feeds;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Web;
 
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class Blog : BaseSublayout
     {

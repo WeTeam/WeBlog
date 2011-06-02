@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Sitecore.Configuration;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class reCaptcha : System.Web.UI.UserControl
     {
-        const string SETTING_PRIVATE_KEY = "EviBlog.reCAPTCHA.PrivateKey";
-        const string SETTING_PUBLIC_KEY = "EviBlog.reCAPTCHA.PublicKey";
+        const string SETTING_PRIVATE_KEY = "WeBlog.reCAPTCHA.PrivateKey";
+        const string SETTING_PUBLIC_KEY = "WeBlog.reCAPTCHA.PublicKey";
 
         protected void uxRecaptcha_Init(object sender, EventArgs e)
         {

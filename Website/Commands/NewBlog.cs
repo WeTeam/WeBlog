@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Specialized;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Globalization;
-using Sitecore.SecurityModel;
+using Sitecore.Data.Managers;
+using Sitecore.Links;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Text;
-using Sitecore.Web.UI.Sheer;
-using Sitecore.Data.Managers;
-using Sitecore.Configuration;
 using Sitecore.Web;
-using Sitecore.Modules.Blog.Utilities;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Links;
-using Sitecore.Shell.Applications.WebEdit.Commands;
-using System.Configuration;
+using Sitecore.Web.UI.Sheer;
 
-namespace Sitecore.Modules.Blog.Commands
+namespace Sitecore.Modules.WeBlog.Commands
 {
     public class NewBlog : Command
     {

@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Sitecore.Modules.Blog.Utilities
+namespace Sitecore.Modules.WeBlog.Utilities
 {
     public class Crypto
     {

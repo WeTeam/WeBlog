@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogRecentComments.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogRecentComments" %>
-<%@ Import Namespace="Sitecore.Modules.Blog.Items.Blog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogRecentComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogRecentComments" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
 
 <asp:Panel ID="PanelRecentComments" runat="server">
     <h3><sc:Text ID="titleRecentComments" runat="server" Field="titleRecentComments" /></h3>

@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogAdministrator.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogAdministrator" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogAdministrator.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogAdministrator" %>
 
 <div id="blog-administration">
     

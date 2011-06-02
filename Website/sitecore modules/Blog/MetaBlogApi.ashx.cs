@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -8,19 +7,18 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
-using Sitecore.Modules.Blog.Items.Blog;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Modules.Blog.Utilities;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Resources.Media;
 using Sitecore.Security.Accounts;
 using Sitecore.Security.Authentication;
 using Sitecore.SecurityModel;
-using System.Configuration;
 
-namespace Sitecore.Modules.Blog
+namespace Sitecore.Modules.WeBlog
 {
     [XmlRpcService(
-    Name = "Sitecore Blog Module",
+    Name = "Sitecore WeBlog Module",
     Description = "This is XML-RPC which implements the MetaWeblog API.",
     AutoDocumentation = true)]
     public class MetaBlogApi : XmlRpcService
@@ -154,7 +152,7 @@ namespace Sitecore.Modules.Blog
 
             //Create structure for blog list
             XmlRpcStruct[] blogs = new XmlRpcStruct[blogList.Length];
-            foreach (Sitecore.Modules.Blog.Items.Blog.BlogItem blog in blogList)
+            foreach (Sitecore.Modules.WeBlog.Items.Blog.BlogItem blog in blogList)
             {
                 XmlRpcStruct rpcstruct = new XmlRpcStruct();
                 rpcstruct.Add("blogid", blog.ID.ToString()); // Blog Id

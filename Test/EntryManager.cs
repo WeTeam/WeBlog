@@ -5,10 +5,10 @@ using NUnit.Framework;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System.IO;
-using Mod = Sitecore.Modules.Blog.Managers;
+using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 
-namespace Sitecore.Modules.Blog.Test
+namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("EntryManager")]
@@ -39,7 +39,7 @@ namespace Sitecore.Modules.Blog.Test
             }
 
             // Retrieve created content items
-            m_testRoot = home.Axes.GetChild("eviblog testroot");
+            m_testRoot = home.Axes.GetChild("weblog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 

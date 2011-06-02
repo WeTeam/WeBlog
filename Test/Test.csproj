@@ -10,8 +10,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.Modules.Blog.Test</RootNamespace>
-    <AssemblyName>Sitecore.Modules.Blog.Test</AssemblyName>
+    <RootNamespace>Sitecore.Modules.WeBlog.Test</RootNamespace>
+    <AssemblyName>Sitecore.Modules.WeBlog.Test</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -102,9 +102,9 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Website\Sitecore.Modules.Blog.csproj">
+    <ProjectReference Include="..\Website\Sitecore.Modules.WeBlog.csproj">
       <Project>{26FE5F3A-F140-40C4-85A0-C1866DA26F16}</Project>
-      <Name>Sitecore.Modules.Blog</Name>
+      <Name>Sitecore.Modules.WeBlog</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

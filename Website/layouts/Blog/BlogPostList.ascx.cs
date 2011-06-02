@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Modules.Blog.Items.Blog;
-using Sitecore.Links;
-using Sitecore.Data;
 using Sitecore.Data.Items;
-using System.Drawing;
+using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogPostList : BaseSublayout
     {

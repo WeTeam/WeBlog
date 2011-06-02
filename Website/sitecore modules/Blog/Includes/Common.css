@@ -305,3 +305,24 @@ div.blog-rightcolumn ul#blog-archive ul.entries li
 {
     display: none;   
 }
+
+/**********************************************************************************
+Images
+**********************************************************************************/
+
+.entry-image
+{
+    float: right;
+    margin: 0 0 15px 15px;
+}
+
+.entry-list-image
+{
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+.entry-detail
+{
+    margin-left: 65px;
+}

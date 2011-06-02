@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Text;
 using System.Web;
-using System.Web.Services;
-using RssToolkit.Rss;
-using System.Web.SessionState;
-using Sitecore.Modules.Blog.Managers;
-using Sitecore.Data;
-using Sitecore.Modules.Blog.Items.Blog;
-using Sitecore.Data.Items;
 using System.Xml;
-using System.Text;
-using Sitecore.Links;
+using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog
+namespace Sitecore.Modules.WeBlog
 {
     /// <summary>
     /// RSD (Really Simple Discoverability) Handler
@@ -43,7 +34,7 @@ namespace Sitecore.Modules.Blog
             {
                 Item currentBlogItem = Sitecore.Context.Database.GetItem(new ID(HttpContext.Current.Request.QueryString["blogid"].ToString()));
 
-                Sitecore.Modules.Blog.Items.Blog.BlogItem currentBlog = new Sitecore.Modules.Blog.Items.Blog.BlogItem(currentBlogItem);
+                Sitecore.Modules.WeBlog.Items.Blog.BlogItem currentBlog = new Sitecore.Modules.WeBlog.Items.Blog.BlogItem(currentBlogItem);
 
                 rsd.Formatting = Formatting.Indented;
                 rsd.WriteStartDocument();

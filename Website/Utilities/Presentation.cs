@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web.UI;
-using Sitecore.Web.UI.WebControls;
 using Sitecore.Web;
+using Sitecore.Web.UI.WebControls;
 
-namespace Sitecore.Modules.Blog.Utilities
+namespace Sitecore.Modules.WeBlog.Utilities
 {
 	public static class Presentation
 	{

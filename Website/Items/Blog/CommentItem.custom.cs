@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace Sitecore.Modules.Blog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.Blog
 {
     public partial class CommentItem
     {

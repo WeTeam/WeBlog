@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.Blog.layouts.Blog
+namespace Sitecore.Modules.WeBlog.layouts.Blog
 {
 
 

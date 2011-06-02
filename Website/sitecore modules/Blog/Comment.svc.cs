@@ -1,7 +1,7 @@
 ﻿using Sitecore.Data;
-using Sitecore.Modules.Blog.Managers;
+using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.Blog.Services
+namespace Sitecore.Modules.WeBlog.Services
 {
     public class CommentService : ICommentService
     {

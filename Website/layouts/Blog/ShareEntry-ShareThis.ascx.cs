@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
-namespace Sitecore.Modules.Blog.layouts.Blog
+namespace Sitecore.Modules.WeBlog.layouts.Blog
 {
     public partial class ShareEntry_ShareThis : System.Web.UI.UserControl
     {

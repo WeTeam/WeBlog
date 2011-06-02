@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.Blog.Admin {
+namespace Sitecore.Modules.WeBlog.Admin {
     
     
     public partial class NewBlog {

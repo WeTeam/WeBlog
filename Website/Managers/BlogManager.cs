@@ -4,13 +4,11 @@ using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.Blog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.Blog;
 using Sitecore.Security.Accounts;
-using Sitecore.Modules.Blog.Items.Blog;
 
-namespace Sitecore.Modules.Blog.Managers
+namespace Sitecore.Modules.WeBlog.Managers
 {
     /// <summary>
     /// Provides utilities for working with blogs

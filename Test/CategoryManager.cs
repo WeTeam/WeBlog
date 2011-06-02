@@ -5,12 +5,12 @@ using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System.IO;
 using System.Web;
-using Sitecore.Modules.Blog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.Blog;
 using System.Collections.Generic;
-using Mod = Sitecore.Modules.Blog.Managers;
+using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 
-namespace Sitecore.Modules.Blog.Test
+namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("CategoryManager")]

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
-using Sitecore.Modules.Blog.Comparers;
-using Sitecore.Modules.Blog.Items.Blog;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Comparers;
+using Sitecore.Modules.WeBlog.Items.Blog;
 
-namespace Sitecore.Modules.Blog.Managers
+namespace Sitecore.Modules.WeBlog.Managers
 {
     public class TagManager
     {

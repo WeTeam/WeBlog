@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Web;
 using Sitecore.Links;
-using Sitecore.Modules.Blog.Managers;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Web;
 
-namespace Sitecore.Modules.Blog.Layouts
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogTagCloud : BaseSublayout
     {

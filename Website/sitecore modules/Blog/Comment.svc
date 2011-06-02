@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Sitecore.Modules.Blog.Services.Comment" CodeBehind="Comment.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Sitecore.Modules.WeBlog.Services.Comment" CodeBehind="Comment.svc.cs" %>

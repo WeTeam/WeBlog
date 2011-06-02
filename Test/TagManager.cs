@@ -5,11 +5,11 @@ using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System.Web;
 using System.IO;
-using Mod = Sitecore.Modules.Blog.Managers;
-using Sitecore.Modules.Blog.Items;
+using Mod = Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Items;
 using Sitecore.Data;
 
-namespace Sitecore.Modules.Blog.Test
+namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("TagManager")]

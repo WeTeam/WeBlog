@@ -1,8 +1,7 @@
-﻿using System;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using Sitecore.Data;
 
-namespace Sitecore.Modules.Blog.Services
+namespace Sitecore.Modules.WeBlog.Services
 {
     [ServiceContract]
     public interface ICommentService

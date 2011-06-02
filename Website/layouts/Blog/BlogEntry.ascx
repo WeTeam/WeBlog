@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogEntry.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogEntry" %>
-<%@ Import Namespace="Sitecore.Modules.Blog.Items.Blog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogEntry.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogEntry" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
 
 <div class="entry">
         <sc:Image runat="server" ID="EntryImage" Field="Image" CssClass="entry-image" />

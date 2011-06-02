@@ -6,9 +6,9 @@ using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System.IO;
 using System.Web;
-using Mod = Sitecore.Modules.Blog.Utilities;
+using Mod = Sitecore.Modules.WeBlog.Utilities;
 
-namespace Sitecore.Modules.Blog.Test.Utilities
+namespace Sitecore.Modules.WeBlog.Test.Utilities
 {
     [TestFixture]
     [Category("Items")]

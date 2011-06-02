@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sitecore.Shell.Framework.Commands;
-using System.Collections.Specialized;
-using Sitecore.Data.Items;
-using Sitecore.Web.UI.Sheer;
-using Sitecore.Data;
-using Sitecore.Data.Managers;
+﻿using System.Collections.Specialized;
 using Sitecore.Configuration;
-using Sitecore.Modules.Blog.Utilities;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Globalization;
-using System.Configuration;
+using Sitecore.Modules.WeBlog.Utilities;
+using Sitecore.Shell.Framework.Commands;
+using Sitecore.Web.UI.Sheer;
 
-namespace Sitecore.Modules.Blog.Commands
+namespace Sitecore.Modules.WeBlog.Commands
 {
     public class NewCategory : Command
     {

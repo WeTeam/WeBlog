@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.Blog.Controls {
+namespace Sitecore.Modules.WeBlog.Controls {
     
     
     public partial class AddComment {

@@ -1,5 +1,5 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogArchive.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogArchive" %>
-<%@ Import Namespace="Sitecore.Modules.Blog.Items.Blog" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogArchive.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogArchive" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
 <h3>Archive</h3>
 
 <asp:Repeater runat="server" ID="Years">

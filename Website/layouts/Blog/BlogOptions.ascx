@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogOptions.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogOptions" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogOptions.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogOptions" %>
 
 <asp:Panel ID="EditModePanel" Visible="false" runat="server" CssClass="settings">
     <b>Settings</b><br />

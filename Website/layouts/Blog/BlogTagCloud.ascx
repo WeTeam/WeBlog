@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTagCloud.ascx.cs" Inherits="Sitecore.Modules.Blog.Layouts.BlogTagCloud" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTagCloud.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogTagCloud" %>
 <%@ Import Namespace="System.Collections.Generic" %>
 
 <asp:Panel ID="PanelTagCloud" runat="server">
