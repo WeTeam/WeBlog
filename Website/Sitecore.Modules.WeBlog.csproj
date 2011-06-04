@@ -92,6 +92,9 @@
     <Compile Include="Commands\NewEntry.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
+    <Compile Include="Import\WpComment.cs" />
+    <Compile Include="Import\WpImportManager.cs" />
+    <Compile Include="Import\WpPost.cs" />
     <Compile Include="Items\Feeds\RSSFeedItem.base.cs" />
     <Compile Include="Items\Feeds\RSSFeedItem.custom.cs" />
     <Compile Include="Items\WeBlog\BlogItem.base.cs" />
@@ -244,6 +247,7 @@
     <Compile Include="sitecore modules\WeBlog\Rss.ashx.cs">
       <DependentUpon>Rss.ashx</DependentUpon>
     </Compile>
+    <Compile Include="sitecore\shell\Applications\WeBlog\WordpressImport.cs" />
     <Compile Include="Utilities\Crypto.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Items.cs" />
@@ -301,6 +305,7 @@
     <Content Include="sitecore modules\WeBlog\Themes\techphoria.css" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\body-2col-bg.png" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\entry-list-separator.png" />
+    <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

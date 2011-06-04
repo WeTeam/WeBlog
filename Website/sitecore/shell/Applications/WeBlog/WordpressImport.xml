@@ -2,7 +2,7 @@
 <control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
   <WordpressImport>
     <Script Src="/sitecore/shell/Applications/Install/installer.js" />
-    <WizardForm CodeBeside="Sitecore.Modules.Blog.sitecore.shell.Applications.WeBlog.WordpressImport,Sitecore.Modules.Blog">
+    <WizardForm CodeBeside="Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog.WordpressImport,Sitecore.Modules.WeBlog">
 
       <WizardFormFirstPage ID="FirstPage" Icon="Custom/32x32/Publish.png">
         <Border Class="scWizardWelcomeTitle"><Literal ID="Welcome" Text="Welcome to the Wordpress Import Wizard."/></Border>

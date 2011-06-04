@@ -5,9 +5,9 @@ using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
-using Sitecore.Modules.Blog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.Blog;
 
-namespace Sitecore.Modules.Blog.Import
+namespace Sitecore.Modules.WeBlog.Import
 {
     public static class WpImportManager
     {
@@ -55,13 +55,13 @@ namespace Sitecore.Modules.Blog.Import
 
                 foreach (string categoryName in post.Categories)
                 {
-                    CategoryItem categoryItem = Sitecore.Modules.Blog.Managers.CategoryManager.Add(categoryName, blogItem);
+                    CategoryItem categoryItem = Sitecore.Modules.WeBlog.Managers.CategoryManager.Add(categoryName, blogItem);
                     entry.Category.ListItems.Add(categoryItem);
                 }
 
                 foreach (WpComment wpComment in post.Comments)
                 {
-                    Sitecore.Modules.Blog.Managers.CommentManager.AddComment(entry, wpComment);
+                    Sitecore.Modules.WeBlog.Managers.CommentManager.AddComment(entry, wpComment);
                 }
 
                 entry.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(post.PublicationDate);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace Sitecore.Modules.Blog.Import
+namespace Sitecore.Modules.WeBlog.Import
 {
     public class WpComment
     {

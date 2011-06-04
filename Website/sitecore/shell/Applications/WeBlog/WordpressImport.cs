@@ -12,16 +12,16 @@ using System.Text;
 using Sitecore.Data.Templates;
 using Sitecore.Data.Items;
 using Sitecore.Web.UI.WebControls;
-using Sitecore.Modules.Blog.Import;
-using Sitecore.Modules.Blog.Managers;
+using Sitecore.Modules.WeBlog.Import;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.SecurityModel;
 using Sitecore.Configuration;
 using Sitecore.Web;
-using Sitecore.Modules.Blog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.Blog;
 
-namespace Sitecore.Modules.Blog.sitecore.shell.Applications.WeBlog
+namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 {
     public class WordpressImport : Sitecore.Web.UI.Pages.WizardForm
     {

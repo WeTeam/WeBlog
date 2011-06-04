@@ -4,7 +4,7 @@ using System.Linq;
 using System.Xml.Linq;
 
 
-namespace Sitecore.Modules.Blog.Import
+namespace Sitecore.Modules.WeBlog.Import
 {
     public class WpPost
     {
