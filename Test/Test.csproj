@@ -69,7 +69,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="test data\blog manager content.xml" />
-    <Content Include="test data\category manager content.xml" />
+    <Content Include="test data\category manager content.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="test data\comment manager content.xml" />
     <Content Include="test data\comments in order.xml" />
     <Content Include="test data\comments out of order.xml" />
@@ -79,7 +81,9 @@
     <Content Include="test data\entries reverse order.xml" />
     <Content Include="test data\entry manager content.xml" />
     <Content Include="test data\tag manager content.xml" />
-    <Content Include="test data\template content.xml" />
+    <Content Include="test data\template content.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="test data\templates.xml" />
     <Content Include="Test.aspx" />
   </ItemGroup>

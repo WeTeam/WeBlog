@@ -1,4 +1,4 @@
-<item name="Test Templates" key="test templates" id="{2BD879B0-AB9E-4D55-9DDD-CCADFAFB82A5}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template folder" parentid="{B29EE504-861C-492F-95A3-0D890B6FCA09}">
+<item name="Test Templates" key="test templates" id="{EB1C549C-B76D-4EE4-B99A-681B05176BDB}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
   <version language="en" version="1">
     <fields>
       <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -21,7 +21,7 @@
       </field>
     </fields>
   </version>
-  <item name="Base" key="base" id="{B7481B1A-A0F8-4471-870A-7A6D68D0E86D}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{2BD879B0-AB9E-4D55-9DDD-CCADFAFB82A5}">
+  <item name="Base" key="base" id="{7E173176-D5CE-4E71-B958-1DC33138B20C}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{EB1C549C-B76D-4EE4-B99A-681B05176BDB}">
     <version language="en" version="1">
       <fields>
         <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -51,7 +51,7 @@
       </fields>
     </version>
   </item>
-  <item name="d1" key="d1" id="{589D2FBF-83A0-4FD8-9944-F84DDF97B434}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{2BD879B0-AB9E-4D55-9DDD-CCADFAFB82A5}">
+  <item name="d1" key="d1" id="{0B2FF602-AA49-4AFC-AA0B-0D44243C6BD4}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{EB1C549C-B76D-4EE4-B99A-681B05176BDB}">
     <version language="en" version="1">
       <fields>
         <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -76,12 +76,12 @@
           <content>20110325T071024:634366338246155778</content>
         </field>
         <field tfid="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" key="__base template" type="tree list">
-          <content>{B7481B1A-A0F8-4471-870A-7A6D68D0E86D}</content>
+          <content>{7E173176-D5CE-4E71-B958-1DC33138B20C}</content>
         </field>
       </fields>
     </version>
   </item>
-  <item name="d2" key="d2" id="{554E6BBA-C9E0-4980-84D3-AB6377977442}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{2BD879B0-AB9E-4D55-9DDD-CCADFAFB82A5}">
+  <item name="d2" key="d2" id="{CCD48A15-B59C-43D3-AB8B-0790B51EB666}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{EB1C549C-B76D-4EE4-B99A-681B05176BDB}">
     <version language="en" version="1">
       <fields>
         <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -106,7 +106,7 @@
           <content>20110325T071001:634366338016201374</content>
         </field>
         <field tfid="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" key="__base template" type="tree list">
-          <content>{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}|{589D2FBF-83A0-4FD8-9944-F84DDF97B434}</content>
+          <content>{0B2FF602-AA49-4AFC-AA0B-0D44243C6BD4}</content>
         </field>
       </fields>
     </version>

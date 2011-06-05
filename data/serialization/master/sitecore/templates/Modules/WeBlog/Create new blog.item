@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {E541FEBF-DEF7-42DC-BDCE-AFBE9393BDAC}
+database: master
+path: /sitecore/templates/Modules/WeBlog/Create new blog
+parent: {086114A3-C0BC-4C50-ACD7-8E6F9742F728}
+name: Create new blog
+master: {00000000-0000-0000-0000-000000000000}
+template: {B2613CC1-A748-46A3-A0DB-3774574BD339}
+templatekey: Command Template
+
+----field----
+field: {854CC8F6-94AD-4521-A4B6-44ED8F794C98}
+name: Command
+key: command
+content-length: 14
+
+weblog:newblog
+----version----
+language: en
+version: 1
+revision: a0383e6f-22b3-4ddd-9911-d521f6136798
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20081226T235900
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+a0383e6f-22b3-4ddd-9911-d521f6136798
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110602T220214:634426489345781458
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {001DD393-96C5-490B-924A-B0F25CD9EFD8}
+name: __Lock
+key: __lock
+content-length: 5
+
+<r />

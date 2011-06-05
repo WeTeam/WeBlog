@@ -35,9 +35,9 @@ namespace Sitecore.Modules.WeBlog.Test
             m_testRoot = home.Axes.GetChild("blog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("myblog");
 
-            m_entry1 = m_blog1.Axes.GetChild("Entry1");
-            m_entry2 = m_blog1.Axes.GetChild("Entry2");
-            m_entry3 = m_blog1.Axes.GetChild("Entry3");
+            m_entry1 = m_blog1.Axes.GetDescendant("Entry1");
+            m_entry2 = m_blog1.Axes.GetDescendant("Entry2");
+            m_entry3 = m_blog1.Axes.GetDescendant("Entry3");
         }
 
         [TestFixtureTearDown]

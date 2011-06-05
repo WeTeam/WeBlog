@@ -202,7 +202,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 if (comments != null)
                 {
                     commentList = MakeSortedCommentsList(comments).ToList();
-                    commentList.Reverse();
+                    //commentList.Reverse();
                     return commentList.Take(maximumCount).ToArray();
                 }
                 else

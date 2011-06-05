@@ -1,27 +1,27 @@
-<item name="comments reverse order" key="comments reverse order" id="{B2B19E03-8E41-4D07-865A-941FD6656B6A}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
+<item name="comments reverse order" key="comments reverse order" id="{C21B35E7-62C0-4196-BA49-82276A699522}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
   <version language="en" version="1">
     <fields>
+      <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+        <content>sitecore\admin</content>
+      </field>
+      <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+        <content>sitecore\admin</content>
+      </field>
+      <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+        <content>1a563fdd-0377-40fc-9887-d90821553541</content>
+      </field>
       <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
         <content>20110304T222758</content>
       </field>
       <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
         <content>sitecore\admin</content>
       </field>
-      <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
-        <content>sitecore\admin</content>
-      </field>
-      <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-        <content>1a563fdd-0377-40fc-9887-d90821553541</content>
-      </field>
       <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
         <content>20110304T222758:634348744782613491</content>
       </field>
-      <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-        <content>sitecore\admin</content>
-      </field>
     </fields>
   </version>
-  <item name="Comment1" key="comment1" id="{06D28244-678E-492B-A606-F56915E9B5AC}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{B2B19E03-8E41-4D07-865A-941FD6656B6A}">
+  <item name="Comment1" key="comment1" id="{F8C8696A-E936-45FD-90FA-80FA558A0E93}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{C21B35E7-62C0-4196-BA49-82276A699522}">
     <version language="en" version="1">
       <fields>
         <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -45,7 +45,7 @@
       </fields>
     </version>
   </item>
-  <item name="Comment2" key="comment2" id="{4302C257-FC1A-4439-9465-A32FFD0492A0}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{B2B19E03-8E41-4D07-865A-941FD6656B6A}">
+  <item name="Comment2" key="comment2" id="{4D9B5829-FE36-4BFD-989E-B756299CBD83}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{C21B35E7-62C0-4196-BA49-82276A699522}">
     <version language="en" version="1">
       <fields>
         <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -69,7 +69,7 @@
       </fields>
     </version>
   </item>
-  <item name="Comment3" key="comment3" id="{851BF9FC-9435-46EC-944D-0B65351A29AF}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{B2B19E03-8E41-4D07-865A-941FD6656B6A}">
+  <item name="Comment3" key="comment3" id="{3AE8DC79-ECF4-48E4-BC2F-1B047C0D7D53}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{C21B35E7-62C0-4196-BA49-82276A699522}">
     <version language="en" version="1">
       <fields>
         <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">

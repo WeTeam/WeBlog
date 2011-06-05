@@ -172,6 +172,7 @@ namespace Codeflood.Testing
 
 		public void UnhandledException(Exception exception)
 		{
+            int y = 0;
 		}
 
 		#endregion

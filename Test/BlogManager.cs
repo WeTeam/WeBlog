@@ -7,6 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Security.AccessControl;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -30,7 +31,14 @@ namespace Sitecore.Modules.WeBlog.Test
             var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
+                try
+                {
+                    home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
+                }
+                catch (Exception ex)
+                {
+                    int y = 0;
+                }
             }
 
             // Retrieve created content items
@@ -38,10 +46,10 @@ namespace Sitecore.Modules.WeBlog.Test
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
-            m_entry11 = m_blog1.Axes.GetChild("entry1");
-            m_comment111 = m_entry11.Axes.GetChild("comment1");
+            m_entry11 = m_blog1.Axes.GetDescendant("entry1");
+            m_comment111 = m_entry11.Axes.GetDescendant("comment1");
 
-            m_entry21 = m_blog2.Axes.GetChild("entry1");
+            m_entry21 = m_blog2.Axes.GetDescendant("entry1");
 
             // Create test user
             try

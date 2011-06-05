@@ -46,18 +46,18 @@ namespace Sitecore.Modules.WeBlog.Test
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
-            m_entry11 = m_blog1.Axes.GetChild("Entry1");
-            m_comment111 = m_entry11.Axes.GetChild("Comment1");
-            m_comment112 = m_entry11.Axes.GetChild("Comment2");
-            m_comment113 = m_entry11.Axes.GetChild("Comment3");
+            m_entry11 = m_blog1.Axes.GetDescendant("Entry1");
+            m_comment111 = m_entry11.Axes.GetDescendant("Comment1");
+            m_comment112 = m_entry11.Axes.GetDescendant("Comment2");
+            m_comment113 = m_entry11.Axes.GetDescendant("Comment3");
 
-            m_entry12 = m_blog1.Axes.GetChild("Entry2");
-            m_comment121 = m_entry12.Axes.GetChild("Comment4");
-            m_comment122 = m_entry12.Axes.GetChild("Comment5");
+            m_entry12 = m_blog1.Axes.GetDescendant("Entry2");
+            m_comment121 = m_entry12.Axes.GetDescendant("Comment4");
+            m_comment122 = m_entry12.Axes.GetDescendant("Comment5");
 
-            m_entry21 = m_blog2.Axes.GetChild("Entry1");
-            m_comment211 = m_entry21.Axes.GetChild("Comment1");
-            m_comment212 = m_entry21.Axes.GetChild("Comment2");
+            m_entry21 = m_blog2.Axes.GetDescendant("Entry1");
+            m_comment211 = m_entry21.Axes.GetDescendant("Comment1");
+            m_comment212 = m_entry21.Axes.GetDescendant("Comment2");
         }
 
         [TearDown]
@@ -432,7 +432,7 @@ namespace Sitecore.Modules.WeBlog.Test
             // Retrieve created content items
             var testRoot = home.Axes.GetChild("blog test root");
             var blog1 = m_testRoot.Axes.GetChild("blog1");
-            var entry12 = m_blog1.Axes.GetChild("Entry2");
+            var entry12 = m_blog1.Axes.GetDescendant("Entry2");
 
             var originalCount = entry12.GetChildren().Count;
             ID commentId = null;

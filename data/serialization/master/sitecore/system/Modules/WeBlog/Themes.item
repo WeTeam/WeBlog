@@ -1,0 +1,72 @@
+----item----
+version: 1
+id: {2E68D26C-5138-4E08-8056-717ACFF80C5E}
+database: master
+path: /sitecore/system/Modules/WeBlog/Themes
+parent: {6A635C75-F807-4FEC-A67D-B90DD7C39B44}
+name: Themes
+master: {00000000-0000-0000-0000-000000000000}
+template: {0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
+templatekey: Template Folder
+
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{1BF19354-D79F-4F32-80F0-5A644811C137}
+----version----
+language: en
+version: 1
+revision: e8431126-f489-41ce-971f-32ec9990956a
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20101012T205144:634225135047675383
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e8431126-f489-41ce-971f-32ec9990956a
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20101129T090044:634266180447823606
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {001DD393-96C5-490B-924A-B0F25CD9EFD8}
+name: __Lock
+key: __lock
+content-length: 5
+
+<r />

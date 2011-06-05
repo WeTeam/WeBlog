@@ -47,10 +47,10 @@ namespace Sitecore.Modules.WeBlog.Test
             m_category3 = categories.Axes.GetChild("category3");
             m_category4 = categories.Axes.GetChild("category4");
 
-            m_entry1 = m_blog1.Axes.GetChild("entry1");
-            m_entry2 = m_blog1.Axes.GetChild("entry2");
+            m_entry1 = m_blog1.Axes.GetDescendant("entry1");
+            m_entry2 = m_blog1.Axes.GetDescendant("entry2");
 
-            m_comment1 = m_entry1.Axes.GetChild("comment1");
+            m_comment1 = m_entry1.Axes.GetDescendant("comment1");
         }
 
         [TestFixtureTearDown]

@@ -7,6 +7,8 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.Blog;
+using System.Threading;
+using Sitecore.StringExtensions;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -147,13 +149,16 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 var entries = blog.Axes.SelectItems(".//*");
 
-                foreach (var entry in MakeSortedEntriesList(entries))
+                if (entries != null)
                 {
-                    if ((string.IsNullOrEmpty(tag) || entry.TagsSplit.Contains(tag)) && (string.IsNullOrEmpty(category) || entry.Category.ListItems.Select(item => item.Name).Contains(category)))
-                        if (blogPostList.Count < maxNumber)
-                            blogPostList.Add(entry);
-                        else
-                            break;
+                    foreach (var entry in MakeSortedEntriesList(entries))
+                    {
+                        if ((string.IsNullOrEmpty(tag) || entry.TagsSplit.Contains(tag)) && (string.IsNullOrEmpty(category) || entry.Category.ListItems.Select(item => item.Name).Contains(category)))
+                            if (blogPostList.Count < maxNumber)
+                                blogPostList.Add(entry);
+                            else
+                                break;
+                    }
                 }
             }
 
@@ -180,17 +185,15 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the month and year from the current blog</returns>
         public static EntryItem[] GetBlogEntriesByMonthAndYear(Item blog, int month, int year)
         {
-            var blogPostList = new List<EntryItem>();
+            if (month >= 13)
+                return new EntryItem[0];
 
-            foreach (var entry in MakeSortedEntriesList(blog.GetChildren().ToArray()))
-            {
-                if (entry.InnerItem.Statistics.Created.Month == month && entry.InnerItem.Statistics.Created.Year == year )
-                {
-                    blogPostList.Add(entry);
-                }
-            }
+            // NewsMover places entries in year, month and day folders. We can rely on this to find entries by time
+            var monthName = Thread.CurrentThread.CurrentCulture.DateTimeFormat.GetMonthName(month);
+            var entryTemplateID = Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID");
+            var entries = blog.Axes.SelectItems("./" + year.ToString() + "/" + monthName + "//*[@@templateid='{0}']".FormatWith(entryTemplateID));
 
-            return blogPostList.ToArray();
+            return (from entry in entries select (EntryItem)entry).ToArray();
         }
 
         /// <summary>
@@ -225,21 +228,13 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns></returns>
         public static EntryItem[] GetBlogEntryByCategorie(ID blogId, ID categoryId)
         {
-            var blogPostList = new List<EntryItem>();
-            var blog = Sitecore.Context.Database.GetItem(blogId);
+            var blogItem = Sitecore.Context.Database.GetItem(blogId);
+            var categoryItem = Sitecore.Context.Database.GetItem(categoryId);
 
-            if (blog != null)
-            {
-                foreach (EntryItem entry in MakeSortedEntriesList(blog.GetChildren().ToArray()))
-                {
-                    if (entry.Category.ListItems.Select(item => item.ID.ToString()).Contains(categoryId.ToString()))
-                    {
-                        blogPostList.Add(entry);
-                    }
-                }
-            }
-
-            return blogPostList.ToArray();
+            if (blogItem != null && categoryItem != null)
+                return GetBlogEntries(blogItem, int.MaxValue, string.Empty, categoryItem.Name);
+            else
+                return new EntryItem[0];
         }
 
         /// <summary>

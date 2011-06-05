@@ -1,27 +1,27 @@
-<item name="weblog testroot" key="weblog testroot" id="{83C7A415-843E-4C6D-9377-00F10A3E497B}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
+<item name="weblog testroot" key="weblog testroot" id="{A71042E9-0525-43C3-A5DE-24A0401A7091}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="folder" parentid="{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}">
   <version language="en" version="1">
     <fields>
-      <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-        <content>64e297d6-31a7-4217-8d18-1fe13597bbf2</content>
-      </field>
-      <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
-        <content>sitecore\admin</content>
-      </field>
       <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
         <content>sitecore\admin</content>
-      </field>
-      <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-        <content>20110225T180454</content>
-      </field>
-      <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-        <content>20110225T180454:634342538941100049</content>
       </field>
       <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
         <content>sitecore\admin</content>
       </field>
+      <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+        <content>64e297d6-31a7-4217-8d18-1fe13597bbf2</content>
+      </field>
+      <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+        <content>20110225T180454</content>
+      </field>
+      <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+        <content>sitecore\admin</content>
+      </field>
+      <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+        <content>20110225T180454:634342538941100049</content>
+      </field>
     </fields>
   </version>
-  <item name="Blog1" key="blog1" id="{C412EC7C-E05A-4F33-A444-BF84E40537AE}" tid="{46663E05-A6B8-422A-8E13-36CD2B041278}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="400" template="bloghome" parentid="{83C7A415-843E-4C6D-9377-00F10A3E497B}">
+  <item name="Blog1" key="blog1" id="{A9006026-8645-4CA7-A1EF-45B780BF5992}" tid="{46663E05-A6B8-422A-8E13-36CD2B041278}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="400" template="bloghome" parentid="{A71042E9-0525-43C3-A5DE-24A0401A7091}">
     <version language="en" version="1">
       <fields>
         <field tfid="{77BA5A31-EB0E-47A4-A7B9-14D195C0B461}" key="enable rss" type="Checkbox">
@@ -68,7 +68,256 @@
         </field>
       </fields>
     </version>
-    <item name="Categories" key="categories" id="{D34E0B14-2A3F-41C7-9390-0AA24689992A}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="100" template="template folder" parentid="{C412EC7C-E05A-4F33-A444-BF84E40537AE}">
+    <item name="2011" key="2011" id="{5C81A1D5-B1F6-42EB-A4B8-79128E26145F}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-2011" template="folder" parentid="{A9006026-8645-4CA7-A1EF-45B780BF5992}">
+      <version language="en" version="1">
+        <fields>
+          <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+            <content>sitecore\admin</content>
+          </field>
+          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+            <content>sitecore\admin</content>
+          </field>
+          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+            <content>33a93fbc-631f-42be-b589-893bf46aed14</content>
+          </field>
+          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+            <content>20110602T232746</content>
+          </field>
+          <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+            <content>sitecore\admin</content>
+          </field>
+          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+            <content>20110602T232746:634426540660772444</content>
+          </field>
+          <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+            <content>-2011</content>
+          </field>
+        </fields>
+      </version>
+      <item name="April" key="april" id="{6B92143A-13B6-4ECB-A599-44DD81D04BF7}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-4" template="folder" parentid="{5C81A1D5-B1F6-42EB-A4B8-79128E26145F}">
+        <version language="en" version="1">
+          <fields>
+            <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+              <content>3ca10362-41b8-4227-b8e1-0c1440e93ae6</content>
+            </field>
+            <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+              <content>20110602T232746</content>
+            </field>
+            <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+              <content>20110602T232746:634426540666833050</content>
+            </field>
+            <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+              <content>-4</content>
+            </field>
+          </fields>
+        </version>
+        <item name="25" key="25" id="{7EABBC72-35F2-481F-AD24-FABC0796D3E3}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-25" template="folder" parentid="{6B92143A-13B6-4ECB-A599-44DD81D04BF7}">
+          <version language="en" version="1">
+            <fields>
+              <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                <content>a37723c9-4abf-450a-aaf9-5efa92dd5f70</content>
+              </field>
+              <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                <content>20110602T232746</content>
+              </field>
+              <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                <content>20110602T232746:634426540667223089</content>
+              </field>
+              <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                <content>-25</content>
+              </field>
+            </fields>
+          </version>
+          <item name="Entry3" key="entry3" id="{41A44F1B-798E-4080-BAA8-EC78452AF0A6}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-425180743" template="blogentry" parentid="{7EABBC72-35F2-481F-AD24-FABC0796D3E3}">
+            <version language="en" version="1">
+              <fields>
+                <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
+                  <content>tagc,tagd</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>e2682f83-31ab-4b53-a0c6-1f01f43f37bd</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110425T180743</content>
+                </field>
+                <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                  <content>{FD0A82F5-69C3-461E-AC02-20AC208533D5}|{B31EC818-E897-4025-8E92-D09A06E98EE2}</content>
+                </field>
+                <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                  <content>Entry3</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110406T220200:634350457201154960</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0425180743</content>
+                </field>
+              </fields>
+            </version>
+          </item>
+        </item>
+      </item>
+      <item name="March" key="march" id="{4BF86173-D435-4047-8917-32958E022E8F}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-3" template="folder" parentid="{5C81A1D5-B1F6-42EB-A4B8-79128E26145F}">
+        <version language="en" version="1">
+          <fields>
+            <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+              <content>761e34e8-4c43-4e4a-8363-13ded0ef570b</content>
+            </field>
+            <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+              <content>20110602T232746</content>
+            </field>
+            <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+              <content>20110602T232746:634426540661622529</content>
+            </field>
+            <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+              <content>-3</content>
+            </field>
+          </fields>
+        </version>
+        <item name="25" key="25" id="{9771A648-0803-45E9-BBD2-DEF37EF5B613}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-25" template="folder" parentid="{4BF86173-D435-4047-8917-32958E022E8F}">
+          <version language="en" version="1">
+            <fields>
+              <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                <content>ab44659f-e8cc-4ee5-a0ec-474063726389</content>
+              </field>
+              <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                <content>20110602T232746</content>
+              </field>
+              <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                <content>20110602T232746:634426540662172584</content>
+              </field>
+              <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                <content>-25</content>
+              </field>
+            </fields>
+          </version>
+          <item name="Entry2" key="entry2" id="{79AE5D3F-F975-4F2A-A245-C6C9454C8E5B}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-325180736" template="blogentry" parentid="{9771A648-0803-45E9-BBD2-DEF37EF5B613}">
+            <version language="en" version="1">
+              <fields>
+                <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
+                  <content>tagb</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>fbfd3a44-41ae-4b0b-8aaf-b76834b3a3cc</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110325T180736</content>
+                </field>
+                <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                  <content>{8A46ED14-0965-4965-A46E-2F2B60D08413}|{0BEA9478-2ABF-46C5-A5AF-5AD1BE3217CC}</content>
+                </field>
+                <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                  <content>Entry2</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110306T213952:634350443924226381</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0325180736</content>
+                </field>
+              </fields>
+            </version>
+          </item>
+          <item name="Entry1" key="entry1" id="{0C7C3DD5-EF97-447B-9BD8-C8CF2EF1C0D2}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-325180716" template="blogentry" parentid="{9771A648-0803-45E9-BBD2-DEF37EF5B613}">
+            <version language="en" version="1">
+              <fields>
+                <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
+                  <content>taga,tagb</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>7760139c-0208-43b3-9bf6-76b52cfca92c</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110325T180716</content>
+                </field>
+                <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                  <content>{8A46ED14-0965-4965-A46E-2F2B60D08413}</content>
+                </field>
+                <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                  <content>Entry1</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110306T220207:634350457276191092</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0325180716</content>
+                </field>
+              </fields>
+            </version>
+            <item name="Comment1" key="comment1" id="{458C07B6-1271-414A-AE63-0C5AECBC5CD7}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{0C7C3DD5-EF97-447B-9BD8-C8CF2EF1C0D2}">
+              <version language="en" version="1">
+                <fields>
+                  <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                    <content>sitecore\admin</content>
+                  </field>
+                  <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                    <content>sitecore\admin</content>
+                  </field>
+                  <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                    <content>8e886029-6e80-4db4-9ba6-9e0326196804</content>
+                  </field>
+                  <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                    <content>20110225T180757</content>
+                  </field>
+                  <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+                    <content>sitecore\admin</content>
+                  </field>
+                  <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                    <content>20110225T180757:634342540770816276</content>
+                  </field>
+                </fields>
+              </version>
+            </item>
+          </item>
+        </item>
+      </item>
+    </item>
+    <item name="Categories" key="categories" id="{861B904E-F7FD-4158-8E46-0ABF0A21BC5C}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="100" template="template folder" parentid="{A9006026-8645-4CA7-A1EF-45B780BF5992}">
       <version language="en" version="1">
         <fields>
           <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -94,7 +343,7 @@
           </field>
         </fields>
       </version>
-      <item name="Category1" key="category1" id="{8A46ED14-0965-4965-A46E-2F2B60D08413}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{D34E0B14-2A3F-41C7-9390-0AA24689992A}">
+      <item name="Category1" key="category1" id="{8D8AF697-34BA-4CC6-8D49-42A4E6C9FFE5}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{861B904E-F7FD-4158-8E46-0ABF0A21BC5C}">
         <version language="en" version="1">
           <fields>
             <field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
@@ -115,7 +364,7 @@
           </fields>
         </version>
       </item>
-      <item name="Category2" key="category2" id="{0BEA9478-2ABF-46C5-A5AF-5AD1BE3217CC}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{D34E0B14-2A3F-41C7-9390-0AA24689992A}">
+      <item name="Category2" key="category2" id="{FD0A82F5-69C3-461E-AC02-20AC208533D5}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{861B904E-F7FD-4158-8E46-0ABF0A21BC5C}">
         <version language="en" version="1">
           <fields>
             <field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
@@ -136,7 +385,7 @@
           </fields>
         </version>
       </item>
-      <item name="Category3" key="category3" id="{90838F68-8235-4FB0-AA93-A193B5346389}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{D34E0B14-2A3F-41C7-9390-0AA24689992A}">
+      <item name="Category3" key="category3" id="{B31EC818-E897-4025-8E92-D09A06E98EE2}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{861B904E-F7FD-4158-8E46-0ABF0A21BC5C}">
         <version language="en" version="1">
           <fields>
             <field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
@@ -158,112 +407,7 @@
         </version>
       </item>
     </item>
-    <item name="Entry1" key="entry1" id="{9B22AF8F-D7DC-4F85-991D-DA7C3C064F70}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogentry" parentid="{C412EC7C-E05A-4F33-A444-BF84E40537AE}">
-      <version language="en" version="1">
-        <fields>
-          <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-            <content>taga,tagb</content>
-          </field>
-          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-            <content>sitecore\admin</content>
-          </field>
-          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-            <content>7760139c-0208-43b3-9bf6-76b52cfca92c</content>
-          </field>
-          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-            <content>20110325T180716</content>
-          </field>
-          <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
-            <content>{8A46ED14-0965-4965-A46E-2F2B60D08413}</content>
-          </field>
-          <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
-            <content>Entry1</content>
-          </field>
-          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-            <content>20110306T220207:634350457276191092</content>
-          </field>
-        </fields>
-      </version>
-      <item name="Comment1" key="comment1" id="{84B11594-76FD-4C21-854B-5EAD2999EA1B}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{9B22AF8F-D7DC-4F85-991D-DA7C3C064F70}">
-        <version language="en" version="1">
-          <fields>
-            <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
-              <content>sitecore\admin</content>
-            </field>
-            <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-              <content>sitecore\admin</content>
-            </field>
-            <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-              <content>8e886029-6e80-4db4-9ba6-9e0326196804</content>
-            </field>
-            <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-              <content>20110225T180757</content>
-            </field>
-            <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
-              <content>sitecore\admin</content>
-            </field>
-            <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-              <content>20110225T180757:634342540770816276</content>
-            </field>
-          </fields>
-        </version>
-      </item>
-    </item>
-    <item name="Entry2" key="entry2" id="{0A8886DC-2CF2-479F-A721-C07D5F93F001}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogentry" parentid="{C412EC7C-E05A-4F33-A444-BF84E40537AE}">
-      <version language="en" version="1">
-        <fields>
-          <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-            <content>tagb</content>
-          </field>
-          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-            <content>sitecore\admin</content>
-          </field>
-          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-            <content>fbfd3a44-41ae-4b0b-8aaf-b76834b3a3cc</content>
-          </field>
-          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-            <content>20110325T180736</content>
-          </field>
-          <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
-            <content>{8A46ED14-0965-4965-A46E-2F2B60D08413}|{0BEA9478-2ABF-46C5-A5AF-5AD1BE3217CC}</content>
-          </field>
-          <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
-            <content>Entry2</content>
-          </field>
-          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-            <content>20110306T213952:634350443924226381</content>
-          </field>
-        </fields>
-      </version>
-    </item>
-    <item name="Entry3" key="entry3" id="{C9517DF1-AC04-4240-945B-9601FA77D957}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogentry" parentid="{C412EC7C-E05A-4F33-A444-BF84E40537AE}">
-      <version language="en" version="1">
-        <fields>
-          <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-            <content>tagc,tagd</content>
-          </field>
-          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-            <content>sitecore\admin</content>
-          </field>
-          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-            <content>e2682f83-31ab-4b53-a0c6-1f01f43f37bd</content>
-          </field>
-          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-            <content>20110425T180743</content>
-          </field>
-          <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
-            <content>{0BEA9478-2ABF-46C5-A5AF-5AD1BE3217CC}|{90838F68-8235-4FB0-AA93-A193B5346389}</content>
-          </field>
-          <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
-            <content>Entry3</content>
-          </field>
-          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-            <content>20110406T220200:634350457201154960</content>
-          </field>
-        </fields>
-      </version>
-    </item>
-    <item name="Blog entries" key="blog entries" id="{5B2D0FF0-051E-4D9E-9AC3-6E218E4A11F4}" tid="{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="600" template="rss feed" parentid="{C412EC7C-E05A-4F33-A444-BF84E40537AE}">
+    <item name="Blog entries" key="blog entries" id="{8F0D6C40-3882-4C1E-BCE2-55572CFBF786}" tid="{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="600" template="rss feed" parentid="{A9006026-8645-4CA7-A1EF-45B780BF5992}">
       <version language="en" version="1">
         <fields>
           <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
@@ -291,7 +435,7 @@
       </version>
     </item>
   </item>
-  <item name="Blog2" key="blog2" id="{B3875249-9539-4D52-9037-3D66E8C8C1FE}" tid="{46663E05-A6B8-422A-8E13-36CD2B041278}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="400" template="bloghome" parentid="{83C7A415-843E-4C6D-9377-00F10A3E497B}">
+  <item name="Blog2" key="blog2" id="{6967D911-8201-4F67-B7E6-EA4DD5918948}" tid="{46663E05-A6B8-422A-8E13-36CD2B041278}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="400" template="bloghome" parentid="{A71042E9-0525-43C3-A5DE-24A0401A7091}">
     <version language="en" version="1">
       <fields>
         <field tfid="{758CA141-3F6A-4806-A511-2953F5B54F3E}" key="title" type="Single-Line Text">
@@ -326,7 +470,202 @@
         </field>
       </fields>
     </version>
-    <item name="Categories" key="categories" id="{7BB2B7C4-C8EF-40A8-8637-F34A753C5FFF}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="100" template="template folder" parentid="{B3875249-9539-4D52-9037-3D66E8C8C1FE}">
+    <item name="2011" key="2011" id="{E90BA2AF-D86C-4B6A-986F-BBEE79FC59B8}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-2011" template="folder" parentid="{6967D911-8201-4F67-B7E6-EA4DD5918948}">
+      <version language="en" version="1">
+        <fields>
+          <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+            <content>sitecore\admin</content>
+          </field>
+          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+            <content>sitecore\admin</content>
+          </field>
+          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+            <content>404b0968-8cea-4af3-a83f-b7758bf38ab9</content>
+          </field>
+          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+            <content>20110602T232746</content>
+          </field>
+          <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+            <content>sitecore\admin</content>
+          </field>
+          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+            <content>20110602T232746:634426540669883355</content>
+          </field>
+          <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+            <content>-2011</content>
+          </field>
+        </fields>
+      </version>
+      <item name="February" key="february" id="{8D58C3DC-96FF-4EBB-9F12-0BDC725B5CA5}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-2" template="folder" parentid="{E90BA2AF-D86C-4B6A-986F-BBEE79FC59B8}">
+        <version language="en" version="1">
+          <fields>
+            <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+              <content>20cc9bbe-d3eb-4568-9c0c-88515f0a9262</content>
+            </field>
+            <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+              <content>20110602T232747</content>
+            </field>
+            <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+              <content>sitecore\admin</content>
+            </field>
+            <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+              <content>20110602T232747:634426540670273394</content>
+            </field>
+            <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+              <content>-2</content>
+            </field>
+          </fields>
+        </version>
+        <item name="25" key="25" id="{A91D2F1B-BD47-4FEF-B585-8A1D23C1109B}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-25" template="folder" parentid="{8D58C3DC-96FF-4EBB-9F12-0BDC725B5CA5}">
+          <version language="en" version="1">
+            <fields>
+              <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                <content>de6f3247-587c-42d9-b1f0-770c461c083e</content>
+              </field>
+              <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                <content>20110602T232747</content>
+              </field>
+              <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                <content>20110602T232747:634426540670623429</content>
+              </field>
+              <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                <content>-25</content>
+              </field>
+            </fields>
+          </version>
+          <item name="Entry3" key="entry3" id="{368CE673-EF66-4A87-820D-FB2901777295}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-225180743" template="blogentry" parentid="{A91D2F1B-BD47-4FEF-B585-8A1D23C1109B}">
+            <version language="en" version="1">
+              <fields>
+                <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
+                  <content>tagf</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>aadf2739-a315-47aa-8800-f2e77a5dd6a5</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110225T180743</content>
+                </field>
+                <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                  <content>{C5A01B5C-8CCB-4716-A038-C9A9218EA833}</content>
+                </field>
+                <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                  <content>Entry3</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110306T214027:634350444270078989</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0225180743</content>
+                </field>
+              </fields>
+            </version>
+          </item>
+          <item name="Entry2" key="entry2" id="{6A9765A2-8211-4563-86EB-B7EDBEE8A5BC}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-225180736" template="blogentry" parentid="{A91D2F1B-BD47-4FEF-B585-8A1D23C1109B}">
+            <version language="en" version="1">
+              <fields>
+                <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
+                  <content>tagb,tagc</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>828d2f76-a89f-43a5-9c93-b5991b0c1dc2</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110225T180736</content>
+                </field>
+                <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                  <content>{F06E0CC9-E422-4E1F-B6DF-025147D1DFB6}</content>
+                </field>
+                <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                  <content>Entry2</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110306T220213:634350457337655200</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0225180736</content>
+                </field>
+              </fields>
+            </version>
+          </item>
+          <item name="Entry1" key="entry1" id="{4C890779-3782-4F57-8860-9E2FF61C8058}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-225180716" template="blogentry" parentid="{A91D2F1B-BD47-4FEF-B585-8A1D23C1109B}">
+            <version language="en" version="1">
+              <fields>
+                <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
+                  <content>taga</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>f538040c-c89e-4259-b34a-ae340a62df34</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110225T180716</content>
+                </field>
+                <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                  <content>{F06E0CC9-E422-4E1F-B6DF-025147D1DFB6}</content>
+                </field>
+                <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                  <content>Entry1</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110306T214014:634350444144498768</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0225180716</content>
+                </field>
+              </fields>
+            </version>
+            <item name="Comment1" key="comment1" id="{D52FFF1A-E2E8-487F-B039-9A9FB8E3F27B}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{4C890779-3782-4F57-8860-9E2FF61C8058}">
+              <version language="en" version="1">
+                <fields>
+                  <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                    <content>sitecore\admin</content>
+                  </field>
+                  <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                    <content>sitecore\admin</content>
+                  </field>
+                  <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                    <content>8e886029-6e80-4db4-9ba6-9e0326196804</content>
+                  </field>
+                  <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                    <content>20110225T180757</content>
+                  </field>
+                  <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+                    <content>sitecore\admin</content>
+                  </field>
+                  <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                    <content>20110225T180757:634342540770816276</content>
+                  </field>
+                </fields>
+              </version>
+            </item>
+          </item>
+        </item>
+      </item>
+    </item>
+    <item name="Categories" key="categories" id="{E71EE5A0-AA0F-4B6F-9ACF-D888DEF7ECC6}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="100" template="template folder" parentid="{6967D911-8201-4F67-B7E6-EA4DD5918948}">
       <version language="en" version="1">
         <fields>
           <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
@@ -352,7 +691,7 @@
           </field>
         </fields>
       </version>
-      <item name="Category1" key="category1" id="{F506633A-E688-431D-A7DE-F8981C4CF763}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{7BB2B7C4-C8EF-40A8-8637-F34A753C5FFF}">
+      <item name="Category1" key="category1" id="{F06E0CC9-E422-4E1F-B6DF-025147D1DFB6}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{E71EE5A0-AA0F-4B6F-9ACF-D888DEF7ECC6}">
         <version language="en" version="1">
           <fields>
             <field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
@@ -373,7 +712,7 @@
           </fields>
         </version>
       </item>
-      <item name="Category2" key="category2" id="{C5A01B5C-8CCB-4716-A038-C9A9218EA833}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{7BB2B7C4-C8EF-40A8-8637-F34A753C5FFF}">
+      <item name="Category2" key="category2" id="{623E6EE7-52A4-4C43-8C41-5D2EF686D5D9}" tid="{61FF8D49-90D7-4E59-878D-DF6E03400D3B}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcategory" parentid="{E71EE5A0-AA0F-4B6F-9ACF-D888DEF7ECC6}">
         <version language="en" version="1">
           <fields>
             <field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
@@ -395,112 +734,7 @@
         </version>
       </item>
     </item>
-    <item name="Entry1" key="entry1" id="{A3769E83-A27B-4581-9F67-5797DAB30A75}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogentry" parentid="{B3875249-9539-4D52-9037-3D66E8C8C1FE}">
-      <version language="en" version="1">
-        <fields>
-          <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-            <content>taga</content>
-          </field>
-          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-            <content>sitecore\admin</content>
-          </field>
-          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-            <content>f538040c-c89e-4259-b34a-ae340a62df34</content>
-          </field>
-          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-            <content>20110225T180716</content>
-          </field>
-          <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
-            <content>{F506633A-E688-431D-A7DE-F8981C4CF763}</content>
-          </field>
-          <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
-            <content>Entry1</content>
-          </field>
-          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-            <content>20110306T214014:634350444144498768</content>
-          </field>
-        </fields>
-      </version>
-      <item name="Comment1" key="comment1" id="{E6CEAAD4-DD3C-4C0E-856D-D063EF80F74E}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogcomment" parentid="{A3769E83-A27B-4581-9F67-5797DAB30A75}">
-        <version language="en" version="1">
-          <fields>
-            <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
-              <content>sitecore\admin</content>
-            </field>
-            <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-              <content>sitecore\admin</content>
-            </field>
-            <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-              <content>8e886029-6e80-4db4-9ba6-9e0326196804</content>
-            </field>
-            <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-              <content>20110225T180757</content>
-            </field>
-            <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
-              <content>sitecore\admin</content>
-            </field>
-            <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-              <content>20110225T180757:634342540770816276</content>
-            </field>
-          </fields>
-        </version>
-      </item>
-    </item>
-    <item name="Entry2" key="entry2" id="{0AE3A131-8292-4090-9217-257BB45ED170}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogentry" parentid="{B3875249-9539-4D52-9037-3D66E8C8C1FE}">
-      <version language="en" version="1">
-        <fields>
-          <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-            <content>tagb,tagc</content>
-          </field>
-          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-            <content>sitecore\admin</content>
-          </field>
-          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-            <content>828d2f76-a89f-43a5-9c93-b5991b0c1dc2</content>
-          </field>
-          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-            <content>20110225T180736</content>
-          </field>
-          <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
-            <content>{F506633A-E688-431D-A7DE-F8981C4CF763}</content>
-          </field>
-          <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
-            <content>Entry2</content>
-          </field>
-          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-            <content>20110306T220213:634350457337655200</content>
-          </field>
-        </fields>
-      </version>
-    </item>
-    <item name="Entry3" key="entry3" id="{471AAD15-111D-4F0E-9F10-1F92A8915DAC}" tid="{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="blogentry" parentid="{B3875249-9539-4D52-9037-3D66E8C8C1FE}">
-      <version language="en" version="1">
-        <fields>
-          <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-            <content>tagf</content>
-          </field>
-          <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
-            <content>sitecore\admin</content>
-          </field>
-          <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
-            <content>aadf2739-a315-47aa-8800-f2e77a5dd6a5</content>
-          </field>
-          <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-            <content>20110225T180743</content>
-          </field>
-          <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
-            <content>{C5A01B5C-8CCB-4716-A038-C9A9218EA833}</content>
-          </field>
-          <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
-            <content>Entry3</content>
-          </field>
-          <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-            <content>20110306T214027:634350444270078989</content>
-          </field>
-        </fields>
-      </version>
-    </item>
-    <item name="Blog entries" key="blog entries" id="{C8C0F3D3-FF74-47C3-B121-C6C6647A90D2}" tid="{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="600" template="rss feed" parentid="{B3875249-9539-4D52-9037-3D66E8C8C1FE}">
+    <item name="Blog entries" key="blog entries" id="{6C29D34E-405A-4E1C-8916-3BE3D2D28161}" tid="{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="600" template="rss feed" parentid="{6967D911-8201-4F67-B7E6-EA4DD5918948}">
       <version language="en" version="1">
         <fields>
           <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">

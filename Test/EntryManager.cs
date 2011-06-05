@@ -43,12 +43,12 @@ namespace Sitecore.Modules.WeBlog.Test
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
-            m_entry11 = m_blog1.Axes.GetChild("Entry1");
-            m_entry12 = m_blog1.Axes.GetChild("Entry2");
-            m_entry13 = m_blog1.Axes.GetChild("Entry3");
-            m_entry21 = m_blog2.Axes.GetChild("Entry1");
-            m_entry22 = m_blog2.Axes.GetChild("Entry2");
-            m_entry23 = m_blog2.Axes.GetChild("Entry3");
+            m_entry11 = m_blog1.Axes.GetDescendant("Entry1");
+            m_entry12 = m_blog1.Axes.GetDescendant("Entry2");
+            m_entry13 = m_blog1.Axes.GetDescendant("Entry3");
+            m_entry21 = m_blog2.Axes.GetDescendant("Entry1");
+            m_entry22 = m_blog2.Axes.GetDescendant("Entry2");
+            m_entry23 = m_blog2.Axes.GetDescendant("Entry3");
 
             var blog1Categories = m_blog1.Axes.GetChild("categories");
             m_category12 = blog1Categories.Axes.GetChild("category2");
