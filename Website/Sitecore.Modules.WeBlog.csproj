@@ -348,7 +348,7 @@
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="App_Config\**\*.*;&#xD;&#xA;                bin\*.dll;&#xD;&#xA;                layouts\**\*.aspx;&#xD;&#xA;                layouts\**\*.ascx;&#xD;&#xA;                sitecore modules\**\*.aspx;&#xD;&#xA;                sitecore modules\**\*.ashx;&#xD;&#xA;                sitecore modules\**\*.ascx;&#xD;&#xA;                sitecore modules\**\*.svc;&#xD;&#xA;                sitecore modules\**\*.js;&#xD;&#xA;                sitecore modules\**\*.css;&#xD;&#xA;                sitecore modules\**\*.xml;&#xD;&#xA;                sitecore modules\**\*.vm;&#xD;&#xA;                sitecore modules\**\*.gif;&#xD;&#xA;                sitecore modules\**\*.png;" Exclude="**\.svn\**\*.*">
+    <CreateItem Include="App_Config\**\*.*;bin\*.dll;layouts\**\*.aspx;layouts\**\*.ascx;sitecore modules\**\*.aspx;sitecore\**\*.xml;sitecore modules\**\*.ashx;sitecore modules\**\*.ascx;sitecore modules\**\*.svc;sitecore modules\**\*.js;sitecore modules\**\*.css;sitecore modules\**\*.xml;sitecore modules\**\*.vm;sitecore modules\**\*.gif;sitecore modules\**\*.png" Exclude="**\.svn\**\*.*">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
