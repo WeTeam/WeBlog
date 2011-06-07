@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="Commands\EditBlogSettings.cs" />
     <Compile Include="Commands\EditEntrySettings.cs" />
+    <Compile Include="Commands\Import.cs" />
     <Compile Include="Commands\NewBlog.cs" />
     <Compile Include="Commands\NewCategory.cs" />
     <Compile Include="Commands\NewEntry.cs" />
@@ -351,10 +352,10 @@
     <CreateItem Include="App_Config\**\*.*;bin\*.dll;layouts\**\*.aspx;layouts\**\*.ascx;sitecore modules\**\*.aspx;sitecore\**\*.xml;sitecore modules\**\*.ashx;sitecore modules\**\*.ascx;sitecore modules\**\*.svc;sitecore modules\**\*.js;sitecore modules\**\*.css;sitecore modules\**\*.xml;sitecore modules\**\*.vm;sitecore modules\**\*.gif;sitecore modules\**\*.png" Exclude="**\.svn\**\*.*">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
-    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <CreateItem Include="..\dependencies\third-party\*.dll" Exclude="**\.svn\**\*.*">
       <Output ItemName="DependencyFiles" TaskParameter="Include" />
     </CreateItem>
-    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecorePath)\bin" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecorePath)\bin" SkipUnchangedFiles="false" />
   </Target>
 </Project>

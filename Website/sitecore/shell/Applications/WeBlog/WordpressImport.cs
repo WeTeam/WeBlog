@@ -80,28 +80,40 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                     break;
                 case "CreatingBlog":
 
-                    string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
-
-                    List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
-                    Item root = db.GetItem(litSummaryPath.Text);
-
-                    BranchItem newBlog = db.Branches.GetMaster(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.BlogBranchTemplateID")));
-                    BlogItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
-
-                    blogItem.BeginEdit();
-                    blogItem.Email.Field.Value = litSettingsEmail.Value;
-                    blogItem.EndEdit();
-
-                    WpImportManager.ImportPosts(blogItem, listWordpressPosts, db);
-
-
-                    base.EndWizard();
+                    
+            
                     break;
                 default:
                     break;
             }
             
             base.ActivePageChanged(page, oldPage);
+        }
+
+        protected override bool ActivePageChanging(string page, ref string newpage)
+        {
+            if (newpage == "LastPage")
+            {
+                string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
+
+                List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
+                Item root = db.GetItem(litSummaryPath.Text);
+
+                BranchItem newBlog = db.Branches.GetMaster(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.BlogBranchTemplateID")));
+                BlogItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
+
+                blogItem.BeginEdit();
+                blogItem.Email.Field.Value = litSettingsEmail.Value;
+                blogItem.EndEdit();
+
+                WpImportManager.ImportPosts(blogItem, listWordpressPosts, db);
+
+                this.NextButton.Disabled = true;
+                this.BackButton.Disabled = true;
+                this.CancelButton.Disabled = true;
+            }
+            
+            return base.ActivePageChanging(page, ref newpage);
         }
 
         protected void OK_Click()

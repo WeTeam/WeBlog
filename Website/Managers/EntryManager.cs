@@ -193,6 +193,8 @@ namespace Sitecore.Modules.WeBlog.Managers
             var entryTemplateID = Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID");
             var entries = blog.Axes.SelectItems("./" + year.ToString() + "/" + monthName + "//*[@@templateid='{0}']".FormatWith(entryTemplateID));
 
+            if (entries == null) return new EntryItem[0];
+
             return (from entry in entries select (EntryItem)entry).ToArray();
         }
 

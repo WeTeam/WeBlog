@@ -141,42 +141,10 @@
                   <Literal ID="litSummaryTags" Text="afdsf"/>
                 </GridPanel>
               </Groupbox>
-                  
-
 
             </Border>
 
           </Scrollbox>
-        </WizardFormPadding>
-      </WizardFormPage>
-
-      <WizardFormPage ID="CreatingBlog" Header="Creating blog" Text="Please wait while creating the blog..." Icon="Custom/32x32/Publish.png">
-        <GridPanel Width="100%">
-          <Space Height="64"/>
-          
-          <ThemedImage Src="Custom/48x48/Publish.png" Width="48" Height="48" GridPanel.Align="center"/>
-
-          <Space Height="16"/>
-          
-          <Border Align="center">
-            <ThemedImage Src="Images/progress.gif" Width="94" Height="17"/>
-          </Border>
-          
-          <Space Height="16"/>
-          
-          <Border ID="PublishingText" Align="center" GridPanel.Align="center" GridPanel.Style="font-weight:bold">
-            <Literal Text="Creating blog and importing..."/>
-          </Border>
-          <Space Height="16"/>
-          <Border ID="PublishingTarget" Align="center" GridPanel.Align="center">
-            &#160;
-          </Border>
-        </GridPanel>
-      </WizardFormPage>
-
-      <WizardFormPage ID="Retry" Header="An error occurred" Text="An error occurred while publishing." Icon="Custom/32x32/Publish.png">
-        <WizardFormPadding>
-          <Memo ID="ErrorText" ReadOnly="true" Width="100%" Height="100%"/>
         </WizardFormPadding>
       </WizardFormPage>
 

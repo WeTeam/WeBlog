@@ -5,6 +5,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.Blog;
 using Sitecore.Data.Managers;
+using Sitecore.Configuration;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -13,6 +14,8 @@ namespace Sitecore.Modules.WeBlog.Managers
     /// </summary>
     public static class CategoryManager
     {
+        private static Database db = Factory.GetDatabase("master");
+
         /// <summary>
         /// Gets the categories for the current blog
         /// </summary>
@@ -31,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var categoryList = new List<CategoryItem>();
             var blogItem = item;
-            var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var template = db.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
 
             if(template != null)
             {
@@ -46,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     var categoriesFolder = blogItem.Axes.GetChild("Categories");
                     if (categoriesFolder != null && categoriesFolder.HasChildren)
                     {
-                        var categoryTemplate = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
+                        var categoryTemplate = db.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
                         if (categoryTemplate != null)
                         {
                             foreach (Item category in categoriesFolder.GetChildren())
@@ -86,7 +89,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static CategoryItem Add(string categoryName, Item item)
         {
             Item blogItem = item;
-            var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var template = db.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
             
 
             if (template != null)
@@ -101,10 +104,10 @@ namespace Sitecore.Modules.WeBlog.Managers
                 CategoryItem[] categories = GetCategories(blogItem);
                 
                 // If there are categories, check if it already contains the categoryName
-                if (categories != null)
+                if (categories.Count() > 0)
                 {
                     var resultList = categories.Where(x => x.Title.Raw.ToLower() == categoryName.ToLower());
-                    var result = resultList == null ? null : resultList.First();
+                    var result = resultList.Count() == 0 ? null : resultList.First();
                     
                     // If category is found return ID
                     if (result != null)
@@ -135,7 +138,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var categoryList = new List<CategoryItem>();
 
-            var item = Context.Database.GetItem(EntryID);
+            var item = db.GetItem(EntryID);
 
             if (item != null)
             {

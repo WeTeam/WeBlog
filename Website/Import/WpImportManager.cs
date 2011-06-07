@@ -53,10 +53,16 @@ namespace Sitecore.Modules.WeBlog.Import
                 entry.Content.Field.Value = post.Content;
                 entry.Tags.Field.Value = string.Join(", ", post.Tags.ToArray());
 
+                List<string> categorieItems = new List<string>();
+
                 foreach (string categoryName in post.Categories)
                 {
                     CategoryItem categoryItem = Sitecore.Modules.WeBlog.Managers.CategoryManager.Add(categoryName, blogItem);
-                    entry.Category.ListItems.Add(categoryItem);
+                    categorieItems.Add(categoryItem.ID.ToString());
+                }
+                if (categorieItems.Count > 0)
+                {
+                    entry.Category.Field.Value = string.Join("|", categorieItems.ToArray());
                 }
 
                 foreach (WpComment wpComment in post.Comments)
