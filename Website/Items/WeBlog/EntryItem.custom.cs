@@ -32,6 +32,21 @@ namespace Sitecore.Modules.WeBlog.Items.Blog
             }
         }
 
+        public string IntroductionText
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(this.Introduction.Rendered))
+                {
+                    int x = this.Content.Rendered.Length > 500 ? 500 : this.Content.Rendered.Length;
+                    
+                    return this.Content.Rendered.Substring(0, x);
+                }
+                return this.Introduction.Rendered;
+                
+            }
+        }
+
         /// <summary>
         /// Gets the count of comments for this blog entry.
         /// </summary>

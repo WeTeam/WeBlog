@@ -16,7 +16,7 @@
             </h2>
             <div class="details">Posted on: <%#(Container.DataItem as EntryItem).Created.ToString("dddd, MMMM d, yyyy")%> by <%#(Container.DataItem as EntryItem).CreatedBy.LocalName%></div>
         
-            <%#(Container.DataItem as EntryItem).Introduction.Rendered%>
+            <%# Eval("IntroductionText") %>
         
             <asp:HyperLink ID="BlogPostLink" runat="server" CssClass="readmore" NavigateUrl='<%# Eval("Url") %>'>Read more...</asp:HyperLink>
         
