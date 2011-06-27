@@ -10,16 +10,23 @@ template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
 templatekey: Sublayout
 
 ----field----
+field: {462A3406-2182-4134-8484-FDC3DD0326DD}
+name: Open Properties after Add
+key: open properties after add
+content-length: 0
+
+
+----field----
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
 key: path
-content-length: 23
+content-length: 25
 
-/layouts/Blog/Blog.ascx
+/layouts/WeBlog/Blog.ascx
 ----version----
 language: en
 version: 1
-revision: 8fed13e8-8c94-44f1-842e-80a2d13ab9e2
+revision: 5983d7a9-2b3f-42ff-b219-b5f1d0df2a97
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-8fed13e8-8c94-44f1-842e-80a2d13ab9e2
+5983d7a9-2b3f-42ff-b219-b5f1d0df2a97
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20101129T090017:634266180172967885
+20110627T205643:634448050039450883
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

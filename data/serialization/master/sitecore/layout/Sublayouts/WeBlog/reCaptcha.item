@@ -13,14 +13,21 @@ templatekey: Sublayout
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
 key: path
-content-length: 28
+content-length: 30
 
-/layouts/Blog/reCAPTCHA.ascx
+/layouts/WeBlog/reCAPTCHA.ascx
 ----version----
 language: en
 version: 1
-revision: 865c2567-b746-4f9c-b8b3-c7ee87789bde
+revision: 234b20cd-c243-4ddd-91ee-f79fff77b1fa
 
+----field----
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
+
+20110624T173748
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -34,7 +41,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20110228T175621
+20110624T173748
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-865c2567-b746-4f9c-b8b3-c7ee87789bde
+234b20cd-c243-4ddd-91ee-f79fff77b1fa
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110228T175651:634345126112373047
+20110624T173819:634445338995633795
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

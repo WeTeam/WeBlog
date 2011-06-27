@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {F6141182-8772-42DF-AD03-87D5AD414A3F}
+id: {F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}
 database: master
-path: /sitecore/layout/Sublayouts/WeBlog/SitecoreCaptcha
+path: /sitecore/layout/Sublayouts/WeBlog/BlogFeeds
 parent: {2068AD29-9223-480A-8E98-B1B85EC9470B}
-name: SitecoreCaptcha
+name: BlogFeeds
 master: {00000000-0000-0000-0000-000000000000}
 template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
 templatekey: Sublayout
@@ -13,14 +13,28 @@ templatekey: Sublayout
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
 key: path
-content-length: 34
+content-length: 30
 
-/layouts/Blog/SitecoreCaptcha.ascx
+/layouts/WeBlog/BlogFeeds.ascx
+----field----
+field: {32CEE5FB-EFCE-4CA6-B697-3B97900C40D3}
+name: Placeholder
+key: placeholder
+content-length: 13
+
+phBlogSidebar
 ----version----
 language: en
 version: 1
-revision: 1760e3f1-04e6-4f79-9981-effaf5a07b99
+revision: 8f02a4fc-57e1-400f-8f10-2f60546a52d4
 
+----field----
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
+
+20110624T173747
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -34,7 +48,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20110228T181602
+20110624T173747
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-1760e3f1-04e6-4f79-9981-effaf5a07b99
+8f02a4fc-57e1-400f-8f10-2f60546a52d4
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110228T181619:634345137798466796
+20110624T173819:634445338991543561
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

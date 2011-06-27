@@ -137,16 +137,15 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             if (entry != null && template != null)
             {
-                var children = entry.GetChildren();
-                foreach (Item child in children)
+                var descendants = entry.Axes.GetDescendants();
+                foreach (Item descendant in descendants)
                 {
-                    if (Utilities.Items.TemplateIsOrBasedOn(child, template))
+                    if (Utilities.Items.TemplateIsOrBasedOn(descendant, template))
                         count++;
                 }
             }
 
             return count;
-            //return entry.GetChildren().Count;
         }
 
         /// <summary>
@@ -254,13 +253,17 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             if (entryItem != null)
             {
-                var count = 0;
-                foreach (var comment in MakeSortedCommentsList(entryItem.GetChildren().ToArray()))
+                var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"));
+                if (Utilities.Items.TemplateIsOrBasedOn(entryItem, template))
                 {
-                    if (count < maximumCount)
+                    var count = 0;
+                    foreach (var comment in MakeSortedCommentsList(entryItem.Axes.GetDescendants()))
                     {
-                        comments.Add(comment);
-                        count++;
+                        if (count < maximumCount)
+                        {
+                            comments.Add(comment);
+                            count++;
+                        }
                     }
                 }
             }

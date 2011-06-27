@@ -254,6 +254,9 @@
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="Utilities\Presentation.cs" />
     <Compile Include="Utilities\Publish.cs" />
+    <Compile Include="WebControls\RsdIncludes.cs" />
+    <Compile Include="WebControls\Syndication.cs" />
+    <Compile Include="WebControls\ThemeIncludes.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />

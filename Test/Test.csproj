@@ -72,8 +72,12 @@
     <Content Include="test data\category manager content.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="test data\comment manager content.xml" />
-    <Content Include="test data\comments in order.xml" />
+    <Content Include="test data\comment manager content.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="test data\comments in order.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="test data\comments out of order.xml" />
     <Content Include="test data\comments reverse order.xml" />
     <Content Include="test data\entries in order.xml" />

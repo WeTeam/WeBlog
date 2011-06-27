@@ -14,8 +14,6 @@ namespace Sitecore.Modules.WeBlog.Managers
     /// </summary>
     public static class CategoryManager
     {
-        private static Database db = Factory.GetDatabase("master");
-
         /// <summary>
         /// Gets the categories for the current blog
         /// </summary>
@@ -34,7 +32,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var categoryList = new List<CategoryItem>();
             var blogItem = item;
-            var template = db.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
 
             if(template != null)
             {
@@ -49,7 +47,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     var categoriesFolder = blogItem.Axes.GetChild("Categories");
                     if (categoriesFolder != null && categoriesFolder.HasChildren)
                     {
-                        var categoryTemplate = db.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
+                        var categoryTemplate = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
                         if (categoryTemplate != null)
                         {
                             foreach (Item category in categoriesFolder.GetChildren())
@@ -89,7 +87,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static CategoryItem Add(string categoryName, Item item)
         {
             Item blogItem = item;
-            var template = db.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
             
 
             if (template != null)
@@ -138,7 +136,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var categoryList = new List<CategoryItem>();
 
-            var item = db.GetItem(EntryID);
+            var item = GetDatabase().GetItem(EntryID);
 
             if (item != null)
             {
@@ -154,6 +152,15 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             return categoryList.ToArray();
+        }
+
+        /// <summary>
+        /// Gets the appropriate database to be reading data from
+        /// </summary>
+        /// <returns>The appropriate content database</returns>
+        private static Database GetDatabase()
+        {
+            return Context.ContentDatabase ?? Context.Database;
         }
 
         #region Obsolete Methods

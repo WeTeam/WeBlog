@@ -1,6 +1,7 @@
 ﻿using System;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Publishing;
 
 namespace Sitecore.Modules.WeBlog.Utilities
 {
@@ -60,7 +61,6 @@ namespace Sitecore.Modules.WeBlog.Utilities
         /// <param name="targetItem">The target item.</param>
         public static void PublishItem(Item targetItem)
         {
-            DateTime publishDate = DateTime.Now;
             Sitecore.Data.Database master = Sitecore.Configuration.Factory.GetDatabase("master");
             Sitecore.Data.Items.Item home = targetItem;
             Sitecore.Data.Items.Item targets = master.GetItem("/sitecore/system/publishing targets");
@@ -68,12 +68,35 @@ namespace Sitecore.Modules.WeBlog.Utilities
             {
                 string targetDBName = target["target database"];
                 Sitecore.Data.Database targetDB = Sitecore.Configuration.Factory.GetDatabase(targetDBName);
-                foreach (Sitecore.Globalization.Language language in master.Languages)
+                PublishItemAndRequiredAncestors(home, targetDB);
+            }
+        }
+
+        /// <summary>
+        /// Publish the item and recursivley any ancestors that haven't yet been published
+        /// </summary>
+        /// <param name="item">The item to publish</param>
+        public static void PublishItemAndRequiredAncestors(Item item, Database targetDatabase)
+        {
+            if (item != null)
+            {
+                var ancestorInTarget = targetDatabase.GetItem(item.ParentID);
+                if (ancestorInTarget == null)
                 {
-                    Sitecore.Publishing.PublishOptions publishOptions = new Sitecore.Publishing.PublishOptions(master, targetDB, Sitecore.Publishing.PublishMode.SingleItem, language, publishDate);
-                    publishOptions.RootItem = home;
-                    publishOptions.Deep = false;
-                    Sitecore.Publishing.Publisher publisher = new Sitecore.Publishing.Publisher(publishOptions); publisher.Publish();
+                    PublishItemAndRequiredAncestors(item.Parent, targetDatabase);
+                }
+
+                ancestorInTarget = targetDatabase.GetItem(item.ParentID);
+                if (ancestorInTarget != null)
+                {
+                    foreach (Sitecore.Globalization.Language language in item.Database.Languages)
+                    {
+                        Sitecore.Publishing.PublishOptions publishOptions = new Sitecore.Publishing.PublishOptions(item.Database, targetDatabase, Sitecore.Publishing.PublishMode.SingleItem, language, DateTime.Now);
+                        publishOptions.RootItem = item;
+                        publishOptions.Deep = false;
+                        Sitecore.Publishing.Publisher publisher = new Sitecore.Publishing.Publisher(publishOptions);
+                        publisher.Publish();
+                    }
                 }
             }
         }

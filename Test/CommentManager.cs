@@ -16,6 +16,7 @@ namespace Sitecore.Modules.WeBlog.Test
     public class CommentManager
     {
         private string FOLDER_TEMPLATE = "common/folder";
+        private readonly string m_commentTemplateId;
 
         private Item m_testRoot = null;
         private Item m_blog1 = null;
@@ -30,6 +31,11 @@ namespace Sitecore.Modules.WeBlog.Test
         private Item m_entry21 = null;
         private Item m_comment211 = null;
         private Item m_comment212 = null;
+
+        public CommentManager()
+        {
+            m_commentTemplateId = Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID");
+        }
 
         [SetUp]
         public void SetUp()
@@ -82,7 +88,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.GetChildren().ToArray());
+                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Comment1", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment2", sorted[1].InnerItem.Name);
@@ -112,7 +118,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.GetChildren().ToArray());
+                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Comment3", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment2", sorted[1].InnerItem.Name);
@@ -142,7 +148,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.GetChildren().ToArray());
+                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(4, sorted.Length);
                 Assert.AreEqual("Comment3", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment1", sorted[1].InnerItem.Name);
@@ -177,7 +183,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.GetChildren().ToArray());
+                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Comment1", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment2", sorted[1].InnerItem.Name);
@@ -434,7 +440,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var blog1 = m_testRoot.Axes.GetChild("blog1");
             var entry12 = m_blog1.Axes.GetDescendant("Entry2");
 
-            var originalCount = entry12.GetChildren().Count;
+            var originalCount = entry12.Axes.GetDescendants().Count(i => i.TemplateID.ToString() == m_commentTemplateId);
             ID commentId = null;
 
             try
@@ -449,7 +455,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 };
 
                 commentId = Mod.CommentManager.AddCommentToEntry(m_entry12.ID, comment);
-                var childCount = m_entry12.GetChildren().Count;
+                var childCount = m_entry12.Axes.GetDescendants().Count(i => i.TemplateID.ToString() == m_commentTemplateId);
 
                 Assert.IsTrue(commentId != ID.Null);
                 Assert.AreEqual(originalCount + 1, childCount);
