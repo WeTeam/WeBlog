@@ -31,36 +31,23 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static CategoryItem[] GetCategories(Item item)
         {
             var categoryList = new List<CategoryItem>();
-            var blogItem = item;
-            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
-
-            if(template != null)
+            var categoryRoot = GetCategoryRoot(item);
+            
+            if (categoryRoot != null && categoryRoot.HasChildren)
             {
-                //Check if current item equals blogroot
-                while (blogItem != null && !Utilities.Items.TemplateIsOrBasedOn(blogItem, template))
+                var categoryTemplate = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
+                if (categoryTemplate != null)
                 {
-                    blogItem = blogItem.Parent;
-                }
-
-                if (blogItem != null)
-                {
-                    var categoriesFolder = blogItem.Axes.GetChild("Categories");
-                    if (categoriesFolder != null && categoriesFolder.HasChildren)
+                    foreach (Item category in categoryRoot.GetChildren())
                     {
-                        var categoryTemplate = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
-                        if (categoryTemplate != null)
+                        if (Utilities.Items.TemplateIsOrBasedOn(category, categoryTemplate) && category.Versions.Count > 0)
                         {
-                            foreach (Item category in categoriesFolder.GetChildren())
-                            {
-                                if (Utilities.Items.TemplateIsOrBasedOn(category, categoryTemplate) && category.Versions.Count > 0)
-                                {
-                                    categoryList.Add(new CategoryItem(category));
-                                }
-                            }
+                            categoryList.Add(new CategoryItem(category));
                         }
                     }
                 }
             }
+
             return categoryList.ToArray();
         }
 
@@ -76,6 +63,45 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return GetCategories(item);
             else
                 return new CategoryItem[0];
+        }
+
+        /// <summary>
+        /// Gets a category for a blog by name
+        /// </summary>
+        /// <param name="item">The blog or an item underneath the blog to search for the category within</param>
+        /// <param name="name">The name of the category to locate</param>
+        /// <returns>The category if found, otherwise null</returns>
+        public static CategoryItem GetCategory(Item item, string name)
+        {
+            var categoryRoot = GetCategoryRoot(item);
+            return categoryRoot.Axes.GetChild(name);
+        }
+
+        /// <summary>
+        /// Gets the category root item for the current blog
+        /// </summary>
+        /// <param name="item">The item to search for the blog from</param>
+        /// <returns>The category folder if found, otherwise null</returns>
+        public static Item GetCategoryRoot(Item item)
+        {
+            var blogItem = item;
+            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+
+            if (template != null)
+            {
+                //Check if current item equals blogroot
+                while (blogItem != null && !Utilities.Items.TemplateIsOrBasedOn(blogItem, template))
+                {
+                    blogItem = blogItem.Parent;
+                }
+
+                if (blogItem != null)
+                {
+                    return blogItem.Axes.GetChild("Categories");
+                }
+            }
+
+            return null;
         }
 
         /// <summary>

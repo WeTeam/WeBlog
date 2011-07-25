@@ -44,6 +44,10 @@
     <Reference Include="CustomItemGenerator">
       <HintPath>..\Dependencies\Third-party\CustomItemGenerator.dll</HintPath>
     </Reference>
+    <Reference Include="Lucene.Net, Version=2.3.1.3, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\inetpub\WeBlog-64\Website\bin\Lucene.Net.dll</HintPath>
+    </Reference>
     <Reference Include="MSCaptcha">
       <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
     </Reference>
@@ -93,6 +97,7 @@
     <Compile Include="Commands\NewEntry.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Import\WpComment.cs" />
     <Compile Include="Import\WpImportManager.cs" />
     <Compile Include="Import\WpPost.cs" />
@@ -221,6 +226,7 @@
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="sitecore modules\WeBlog\Admin\NewBlog.aspx.cs">
       <DependentUpon>NewBlog.aspx</DependentUpon>
@@ -254,6 +260,7 @@
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="Utilities\Presentation.cs" />
     <Compile Include="Utilities\Publish.cs" />
+    <Compile Include="Utilities\Search.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
     <Compile Include="WebControls\Syndication.cs" />
     <Compile Include="WebControls\ThemeIncludes.cs" />
@@ -310,13 +317,17 @@
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\body-2col-bg.png" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\entry-list-separator.png" />
     <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="How to build.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.config" />
+    <Content Include="App_Config\Include\WeBlog.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\CustomItem.config" />
@@ -333,6 +344,7 @@
     <Content Include="sitecore modules\WeBlog\rsd.ashx" />
     <Content Include="sitecore modules\WeBlog\Rss.ashx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

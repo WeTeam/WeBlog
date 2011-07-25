@@ -18,6 +18,7 @@ namespace Sitecore.Modules.WeBlog.Test
     {
         private Item m_testRoot = null;
         private Item m_blog1 = null;
+        private Item m_categoryRoot = null;
         private Item m_category1 = null;
         private Item m_category2 = null;
         private Item m_category3 = null;
@@ -41,11 +42,11 @@ namespace Sitecore.Modules.WeBlog.Test
             m_testRoot = home.Axes.GetChild("blog test root");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
 
-            var categories = m_blog1.Axes.GetChild("categories");
-            m_category1 = categories.Axes.GetChild("category1");
-            m_category2 = categories.Axes.GetChild("category2");
-            m_category3 = categories.Axes.GetChild("category3");
-            m_category4 = categories.Axes.GetChild("category4");
+            m_categoryRoot = m_blog1.Axes.GetChild("categories");
+            m_category1 = m_categoryRoot.Axes.GetChild("category1");
+            m_category2 = m_categoryRoot.Axes.GetChild("category2");
+            m_category3 = m_categoryRoot.Axes.GetChild("category3");
+            m_category4 = m_categoryRoot.Axes.GetChild("category4");
 
             m_entry1 = m_blog1.Axes.GetDescendant("entry1");
             m_entry2 = m_blog1.Axes.GetDescendant("entry2");
@@ -178,6 +179,61 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var categories = Mod.CategoryManager.GetCategoriesByEntryID(ID.NewID);
             Assert.AreEqual(0, categories.Length);
+        }
+
+        [Test]
+        public void GetCategoryRoot_BelowBlog()
+        {
+            var root = Mod.CategoryManager.GetCategoryRoot(m_entry1);
+            Assert.IsNotNull(root);
+            Assert.AreEqual(m_categoryRoot.ID, root.ID);
+        }
+
+        [Test]
+        public void GetCategoryRoot_OnBlog()
+        {
+            var root = Mod.CategoryManager.GetCategoryRoot(m_blog1);
+            Assert.IsNotNull(root);
+            Assert.AreEqual(m_categoryRoot.ID, root.ID);
+        }
+
+        [Test]
+        public void GetCategoryRoot_OutsideBlog()
+        {
+            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            var root = Mod.CategoryManager.GetCategoryRoot(home);
+            Assert.IsNull(root);
+        }
+
+        [Test]
+        public void GetCategory_ByValidNameFromBlog()
+        {
+            var category = Mod.CategoryManager.GetCategory(m_blog1, m_category3.Name);
+            Assert.IsNotNull(category);
+            Assert.AreEqual(m_category3.ID, category.ID);
+        }
+
+        [Test]
+        public void GetCategory_ByInvalidNameFromBlog()
+        {
+            var category = Mod.CategoryManager.GetCategory(m_blog1, "blah");
+            Assert.IsNull(category);
+        }
+
+        [Test]
+        public void GetCategory_ByUppercaseValidNameFromBlog()
+        {
+            var category = Mod.CategoryManager.GetCategory(m_blog1, m_category3.Name.ToUpper());
+            Assert.IsNotNull(category);
+            Assert.AreEqual(m_category3.ID, category.ID);
+        }
+
+        [Test]
+        public void GetCategory_ByValidNameFromEntry()
+        {
+            var category = Mod.CategoryManager.GetCategory(m_entry2, m_category3.Name);
+            Assert.IsNotNull(category);
+            Assert.AreEqual(m_category3.ID, category.ID);
         }
     }
 }

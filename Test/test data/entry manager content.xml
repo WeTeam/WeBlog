@@ -150,7 +150,7 @@
             <version language="en" version="1">
               <fields>
                 <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-                  <content>tagc,tagd</content>
+                  <content>tagc,tagd,tag with space</content>
                 </field>
                 <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
                   <content>sitecore\admin</content>
@@ -234,7 +234,7 @@
             <version language="en" version="1">
               <fields>
                 <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-                  <content>tagb</content>
+                  <content>tagb,space</content>
                 </field>
                 <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
                   <content>sitecore\admin</content>

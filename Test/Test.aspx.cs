@@ -21,6 +21,7 @@ namespace Codeflood.Testing
 			// Initialise data table to hold test results
 			m_results.Columns.Add("test");
 			m_results.Columns.Add("result");
+            m_results.Columns.Add("time");
 			m_results.Columns.Add("message");
 			m_results.Columns.Add("class");
 
@@ -58,6 +59,15 @@ namespace Codeflood.Testing
 					categories.Add(cblCategories.Items[i].Value);
 			}
 
+            if (categories.Count == 0)
+            {
+                for (int i = 0; i < cblCategories.Items.Count; i++)
+                {
+                    if (!cblCategories.Items[i].Text.ToLower().Contains("performance"))
+                        categories.Add(cblCategories.Items[i].Value);
+                }
+            }
+
 			string[] arCats = new string[categories.Count];
 			categories.CopyTo(arCats, 0);
 
@@ -65,11 +75,7 @@ namespace Codeflood.Testing
 			ITestFilter filter = new CategoryFilter(arCats);
 			TestResult result = null;
 
-			// Run test suite with appropriate filter
-			if (arCats.Length >= 1)
-				result = m_testSuite.Run(this, filter);
-			else
-				result = m_testSuite.Run(this, NUnit.Core.Filters.SimpleNameFilter.Empty);
+            result = m_testSuite.Run(this, filter);
 
 			// Bind results to presentation
 			gvResults.DataSource = m_results;
@@ -142,6 +148,7 @@ namespace Codeflood.Testing
 			if (result.IsFailure)
 				dr["message"] += result.StackTrace;
 			dr["class"] = "notRun";
+            dr["time"] = result.Time;
 
 			if (result.IsSuccess && result.Executed)
 			{

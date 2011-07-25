@@ -30,6 +30,7 @@
 			<Columns>
 				<asp:BoundField DataField="test" HeaderText="Test" />
 				<asp:BoundField DataField="result" HeaderText="Result"/>
+                <asp:BoundField DataField="time" HeaderText="Time" />
 				<asp:TemplateField>
 					<ItemTemplate>
 						<div class="<%# Eval("class") %>">&nbsp;</div>
@@ -40,7 +41,7 @@
 		</asp:GridView>
 		<hr />
 		<h2>Category Filter</h2>
-		If no categories are selected the entire suite will run.
+		If no categories are selected the entire suite will run excluding the performance tests.
 		<asp:CheckBoxList runat="server" ID="cblCategories" RepeatColumns="8" RepeatDirection="Horizontal" RepeatLayout="Table" />
 		<asp:Button runat="server" ID="btnRun" Text="Run" OnClick="RunClick" /><br />
     </div>

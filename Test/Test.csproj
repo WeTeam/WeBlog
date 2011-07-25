@@ -64,6 +64,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -83,7 +84,9 @@
     <Content Include="test data\entries in order.xml" />
     <Content Include="test data\entries out of order.xml" />
     <Content Include="test data\entries reverse order.xml" />
-    <Content Include="test data\entry manager content.xml" />
+    <Content Include="test data\entry manager content.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="test data\tag manager content.xml" />
     <Content Include="test data\template content.xml">
       <SubType>Designer</SubType>
@@ -95,7 +98,9 @@
     <Compile Include="BlogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CommentManager.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="EntryManager.cs" />
+    <Compile Include="EntryManagerPerformance.cs" />
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">

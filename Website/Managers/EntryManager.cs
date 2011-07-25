@@ -9,6 +9,7 @@ using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.Blog;
 using System.Threading;
 using Sitecore.StringExtensions;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -25,6 +26,21 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var current = new EntryItem(Context.Item);
             return current;
+        }
+
+        /// <summary>
+        /// Gets the current context item as a blog entry
+        /// </summary>
+        /// <param name="item">The item to find the current entry item for</param>
+        /// <returns>The current blog entry</returns>
+        public static EntryItem GetCurrentBlogEntry(Item item)
+        {
+            var entryItem = Utilities.Items.GetCurrentItem(item, Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"));
+
+            if (entryItem != null)
+                return new Items.Blog.EntryItem(entryItem);
+            else
+                return null;
         }
 
         /// <summary>
@@ -111,7 +127,19 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the given blog</returns>
         public static EntryItem[] GetBlogEntries(ID blogID, int maxNumber)
         {
-            var blog = Context.Database.GetItem(blogID);
+            return GetBlogEntries(blogID, Context.Database, maxNumber);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blogID">The ID of the blog to get the entries for</param>
+        /// <param name="database">The database to get the blog from</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <returns>The entries for the given blog</returns>
+        public static EntryItem[] GetBlogEntries(ID blogID, Database database, int maxNumber)
+        {
+            var blog = database.GetItem(blogID);
             if (blog != null)
                 return GetBlogEntries(blog, maxNumber, null, null);
             else
@@ -127,7 +155,20 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the given blog</returns>
         public static EntryItem[] GetBlogEntries(ID blogID, int maxNumber, string tag)
         {
-            var blog = Context.Database.GetItem(blogID);
+            return GetBlogEntries(blogID, Context.Database, maxNumber, tag);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blogID">The ID of the blog to get the entries for</param>
+        /// <param name="database">The database to get the blog from</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <returns>The entries for the given blog</returns>
+        public static EntryItem[] GetBlogEntries(ID blogID, Database database, int maxNumber, string tag)
+        {
+            var blog = database.GetItem(blogID);
             if (blog != null)
                 return GetBlogEntries(blog, maxNumber, tag, null);
             else
@@ -145,19 +186,52 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var blogPostList = new List<EntryItem>();
 
-            if (blog != null)
+            if (blog != null && maxNumber > 0)
             {
-                var entries = blog.Axes.SelectItems(".//*");
+                var query = new CombinedQuery();
 
-                if (entries != null)
+                // TODO: What about items using templates derived from entryemplateid? need to accommodate those
+                var templateId = ID.Null;
+                ID.TryParse(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"), out templateId);
+                query.Add(new Sitecore.Search.FieldQuery(Sitecore.Search.BuiltinFields.Template, templateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+
+                query.Add(new Sitecore.Search.FieldQuery(Constants.Index.Fields.BlogID, blog.ID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+
+                if(!string.IsNullOrEmpty(tag))
+                    query.Add(new Sitecore.Search.FieldQuery(Constants.Index.Fields.Tags, Utilities.Search.TransformCSV(tag)), QueryOccurance.Must);
+
+                if(!string.IsNullOrEmpty(category))
                 {
-                    foreach (var entry in MakeSortedEntriesList(entries))
+                    var categoryItem = CategoryManager.GetCategory(blog, category);
+                    ID id = ID.Null;
+
+                    if (categoryItem != null)
+                        id = categoryItem.ID;
+
+                    query.Add(new Sitecore.Search.FieldQuery(Constants.Index.Fields.Category, id.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+                }
+
+                var index = Utilities.Search.GetSearchIndex();
+                if (index != null)
+                {
+                    using (var searchContext = index.CreateSearchContext())
                     {
-                        if ((string.IsNullOrEmpty(tag) || entry.TagsSplit.Contains(tag)) && (string.IsNullOrEmpty(category) || entry.Category.ListItems.Select(item => item.Name).Contains(category)))
-                            if (blogPostList.Count < maxNumber)
-                                blogPostList.Add(entry);
-                            else
-                                break;
+                        var hits = searchContext.Search(query);
+
+                        var sort = new Lucene.Net.Search.Sort(Constants.Index.Fields.Created);
+                        var prepQuery = searchContext.Prepare(query);
+
+                        searchContext.Searcher.Search(prepQuery.Query, sort);
+
+                        if (hits != null)
+                        {
+                            foreach (var result in hits.FetchResults(0, maxNumber))
+                            {
+                                var item = SearchManager.GetObject(result);
+                                if (item != null)
+                                    blogPostList.Add((EntryItem)(Item)item);
+                            }
+                        }
                     }
                 }
             }
@@ -189,6 +263,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return new EntryItem[0];
 
             // NewsMover places entries in year, month and day folders. We can rely on this to find entries by time
+            // TODO: What about if year and month folder are missing?
             var monthName = Thread.CurrentThread.CurrentCulture.DateTimeFormat.GetMonthName(month);
             var entryTemplateID = Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID");
             var entries = blog.Axes.SelectItems("./" + year.ToString() + "/" + monthName + "//*[@@templateid='{0}']".FormatWith(entryTemplateID));

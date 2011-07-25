@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.Utilities
 {
@@ -107,6 +108,31 @@ namespace Sitecore.Modules.WeBlog.Utilities
             }
 
             return foundItems.ToArray();
+        }
+
+        /// <summary>
+        /// Finds the current type of item for the given item
+        /// </summary>
+        /// <param name="item">The item to search from</param>
+        /// <param name="template">The template the target item must be based on or derived from</param>
+        /// <returns>The target item if found, otherwise null</returns>
+        public static Item GetCurrentItem(Item item, string template)
+        {
+            if (item == null)
+                return null;
+
+            var templateValue = item.Database.GetTemplate(template);
+            var currentItem = item;
+
+            while (currentItem != null && !Utilities.Items.TemplateIsOrBasedOn(currentItem, templateValue))
+            {
+                currentItem = currentItem.Parent;
+            }
+
+            if (currentItem != null)
+                return currentItem;
+            else
+                return null;
         }
     }
 }

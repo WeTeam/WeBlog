@@ -31,18 +31,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public static Items.Blog.BlogItem GetCurrentBlog(Item item)
         {
-            Assert.IsNotNull(item, "Item cannot be null");
+            var blogItem = Utilities.Items.GetCurrentItem(item, Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
 
-            var template = item.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
-            var currentItem = item;
-
-            while (currentItem != null && !Utilities.Items.TemplateIsOrBasedOn(currentItem, template))
-            {
-                currentItem = currentItem.Parent;
-            }
-
-            if (currentItem != null)
-                return new Items.Blog.BlogItem(currentItem);
+            if (blogItem != null)
+                return new Items.Blog.BlogItem(blogItem);
             else
                 return null;
         }

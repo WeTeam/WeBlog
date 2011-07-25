@@ -132,7 +132,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The number of comments</returns>
         public static int GetCommentsCount(Item entry)
         {
-            var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
+            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
             var count = 0;
 
             if (entry != null && template != null)
@@ -155,7 +155,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns></returns>
         public static int GetCommentsCount(ID entryId)
         {
-            var entry = Context.Database.GetItem(entryId);
+            var entry = GetDatabase().GetItem(entryId);
             if (entry != null)
                 return GetCommentsCount(entry);
             else
@@ -172,7 +172,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (blogId != (ID)null)
             {
-                var blogItem = Context.Database.GetItem(blogId);
+                var blogItem = GetDatabase().GetItem(blogId);
                 if (blogItem != null)
                 {
                     return GetCommentsByBlog(blogItem, maximumCount);
@@ -253,7 +253,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             if (entryItem != null)
             {
-                var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"));
+                var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"));
                 if (Utilities.Items.TemplateIsOrBasedOn(entryItem, template))
                 {
                     var count = 0;
@@ -279,7 +279,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
         {
             var commentItemList = new List<CommentItem>();
-            var template = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
+            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
 
             if (template != null)
             {
@@ -297,6 +297,14 @@ namespace Sitecore.Modules.WeBlog.Managers
             return commentItemList.ToArray();
         }
 
+        /// <summary>
+        /// Gets the appropriate database to be reading data from
+        /// </summary>
+        /// <returns>The appropriate content database</returns>
+        private static Database GetDatabase()
+        {
+            return Context.ContentDatabase ?? Context.Database;
+        }
 
         #region Obsolete Methods
         /// <summary>

@@ -7,6 +7,7 @@ using Sitecore.SecurityModel;
 using System.IO;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -57,6 +58,10 @@ namespace Sitecore.Modules.WeBlog.Test
             var blog2Categories = m_blog2.Axes.GetChild("categories");
             m_category21 = blog2Categories.Axes.GetChild("category1");
             m_category22 = blog2Categories.Axes.GetChild("category2");
+
+            // rebuild the WeBlog search index (or the entry manager won't work)
+            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            index.Rebuild();
         }
 
         [TestFixtureTearDown]
@@ -113,6 +118,16 @@ namespace Sitecore.Modules.WeBlog.Test
             Assert.AreEqual(2, entryIds.Length);
             Assert.Contains(m_entry11.ID, entryIds);
             Assert.Contains(m_entry12.ID, entryIds);
+        }
+
+        [Test]
+        public void GetBlogEntries_TagWithSpace()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetBlogEntries(m_blog1, int.MaxValue, "tag with space", null)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(1, entryIds.Length);
+            Assert.Contains(m_entry13.ID, entryIds);
         }
 
         [Test]
@@ -249,6 +264,10 @@ namespace Sitecore.Modules.WeBlog.Test
                 m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries in order.xml")), false, PasteMode.Overwrite);
             }
 
+            // rebuild the WeBlog search index (or the entry manager won't work)
+            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            index.Rebuild();
+
             var blog = m_testRoot.Axes.GetChild("MyBlog");
 
             try
@@ -256,7 +275,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 var entries = from entry in Mod.EntryManager.GetBlogEntries(blog)
                               select entry.InnerItem;
 
-                var sorted = Mod.EntryManager.MakeSortedEntriesList(entries.ToArray());
+                var sorted = entries.ToArray();
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Entry3", sorted[0].Name);
                 Assert.AreEqual("Entry2", sorted[1].Name);
@@ -282,6 +301,10 @@ namespace Sitecore.Modules.WeBlog.Test
                 m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries reverse order.xml")), false, PasteMode.Overwrite);
             }
 
+            // rebuild the WeBlog search index (or the entry manager won't work)
+            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            index.Rebuild();
+
             var blog = m_testRoot.Axes.GetChild("MyBlog");
 
             try
@@ -289,7 +312,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 var entries = from entry in Mod.EntryManager.GetBlogEntries(blog)
                               select entry.InnerItem;
 
-                var sorted = Mod.EntryManager.MakeSortedEntriesList(entries.ToArray());
+                var sorted = entries.ToArray();
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Entry1", sorted[0].Name);
                 Assert.AreEqual("Entry2", sorted[1].Name);
@@ -315,6 +338,10 @@ namespace Sitecore.Modules.WeBlog.Test
                 m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries out of order.xml")), false, PasteMode.Overwrite);
             }
 
+            // rebuild the WeBlog search index (or the entry manager won't work)
+            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            index.Rebuild();
+
             var blog = m_testRoot.Axes.GetChild("MyBlog");
 
             try
@@ -322,7 +349,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 var entries = from entry in Mod.EntryManager.GetBlogEntries(blog)
                               select entry.InnerItem;
 
-                var sorted = Mod.EntryManager.MakeSortedEntriesList(entries.ToArray());
+                var sorted = entries.ToArray();
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Yet another entry", sorted[0].Name);
                 Assert.AreEqual("Another Entry", sorted[1].Name);
