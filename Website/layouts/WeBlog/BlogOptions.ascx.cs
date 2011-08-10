@@ -8,9 +8,14 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             if (Sitecore.Context.PageMode.IsPageEditorEditing)
             {
-                EditModePanel.Visible = true;
-                CheckBoxEnableRSS.Checked = CurrentBlog.EnableRSS.Checked;
-                CheckBoxCommentsEmail.Checked = CurrentBlog.ShowEmailWithinComments.Checked;
+                if(EditModePanel != null)
+                    EditModePanel.Visible = true;
+
+                if(CheckBoxEnableRSS != null)
+                    CheckBoxEnableRSS.Checked = CurrentBlog.EnableRSS.Checked;
+
+                if(CheckBoxCommentsEmail != null)
+                    CheckBoxCommentsEmail.Checked = CurrentBlog.ShowEmailWithinComments.Checked;
             }
         }
     }

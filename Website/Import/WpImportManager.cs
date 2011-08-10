@@ -42,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.Import
 
         internal static void ImportPosts(Data.Items.Item blogItem, List<WpPost> listWordpressPosts, Database db)
         {
-            Template entryTemplate = TemplateManager.GetTemplate(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID")), db);
+            Template entryTemplate = TemplateManager.GetTemplate(Settings.EntryTemplateId, db);
 
             foreach (WpPost post in listWordpressPosts)
             {

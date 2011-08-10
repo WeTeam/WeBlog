@@ -51,17 +51,22 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 string tag = Request.QueryString["tag"];
                 BindEntries(tag);
                 string blogUrl = Sitecore.Links.LinkManager.GetItemUrl(Sitecore.Context.Item);
-                ancViewMore.HRef = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
-                if (tag != null)
+
+                if (ancViewMore != null)
                 {
-                    ancViewMore.HRef += "&tag=" + Server.UrlEncode(tag);
+                    ancViewMore.HRef = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
+
+                    if (tag != null)
+                    {
+                        ancViewMore.HRef += "&tag=" + Server.UrlEncode(tag);
+                    }
                 }
             }
         }
 
         protected virtual void BindEntries(string tag)
         {
-            var categoryTemplateID = Sitecore.Data.ID.Parse(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
+            var categoryTemplateID = Settings.CategoryTemplateId;
             var categoryTemplate = new TemplateItem(Sitecore.Context.Database.GetItem(categoryTemplateID));
 
             IEnumerable<EntryItem> entries;
@@ -87,11 +92,16 @@ namespace Sitecore.Modules.WeBlog.Layouts
             }
             if ((StartIndex + TotalToShow) >= entries.Count())
             {
-                ancViewMore.Visible = false;
+                if(ancViewMore != null)
+                    ancViewMore.Visible = false;
             }
             entries = entries.Skip(StartIndex).Take(TotalToShow);
-            EntryList.DataSource = entries;
-            EntryList.DataBind();
+
+            if (EntryList != null)
+            {
+                EntryList.DataSource = entries;
+                EntryList.DataBind();
+            }
         }
 
         protected void EntryDataBound(object sender, ListViewItemEventArgs args)

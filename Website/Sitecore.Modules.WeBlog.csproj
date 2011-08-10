@@ -95,6 +95,7 @@
     <Compile Include="Commands\NewBlog.cs" />
     <Compile Include="Commands\NewCategory.cs" />
     <Compile Include="Commands\NewEntry.cs" />
+    <Compile Include="Commands\RebuildIndex.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
     <Compile Include="Constants.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
     <Compile Include="Services\ICommentService.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="sitecore modules\WeBlog\Admin\NewBlog.aspx.cs">
       <DependentUpon>NewBlog.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

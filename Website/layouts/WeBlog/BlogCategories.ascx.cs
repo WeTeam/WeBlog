@@ -11,7 +11,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             if (!IsPostBack)
             {
-                titleCategories.Item = CurrentBlog.InnerItem;
+                if(titleCategories != null)
+                    titleCategories.Item = CurrentBlog.InnerItem;
                 LoadCategories();
             }
         }
@@ -23,12 +24,16 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             if (CategoryManager.GetCategories().Length == 0)
             {
-                PanelCategories.Visible = false;
+                if(PanelCategories != null)
+                    PanelCategories.Visible = false;
             }
             else
             {
-                ListViewCategories.DataSource = CategoryManager.GetCategories();
-                ListViewCategories.DataBind();
+                if (ListViewCategories != null)
+                {
+                    ListViewCategories.DataSource = CategoryManager.GetCategories();
+                    ListViewCategories.DataBind();
+                }
             }
         }
 

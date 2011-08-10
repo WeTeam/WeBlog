@@ -25,15 +25,14 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
             if (item != null && document != null)
             {
                 // Add the blog this item is under
-                var blog = BlogManager.GetCurrentBlog(item);
+                /*var blog = BlogManager.GetCurrentBlog(item);
                 if (blog != null)
                 {
                     document.Add(new Field(Constants.Index.Fields.BlogID, TransformValue(blog.ID), Field.Store.YES, Field.Index.UN_TOKENIZED));
                 }
 
                 // Add the entry this item is under if the item itself is not an entry
-                ID id = ID.Null;
-                ID.TryParse(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"), out id);
+                ID id = Settings.EntryTemplateId;
 
                 // TODO: What about items using templates derived from entryemplateid? need to accommodate those
                 if (item.TemplateID != id)
@@ -43,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
                     {
                         document.Add(new Field(Constants.Index.Fields.EntryID, TransformValue(entry.ID), Field.Store.YES, Field.Index.UN_TOKENIZED));
                     }
-                }
+                }*/
 
                 // Add multilist fields
                 foreach (var fieldName in m_multilistFields)

@@ -13,13 +13,13 @@ templatekey: Layout
 field: {A036B2BC-BA04-44F6-A75F-BAE6CD242ABF}
 name: Path
 key: path
-content-length: 33
+content-length: 35
 
-/layouts/Blog/BlogLayoutAjax.aspx
+/layouts/WeBlog/BlogLayoutAjax.aspx
 ----version----
 language: en
 version: 1
-revision: 23e55b28-43e0-49d2-911d-5e50d32ab801
+revision: 05efad3b-cda8-426b-93c4-d6ac2c089e2c
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-23e55b28-43e0-49d2-911d-5e50d32ab801
+05efad3b-cda8-426b-93c4-d6ac2c089e2c
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110403T215927:634374647674541015
+20110624T173421:634445336610677384
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

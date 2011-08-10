@@ -8,6 +8,7 @@ using System.Web;
 using Sitecore;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -64,6 +65,10 @@ namespace Sitecore.Modules.WeBlog.Test
             m_entry21 = m_blog2.Axes.GetDescendant("Entry1");
             m_comment211 = m_entry21.Axes.GetDescendant("Comment1");
             m_comment212 = m_entry21.Axes.GetDescendant("Comment2");
+
+            // rebuild the WeBlog search index (or the comment manager won't work)
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            index.Rebuild();
         }
 
         [TearDown]
@@ -321,10 +326,10 @@ namespace Sitecore.Modules.WeBlog.Test
             var ids = (from comment in comments
                        select comment.ID).ToArray();
 
-            Assert.Contains(m_comment111.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
+            Assert.Contains(m_comment122.ID, ids);
             Assert.Contains(m_comment121.ID, ids);
+            Assert.Contains(m_comment113.ID, ids);
+            Assert.Contains(m_comment112.ID, ids);
         }
 
         [Test]
@@ -336,10 +341,10 @@ namespace Sitecore.Modules.WeBlog.Test
             var ids = (from comment in comments
                        select comment.ID).ToArray();
 
-            Assert.Contains(m_comment111.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
+            Assert.Contains(m_comment122.ID, ids);
             Assert.Contains(m_comment121.ID, ids);
+            Assert.Contains(m_comment113.ID, ids);
+            Assert.Contains(m_comment112.ID, ids);
         }
 
         [Test]
@@ -406,7 +411,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var ids = (from comment in comments
                        select comment.ID).ToArray();
 
-            Assert.Contains(m_comment111.ID, ids);
+            Assert.Contains(m_comment113.ID, ids);
             Assert.Contains(m_comment112.ID, ids);
         }
 

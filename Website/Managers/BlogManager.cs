@@ -31,7 +31,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public static Items.Blog.BlogItem GetCurrentBlog(Item item)
         {
-            var blogItem = Utilities.Items.GetCurrentItem(item, Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var blogItem = Utilities.Items.GetCurrentItem(item, Settings.BlogTemplateIdString);
 
             if (blogItem != null)
                 return new Items.Blog.BlogItem(blogItem);
@@ -66,8 +66,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static Items.Blog.BlogItem[] GetAllBlogs()
         {
             // TODO: Store the result of this call in cache and clear it from cache on publish
-            var blogTemplate = Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
-            var contentRoot = Context.Database.GetItem(Sitecore.Configuration.Settings.GetSetting("Blog.ContentRootPath", "/sitecore/content"));
+            var blogTemplate = Context.Database.GetTemplate(Settings.BlogTemplateIdString);
+            var contentRoot = Context.Database.GetItem(Settings.ContentRootPath);
             var blogItems = Utilities.Items.FindItemsByTemplateOrDerivedTemplate(contentRoot, blogTemplate);
             return (from item in blogItems select new BlogItem(item)).ToArray();
         }

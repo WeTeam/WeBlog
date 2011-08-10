@@ -98,6 +98,7 @@
     <Compile Include="BlogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CommentManager.cs" />
+    <Compile Include="CommentManagerPerformance.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="EntryManager.cs" />
     <Compile Include="EntryManagerPerformance.cs" />

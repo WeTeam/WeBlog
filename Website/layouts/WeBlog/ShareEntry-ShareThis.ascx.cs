@@ -12,7 +12,7 @@ namespace Sitecore.Modules.WeBlog.layouts.Blog
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            ShareThisPublisherID = Sitecore.Configuration.Settings.GetSetting("Blog.ShareThisPublisherID");
+            ShareThisPublisherID = Settings.ShareThisPublisherID;
             DataBind();
         }
     }

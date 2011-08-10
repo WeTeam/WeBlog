@@ -35,7 +35,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             
             if (categoryRoot != null && categoryRoot.HasChildren)
             {
-                var categoryTemplate = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"));
+                var categoryTemplate = GetDatabase().GetTemplate(Settings.CategoryTemplateId);
                 if (categoryTemplate != null)
                 {
                     foreach (Item category in categoryRoot.GetChildren())
@@ -85,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static Item GetCategoryRoot(Item item)
         {
             var blogItem = item;
-            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var template = GetDatabase().GetTemplate(Settings.BlogTemplateId);
 
             if (template != null)
             {
@@ -113,7 +113,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static CategoryItem Add(string categoryName, Item item)
         {
             Item blogItem = item;
-            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"));
+            var template = GetDatabase().GetTemplate(Settings.BlogTemplateId);
             
 
             if (template != null)

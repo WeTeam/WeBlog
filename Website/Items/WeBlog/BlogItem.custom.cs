@@ -103,7 +103,7 @@ namespace Sitecore.Modules.WeBlog.Items.Blog
                 List<Feeds.RSSFeedItem> feeds = null;
                 if (this.EnableRSS.Checked)
                 {
-                    var rssTemplateID = Sitecore.Configuration.Settings.GetSetting("Blog.RSSFeedTemplateID");
+                    var rssTemplateID = Settings.RssFeedTemplateIdString;
                     Item[] feedItems = this.InnerItem.Axes.SelectItems(string.Format("./*[@@templateid='{0}']", rssTemplateID));
                     if (feedItems != null)
                     {

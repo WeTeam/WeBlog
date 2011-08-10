@@ -1,0 +1,241 @@
+----item----
+version: 1
+id: {0D6A1C29-23A5-4602-B0D3-57862CA9F542}
+database: core
+path: /sitecore/content/Applications/Control Panel/Database/Rebuild WeBlog search index
+parent: {82419497-F084-4C31-931F-551389260CE9}
+name: Rebuild WeBlog search index
+master: {C5F1AA82-F831-477E-BA04-11D435D476E4}
+template: {BDB6FA46-2F76-4BDE-8138-52B56C2FC47E}
+templatekey: Task option
+
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 2
+
+30
+----field----
+field: {20F47B0C-B146-4847-AC4D-0B25983514B3}
+name: Click
+key: click
+content-length: 17
+
+blog:rebuildindex
+----field----
+field: {DEC8D2D5-E3CF-48B6-A653-8E69E2716641}
+name: __Security
+key: __security
+content-length: 86
+
+ar|sitecore\Sitecore Client Maintaining|pe|+item:read|pd|+item:read|a?|Everyone|p*|!*|
+----version----
+language: da
+version: 1
+revision: c8f60220-3f3a-43da-a5df-5ed9d2a34e10
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 21
+
+Genopbyg søgeindekset
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110324T095655:634365574154314179
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+c8f60220-3f3a-43da-a5df-5ed9d2a34e10
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110324T095655:634365574154314179
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: de-DE
+version: 1
+revision: c626279c-18e0-4626-817b-0ecb2ab2e428
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 27
+
+Such Index wiederherstellen
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110324T095945:634365575856389001
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+c626279c-18e0-4626-817b-0ecb2ab2e428
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110324T095945:634365575856389001
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: en
+version: 1
+revision: 6b1aa706-4077-401f-babd-4be256223290
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 31
+
+Rebuild the WeBlog Search Index
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110805T093413:634481336538372637
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+6b1aa706-4077-401f-babd-4be256223290
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110805T093413:634481336538372637
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: ja-JP
+version: 1
+revision: 43bd5bd3-3c5c-4303-b264-d4d4e9013994
+
+----field----
+field: {48323B75-9F6A-4779-AC8B-A01DA56B35B3}
+name: Header
+key: header
+content-length: 14
+
+検索インデックスを再構築する
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 34
+
+20110324T100425:634365578650054267
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+43bd5bd3-3c5c-4303-b264-d4d4e9013994
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20110324T100425:634365578650054267
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

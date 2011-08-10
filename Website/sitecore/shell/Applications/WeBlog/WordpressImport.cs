@@ -99,7 +99,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
                 Item root = db.GetItem(litSummaryPath.Text);
 
-                BranchItem newBlog = db.Branches.GetMaster(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.BlogBranchTemplateID")));
+                BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchId);
                 BlogItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
 
                 blogItem.BeginEdit();

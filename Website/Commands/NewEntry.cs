@@ -35,7 +35,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                     string itemTitle = args.Result;
 
                     Database current = Factory.GetDatabase("master");
-                    TemplateID template = new TemplateID(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID")));
+                    TemplateID template = new TemplateID(Settings.EntryTemplateId);
 
                     Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(args.Parameters["currentid"]), args.Parameters["database"]);
                     Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
@@ -51,7 +51,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 string currentTID = args.Parameters["tid"];
 
-                if (currentTID != Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID") && currentTID != Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID") && currentTID != Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID"))
+                if (currentTID != Settings.BlogTemplateIdString && currentTID != Settings.EntryTemplateIdString && currentTID != Settings.EntryTemplateIdString)
                 {
                     Context.ClientPage.ClientResponse.Alert("Please create or select a blog first");
                 }

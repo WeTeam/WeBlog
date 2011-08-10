@@ -23,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
                 args.Parameters.Add("uri", context.Items[0].Uri.ToString());
-                if (context.Items[0].TemplateID == new ID(Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID")))
+                if (context.Items[0].TemplateID == Settings.BlogTemplateId)
                 {
                     Context.ClientPage.Start(this, "StartFieldEditor", args);
                 }
@@ -51,7 +51,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             Sitecore.Diagnostics.Assert.IsNotNull(uri, URI);
             Sitecore.Data.Items.Item item = Sitecore.Data.Database.GetItem(uri);
 
-            while (item.TemplateID.ToString() != Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"))
+            while (item.TemplateID != Settings.BlogTemplateId)
             {
                 item = item.Parent;
             }

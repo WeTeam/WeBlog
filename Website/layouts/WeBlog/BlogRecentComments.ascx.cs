@@ -13,14 +13,19 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
             if (CommentManager.GetCommentsByBlog(CurrentBlog.ID, totalToShow).Length == 0)
             {
-                PanelRecentComments.Visible = false;
+                if(PanelRecentComments != null)
+                    PanelRecentComments.Visible = false;
             }
             else
             {
-                ListViewRecentComments.DataSource = CommentManager.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
-                ListViewRecentComments.DataBind();
+                if (ListViewRecentComments != null)
+                {
+                    ListViewRecentComments.DataSource = CommentManager.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
+                    ListViewRecentComments.DataBind();
+                }
 
-                titleRecentComments.Item = CurrentBlog.InnerItem;
+                if(titleRecentComments != null)
+                    titleRecentComments.Item = CurrentBlog.InnerItem;
             }
         }
 

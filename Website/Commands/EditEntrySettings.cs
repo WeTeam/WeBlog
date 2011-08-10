@@ -23,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
                 args.Parameters.Add("uri", context.Items[0].Uri.ToString());
-                if (context.Items[0].TemplateID == new ID(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID")))
+                if (context.Items[0].TemplateID == Settings.EntryTemplateId)
                 {
                     Context.ClientPage.Start(this, "StartFieldEditor", args);
                 }

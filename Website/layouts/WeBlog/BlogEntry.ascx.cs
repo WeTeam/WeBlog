@@ -218,7 +218,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <returns>The URL for the gravatar image</returns>
         protected virtual string GetGravatarUrl(string email)
         {
-            var baseUrl = Sitecore.Configuration.Settings.GetSetting("Blog.Gravatar.ImageService");
+            var baseUrl = Settings.GravatarImageServiceUrl;
             if (!string.IsNullOrEmpty(baseUrl))
             {
                 return baseUrl + "/" + Utilities.Crypto.GetMD5Hash(email) + ".jpg" +

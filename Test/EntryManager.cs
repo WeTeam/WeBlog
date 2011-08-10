@@ -60,7 +60,7 @@ namespace Sitecore.Modules.WeBlog.Test
             m_category22 = blog2Categories.Axes.GetChild("category2");
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
         }
 
@@ -265,7 +265,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
             var blog = m_testRoot.Axes.GetChild("MyBlog");
@@ -302,7 +302,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
             var blog = m_testRoot.Axes.GetChild("MyBlog");
@@ -339,7 +339,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
             var blog = m_testRoot.Axes.GetChild("MyBlog");

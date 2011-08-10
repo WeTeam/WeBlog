@@ -32,8 +32,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
             if (!Page.IsPostBack)
             {
                 LoadEntries();
-                Years.DataSource = GetYears();
-                Years.DataBind();
+                if (Years != null)
+                {
+                    Years.DataSource = GetYears();
+                    Years.DataBind();
+                }
             }
         }
 

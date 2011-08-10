@@ -15,8 +15,12 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 this.Visible = false;
                 return;
             }
-            FeedList.DataSource = feeds;
-            FeedList.DataBind();
+
+            if (FeedList != null)
+            {
+                FeedList.DataSource = feeds;
+                FeedList.DataBind();
+            }
         }
     }
 }

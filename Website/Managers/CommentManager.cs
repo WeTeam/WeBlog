@@ -13,6 +13,7 @@ using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.SecurityModel;
 using Sitecore.Web;
 using Sitecore.Modules.WeBlog.Import;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -30,7 +31,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static ID AddCommentToEntry(ID entryId, Model.Comment comment)
         {
             var database = Factory.GetDatabase("master");
-            var template = database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
+            var template = database.GetTemplate(Settings.CommentTemplateId);
 
             if (template != null)
             {
@@ -132,10 +133,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The number of comments</returns>
         public static int GetCommentsCount(Item entry)
         {
-            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
-            var count = 0;
+           /* var template = GetDatabase().GetTemplate(Settings.CommentTemplateIdString);
+            var count = 0;*/
 
-            if (entry != null && template != null)
+            /*if (entry != null && template != null)
             {
                 var descendants = entry.Axes.GetDescendants();
                 foreach (Item descendant in descendants)
@@ -143,9 +144,11 @@ namespace Sitecore.Modules.WeBlog.Managers
                     if (Utilities.Items.TemplateIsOrBasedOn(descendant, template))
                         count++;
                 }
-            }
+            }*/
 
-            return count;
+            return GetEntryComments(entry).Length;
+
+            //return count;
         }
 
         /// <summary>
@@ -190,26 +193,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The comments for the blog entry</returns>
         public static CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
         {
-            var commentList = new List<CommentItem>();
-
-            //refactored to run as sitecore query. inefficient but gets most recent from ALL comments
-            //could be refactored again to use Lucene?
-            if (blogItem != null)
-            {
-                var commentTemplateID = Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID");
-                var comments = blogItem.Axes.SelectItems(string.Format(".//*[@@templateid='{0}']", commentTemplateID));
-                if (comments != null)
-                {
-                    commentList = MakeSortedCommentsList(comments).ToList();
-                    //commentList.Reverse();
-                    return commentList.Take(maximumCount).ToArray();
-                }
-                else
-                {
-                    Log.Error("CommentManager.GetCommentsByBlog: Failed to find blog entry template", typeof(CommentManager));
-                }
-            }
-            return commentList.ToArray();
+            return GetCommentsFor(blogItem, maximumCount);
         }
 
         /// <summary>
@@ -249,26 +233,38 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The comments for the blog entry</returns>
         public static CommentItem[] GetEntryComments(Item entryItem, int maximumCount)
         {
-            var comments = new List<CommentItem>();
-
             if (entryItem != null)
             {
-                var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"));
+                var template = GetDatabase().GetTemplate(Settings.EntryTemplateIdString);
                 if (Utilities.Items.TemplateIsOrBasedOn(entryItem, template))
                 {
-                    var count = 0;
-                    foreach (var comment in MakeSortedCommentsList(entryItem.Axes.GetDescendants()))
-                    {
-                        if (count < maximumCount)
-                        {
-                            comments.Add(comment);
-                            count++;
-                        }
-                    }
+                    return GetCommentsFor(entryItem, maximumCount);
                 }
             }
 
-            return comments.ToArray();
+            return new CommentItem[0];
+        }
+
+        /// <summary>
+        /// Gets the comments for the given blog entry
+        /// </summary>
+        /// <param name="item">The item to get the comments under</param>
+        /// <param name="maximumCount">The maximum number of comments to retrieve</param>
+        /// <returns>The comments which are decendants of the given item</returns>
+        public static CommentItem[] GetCommentsFor(Item item, int maximumCount)
+        {
+            if (item != null && maximumCount > 0)
+            {
+                var query = new CombinedQuery();
+
+                // TODO: What about items using templates derived from entryemplateid? need to accommodate those
+                query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Template, Settings.CommentTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+                query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
+
+                return Utilities.Search.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem));
+            }
+
+            return new CommentItem[0];
         }
 
         /// <summary>
@@ -279,7 +275,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
         {
             var commentItemList = new List<CommentItem>();
-            var template = GetDatabase().GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID"));
+            var template = GetDatabase().GetTemplate(Settings.CommentTemplateId);
 
             if (template != null)
             {
@@ -341,7 +337,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var commentItemList = new List<Item>();
             foreach (Item item in array)
             {
-                if (item.TemplateID.ToString() == Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID") && item.Versions.GetVersions().Length > 0)
+                if (item.TemplateID == Settings.CommentTemplateId && item.Versions.GetVersions().Length > 0)
                 {
                     commentItemList.Add(item);
                 }

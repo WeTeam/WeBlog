@@ -7,13 +7,19 @@ namespace Sitecore.Modules.WeBlog.Layouts
 	{
         protected void uxCaptchaValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            uxCaptchaCode.ValidateCaptcha(uxCaptchaText.Text);
-            args.IsValid = uxCaptchaCode.UserValidated;
+            if (uxCaptchaCode != null)
+            {
+                uxCaptchaCode.ValidateCaptcha(uxCaptchaText.Text);
+                args.IsValid = uxCaptchaCode.UserValidated;
+            }
         }
 
         protected void uxCaptchaCode_RefreshButtonClick(object sender, ImageClickEventArgs arg)
         {
-            uxCaptchaText.Focus();
+            if (uxCaptchaText != null)
+            {
+                uxCaptchaText.Focus();
+            }
         }
 	}
 }

@@ -5,7 +5,7 @@
 
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head runat="server">
-    <title></title>
+    <title><%= GetItemTitle() %></title>
     <wb:Syndication runat="server" />
     <wb:RsdIncludes runat="server" />
     <link href="/sitecore modules/Blog/Includes/Common.css" rel="stylesheet" />

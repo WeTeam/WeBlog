@@ -49,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 string currentTID = args.Parameters["tid"];
 
-                if (currentTID == Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID"))
+                if (currentTID == Settings.BlogTemplateIdString)
                 {
                     Context.ClientPage.ClientResponse.Alert("Cannot create a blog within a blog");
                 }

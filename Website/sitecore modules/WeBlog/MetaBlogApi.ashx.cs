@@ -329,7 +329,7 @@ namespace Sitecore.Modules.WeBlog
 
             Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(blogid), "master");
 
-            TemplateID template = new TemplateID(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID")));
+            TemplateID template = new TemplateID(Settings.EntryTemplateId);
             Item newItem = ItemManager.AddFromTemplate(EntryTitle, template, currentBlog);
 
             EntryItem createdEntry = new EntryItem(newItem);
@@ -523,7 +523,7 @@ namespace Sitecore.Modules.WeBlog
 
                     Database db = Factory.GetDatabase("master");
                     ID currentID = ID.Parse(entryId);
-                    TemplateID templateID = new TemplateID(new ID(Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID")));
+                    TemplateID templateID = new TemplateID(Settings.CommentTemplateId);
                     Item currentItem = db.GetItem(currentID);
 
                     Item newPingbackItem = currentItem.Add("Pingback", templateID);

@@ -14,5 +14,5 @@
         <sc:placeholder ID="phBlogSidebar" key="phBlogSidebar" runat="server" />
     </div>
 
-    <div class="blog-footer">Powered by Blog</div>
+    <div class="blog-footer">Powered by <a href="http://trac.sitecore.net/WeBlog">WeBlog</a></div>
 </div>

@@ -25,20 +25,25 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             if (TagManager.GetAllTags().Count == 0)
             {
-                PanelTagCloud.Visible = false;
+                if(PanelTagCloud != null)
+                    PanelTagCloud.Visible = false;
             }
             else
             {
                 // Set title
-                titleTagcloud.Item = CurrentBlog.InnerItem;
+                if(titleTagcloud != null)
+                    titleTagcloud.Item = CurrentBlog.InnerItem;
 
                 var tags = TagManager.GetAllTags();
 
                 m_min = (from tag in tags select tag.Value).Min();
                 m_max = (from tag in tags select tag.Value).Max();
 
-                TagList.DataSource = tags;
-                TagList.DataBind();
+                if (TagList != null)
+                {
+                    TagList.DataSource = tags;
+                    TagList.DataBind();
+                }
             }
         }
 

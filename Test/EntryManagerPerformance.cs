@@ -61,7 +61,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             // rebuild the WeBlog search index (or the entry manager won't work)
             // publishing will update the index, but perhaps not as quickly as we need here
-            var index = SearchManager.GetIndex(Sitecore.Modules.WeBlog.Constants.Index.Name);
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
         }
 
@@ -234,7 +234,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 startDate = startDate.AddDays(-2);
                 var dateString = Sitecore.DateUtil.ToIsoDate(startDate);
-                var xml = string.Format(Constants.ItemXmlTemplate, i, dateString, dateString);
+                var xml = string.Format(Constants.EntryItemXmlTemplate, i, dateString, dateString);
 
                 var entry = blog.PasteItem(xml, true, PasteMode.Undefined);
 

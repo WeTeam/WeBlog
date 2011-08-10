@@ -41,22 +41,3 @@
         </ul>
     </FooterTemplate>
 </asp:Repeater>
-
-<%--<asp:Repeater runat="server" ID="Years">
-    <HeaderTemplate>
-        <ul id="blog-archive" class="sidebar">
-    </HeaderTemplate>
-    <ItemTemplate>
-        <li class="month" onClick="ToggleVisibility('entries-<%# Eval("Year") %>' + year + month + "\")"></li>
-        <ul id="month-<%# Eval("Year") %>" class="month">
-            <asp:Repeater runat="server" ID="Months">
-                <ItemTemplate>
-                    
-                </ItemTemplate>
-            </asp:Repeater>
-        </ul>
-    </ItemTemplate>
-    <FooterTemplate>
-        </ul>
-    </FooterTemplate>
-</asp:Repeater>--%>

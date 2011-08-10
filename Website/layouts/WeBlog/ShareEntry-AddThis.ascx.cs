@@ -12,7 +12,7 @@ namespace Sitecore.Modules.WeBlog.layouts.Blog
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            var addThisAccountName = Sitecore.Configuration.Settings.GetSetting("Blog.AddThisAccountName");
+            var addThisAccountName = Settings.AddThisAccountName;
             AddThisAccountName = string.IsNullOrEmpty(addThisAccountName) ? "" : "#pubid=" + addThisAccountName;
             DataBind();
         }
