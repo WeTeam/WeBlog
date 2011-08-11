@@ -46,7 +46,7 @@
     </Reference>
     <Reference Include="Lucene.Net, Version=2.3.1.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\inetpub\WeBlog-64\Website\bin\Lucene.Net.dll</HintPath>
+      <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
     </Reference>
     <Reference Include="MSCaptcha">
       <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
