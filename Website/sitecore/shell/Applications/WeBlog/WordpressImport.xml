@@ -4,8 +4,8 @@
     <Script Src="/sitecore/shell/Applications/Install/installer.js" />
     <WizardForm CodeBeside="Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog.WordpressImport,Sitecore.Modules.WeBlog">
 
-      <WizardFormFirstPage ID="FirstPage" Icon="Custom/32x32/Publish.png">
-        <Border Class="scWizardWelcomeTitle"><Literal ID="Welcome" Text="Welcome to the Wordpress Import Wizard."/></Border>
+      <WizardFormFirstPage ID="FirstPage" Icon="Business/32x32/address_book.png">
+        <Border Class="scWizardWelcomeTitle"><Literal ID="Welcome" Text="Welcome to the WeBlog Import Wizard."/></Border>
         <Literal Text="This wizard helps you:"/>
         <ul>
           <li class="scWizardBullet"><Literal Text="Create a new WeBlog"/></li>
@@ -13,7 +13,7 @@
         </ul>
       </WizardFormFirstPage>
       
-      <WizardFormPage ID="Settings" Header="Blog settings" Text="Please choose your action." Icon="Custom/32x32/Publish.png">
+      <WizardFormPage ID="Settings" Header="Blog settings" Text="Please choose your action." Icon="Business/32x32/address_book.png">
         <WizardFormPadding>
 
           <Scrollbox ID="SettingsPane" Border="none" Background="transparent">
@@ -45,7 +45,7 @@
         </WizardFormPadding>
       </WizardFormPage>
 
-      <WizardFormPage ID="Import" Header="Wordpress Import" Text="Use the form below to import your Wordpress XML" Icon="Applications/32x32/Export1.png">
+      <WizardFormPage ID="Import" Header="Wordpress Import" Text="Use the form below to import your Wordpress XML" Icon="Business/32x32/address_book.png">
         <WizardFormPadding>
           <Scrollbox ID="ImportPane" Border="none" Background="transparent">
             
@@ -79,7 +79,7 @@
         </WizardFormPadding>
       </WizardFormPage>
 
-      <WizardFormPage ID="CreateBlog" Header="Create your blog" Text="Create the blog" Icon="Applications/32x32/Export1.png">
+      <WizardFormPage ID="CreateBlog" Header="Create your blog" Text="Create the blog" Icon="Business/32x32/address_book.png">
         <WizardFormPadding>
           <Scrollbox ID="CreatePane" Border="none" Background="transparent">
 
@@ -104,7 +104,7 @@
         </WizardFormPadding>
       </WizardFormPage>
 
-      <WizardFormPage ID="Summary" Header="Settings summary" Text="Summary" Icon="Applications/32x32/Export1.png">
+      <WizardFormPage ID="Summary" Header="Settings summary" Text="Summary" Icon="Business/32x32/address_book.png">
         <WizardFormPadding>
           <Scrollbox ID="SummaryPane" Border="none" Background="transparent">
 
@@ -146,6 +146,29 @@
 
           </Scrollbox>
         </WizardFormPadding>
+      </WizardFormPage>
+
+      <WizardFormPage ID="ImportJob" Header="Creating blog" Text="This may take a few minutes." Icon="Business/32x32/address_book.png">
+        <Edit Mode="Hidden" ID="JobHandle" Width="0" Height="0"/>
+        <GridPanel Width="100%">
+          <Space Height="64"/>
+
+          <ThemedImage Src="Business/48x48/address_book.png" Width="48" Height="48" GridPanel.Align="center"/>
+
+          <Space Height="16"/>
+
+          <Border Align="center">
+            <ThemedImage Src="Images/progress.gif" Width="94" Height="17"/>
+          </Border>
+
+          <Space Height="16"/>
+
+          <Border Align="center" GridPanel.Align="center" GridPanel.Style="font-weight:bold">
+            <Literal Text="Creating blog and importing xml..."/>
+            <Literal ID="StatusMessage"/>
+          </Border>
+
+        </GridPanel>
       </WizardFormPage>
 
       <WizardFormLastPage ID="LastPage" Icon="Custom/32x32/Publish.png">

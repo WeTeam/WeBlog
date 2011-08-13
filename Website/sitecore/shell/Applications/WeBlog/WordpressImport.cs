@@ -20,6 +20,7 @@ using Sitecore.SecurityModel;
 using Sitecore.Configuration;
 using Sitecore.Web;
 using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Jobs;
 
 namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 {
@@ -39,9 +40,12 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected Literal litSummaryCategories;
         protected Literal litSummaryComments;
         protected Literal litSummaryTags;
+        protected Literal StatusMessage;
+        protected Literal Status;
 
         protected Edit litSettingsName;
         protected Edit litSettingsEmail;
+        protected Edit JobHandle;
 
         protected Checkbox ImportPosts;
         protected Checkbox ImportCategories;
@@ -50,6 +54,8 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 
         protected Database db = Factory.GetDatabase("master");
         #endregion
+
+        private string jobStatus;
 
         protected override void OnLoad(EventArgs e)
         {
@@ -65,9 +71,18 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             Assert.ArgumentNotNull(page, "page");
             Assert.ArgumentNotNull(oldPage, "oldPage");
 
-            switch (page)
+            base.ActivePageChanged(page, oldPage);
+
+            if (page == "Import")
             {
-                case "Summary":
+                if (!string.IsNullOrEmpty(WordpressXmlFile.Value))
+                {
+                    ImportOptionsPane.Visible = true;
+                    return;
+                }
+            }
+            if (page == "Summary")
+            {
                     litSummaryName.Text = litSettingsName.Value;
                     litSummaryEmail.Text = litSettingsEmail.Value;
                     litSummaryPath.Text = Treeview.GetSelectedItems().First().Paths.FullPath;
@@ -77,44 +92,78 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                     litSummaryComments.Text = ImportComments.Checked ? "Yes" : "No";
                     litSummaryPosts.Text = ImportPosts.Checked ? "Yes" : "No";
                     litSummaryTags.Text = ImportTags.Checked ? "Yes" : "No";
-                    break;
-                case "CreatingBlog":
-
-                    
-            
-                    break;
-                default:
-                    break;
             }
-            
-            base.ActivePageChanged(page, oldPage);
-        }
+            NextButton.Header = "Next >";
 
-        protected override bool ActivePageChanging(string page, ref string newpage)
-        {
-            if (newpage == "LastPage")
+            if (page == "Summary")
             {
-                string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
-
-                List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
-                Item root = db.GetItem(litSummaryPath.Text);
-
-                BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchId);
-                BlogItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
-
-                blogItem.BeginEdit();
-                blogItem.Email.Field.Value = litSettingsEmail.Value;
-                blogItem.EndEdit();
-
-                WpImportManager.ImportPosts(blogItem, listWordpressPosts, db);
-
-                this.NextButton.Disabled = true;
-                this.BackButton.Disabled = true;
-                this.CancelButton.Disabled = true;
+                NextButton.Header = "Start Import";
             }
-            
-            return base.ActivePageChanging(page, ref newpage);
+
+            if (page == "ImportJob")
+            {
+                BackButton.Disabled = true;
+                NextButton.Disabled = true;
+                StartImport();
+            }
         }
+
+        private void StartImport()
+        {
+            // Start job for index rebuild
+            var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog");
+            var job = JobManager.Start(options);
+            JobHandle.Value = job.Handle.ToString();
+
+            // Start client pipeline to check progress
+            Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
+        }
+
+        private void ImportBlog()
+        {
+            jobStatus = "Reading import file";
+            string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
+            List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
+
+            jobStatus = "Creating blog";
+            Item root = db.GetItem(litSummaryPath.Text);
+
+            BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchId);
+            BlogItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
+
+            blogItem.BeginEdit();
+            blogItem.Email.Field.Value = litSettingsEmail.Value;
+            blogItem.EndEdit();
+
+            jobStatus = "Importing posts";
+            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db);
+
+            this.NextButton.Disabled = true;
+            this.BackButton.Disabled = true;
+            this.CancelButton.Disabled = true;
+        }
+
+        protected void CheckStatus()
+        {
+            var handle = Handle.Parse(JobHandle.Value);
+            if (handle != null)
+            {
+                var job = JobManager.GetJob(handle);
+                if (job != null && jobStatus != null)
+                {
+                    StatusMessage.Text = jobStatus;
+                }
+
+                if (job.IsDone)
+                {
+                    Active = "LastPage";
+                    Status.Text = StatusMessage.Text;
+                }
+                else
+                    Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
+            }
+        }
+
 
         protected void OK_Click()
         {
