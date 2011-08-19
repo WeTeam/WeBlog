@@ -1,19 +1,33 @@
 ----item----
 version: 1
-id: {A47D8623-99E0-4B9C-BF9E-D6424D8DE0E6}
+id: {ECC570FF-0223-49DC-B902-FCCD554A29EA}
 database: master
-path: /sitecore/templates/Modules/WeBlog/BlogHome/Blog settings
-parent: {46663E05-A6B8-422A-8E13-36CD2B041278}
-name: Blog settings
+path: /sitecore/system/Dictionary/WeBlog/logged_in_as
+parent: {37C581F6-1738-43EC-85D6-E85E810CAAC0}
+name: logged_in_as
 master: {00000000-0000-0000-0000-000000000000}
-template: {E269FBB5-3750-427A-9149-7AA950B49301}
-templatekey: Template section
+template: {6D1CD897-1936-4A3A-A511-289A94C2A7B1}
+templatekey: Dictionary entry
 
+----field----
+field: {580C75A8-C01A-4580-83CB-987776CEB3AF}
+name: Key
+key: key
+content-length: 12
+
+LOGGED_AS_IN
 ----version----
 language: en
 version: 1
-revision: 93d4cef2-e4f0-475e-96d5-9a415c51a5fd
+revision: c55ce7c1-643e-46df-adcd-8269597ddfcc
 
+----field----
+field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
+name: Phrase
+key: phrase
+content-length: 21
+
+You are logged in as:
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -27,7 +41,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20081030T215059
+20110814T212500
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -41,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-93d4cef2-e4f0-475e-96d5-9a415c51a5fd
+c55ce7c1-643e-46df-adcd-8269597ddfcc
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110818T220642:634493020027739239
+20110814T212552:634489539527202609
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
