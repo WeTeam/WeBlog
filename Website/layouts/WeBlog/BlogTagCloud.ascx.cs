@@ -30,10 +30,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
             }
             else
             {
-                // Set title
-                if(titleTagcloud != null)
-                    titleTagcloud.Item = CurrentBlog.InnerItem;
-
                 var tags = TagManager.GetAllTags();
 
                 m_min = (from tag in tags select tag.Value).Min();

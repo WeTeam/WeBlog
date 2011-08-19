@@ -99,6 +99,9 @@
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Globalization\ItemAndPublishEventHandler.cs" />
+    <Compile Include="Globalization\Translator.cs" />
+    <Compile Include="Globalization\TranslatorControl.cs" />
     <Compile Include="Import\WpComment.cs" />
     <Compile Include="Import\WpImportManager.cs" />
     <Compile Include="Import\WpPost.cs" />
@@ -319,9 +322,6 @@
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\body-2col-bg.png" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\entry-list-separator.png" />
     <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml" />
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="How to build.txt" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog
 {
@@ -13,6 +14,13 @@ namespace Sitecore.Modules.WeBlog
                 public const string Tags = "tags";
                 public const string Category = "category";
                 public const string Created = "__created";
+            }
+        }
+        public static class Templates
+        {
+            public static class DictionaryEntry
+            {
+                public static ID ID = ID.Parse("{819F1459-A930-45E4-975B-9165028E6A58}");
             }
         }
     }

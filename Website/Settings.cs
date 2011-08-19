@@ -200,5 +200,42 @@ namespace Sitecore.Modules.WeBlog
         {
             get { return Sitecore.Configuration.Settings.GetSetting("Blog.ContentRootPath", "/sitecore/content"); }
         }
+
+        /// <summary>
+        /// Gets the size for the globalization cache.
+        /// </summary>
+        public static string GlobalizationCacheSize
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Globalization.CacheSize"); }
+        }
+
+        /// <summary>
+        /// Gets the default dictionary path.
+        /// </summary>
+        public static string DictionaryPath
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Globalization.DictonaryPath"); }
+        }
+
+        /// <summary>
+        /// Gets the dictionary entry templateid as string.
+        /// </summary>
+        public static string DictionaryEntryTemplateIdString
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Globalization.DictonaryEntryTemplateId"); }
+        }
+
+        /// <summary>
+        /// Gets the dictionary entry template id.
+        /// </summary>
+        public static ID DictionaryEntryTemplateId
+        {
+            get
+            {
+                var id = ID.Null;
+                ID.TryParse(DictionaryEntryTemplateIdString, out id);
+                return id;
+            }
+        }
     }
 }

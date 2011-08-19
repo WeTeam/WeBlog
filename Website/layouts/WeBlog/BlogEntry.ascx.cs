@@ -8,6 +8,7 @@ using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Items.Blog;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -93,7 +94,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
             }
             else
             {
-                txtAddYourComment.Item = CurrentBlog.InnerItem;
+                ValidationSummaryComments.HeaderText = Translate.Text("REQUIRED_FIELDS");
+                buttonSaveComment.Text = Translate.Text("POST");
             }
 
             // Check for the existence of comments
@@ -101,10 +103,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 ListViewComments.DataSource = CommentManager.GetEntryComments();
                 ListViewComments.DataBind();
-
-                Web.UI.WebControls.Text titleComment =
-                    (Web.UI.WebControls.Text)ListViewComments.FindControl("titleComments");
-                titleComment.Item = CurrentBlog.InnerItem;
             }
 
             #endregion

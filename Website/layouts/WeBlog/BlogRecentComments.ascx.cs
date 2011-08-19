@@ -23,9 +23,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
                     ListViewRecentComments.DataSource = CommentManager.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
                     ListViewRecentComments.DataBind();
                 }
-
-                if(titleRecentComments != null)
-                    titleRecentComments.Item = CurrentBlog.InnerItem;
             }
         }
 

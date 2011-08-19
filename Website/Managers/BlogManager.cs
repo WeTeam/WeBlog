@@ -7,6 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Items.Blog;
 using Sitecore.Security.Accounts;
+using Sitecore.Data.Managers;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -110,6 +111,16 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static bool ShowEmailWithinComments(Items.Blog.BlogItem blog)
         {
             return blog.ShowEmailWithinComments.Checked;
+        }
+
+        /// <summary>
+        /// Returns the dictionary item.
+        /// </summary>
+        /// <returns>Returns standard dictionary item if there is no custom item selected</returns>
+        public static Item GetDictionaryItem()
+        {
+            BlogItem currentBlog = GetCurrentBlog();
+            return currentBlog.DictionaryItem;
         }
 
         #region Obsolete Methods

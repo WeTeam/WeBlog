@@ -5,7 +5,7 @@
     <asp:Panel ID="LoggedInPanel" runat="server" Visible="false">
         <h3><sc:Text ID="titleAdministration" runat="server" Field="titleAdministration" /></h3>
 
-        <p>You are logged in as: <asp:LoginName ID="LoginName1" runat="server" /></p>
+        <p><%# Sitecore.Modules.WeBlog.Globalization.Translator.Render("LOGGED_IN_AS") %>&nbsp;<asp:LoginName ID="LoginName1" runat="server" /></p>
                 
         <asp:Label ID="lblTheme" runat="server" Text="Theme" AssociatedControlID="Theme" />
         <asp:DropDownList ID="Theme" runat="server" AutoPostBack="true"></asp:DropDownList>

@@ -14,23 +14,23 @@
             <h2>
                 <a href="<%#(Container.DataItem as EntryItem).Url%>"><%#(Container.DataItem as EntryItem).Title.Rendered%></a>
             </h2>
-            <div class="details">Posted on: <%#(Container.DataItem as EntryItem).Created.ToString("dddd, MMMM d, yyyy")%> by <%#(Container.DataItem as EntryItem).CreatedBy.LocalName%></div>
+            <div class="details"><%#Sitecore.Modules.WeBlog.Globalization.Translator.Render("POSTED_ON")%>&nbsp;<%#(Container.DataItem as EntryItem).Created.ToString("dddd, MMMM d, yyyy")%> by <%#(Container.DataItem as EntryItem).CreatedBy.LocalName%></div>
         
             <%# Eval("IntroductionText") %>
         
-            <asp:HyperLink ID="BlogPostLink" runat="server" CssClass="readmore" NavigateUrl='<%# Eval("Url") %>'>Read more...</asp:HyperLink>
+            <asp:HyperLink ID="BlogPostLink" runat="server" CssClass="readmore" NavigateUrl='<%# Eval("Url") %>'><%#Sitecore.Modules.WeBlog.Globalization.Translator.Render("READ_MORE")%></asp:HyperLink>
         
             <asp:PlaceHolder ID="CommentsPlaceholder" runat="server">
-                Comments (<%#(Container.DataItem as EntryItem).CommentCount%>)
+                <%#Sitecore.Modules.WeBlog.Globalization.Translator.Render("COMMENTS")%> (<%#(Container.DataItem as EntryItem).CommentCount%>)
             </asp:PlaceHolder>
         </div>
     </div>
 </ItemTemplate>
 <EmptyDataTemplate>
-    no posts found!
+    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Render("NO_POSTS_FOUND")%>
 </EmptyDataTemplate>
 </asp:ListView>
 <div class="viewMoreWrapper">
-    <a runat="server" id="ancViewMore" class="viewMore" href="#">View More</a>
+    <a runat="server" id="ancViewMore" class="viewMore" href="#"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("VIEW_MORE")%></a>
     <img src="/sitecore modules/Blog/Images/ajax-loader.gif" class="loadingAnimation" alt="Loading..." />
 </div>

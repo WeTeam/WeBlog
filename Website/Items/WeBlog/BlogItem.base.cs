@@ -231,6 +231,14 @@ public CustomTextField MaximumThumbnailImageSize
     }
 }
 
+public CustomLookupField CustomDictionaryFolder
+{
+    get
+    {
+        return new CustomLookupField(InnerItem, InnerItem.Fields["Custom Dictionary Folder"]);
+    }
+}
+
 #endregion //Field Instance Methods
 }
 }

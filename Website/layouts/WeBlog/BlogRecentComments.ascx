@@ -2,7 +2,7 @@
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
 
 <asp:Panel ID="PanelRecentComments" runat="server">
-    <h3><sc:Text ID="titleRecentComments" runat="server" Field="titleRecentComments" /></h3>
+    <h3><%# Sitecore.Modules.WeBlog.Globalization.Translator.Render("RECENT_COMMENTS") %></h3>
     <asp:ListView ID="ListViewRecentComments" runat="server">
     <LayoutTemplate>
         <ul id="blog-comments" class="sidebar">

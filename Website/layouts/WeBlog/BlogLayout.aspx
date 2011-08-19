@@ -8,11 +8,11 @@
     <title><%= GetItemTitle() %></title>
     <wb:Syndication runat="server" />
     <wb:RsdIncludes runat="server" />
-    <link href="/sitecore modules/Blog/Includes/Common.css" rel="stylesheet" />
+    <link href="/sitecore modules/WeBlog/Includes/Common.css" rel="stylesheet" />
     <wb:ThemeIncludes runat="server" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
-    <script src="/sitecore modules/Blog/Includes/jquery.url.js" type="text/javascript"></script>
-    <script src="/sitecore modules/Blog/Includes/functions.js" type="text/javascript"></script>
+    <script src="/sitecore modules/WeBlog/Includes/jquery.url.js" type="text/javascript"></script>
+    <script src="/sitecore modules/WeBlog/Includes/functions.js" type="text/javascript"></script>
   </head>
   <body>
   <form method="post" runat="server" id="mainform">

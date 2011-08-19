@@ -2,7 +2,7 @@
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
 
 <asp:Panel ID="PanelCategories" runat="server">
-    <h3><sc:Text ID="titleCategories" runat="server" Field="titleCategories" /></h3>
+    <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("CATEGORIES")%></h3>
     <asp:ListView ID="ListViewCategories" runat="server">
     <LayoutTemplate>
         <ul id="blog-categories" class="sidebar">

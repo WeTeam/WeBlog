@@ -4,6 +4,8 @@ using System.Drawing;
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Web;
+using Sitecore.Data;
+using Sitecore.Data.Managers;
 
 namespace Sitecore.Modules.WeBlog.Items.Blog
 {
@@ -115,6 +117,18 @@ namespace Sitecore.Modules.WeBlog.Items.Blog
                     }
                 }
                 return feeds;
+            }
+        }
+
+        public Item DictionaryItem
+        {
+            get
+            {
+                if (CustomDictionaryFolder.Item != null)
+                {
+                    return CustomDictionaryFolder.Item;
+                }
+                return ItemManager.GetItem(Settings.DictionaryPath, Context.Language, Sitecore.Data.Version.Latest, Context.Database);
             }
         }
 

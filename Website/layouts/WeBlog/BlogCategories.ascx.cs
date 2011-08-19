@@ -11,8 +11,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             if (!IsPostBack)
             {
-                if(titleCategories != null)
-                    titleCategories.Item = CurrentBlog.InnerItem;
                 LoadCategories();
             }
         }

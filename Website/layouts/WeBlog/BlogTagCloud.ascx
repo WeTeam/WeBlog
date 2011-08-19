@@ -2,7 +2,7 @@
 <%@ Import Namespace="System.Collections.Generic" %>
 
 <asp:Panel ID="PanelTagCloud" runat="server">
-    <h3><sc:Text ID="titleTagcloud" runat="server" Field="titleTagcloud" /></h3>
+    <h3><%# Sitecore.Modules.WeBlog.Globalization.Translator.Render("TAGCLOUD") %></h3>
 
     <div id="tagCloud" class="sidebar">
         <asp:Repeater runat="server" ID="TagList">

@@ -8,10 +8,9 @@
 //------------------------------------------------------------------------------
 
 namespace Sitecore.Modules.WeBlog.Layouts {
-
-
-    public partial class reCaptcha
-    {
+    
+    
+    public partial class reCaptcha {
         
         /// <summary>
         /// lblCaptcha control.
