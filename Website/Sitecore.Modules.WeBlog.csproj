@@ -47,15 +47,14 @@
     <Reference Include="Lucene.Net, Version=2.3.1.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="MSCaptcha">
       <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="RadEditor.Net2">
       <HintPath>$(SitecorePath)\bin\RadEditor.Net2.dll</HintPath>
-    </Reference>
-    <Reference Include="RadSpell.NET2">
-      <HintPath>$(SitecorePath)\bin\RadSpell.NET2.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\Dependencies\Third-party\Recaptcha.dll</HintPath>
@@ -63,14 +62,13 @@
     <Reference Include="RssToolkit">
       <HintPath>..\Dependencies\Third-party\RssToolkit.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Captcha">
-      <HintPath>..\Dependencies\Third-party\Sitecore.Captcha.dll</HintPath>
-    </Reference>
     <Reference Include="Sitecore.Client">
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -115,6 +113,9 @@
     <Compile Include="Items\WeBlog\EntryItem.base.cs" />
     <Compile Include="Items\WeBlog\EntryItem.custom.cs" />
     <Compile Include="Items\WeBlog\ThemeItem.base.cs" />
+    <Compile Include="layouts\WeBlog\BaseEntrySublayout.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="layouts\WeBlog\BaseSublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -145,6 +146,13 @@
     </Compile>
     <Compile Include="layouts\WeBlog\BlogCategories.ascx.designer.cs">
       <DependentUpon>BlogCategories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogCommentsList.ascx.cs">
+      <DependentUpon>BlogCommentsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogCommentsList.ascx.designer.cs">
+      <DependentUpon>BlogCommentsList.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\WeBlog\BlogEntry.ascx.cs">
       <DependentUpon>BlogEntry.ascx</DependentUpon>
@@ -188,12 +196,26 @@
     <Compile Include="layouts\WeBlog\BlogRecentComments.ascx.designer.cs">
       <DependentUpon>BlogRecentComments.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\BlogSubmitComment.ascx.cs">
+      <DependentUpon>BlogSubmitComment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogSubmitComment.ascx.designer.cs">
+      <DependentUpon>BlogSubmitComment.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\BlogTagCloud.ascx.cs">
       <DependentUpon>BlogTagCloud.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\WeBlog\BlogTagCloud.ascx.designer.cs">
       <DependentUpon>BlogTagCloud.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Captcha.ascx.cs">
+      <DependentUpon>Captcha.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Captcha.ascx.designer.cs">
+      <DependentUpon>Captcha.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\WeBlog\reCAPTCHA.ascx.cs">
       <DependentUpon>reCAPTCHA.ascx</DependentUpon>
@@ -216,19 +238,13 @@
     <Compile Include="layouts\WeBlog\ShareEntry-ShareThis.ascx.designer.cs">
       <DependentUpon>ShareEntry-ShareThis.ascx</DependentUpon>
     </Compile>
-    <Compile Include="layouts\WeBlog\SitecoreCaptcha.ascx.cs">
-      <DependentUpon>SitecoreCaptcha.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\SitecoreCaptcha.ascx.designer.cs">
-      <DependentUpon>SitecoreCaptcha.ascx</DependentUpon>
-    </Compile>
     <Compile Include="Managers\BlogManager.cs" />
     <Compile Include="Managers\CategoryManager.cs" />
     <Compile Include="Managers\CommentManager.cs" />
     <Compile Include="Managers\EntryManager.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
+    <Compile Include="Pipelines\CaptchaProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
     <Compile Include="Services\ICommentService.cs" />
@@ -276,6 +292,7 @@
     <Content Include="layouts\WeBlog\BlogAdministrator.ascx" />
     <Content Include="layouts\WeBlog\BlogArchive.ascx" />
     <Content Include="layouts\WeBlog\BlogCategories.ascx" />
+    <Content Include="layouts\WeBlog\BlogCommentsList.ascx" />
     <Content Include="layouts\WeBlog\BlogEntry.ascx" />
     <Content Include="layouts\WeBlog\BlogFeeds.ascx" />
     <Content Include="layouts\WeBlog\BlogLayout.aspx" />
@@ -283,11 +300,12 @@
     <Content Include="layouts\WeBlog\BlogOptions.ascx" />
     <Content Include="layouts\WeBlog\BlogPostList.ascx" />
     <Content Include="layouts\WeBlog\BlogRecentComments.ascx" />
+    <Content Include="layouts\WeBlog\BlogSubmitComment.ascx" />
     <Content Include="layouts\WeBlog\BlogTagCloud.ascx" />
+    <Content Include="layouts\WeBlog\Captcha.ascx" />
     <Content Include="layouts\WeBlog\reCAPTCHA.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-AddThis.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-ShareThis.ascx" />
-    <Content Include="layouts\WeBlog\SitecoreCaptcha.ascx" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItem.xml" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItemByFolder.xml" />
     <Content Include="sitecore modules\WeBlog\Admin\BlogAdmin.css" />
@@ -337,9 +355,6 @@
   <ItemGroup>
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Config\Include\Captcha.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore modules\WeBlog\MetaBlogApi.ashx" />

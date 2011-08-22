@@ -237,5 +237,21 @@ namespace Sitecore.Modules.WeBlog
                 return id;
             }
         }
+
+        /// <summary>
+        /// Gets the maximum timeout period for the captcha control
+        /// </summary>
+        public static TimeSpan CaptchaMaximumTimeout
+        {
+            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("Captcha.MaxTimeout", "00:01:00"); }
+        }
+
+        /// <summary>
+        /// Gets the minimum timeout period for the captcha control
+        /// </summary>
+        public static TimeSpan CaptchaMinimumTimeout
+        {
+            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("Captcha.MinTimeout", "00:00:03"); }
+        }
     }
 }

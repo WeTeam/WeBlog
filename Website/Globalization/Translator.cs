@@ -122,31 +122,38 @@ namespace Sitecore.Modules.WeBlog.Globalization
         /// <returns></returns>
         protected static Cache FindCache()
         {
-            _cacheRootID = BlogManager.GetDictionaryItem().ID;
-            Cache siteDictionary = null;
-            lock (caches)
+            // todo: error checking here. item not null
+            var dictionaryItem = BlogManager.GetDictionaryItem();
+            if (dictionaryItem != null)
             {
-                if (caches.ContainsKey(CacheName))
+                _cacheRootID = dictionaryItem.ID;
+                Cache siteDictionary = null;
+                lock (caches)
                 {
-                    siteDictionary = caches[CacheName];
+                    if (caches.ContainsKey(CacheName))
+                    {
+                        siteDictionary = caches[CacheName];
+                    }
+                    else
+                    {
+                        string cacheSizeStr = Sitecore.Configuration.Settings.GetSetting(Settings.GlobalizationCacheSize, DEFAULT_CACHE_SIZE);
+                        long cacheSize = Sitecore.StringUtil.ParseSizeString(cacheSizeStr);
+                        siteDictionary = new Cache(CacheName, cacheSize);
+                        caches[CacheName] = siteDictionary;
+                    }
                 }
-                else
+                lock (siteDictionary)
                 {
-                    string cacheSizeStr = Sitecore.Configuration.Settings.GetSetting(Settings.GlobalizationCacheSize, DEFAULT_CACHE_SIZE);
-                    long cacheSize = Sitecore.StringUtil.ParseSizeString(cacheSizeStr);
-                    siteDictionary = new Cache(CacheName, cacheSize);
-                    caches[CacheName] = siteDictionary;
+                    //do an initial load if the cache is empty
+                    if (siteDictionary.Count == 0)
+                    {
+                        PopulateCache(siteDictionary);
+                    }
                 }
+                return siteDictionary;
             }
-            lock (siteDictionary)
-            {
-                //do an initial load if the cache is empty
-                if (siteDictionary.Count == 0)
-                {
-                    PopulateCache(siteDictionary);
-                }
-            }
-            return siteDictionary;
+
+            return new Cache(0);
         }
 
         /// <summary>

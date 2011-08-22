@@ -10,7 +10,7 @@
 namespace Sitecore.Modules.WeBlog.Layouts {
     
     
-    public partial class SitecoreCaptcha {
+    public partial class Captcha {
         
         /// <summary>
         /// lblCaptcha control.
@@ -28,7 +28,7 @@ namespace Sitecore.Modules.WeBlog.Layouts {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Sitecore.Captcha.WebControls.Captcha uxCaptchaCode;
+        protected global::MSCaptcha.CaptchaControl uxCaptchaCode;
         
         /// <summary>
         /// uxCaptchaText control.

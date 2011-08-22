@@ -5,7 +5,7 @@ database: master
 path: /sitecore/layout/Renderings/WeBlog/Theme Includes
 parent: {5F870ADF-B1D0-4A69-86CB-2BDCA7F5EE2F}
 name: Theme Includes
-master: {00E66E02-DF20-4F3A-B8AA-5239108DC2BB}
+master: {00000000-0000-0000-0000-000000000000}
 template: {1DDE3F02-0BD7-4779-867A-DC578ADF91EA}
 templatekey: Webcontrol
 
