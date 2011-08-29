@@ -40,8 +40,8 @@ namespace Sitecore.Modules.WeBlog.Controls
                 {
                     AuthorName = txtCommentName.Text,
                     AuthorEmail = txtCommentEmail.Text,
-                    AuthorWebsite = txtCommentWebsite.Text,
-                    AuthorIP = Context.Request.UserHostAddress,
+                    /*AuthorWebsite = txtCommentWebsite.Text,
+                    AuthorIP = Context.Request.UserHostAddress,*/
                     Text = txtCommentText.Text
                 };
                 ID submissionResult = CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment);

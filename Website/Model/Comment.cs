@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Specialized;
 namespace Sitecore.Modules.WeBlog.Model
 {
     /// <summary>
@@ -25,30 +26,26 @@ namespace Sitecore.Modules.WeBlog.Model
         }
 
         /// <summary>
-        /// Gets or sets the author's website URL
-        /// </summary>
-        public string AuthorWebsite
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the IP address the comment was originally submitted from
-        /// </summary>
-        public string AuthorIP
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Gets or sets the text of the comment
         /// </summary>
         public string Text
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets or sets a collection of additional fields for this comment submission
+        /// </summary>
+        public NameValueCollection Fields
+        {
+            get;
+            set;
+        }
+
+        public Comment()
+        {
+            Fields = new NameValueCollection();
         }
     }
 }

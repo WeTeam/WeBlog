@@ -454,10 +454,11 @@ namespace Sitecore.Modules.WeBlog.Test
                 {
                     AuthorEmail = "a@b.com",
                     AuthorName = "commentor",
-                    AuthorIP = "127.0.0.1",
-                    AuthorWebsite = "website",
                     Text = "My Comment"
                 };
+
+                comment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.IpAddress] = "127.0.0.1";
+                comment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.Website] = "website";
 
                 commentId = Mod.CommentManager.AddCommentToEntry(m_entry12.ID, comment);
                 var childCount = m_entry12.Axes.GetDescendants().Count(i => i.TemplateID.ToString() == m_commentTemplateId);

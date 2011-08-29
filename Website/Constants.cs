@@ -16,6 +16,13 @@ namespace Sitecore.Modules.WeBlog
                 public const string Created = "__created";
             }
         }
+
+        public static class Fields
+        {
+            public const string IpAddress = "IP Address";
+            public const string Website = "Website";
+        }
+
         public static class Templates
         {
             public static class DictionaryEntry

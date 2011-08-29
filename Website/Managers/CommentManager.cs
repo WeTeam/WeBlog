@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.ServiceModel;
 using Sitecore.Configuration;
@@ -49,9 +50,13 @@ namespace Sitecore.Modules.WeBlog.Managers
                         newComment.BeginEdit();
                         newComment.Name.Field.Value = comment.AuthorName;
                         newComment.Email.Field.Value = comment.AuthorEmail;
-                        newComment.Website.Field.Value = comment.AuthorWebsite;
-                        newComment.IPAddress.Field.Value = comment.AuthorIP;
                         newComment.Comment.Field.Value = comment.Text;
+
+                        foreach (var key in comment.Fields.AllKeys)
+                        {
+                            newComment.InnerItem[key] = comment.Fields[key];
+                        }
+
                         newComment.EndEdit();
 
                         Publish.PublishItem(newItem);
@@ -65,8 +70,8 @@ namespace Sitecore.Modules.WeBlog.Managers
                 }
                 else
                 {
-                    string message = "WeBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', website='{3}', commentText='{4}', IP='{5}'";
-                    Log.Error(string.Format(message, entryId, comment.AuthorName, comment.AuthorEmail, comment.AuthorWebsite, comment.Text, comment.AuthorIP), typeof(CommentManager));
+                    string message = "WeBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
+                    Log.Error(string.Format(message, entryId, comment.AuthorName, comment.AuthorEmail, comment.Text), typeof(CommentManager));
                 }
             }
             else
@@ -133,22 +138,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The number of comments</returns>
         public static int GetCommentsCount(Item entry)
         {
-           /* var template = GetDatabase().GetTemplate(Settings.CommentTemplateIdString);
-            var count = 0;*/
-
-            /*if (entry != null && template != null)
-            {
-                var descendants = entry.Axes.GetDescendants();
-                foreach (Item descendant in descendants)
-                {
-                    if (Utilities.Items.TemplateIsOrBasedOn(descendant, template))
-                        count++;
-                }
-            }*/
-
             return GetEntryComments(entry).Length;
-
-            //return count;
         }
 
         /// <summary>

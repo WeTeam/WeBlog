@@ -63,17 +63,19 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 {
                     AuthorName = txtCommentName != null ? txtCommentName.Text : string.Empty,
                     AuthorEmail = txtCommentEmail != null ? txtCommentEmail.Text : string.Empty,
-                    AuthorWebsite = txtCommentWebsite != null ? txtCommentWebsite.Text : string.Empty,
-                    AuthorIP = Context.Request.UserHostAddress,
                     Text = txtCommentText != null ? txtCommentText.Text : string.Empty
                 };
 
+                if(txtCommentWebsite != null)
+                    comment.Fields.Add("Website", txtCommentWebsite.Text);
+                comment.Fields.Add("IP Address", Context.Request.UserHostAddress);
+
                 var submissionResult = CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment);
                 if (submissionResult.IsNull)
-                    SetErrorMessage("An error occurred during comment submission. Please try again later.");
+                    SetErrorMessage(Translate.Text("COMMENT_SUBMIT_ERROR"));
                 else
                 {
-                    SetSuccessMessage("Thank you for your comment.");
+                    SetSuccessMessage(Translate.Text("COMMENT_SUBMIT_SUCCESS"));
                     ResetCommentFields();
                 }
             }
