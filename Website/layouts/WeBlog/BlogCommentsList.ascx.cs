@@ -8,7 +8,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Utilities.Presentation.SetProperties(this);
             LoadEntry();
         }
 

@@ -5,6 +5,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Items.Blog;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Utilities;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -24,7 +25,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected virtual void Page_Load(object sender, EventArgs e)
         {
-            Utilities.Presentation.SetProperties(this);
+            SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
 
             m_entriesByMonthAndYear = new Dictionary<int, EntryItem[]>();
             m_startedDate = CurrentBlog.InnerItem.Statistics.Created;

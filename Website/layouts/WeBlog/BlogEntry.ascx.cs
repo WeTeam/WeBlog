@@ -8,8 +8,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Utilities.Presentation.SetProperties(this);
-
             Page.Title = CurrentEntry.Title.Text + " | " + CurrentBlog.Title.Text;
 
             var maxEntryImage = CurrentBlog.MaximumEntryImageSizeDimension;

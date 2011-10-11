@@ -175,6 +175,13 @@
     <Compile Include="layouts\WeBlog\BlogEntryTags.ascx.designer.cs">
       <DependentUpon>BlogEntryTags.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\BlogFacebook.ascx.cs">
+      <DependentUpon>BlogFacebook.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogFacebook.ascx.designer.cs">
+      <DependentUpon>BlogFacebook.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\BlogFeeds.ascx.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -223,6 +230,13 @@
     </Compile>
     <Compile Include="layouts\WeBlog\BlogTagCloud.ascx.designer.cs">
       <DependentUpon>BlogTagCloud.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogTwitter.ascx.cs">
+      <DependentUpon>BlogTwitter.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogTwitter.ascx.designer.cs">
+      <DependentUpon>BlogTwitter.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\WeBlog\Captcha.ascx.cs">
       <DependentUpon>Captcha.ascx</DependentUpon>
@@ -293,9 +307,12 @@
     <Compile Include="Utilities\Crypto.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Items.cs" />
-    <Compile Include="Utilities\Presentation.cs" />
+    <Compile Include="Utilities\Presentation.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Utilities\Publish.cs" />
     <Compile Include="Utilities\Search.cs" />
+    <Compile Include="Utilities\SublayoutParamHelper.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
     <Compile Include="WebControls\Syndication.cs" />
     <Compile Include="WebControls\ThemeIncludes.cs" />
@@ -310,6 +327,7 @@
     <Content Include="layouts\WeBlog\BlogEntry.ascx" />
     <Content Include="layouts\WeBlog\BlogEntryCategories.ascx" />
     <Content Include="layouts\WeBlog\BlogEntryTags.ascx" />
+    <Content Include="layouts\WeBlog\BlogFacebook.ascx" />
     <Content Include="layouts\WeBlog\BlogFeeds.ascx" />
     <Content Include="layouts\WeBlog\BlogLayout.aspx" />
     <Content Include="layouts\WeBlog\BlogLayoutAjax.aspx" />
@@ -318,6 +336,7 @@
     <Content Include="layouts\WeBlog\BlogRecentComments.ascx" />
     <Content Include="layouts\WeBlog\BlogSubmitComment.ascx" />
     <Content Include="layouts\WeBlog\BlogTagCloud.ascx" />
+    <Content Include="layouts\WeBlog\BlogTwitter.ascx" />
     <Content Include="layouts\WeBlog\Captcha.ascx" />
     <Content Include="layouts\WeBlog\reCAPTCHA.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-AddThis.ascx" />

@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Globalization;
+using Sitecore.Modules.WeBlog.Utilities;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -33,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             SuccessCssClass = "successtext";
             ErrorCssClass = "errortext";
-            Utilities.Presentation.SetProperties(this);
+            SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
             LoadEntry();
         }
 
