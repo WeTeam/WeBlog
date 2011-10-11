@@ -6,7 +6,7 @@
 /*************************************************************************************
 Main layout
 *************************************************************************************/
-div.blog-header 
+.wb-header 
 {
     width: 800px;
     margin: 0 auto;
@@ -14,9 +14,10 @@ div.blog-header
     text-transform: lowercase;
     font-variant: small-caps;
 }
-div.blog 
+.wb-wrapper 
 {
     width: 800px;
+    margin: 0 auto;
     border-left: 1px solid #384001;
     border-right: 1px solid #384001;
     border-top: 5px solid #222601;
@@ -25,26 +26,18 @@ div.blog
 /*************************************************************************************
 Blog entry
 *************************************************************************************/
-div.entry
+.wb-entry-list,
+.wb-entry
 {
     font-size: 0.9em;
 }
-    div.entry h2 
+    .wb-entry-list h2,
+    .wb-entry h2 
     {
         font-size: 18px;
         color: #000000;
     }
-    ul.entry-categories 
-    {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-                ul.entry-categories li a:hover
-                {
-                    text-decoration: underline;
-                }
-    div.entry a.readmore
+    .wb-entry-list a.wb-read-more
     {
         color: #384001;
     }
@@ -52,57 +45,51 @@ div.entry
 /*************************************************************************************
 Comment List
 *************************************************************************************/
-div#entry-comment ul
+.wb-entry-comments ul
 {
     list-style: none;
     margin: 0px;
     padding: 0px;
 }
-    div#entry-comment ul li
+    .wb-entry-comments ul li
     {
         padding: 4px;
         background-color: #A3A649;
     }
-        div#entry-comment ul li.comment-alternate
+        .wb-entry-comments ul li.wb-comment-alternate
         {
             background-color: #F2EEAC;
         }
 /*************************************************************************************
 Blog Sidebar
 *************************************************************************************/
-div.blog-rightcolumn ul
+.wb-rightcolumn ul
 {
     list-style: none;    
     margin: 0px 0px 15px 0px;
     padding: 0px;
 }
-    div.blog-rightcolumn ul li
+    .wb-rightcolumn ul li
     {
         border-bottom: 1px solid #384001;
         padding: 2px 0px 2px 0px;
     }
-        div.blog-rightcolumn ul.sidebar li a
+        .wb-rightcolumn ul.wb-panel li a
         {
             color: #222601;
             text-decoration: none;
             font-size: 12px;
         }
-        div.blog-rightcolumn ul li ul
+        .wb-rightcolumn ul li ul
         {
             margin: 0;
         }
-            div.blog-rightcolumn ul li ul li
+            .wb-rightcolumn ul li ul li
             {
                 border: none;
             }
-div.blog-rightcolumn h3
+.wb-rightcolumn h3
 {   
     margin: 10px 0px 0px 0px;
     border-bottom: 3px solid #384001;
 }
-div.blog-rightcolumn ul.month
-{
-}
-    div.blog-rightcolumn ul.entries
-    {
-    }

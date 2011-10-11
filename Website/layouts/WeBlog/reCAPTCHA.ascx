@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="reCaptcha.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.reCaptcha" %>
 <%@ Register TagPrefix="recaptcha" Namespace="Recaptcha" Assembly="Recaptcha" %>
 
-<div class="captcha">
-    <asp:Label ID="lblCaptcha" runat="server" AssociatedControlID="uxRecaptcha" CssClass="captchaLabel" />
+<div class="wb-captcha">
+    <asp:Label ID="lblCaptcha" runat="server" AssociatedControlID="uxRecaptcha" CssClass="wb-captchaLabel" />
     <recaptcha:RecaptchaControl
         ID="uxRecaptcha"
         OnInit="uxRecaptcha_Init"

@@ -7,27 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.WeBlog.Layouts {
+namespace Sitecore.Modules.WeBlog.layouts.WeBlog {
     
     
-    public partial class BlogFeeds {
+    public partial class BlogEntryCategories {
         
         /// <summary>
-        /// PanelFeeds control.
+        /// PanelEntryCategories control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PanelFeeds;
+        protected global::System.Web.UI.WebControls.Panel PanelEntryCategories;
         
         /// <summary>
-        /// FeedList control.
+        /// ListViewCategories control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ListView FeedList;
+        protected global::System.Web.UI.WebControls.ListView ListViewCategories;
     }
 }

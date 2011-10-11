@@ -20,7 +20,7 @@ name: File location
 key: file location
 content-length: 38
 
-/sitecore modules/Blog/Themes/Blue.css
+/sitecore modules/WeBlog/Themes/Blue.css
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner

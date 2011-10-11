@@ -1,41 +1,38 @@
-﻿body
-{
-    font-family: Arial;
-    margin: 0px;
-}
-/*************************************************************************************
+﻿/*************************************************************************************
 Main layout
 *************************************************************************************/
-
-div.blog 
+.wb
 {
     width: 800px;
     margin: -11px auto 0px auto;
  }
-        div.blog-header a
-        {
-            color: #000000;
-            text-decoration: none;
-        }
-        div.blog-header a:hover
-        {
-            color: #F2EEAC;
-            text-decoration: none;
-        }
-    div.blog div.blog-leftcolumn
-    {
-        width: 70%;
-        padding: 5px;
-        float: left;
-    }
-    
-    div.blog div.blog-rightcolumn
-    {
-        width: 25%;
-        margin: 0px 0px 0px 5px;
-        float: left;
-    }
-div.blog-footer 
+.wb-header a
+{
+    color: #000000;
+    text-decoration: none;
+}
+.wb-header a:hover
+{
+    color: #F2EEAC;
+    text-decoration: none;
+}
+.wb-leftcolumn
+{
+    width: 70%;
+    padding: 5px;
+    float: left;
+}
+.wb-rightcolumn
+{
+    width: 25%;
+    margin: 0px 0px 0px 5px;
+    float: left;
+}
+.wb-panel
+{
+    clear: both;
+}
+.wb-footer 
 {
     clear: both;
     background: #000000;
@@ -48,21 +45,20 @@ div.blog-footer
 /*************************************************************************************
 Generic classes
 *************************************************************************************/
-div.settings
+.wb-settings
 {
     border: 1px solid #000;
     background-color: #FFFFC6;
     font-size: 12px;
     padding: 3px;
 }
-    div.settings label
+    .wb-settings label
     {
         width: 200px;
         display: block;
     }
-    
 
-div.error
+.wb-error
 {
     border: 3px solid #FF0000;
     background-color: #FFFFC6;
@@ -72,18 +68,19 @@ div.error
     margin-bottom: 10px;
 }
 
-div.details 
+.wb-details 
 {
     margin-bottom: 10px;
     font-size: 12px;
     font-style: italic;
 }
-.errortext 
+
+.wb-errortext 
 {
     color: #ff0000;
 }
 
-.successtext
+.wb-successtext
 {
 	color: #0000ff;
 }
@@ -91,111 +88,70 @@ div.details
 /*************************************************************************************
 Blog entry
 *************************************************************************************/
-
-div.entry
+ul.wb-entry-list
 {
-    margin-bottom: 10px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+    ul.wb-entry-list li
+    {
+        margin-bottom: 10px;
+    }
+.wb-entry-list,
+.wb-entry
+{   
     font-size: 0.9em;
 }
-    div.entry h2 
+    .wb-entry-list h2,
+    .wb-entry h2 
     {
         margin: 0;
     }
-    ul.entry-categories 
+
+.wb-entry-categories h3,
+.wb-entry-tags h3
+{
+    margin-bottom: 0;
+    font-size: 12px;
+}
+.wb-entry-categories ul,
+.wb-entry-tags ul
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+    .wb-entry-categories ul li,
+    .wb-entry-tags ul li
     {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        width: 400px;
+        float: left;
+        margin-right: 10px;
     }
-        ul.entry-categories li
+        .wb-entry-categories ul li a,
+        .wb-entry-tags ul li a
         {
-            float: left;
-            font-size: 12px;
-        }
-                ul.entry-categories li a
-                {
-                    text-decoration: none;
-                }
-                ul.entry-categories li a:hover
-                {
-                    text-decoration: underline;
-                }
-    div#entry-tags
-    {
-        clear: both;
-    }
-        div#entry-tags a
-        {
-            margin-right: 5px;
             text-decoration: none;
         }
-            div#entry-tags a:hover
-            {
-                text-decoration: underline
-            }
-   div.entry-share
-   {
-       padding-top: 15px;   
-   }
-/*************************************************************************************
-TagCloud
-*************************************************************************************/
-div#tagCloud
+        .wb-entry-categories ul li a:hover,
+        .wb-entry-tags ul li a:hover
+        {
+            text-decoration: underline;
+        }
+        
+.wb-entry-share
 {
-	width: 200px;
-    padding: 5px;
-    margin-bottom: 10px;
-    text-align: justify;
+    padding-top: 15px;   
 }
-
-div#tagCloud a
-{
-	text-decoration: none;
-    margin-left: 5px;
-    margin-right: 5px;
-    text-transform: lowercase;
-    color: #000000;
-}
-
-div#tagCloud a:hover
-{
-    text-decoration:underline;
-}
-
-div#tagCloud a.weight1  {	font-size: 1.9em }
-div#tagCloud a.weight2  {	font-size: 1.5em }
-div#tagCloud a.weight3  {	font-size: 1.4em }
-div#tagCloud a.weight4  {   font-size: 1.2em }
-div#tagCloud a.weight5  {   font-size: 1.0em }   
-
-/*************************************************************************************
-Administration
-*************************************************************************************/
-
-div#blog-administration
-{
-}
-
-    div#blog-administration label
-    {
-        font-size: 12px;
-        width: 70px;
-        display: block;
-        float: left;
-        clear: right;
-        margin-top: 4px;
-    }
 
 /*************************************************************************************
 Add Comment
 *************************************************************************************/
-    
-div.entry-comments
+.wb-entry-add-comment
 {
     margin-top: 20px;
 }
-    div.entry-comments label
+    .wb-entry-add-comment label
     {
         width: 100px;
         display: block;
@@ -204,13 +160,13 @@ div.entry-comments
         margin: 4px 0px 4px 0px;
     }
     
-    div.entry-comments label.captchaLabel
+    .wb-entry-add-comment label.wb-captchaLabel
     {
         width: 100%;
         float: none;
     }
     
-    div.entry-comments input.textbox
+    .wb-entry-add-comment input.wb-textbox
     {
         float: left;
         margin: 4px 0px 4px 0px;
@@ -219,110 +175,142 @@ div.entry-comments
 /*************************************************************************************
 Comment List
 *************************************************************************************/
-        
-div#entry-comment
+.wb-entry-comments
 {
-    
 }
-    div#entry-comment ul
+    .wb-entry-comments ul
     {
         list-style: none;
         margin: 0;
     }
-        div#entry-comment ul li
+        .wb-entry-comments ul li
         {
             padding: 4px;
             background-color: #F2EDE4;
         }
-            div#entry-comment ul li a
+            .wb-entry-comments ul li a
             {
                 text-decoration: none;
                 color: #000000;
                 font-weight: bold;
             }
-                div#entry-comment ul li a:hover
+                .wb-entry-comments ul li a:hover
                 {
                     text-decoration: underline;
                 }
-            div#entry-comment ul li hr
+            .wb-entry-comments ul li hr
             {
                 height: 1px;
                 color: #000000;
             }
-            div#entry-comment ul li div.datetime
+            .wb-entry-comments ul li .wb-datetime
             {
                 float: right
             }
-            div#entry-comment ul li span.comment-email
+            .wb-entry-comments ul li span.wb-comment-email
             {
                 font-style: italic;
             }
-            div#entry-comment ul li span.comment-text
-            {
-                
-            }
-            div#entry-comment ul li.comment-alternate
+            .wb-entry-comments ul li.wb-comment-alternate
             {
                 background-color: #ffffff;
             }
 
 /*************************************************************************************
-Blog Sidebar
+TagCloud
 *************************************************************************************/
+.wb-tagCloud
+{
+	width: 200px;
+    padding: 5px;
+    margin-bottom: 10px;
+    text-align: justify;
+}
 
-div#blog-administration p
+.wb-tagCloud a
+{
+	text-decoration: none;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-transform: lowercase;
+    color: #000000;
+}
+
+.wb-tagCloud a:hover
+{
+    text-decoration:underline;
+}
+
+.wb-tagCloud a.wb-weight1  { font-size: 1.9em }
+.wb-tagCloud a.wb-weight2  { font-size: 1.5em }
+.wb-tagCloud a.wb-weight3  { font-size: 1.4em }
+.wb-tagCloud a.wb-weight4  { font-size: 1.2em }
+.wb-tagCloud a.wb-weight5  { font-size: 1.0em }   
+
+/*************************************************************************************
+Administration
+*************************************************************************************/
+.wb-administration label
+{
+    font-size: 12px;
+    width: 70px;
+    display: block;
+    float: left;
+    clear: right;
+    margin-top: 4px;
+}
+
+.wb-administration p
 {
     font-size: 12px;
 }
-ul#blog-archive a.year, ul#blog-archive a.month
+
+/*************************************************************************************
+Archive
+*************************************************************************************/
+.wb-archive a.wb-year, .wb-archive a.wb-month
 {
     cursor: pointer;
 }
-/*************************************************************************************
-Blog Sidebar Archive
-*************************************************************************************/
-
-div.blog-rightcolumn ul#blog-archive
-{
-}
-div.blog-rightcolumn ul#blog-archive ul
-{
-}
-div.blog-rightcolumn ul#blog-archive ul li
+.wb-archive ul li
 {
     border: none;
 }
-div.blog-rightcolumn ul#blog-archive ul.entries li
+.wb-archive ul.wb-entries li
 {
     padding-left: 10px;
 }
 
-.viewMoreWrapper
-{
-    text-align: center;   
-}
-.loadingAnimation
-{
-    display: none;   
-}
-
 /**********************************************************************************
-Images
+Misc
 **********************************************************************************/
-
-.entry-image
+.wb-entry .wb-image
 {
     float: right;
     margin: 0 0 15px 15px;
 }
 
-.entry-list-image
+.wb-entry-list .wb-image
 {
     float: left;
     margin: 0 15px 15px 0;
 }
 
-.entry-detail
+.wb-entry-detail
 {
     margin-left: 65px;
 }
+
+.wb-view-more-wrapper
+{
+    text-align: center;   
+}
+.wb-loading-animation
+{
+    width: 100%;
+    height: 16px;
+    text-indent: -9999px;
+    background: transparent url(../Images/ajax-loader.gif) no-repeat 50% 50%;
+    display: block;
+}
+

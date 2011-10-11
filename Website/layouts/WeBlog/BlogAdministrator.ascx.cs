@@ -14,9 +14,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(titleAdministration != null)
-                titleAdministration.Item = CurrentBlog.InnerItem;
-
             if (Sitecore.Context.User.IsAuthenticated && !Page.IsPostBack)
             {
                 if(LoggedInPanel != null)

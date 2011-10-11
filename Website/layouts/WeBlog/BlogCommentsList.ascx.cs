@@ -14,26 +14,20 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected virtual void LoadEntry()
         {
-            // Comments enabled?
-            if (CurrentEntry.DisableComments.Checked)
+            // Comments enabled and exist?
+            if (CurrentEntry.DisableComments.Checked || CommentManager.GetCommentsCount() == 0)
             {
-                if(ListViewComments != null)
-                    ListViewComments.Visible = false;
+                if (CommentList != null)
+                {
+                    CommentList.Visible = false;
+                }
             }
-
-            // Check for the existence of comments
-            if (CommentManager.GetCommentsCount() != 0)
+            else
             {
                 if (ListViewComments != null)
                 {
                     ListViewComments.DataSource = CommentManager.GetEntryComments();
                     ListViewComments.DataBind();
-
-                    var titleCommentControl = ListViewComments.FindControl("titleComments");
-                    if(titleCommentControl != null)
-                    {
-                        ((FieldControl)titleCommentControl).Item = CurrentBlog.InnerItem;
-                    }
                 }
             }
         }

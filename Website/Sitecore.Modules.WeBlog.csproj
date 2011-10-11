@@ -161,6 +161,20 @@
     <Compile Include="layouts\WeBlog\BlogEntry.ascx.designer.cs">
       <DependentUpon>BlogEntry.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\BlogEntryCategories.ascx.cs">
+      <DependentUpon>BlogEntryCategories.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogEntryCategories.ascx.designer.cs">
+      <DependentUpon>BlogEntryCategories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogEntryTags.ascx.cs">
+      <DependentUpon>BlogEntryTags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogEntryTags.ascx.designer.cs">
+      <DependentUpon>BlogEntryTags.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\BlogFeeds.ascx.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -294,6 +308,8 @@
     <Content Include="layouts\WeBlog\BlogCategories.ascx" />
     <Content Include="layouts\WeBlog\BlogCommentsList.ascx" />
     <Content Include="layouts\WeBlog\BlogEntry.ascx" />
+    <Content Include="layouts\WeBlog\BlogEntryCategories.ascx" />
+    <Content Include="layouts\WeBlog\BlogEntryTags.ascx" />
     <Content Include="layouts\WeBlog\BlogFeeds.ascx" />
     <Content Include="layouts\WeBlog\BlogLayout.aspx" />
     <Content Include="layouts\WeBlog\BlogLayoutAjax.aspx" />

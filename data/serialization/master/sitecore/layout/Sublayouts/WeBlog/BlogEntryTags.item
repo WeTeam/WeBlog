@@ -1,26 +1,33 @@
 ----item----
 version: 1
-id: {007B0F91-DE44-404F-9A06-D4AD595F1C52}
+id: {DE1B6D0B-6988-4B31-B469-EAD66F2F6ED3}
 database: master
-path: /sitecore/system/Modules/WeBlog/Themes/Green
-parent: {2E68D26C-5138-4E08-8056-717ACFF80C5E}
-name: Green
+path: /sitecore/layout/Sublayouts/WeBlog/BlogEntryTags
+parent: {2068AD29-9223-480A-8E98-B1B85EC9470B}
+name: BlogEntryTags
 master: {00000000-0000-0000-0000-000000000000}
-template: {1BF19354-D79F-4F32-80F0-5A644811C137}
-templatekey: Theme
+template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
+templatekey: Sublayout
 
+----field----
+field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
+name: Path
+key: path
+content-length: 34
+
+/layouts/WeBlog/BlogEntryTags.ascx
 ----version----
 language: en
 version: 1
-revision: 6c2f8c40-4c0b-4fda-a9b7-6821d22ed2db
+revision: 8b31dd98-5d62-4bab-8672-258bb2de6a5c
 
 ----field----
-field: {A6E2EF56-AA51-440F-86FC-7C71A0BB1EDB}
-name: File location
-key: file location
-content-length: 39
+field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
+name: __Valid from
+key: __valid from
+content-length: 15
 
-/sitecore modules/WeBlog/Themes/Green.css
+20110624T173747
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -32,9 +39,9 @@ sitecore\admin
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 34
+content-length: 15
 
-20101012T205144:634225135048585435
+20110624T173747
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-6c2f8c40-4c0b-4fda-a9b7-6821d22ed2db
+8b31dd98-5d62-4bab-8672-258bb2de6a5c
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110409T155222:634379611424091796
+20111010T124304:634538473841809471
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -63,10 +70,3 @@ key: __updated by
 content-length: 14
 
 sitecore\admin
-----field----
-field: {001DD393-96C5-490B-924A-B0F25CD9EFD8}
-name: __Lock
-key: __lock
-content-length: 5
-
-<r />

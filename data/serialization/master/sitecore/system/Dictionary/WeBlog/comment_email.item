@@ -1,26 +1,33 @@
 ----item----
 version: 1
-id: {007B0F91-DE44-404F-9A06-D4AD595F1C52}
+id: {2ABBAD27-0110-4073-9BDF-E16D550F1630}
 database: master
-path: /sitecore/system/Modules/WeBlog/Themes/Green
-parent: {2E68D26C-5138-4E08-8056-717ACFF80C5E}
-name: Green
+path: /sitecore/system/Dictionary/WeBlog/comment_email
+parent: {37C581F6-1738-43EC-85D6-E85E810CAAC0}
+name: comment_email
 master: {00000000-0000-0000-0000-000000000000}
-template: {1BF19354-D79F-4F32-80F0-5A644811C137}
-templatekey: Theme
+template: {6D1CD897-1936-4A3A-A511-289A94C2A7B1}
+templatekey: Dictionary entry
 
+----field----
+field: {580C75A8-C01A-4580-83CB-987776CEB3AF}
+name: Key
+key: key
+content-length: 13
+
+COMMENT_EMAIL
 ----version----
 language: en
 version: 1
-revision: 6c2f8c40-4c0b-4fda-a9b7-6821d22ed2db
+revision: 8c461630-3318-4112-a362-711ba49262a6
 
 ----field----
-field: {A6E2EF56-AA51-440F-86FC-7C71A0BB1EDB}
-name: File location
-key: file location
-content-length: 39
+field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
+name: Phrase
+key: phrase
+content-length: 3
 
-/sitecore modules/WeBlog/Themes/Green.css
+{0}
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -32,9 +39,9 @@ sitecore\admin
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 34
+content-length: 15
 
-20101012T205144:634225135048585435
+20111010T091412
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-6c2f8c40-4c0b-4fda-a9b7-6821d22ed2db
+8c461630-3318-4112-a362-711ba49262a6
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110409T155222:634379611424091796
+20111010T091421:634538348614636891
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -63,10 +70,3 @@ key: __updated by
 content-length: 14
 
 sitecore\admin
-----field----
-field: {001DD393-96C5-490B-924A-B0F25CD9EFD8}
-name: __Lock
-key: __lock
-content-length: 5
-
-<r />

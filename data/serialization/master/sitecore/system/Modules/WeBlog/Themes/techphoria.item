@@ -20,7 +20,7 @@ name: File location
 key: file location
 content-length: 44
 
-/sitecore modules/Blog/Themes/techphoria.css
+/sitecore modules/WeBlog/Themes/techphoria.css
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner

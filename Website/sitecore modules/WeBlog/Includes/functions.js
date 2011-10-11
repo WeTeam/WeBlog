@@ -18,14 +18,14 @@ jQuery(function () {
 });
 
 function blogViewMore() {
-    jQuery(".viewMore").click(function () {
+    jQuery(".wb-view-more").live("click", function () {
         var viewMore = jQuery(this);
-        var loading = viewMore.next(".loadingAnimation");
+        var loading = viewMore.next(".wb-loading-animation");
         viewMore.remove();
         loading.show();
         jQuery.url.setUrl(document.location);
         var params = {
-            startIndex: jQuery(".entry").size(),
+            startIndex: jQuery(".wb-entry-list").children().length,
             blogAjax: 1
         }
         if (jQuery.url.param("tag") != null) {
@@ -35,7 +35,6 @@ function blogViewMore() {
         jQuery.get(url, params, function (data) {
             loading.parent().after(data);
             loading.parent().remove();
-            blogViewMore();
         });
         return false;
     });

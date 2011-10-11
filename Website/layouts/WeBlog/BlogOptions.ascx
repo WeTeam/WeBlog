@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogOptions.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogOptions" %>
 
-<asp:Panel ID="EditModePanel" Visible="false" runat="server" CssClass="settings">
+<asp:Panel ID="EditModePanel" Visible="false" runat="server" CssClass="wb-settings wb-panel">
     <b><%# Sitecore.Modules.WeBlog.Globalization.Translator.Render("SETTINGS") %></b><br />
     <table style="width: 300px;">
     <tr>
