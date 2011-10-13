@@ -11,9 +11,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <asp:HyperLink ID="hyperlinkCategory" runat="server" NavigateUrl="<%# GetCategoryUrl(Container.DataItem as CategoryItem) %>">
-                    <sc:Text ID="txtCategory" Field="Title" runat="server" DataSource="<%# (Container.DataItem as CategoryItem).ID %>" />
-                </asp:HyperLink>
+                <a href="<%# GetCategoryUrl(Container.DataItem as CategoryItem) %>"><%# (Container.DataItem as CategoryItem).Title.Text%></a>
             </li>
         </ItemTemplate>
     </asp:ListView>

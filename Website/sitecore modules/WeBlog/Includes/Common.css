@@ -4,7 +4,7 @@ Main layout
 .wb
 {
     width: 800px;
-    margin: -11px auto 0px auto;
+    margin: 0 auto;
  }
 .wb-header a
 {

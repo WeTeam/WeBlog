@@ -8,8 +8,6 @@ Main layout
 *************************************************************************************/
 .wb-header 
 {
-    width: 800px;
-    margin: 0 auto;
     font-size: 48px;
     text-transform: lowercase;
     font-variant: small-caps;
@@ -24,8 +22,6 @@ Main layout
         }
 .wb-wrapper
 {
-    width: 800px;
-    margin: 0 auto;
     border-left: 1px solid #183152;
     border-right: 1px solid #183152;
     border-top: 5px solid #183152;

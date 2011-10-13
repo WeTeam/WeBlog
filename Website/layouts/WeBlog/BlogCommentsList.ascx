@@ -16,7 +16,7 @@
                     { %>
                 <img src="<%# GetGravatarUrl((Container.DataItem as CommentItem).Email.Rendered) %>" alt="<%#(Container.DataItem as CommentItem).Name.Rendered%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
-                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>'>
+                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>' CssClass="wb-comment-name">
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_NAME", (Container.DataItem as CommentItem).Name.Text) %>
                 </asp:HyperLink>
                 <% if (CurrentBlog.ShowEmailWithinComments.Checked)
@@ -39,7 +39,7 @@
                     { %>
                 <img src="<%# GetGravatarUrl((Container.DataItem as CommentItem).Email.Rendered) %>" alt="<%#(Container.DataItem as CommentItem).Name.Rendered%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
-                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>'>
+                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>' CssClass="wb-comment-name">
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_NAME", (Container.DataItem as CommentItem).Name.Text) %>
                 </asp:HyperLink>
                 <% if (CurrentBlog.ShowEmailWithinComments.Checked)

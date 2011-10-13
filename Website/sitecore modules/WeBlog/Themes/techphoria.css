@@ -14,12 +14,14 @@ a
 /*************************************************************************************
 Main layout
 *************************************************************************************/
-.wb-header 
+.wb
 {
     width: 900px;
-    height: 50px;
+}
+.wb-header 
+{
+    height: 38px;
     padding-top: 10px;
-    margin:0 auto;
 }
     .wb-header a 
     {
@@ -28,11 +30,6 @@ Main layout
     }
 .wb-wrapper
 {
-    width: 900px;
-    margin:0 auto;
-    border-left: 1px solid #000000;
-    border-right: 1px solid #000000;
-    border-top: 1px solid #000000;
     background-color: #ffffff;
     background-image: url(./techphoria/images/body-2col-bg.png);
     background-repeat: repeat-y;
