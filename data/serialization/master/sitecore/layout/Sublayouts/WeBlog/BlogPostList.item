@@ -10,6 +10,13 @@ template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
 templatekey: Sublayout
 
 ----field----
+field: {E28F0784-53EC-4B5C-803E-638FDB1EC15D}
+name: Parameters Template
+key: parameters template
+content-length: 38
+
+{DBA2C601-EFC1-43BD-AF8F-085756966CB2}
+----field----
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
 key: path
@@ -54,7 +61,7 @@ content-length: 1
 ----version----
 language: en
 version: 1
-revision: 075029c2-ad0d-4515-a71a-3f85f3f06681
+revision: ef4573eb-b5c5-4176-a427-519abb5b7ff2
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -90,21 +97,21 @@ name: __Revision
 key: __revision
 content-length: 36
 
-075029c2-ad0d-4515-a71a-3f85f3f06681
+ef4573eb-b5c5-4176-a427-519abb5b7ff2
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110624T173819:634445338992603622
+20111012T223211:634540555314746436
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 14
+content-length: 19
 
-sitecore\admin
+sitecore\nwesselman
 ----field----
 field: {001DD393-96C5-490B-924A-B0F25CD9EFD8}
 name: __Lock

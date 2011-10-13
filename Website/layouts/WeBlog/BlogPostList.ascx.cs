@@ -7,11 +7,14 @@ using System.Web.UI.WebControls;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.Blog;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Utilities;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogPostList : BaseSublayout
     {
+        protected const string DEFAULT_POST_TEMPLATE = "BlogPostListEntry.ascx";
+
         protected Size m_imageMaxSize = Size.Empty;
 
         /// <summary>
@@ -32,8 +35,25 @@ namespace Sitecore.Modules.WeBlog.Layouts
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the path to the (override) template for posts in the list.
+        /// </summary>
+        public string PostTemplate
+        {
+            get;
+            set;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            //will populate the custom PostTemplate value if present
+            SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
+            if (string.IsNullOrEmpty(PostTemplate))
+            {
+                PostTemplate = DEFAULT_POST_TEMPLATE;
+            }
+            EntryList.ItemTemplate = Page.LoadTemplate(PostTemplate);
+
             if (!Page.IsPostBack)
             {
                 m_imageMaxSize = CurrentBlog.MaximumThumbnailImageSizeDimension;

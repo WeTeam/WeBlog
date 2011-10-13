@@ -210,6 +210,13 @@
     <Compile Include="layouts\WeBlog\BlogPostList.ascx.designer.cs">
       <DependentUpon>BlogPostList.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\BlogPostListEntry.ascx.cs">
+      <DependentUpon>BlogPostListEntry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogPostListEntry.ascx.designer.cs">
+      <DependentUpon>BlogPostListEntry.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\BlogRecentComments.ascx.cs">
       <DependentUpon>BlogRecentComments.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -333,6 +340,7 @@
     <Content Include="layouts\WeBlog\BlogLayoutAjax.aspx" />
     <Content Include="layouts\WeBlog\BlogOptions.ascx" />
     <Content Include="layouts\WeBlog\BlogPostList.ascx" />
+    <Content Include="layouts\WeBlog\BlogPostListEntry.ascx" />
     <Content Include="layouts\WeBlog\BlogRecentComments.ascx" />
     <Content Include="layouts\WeBlog\BlogSubmitComment.ascx" />
     <Content Include="layouts\WeBlog\BlogTagCloud.ascx" />
