@@ -88,13 +88,13 @@ Generic classes
 /*************************************************************************************
 Blog entry
 *************************************************************************************/
-ul.wb-entry-list
+.wb-entry-list ul
 {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-    ul.wb-entry-list li
+    .wb-entry-list ul li
     {
         margin-bottom: 10px;
     }

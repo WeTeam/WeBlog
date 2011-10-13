@@ -54,32 +54,29 @@ namespace Sitecore.Modules.WeBlog.Layouts
             }
             EntryList.ItemTemplate = Page.LoadTemplate(PostTemplate);
 
-            if (!Page.IsPostBack)
+            m_imageMaxSize = CurrentBlog.MaximumThumbnailImageSizeDimension;
+
+            string requestedToShowStr = Request.QueryString["count"] ?? "0";
+            int requestedToShow = 0;
+            int.TryParse(requestedToShowStr, out requestedToShow);
+            TotalToShow = requestedToShow > 0 ? requestedToShow : CurrentBlog.DisplayItemCountNumeric;
+
+            string startIndexStr = Request.QueryString["startIndex"] ?? "0";
+            int startIndex = 0;
+            int.TryParse(startIndexStr, out startIndex);
+            StartIndex = startIndex;
+
+            string tag = Request.QueryString["tag"];
+            BindEntries(tag);
+            string blogUrl = Sitecore.Links.LinkManager.GetItemUrl(Sitecore.Context.Item);
+
+            if (ancViewMore != null)
             {
-                m_imageMaxSize = CurrentBlog.MaximumThumbnailImageSizeDimension;
+                ancViewMore.HRef = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
 
-                string requestedToShowStr = Request.QueryString["count"] ?? "0";
-                int requestedToShow = 0;
-                int.TryParse(requestedToShowStr, out requestedToShow);
-                TotalToShow = requestedToShow > 0 ? requestedToShow : CurrentBlog.DisplayItemCountNumeric;
-
-                string startIndexStr = Request.QueryString["startIndex"] ?? "0";
-                int startIndex = 0;
-                int.TryParse(startIndexStr, out startIndex);
-                StartIndex = startIndex;
-
-                string tag = Request.QueryString["tag"];
-                BindEntries(tag);
-                string blogUrl = Sitecore.Links.LinkManager.GetItemUrl(Sitecore.Context.Item);
-
-                if (ancViewMore != null)
+                if (tag != null)
                 {
-                    ancViewMore.HRef = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
-
-                    if (tag != null)
-                    {
-                        ancViewMore.HRef += "&tag=" + Server.UrlEncode(tag);
-                    }
+                    ancViewMore.HRef += "&tag=" + Server.UrlEncode(tag);
                 }
             }
         }
