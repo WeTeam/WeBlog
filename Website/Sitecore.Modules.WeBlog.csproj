@@ -182,6 +182,13 @@
     <Compile Include="layouts\WeBlog\BlogFacebook.ascx.designer.cs">
       <DependentUpon>BlogFacebook.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\BlogFacebookComments.ascx.cs">
+      <DependentUpon>BlogFacebookComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogFacebookComments.ascx.designer.cs">
+      <DependentUpon>BlogFacebookComments.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\BlogFeeds.ascx.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -336,6 +343,7 @@
     <Content Include="layouts\WeBlog\BlogEntryCategories.ascx" />
     <Content Include="layouts\WeBlog\BlogEntryTags.ascx" />
     <Content Include="layouts\WeBlog\BlogFacebook.ascx" />
+    <Content Include="layouts\WeBlog\BlogFacebookComments.ascx" />
     <Content Include="layouts\WeBlog\BlogFeeds.ascx" />
     <Content Include="layouts\WeBlog\BlogLayout.aspx" />
     <Content Include="layouts\WeBlog\BlogLayoutAjax.aspx" />
