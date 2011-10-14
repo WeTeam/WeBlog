@@ -3,6 +3,7 @@ using System.Linq;
 using Sitecore.Search;
 using System.Collections.Generic;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Search.Search;
 
 namespace Sitecore.Modules.WeBlog.Utilities
 {
@@ -29,13 +30,14 @@ namespace Sitecore.Modules.WeBlog.Utilities
         }
 
         /// <summary>
-        /// Performs a search in the WeBlog search index
+        /// Performs a search in the WeBlog search index, with a sort
         /// </summary>
         /// <typeparam name="T">The type of the items to be returned from the search</typeparam>
         /// <param name="query">The query to execute</param>
         /// <param name="maximumResults">The maximum number of results</param>
+        /// <param name="sortField">The index field to sort on</param>
         /// <returns>An array of search results, or an empty array if there was an issue</returns>
-        public static T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func)
+        public static T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func, string sortField, bool reverseSort)
         {
             if (query is CombinedQuery)
             {
@@ -51,14 +53,18 @@ namespace Sitecore.Modules.WeBlog.Utilities
                 var index = Utilities.Search.GetSearchIndex();
                 if (index != null)
                 {
-                    using (var searchContext = index.CreateSearchContext())
+                    using (var searchContext = new SortableIndexSearchContext(index))
                     {
-                        var hits = searchContext.Search(query);
-
-                        /*var sort = new Lucene.Net.Search.Sort(Constants.Index.Fields.Created);
-                            var prepQuery = searchContext.Prepare(query);
-
-                            var hits = searchContext.Searcher.Search(prepQuery.Query, sort);*/
+                        SearchHits hits;
+                        if (!string.IsNullOrEmpty(sortField))
+                        {
+                            var sort = new Lucene.Net.Search.Sort(sortField, reverseSort);
+                            hits = searchContext.Search(query, sort);
+                        }
+                        else
+                        {
+                            hits = searchContext.Search(query);
+                        }
 
                         if (hits != null)
                         {
@@ -74,6 +80,14 @@ namespace Sitecore.Modules.WeBlog.Utilities
             }
 
             return items.ToArray();
+        }
+
+        /// <summary>
+        /// Performs a search in the WeBlog search index, without a sort
+        /// </summary>
+        public static T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func)
+        {
+            return Execute<T>(query, maximumResults, func, null, false);
         }
     }
 }

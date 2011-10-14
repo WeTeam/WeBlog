@@ -282,6 +282,7 @@
     <Compile Include="Pipelines\CaptchaProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
+    <Compile Include="Search\SortableIndexSearchContext.cs" />
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="sitecore modules\WeBlog\Admin\NewBlog.aspx.cs">

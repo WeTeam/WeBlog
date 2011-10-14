@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog
                 public const string EntryID = "entryid";
                 public const string Tags = "tags";
                 public const string Category = "category";
-                public const string Created = "__created";
+                public const string Created = "_created";
             }
         }
 
