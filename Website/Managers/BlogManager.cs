@@ -120,7 +120,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static Item GetDictionaryItem()
         {
             BlogItem currentBlog = GetCurrentBlog();
-            return currentBlog.DictionaryItem;
+            if (currentBlog != null)
+                return currentBlog.DictionaryItem;
+            else
+                return null;
         }
 
         #region Obsolete Methods

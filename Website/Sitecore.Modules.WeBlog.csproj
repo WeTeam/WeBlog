@@ -59,9 +59,6 @@
     <Reference Include="Recaptcha">
       <HintPath>..\Dependencies\Third-party\Recaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="RssToolkit">
-      <HintPath>..\Dependencies\Third-party\RssToolkit.dll</HintPath>
-    </Reference>
     <Reference Include="Sitecore.Client">
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
@@ -315,9 +312,6 @@
     <Compile Include="sitecore modules\WeBlog\rsd.ashx.cs">
       <DependentUpon>rsd.ashx</DependentUpon>
     </Compile>
-    <Compile Include="sitecore modules\WeBlog\Rss.ashx.cs">
-      <DependentUpon>Rss.ashx</DependentUpon>
-    </Compile>
     <Compile Include="sitecore\shell\Applications\WeBlog\WordpressImport.cs" />
     <Compile Include="Utilities\Crypto.cs" />
     <Compile Include="Utilities\Extensions.cs" />
@@ -411,7 +405,6 @@
   <ItemGroup>
     <Content Include="sitecore modules\WeBlog\MetaBlogApi.ashx" />
     <Content Include="sitecore modules\WeBlog\rsd.ashx" />
-    <Content Include="sitecore modules\WeBlog\Rss.ashx" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

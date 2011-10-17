@@ -122,7 +122,6 @@ namespace Sitecore.Modules.WeBlog.Globalization
         /// <returns></returns>
         protected static Cache FindCache()
         {
-            // todo: error checking here. item not null
             var dictionaryItem = BlogManager.GetDictionaryItem();
             if (dictionaryItem != null)
             {
