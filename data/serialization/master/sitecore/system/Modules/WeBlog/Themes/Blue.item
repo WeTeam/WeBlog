@@ -12,13 +12,13 @@ templatekey: Theme
 ----version----
 language: en
 version: 1
-revision: 53a0367c-905f-4578-92a3-c48c4940135b
+revision: c4ec6084-23a4-4e04-ae54-c44493aa66b2
 
 ----field----
 field: {A6E2EF56-AA51-440F-86FC-7C71A0BB1EDB}
 name: File location
 key: file location
-content-length: 38
+content-length: 40
 
 /sitecore modules/WeBlog/Themes/Blue.css
 ----field----
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-53a0367c-905f-4578-92a3-c48c4940135b
+c4ec6084-23a4-4e04-ae54-c44493aa66b2
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110409T155214:634379611345546875
+20111017T162943:634544657838767293
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

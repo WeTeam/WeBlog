@@ -1,40 +1,40 @@
 ----item----
 version: 1
-id: {2AC5A271-0770-4B54-942D-CA1467D22B43}
+id: {91395FDE-8CC3-4129-A775-0B29833563AB}
 database: master
-path: /sitecore/system/Modules/WeBlog/Themes/techphoria
-parent: {2E68D26C-5138-4E08-8056-717ACFF80C5E}
-name: techphoria
+path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Blog Entry
+parent: {9F26902B-9E62-4754-A8DD-2D6847CDDFF7}
+name: Blog Entry
 master: {00000000-0000-0000-0000-000000000000}
-template: {1BF19354-D79F-4F32-80F0-5A644811C137}
-templatekey: Theme
+template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
+templatekey: Template
 
+----field----
+field: {12C33F3F-86C5-43A5-AEB4-5598CEC45116}
+name: __Base template
+key: __base template
+content-length: 38
+
+{8CA06D6A-B353-44E8-BC31-B528C7306971}
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 27
+
+Applications/16x16/gear.png
 ----version----
 language: en
 version: 1
-revision: 073f505d-877b-46ea-93e2-1a99becd92b9
+revision: cbfd8c11-756f-445b-80f2-e89010249e75
 
-----field----
-field: {A6E2EF56-AA51-440F-86FC-7C71A0BB1EDB}
-name: File location
-key: file location
-content-length: 46
-
-/sitecore modules/WeBlog/Themes/techphoria.css
-----field----
-field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
-name: __Owner
-key: __owner
-content-length: 14
-
-sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20110404T223723
+20111017T163121
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-073f505d-877b-46ea-93e2-1a99becd92b9
+cbfd8c11-756f-445b-80f2-e89010249e75
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111017T162927:634544657673817953
+20111017T164516:634544667166999290
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

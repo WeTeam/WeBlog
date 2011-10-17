@@ -1,40 +1,26 @@
 ----item----
 version: 1
-id: {2AC5A271-0770-4B54-942D-CA1467D22B43}
+id: {BF9C6A1A-763A-4BE2-AAD3-6AEEAE685E63}
 database: master
-path: /sitecore/system/Modules/WeBlog/Themes/techphoria
-parent: {2E68D26C-5138-4E08-8056-717ACFF80C5E}
-name: techphoria
+path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Blog Entry/Display
+parent: {91395FDE-8CC3-4129-A775-0B29833563AB}
+name: Display
 master: {00000000-0000-0000-0000-000000000000}
-template: {1BF19354-D79F-4F32-80F0-5A644811C137}
-templatekey: Theme
+template: {E269FBB5-3750-427A-9149-7AA950B49301}
+templatekey: Template section
 
 ----version----
 language: en
 version: 1
-revision: 073f505d-877b-46ea-93e2-1a99becd92b9
+revision: e14ef754-0e0a-4639-bf23-9ff8c573ec82
 
-----field----
-field: {A6E2EF56-AA51-440F-86FC-7C71A0BB1EDB}
-name: File location
-key: file location
-content-length: 46
-
-/sitecore modules/WeBlog/Themes/techphoria.css
-----field----
-field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
-name: __Owner
-key: __owner
-content-length: 14
-
-sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20110404T223723
+20111017T163159
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +34,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-073f505d-877b-46ea-93e2-1a99becd92b9
+e14ef754-0e0a-4639-bf23-9ff8c573ec82
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111017T162927:634544657673817953
+20111017T163456:634544660961612705
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
