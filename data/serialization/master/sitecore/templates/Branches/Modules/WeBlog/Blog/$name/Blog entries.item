@@ -23,3 +23,57 @@ key: __renderings
 content-length: 329
 
 <?xml version="1.0" encoding="utf-16"?><r xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{A57C19C2-8EE3-4DEC-AA39-0B8D522D59EB}" /><d id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" l="{A57C19C2-8EE3-4DEC-AA39-0B8D522D59EB}" /></r>
+----version----
+language: en
+version: 1
+revision: b05ad421-2923-4424-b5f9-a07b599f1e35
+
+----field----
+field: {72C481B9-F789-4457-838F-2329EB8469C2}
+name: Source
+key: source
+content-length: 68
+
+query:.././/*[@@templateid='{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}']
+----field----
+field: {16CC56DD-27F5-4839-B790-DBBD9ACA882C}
+name: Title
+key: title
+content-length: 12
+
+Blog Entries
+----field----
+field: {770878C5-EE73-4967-AFF5-D0F402523FDF}
+name: Description
+key: description
+content-length: 23
+
+The latest blog entries
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111017T171530
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+b05ad421-2923-4424-b5f9-a07b599f1e35
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111017T171554:634544685545052961
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
