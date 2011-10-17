@@ -34,16 +34,11 @@ namespace Sitecore.Modules.WeBlog.Commands
                 {
                     string itemTitle = args.Result;
 
-                    Database current = Factory.GetDatabase("master");
                     TemplateID template = new TemplateID(Settings.EntryTemplateId);
 
                     Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(args.Parameters["currentid"]), args.Parameters["database"]);
                     Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
-                    newItem.Editing.BeginEdit();
-                    newItem.Fields["Introduction"].Value = "Enter the introduction text";
-                    newItem.Fields["Content"].Value = "Enter the full article";
-                    newItem.Editing.EndEdit();
-
+                    
                     Publish.PublishItem(newItem);
                 }
             }
