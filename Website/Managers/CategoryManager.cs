@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Data.Managers;
 using Sitecore.Configuration;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sitecore.Modules.WeBlog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
     public partial class CommentItem
     {

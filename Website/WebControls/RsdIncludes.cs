@@ -1,5 +1,5 @@
 ﻿using System.Web.UI;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Web;
 using Sitecore.Web.UI;
@@ -19,7 +19,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
             }
         }
 
-        protected virtual void AddLinkToOutput(HtmlTextWriter output, BlogItem blogItem)
+        protected virtual void AddLinkToOutput(HtmlTextWriter output, BlogHomeItem blogItem)
         {
             output.AddAttribute(HtmlTextWriterAttribute.Rel, "application/rsd+xml");
             output.AddAttribute(HtmlTextWriterAttribute.Title, "RSD");

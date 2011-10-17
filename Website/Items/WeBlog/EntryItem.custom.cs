@@ -4,7 +4,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.Accounts;
 using Sitecore.Web;
 
-namespace Sitecore.Modules.WeBlog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
     public partial class EntryItem
     {

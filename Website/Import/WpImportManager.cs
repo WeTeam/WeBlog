@@ -5,7 +5,7 @@ using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Import
 {

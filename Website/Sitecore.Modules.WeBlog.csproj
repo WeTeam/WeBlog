@@ -102,8 +102,8 @@
     <Compile Include="Import\WpPost.cs" />
     <Compile Include="Items\Feeds\RSSFeedItem.base.cs" />
     <Compile Include="Items\Feeds\RSSFeedItem.custom.cs" />
-    <Compile Include="Items\WeBlog\BlogItem.base.cs" />
-    <Compile Include="Items\WeBlog\BlogItem.custom.cs" />
+    <Compile Include="Items\WeBlog\BlogHomeItem.base.cs" />
+    <Compile Include="Items\WeBlog\BlogHomeItem.custom.cs" />
     <Compile Include="Items\WeBlog\CategoryItem.base.cs" />
     <Compile Include="Items\WeBlog\CommentItem.base.cs" />
     <Compile Include="Items\WeBlog\CommentItem.custom.cs" />

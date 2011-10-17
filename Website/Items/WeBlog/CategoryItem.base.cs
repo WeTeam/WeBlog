@@ -1,7 +1,7 @@
 using CustomItemGenerator.Fields.SimpleTypes;
 using Sitecore.Data.Items;
 
-namespace Sitecore.Modules.WeBlog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
 public partial class CategoryItem : CustomItem
 {

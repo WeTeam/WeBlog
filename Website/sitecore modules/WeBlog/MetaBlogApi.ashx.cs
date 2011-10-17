@@ -7,7 +7,7 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Resources.Media;
@@ -152,7 +152,7 @@ namespace Sitecore.Modules.WeBlog
 
             //Create structure for blog list
             XmlRpcStruct[] blogs = new XmlRpcStruct[blogList.Length];
-            foreach (Sitecore.Modules.WeBlog.Items.Blog.BlogItem blog in blogList)
+            foreach (Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem blog in blogList)
             {
                 XmlRpcStruct rpcstruct = new XmlRpcStruct();
                 rpcstruct.Add("blogid", blog.ID.ToString()); // Blog Id

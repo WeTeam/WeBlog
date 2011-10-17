@@ -5,7 +5,7 @@ using System.Web;
 using Sitecore.Web.UI;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using System.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.WebControls

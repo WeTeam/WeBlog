@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Comparers
 {

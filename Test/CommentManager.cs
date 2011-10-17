@@ -469,7 +469,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 var commentItem = db.GetItem(commentId);
                 Assert.IsNotNull(commentItem);
 
-                var commentAsComment = new Sitecore.Modules.WeBlog.Items.Blog.CommentItem(commentItem);
+                var commentAsComment = new Sitecore.Modules.WeBlog.Items.WeBlog.CommentItem(commentItem);
                 Assert.AreEqual("a@b.com", commentAsComment.Email.Text);
                 Assert.AreEqual("commentor", commentAsComment.Name.Text);
                 Assert.AreEqual("127.0.0.1", commentAsComment.IPAddress.Text);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 using Sitecore.Data;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Controls
@@ -9,7 +9,7 @@ namespace Sitecore.Modules.WeBlog.Controls
     public partial class AddComment : System.Web.UI.UserControl
     {
         #region Fields
-        public Items.Blog.BlogItem currentBlog = BlogManager.GetCurrentBlog();
+        public Items.WeBlog.BlogHomeItem currentBlog = BlogManager.GetCurrentBlog();
         #endregion
 
         #region Page methods

@@ -5,7 +5,7 @@ using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System.IO;
 using System.Web;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using System.Collections.Generic;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;

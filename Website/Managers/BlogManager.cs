@@ -5,7 +5,7 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Security.Accounts;
 using Sitecore.Data.Managers;
 
@@ -20,7 +20,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the current blog for the context item
         /// </summary>
         /// <returns>The current blog if found, otherwise null</returns>
-        public static Items.Blog.BlogItem GetCurrentBlog()
+        public static Items.WeBlog.BlogHomeItem GetCurrentBlog()
         {
             return GetCurrentBlog(Context.Item);
         }
@@ -30,12 +30,12 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="item">The item to find the current blog for</param>
         /// <returns>The current blog if found, otherwise null</returns>
-        public static Items.Blog.BlogItem GetCurrentBlog(Item item)
+        public static Items.WeBlog.BlogHomeItem GetCurrentBlog(Item item)
         {
             var blogItem = Utilities.Items.GetCurrentItem(item, Settings.BlogTemplateIdString);
 
             if (blogItem != null)
-                return new Items.Blog.BlogItem(blogItem);
+                return new Items.WeBlog.BlogHomeItem(blogItem);
             else
                 return null;
         }
@@ -44,9 +44,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="username">The name of the user requiring write access to the blog</param>
         /// <returns>The blogs the user has write access to</returns>
-        public static Items.Blog.BlogItem[] GetUserBlogs(string username)
+        public static Items.WeBlog.BlogHomeItem[] GetUserBlogs(string username)
         {
-            var blogList = new List<Items.Blog.BlogItem>();
+            var blogList = new List<Items.WeBlog.BlogHomeItem>();
 
             var blogs = GetAllBlogs();
             var account = Account.FromName(username, AccountType.User);
@@ -64,13 +64,13 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets all the blogs.
         /// </summary>
         /// <returns>The list of all blogs</returns>
-        public static Items.Blog.BlogItem[] GetAllBlogs()
+        public static Items.WeBlog.BlogHomeItem[] GetAllBlogs()
         {
             // TODO: Store the result of this call in cache and clear it from cache on publish
             var blogTemplate = Context.Database.GetTemplate(Settings.BlogTemplateIdString);
             var contentRoot = Context.Database.GetItem(Settings.ContentRootPath);
             var blogItems = Utilities.Items.FindItemsByTemplateOrDerivedTemplate(contentRoot, blogTemplate);
-            return (from item in blogItems select new BlogItem(item)).ToArray();
+            return (from item in blogItems select new BlogHomeItem(item)).ToArray();
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blog">The blog to read the setting from</param>
         /// <returns>True if RSS is enabled, otherwise False</returns>
-        public static bool EnableRSS(Items.Blog.BlogItem blog)
+        public static bool EnableRSS(Items.WeBlog.BlogHomeItem blog)
         {
             return blog.EnableRSS.Checked;
         }
@@ -108,7 +108,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// /// <param name="blog">The blog to read the setting from</param>
         /// <returns>True if email should be shown, otherwise False</returns>
-        public static bool ShowEmailWithinComments(Items.Blog.BlogItem blog)
+        public static bool ShowEmailWithinComments(Items.WeBlog.BlogHomeItem blog)
         {
             return blog.ShowEmailWithinComments.Checked;
         }
@@ -119,7 +119,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>Returns standard dictionary item if there is no custom item selected</returns>
         public static Item GetDictionaryItem()
         {
-            BlogItem currentBlog = GetCurrentBlog();
+            BlogHomeItem currentBlog = GetCurrentBlog();
             if (currentBlog != null)
                 return currentBlog.DictionaryItem;
             else

@@ -50,7 +50,7 @@ namespace Sitecore.Modules.WeBlog.Admin
                 Item blogItem = db.GetItem(BlogID);
 
                 // Convert item to Blog
-                Sitecore.Modules.WeBlog.Items.Blog.BlogItem createdBlog = new Sitecore.Modules.WeBlog.Items.Blog.BlogItem(blogItem);
+                Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem createdBlog = new Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem(blogItem);
 
                 // Fill the blog item with the entered values
                 createdBlog.BeginEdit();

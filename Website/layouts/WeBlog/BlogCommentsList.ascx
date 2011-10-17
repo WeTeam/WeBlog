@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogCommentsList.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogCommentsList" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
 <%@ Register TagPrefix="gl" Namespace="Sitecore.Modules.WeBlog.Globalization" Assembly="Sitecore.Modules.WeBlog" %>
 
 <asp:Panel ID="CommentList" runat="server" CssClass="wb-entry-comments wb-panel">

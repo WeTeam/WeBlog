@@ -6,7 +6,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using System.Threading;
 using Sitecore.StringExtensions;
 using Sitecore.Search;
@@ -38,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var entryItem = Utilities.Items.GetCurrentItem(item, Settings.EntryTemplateIdString);
 
             if (entryItem != null)
-                return new Items.Blog.EntryItem(entryItem);
+                return new Items.WeBlog.EntryItem(entryItem);
             else
                 return null;
         }

@@ -19,7 +19,7 @@ using Sitecore.Data.Managers;
 using Sitecore.SecurityModel;
 using Sitecore.Configuration;
 using Sitecore.Web;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Jobs;
 
 namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
@@ -129,7 +129,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             Item root = db.GetItem(litSummaryPath.Text);
 
             BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchId);
-            BlogItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
+            BlogHomeItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
 
             blogItem.BeginEdit();
             blogItem.Email.Field.Value = litSettingsEmail.Value;

@@ -55,7 +55,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllTags_Blog1()
         {
-            var tags = Mod.TagManager.GetAllTags(new Items.Blog.BlogItem(m_blog1));
+            var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_blog1));
             Assert.AreEqual(1, tags["tagb"]);
             Assert.AreEqual(2, tags["tagc"]);
             Assert.AreEqual(3, tags["taga"]);
@@ -64,14 +64,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllTags_NonBlogItem()
         {
-            var tags = Mod.TagManager.GetAllTags(new Items.Blog.BlogItem(m_entry1));
+            var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
             Assert.AreEqual(0, tags.Count);
         }
 
         [Test]
         public void GetAllTags_Null()
         {
-            var tags = Mod.TagManager.GetAllTags(new Items.Blog.BlogItem(m_entry1));
+            var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
             Assert.AreEqual(0, tags.Count);
         }
 

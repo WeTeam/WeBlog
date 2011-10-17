@@ -7,9 +7,9 @@ using Sitecore.Web;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 
-namespace Sitecore.Modules.WeBlog.Items.Blog
+namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
-    public partial class BlogItem : CustomItem
+    public partial class BlogHomeItem : CustomItem
     {
 
         public int DisplayItemCountNumeric

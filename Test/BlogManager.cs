@@ -124,25 +124,25 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void EnableRSS_BlogEnabled()
         {
-            Assert.IsTrue(Mod.BlogManager.EnableRSS(new Items.Blog.BlogItem(m_blog1)));
+            Assert.IsTrue(Mod.BlogManager.EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog1)));
         }
 
         [Test]
         public void EnableRSS_BlogDisabled()
         {
-            Assert.IsFalse(Mod.BlogManager.EnableRSS(new Items.Blog.BlogItem(m_blog2)));
+            Assert.IsFalse(Mod.BlogManager.EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog2)));
         }
 
         [Test]
         public void ShowEmailWithinComments_BlogEnabled()
         {
-            Assert.IsTrue(Mod.BlogManager.ShowEmailWithinComments(new Items.Blog.BlogItem(m_blog1)));
+            Assert.IsTrue(Mod.BlogManager.ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog1)));
         }
 
         [Test]
         public void ShowEmailWithinComments_BlogDisabled()
         {
-            Assert.IsFalse(Mod.BlogManager.ShowEmailWithinComments(new Items.Blog.BlogItem(m_blog2)));
+            Assert.IsFalse(Mod.BlogManager.ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog2)));
         }
 
         [Test]

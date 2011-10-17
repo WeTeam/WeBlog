@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogRecentComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogRecentComments" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Blog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
 
 <asp:Panel ID="PanelRecentComments" runat="server" CssClass="wb-recent-comments wb-panel">
-    <h3><%# Sitecore.Modules.WeBlog.Globalization.Translator.Render("RECENT_COMMENTS") %></h3>
+    <h3><%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("RECENT_COMMENTS") %></h3>
     <asp:ListView ID="ListViewRecentComments" runat="server">
         <LayoutTemplate>
             <ul>

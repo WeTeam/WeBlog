@@ -1,4 +1,4 @@
-﻿using Sitecore.Modules.WeBlog.Items.Blog;
+﻿using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts
@@ -8,7 +8,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <summary>
         /// Gets or sets the current blog
         /// </summary>
-        public BlogItem CurrentBlog
+        public BlogHomeItem CurrentBlog
         {
             get;
             set;

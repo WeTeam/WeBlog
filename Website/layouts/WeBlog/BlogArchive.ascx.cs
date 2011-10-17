@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Items.Blog;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Utilities;
 
@@ -12,7 +12,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
     public partial class BlogArchive : BaseSublayout
     {
         protected DateTime m_startedDate = DateTime.Now;
-        public Dictionary<int, Items.Blog.EntryItem[]> m_entriesByMonthAndYear = null;
+        public Dictionary<int, Items.WeBlog.EntryItem[]> m_entriesByMonthAndYear = null;
 
         /// <summary>
         /// Gets or sets whether individual posts in each month should be shown
