@@ -20,21 +20,28 @@ content-length: 3
 field: {12C1CEB4-F549-472A-97ED-99BFF70EB84E}
 name: ID
 key: id
-content-length: 12
+content-length: 11
 
-EviBlogStrip
+WeBlogStrip
 ----version----
 language: en
 version: 1
-revision: 867ae3df-d249-426e-8aeb-2f6f5c2d24f7
+revision: 6d7cfb70-2946-4015-85ae-5f5ad02f097a
 
 ----field----
 field: {5453DC07-6A17-48BA-8D05-17DB90A2E795}
 name: Header
 key: header
-content-length: 7
+content-length: 6
 
-EviBlog
+WeBlog
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -55,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-867ae3df-d249-426e-8aeb-2f6f5c2d24f7
+6d7cfb70-2946-4015-85ae-5f5ad02f097a
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110602T223813:634426510936350299
+20111017T164336:634544666160003708
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

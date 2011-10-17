@@ -27,13 +27,13 @@ content-length: 55
 field: {DBBF9EE3-C30E-4456-A81F-ED8C2E8DF91B}
 name: Click
 key: click
-content-length: 21
+content-length: 18
 
-eviblog:entrysettings
+blog:entrysettings
 ----version----
 language: en
 version: 1
-revision: 7c0764b3-b66a-4cc1-87c8-fe51160982b0
+revision: 155e1321-bdf9-4a0c-bc0f-e7f6553e1e41
 
 ----field----
 field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
@@ -49,6 +49,13 @@ key: tooltip
 content-length: 38
 
 Assign categories to the current entry
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -69,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-7c0764b3-b66a-4cc1-87c8-fe51160982b0
+155e1321-bdf9-4a0c-bc0f-e7f6553e1e41
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20091102T004022:633927192227086335
+20111017T165831:634544675117227046
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

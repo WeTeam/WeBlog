@@ -27,13 +27,13 @@ content-length: 56
 field: {DBBF9EE3-C30E-4456-A81F-ED8C2E8DF91B}
 name: Click
 key: click
-content-length: 19
+content-length: 16
 
-eviblog:newcategory
+blog:newcategory
 ----version----
 language: en
 version: 1
-revision: 4be7d8cd-d9b0-4694-8314-975c9e3f6406
+revision: a3b9ea1c-5662-4545-a0be-b0000b1e3b1a
 
 ----field----
 field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
@@ -49,6 +49,13 @@ key: tooltip
 content-length: 18
 
 Add a new category
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -69,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-4be7d8cd-d9b0-4694-8314-975c9e3f6406
+a3b9ea1c-5662-4545-a0be-b0000b1e3b1a
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20090105T205846:633667859269159822
+20111017T165821:634544675017943487
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -27,13 +27,13 @@ content-length: 67
 field: {DBBF9EE3-C30E-4456-A81F-ED8C2E8DF91B}
 name: Click
 key: click
-content-length: 20
+content-length: 17
 
-eviblog:blogsettings
+blog:blogsettings
 ----version----
 language: en
 version: 1
-revision: d536ca70-8963-4117-ac3d-6f30070bc51d
+revision: dfdd1dab-e650-4258-b1af-d47efa75b4ed
 
 ----field----
 field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
@@ -49,6 +49,13 @@ key: tooltip
 content-length: 22
 
 Edit the blog settings
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -69,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-d536ca70-8963-4117-ac3d-6f30070bc51d
+dfdd1dab-e650-4258-b1af-d47efa75b4ed
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20091102T003208:633927187282423517
+20111017T165828:634544675088019909
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
