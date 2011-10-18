@@ -1,39 +1,25 @@
 ----item----
 version: 1
-id: {6CEFC19A-78C6-4D24-A067-4CB3DF5E03D3}
+id: {CAC00CD7-54B1-4397-B05C-04FAFF112CF5}
 database: master
-path: /sitecore/templates/Modules/WeBlog/BlogHome/Blog options/Gravatar Rating
-parent: {A9972BCC-DD50-46C6-813B-8F2CC74250F1}
-name: Gravatar Rating
+path: /sitecore/system/Workflows/WeBlog Comments
+parent: {05592656-56D7-4D85-AACF-30919EE494F9}
+name: WeBlog Comments
 master: {00000000-0000-0000-0000-000000000000}
-template: {455A3E98-A627-4B40-8035-E683A0331AC7}
-templatekey: Template field
+template: {1C0ACC50-37BE-4742-B43C-96A07A7410A5}
+templatekey: Workflow
 
 ----field----
-field: {AB162CC0-DC80-4ABF-8871-998EE5D7BA32}
-name: Type
-key: type
-content-length: 8
+field: {B5166B38-E4BF-4410-953C-2037F2BF6A56}
+name: Initial state
+key: initial state
+content-length: 38
 
-Droplist
-----field----
-field: {1EB8AE32-E190-44A6-968D-ED904C794EBF}
-name: Source
-key: source
-content-length: 48
-
-/sitecore/system/modules/weblog/gravatar ratings
-----field----
-field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
-name: __Sortorder
-key: __sortorder
-content-length: 3
-
-800
+{DC5020D1-39C1-404C-8772-B99DF5E928EB}
 ----version----
 language: en
 version: 1
-revision: 31ba5c58-6374-473d-831c-4244ece5c92f
+revision: 485cbe45-82f3-4b9e-b103-e6602d93d187
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,7 +34,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20110411T065541
+20111018T100329
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -62,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-31ba5c58-6374-473d-831c-4244ece5c92f
+485cbe45-82f3-4b9e-b103-e6602d93d187
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111018T095433:634545284733103152
+20111018T124159:634545385196042923
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -253,5 +253,13 @@ namespace Sitecore.Modules.WeBlog
         {
             get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("Captcha.MinTimeout", "00:00:03"); }
         }
+
+        /// <summary>
+        /// Gets the name of the workflow command to execute after creating a comment.
+        /// </summary>
+        public static string CommentWorkflowCommand
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command"); }
+        }
     }
 }

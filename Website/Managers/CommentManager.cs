@@ -15,6 +15,7 @@ using Sitecore.SecurityModel;
 using Sitecore.Web;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Search;
+using Sitecore.Sites;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -59,7 +60,25 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                         newComment.EndEdit();
 
-                        Publish.PublishItem(newItem);
+                        //if the comment has workflow and we have a command configured, push it through
+                        var workflow = database.WorkflowProvider.GetWorkflow(newItem);
+                        if (!string.IsNullOrEmpty(Settings.CommentWorkflowCommand))
+                        {
+                            if (workflow != null)
+                            {
+                                //Need to switch to shell website to execute workflow
+                                using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))
+                                {
+                                    workflow.Execute(Settings.CommentWorkflowCommand, newItem, "WeBlog automated submit", false, new object[0]);
+                                }
+                            }
+                        }
+
+                        //publish won't push the item if it's not in a final state, but check here to save the effort
+                        if (workflow == null || workflow.GetState(newItem) == null || workflow.GetState(newItem).FinalState)
+                        {
+                            Publish.PublishItem(newItem);
+                        }
 
                         // Ensure current request is not from the test page (Context.Item is not null)
                         if(Sitecore.Context.Item != null)

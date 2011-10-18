@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Utilities
 {
@@ -40,7 +41,18 @@ namespace Sitecore.Modules.WeBlog.Utilities
         /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
         public static bool TemplateIsOrBasedOn(Item item, TemplateItem template)
         {
-            if (item == null || template == null)
+            return TemplateIsOrBasedOn(item, template.ID);
+        }
+
+        /// <summary>
+        /// Determine if an item is based on a given template or if the item's template is based on the given template
+        /// </summary>
+        /// <param name="item">The item to test the template of</param>
+        /// <param name="template">The ID of the template which the item's template should be or inherit from</param>
+        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        public static bool TemplateIsOrBasedOn(Item item, ID template)
+        {
+            if (item == null || template == ID.Null)
                 return false;
 
             return TemplateIsOrBasedOn(item.Template, template);
@@ -54,10 +66,21 @@ namespace Sitecore.Modules.WeBlog.Utilities
         /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
         public static bool TemplateIsOrBasedOn(TemplateItem itemTemplate, TemplateItem baseTemplate)
         {
-            if (itemTemplate == null || baseTemplate == null)
+            return TemplateIsOrBasedOn(itemTemplate, baseTemplate.ID);
+        }
+
+        /// <summary>
+        /// Determine if an item is based on a given template or if the item's template is based on the given template
+        /// </summary>
+        /// <param name="item">The item to test the template of</param>
+        /// <param name="template">The ID of the template which the item's template should be or inherit from</param>
+        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        public static bool TemplateIsOrBasedOn(TemplateItem itemTemplate, ID baseTemplate)
+        {
+            if (itemTemplate == null || baseTemplate == ID.Null)
                 return false;
 
-            if (itemTemplate.ID == baseTemplate.ID)
+            if (itemTemplate.ID == baseTemplate)
                 return true;
 
             else

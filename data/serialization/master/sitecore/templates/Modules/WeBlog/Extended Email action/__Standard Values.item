@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {0FE9A2A0-E85E-4CFF-A62C-84B00F56C517}
+database: master
+path: /sitecore/templates/Modules/WeBlog/Extended Email action/__Standard Values
+parent: {5EE0B15C-A89F-433D-A56F-4059687EFF2A}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {5EE0B15C-A89F-433D-A56F-4059687EFF2A}
+templatekey: Extended Email action
+
+----field----
+field: {3E3DB713-5A6E-4EDA-9C96-A739F27FF79A}
+name: To
+key: to
+content-length: 25
+
+$entryUpdatedBy.get_Email
+----field----
+field: {E8A676DE-DDC6-4418-824D-5E2EF3FA9AF8}
+name: From
+key: from
+content-length: 39
+
+Sitecore WeBlog <no_reply@sitecore.net>
+----field----
+field: {63837207-5A36-4080-9367-2F077200A3BE}
+name: Type
+key: type
+content-length: 76
+
+Sitecore.Modules.WeBlog.Workflow.ExtendedMailAction, Sitecore.Modules.WeBlog
+----version----
+language: en
+version: 1
+revision: af2a7096-aa65-4647-b8b0-81ed9705280c
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111018T112744
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+af2a7096-aa65-4647-b8b0-81ed9705280c
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20111018T120231:634545361511594631
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

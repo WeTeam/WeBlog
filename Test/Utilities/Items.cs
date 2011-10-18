@@ -116,7 +116,7 @@ namespace Sitecore.Modules.WeBlog.Test.Utilities
         [Test]
         public void TemplateIsOrBasedOn_NullTemplate()
         {
-            Assert.IsFalse(Mod.Items.TemplateIsOrBasedOn(m_testTemplateRoot, null));
+            Assert.IsFalse(Mod.Items.TemplateIsOrBasedOn(m_testTemplateRoot, (TemplateItem)null));
         }
 
         [Test]
