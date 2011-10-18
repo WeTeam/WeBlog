@@ -21,11 +21,11 @@ function blogViewMore() {
     jQuery(".wb-view-more").live("click", function () {
         var viewMore = jQuery(this);
         var loading = viewMore.next(".wb-loading-animation");
-        viewMore.remove();
+        viewMore.hide();
         loading.show();
         jQuery.url.setUrl(document.location);
         var params = {
-            startIndex: jQuery(".wb-entry-list").children().length,
+            startIndex: jQuery(".wb-entry-list ul").children().length,
             blogAjax: 1
         }
         if (jQuery.url.param("tag") != null) {
@@ -33,8 +33,10 @@ function blogViewMore() {
         }
         var url = jQuery.url.setUrl(jQuery(this).attr("href")).attr("path");
         jQuery.get(url, params, function (data) {
-            loading.parent().after(data);
-            loading.parent().remove();
+            var posts = jQuery(data).find('ul li');
+            loading.parent().parent().find('ul').append(posts);
+            loading.hide();
+            viewMore.show();
         });
         return false;
     });
