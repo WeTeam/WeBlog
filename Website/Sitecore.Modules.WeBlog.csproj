@@ -105,7 +105,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.NVelocity">
-      <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
+      <HintPath>$(SitecorePathCurrent)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
