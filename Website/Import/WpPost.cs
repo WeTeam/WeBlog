@@ -55,6 +55,7 @@ namespace Sitecore.Modules.WeBlog.Import
 
             Title = postXml.Element("title").Value;
             Content = postXml.Element(nsContent + "encoded").Value;
+
             PublicationDate = DateTime.Parse(postXml.Element(wpContent + "post_date").Value);
 
             Categories = new List<string>();

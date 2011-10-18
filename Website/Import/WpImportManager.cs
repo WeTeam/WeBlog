@@ -46,33 +46,36 @@ namespace Sitecore.Modules.WeBlog.Import
 
             foreach (WpPost post in listWordpressPosts)
             {
-                EntryItem entry = ItemManager.AddFromTemplate(Utilities.Items.MakeSafeItemName(post.Title), entryTemplate.ID, blogItem);
-
-                entry.BeginEdit();
-                entry.Title.Field.Value = post.Title;
-                entry.Content.Field.Value = post.Content;
-                entry.Tags.Field.Value = string.Join(", ", post.Tags.ToArray());
-
-                List<string> categorieItems = new List<string>();
-
-                foreach (string categoryName in post.Categories)
+                if (!string.IsNullOrEmpty(post.Content))
                 {
-                    CategoryItem categoryItem = Sitecore.Modules.WeBlog.Managers.CategoryManager.Add(categoryName, blogItem);
-                    categorieItems.Add(categoryItem.ID.ToString());
-                }
-                if (categorieItems.Count > 0)
-                {
-                    entry.Category.Field.Value = string.Join("|", categorieItems.ToArray());
-                }
+                    EntryItem entry = ItemManager.AddFromTemplate(Utilities.Items.MakeSafeItemName(post.Title), entryTemplate.ID, blogItem);
 
-                foreach (WpComment wpComment in post.Comments)
-                {
-                    Sitecore.Modules.WeBlog.Managers.CommentManager.AddComment(entry, wpComment);
+                    entry.BeginEdit();
+                    entry.Title.Field.Value = post.Title;
+                    entry.Content.Field.Value = post.Content;
+                    entry.Tags.Field.Value = string.Join(", ", post.Tags.ToArray());
+
+                    List<string> categorieItems = new List<string>();
+
+                    foreach (string categoryName in post.Categories)
+                    {
+                        CategoryItem categoryItem = Sitecore.Modules.WeBlog.Managers.CategoryManager.Add(categoryName, blogItem);
+                        categorieItems.Add(categoryItem.ID.ToString());
+                    }
+                 
+                    if (categorieItems.Count > 0)
+                    {
+                        entry.Category.Field.Value = string.Join("|", categorieItems.ToArray());
+                    }
+
+                    foreach (WpComment wpComment in post.Comments)
+                    {
+                        Sitecore.Modules.WeBlog.Managers.CommentManager.AddComment(entry, wpComment);
+                    }
+
+                    entry.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(post.PublicationDate);
+                    entry.EndEdit();
                 }
-
-                entry.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(post.PublicationDate);
-                entry.EndEdit();
-
             }
 
         }
