@@ -112,8 +112,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
                 ID entryID = dictionary[key] as ID;
                 return Sitecore.Context.Database.GetItem(entryID);
             }
-            //attempt to find and cache the key
-            return PopulateItem(key);
+            return null;
         }
 
         /// <summary>
@@ -169,8 +168,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
                 return;
             }
 
-            IEnumerable<Item> entries = dictionaryItem.Axes.SelectItems(string.Format("{0}//*", dictionaryItem.Paths.FullPath));
-            //Item[] entries = dictionary.Axes.GetDescendants(); faster?
+            IEnumerable<Item> entries = dictionaryItem.Axes.GetDescendants();
             entries = entries.Where(entry => entry.TemplateID == Settings.DictionaryEntryTemplateId);
             foreach (Item entry in entries)
             {
@@ -180,30 +178,6 @@ namespace Sitecore.Modules.WeBlog.Globalization
                     cache.Add(key, entry.ID);
                 }
             }
-        }
-
-        /// <summary>
-        /// Populates the item.
-        /// </summary>
-        /// <param name="key">The key.</param>
-        /// <returns></returns>
-        protected static Item PopulateItem(string key)
-        {
-            Item dictionaryItem = BlogManager.GetDictionaryItem();
-            if (dictionaryItem == null)
-            {
-                Log.Error("No dictionary configured for blog " + BlogManager.GetCurrentBlog().Name, typeof(Translator));
-                return null;
-            }
-
-            Item entry = dictionaryItem.Axes.SelectSingleItem(string.Format("{0}//*[@Key='{1}']", dictionaryItem.Paths.FullPath, key));
-            //cache should have been created already
-            if (entry != null && caches.ContainsKey(CacheName))
-            {
-                Cache siteDictionary = caches[CacheName];
-                siteDictionary.Add(key, entry.ID);
-            }
-            return entry;
         }
     }
 }
