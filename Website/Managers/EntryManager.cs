@@ -10,6 +10,7 @@ using Sitecore.Modules.WeBlog.Items.WeBlog;
 using System.Threading;
 using Sitecore.StringExtensions;
 using Sitecore.Search;
+using Sitecore.Analytics;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -181,6 +182,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="blog">The blog item to get the entries for</param>
         /// <param name="maxNumber">The maximum number of entries to retrieve</param>
         /// <param name="tag">A tag the entry must contain</param>
+        /// <param name="category">A category the entry must contain</param>
         /// <returns></returns>
         public static EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category)
         {
@@ -292,6 +294,35 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
 
         /// <summary>
+        /// Gets the most popular entries for the blog by the number of page views
+        /// </summary>
+        /// <param name="blogItem">The blog to find the most popular pages for</param>
+        /// <param name="maxCount">The maximum number of entries to return</param>
+        /// <returns>An array of EntryItem classes</returns>
+        public static EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
+        {
+            return new EntryItem[0];
+        }
+
+        /// <summary>
+        /// Gets the most popular entries for the blog by the number of comments on the entry
+        /// </summary>
+        /// <param name="blogItem">The blog to find the most popular pages for</param>
+        /// <param name="maxCount">The maximum number of entries to return</param>
+        /// <returns>An array of EntryItem classes</returns>
+        public static EntryItem[] GetPopularEntriesByComment(Item blogItem, int maxCount)
+        {
+            var comments = CommentManager.GetCommentsByBlog(blogItem, int.MaxValue);
+            var grouped = from comment in comments
+                          group comment by GetBlogEntryByComment(comment).ID into g
+                          orderby g.Count() descending
+                          select g.Key;
+
+            var ids = grouped.Take(maxCount).ToArray();
+            return (from id in ids select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
+        }
+
+        /// <summary>
         /// Gets the entry item for the current comment.
         /// </summary>
         /// <param name="commentItem">The comment item.</param>
@@ -302,7 +333,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             if (blogEntry.Length > 0)
             {
-                return new EntryItem(blogEntry.First());
+                return new EntryItem(blogEntry.FirstOrDefault());
             }
             return null;
         }

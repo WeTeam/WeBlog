@@ -59,6 +59,9 @@
     <Reference Include="Recaptcha">
       <HintPath>..\Dependencies\Third-party\Recaptcha.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Analytics">
+      <HintPath>..\..\..\..\..\..\inetpub\WeBlog-65\Website\bin\Sitecore.Analytics.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Client">
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
@@ -256,6 +259,13 @@
     <Compile Include="layouts\WeBlog\Captcha.ascx.designer.cs">
       <DependentUpon>Captcha.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\BlogInterestingEntries.ascx.cs">
+      <DependentUpon>BlogInterestingEntries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\BlogInterestingEntries.ascx.designer.cs">
+      <DependentUpon>BlogInterestingEntries.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\reCAPTCHA.ascx.cs">
       <DependentUpon>reCAPTCHA.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -286,6 +296,9 @@
     <Compile Include="Pipelines\CaptchaProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
+    <Compile Include="Search\InterestingEntries\Comments.cs" />
+    <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
+    <Compile Include="Search\InterestingEntries\InterestingEntriesAlgorithm.cs" />
     <Compile Include="Search\SortableIndexSearchContext.cs" />
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="Settings.cs" />
@@ -349,6 +362,7 @@
     <Content Include="layouts\WeBlog\BlogTagCloud.ascx" />
     <Content Include="layouts\WeBlog\BlogTwitter.ascx" />
     <Content Include="layouts\WeBlog\Captcha.ascx" />
+    <Content Include="layouts\WeBlog\BlogInterestingEntries.ascx" />
     <Content Include="layouts\WeBlog\reCAPTCHA.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-AddThis.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-ShareThis.ascx" />

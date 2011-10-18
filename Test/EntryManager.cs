@@ -8,6 +8,8 @@ using System.IO;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
+using Sitecore.Analytics;
+using Sitecore.Analytics.Data.DataAccess;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -65,6 +67,17 @@ namespace Sitecore.Modules.WeBlog.Test
             // rebuild the WeBlog search index (or the entry manager won't work)
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
+
+            // Register OMS/DMS page views for popular items
+            var visitor = new Visitor(Guid.NewGuid());
+            visitor.CreateVisit(Guid.NewGuid());
+            visitor.CurrentVisit.CreatePage();
+            visitor.CurrentVisit.CreatePage();
+            visitor.CurrentVisit.CreatePage();
+
+            /*Tracker.Visitor.CurrentVisit.CreatePage();
+            Tracker.Visitor.CurrentVisit.CreatePage();
+            Tracker.Visitor.CurrentVisit.CreatePage();*/
         }
 
         [TestFixtureTearDown]
@@ -159,7 +172,8 @@ namespace Sitecore.Modules.WeBlog.Test
             var entryIds = (from entry in Mod.EntryManager.GetBlogEntries(m_entry11, int.MaxValue, null, null)
                             select entry.ID).ToArray();
 
-            Assert.AreEqual(0, entryIds.Length);
+            Assert.AreEqual(1, entryIds.Length);
+            Assert.Contains(m_entry11.ID, entryIds);
         }
 
         [Test]
@@ -416,6 +430,48 @@ namespace Sitecore.Modules.WeBlog.Test
                     }
                 }
             }
+        }
+
+        [Test]
+        public void GetPopularEntriesByComment_ValidItem()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByComment(m_blog1, int.MaxValue)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(3, entryIds.Length);
+            Assert.AreEqual(m_entry12.ID, entryIds[0]);
+            Assert.AreEqual(m_entry13.ID, entryIds[1]);
+            Assert.AreEqual(m_entry11.ID, entryIds[2]);
+        }
+
+        [Test]
+        public void GetPopularEntriesByComment_ValidItem_Limited()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByComment(m_blog1, 2)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(2, entryIds.Length);
+            Assert.AreEqual(m_entry12.ID, entryIds[0]);
+            Assert.AreEqual(m_entry13.ID, entryIds[1]);
+        }
+
+        [Test]
+        public void GetPopularEntriesByComment_InvalidItem()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByComment(m_entry12, int.MaxValue)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(1, entryIds.Length);
+            Assert.AreEqual(m_entry12.ID, entryIds[0]);
+        }
+
+        [Test]
+        public void GetPopularEntriesByComment_NullItem()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByComment(null, int.MaxValue)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(0, entryIds.Length);
         }
     }
 }
