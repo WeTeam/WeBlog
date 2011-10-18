@@ -71,6 +71,7 @@ namespace Sitecore.Modules.WeBlog.Test
             index.Rebuild();
 
 #if PRE_65
+            //Sitecore.Analytics.AnalyticsTracker.Current.
 #else
             // Register DMS page views for popular items
             var visitor = new Visitor(Guid.NewGuid());

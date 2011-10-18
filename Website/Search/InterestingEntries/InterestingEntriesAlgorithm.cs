@@ -6,7 +6,6 @@ namespace Sitecore.Modules.WeBlog.Search
     {
         PageViews,
         Comments,
-        Score,
         Custom
     }
 }

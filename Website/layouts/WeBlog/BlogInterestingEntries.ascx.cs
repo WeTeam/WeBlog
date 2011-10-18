@@ -2,6 +2,7 @@
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.layouts.WeBlog
 {
@@ -67,9 +68,18 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
         protected virtual void SetProperties()
         {
             var helper = new SublayoutParamHelper(this, true);
-            
-            if(!string.IsNullOrEmpty(Mode))
-                Algorithm = (InterestingEntriesAlgorithm)Enum.Parse(typeof(InterestingEntriesAlgorithm), Mode);
+
+            if (!string.IsNullOrEmpty(Mode))
+            {
+                try
+                {
+                    Algorithm = (InterestingEntriesAlgorithm)Enum.Parse(typeof(InterestingEntriesAlgorithm), Mode);
+                }
+                catch (ArgumentException ex)
+                {
+                    Log.Warn("Failed to parse Mode as InterestingEntriesAlgorithm: " + Mode, this);
+                }
+            }
         }
 
         protected virtual void PopulateList()
@@ -80,6 +90,10 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
             {
                 case InterestingEntriesAlgorithm.Comments:
                     Items.DataSource = EntryManager.GetPopularEntriesByComment(blogItem, MaximumCount);
+                    break;
+
+                case InterestingEntriesAlgorithm.PageViews:
+                    Items.DataSource = EntryManager.GetPopularEntriesByView(blogItem, MaximumCount);
                     break;
 
                 case InterestingEntriesAlgorithm.Custom:

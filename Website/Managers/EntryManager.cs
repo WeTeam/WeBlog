@@ -304,23 +304,28 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public static EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            var sql = "select {{0}}ItemId{{1}} from pages where itemid in ({0}) group by ItemId order by count(ItemId) desc";
-            var entryIds = from entry in GetBlogEntries() select entry.ID.ToString();
-
+            var entryIds = from entry in GetBlogEntries(blogItem) select entry.ID.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
+            var sql = "select {{0}}ItemId{{1}} from pages where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));                     
+            
+            if (entryIds.Count() > 0)
+            {
 #if PRE_65
-            var ids = AnalyticsManager.ReadMany<ID>(sql.FormatWith(string.Join(",", entryIds.ToArray())), reader =>
-            {
-                return new ID(AnalyticsManager.GetGuid(0, reader));
-            });
+                var ids = AnalyticsManager.ReadMany<ID>(sql.FormatWith(string.Join(",", entryIds.ToArray())), reader =>
+                {
+                    return new ID(AnalyticsManager.GetGuid(0, reader));
+                }, new object[0]);
 #else
-            var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql.FormatWith(string.Join(",", entryIds.ToArray())), reader =>
-            {
-                return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
-            });
+               
+                var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
+                {
+                    return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
+                }, new object[0]); 
 #endif
-
-            var limitedIds = ids.Take(maxCount).ToArray();
-            return (from id in ids select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
+                var limitedIds = ids.Take(maxCount).ToArray();
+                return (from id in limitedIds select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
+            }
+            else
+                return new EntryItem[0];
         }
 
         /// <summary>
