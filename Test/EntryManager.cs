@@ -28,6 +28,7 @@ namespace Sitecore.Modules.WeBlog.Test
         private Item m_entry23 = null;
         private Item m_category21 = null;
         private Item m_category22 = null;
+        private Item m_comment1 = null;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
@@ -58,6 +59,8 @@ namespace Sitecore.Modules.WeBlog.Test
             var blog2Categories = m_blog2.Axes.GetChild("categories");
             m_category21 = blog2Categories.Axes.GetChild("category1");
             m_category22 = blog2Categories.Axes.GetChild("category2");
+
+            m_comment1 = m_entry21.Axes.GetChild("comment1");
 
             // rebuild the WeBlog search index (or the entry manager won't work)
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
@@ -254,6 +257,14 @@ namespace Sitecore.Modules.WeBlog.Test
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
+        }
+
+        [Test]
+        public void GetBlogEntryByComment()
+        {
+            var entry = Mod.EntryManager.GetBlogEntryByComment(m_comment1);
+
+            Assert.AreEqual(m_entry21.ID, entry.ID);
         }
 
         [Test]

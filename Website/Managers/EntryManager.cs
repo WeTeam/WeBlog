@@ -207,7 +207,9 @@ namespace Sitecore.Modules.WeBlog.Managers
                     query.Add(new FieldQuery(Constants.Index.Fields.Category, id.ToShortID().ToString().ToLower()), QueryOccurance.Must);
                 }
 
-                return Utilities.Search.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.Created, true);
+                var result = Utilities.Search.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.Created, true);
+
+                return result;
             }
 
             //return blogPostList.ToArray();
