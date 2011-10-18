@@ -290,6 +290,22 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
 
         /// <summary>
+        /// Gets the entry item for the current comment.
+        /// </summary>
+        /// <param name="commentItem">The comment item.</param>
+        /// <returns></returns>
+        public static EntryItem GetBlogEntryByComment(CommentItem commentItem)
+        {
+            Item[] blogEntry = commentItem.InnerItem.Axes.GetAncestors().Where(item => item.TemplateID == Settings.EntryTemplateId).ToArray();
+
+            if (blogEntry.Length > 0)
+            {
+                return new EntryItem(blogEntry.First());
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Makes the sorted post item list.
         /// </summary>
         /// <param name="array">The array.</param>

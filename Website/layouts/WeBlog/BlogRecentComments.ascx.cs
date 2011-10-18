@@ -31,10 +31,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// </summary>
         /// <param name="comment">The comment to find the blog URL for</param>
         /// <returns>The URL if found, otherwise an empty string</returns>
-        protected virtual string GetEntryUrlForComment(CommentItem comment)
+        protected virtual string GetEntryUrlForComment(CommentItem comment) 
         {
             if (comment != null)
-                return LinkManager.GetItemUrl(comment.InnerItem.Parent);
+                return LinkManager.GetItemUrl(EntryManager.GetBlogEntryByComment(comment).InnerItem);
             else
                 return string.Empty;
         }
