@@ -4,6 +4,7 @@ using System.Xml;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Web;
+using Sitecore.Configuration;
 
 namespace Sitecore.Modules.WeBlog
 {
@@ -32,7 +33,8 @@ namespace Sitecore.Modules.WeBlog
             context.Response.ContentType = "text/xml";
             using (XmlTextWriter rsd = new XmlTextWriter(context.Response.OutputStream, Encoding.UTF8))
             {
-                Item currentBlogItem = Sitecore.Context.Database.GetItem(new ID(HttpContext.Current.Request.QueryString["blogid"].ToString()));
+                Database web = Factory.GetDatabase("web");
+                Item currentBlogItem = web.GetItem(new ID(HttpContext.Current.Request.QueryString["blogid"].ToString()));
 
                 Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem currentBlog = new Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem(currentBlogItem);
 
@@ -45,7 +47,7 @@ namespace Sitecore.Modules.WeBlog
 
                 // Service 
                 rsd.WriteStartElement("service");
-                rsd.WriteElementString("engineName", "Sitecore Blog Module");
+                rsd.WriteElementString("engineName", "Sitecore WeBlog Module");
                 rsd.WriteElementString("engineLink", "http://" + WebUtil.GetHostName());
                 rsd.WriteElementString("homePageLink", currentBlog.Url);
 
