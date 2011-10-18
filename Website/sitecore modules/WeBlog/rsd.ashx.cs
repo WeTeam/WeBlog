@@ -56,7 +56,7 @@ namespace Sitecore.Modules.WeBlog
                 rsd.WriteStartElement("api");
                 rsd.WriteAttributeString("name", "MetaWeblog");
                 rsd.WriteAttributeString("preferred", "true");
-                rsd.WriteAttributeString("apiLink", "http://" + WebUtil.GetHostName() + "/sitecore modules/Blog/MetaBlogApi.ashx");
+                rsd.WriteAttributeString("apiLink", "http://" + WebUtil.GetHostName() + "/sitecore modules/WeBlog/MetaBlogApi.ashx");
                 rsd.WriteAttributeString("blogID", currentBlog.ID.ToString());
                 rsd.WriteEndElement();
 

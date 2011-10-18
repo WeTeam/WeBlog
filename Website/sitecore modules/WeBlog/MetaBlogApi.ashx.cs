@@ -129,7 +129,7 @@ namespace Sitecore.Modules.WeBlog
                     return result;
                 }
             }
-            
+
             return string.Empty;
         }
         #endregion
@@ -322,33 +322,30 @@ namespace Sitecore.Modules.WeBlog
 
             CheckUserRights(blogid, username);
 
-            SecurityDisabler securitydisabler = new SecurityDisabler();
-
-            string EntryTitle = rpcstruct["title"].ToString();
-            string EntryDescription = rpcstruct["description"].ToString();
-
-            Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(blogid), "master");
-
-            TemplateID template = new TemplateID(Settings.EntryTemplateId);
-            Item newItem = ItemManager.AddFromTemplate(EntryTitle, template, currentBlog);
-
-            EntryItem createdEntry = new EntryItem(newItem);
-            createdEntry.BeginEdit();
-            createdEntry.Title.Field.Value = EntryTitle;
-            createdEntry.Content.Field.Value = EntryDescription;
-            createdEntry.Category.Field.Value = GetCategoriesAsString(currentBlog.ID, rpcstruct);
-            createdEntry.EndEdit();
-
-            if (publish == true)
+            using (new SecurityDisabler())
             {
-                Publish.PublishItem(createdEntry.ID);
+                string EntryTitle = rpcstruct["title"].ToString();
+                string EntryDescription = rpcstruct["description"].ToString();
+
+                Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(blogid), "master");
+
+                TemplateID template = new TemplateID(Settings.EntryTemplateId);
+                Item newItem = ItemManager.AddFromTemplate(EntryTitle, template, currentBlog);
+
+                EntryItem createdEntry = new EntryItem(newItem);
+                createdEntry.BeginEdit();
+                createdEntry.Title.Field.Value = EntryTitle;
+                createdEntry.Content.Field.Value = EntryDescription;
+                createdEntry.Category.Field.Value = GetCategoriesAsString(currentBlog.ID, rpcstruct);
+                createdEntry.EndEdit();
+
+                if (publish)
+                {
+                    Publish.PublishItem(createdEntry.ID);
+                }
+
+                return createdEntry.ID.ToString();
             }
-
-            string id = createdEntry.ID.ToString();
-
-            SecurityEnabler securityenabler = new SecurityEnabler();
-
-            return id;
         }
 
 
@@ -371,21 +368,21 @@ namespace Sitecore.Modules.WeBlog
 
             CheckUserRights(postid, username);
 
-            SecurityDisabler securitydisabler = new SecurityDisabler();
+            using(new SecurityDisabler())
+            {
+                Database master = Factory.GetDatabase("master");
+                Item item = master.GetItem(new ID(postid));
+                EntryItem entry = new EntryItem(item);
 
-            Database master = Factory.GetDatabase("master");
-            Item item = master.GetItem(new ID(postid));
-            EntryItem entry = new EntryItem(item);
+                entry.BeginEdit();
+                entry.Title.Field.Value = rpcstruct["title"].ToString();
+                entry.Content.Field.Value = rpcstruct["description"].ToString();
+                entry.Category.Field.Value = GetCategoriesAsString(postid, rpcstruct);
+                entry.EndEdit();
 
-            entry.BeginEdit();
-            entry.Title.Field.Value = rpcstruct["title"].ToString();
-            entry.Content.Field.Value = rpcstruct["description"].ToString();
-            entry.Category.Field.Value = GetCategoriesAsString(postid, rpcstruct);
-            entry.EndEdit();
+                Publish.PublishItem(entry.ID);
 
-            Publish.PublishItem(entry.ID);
-
-            SecurityEnabler securityenabler = new SecurityEnabler();
+            }
 
             return true;
         }
@@ -445,7 +442,7 @@ namespace Sitecore.Modules.WeBlog
             {
                 EntryManager.DeleteEntry(postid);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -493,9 +490,10 @@ namespace Sitecore.Modules.WeBlog
 
             // Create mediaitem
             MediaItem mediaItem;
-            SecurityDisabler securitydisabler = new SecurityDisabler();
-            mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
-            SecurityEnabler securityenabler = new SecurityEnabler();
+            using (new SecurityDisabler())
+            {
+                mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
+            }
 
             // Publish mediaitem to web database
             Publish.PublishItem(mediaItem);

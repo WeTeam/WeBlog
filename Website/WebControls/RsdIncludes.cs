@@ -21,9 +21,10 @@ namespace Sitecore.Modules.WeBlog.WebControls
 
         protected virtual void AddLinkToOutput(HtmlTextWriter output, BlogHomeItem blogItem)
         {
-            output.AddAttribute(HtmlTextWriterAttribute.Rel, "application/rsd+xml");
+            output.AddAttribute(HtmlTextWriterAttribute.Rel, "EditURI");
+            output.AddAttribute(HtmlTextWriterAttribute.Type, "application/rsd+xml");
             output.AddAttribute(HtmlTextWriterAttribute.Title, "RSD");
-            output.AddAttribute(HtmlTextWriterAttribute.Href, "http://" + WebUtil.GetHostName() + "/sitecore modules/Blog/rsd.ashx?blogid=" + blogItem.ID);
+            output.AddAttribute(HtmlTextWriterAttribute.Href, "http://" + WebUtil.GetHostName() + "/sitecore modules/WeBlog/rsd.ashx?blogid=" + blogItem.ID);
             output.RenderBeginTag(HtmlTextWriterTag.Link);
             output.RenderEndTag();
         }
