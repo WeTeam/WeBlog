@@ -9,7 +9,9 @@ using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
 using Sitecore.Analytics;
+#if !PRE_65
 using Sitecore.Analytics.Data.DataAccess;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -68,16 +70,22 @@ namespace Sitecore.Modules.WeBlog.Test
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
-            // Register OMS/DMS page views for popular items
+#if PRE_65
+#else
+            // Register DMS page views for popular items
             var visitor = new Visitor(Guid.NewGuid());
             visitor.CreateVisit(Guid.NewGuid());
-            visitor.CurrentVisit.CreatePage();
-            visitor.CurrentVisit.CreatePage();
-            visitor.CurrentVisit.CreatePage();
+            visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
+            visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
+            visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
 
-            /*Tracker.Visitor.CurrentVisit.CreatePage();
-            Tracker.Visitor.CurrentVisit.CreatePage();
-            Tracker.Visitor.CurrentVisit.CreatePage();*/
+            visitor.CurrentVisit.CreatePage().ItemId = m_entry11.ID.ToGuid();
+            visitor.CurrentVisit.CreatePage().ItemId = m_entry11.ID.ToGuid();
+
+            visitor.CurrentVisit.CreatePage().ItemId = m_entry12.ID.ToGuid();
+
+            visitor.Submit();
+#endif
         }
 
         [TestFixtureTearDown]
@@ -472,6 +480,47 @@ namespace Sitecore.Modules.WeBlog.Test
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
+        }
+
+        [Test]
+        public void GetPopularEntriesByView_ValidItem()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByView(m_blog1, int.MaxValue)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(3, entryIds.Length);
+            Assert.AreEqual(m_entry13.ID, entryIds[0]);
+            Assert.AreEqual(m_entry11.ID, entryIds[1]);
+            Assert.AreEqual(m_entry12.ID, entryIds[2]);
+        }
+
+        [Test]
+        public void GetPopularEntriesByView_ValidItem_Limited()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByView(m_blog1, 1)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(1, entryIds.Length);
+            Assert.AreEqual(m_entry13.ID, entryIds[0]);
+        }
+
+        [Test]
+        public void GetPopularEntriesByView_InvalidItem()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByView(m_entry12, int.MaxValue)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(1, entryIds.Length);
+            Assert.AreEqual(m_entry12.ID, entryIds[0]);
+        }
+
+        [Test]
+        public void GetPopularEntriesByView_NullItem()
+        {
+            var entryIds = (from entry in Mod.EntryManager.GetPopularEntriesByView(null, 1)
+                            select entry.ID).ToArray();
+
+            Assert.AreEqual(0, entryIds.Length);            
         }
     }
 }

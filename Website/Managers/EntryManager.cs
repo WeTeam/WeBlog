@@ -11,6 +11,9 @@ using System.Threading;
 using Sitecore.StringExtensions;
 using Sitecore.Search;
 using Sitecore.Analytics;
+#if !PRE_65
+using Sitecore.Analytics.Data.DataAccess.DataAdapters;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -301,7 +304,23 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public static EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            return new EntryItem[0];
+            var sql = "select {{0}}ItemId{{1}} from pages where itemid in ({0}) group by ItemId order by count(ItemId) desc";
+            var entryIds = from entry in GetBlogEntries() select entry.ID.ToString();
+
+#if PRE_65
+            var ids = AnalyticsManager.ReadMany<ID>(sql.FormatWith(string.Join(",", entryIds.ToArray())), reader =>
+            {
+                return new ID(AnalyticsManager.GetGuid(0, reader));
+            });
+#else
+            var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql.FormatWith(string.Join(",", entryIds.ToArray())), reader =>
+            {
+                return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
+            });
+#endif
+
+            var limitedIds = ids.Take(maxCount).ToArray();
+            return (from id in ids select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
         }
 
         /// <summary>

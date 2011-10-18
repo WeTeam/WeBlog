@@ -1,6 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\deploy.targets" Condition="Exists('..\deploy.targets')" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug pre 6.5|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;PRE_65</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Sitecore.Modules.WeBlog.Test.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release pre 6.5|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE;PRE_65</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Sitecore.Modules.WeBlog.Test.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -17,6 +50,8 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <SitecorePathCurrent Condition="'$(Configuration)' == 'Debug pre 6.5' or '$(Configuration)' == 'Release pre 6.5'">$(SitecorePathPre65)</SitecorePathCurrent>
+    <SitecorePathCurrent Condition="'$(Configuration)' != 'Debug pre 6.5' and '$(Configuration)' != 'Release pre 6.5'">$(SitecorePath)</SitecorePathCurrent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,11 +91,11 @@
     </Reference>
     <Reference Include="Sitecore.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\inetpub\WeBlog-65\Website\bin\Sitecore.Analytics.dll</HintPath>
+      <HintPath>$(SitecorePathCurrent)\bin\Sitecore.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>$(SitecorePathCurrent)\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -132,13 +167,13 @@
   <Target Name="BeforeBuild">
   </Target>-->
   <Target Name="AfterBuild">
-    <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
+    <CallTarget Targets="DeployToWeb" Condition="$(SitecorePathCurrent) != ''" />
   </Target>
   <Target Name="DeployToWeb">
     <CreateItem Include="bin\*.dll;test.aspx;test data\**\*.*" Exclude="**\.svn\**\*.*">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
-    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePathCurrent)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>
