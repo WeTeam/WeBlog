@@ -6,8 +6,8 @@ path: /sitecore/layout/Sublayouts/WeBlog
 parent: {EB443C0B-F923-409E-85F3-E7893C8C30C2}
 name: WeBlog
 master: {00000000-0000-0000-0000-000000000000}
-template: {0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
-templatekey: Template Folder
+template: {3BAA73E5-6BA9-4462-BF72-C106F8801B11}
+templatekey: Sublayout Folder
 
 ----field----
 field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
@@ -19,7 +19,7 @@ content-length: 38
 ----version----
 language: en
 version: 1
-revision: c05d6db6-25fb-482c-a14b-a07f36fe5dff
+revision: ed9de6b8-ee5a-44db-ad54-f93da06c8fab
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-c05d6db6-25fb-482c-a14b-a07f36fe5dff
+ed9de6b8-ee5a-44db-ad54-f93da06c8fab
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110605T215502:634429077022593188
+20111019T130608:634546263683974885
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

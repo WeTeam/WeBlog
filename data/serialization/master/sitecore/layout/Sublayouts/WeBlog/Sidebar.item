@@ -1,61 +1,47 @@
 ----item----
 version: 1
-id: {A9972BCC-DD50-46C6-813B-8F2CC74250F1}
+id: {78C79C5D-F7FE-412B-9580-64ADB22EFDE5}
 database: master
-path: /sitecore/templates/Modules/WeBlog/BlogHome/Blog options
-parent: {46663E05-A6B8-422A-8E13-36CD2B041278}
-name: Blog options
+path: /sitecore/layout/Sublayouts/WeBlog/Sidebar
+parent: {2068AD29-9223-480A-8E98-B1B85EC9470B}
+name: Sidebar
 master: {00000000-0000-0000-0000-000000000000}
-template: {E269FBB5-3750-427A-9149-7AA950B49301}
-templatekey: Template section
+template: {3BAA73E5-6BA9-4462-BF72-C106F8801B11}
+templatekey: Sublayout Folder
 
 ----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
 key: __sortorder
-content-length: 3
+content-length: 2
 
-200
+50
 ----version----
 language: en
 version: 1
-revision: 36562f1d-9b61-4ec1-ae12-6edc2014a926
+revision: d8f2f230-da1e-4fba-82ce-293745cd8da6
 
-----field----
-field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
-name: __Owner
-key: __owner
-content-length: 14
-
-sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20081030T231516
-----field----
-field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
-name: __Created by
-key: __created by
-content-length: 14
-
-sitecore\admin
+20111019T130628
 ----field----
 field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
 name: __Revision
 key: __revision
 content-length: 36
 
-36562f1d-9b61-4ec1-ae12-6edc2014a926
+d8f2f230-da1e-4fba-82ce-293745cd8da6
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111017T170214:634544677349106796
+20111019T130658:634546264186057440
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

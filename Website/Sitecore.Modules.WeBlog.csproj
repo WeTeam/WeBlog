@@ -48,7 +48,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <SitecorePathCurrent Condition="'$(Configuration)' == 'Debug pre 6.5' or '$(Configuration)' == 'Release pre 6.5'">$(SitecorePathPre65)</SitecorePathCurrent>
     <SitecorePathCurrent Condition="'$(Configuration)' != 'Debug pre 6.5' and '$(Configuration)' != 'Release pre 6.5'">$(SitecorePath)</SitecorePathCurrent>
-</PropertyGroup>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -151,6 +151,13 @@
     <Compile Include="Items\WeBlog\EntryItem.base.cs" />
     <Compile Include="Items\WeBlog\EntryItem.custom.cs" />
     <Compile Include="Items\WeBlog\ThemeItem.base.cs" />
+    <Compile Include="layouts\WeBlog\Archive.ascx.cs">
+      <DependentUpon>Archive.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Archive.ascx.designer.cs">
+      <DependentUpon>Archive.ascx</DependentUpon>
+    </Compile>
     <Compile Include="layouts\WeBlog\BaseEntrySublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -164,131 +171,12 @@
     <Compile Include="layouts\WeBlog\Blog.ascx.designer.cs">
       <DependentUpon>Blog.ascx</DependentUpon>
     </Compile>
-    <Compile Include="layouts\WeBlog\BlogAdministrator.ascx.cs">
-      <DependentUpon>BlogAdministrator.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogAdministrator.ascx.designer.cs">
-      <DependentUpon>BlogAdministrator.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogArchive.ascx.cs">
-      <DependentUpon>BlogArchive.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogArchive.ascx.designer.cs">
-      <DependentUpon>BlogArchive.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogCategories.ascx.cs">
-      <DependentUpon>BlogCategories.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogCategories.ascx.designer.cs">
-      <DependentUpon>BlogCategories.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogCommentsList.ascx.cs">
-      <DependentUpon>BlogCommentsList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogCommentsList.ascx.designer.cs">
-      <DependentUpon>BlogCommentsList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogEntry.ascx.cs">
-      <DependentUpon>BlogEntry.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogEntry.ascx.designer.cs">
-      <DependentUpon>BlogEntry.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogEntryCategories.ascx.cs">
-      <DependentUpon>BlogEntryCategories.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogEntryCategories.ascx.designer.cs">
-      <DependentUpon>BlogEntryCategories.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogEntryTags.ascx.cs">
-      <DependentUpon>BlogEntryTags.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogEntryTags.ascx.designer.cs">
-      <DependentUpon>BlogEntryTags.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogFacebook.ascx.cs">
-      <DependentUpon>BlogFacebook.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogFacebook.ascx.designer.cs">
-      <DependentUpon>BlogFacebook.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogFacebookComments.ascx.cs">
-      <DependentUpon>BlogFacebookComments.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogFacebookComments.ascx.designer.cs">
-      <DependentUpon>BlogFacebookComments.ascx</DependentUpon>
-    </Compile>
     <Compile Include="layouts\WeBlog\BlogFeeds.ascx.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="layouts\WeBlog\BlogFeeds.ascx.designer.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogLayout.aspx.cs">
-      <DependentUpon>BlogLayout.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogLayout.aspx.designer.cs">
-      <DependentUpon>BlogLayout.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogOptions.ascx.cs">
-      <DependentUpon>BlogOptions.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogOptions.ascx.designer.cs">
-      <DependentUpon>BlogOptions.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogPostList.ascx.cs">
-      <DependentUpon>BlogPostList.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogPostList.ascx.designer.cs">
-      <DependentUpon>BlogPostList.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogPostListEntry.ascx.cs">
-      <DependentUpon>BlogPostListEntry.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogPostListEntry.ascx.designer.cs">
-      <DependentUpon>BlogPostListEntry.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogRecentComments.ascx.cs">
-      <DependentUpon>BlogRecentComments.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogRecentComments.ascx.designer.cs">
-      <DependentUpon>BlogRecentComments.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogSubmitComment.ascx.cs">
-      <DependentUpon>BlogSubmitComment.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogSubmitComment.ascx.designer.cs">
-      <DependentUpon>BlogSubmitComment.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogTagCloud.ascx.cs">
-      <DependentUpon>BlogTagCloud.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogTagCloud.ascx.designer.cs">
-      <DependentUpon>BlogTagCloud.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogTwitter.ascx.cs">
-      <DependentUpon>BlogTwitter.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="layouts\WeBlog\BlogTwitter.ascx.designer.cs">
-      <DependentUpon>BlogTwitter.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\WeBlog\Captcha.ascx.cs">
       <DependentUpon>Captcha.ascx</DependentUpon>
@@ -297,12 +185,82 @@
     <Compile Include="layouts\WeBlog\Captcha.ascx.designer.cs">
       <DependentUpon>Captcha.ascx</DependentUpon>
     </Compile>
-    <Compile Include="layouts\WeBlog\BlogInterestingEntries.ascx.cs">
-      <DependentUpon>BlogInterestingEntries.ascx</DependentUpon>
+    <Compile Include="layouts\WeBlog\Categories.ascx.cs">
+      <DependentUpon>Categories.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="layouts\WeBlog\BlogInterestingEntries.ascx.designer.cs">
-      <DependentUpon>BlogInterestingEntries.ascx</DependentUpon>
+    <Compile Include="layouts\WeBlog\Categories.ascx.designer.cs">
+      <DependentUpon>Categories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\CommentsList.ascx.cs">
+      <DependentUpon>CommentsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\CommentsList.ascx.designer.cs">
+      <DependentUpon>CommentsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Entry.ascx.cs">
+      <DependentUpon>Entry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Entry.ascx.designer.cs">
+      <DependentUpon>Entry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\EntryCategories.ascx.cs">
+      <DependentUpon>EntryCategories.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\EntryCategories.ascx.designer.cs">
+      <DependentUpon>EntryCategories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\EntryTags.ascx.cs">
+      <DependentUpon>EntryTags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\EntryTags.ascx.designer.cs">
+      <DependentUpon>EntryTags.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\FacebookComments.ascx.cs">
+      <DependentUpon>FacebookComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\FacebookComments.ascx.designer.cs">
+      <DependentUpon>FacebookComments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\FacebookLike.ascx.cs">
+      <DependentUpon>FacebookLike.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\FacebookLike.ascx.designer.cs">
+      <DependentUpon>FacebookLike.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\InterestingEntries.ascx.cs">
+      <DependentUpon>InterestingEntries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\InterestingEntries.ascx.designer.cs">
+      <DependentUpon>InterestingEntries.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Layout.aspx.cs">
+      <DependentUpon>Layout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\Layout.aspx.designer.cs">
+      <DependentUpon>Layout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\PostList.ascx.cs">
+      <DependentUpon>PostList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\PostList.ascx.designer.cs">
+      <DependentUpon>PostList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\PostListEntry.ascx.cs">
+      <DependentUpon>PostListEntry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\PostListEntry.ascx.designer.cs">
+      <DependentUpon>PostListEntry.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\WeBlog\reCAPTCHA.ascx.cs">
       <DependentUpon>reCAPTCHA.ascx</DependentUpon>
@@ -310,6 +268,13 @@
     </Compile>
     <Compile Include="layouts\WeBlog\reCAPTCHA.ascx.designer.cs">
       <DependentUpon>reCAPTCHA.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\RecentComments.ascx.cs">
+      <DependentUpon>RecentComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\RecentComments.ascx.designer.cs">
+      <DependentUpon>RecentComments.ascx</DependentUpon>
     </Compile>
     <Compile Include="layouts\WeBlog\ShareEntry-AddThis.ascx.cs">
       <DependentUpon>ShareEntry-AddThis.ascx</DependentUpon>
@@ -325,6 +290,27 @@
     <Compile Include="layouts\WeBlog\ShareEntry-ShareThis.ascx.designer.cs">
       <DependentUpon>ShareEntry-ShareThis.ascx</DependentUpon>
     </Compile>
+    <Compile Include="layouts\WeBlog\SubmitComment.ascx.cs">
+      <DependentUpon>SubmitComment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\SubmitComment.ascx.designer.cs">
+      <DependentUpon>SubmitComment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\TagCloud.ascx.cs">
+      <DependentUpon>TagCloud.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\TagCloud.ascx.designer.cs">
+      <DependentUpon>TagCloud.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\TwitterTimeline.ascx.cs">
+      <DependentUpon>TwitterTimeline.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\TwitterTimeline.ascx.designer.cs">
+      <DependentUpon>TwitterTimeline.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Managers\BlogManager.cs" />
     <Compile Include="Managers\CategoryManager.cs" />
     <Compile Include="Managers\CommentManager.cs" />
@@ -339,22 +325,8 @@
     <Compile Include="Search\SortableIndexSearchContext.cs" />
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="sitecore modules\WeBlog\Admin\NewBlog.aspx.cs">
-      <DependentUpon>NewBlog.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="sitecore modules\WeBlog\Admin\NewBlog.aspx.designer.cs">
-      <DependentUpon>NewBlog.aspx</DependentUpon>
-    </Compile>
     <Compile Include="sitecore modules\WeBlog\Comment.svc.cs">
       <DependentUpon>Comment.svc</DependentUpon>
-    </Compile>
-    <Compile Include="sitecore modules\WeBlog\Controls\AddComment.ascx.cs">
-      <DependentUpon>AddComment.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="sitecore modules\WeBlog\Controls\AddComment.ascx.designer.cs">
-      <DependentUpon>AddComment.ascx</DependentUpon>
     </Compile>
     <Compile Include="sitecore modules\WeBlog\MetaBlogApi.ashx.cs">
       <DependentUpon>MetaBlogApi.ashx</DependentUpon>
@@ -379,37 +351,32 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <Content Include="layouts\WeBlog\Archive.ascx" />
     <Content Include="layouts\WeBlog\Blog.ascx" />
-    <Content Include="layouts\WeBlog\BlogAdministrator.ascx" />
-    <Content Include="layouts\WeBlog\BlogArchive.ascx" />
-    <Content Include="layouts\WeBlog\BlogCategories.ascx" />
-    <Content Include="layouts\WeBlog\BlogCommentsList.ascx" />
-    <Content Include="layouts\WeBlog\BlogEntry.ascx" />
-    <Content Include="layouts\WeBlog\BlogEntryCategories.ascx" />
-    <Content Include="layouts\WeBlog\BlogEntryTags.ascx" />
-    <Content Include="layouts\WeBlog\BlogFacebook.ascx" />
-    <Content Include="layouts\WeBlog\BlogFacebookComments.ascx" />
     <Content Include="layouts\WeBlog\BlogFeeds.ascx" />
-    <Content Include="layouts\WeBlog\BlogLayout.aspx" />
-    <Content Include="layouts\WeBlog\BlogLayoutAjax.aspx" />
-    <Content Include="layouts\WeBlog\BlogOptions.ascx" />
-    <Content Include="layouts\WeBlog\BlogPostList.ascx" />
-    <Content Include="layouts\WeBlog\BlogPostListEntry.ascx" />
-    <Content Include="layouts\WeBlog\BlogRecentComments.ascx" />
-    <Content Include="layouts\WeBlog\BlogSubmitComment.ascx" />
-    <Content Include="layouts\WeBlog\BlogTagCloud.ascx" />
-    <Content Include="layouts\WeBlog\BlogTwitter.ascx" />
     <Content Include="layouts\WeBlog\Captcha.ascx" />
-    <Content Include="layouts\WeBlog\BlogInterestingEntries.ascx" />
+    <Content Include="layouts\WeBlog\Categories.ascx" />
+    <Content Include="layouts\WeBlog\CommentsList.ascx" />
+    <Content Include="layouts\WeBlog\Entry.ascx" />
+    <Content Include="layouts\WeBlog\EntryCategories.ascx" />
+    <Content Include="layouts\WeBlog\EntryTags.ascx" />
+    <Content Include="layouts\WeBlog\FacebookComments.ascx" />
+    <Content Include="layouts\WeBlog\FacebookLike.ascx" />
+    <Content Include="layouts\WeBlog\InterestingEntries.ascx" />
+    <Content Include="layouts\WeBlog\Layout.aspx" />
+    <Content Include="layouts\WeBlog\LayoutAjax.aspx" />
+    <Content Include="layouts\WeBlog\PostList.ascx" />
+    <Content Include="layouts\WeBlog\PostListEntry.ascx" />
     <Content Include="layouts\WeBlog\reCAPTCHA.ascx" />
+    <Content Include="layouts\WeBlog\RecentComments.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-AddThis.ascx" />
     <Content Include="layouts\WeBlog\ShareEntry-ShareThis.ascx" />
+    <Content Include="layouts\WeBlog\SubmitComment.ascx" />
+    <Content Include="layouts\WeBlog\TagCloud.ascx" />
+    <Content Include="layouts\WeBlog\TwitterTimeline.ascx" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItem.xml" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItemByFolder.xml" />
-    <Content Include="sitecore modules\WeBlog\Admin\BlogAdmin.css" />
-    <Content Include="sitecore modules\WeBlog\Admin\NewBlog.aspx" />
     <Content Include="sitecore modules\WeBlog\Comment.svc" />
-    <Content Include="sitecore modules\WeBlog\Controls\AddComment.ascx" />
     <Content Include="sitecore modules\WeBlog\Images\ajax-loader.gif" />
     <Content Include="sitecore modules\WeBlog\Images\feed-icon-14x14.png" />
     <Content Include="sitecore modules\WeBlog\Includes\Common.css" />
@@ -423,17 +390,6 @@
     <Content Include="sitecore modules\WeBlog\Themes\Blue.css" />
     <Content Include="sitecore modules\WeBlog\Themes\Green.css" />
     <Content Include="sitecore modules\WeBlog\Themes\Red.css" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\BlogEntry.aspx" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\BlogList.aspx" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\default.css" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\bg.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\bgcode.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\bgcontainer.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\bgul.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\header.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\li.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\quote.gif" />
-    <Content Include="sitecore modules\WeBlog\Themes\Sample\img\search.gif" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria.css" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\body-2col-bg.png" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\entry-list-separator.png" />
