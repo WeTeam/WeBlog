@@ -52,6 +52,7 @@ namespace Sitecore.Modules.WeBlog.Import
 
                     entry.BeginEdit();
                     entry.Title.Field.Value = post.Title;
+                    entry.Introduction.Field.Value = string.Empty;
                     entry.Content.Field.Value = post.Content;
                     entry.Tags.Field.Value = string.Join(", ", post.Tags.ToArray());
 

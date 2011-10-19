@@ -26,7 +26,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
 
         protected virtual void AddIncludeToOutput(HtmlTextWriter output, ThemeItem themeItem)
         {
-            output.AddAttribute(HtmlTextWriterAttribute.Href, themeItem.FileLocation.Raw);
+            output.AddAttribute(HtmlTextWriterAttribute.Href, themeItem.FileLocation.Raw.Trim());
             output.AddAttribute(HtmlTextWriterAttribute.Rel, "stylesheet");
             output.AddAttribute(HtmlTextWriterAttribute.Type, "text/css");
             output.RenderBeginTag(HtmlTextWriterTag.Link);

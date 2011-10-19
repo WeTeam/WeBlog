@@ -7,6 +7,7 @@ using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
+using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -37,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                     TemplateID template = new TemplateID(Settings.CategoryTemplateId);
 
                     Item currentItem = current.GetItem(args.Parameters["currentid"]);
-                    Item categories = currentItem.Axes.GetChild("Categories");
+                    Item categories = CategoryManager.GetCategoryRoot(currentItem);
 
                     Item newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
 
