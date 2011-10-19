@@ -321,6 +321,9 @@
         <field tfid="{BAD8E75C-BD7C-475A-A7B8-8B3600BAA26C}" key="displayitemcount" type="Single-Line Text">
           <content>10</content>
         </field>
+        <field tfid="{77BA5A31-EB0E-47A4-A7B9-14D195C0B461}" key="enable rss" type="Checkbox">
+          <content>0</content>
+        </field>
         <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
           <content>20110225T180527</content>
         </field>

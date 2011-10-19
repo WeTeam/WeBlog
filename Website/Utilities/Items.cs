@@ -41,7 +41,10 @@ namespace Sitecore.Modules.WeBlog.Utilities
         /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
         public static bool TemplateIsOrBasedOn(Item item, TemplateItem template)
         {
-            return TemplateIsOrBasedOn(item, template.ID);
+            if (template != null)
+                return TemplateIsOrBasedOn(item, template.ID);
+            else
+                return false;
         }
 
         /// <summary>

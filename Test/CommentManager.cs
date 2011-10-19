@@ -35,7 +35,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
         public CommentManager()
         {
-            m_commentTemplateId = Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID");
+            m_commentTemplateId = Sitecore.Configuration.Settings.GetSetting("WeBlog.CommentTemplateID");
         }
 
         [SetUp]

@@ -80,11 +80,15 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static Dictionary<string, int> GetAllTags(Items.WeBlog.BlogHomeItem blog)
         {
             var tagList = new List<string>();
-            var entries = EntryManager.GetBlogEntries(blog.InnerItem);
 
-            foreach (var entry in entries)
+            if (blog != null)
             {
-                tagList.AddRange(entry.TagsSplit);
+                var entries = EntryManager.GetBlogEntries(blog.InnerItem);
+
+                foreach (var entry in entries)
+                {
+                    tagList.AddRange(entry.TagsSplit);
+                }
             }
 
             return SortByWeight(tagList);

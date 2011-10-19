@@ -8,6 +8,7 @@ using System.IO;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Items;
 using Sitecore.Data;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -38,6 +39,10 @@ namespace Sitecore.Modules.WeBlog.Test
             m_entry1 = m_blog1.Axes.GetDescendant("Entry1");
             m_entry2 = m_blog1.Axes.GetDescendant("Entry2");
             m_entry3 = m_blog1.Axes.GetDescendant("Entry3");
+
+            // rebuild the WeBlog search index (or some aspects of TagManager won't work)
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            index.Rebuild();
         }
 
         [TestFixtureTearDown]
@@ -65,13 +70,13 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetAllTags_NonBlogItem()
         {
             var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
-            Assert.AreEqual(0, tags.Count);
+            Assert.AreEqual(1, tags.Count);
         }
 
         [Test]
         public void GetAllTags_Null()
         {
-            var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
+            var tags = Mod.TagManager.GetAllTags(null);
             Assert.AreEqual(0, tags.Count);
         }
 
@@ -95,7 +100,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetTagsByBlog_NonBlogID()
         {
             var tags = Mod.TagManager.GetTagsByBlog(m_entry1.ID);
-            Assert.AreEqual(0, tags.Length);
+            Assert.AreEqual(1, tags.Length);
         }
 
         [Test]

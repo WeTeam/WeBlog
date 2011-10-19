@@ -64,7 +64,7 @@ namespace Sitecore.Modules.WeBlog.Test
             m_category21 = blog2Categories.Axes.GetChild("category1");
             m_category22 = blog2Categories.Axes.GetChild("category2");
 
-            m_comment1 = m_entry21.Axes.GetChild("comment1");
+            m_comment1 = m_entry21.Axes.GetDescendant("comment1");
 
             // rebuild the WeBlog search index (or the entry manager won't work)
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
@@ -417,7 +417,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void DeleteEntry_ValidItem()
         {
             Item toDel = null;
-            var template = Sitecore.Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"));
+            var template = Sitecore.Context.Database.GetTemplate(Sitecore.Configuration.Settings.GetSetting("WeBlog.EntryTemplateID"));
 
             try
             {
