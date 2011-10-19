@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogPostList : BaseSublayout
     {
-        protected const string DEFAULT_POST_TEMPLATE = "/layouts/WeBlog/BlogPostListEntry.ascx";
+        protected const string DEFAULT_POST_TEMPLATE = "/layouts/WeBlog/PostListEntry.ascx";
 
         protected Size m_imageMaxSize = Size.Empty;
 
