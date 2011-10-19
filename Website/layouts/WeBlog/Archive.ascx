@@ -9,14 +9,14 @@
         </HeaderTemplate>
         <ItemTemplate>
             <li>
-                <a onClick="ToggleVisibility('month-<%# Container.DataItem %>')" class="wb-year"><%# Container.DataItem %></a>
+                <a onClick="ToggleVisibility('month-<%# Container.DataItem %>', this)" class="wb-year expanded"><%# Container.DataItem %></a>
                 <asp:Repeater runat="server" ID="Months" DataSource="<%# GetMonths((int)Container.DataItem) %>" OnItemDataBound="MonthDataBound">
                     <HeaderTemplate>
                         <ul id="month-<%# (Container.Parent.Parent as RepeaterItem).DataItem %>" class="wb-month">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a onClick="ToggleVisibility('entries-<%# Container.DataItem %>')" class="wb-month"><%# GetFriendlyMonthName((int)Container.DataItem) %> (<%# GetEntryCountForYearAndMonth((int)Container.DataItem)%>)</a>
+                            <a onClick="ToggleVisibility('entries-<%# Container.DataItem %>', this)" class="wb-month"><%# GetFriendlyMonthName((int)Container.DataItem) %> (<%# GetEntryCountForYearAndMonth((int)Container.DataItem)%>)</a>
                             <asp:Repeater runat="server" ID="Entries" DataSource="<%# GetEntriesForYearAndMonth((int)Container.DataItem) %>">
                                 <HeaderTemplate>
                                     <ul id="entries-<%# (Container.Parent.Parent as RepeaterItem).DataItem %>" class="wb-entries" <% if(!ExpandPostsOnLoad) { %>style="display:none;" <% } %>>

@@ -1,21 +1,14 @@
-﻿function ToggleVisibility(elementId) {
-    switch(document.getElementById(elementId).style.display)
-    {
-    case "block":
-      document.getElementById(elementId).style.display = "none";
-      break;    
-    case "none":
-      document.getElementById(elementId).style.display = "block";
-      break;
-    default:
-        document.getElementById(elementId).style.display = "none";
-    }
-}
-
-jQuery = jQuery.noConflict();
+﻿jQuery = jQuery.noConflict();
 jQuery(function () {
     blogViewMore();
 });
+
+function ToggleVisibility(elementId, caller) {
+    var el = jQuery("#" + elementId);
+    el.toggle('200');
+    if (caller != null)
+        jQuery(caller).toggleClass('expanded');
+}
 
 function blogViewMore() {
     jQuery(".wb-view-more").live("click", function () {

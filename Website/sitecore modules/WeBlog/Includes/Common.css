@@ -280,6 +280,20 @@ Archive
 {
     padding-left: 10px;
 }
+.wb-archive ul li a
+{
+    background: url(../../../sitecore/shell/Themes/Standard/Images/expand9x9.png) no-repeat left 3px;
+    padding-left: 15px;
+}
+.wb-archive ul li a.expanded
+{
+    background: url(../../../sitecore/shell/Themes/Standard/Images/collapse9x9.png) no-repeat left 3px;
+}
+.wb-archive li li li a
+{
+    background: none;
+    padding-left: 0;
+}
 
 /**********************************************************************************
 Misc
