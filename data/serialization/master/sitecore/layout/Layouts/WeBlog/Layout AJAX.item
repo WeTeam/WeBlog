@@ -2,9 +2,9 @@
 version: 1
 id: {90397DEF-ABEB-424A-AF56-2FD32DEC3432}
 database: master
-path: /sitecore/layout/Layouts/WeBlog/BlogLayout AJAX
+path: /sitecore/layout/Layouts/WeBlog/Layout AJAX
 parent: {214B605C-0AB7-47B4-AB9F-62FDA58A9FD9}
-name: BlogLayout AJAX
+name: Layout AJAX
 master: {00000000-0000-0000-0000-000000000000}
 template: {3A45A723-64EE-4919-9D41-02FD40FD1466}
 templatekey: Layout
@@ -13,13 +13,13 @@ templatekey: Layout
 field: {A036B2BC-BA04-44F6-A75F-BAE6CD242ABF}
 name: Path
 key: path
-content-length: 35
+content-length: 31
 
-/layouts/WeBlog/BlogLayoutAjax.aspx
+/layouts/WeBlog/LayoutAjax.aspx
 ----version----
 language: en
 version: 1
-revision: 05efad3b-cda8-426b-93c4-d6ac2c089e2c
+revision: 8353751b-0513-4d03-a765-59a45baf5e68
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-05efad3b-cda8-426b-93c4-d6ac2c089e2c
+8353751b-0513-4d03-a765-59a45baf5e68
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110624T173421:634445336610677384
+20111019T130148:634546261085252628
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
