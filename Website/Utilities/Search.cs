@@ -51,7 +51,7 @@ namespace Sitecore.Modules.WeBlog.Utilities
             if (maximumResults > 0)
             {
                 var index = Utilities.Search.GetSearchIndex();
-                if (index != null)
+                if (index != null && index.GetDocumentCount() > 0)
                 {
                     using (var searchContext = new SortableIndexSearchContext(index))
                     {

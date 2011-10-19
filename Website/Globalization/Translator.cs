@@ -62,6 +62,20 @@ namespace Sitecore.Modules.WeBlog.Globalization
             return FieldRenderer.Render(entry, PHRASE);
         }
 
+        public static string Render(string key, bool disableWebEditing)
+        {
+            var entry = FindEntry(key);
+            if (entry == null)
+            {
+                return "#" + key + "#";
+            }
+
+            if (disableWebEditing)
+                return FieldRenderer.Render(entry, PHRASE, "disable-web-editing=true");
+            else
+                return FieldRenderer.Render(entry, PHRASE);
+        }
+
         /// <summary>
         /// Renders the specified key as a formatted string
         /// </summary>
