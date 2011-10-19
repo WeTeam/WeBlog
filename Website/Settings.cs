@@ -16,7 +16,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string SearchIndexName
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.SearchIndexName", "WeBlog"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.SearchIndexName", "WeBlog"); }
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string EntryTemplateIdString
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID", "{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.EntryTemplateID", "{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}"); }
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string CommentTemplateIdString
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.CommentTemplateID", "{70949D4E-35D8-4581-A7A2-52928AA119D5}"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.CommentTemplateID", "{70949D4E-35D8-4581-A7A2-52928AA119D5}"); }
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string BlogTemplateIdString
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.BlogTemplateID", "{46663E05-A6B8-422A-8E13-36CD2B041278}"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.BlogTemplateID", "{46663E05-A6B8-422A-8E13-36CD2B041278}"); }
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string CategoryTemplateIdString
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.CategoryTemplateID", "{61FF8D49-90D7-4E59-878D-DF6E03400D3B}"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.CategoryTemplateID", "{61FF8D49-90D7-4E59-878D-DF6E03400D3B}"); }
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string RssFeedTemplateIdString
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.RSSFeedTemplateID", "{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.RSSFeedTemplateID", "{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}"); }
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string BlogBranchIdString
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.BlogBranchTemplateID", "{6FC4278C-E043-458B-9D5D-BBA775A9C386}"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.BlogBranchTemplateID", "{6FC4278C-E043-458B-9D5D-BBA775A9C386}"); }
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string ThemesRoot
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.ThemesRoot", "/sitecore/system/Modules/WeBlog/Themes"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.ThemesRoot", "/sitecore/system/Modules/WeBlog/Themes"); }
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string GravatarImageServiceUrl
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.Gravatar.ImageService.Url", "http://www.gravatar.com/avatar"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Gravatar.ImageService.Url", "http://www.gravatar.com/avatar"); }
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string AddThisAccountName
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.AddThisAccountName"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.AddThisAccountName"); }
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string ShareThisPublisherID
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.ShareThisPublisherID"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.ShareThisPublisherID"); }
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string ContentRootPath
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("Blog.ContentRootPath", "/sitecore/content"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.ContentRootPath", "/sitecore/content"); }
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static TimeSpan CaptchaMaximumTimeout
         {
-            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("Captcha.MaxTimeout", "00:01:00"); }
+            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MaxTimeout", "00:01:00"); }
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static TimeSpan CaptchaMinimumTimeout
         {
-            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("Captcha.MinTimeout", "00:00:03"); }
+            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MinTimeout", "00:00:03"); }
         }
 
         /// <summary>
