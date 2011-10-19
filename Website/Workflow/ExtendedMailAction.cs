@@ -80,16 +80,23 @@ namespace Sitecore.Modules.WeBlog.Workflow
                 return;
             }
 
-            MailMessage message = new MailMessage(from, to, subject, body);
-            string server = item["mail server"];
-            if (string.IsNullOrEmpty(server))
+            try
             {
-                Sitecore.MainUtil.SendMail(message);
+                MailMessage message = new MailMessage(from, to, subject, body);
+                string server = item["mail server"];
+                if (string.IsNullOrEmpty(server))
+                {
+                    Sitecore.MainUtil.SendMail(message);
+                }
+                else
+                {
+                    SmtpClient smtp = new SmtpClient(server);
+                    smtp.Send(message);
+                }
             }
-            else
+            catch (Exception e)
             {
-                SmtpClient smtp = new SmtpClient(server);
-                smtp.Send(message);
+                Log.Error("Exception while sending workflow email", e, this);
             }
         }
 
