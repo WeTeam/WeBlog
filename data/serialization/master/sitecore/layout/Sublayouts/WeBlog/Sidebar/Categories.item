@@ -13,9 +13,9 @@ templatekey: Sublayout
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
 key: path
-content-length: 31
+content-length: 39
 
-/layouts/WeBlog/Categories.ascx
+/layouts/WeBlog/Sidebar/Categories.ascx
 ----field----
 field: {3D08DB46-2267-41B0-BC52-BE69FD618633}
 name: Cacheable
@@ -26,7 +26,7 @@ content-length: 1
 ----version----
 language: en
 version: 1
-revision: e40bfc76-cb7a-4f44-bf7b-19554aa3eb4b
+revision: 4dc44da3-aeb3-4777-903e-ba3a54d2230b
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -34,7 +34,7 @@ name: __Valid from
 key: __valid from
 content-length: 15
 
-20110624T173747
+20110624T173700
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -48,7 +48,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20110624T173747
+20110624T173700
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -62,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e40bfc76-cb7a-4f44-bf7b-19554aa3eb4b
+4dc44da3-aeb3-4777-903e-ba3a54d2230b
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T125657:634546258174931950
+20111019T163911:634546391513558972
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

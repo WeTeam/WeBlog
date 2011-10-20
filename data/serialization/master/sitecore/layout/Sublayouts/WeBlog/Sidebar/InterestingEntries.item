@@ -20,13 +20,13 @@ content-length: 38
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
 key: path
-content-length: 39
+content-length: 47
 
-/layouts/WeBlog/InterestingEntries.ascx
+/layouts/WeBlog/Sidebar/InterestingEntries.ascx
 ----version----
 language: en
 version: 1
-revision: a7815d9d-1c13-425d-9a95-b2a692ac3a03
+revision: 15cd4c8d-114a-4eba-ae2a-3a3e1345d596
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -34,7 +34,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20111018T131312
+20111018T131300
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a7815d9d-1c13-425d-9a95-b2a692ac3a03
+15cd4c8d-114a-4eba-ae2a-3a3e1345d596
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T125919:634546259595154174
+20111019T163923:634546391639606181
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

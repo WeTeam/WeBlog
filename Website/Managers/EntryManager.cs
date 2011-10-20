@@ -305,17 +305,18 @@ namespace Sitecore.Modules.WeBlog.Managers
         public static EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
             var entryIds = from entry in GetBlogEntries(blogItem) select entry.ID.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from pages where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));                     
+            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));                     
             
             if (entryIds.Count() > 0)
             {
 #if PRE_65
-                var ids = AnalyticsManager.ReadMany<ID>(sql.FormatWith(string.Join(",", entryIds.ToArray())), reader =>
+                sql = sql.Replace("$page_table$", "page");
+                var ids = AnalyticsManager.ReadMany<ID>(sql, reader =>
                 {
                     return new ID(AnalyticsManager.GetGuid(0, reader));
                 }, new object[0]);
 #else
-               
+                sql = sql.Replace("$page_table$", "pages");
                 var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
                 {
                     return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
