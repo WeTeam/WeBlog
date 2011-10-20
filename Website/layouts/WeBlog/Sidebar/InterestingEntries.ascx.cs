@@ -17,7 +17,7 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
                 if (!string.IsNullOrEmpty(m_title))
                     return m_title;
                 else
-                    return Sitecore.Modules.WeBlog.Globalization.Translator.Render("POPULAR POSTS");
+                    return Sitecore.Modules.WeBlog.Globalization.Translator.Render("POPULAR_POSTS");
             }
 
             set
