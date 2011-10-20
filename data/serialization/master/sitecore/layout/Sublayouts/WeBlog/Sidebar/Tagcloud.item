@@ -27,13 +27,13 @@ content-length: 1
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
-content-length: 165
+content-length: 138
 
-<image mediaid="{C9455D3F-CEFA-4C00-BE2D-E6AEAED2804F}" mediapath="/System/C/9/8/7/thumbnail_C987F2EB64164E159EDAB9F016918832" src="/layouts/WeBlog/TagCloud.ascx" />
+<image mediaid="{C9455D3F-CEFA-4C00-BE2D-E6AEAED2804F}" mediapath="/Modules/WeBlog/Tagcloud" src="~/media/Modules/WeBlog/Tagcloud.ashx" />
 ----version----
 language: en
 version: 1
-revision: 6dc20b6e-6b9c-4941-b8cd-af33b27459f4
+revision: b1e45f25-0998-44d3-8b22-54a169b1b473
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -69,14 +69,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-6dc20b6e-6b9c-4941-b8cd-af33b27459f4
+b1e45f25-0998-44d3-8b22-54a169b1b473
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T163939:634546391797695224
+20111020T153018:634547214181985930
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

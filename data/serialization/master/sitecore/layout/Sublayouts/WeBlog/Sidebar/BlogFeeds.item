@@ -27,13 +27,13 @@ phBlogSidebar
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
-content-length: 166
+content-length: 144
 
-<image mediaid="{21DF52BE-CA82-4329-A937-1A85C2041044}" mediapath="/System/F/0/A/B/thumbnail_F0ABC24830B44F0A8ADA1A03D298DFD7" src="/layouts/WeBlog/BlogFeeds.ascx" />
+<image mediaid="{21DF52BE-CA82-4329-A937-1A85C2041044}" mediapath="/Modules/WeBlog/Syndication" src="~/media/Modules/WeBlog/Syndication.ashx" />
 ----version----
 language: en
 version: 1
-revision: b8485a51-3fad-41ca-9107-bc2ab365f5a1
+revision: 77e34906-0755-43b0-be29-1955e82bbfca
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -69,14 +69,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-b8485a51-3fad-41ca-9107-bc2ab365f5a1
+77e34906-0755-43b0-be29-1955e82bbfca
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T163903:634546391437974649
+20111020T152850:634547213309566030
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

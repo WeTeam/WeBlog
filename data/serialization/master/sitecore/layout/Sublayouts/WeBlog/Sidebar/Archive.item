@@ -27,13 +27,13 @@ content-length: 1
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
-content-length: 164
+content-length: 136
 
-<image mediaid="{5B12A384-4347-41E0-B326-EE7D209B2559}" mediapath="/System/5/5/1/8/thumbnail_5518AD7AB52A4356BE36145ACEA6A5FC" src="/layouts/WeBlog/Archive.ascx" />
+<image mediaid="{5B12A384-4347-41E0-B326-EE7D209B2559}" mediapath="/Modules/WeBlog/Archive" src="~/media/Modules/WeBlog/Archive.ashx" />
 ----version----
 language: en
 version: 1
-revision: 9dc4fed1-aac9-48ab-990e-51eb1a55e027
+revision: 54896298-c196-4da3-b573-18e41e3807df
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -69,14 +69,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-9dc4fed1-aac9-48ab-990e-51eb1a55e027
+54896298-c196-4da3-b573-18e41e3807df
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T163855:634546391352249746
+20111020T152832:634547213124465443
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
