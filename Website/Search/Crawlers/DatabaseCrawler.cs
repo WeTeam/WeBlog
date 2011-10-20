@@ -24,25 +24,8 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
 
             if (item != null && document != null)
             {
-                // Add the blog this item is under
-                /*var blog = BlogManager.GetCurrentBlog(item);
-                if (blog != null)
-                {
-                    document.Add(new Field(Constants.Index.Fields.BlogID, TransformValue(blog.ID), Field.Store.YES, Field.Index.UN_TOKENIZED));
-                }
-
-                // Add the entry this item is under if the item itself is not an entry
-                ID id = Settings.EntryTemplateId;
-
-                // TODO: What about items using templates derived from entryemplateid? need to accommodate those
-                if (item.TemplateID != id)
-                {
-                    var entry = EntryManager.GetCurrentBlogEntry(item);
-                    if (entry != null)
-                    {
-                        document.Add(new Field(Constants.Index.Fields.EntryID, TransformValue(entry.ID), Field.Store.YES, Field.Index.UN_TOKENIZED));
-                    }
-                }*/
+                // Sitecore 6.2 does not include template
+                document.Add(new Field(Constants.Index.Fields.Template, TransformValue(item.TemplateID), Field.Store.NO, Field.Index.TOKENIZED));
 
                 // Add multilist fields
                 foreach (var fieldName in m_multilistFields)

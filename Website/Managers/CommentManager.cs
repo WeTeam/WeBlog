@@ -258,7 +258,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var query = new CombinedQuery();
 
                 // TODO: What about items using templates derived from entryemplateid? need to accommodate those
-                query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Template, Settings.CommentTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+                query.Add(new FieldQuery(Constants.Index.Fields.Template, Settings.CommentTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
                 query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
 
                 return Utilities.Search.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem));

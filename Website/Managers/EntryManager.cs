@@ -196,7 +196,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, blog.ID.ToShortID().ToString()), QueryOccurance.Must);
 
                 // TODO: What about items using templates derived from entryemplateid? need to accommodate those
-                query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Template, Settings.EntryTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+                query.Add(new FieldQuery(Constants.Index.Fields.Template, Settings.EntryTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
 
                 if(!string.IsNullOrEmpty(tag))
                     query.Add(new FieldQuery(Constants.Index.Fields.Tags, Utilities.Search.TransformCSV(tag)), QueryOccurance.Must);
