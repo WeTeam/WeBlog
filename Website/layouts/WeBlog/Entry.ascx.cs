@@ -27,5 +27,15 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 EntryImage.MaxHeight = maxEntryImage.Height;
             }
         }
+
+        /// <summary>
+        /// Determines if the field given by name needs to have it's output wrapped in an additional tag
+        /// </summary>
+        /// <param name="fieldName">The name of the field to check</param>
+        /// <returns>True if wrapping is required, otherwsie false  </returns>
+        protected bool DoesFieldRequireWrapping(string fieldName)
+        {
+            return !CurrentEntry[fieldName].StartsWith("<p>");
+        }
     }
 }

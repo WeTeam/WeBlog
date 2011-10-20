@@ -12,7 +12,19 @@
         <div class="wb-details"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created, CurrentEntry.CreatedBy.LocalName) %></div>
     <% } %>
     <sc:Placeholder runat="server" key="phBlogBelowEntryTitle" />
-    <p><sc:Text ID="txtIntroduction" Field="Introduction" runat="server" /></p>
-    <p><sc:Text ID="txtContent" Field="Content" runat="server" /></p>
+    <% if(DoesFieldRequireWrapping("Introduction")) { %>
+    <p>
+    <% } %>
+        <sc:Text ID="txtIntroduction" Field="Introduction" runat="server" />
+    <% if(DoesFieldRequireWrapping("Introduction")) { %>
+    </p>
+    <% } %>
+    <% if(DoesFieldRequireWrapping("Content")) { %>
+    <p>
+    <% } %>
+    <sc:Text ID="txtContent" Field="Content" runat="server" />
+    <% if(DoesFieldRequireWrapping("Content")) { %>
+    </p>
+    <% } %>
     <sc:Placeholder runat="server" key="phBlogBelowEntry" /> 
 </div>

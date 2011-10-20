@@ -11,6 +11,11 @@
     <link href="/sitecore modules/WeBlog/Includes/Common.css" rel="stylesheet" />
     <wb:ThemeIncludes runat="server" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') {
+            document.write(unescape("%3Cscript src='/sitecore modules/WeBlog/Includes/jquery-1.4.3.min.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+    </script>
     <script src="/sitecore modules/WeBlog/Includes/jquery.url.js" type="text/javascript"></script>
     <script src="/sitecore modules/WeBlog/Includes/functions.js" type="text/javascript"></script>
   </head>
