@@ -22,7 +22,7 @@ name: __Standard values
 key: __standard values
 content-length: 38
 
-{DA2888B7-A131-4096-A550-90948D07F065}
+{E6B2DB05-8C84-46E1-9803-705A8B27644B}
 ----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
@@ -33,7 +33,7 @@ applications/16x16/gear.png
 ----version----
 language: en
 version: 1
-revision: d43d496f-0a6a-41b5-8b6b-4be31314b46f
+revision: a5fc35fb-3845-4c21-89de-a1ac69837ee9
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -62,18 +62,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-d43d496f-0a6a-41b5-8b6b-4be31314b46f
+a5fc35fb-3845-4c21-89de-a1ac69837ee9
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111018T174042:634545564425885323
+20111019T160249:634546369699363142
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 14
+content-length: 19
 
-sitecore\admin
+sitecore\nwesselman

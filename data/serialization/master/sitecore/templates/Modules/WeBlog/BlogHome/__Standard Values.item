@@ -34,13 +34,28 @@ content-length: 38
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
-content-length: 1134
+content-length: 1541
 
-<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"><r id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" ph="phContent" uid="{519F319A-BB46-4A00-8319-B10CD5FF6031}" /><r id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" ph="phBlogMain" uid="{7B572A4F-D434-4EE0-8298-2784298B7EE1}" /><r id="{9773C9D7-989D-4807-A834-10A10336BF27}" ph="phBlogSidebar" uid="{9AB0519F-753B-43E5-9DB2-9D23D4334960}" /><r id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" ph="phBlogSidebar" uid="{57F227FA-295A-4A67-BE15-1FC30303BF6A}" /><r id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" ph="phBlogSidebar" uid="{DAC7C38C-B5FA-4855-ABBC-AEB4EF82D4DB}" /><r id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" ph="phBlogSidebar" uid="{5DA6458D-B784-4922-946E-FAED0F7647F0}" /><r id="{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}" ph="phBlogSidebar" uid="{2C93122A-AC9A-40F6-BA99-76D8977E4C40}" /></d><d id="{CF7D07C2-F835-4313-B01D-7AADCA72D24B}" l="{90397DEF-ABEB-424A-AF56-2FD32DEC3432}"><r id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" ph="phContent" uid="{E7C0A81B-427F-4B72-8FCC-2FBB2A551CEA}" /></d></r>
+<?xml version="1.0" encoding="utf-16"?>
+<r xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}">
+    <r id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" ph="phContent" uid="{519F319A-BB46-4A00-8319-B10CD5FF6031}" />
+    <r id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" ph="phBlogMain" uid="{7B572A4F-D434-4EE0-8298-2784298B7EE1}" />
+    <r id="{9773C9D7-989D-4807-A834-10A10336BF27}" ph="phBlogSidebar" uid="{9AB0519F-753B-43E5-9DB2-9D23D4334960}" />
+    <r id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" ph="phBlogSidebar" uid="{57F227FA-295A-4A67-BE15-1FC30303BF6A}" />
+    <r id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" ph="phBlogSidebar" uid="{DAC7C38C-B5FA-4855-ABBC-AEB4EF82D4DB}" />
+    <r id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" ph="phBlogSidebar" uid="{5DA6458D-B784-4922-946E-FAED0F7647F0}" />
+    <r id="{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}" ph="phBlogSidebar" uid="{2C93122A-AC9A-40F6-BA99-76D8977E4C40}" />
+    <r cac="0" cnd="" mvt="" ds="" id="{7174B8A3-4C4B-4F5A-B428-05EFB7FA6077}" par="Title&amp;MaximumCount=3&amp;Mode=Comments" ph="phBlogSidebar" uid="{71FF3C18-6434-4C1A-A6B3-3E55928DA65D}" vbd="0" vbdev="0" vbl="0" vbp="0" vbqs="0" vbu="0" />
+  </d>
+  <d id="{CF7D07C2-F835-4313-B01D-7AADCA72D24B}" l="{90397DEF-ABEB-424A-AF56-2FD32DEC3432}">
+    <r id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" ph="phContent" uid="{E7C0A81B-427F-4B72-8FCC-2FBB2A551CEA}" />
+  </d>
+</r>
 ----version----
 language: en
 version: 1
-revision: c75ed8dc-a81b-416c-893f-f51292f21633
+revision: 95ed633f-2732-4a8d-bec1-4ba2e731f6e4
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -125,18 +140,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-c75ed8dc-a81b-416c-893f-f51292f21633
+95ed633f-2732-4a8d-bec1-4ba2e731f6e4
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T132215:634546273352352361
+20111019T161917:634546379570793182
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 14
+content-length: 19
 
-sitecore\admin
+sitecore\nwesselman
