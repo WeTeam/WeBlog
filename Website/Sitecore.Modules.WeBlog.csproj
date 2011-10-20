@@ -318,6 +318,7 @@
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Pipelines\CaptchaProcessor.cs" />
+    <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
