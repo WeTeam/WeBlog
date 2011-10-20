@@ -23,6 +23,13 @@ key: cacheable
 content-length: 1
 
 1
+----field----
+field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
+name: __Thumbnail
+key: __thumbnail
+content-length: 171
+
+<image mediaid="{DD877AF0-2B30-4164-903E-5B846294ED97}" mediapath="/System/1/3/3/0/thumbnail_1330FDB392774BE6945FCB4CB113B5C3" src="/layouts/WeBlog/RecentComments.ascx" />
 ----version----
 language: en
 version: 1

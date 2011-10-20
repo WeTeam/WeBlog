@@ -23,6 +23,13 @@ key: cacheable
 content-length: 1
 
 1
+----field----
+field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
+name: __Thumbnail
+key: __thumbnail
+content-length: 165
+
+<image mediaid="{C9455D3F-CEFA-4C00-BE2D-E6AEAED2804F}" mediapath="/System/C/9/8/7/thumbnail_C987F2EB64164E159EDAB9F016918832" src="/layouts/WeBlog/TagCloud.ascx" />
 ----version----
 language: en
 version: 1

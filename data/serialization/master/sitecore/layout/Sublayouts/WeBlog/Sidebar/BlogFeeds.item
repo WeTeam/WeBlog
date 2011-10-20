@@ -23,6 +23,13 @@ key: placeholder
 content-length: 13
 
 phBlogSidebar
+----field----
+field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
+name: __Thumbnail
+key: __thumbnail
+content-length: 166
+
+<image mediaid="{21DF52BE-CA82-4329-A937-1A85C2041044}" mediapath="/System/F/0/A/B/thumbnail_F0ABC24830B44F0A8ADA1A03D298DFD7" src="/layouts/WeBlog/BlogFeeds.ascx" />
 ----version----
 language: en
 version: 1

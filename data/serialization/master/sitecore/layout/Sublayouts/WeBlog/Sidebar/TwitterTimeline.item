@@ -37,6 +37,13 @@ key: cacheable
 content-length: 1
 
 1
+----field----
+field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
+name: __Thumbnail
+key: __thumbnail
+content-length: 136
+
+<image mediaid="{642F0B2B-9B60-48C9-9BBA-E9C9AB849BC0}" mediapath="/Modules/WeBlog/twitter" src="~/media/Modules/WeBlog/twitter.ashx" />
 ----version----
 language: en
 version: 1
