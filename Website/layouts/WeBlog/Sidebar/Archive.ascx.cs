@@ -30,14 +30,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
             m_entriesByMonthAndYear = new Dictionary<int, EntryItem[]>();
             m_startedDate = CurrentBlog.InnerItem.Statistics.Created;
             
-            if (!Page.IsPostBack)
+            LoadEntries();
+            if (Years != null)
             {
-                LoadEntries();
-                if (Years != null)
-                {
-                    Years.DataSource = GetYears();
-                    Years.DataBind();
-                }
+                Years.DataSource = GetYears();
+                Years.DataBind();
             }
         }
 

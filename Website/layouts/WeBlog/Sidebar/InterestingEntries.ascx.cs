@@ -10,6 +10,9 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
     {
         private string m_title = string.Empty;
 
+        /// <summary>
+        /// Gets or sets the title to display. If empty, reads the title from the dictionary
+        /// </summary>
         public string Title
         {
             get
@@ -26,24 +29,36 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
             }
         }
 
+        /// <summary>
+        /// Gets or sets the algorithm to use for selecting items to display
+        /// </summary>
         public InterestingEntriesAlgorithm Algorithm
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the algorithm implementation to use. Only used when Algorithm = InterestingEntriesAlgorithm.Custom
+        /// </summary>
         public IInterstingEntriesAlgorithm CustomAlgorithm
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the algorithm to use in a textual fashion
+        /// </summary>
         public string Mode
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the maximum number of items to show
+        /// </summary>
         public int MaximumCount
         {
             get;
@@ -58,11 +73,8 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                SetProperties();
-                PopulateList();
-            }
+            SetProperties();
+            PopulateList();
         }
 
         protected virtual void SetProperties()

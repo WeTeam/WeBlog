@@ -9,10 +9,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                LoadCategories();
-            }
+            LoadCategories();
         }
 
         /// <summary>
