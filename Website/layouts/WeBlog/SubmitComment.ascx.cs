@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Utilities;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -32,8 +33,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SuccessCssClass = "successtext";
-            ErrorCssClass = "errortext";
+            SuccessCssClass = "wb-successtext";
+            ErrorCssClass = "wb-errortext";
             SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
             LoadEntry();
         }
@@ -58,6 +59,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected void buttonSaveComment_Click(object sender, EventArgs e)
         {
+            if (MessagePanel != null)
+            {
+                MessagePanel.Visible = false;
+            }
             if (Page.IsValid)
             {
                 Model.Comment comment = new Model.Comment()
@@ -68,17 +73,27 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 };
 
                 if(txtCommentWebsite != null)
-                    comment.Fields.Add("Website", txtCommentWebsite.Text);
-                comment.Fields.Add("IP Address", Context.Request.UserHostAddress);
+                    comment.Fields.Add(Constants.Fields.Website, txtCommentWebsite.Text);
+                comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
 
                 var submissionResult = CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment);
                 if (submissionResult.IsNull)
+                {
                     SetErrorMessage(Translate.Text("COMMENT_SUBMIT_ERROR"));
+                }
                 else
                 {
                     SetSuccessMessage(Translate.Text("COMMENT_SUBMIT_SUCCESS"));
                     ResetCommentFields();
                 }
+
+                //check if added comment is available. if so, send it along with the event
+                //won't happen unless publishing and indexing is really fast, but worth a try
+                CommentItem newComment = CommentManager.GetEntryComments(Sitecore.Context.Item).Where(item => item.ID == submissionResult).SingleOrDefault();
+                Sitecore.Events.Event.RaiseEvent(Constants.Events.UI.COMMENT_ADDED, new object[] { newComment });
+
+                //display javascript to scroll right to the comments list
+                CommentScroll.Visible = true;
             }
         }
 
@@ -88,8 +103,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <param name="message">The message to display</param>
         protected virtual void SetErrorMessage(string message)
         {
-            if(MessagePanel != null)
+            if (MessagePanel != null)
+            {
+                MessagePanel.Visible = true;
                 MessagePanel.CssClass = ErrorCssClass;
+            }
 
             if(Message != null)
                 Message.Text = message;
@@ -101,8 +119,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <param name="message"></param>
         protected virtual void SetSuccessMessage(string message)
         {
-            if(MessagePanel != null)
+            if (MessagePanel != null)
+            {
+                MessagePanel.Visible = true;
                 MessagePanel.CssClass = SuccessCssClass;
+            }
 
             if(Message != null)
                 Message.Text = message;

@@ -82,7 +82,13 @@ Generic classes
 
 .wb-successtext
 {
-	color: #0000ff;
+    border: 3px solid green;
+    color: Green;
+    background-color: #FFFFC6;
+    font-size: 12px;
+    padding: 3px;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
 /*************************************************************************************

@@ -71,18 +71,9 @@ namespace Sitecore.Modules.WeBlog.Managers
                                 {
                                     workflow.Execute(Settings.CommentWorkflowCommand, newItem, "WeBlog automated submit", false, new object[0]);
                                 }
+                                //workflow should take care of publishing the item following this, if it's configured to do so
                             }
                         }
-
-                        //publish won't push the item if it's not in a final state, but check here to save the effort
-                        if (workflow == null || workflow.GetState(newItem) == null || workflow.GetState(newItem).FinalState)
-                        {
-                            Publish.PublishItem(newItem);
-                        }
-
-                        // Ensure current request is not from the test page (Context.Item is not null)
-                        if(Sitecore.Context.Item != null)
-                            WebUtil.ReloadPage();
 
                         return newComment.ID;
                     }

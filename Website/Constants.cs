@@ -30,5 +30,13 @@ namespace Sitecore.Modules.WeBlog
                 public static ID ID = ID.Parse("{819F1459-A930-45E4-975B-9165028E6A58}");
             }
         }
+
+        public static class Events
+        {
+            public static class UI
+            {
+                public const string COMMENT_ADDED = "weblog:comment:added";
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ ar|sitecore\Sitecore Client Authoring|pd|+workflowCommand:execute|pe|+workflowCo
 ----version----
 language: en
 version: 1
-revision: 100a3cc7-38ae-48b1-817e-e3d1984c2b21
+revision: ee184dfc-3cc0-47fa-b7a9-93b242a054b1
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -62,21 +62,21 @@ name: __Revision
 key: __revision
 content-length: 36
 
-100a3cc7-38ae-48b1-817e-e3d1984c2b21
+ee184dfc-3cc0-47fa-b7a9-93b242a054b1
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111018T132202:634545409221147080
+20111020T142836:634547177164723510
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 14
+content-length: 19
 
-sitecore\admin
+sitecore\nwesselman
 ----version----
 language: ja-JP
 version: 1

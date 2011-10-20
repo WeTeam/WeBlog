@@ -13,6 +13,15 @@ namespace Sitecore.Modules.WeBlog.Layouts {
     public partial class BlogSubmitComment {
         
         /// <summary>
+        /// CommentScroll control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder CommentScroll;
+        
+        /// <summary>
         /// CommentsPanel control.
         /// </summary>
         /// <remarks>

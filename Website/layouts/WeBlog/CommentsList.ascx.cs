@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Web.UI.WebControls;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -8,10 +11,16 @@ namespace Sitecore.Modules.WeBlog.Layouts
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            LoadEntry();
+            LoadComments();
+            Sitecore.Events.Event.Subscribe(Constants.Events.UI.COMMENT_ADDED, new EventHandler(this.CommentAdded));
         }
 
-        protected virtual void LoadEntry()
+        protected virtual void LoadComments()
+        {
+            LoadComments(null);
+        }
+
+        protected virtual void LoadComments(CommentItem addedComment)
         {
             // Comments enabled and exist?
             if (CurrentEntry.DisableComments.Checked || CommentManager.GetCommentsCount() == 0)
@@ -25,7 +34,16 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 if (ListViewComments != null)
                 {
-                    ListViewComments.DataSource = CommentManager.GetEntryComments();
+                    CommentItem[] comments = CommentManager.GetEntryComments();
+                    //if a comment has been added but is not coming back yet (i.e. being indexed), fake it
+                    if (addedComment != null && comments.Count(comment => comment.ID == addedComment.ID) == 0)
+                    {
+                        List<CommentItem> newList = new List<CommentItem>();
+                        newList.Add(addedComment);
+                        newList.AddRange(comments);
+                        comments = newList.ToArray();
+                    }
+                    ListViewComments.DataSource = comments;
                     ListViewComments.DataBind();
                 }
             }
@@ -48,6 +66,20 @@ namespace Sitecore.Modules.WeBlog.Layouts
             }
             else
                 return string.Empty;
+        }
+
+        protected virtual void CommentAdded(object sender, EventArgs e)
+        {
+            object[] parameters = (e as Sitecore.Events.SitecoreEventArgs).Parameters;
+            if (parameters.Length > 0)
+            {
+                CommentItem added = parameters[0] as CommentItem;
+                LoadComments(added);
+            }
+            else
+            {
+                LoadComments();
+            }
         }
     }
 }
