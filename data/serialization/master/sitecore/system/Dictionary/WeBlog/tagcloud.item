@@ -261,15 +261,15 @@ sitecore\admin
 ----version----
 language: ja
 version: 1
-revision: e6a5caf3-df78-4ebf-b139-c26751ea25a6
+revision: 1beb6dd0-ccc4-4e51-a24c-a5a6c8d67c93
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 8
+content-length: 6
 
-Tagcloud
+タグクラウド
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -290,14 +290,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e6a5caf3-df78-4ebf-b139-c26751ea25a6
+1beb6dd0-ccc4-4e51-a24c-a5a6c8d67c93
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134716:634547152361136617
+20111021T084658:634547836185838282
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

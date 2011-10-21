@@ -74,6 +74,11 @@ Blog entry
     text-decoration: none;   
 }
 
+.wb-entry p
+{
+    clear: left;
+}
+
 .wb-entry .wb-entry-share h3
 {
     display: none;
@@ -81,6 +86,10 @@ Blog entry
 .wb-entry-list .wb-read-more a
 {
     color: #336699;
+}
+.wb-entry-categories
+{
+    display: inline;
 }
 
 /*************************************************************************************

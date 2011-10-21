@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogEntryCategories.ascx.cs" Inherits="Sitecore.Modules.WeBlog.layouts.WeBlog.BlogEntryCategories" %>
 
-<asp:Panel ID="PanelEntryCategories" runat="server" CssClass="wb-entry-categories wb-panel">
+<asp:Panel ID="PanelEntryCategories" runat="server" CssClass="wb-entry-categories">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("POSTED_IN")%></h3>
     <asp:ListView ID="ListViewCategories" runat="server">
         <LayoutTemplate>

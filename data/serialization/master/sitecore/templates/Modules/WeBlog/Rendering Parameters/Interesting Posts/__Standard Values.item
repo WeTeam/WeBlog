@@ -1,6 +1,6 @@
 ----item----
 version: 1
-id: {E6B2DB05-8C84-46E1-9803-705A8B27644B}
+id: {DA2888B7-A131-4096-A550-90948D07F065}
 database: master
 path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Interesting Posts/__Standard Values
 parent: {448A760F-07E3-441C-8275-213F2D175795}
@@ -19,47 +19,54 @@ content-length: 13
 ----version----
 language: en
 version: 1
-revision: a6eccc5c-828f-4521-9476-59b6a6cd39af
+revision: 727492ef-b1e6-49a5-8d8f-644b9ebeacdb
 
+----field----
+field: {FAA517DE-913A-4E64-B9EE-C27B9D237FF8}
+name: Title
+key: title
+content-length: 13
+
+popular_posts
+----field----
+field: {73847EAC-EC00-4921-9A24-A8B3FFD35181}
+name: MaximumCount
+key: maximumcount
+content-length: 1
+
+5
 ----field----
 field: {6A570A28-884E-4D2E-AD39-1DBFABFD53C8}
 name: Mode
 key: mode
-content-length: 8
+content-length: 9
 
-Comments
+PageViews
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 15
 
-20111019T160200
-----field----
-field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
-name: __Created by
-key: __created by
-content-length: 19
-
-sitecore\nwesselman
+20111018T174000
 ----field----
 field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
 name: __Revision
 key: __revision
 content-length: 36
 
-a6eccc5c-828f-4521-9476-59b6a6cd39af
+727492ef-b1e6-49a5-8d8f-644b9ebeacdb
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T161111:634546374715245461
+20111020T160918:634547237582300989
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin

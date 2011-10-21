@@ -261,15 +261,15 @@ sitecore\admin
 ----version----
 language: ja
 version: 1
-revision: 23762849-eb06-491e-9ee2-ade3056f4ca1
+revision: 5434ff2d-9a46-40da-9309-9b29310b8430
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 68
+content-length: 28
 
-An error occurred during comment submission. Please try again later.
+エラーが起こりました。時間を置いて再度実行してください。
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -290,14 +290,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-23762849-eb06-491e-9ee2-ade3056f4ca1
+5434ff2d-9a46-40da-9309-9b29310b8430
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134711:634547152314243935
+20111021T084657:634547836172207502
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

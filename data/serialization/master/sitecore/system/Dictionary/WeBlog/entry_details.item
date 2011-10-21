@@ -113,15 +113,15 @@ sitecore\admin
 ----version----
 language: en
 version: 1
-revision: aab3bce9-2d29-4282-87d8-42831e882731
+revision: 5dc15a50-7620-4129-b2be-7537e8346193
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 5
+content-length: 19
 
-{0:d}
+Posted {0:d} by {1}
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -135,7 +135,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20111010T094336
+20111010T094300
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -149,14 +149,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-aab3bce9-2d29-4282-87d8-42831e882731
+5dc15a50-7620-4129-b2be-7537e8346193
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T161649:634547242099699369
+20111020T175416:634547300569533062
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

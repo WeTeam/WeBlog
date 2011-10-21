@@ -6,10 +6,10 @@
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
   <head runat="server">
     <title><%= GetItemTitle() %></title>
-    <wb:Syndication runat="server" />
-    <wb:RsdIncludes runat="server" />
+    <wb:Syndication runat="server" Cacheable="true" VaryByData="true" />
+    <wb:RsdIncludes runat="server" Cacheable="true" VaryByData="true" />
     <link href="/sitecore modules/WeBlog/Includes/Common.css" rel="stylesheet" />
-    <wb:ThemeIncludes runat="server" />
+    <wb:ThemeIncludes runat="server" Cacheable="true" VaryByData="true" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         if (typeof jQuery == 'undefined') {

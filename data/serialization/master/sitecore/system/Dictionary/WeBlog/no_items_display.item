@@ -261,15 +261,15 @@ sitecore\admin
 ----version----
 language: ja
 version: 1
-revision: 407d7cac-cd74-495c-8e07-ae58f31e584a
+revision: 8edf3d59-1965-480a-bd50-8f694561e5a9
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 26
+content-length: 9
 
-Number of items to display
+表示するアイテム数
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -290,14 +290,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-407d7cac-cd74-495c-8e07-ae58f31e584a
+8edf3d59-1965-480a-bd50-8f694561e5a9
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134713:634547152336395202
+20111021T084657:634547836177477803
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

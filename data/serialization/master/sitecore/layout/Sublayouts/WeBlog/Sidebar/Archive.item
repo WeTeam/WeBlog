@@ -24,6 +24,13 @@ content-length: 1
 
 1
 ----field----
+field: {8B6D532B-6128-4486-A044-CA06D90948BA}
+name: VaryByData
+key: varybydata
+content-length: 1
+
+1
+----field----
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
@@ -33,7 +40,7 @@ content-length: 136
 ----version----
 language: en
 version: 1
-revision: 54896298-c196-4da3-b573-18e41e3807df
+revision: 2db6ea7f-543b-4b32-97fb-ec4855cac361
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -69,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-54896298-c196-4da3-b573-18e41e3807df
+2db6ea7f-543b-4b32-97fb-ec4855cac361
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T152832:634547213124465443
+20111020T173756:634547290764702258
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

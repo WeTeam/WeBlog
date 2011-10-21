@@ -13,9 +13,9 @@ templatekey: BlogComment
 field: {A4F985D9-98B3-4B52-AAAF-4344F6E747C6}
 name: __Workflow
 key: __workflow
-content-length: 38
+content-length: 0
 
-{CAC00CD7-54B1-4397-B05C-04FAFF112CF5}
+
 ----field----
 field: {CA9B9F52-4FB0-4F87-A79F-24DEA62CDA65}
 name: __Default workflow
@@ -26,7 +26,7 @@ content-length: 38
 ----version----
 language: en
 version: 1
-revision: a0a1dc2a-fb6a-4fc2-a325-1e95ab8b02a1
+revision: 0046777d-6cea-459c-842d-7579a943bedc
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -41,7 +41,7 @@ name: __Created
 key: __created
 content-length: 15
 
-20111018T113431
+20111018T113400
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -55,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a0a1dc2a-fb6a-4fc2-a325-1e95ab8b02a1
+0046777d-6cea-459c-842d-7579a943bedc
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111018T124643:634545388035805348
+20111020T170415:634547270553636841
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -74,6 +74,6 @@ sitecore\admin
 field: {3E431DE1-525E-47A3-B6B0-1CCBEC3A8C98}
 name: __Workflow state
 key: __workflow state
-content-length: 38
+content-length: 0
 
-{DC5020D1-39C1-404C-8772-B99DF5E928EB}
+

@@ -572,9 +572,9 @@ revision: 71e4acf7-6c27-4b71-8463-21420c4cfed8
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 16
+content-length: 7
 
-Add your comment
+コメントを追加
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -613,15 +613,15 @@ sitecore\admin
 ----version----
 language: ja
 version: 2
-revision: eb036817-8da4-4a71-9b2d-16c8b8f529e0
+revision: 5295d3fa-7f2b-48f6-816d-01565192ba45
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 16
+content-length: 7
 
-Add your comment
+コメントを追加
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
 name: __Valid from
@@ -656,14 +656,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-eb036817-8da4-4a71-9b2d-16c8b8f529e0
+5295d3fa-7f2b-48f6-816d-01565192ba45
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134528:634547151287875230
+20111021T084656:634547836162416942
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
