@@ -60,6 +60,7 @@ Create a Blog
         <x-item>/master/sitecore/layout/Placeholder Settings/phBlogBelowEntry/{837CFD12-E201-4649-BC99-0AB87C2FE17E}/invariant/0</x-item>
         <x-item>/master/sitecore/layout/Placeholder Settings/phBlogCommentForm/{5F31D61F-4AB7-499A-9219-3F9CD172A516}/invariant/0</x-item>
         <x-item>/master/sitecore/layout/Placeholder Settings/phBlogSidebar/{8C2C07C1-9CEE-49F5-BFB8-3033B8A48FEC}/invariant/0</x-item>
+        <x-item>/master/sitecore/layout/Placeholder Settings/phBlogBelowEntryTitle/{AA1239DA-A2F2-455B-A087-52F6A7F9F936}/invariant/0</x-item>
       </Entries>
       <SkipVersions>False</SkipVersions>
       <Converter>
