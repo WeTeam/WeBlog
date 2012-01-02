@@ -144,6 +144,13 @@ version: 1
 revision: 8e86b263-6cde-4ea7-bc5b-739b7f626440
 
 ----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 18
+
+sitecore\Anonymous
+----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created

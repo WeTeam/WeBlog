@@ -23,10 +23,17 @@ key: suppress comment
 content-length: 1
 
 1
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 28
+
+applications/32x32/check.png
 ----version----
 language: en
 version: 1
-revision: b9184def-8de4-4f22-8738-afecc2302447
+revision: eec89f6e-9402-45ac-88cc-4733b9284572
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -55,18 +62,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-b9184def-8de4-4f22-8738-afecc2302447
+eec89f6e-9402-45ac-88cc-4733b9284572
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T101109:634547022692857719
+20120102T161053:634611174530274795
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin

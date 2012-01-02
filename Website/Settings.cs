@@ -191,6 +191,14 @@ namespace Sitecore.Modules.WeBlog
         }
 
         /// <summary>
+        /// Gets the Akismet API key from Sitecore settings
+        /// </summary>
+        public static string AkismetAPIKey
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Akismet.APIKey"); }
+        }
+
+        /// <summary>
         /// Gets the content root path from Sitecore settings
         /// </summary>
         public static string ContentRootPath
@@ -252,11 +260,19 @@ namespace Sitecore.Modules.WeBlog
         }
 
         /// <summary>
-        /// Gets the name of the workflow command to execute after creating a comment.
+        /// Gets the ID of the workflow command to execute after creating a comment.
         /// </summary>
-        public static string CommentWorkflowCommand
+        public static string CommentWorkflowCommandCreated
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created"); }
+        }
+
+        /// <summary>
+        /// Gets the ID of the workflow command to execute after a comment is classified as spam.
+        /// </summary>
+        public static string CommentWorkflowCommandSpam
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Spam"); }
         }
     }
 }

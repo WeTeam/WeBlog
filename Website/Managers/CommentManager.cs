@@ -16,6 +16,9 @@ using Sitecore.Web;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Search;
 using Sitecore.Sites;
+using Joel.Net;
+using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
+using Sitecore.Pipelines;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -32,65 +35,17 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The ID of the created comment item, or ID.Null if creation failed</returns>
         public static ID AddCommentToEntry(ID entryId, Model.Comment comment)
         {
-            var database = Factory.GetDatabase("master");
-            var template = database.GetTemplate(Settings.CommentTemplateId);
+            var args = new CreateCommentArgs();
+            args.EntryID = entryId;
+            args.Comment = comment;
+            args.Database = Factory.GetDatabase("master");
 
-            if (template != null)
-            {
-                var entryItem = database.GetItem(entryId);
+            CorePipeline.Run("weblogCreateComment", args, true);
 
-                if (entryItem != null)
-                {
-                    string itemName = Utilities.Items.MakeSafeItemName("Comment by " + comment.AuthorName + " at " + DateTime.Now.ToString("d"));
-
-                    using (new SecurityDisabler())
-                    {
-                        Item newItem = entryItem.Add(itemName, template);
-
-                        CommentItem newComment = new CommentItem(newItem);
-                        newComment.BeginEdit();
-                        newComment.Name.Field.Value = comment.AuthorName;
-                        newComment.Email.Field.Value = comment.AuthorEmail;
-                        newComment.Comment.Field.Value = comment.Text;
-
-                        foreach (var key in comment.Fields.AllKeys)
-                        {
-                            newComment.InnerItem[key] = comment.Fields[key];
-                        }
-
-                        newComment.EndEdit();
-
-                        //if the comment has workflow and we have a command configured, push it through
-                        var workflow = database.WorkflowProvider.GetWorkflow(newItem);
-                        if (!string.IsNullOrEmpty(Settings.CommentWorkflowCommand))
-                        {
-                            if (workflow != null)
-                            {
-                                //Need to switch to shell website to execute workflow
-                                using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))
-                                {
-                                    workflow.Execute(Settings.CommentWorkflowCommand, newItem, "WeBlog automated submit", false, new object[0]);
-                                }
-                                //workflow should take care of publishing the item following this, if it's configured to do so
-                            }
-                        }
-
-                        return newComment.ID;
-                    }
-                }
-                else
-                {
-                    string message = "WeBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
-                    Log.Error(string.Format(message, entryId, comment.AuthorName, comment.AuthorEmail, comment.Text), typeof(CommentManager));
-                }
-            }
+            if (args.CommentItem != null)
+                return args.CommentItem.ID;
             else
-            {
-                Log.Error("WeBlog.CommentManager: Failed to find comment template", typeof(CommentManager));
-            }
-            
-            // Something went wrong if we fall through to here
-            return ID.Null;
+                return ID.Null;
         }
 
         internal static void AddComment(EntryItem entryItem, WpComment wpComment)

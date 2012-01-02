@@ -1,10 +1,16 @@
 ﻿using System.Web.UI;
 using System.Web.UI.WebControls;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
 	public partial class Captcha : System.Web.UI.UserControl
 	{
+        public void Page_Load(object sender, EventArgs args)
+        {
+            int y = 0;
+        }
+
         protected void uxCaptchaValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (uxCaptchaCode != null)
