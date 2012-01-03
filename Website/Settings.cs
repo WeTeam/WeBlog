@@ -274,5 +274,45 @@ namespace Sitecore.Modules.WeBlog
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Spam"); }
         }
+
+        /// <summary>
+        /// Gets the type that provides the concrete implementation of the IBlogManager interface
+        /// </summary>
+        public static string BlogManagerClass
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.BlogManager"); }
+        }
+
+        /// <summary>
+        /// Gets the type that provides the concrete implementation of the ICategoryManager interface
+        /// </summary>
+        public static string CategoryManagerClass
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.CategoryManager"); }
+        }
+
+        /// <summary>
+        /// Gets the type that provides the concrete implementation of the ICommentManager interface
+        /// </summary>
+        public static string CommentManagerClass
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.CommentManager"); }
+        }
+
+        /// <summary>
+        /// Gets the type that provides the concrete implementation of the IEntryManager interface
+        /// </summary>
+        public static string EntryManagerClass
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.EntryManager"); }
+        }
+
+        /// <summary>
+        /// Gets the type that provides the concrete implementation of the ITagManager interface
+        /// </summary>
+        public static string TagManagerClass
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.TagManager"); }
+        }
     }
 }

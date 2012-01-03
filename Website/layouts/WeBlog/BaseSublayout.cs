@@ -16,7 +16,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         public BaseSublayout()
         {
-            CurrentBlog = BlogManager.GetCurrentBlog();
+            CurrentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
         }
     }
 }

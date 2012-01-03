@@ -92,126 +92,126 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void AllEntries_Small()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_smallTree);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_smallTree);
             Assert.AreEqual(SMALL_COUNT, entries.Length);
         }
 
         [Test]
         public void AllEntries_Medium()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_mediumTree);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_mediumTree);
             Assert.AreEqual(MEDIUM_COUNT, entries.Length);
         }
 
         [Test]
         public void AllEntries_Large()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_largeTree);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_largeTree);
             Assert.AreEqual(LARGE_COUNT, entries.Length);
         }
 
         [Test]
         public void LimitedEntries_Small()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_smallTree.ID, GetDatabase(), 40);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_smallTree.ID, GetDatabase(), 40);
             Assert.AreEqual(40, entries.Length);
         }
 
         [Test]
         public void LimitedEntries_Medium()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_mediumTree.ID, GetDatabase(), 40);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_mediumTree.ID, GetDatabase(), 40);
             Assert.AreEqual(40, entries.Length);
         }
 
         [Test]
         public void LimitedEntries_Large()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_largeTree.ID, GetDatabase(), 40);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_largeTree.ID, GetDatabase(), 40);
             Assert.AreEqual(40, entries.Length);
         }
 
         [Test]
         public void EntriesByTagA_Small()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_smallTree.ID, GetDatabase(), int.MaxValue, TAG_A);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_smallTree.ID, GetDatabase(), int.MaxValue, TAG_A);
             Assert.AreEqual(17, entries.Length);
         }
 
         [Test]
         public void EntriesByTagA_Medium()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_mediumTree.ID, GetDatabase(), int.MaxValue, TAG_A);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_mediumTree.ID, GetDatabase(), int.MaxValue, TAG_A);
             Assert.AreEqual(100, entries.Length);
         }
 
         [Test]
         public void EntriesByTagA_Large()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_largeTree.ID, GetDatabase(), int.MaxValue, TAG_A);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_largeTree.ID, GetDatabase(), int.MaxValue, TAG_A);
             Assert.AreEqual(667, entries.Length);
         }
 
         [Test]
         public void EntriesByTagB_Small()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_smallTree.ID, GetDatabase(), int.MaxValue, TAG_B);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_smallTree.ID, GetDatabase(), int.MaxValue, TAG_B);
             Assert.AreEqual(8, entries.Length);
         }
 
         [Test]
         public void EntriesByTagB_Medium()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_mediumTree.ID, GetDatabase(), int.MaxValue, TAG_B);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_mediumTree.ID, GetDatabase(), int.MaxValue, TAG_B);
             Assert.AreEqual(43, entries.Length);
         }
 
         [Test]
         public void EntriesByTagB_Large()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_largeTree.ID, GetDatabase(), int.MaxValue, TAG_B);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_largeTree.ID, GetDatabase(), int.MaxValue, TAG_B);
             Assert.AreEqual(286, entries.Length);
         }
 
         [Test]
         public void EntriesByCategory1_Small()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_smallTree, int.MaxValue, string.Empty, "category 1");
+            var entries = new Mod.EntryManager().GetBlogEntries(m_smallTree, int.MaxValue, string.Empty, "category 1");
             Assert.AreEqual(25, entries.Length);
         }
 
         [Test]
         public void EntriesByCategory1_Medium()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_mediumTree, int.MaxValue, string.Empty, "category 1");
+            var entries = new Mod.EntryManager().GetBlogEntries(m_mediumTree, int.MaxValue, string.Empty, "category 1");
             Assert.AreEqual(150, entries.Length);
         }
 
         [Test]
         public void EntriesByCategory1_Large()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_largeTree, int.MaxValue, string.Empty, "category 1");
+            var entries = new Mod.EntryManager().GetBlogEntries(m_largeTree, int.MaxValue, string.Empty, "category 1");
             Assert.AreEqual(1000, entries.Length);
         }
 
         [Test]
         public void EntriesByCategory2_Small()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_smallTree, int.MaxValue, string.Empty, "category 2");
+            var entries = new Mod.EntryManager().GetBlogEntries(m_smallTree, int.MaxValue, string.Empty, "category 2");
             Assert.AreEqual(13, entries.Length);
         }
 
         [Test]
         public void EntriesByCategory2_Medium()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_mediumTree, int.MaxValue, string.Empty, "category 2");
+            var entries = new Mod.EntryManager().GetBlogEntries(m_mediumTree, int.MaxValue, string.Empty, "category 2");
             Assert.AreEqual(75, entries.Length);
         }
 
         [Test]
         public void EntriesByCategory2_Large()
         {
-            var entries = Mod.EntryManager.GetBlogEntries(m_largeTree, int.MaxValue, string.Empty, "category 2");
+            var entries = new Mod.EntryManager().GetBlogEntries(m_largeTree, int.MaxValue, string.Empty, "category 2");
             Assert.AreEqual(500, entries.Length);
         }
 

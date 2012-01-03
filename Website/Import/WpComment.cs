@@ -37,5 +37,18 @@ namespace Sitecore.Modules.WeBlog.Import
             Pingback = commentXml.Element(wpContent + "comment_type").Value == "pingback";
         }
         #endregion
+
+        public static implicit operator Model.Comment(WpComment wpComment)
+        {
+            var model = new Model.Comment();
+            model.Text = wpComment.Content;
+            model.AuthorEmail = wpComment.Email;
+            model.AuthorName = wpComment.Author;
+            model.Fields.Add(Constants.Fields.IpAddress, wpComment.IP);
+            model.Fields.Add(Constants.Fields.Website, wpComment.Url);
+            model.Fields.Add(Sitecore.FieldIDs.Created.ToString(), Sitecore.DateUtil.ToIsoDate(wpComment.Date));
+
+            return model;
+        }
     }
 }

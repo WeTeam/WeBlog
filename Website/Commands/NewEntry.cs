@@ -32,14 +32,21 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 if (args.HasResult)
                 {
-                    string itemTitle = args.Result;
+                    var itemTitle = args.Result;
 
-                    TemplateID template = new TemplateID(Settings.EntryTemplateId);
+                    var template = new TemplateID(Settings.EntryTemplateId);
+                    var db = Sitecore.Configuration.Factory.GetDatabase(args.Parameters["database"]);
+                    if (db != null)
+                    {
+                        var currentItem = db.GetItem(args.Parameters["currentid"]);
+                        if (currentItem != null)
+                        {
+                            var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
+                            Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
 
-                    Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(args.Parameters["currentid"]), args.Parameters["database"]);
-                    Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
-                    
-                    Publish.PublishItem(newItem);
+                            Publish.PublishItem(newItem);
+                        }
+                    }
                 }
             }
             else

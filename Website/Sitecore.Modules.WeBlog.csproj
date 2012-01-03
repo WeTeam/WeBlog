@@ -315,6 +315,12 @@
     <Compile Include="Managers\CategoryManager.cs" />
     <Compile Include="Managers\CommentManager.cs" />
     <Compile Include="Managers\EntryManager.cs" />
+    <Compile Include="Managers\IBlogManager.cs" />
+    <Compile Include="Managers\ICategoryManager.cs" />
+    <Compile Include="Managers\ICommentManager.cs" />
+    <Compile Include="Managers\IEntryManager.cs" />
+    <Compile Include="Managers\ITagManager.cs" />
+    <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Pipelines\CaptchaProcessor.cs" />
@@ -343,6 +349,7 @@
     <Compile Include="sitecore\shell\Applications\WeBlog\WordpressImport.cs" />
     <Compile Include="Utilities\Akismet.cs" />
     <Compile Include="Utilities\Crypto.cs" />
+    <Compile Include="Utilities\DataUtil.cs" />
     <Compile Include="Utilities\Extensions.cs" />
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="Utilities\Presentation.cs">

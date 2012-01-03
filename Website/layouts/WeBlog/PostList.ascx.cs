@@ -89,19 +89,19 @@ namespace Sitecore.Modules.WeBlog.Layouts
             IEnumerable<EntryItem> entries;
             if (!string.IsNullOrEmpty(tag))
             {
-                entries = EntryManager.GetBlogEntries(tag);
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(tag);
                 //TODO: Does this logic belong elsewhere? Possibly consolidate title logic somewhere.
                 Page.Title = "Posts tagged \"" + tag + "\" | " + CurrentBlog.Title.Text;
             }
             else if (Utilities.Items.TemplateIsOrBasedOn(Sitecore.Context.Item, categoryTemplate))
             {
                 CategoryItem category = Sitecore.Context.Item;
-                entries = EntryManager.GetBlogEntryByCategorie(CurrentBlog.ID, Sitecore.Context.Item.Name);
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntryByCategorie(CurrentBlog.ID, Sitecore.Context.Item.Name);
                 Page.Title = category.Title.Text + " | " + CurrentBlog.Title.Text;
             }
             else
             {
-                entries = EntryManager.GetBlogEntries();
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries();
             }
             if (TotalToShow == 0)
             {

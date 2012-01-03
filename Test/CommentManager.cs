@@ -93,7 +93,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
+                var sorted = new Mod.CommentManager().MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Comment1", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment2", sorted[1].InnerItem.Name);
@@ -123,7 +123,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
+                var sorted = new Mod.CommentManager().MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Comment3", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment2", sorted[1].InnerItem.Name);
@@ -153,7 +153,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
+                var sorted = new Mod.CommentManager().MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(4, sorted.Length);
                 Assert.AreEqual("Comment3", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment1", sorted[1].InnerItem.Name);
@@ -188,7 +188,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                var sorted = Mod.CommentManager.MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
+                var sorted = new Mod.CommentManager().MakeSortedCommentsList(commentFolder.Axes.GetDescendants().Where(i => i.TemplateID.ToString() == m_commentTemplateId).ToArray());
                 Assert.AreEqual(3, sorted.Length);
                 Assert.AreEqual("Comment1", sorted[0].InnerItem.Name);
                 Assert.AreEqual("Comment2", sorted[1].InnerItem.Name);
@@ -209,73 +209,73 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsCount_Null()
         {
-            Assert.AreEqual(0, Mod.CommentManager.GetCommentsCount((Item)null));
+            Assert.AreEqual(0, new Mod.CommentManager().GetCommentsCount((Item)null));
         }
 
         [Test]
         public void GetCommentsCount_Entry11()
         {
-            Assert.AreEqual(3, Mod.CommentManager.GetCommentsCount(m_entry11));
+            Assert.AreEqual(3, new Mod.CommentManager().GetCommentsCount(m_entry11));
         }
 
         [Test]
         public void GetCommentsCount_Entry11_ById()
         {
-            Assert.AreEqual(3, Mod.CommentManager.GetCommentsCount(m_entry11.ID));
+            Assert.AreEqual(3, new Mod.CommentManager().GetCommentsCount(m_entry11.ID));
         }
 
         [Test]
         public void GetCommentsCount_InvalidId()
         {
-            Assert.AreEqual(0, Mod.CommentManager.GetCommentsCount(ID.NewID));
+            Assert.AreEqual(0, new Mod.CommentManager().GetCommentsCount(ID.NewID));
         }
 
         [Test]
         public void GetCommentsCount_Entry12()
         {
-            Assert.AreEqual(2, Mod.CommentManager.GetCommentsCount(m_entry12));
+            Assert.AreEqual(2, new Mod.CommentManager().GetCommentsCount(m_entry12));
         }
 
         [Test]
         public void GetCommentsCount_Entry12_ById()
         {
-            Assert.AreEqual(2, Mod.CommentManager.GetCommentsCount(m_entry12.ID));
+            Assert.AreEqual(2, new Mod.CommentManager().GetCommentsCount(m_entry12.ID));
         }
 
         [Test]
         public void GetCommentsCount_Entry21()
         {
-            Assert.AreEqual(2, Mod.CommentManager.GetCommentsCount(m_entry21));
+            Assert.AreEqual(2, new Mod.CommentManager().GetCommentsCount(m_entry21));
         }
 
         [Test]
         public void GetCommentsCount_Entry21_ById()
         {
-            Assert.AreEqual(2, Mod.CommentManager.GetCommentsCount(m_entry21.ID));
+            Assert.AreEqual(2, new Mod.CommentManager().GetCommentsCount(m_entry21.ID));
         }
 
         [Test]
         public void GetCommentsByBlog_NullId()
         {
-            Assert.AreEqual(0, Mod.CommentManager.GetCommentsByBlog((ID)null, int.MaxValue).Length);
+            Assert.AreEqual(0, new Mod.CommentManager().GetCommentsByBlog((ID)null, int.MaxValue).Length);
         }
 
         [Test]
         public void GetCommentsByBlog_InvalidId()
         {
-            Assert.AreEqual(0, Mod.CommentManager.GetCommentsByBlog(ID.NewID, int.MaxValue).Length);
+            Assert.AreEqual(0, new Mod.CommentManager().GetCommentsByBlog(ID.NewID, int.MaxValue).Length);
         }
 
         [Test]
         public void GetCommentsByBlog_Null()
         {
-            Assert.AreEqual(0, Mod.CommentManager.GetCommentsByBlog((Item)null, int.MaxValue).Length);
+            Assert.AreEqual(0, new Mod.CommentManager().GetCommentsByBlog((Item)null, int.MaxValue).Length);
         }
 
         [Test]
         public void GetCommentsByBlog_Blog1_NoLimit()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog1, int.MaxValue);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1, int.MaxValue);
             Assert.AreEqual(5, comments.Length);
 
             var ids = (from comment in comments
@@ -291,7 +291,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsByBlog_Blog1_NoLimit_ByID()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog1.ID, int.MaxValue);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, int.MaxValue);
             Assert.AreEqual(5, comments.Length);
 
             var ids = (from comment in comments
@@ -307,7 +307,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsByBlog_Blog2_NoLimit()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog2, int.MaxValue);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog2, int.MaxValue);
             Assert.AreEqual(2, comments.Length);
 
             var ids = (from comment in comments
@@ -320,7 +320,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsByBlog_Blog1_Limited()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog1, 4);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1, 4);
             Assert.AreEqual(4, comments.Length);
 
             var ids = (from comment in comments
@@ -335,7 +335,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsByBlog_Blog1_Limited_ById()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog1.ID, 4);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, 4);
             Assert.AreEqual(4, comments.Length);
 
             var ids = (from comment in comments
@@ -350,21 +350,21 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsByBlog_Blog1_LimitZero()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog1.ID, 0);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, 0);
             Assert.AreEqual(0, comments.Length);
         }
 
         [Test]
         public void GetCommentsByBlog_Blog1_NegativeLimit()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_blog1.ID, -7);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, -7);
             Assert.AreEqual(0, comments.Length);
         }
 
         [Test]
         public void GetEntryComments_Entry11()
         {
-            var comments = Mod.CommentManager.GetEntryComments(m_entry11);
+            var comments = new Mod.CommentManager().GetEntryComments(m_entry11);
             Assert.AreEqual(3, comments.Length);
 
             var ids = (from comment in comments
@@ -378,7 +378,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetEntryComments_Entry21()
         {
-            var comments = Mod.CommentManager.GetEntryComments(m_entry21);
+            var comments = new Mod.CommentManager().GetEntryComments(m_entry21);
             Assert.AreEqual(2, comments.Length);
 
             var ids = (from comment in comments
@@ -391,21 +391,21 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetEntryComments_Null()
         {
-            var comments = Mod.CommentManager.GetEntryComments(null);
+            var comments = new Mod.CommentManager().GetEntryComments(null);
             Assert.AreEqual(0, comments.Length);
         }
 
         [Test]
         public void GetEntryComments_BlogItem()
         {
-            var comments = Mod.CommentManager.GetEntryComments(m_blog1);
+            var comments = new Mod.CommentManager().GetEntryComments(m_blog1);
             Assert.AreEqual(0, comments.Length);
         }
 
         [Test]
         public void GetEntryComments_Entry11_WithLimit()
         {
-            var comments = Mod.CommentManager.GetEntryComments(m_entry11, 2);
+            var comments = new Mod.CommentManager().GetEntryComments(m_entry11, 2);
             Assert.AreEqual(2, comments.Length);
 
             var ids = (from comment in comments
@@ -418,14 +418,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetEntryComments_Entry11_LimitZero()
         {
-            var comments = Mod.CommentManager.GetEntryComments(m_entry11, 0);
+            var comments = new Mod.CommentManager().GetEntryComments(m_entry11, 0);
             Assert.AreEqual(0, comments.Length);
         }
 
         [Test]
         public void GetEntryComments_Entry11_NegativeLimit()
         {
-            var comments = Mod.CommentManager.GetEntryComments(m_entry11, -4);
+            var comments = new Mod.CommentManager().GetEntryComments(m_entry11, -4);
             Assert.AreEqual(0, comments.Length);
         }
 
@@ -460,7 +460,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 comment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.IpAddress] = "127.0.0.1";
                 comment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.Website] = "website";
 
-                commentId = Mod.CommentManager.AddCommentToEntry(m_entry12.ID, comment);
+                commentId = new Mod.CommentManager().AddCommentToEntry(m_entry12.ID, comment);
                 var childCount = m_entry12.Axes.GetDescendants().Count(i => i.TemplateID.ToString() == m_commentTemplateId);
 
                 Assert.IsTrue(commentId != ID.Null);

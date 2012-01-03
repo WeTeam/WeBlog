@@ -60,7 +60,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllTags_Blog1()
         {
-            var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_blog1));
+            var tags = new Mod.TagManager().GetAllTags(new Items.WeBlog.BlogHomeItem(m_blog1));
             Assert.AreEqual(1, tags["tagb"]);
             Assert.AreEqual(2, tags["tagc"]);
             Assert.AreEqual(3, tags["taga"]);
@@ -69,21 +69,21 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllTags_NonBlogItem()
         {
-            var tags = Mod.TagManager.GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
+            var tags = new Mod.TagManager().GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
             Assert.AreEqual(1, tags.Count);
         }
 
         [Test]
         public void GetAllTags_Null()
         {
-            var tags = Mod.TagManager.GetAllTags(null);
+            var tags = new Mod.TagManager().GetAllTags(null);
             Assert.AreEqual(0, tags.Count);
         }
 
         [Test]
         public void GetTagsByBlog_Blog1()
         {
-            var tags = Mod.TagManager.GetTagsByBlog(m_blog1.ID);
+            var tags = new Mod.TagManager().GetTagsByBlog(m_blog1.ID);
             Assert.Contains("taga", tags);
             Assert.Contains("tagb", tags);
             Assert.Contains("tagc", tags);
@@ -92,28 +92,28 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetTagsByBlog_Null()
         {
-            var tags = Mod.TagManager.GetTagsByBlog((ID)null);
+            var tags = new Mod.TagManager().GetTagsByBlog((ID)null);
             Assert.AreEqual(0, tags.Length);
         }
 
         [Test]
         public void GetTagsByBlog_NonBlogID()
         {
-            var tags = Mod.TagManager.GetTagsByBlog(m_entry1.ID);
+            var tags = new Mod.TagManager().GetTagsByBlog(m_entry1.ID);
             Assert.AreEqual(1, tags.Length);
         }
 
         [Test]
         public void GetTagsByBlog_InvalidId()
         {
-            var tags = Mod.TagManager.GetTagsByBlog(ID.NewID);
+            var tags = new Mod.TagManager().GetTagsByBlog(ID.NewID);
             Assert.AreEqual(0, tags.Length);
         }
 
         [Test]
         public void SortByWeight_Normal()
         {
-            var weightedTags = Mod.TagManager.SortByWeight(new string[] { "a", "a", "b", "c", "c", "c", "c", "a", "b" });
+            var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "a", "a", "b", "c", "c", "c", "c", "a", "b" });
             Assert.AreEqual(3, weightedTags.Count);
             Assert.AreEqual("a", weightedTags.ElementAt(0).Key);
             Assert.AreEqual(3, weightedTags["a"]);
@@ -126,7 +126,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void SortByWeight_SameWeight()
         {
-            var weightedTags = Mod.TagManager.SortByWeight(new string[] { "a", "b", "c", "A", "B", "C", "D", "d" });
+            var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "a", "b", "c", "A", "B", "C", "D", "d" });
             Assert.AreEqual(4, weightedTags.Count);
             Assert.AreEqual("a", weightedTags.ElementAt(0).Key);           
             Assert.AreEqual(2, weightedTags["a"]);
@@ -141,14 +141,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void SortByWeight_Empty()
         {
-            var weightedTags = Mod.TagManager.SortByWeight(new string[0]);
+            var weightedTags = new Mod.TagManager().SortByWeight(new string[0]);
             Assert.AreEqual(0, weightedTags.Count);
         }
 
         [Test]
         public void SortByWeight_CaseInsensitive()
         {
-            var weightedTags = Mod.TagManager.SortByWeight(new string[] { "mytag", "MyTag", "MYTAG", "myTaG"});
+            var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "mytag", "MyTag", "MYTAG", "myTaG" });
             Assert.AreEqual(1, weightedTags.Count);
         }
     }

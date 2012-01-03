@@ -136,7 +136,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             else if (Utilities.Items.TemplateIsOrBasedOn(args.DataItem, Settings.CommentTemplateId))
             {
                 Items.WeBlog.CommentItem commentItem = new Items.WeBlog.CommentItem(args.DataItem);
-                entryItem = EntryManager.GetBlogEntryByComment(commentItem);
+                entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(commentItem);
                 velocityContext.Put("comment", commentItem);
             }
 
@@ -154,7 +154,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
                     velocityContext.Put("entryUpdatedBy", updatedBy);
                 }
 
-                Items.WeBlog.BlogHomeItem blog = BlogManager.GetCurrentBlog(entryItem);
+                Items.WeBlog.BlogHomeItem blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entryItem);
                 velocityContext.Put("blog", blog);
             }
         }

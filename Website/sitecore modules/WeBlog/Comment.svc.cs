@@ -7,7 +7,7 @@ namespace Sitecore.Modules.WeBlog.Services
     {
         public ID SubmitComment(ID EntryId, Model.Comment comment)
         {
-            return CommentManager.AddCommentToEntry(EntryId, comment);
+            return ManagerFactory.CommentManagerInstance.AddCommentToEntry(EntryId, comment);
         }
     }
 }

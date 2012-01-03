@@ -38,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                     TemplateID template = new TemplateID(Settings.CategoryTemplateId);
 
                     Item currentItem = current.GetItem(args.Parameters["currentid"]);
-                    Item categories = CategoryManager.GetCategoryRoot(currentItem);
+                    Item categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
 
                     Item newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
 

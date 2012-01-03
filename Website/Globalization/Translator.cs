@@ -135,7 +135,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
         /// <returns></returns>
         protected static Cache FindCache()
         {
-            var dictionaryItem = BlogManager.GetDictionaryItem();
+            var dictionaryItem = ManagerFactory.BlogManagerInstance.GetDictionaryItem();
             if (dictionaryItem != null)
             {
                 _cacheRootID = dictionaryItem.ID;
@@ -174,11 +174,11 @@ namespace Sitecore.Modules.WeBlog.Globalization
         /// <param name="cache">The cache.</param>
         protected static void PopulateCache(Cache cache)
         {
-            Item dictionaryItem = BlogManager.GetDictionaryItem();
+            Item dictionaryItem = ManagerFactory.BlogManagerInstance.GetDictionaryItem();
             _cacheRootID = dictionaryItem.ID;
             if (dictionaryItem == null)
             {
-                Log.Error("No dictionary configured for blog " + BlogManager.GetCurrentBlog().Name, typeof(Translator));
+                Log.Error("No dictionary configured for blog " + ManagerFactory.BlogManagerInstance.GetCurrentBlog().Name, typeof(Translator));
                 return;
             }
 

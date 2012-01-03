@@ -17,7 +17,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// </summary>
         protected virtual void LoadCategories()
         {
-            if (CategoryManager.GetCategories().Length == 0)
+            if (ManagerFactory.CategoryManagerInstance.GetCategories().Length == 0)
             {
                 if(PanelCategories != null)
                     PanelCategories.Visible = false;
@@ -26,7 +26,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 if (ListViewCategories != null)
                 {
-                    ListViewCategories.DataSource = CategoryManager.GetCategories();
+                    ListViewCategories.DataSource = ManagerFactory.CategoryManagerInstance.GetCategories();
                     ListViewCategories.DataBind();
                 }
             }

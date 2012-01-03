@@ -50,7 +50,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 for (int i = 1; i <= 12; i++)
                 {
                     var key = (year * 100) + i;
-                    m_entriesByMonthAndYear.Add(key, EntryManager.GetBlogEntriesByMonthAndYear(i, year));
+                    m_entriesByMonthAndYear.Add(key, ManagerFactory.EntryManagerInstance.GetBlogEntriesByMonthAndYear(i, year));
                 }
             }
         }

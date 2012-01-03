@@ -8,14 +8,14 @@ using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
-    public class TagManager
+    public class TagManager : ITagManager
     {
         /// <summary>
         /// Gets the tags for the blog by the given blog ID
         /// </summary>
         /// <param name="blogId">The ID of the blog to get the tags for</param>
         /// <returns>An array of unique tags</returns>
-        public static string[] GetTagsByBlog(ID blogId)
+        public string[] GetTagsByBlog(ID blogId)
         {
             if (blogId != (ID)null)
             {
@@ -32,10 +32,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blogItem">The blog to get the tags for</param>
         /// <returns>An array of unique tags</returns>
-        public static string[] GetTagsByBlog(Item blogItem)
+        public string[] GetTagsByBlog(Item blogItem)
         {
             var tagList = new List<string>();
-            var entries = EntryManager.GetBlogEntries(blogItem);
+            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blogItem);
 
             foreach (var entry in entries)
             {
@@ -54,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="Entry">The entry to get the tags for</param>
         /// <returns></returns>
-        public static Dictionary<string, int> GetTagsByEntry(EntryItem entry)
+        public Dictionary<string, int> GetTagsByEntry(EntryItem entry)
         {
             var tagList = new List<string>();
 
@@ -67,9 +67,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the tags and coutns for the blog by the given blog ID
         /// </summary>
         /// <returns>A sorted array of tags with counts</returns>
-        public static Dictionary<string, int> GetAllTags()
+        public Dictionary<string, int> GetAllTags()
         {
-            return GetAllTags(BlogManager.GetCurrentBlog());
+            return GetAllTags(ManagerFactory.BlogManagerInstance.GetCurrentBlog());
         }
 
         /// <summary>
@@ -77,13 +77,13 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blog">The blog to get the tags for</param>
         /// <returns>A sorted array of tags with counts</returns>
-        public static Dictionary<string, int> GetAllTags(Items.WeBlog.BlogHomeItem blog)
+        public Dictionary<string, int> GetAllTags(Items.WeBlog.BlogHomeItem blog)
         {
             var tagList = new List<string>();
 
             if (blog != null)
             {
-                var entries = EntryManager.GetBlogEntries(blog.InnerItem);
+                var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blog.InnerItem);
 
                 foreach (var entry in entries)
                 {
@@ -99,7 +99,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="tags">The tags to sort</param>
         /// <returns>A dictionary of tags with counts sorted by count</returns>
-        public static Dictionary<string, int> SortByWeight(IEnumerable<string> tags)
+        public Dictionary<string, int> SortByWeight(IEnumerable<string> tags)
         {
             var sort = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
@@ -121,7 +121,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             return sort;
         }
 
-        #region Deprecated Methods
+        /*#region Deprecated Methods
         /// <summary>
         /// Gets the tags for the blog by the given blog ID
         /// </summary>
@@ -130,8 +130,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         [Obsolete("Use GetTagsByBlog instead")]
         public static string[] GetTagsByBlogID(ID blogId)
         {
-            return GetTagsByBlog(blogId);
+            return new TagManager().GetTagsByBlog(blogId);
         }
-        #endregion
+        #endregion*/
     }
 }

@@ -35,9 +35,11 @@ namespace Sitecore.Modules.WeBlog.Test
                 {
                     home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
                 }
-                catch (Exception ex)
+                catch
                 {
+                    // this "catch" is used to debug issues with the Paste() method call above
                     int y = 0;
+                    y++;
                 }
             }
 
@@ -83,37 +85,37 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCurrentBlog_FromBlogItem()
         {
-            Assert.AreEqual(m_blog1.ID, Mod.BlogManager.GetCurrentBlog(m_blog1).ID);
+            Assert.AreEqual(m_blog1.ID, new Mod.BlogManager().GetCurrentBlog(m_blog1).ID);
         }
 
         [Test]
         public void GetCurrentBlog_OutsideBlogRoot()
         {
-            Assert.IsNull(Mod.BlogManager.GetCurrentBlog(m_testRoot));
+            Assert.IsNull(new Mod.BlogManager().GetCurrentBlog(m_testRoot));
         }
 
         [Test]
         public void GetCurrentBlog_FromEntryItem()
         {
-            Assert.AreEqual(m_blog1.ID, Mod.BlogManager.GetCurrentBlog(m_entry11).ID);
+            Assert.AreEqual(m_blog1.ID, new Mod.BlogManager().GetCurrentBlog(m_entry11).ID);
         }
 
         [Test]
         public void GetCurrentBlog_FromCommentItem()
         {
-            Assert.AreEqual(m_blog1.ID, Mod.BlogManager.GetCurrentBlog(m_comment111).ID);
+            Assert.AreEqual(m_blog1.ID, new Mod.BlogManager().GetCurrentBlog(m_comment111).ID);
         }
 
         [Test]
         public void GetCurrentBlog_FromSeparateBlogEntryItem()
         {
-            Assert.AreNotEqual(m_blog1.ID, Mod.BlogManager.GetCurrentBlog(m_entry21).ID);
+            Assert.AreNotEqual(m_blog1.ID, new Mod.BlogManager().GetCurrentBlog(m_entry21).ID);
         }
 
         [Test]
         public void GetAllBlogs()
         {
-            var blogIds = (from blog in Mod.BlogManager.GetAllBlogs()
+            var blogIds = (from blog in new Mod.BlogManager().GetAllBlogs(null)
                        select blog.ID).ToArray();
 
             Assert.AreEqual(2, blogIds.Length);
@@ -124,31 +126,31 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void EnableRSS_BlogEnabled()
         {
-            Assert.IsTrue(Mod.BlogManager.EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog1)));
+            Assert.IsTrue(new Mod.BlogManager().EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog1)));
         }
 
         [Test]
         public void EnableRSS_BlogDisabled()
         {
-            Assert.IsFalse(Mod.BlogManager.EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog2)));
+            Assert.IsFalse(new Mod.BlogManager().EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog2)));
         }
 
         [Test]
         public void ShowEmailWithinComments_BlogEnabled()
         {
-            Assert.IsTrue(Mod.BlogManager.ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog1)));
+            Assert.IsTrue(new Mod.BlogManager().ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog1)));
         }
 
         [Test]
         public void ShowEmailWithinComments_BlogDisabled()
         {
-            Assert.IsFalse(Mod.BlogManager.ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog2)));
+            Assert.IsFalse(new Mod.BlogManager().ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog2)));
         }
 
         [Test]
         public void GetUserBlogs()
         {
-            var blogs = Mod.BlogManager.GetUserBlogs("sitecore\\" + TESTUSERNAME);
+            var blogs = new Mod.BlogManager().GetUserBlogs("sitecore\\" + TESTUSERNAME);
             Assert.AreEqual(1, blogs.Length);
             Assert.AreEqual(m_blog1.ID, blogs[0].ID);
         }

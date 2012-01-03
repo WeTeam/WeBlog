@@ -37,7 +37,7 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         public static implicit operator AkismetComment(CommentItem comment)
         {
             var akismetComment = new AkismetComment();
-            akismetComment.Blog = BlogManager.GetCurrentBlog().Url;
+            akismetComment.Blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog().Url;
             akismetComment.UserIp = comment.IPAddress.Text;
             akismetComment.UserAgent = ""; // TODO
             akismetComment.CommentContent = comment.Comment.Text;

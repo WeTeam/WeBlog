@@ -12,13 +12,13 @@ namespace Sitecore.Modules.WeBlog.Managers
     /// <summary>
     /// Provides utilities for working with categories
     /// </summary>
-    public static class CategoryManager
+    public class CategoryManager : ICategoryManager
     {
         /// <summary>
         /// Gets the categories for the current blog
         /// </summary>
         /// <returns>The list of categories</returns>
-        public static CategoryItem[] GetCategories()
+        public CategoryItem[] GetCategories()
         {
             return GetCategories(Context.Item);
         }
@@ -28,7 +28,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="item">The current item to search for a blog from</param>
         /// <returns>The list of categories</returns>
-        public static CategoryItem[] GetCategories(Item item)
+        public CategoryItem[] GetCategories(Item item)
         {
             var categoryList = new List<CategoryItem>();
             var categoryRoot = GetCategoryRoot(item);
@@ -56,7 +56,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="Id">The ID of the current item to search for a blog from</param>
         /// <returns>The list of categories</returns>
-        public static CategoryItem[] GetCategories(string Id)
+        public CategoryItem[] GetCategories(string Id)
         {
             var item = Context.Database.GetItem(Id);
             if (item != null)
@@ -71,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="item">The blog or an item underneath the blog to search for the category within</param>
         /// <param name="name">The name of the category to locate</param>
         /// <returns>The category if found, otherwise null</returns>
-        public static CategoryItem GetCategory(Item item, string name)
+        public CategoryItem GetCategory(Item item, string name)
         {
             var categoryRoot = GetCategoryRoot(item);
             return categoryRoot.Axes.GetChild(name);
@@ -82,7 +82,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="item">The item to search for the blog from</param>
         /// <returns>The category folder if found, otherwise null</returns>
-        public static Item GetCategoryRoot(Item item)
+        public Item GetCategoryRoot(Item item)
         {
             var blogItem = item;
             var template = GetDatabase().GetTemplate(Settings.BlogTemplateId);
@@ -110,7 +110,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="categoryName">Name of the category.</param>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public static CategoryItem Add(string categoryName, Item item)
+        public CategoryItem Add(string categoryName, Item item)
         {
             Item blogItem = item;
             var template = GetDatabase().GetTemplate(Settings.BlogTemplateId);
@@ -158,7 +158,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="EntryID">The ID of the blog entry to get teh categories from</param>
         /// <returns>The categories of the blog</returns>
-        public static CategoryItem[] GetCategoriesByEntryID(ID EntryID)
+        public CategoryItem[] GetCategoriesByEntryID(ID EntryID)
         {
             var categoryList = new List<CategoryItem>();
 
@@ -184,12 +184,12 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the appropriate database to be reading data from
         /// </summary>
         /// <returns>The appropriate content database</returns>
-        private static Database GetDatabase()
+        protected Database GetDatabase()
         {
             return Context.ContentDatabase ?? Context.Database;
         }
 
-        #region Obsolete Methods
+        /*#region Obsolete Methods
         /// <summary>
         /// Gets the categories by entry ID.
         /// </summary>
@@ -198,8 +198,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         [Obsolete("Use GetCategoriesByEntryID(ID EntryID).InnerItem instead")]
         public static Item[] GetCategoriesItemsByEntryID(ID EntryID)
         {
-            return (from category in GetCategoriesByEntryID(EntryID) select category.InnerItem).ToArray();
+            return (from category in new CategoryManager().GetCategoriesByEntryID(EntryID) select category.InnerItem).ToArray();
         }
-        #endregion
+        #endregion*/
     }
 }

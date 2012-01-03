@@ -42,9 +42,9 @@ namespace Sitecore.Modules.WeBlog
 
         private static void CheckUserRights(string blogid, string username)
         {
-            Item blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, Sitecore.Context.Database);
+            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, DataUtil.GetContentDatabase());
 
-            Account account = Account.FromName(username, AccountType.User);
+            var account = Account.FromName(username, AccountType.User);
 
             if (blog != null && !blog.Security.CanWrite(account))
                 throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");
@@ -58,9 +58,9 @@ namespace Sitecore.Modules.WeBlog
         /// <returns></returns>
         private static string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
         {
-            Database master = Factory.GetDatabase("master");
-            Item blog = BlogManager.GetCurrentBlogItem(new ID(postid), "master");
-            var categoryList = CategoryManager.GetCategories(blog.ID.ToString());
+            var postItem = DataUtil.GetContentDatabase().GetItem(postid);
+            Item blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(postItem).InnerItem;
+            var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
 
             if (categoryList.Length != 0)
             {
@@ -101,17 +101,16 @@ namespace Sitecore.Modules.WeBlog
         /// <returns></returns>
         private static string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
         {
-            Database master = Factory.GetDatabase("master");
-            Item blog = master.GetItem(BlogID);
+            var blog = DataUtil.GetContentDatabase().GetItem(BlogID);
             if (blog != null)
             {
-                var categoryList = CategoryManager.GetCategories(blog.ID.ToString());
+                var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
 
-                string selectedCategories = string.Empty;
+                var selectedCategories = string.Empty;
 
                 if (((object[])rpcstruct["categories"]).Count() != 0)
                 {
-                    string[] categories = (string[])rpcstruct["categories"];
+                    var categories = (string[])rpcstruct["categories"];
 
                     foreach (string category in categories)
                     {
@@ -124,7 +123,7 @@ namespace Sitecore.Modules.WeBlog
                         }
                     }
 
-                    string result = selectedCategories.Replace("}{", "}|{");
+                    var result = selectedCategories.Replace("}{", "}|{");
 
                     return result;
                 }
@@ -148,7 +147,7 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var blogList = BlogManager.GetUserBlogs(username);
+            var blogList = ManagerFactory.BlogManagerInstance.GetUserBlogs(username);
 
             //Create structure for blog list
             XmlRpcStruct[] blogs = new XmlRpcStruct[blogList.Length];
@@ -202,20 +201,27 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var categoryList = CategoryManager.GetCategories(blogid);
-
-            XmlRpcStruct[] categories = new XmlRpcStruct[categoryList.Length];
-
-            foreach (CategoryItem category in categoryList)
+            var blog = DataUtil.GetContentDatabase().GetItem(blogid);
+            if (blog != null)
             {
-                XmlRpcStruct rpcstruct = new XmlRpcStruct();
-                rpcstruct.Add("categoryid", category.ID.ToString()); // Category ID
-                rpcstruct.Add("title", category.Title.Raw); // Category Title
-                rpcstruct.Add("description", "Description is not available"); // Category Description
-                categories[ii] = rpcstruct;
-                ii++;
+                var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
+
+                XmlRpcStruct[] categories = new XmlRpcStruct[categoryList.Length];
+
+                foreach (CategoryItem category in categoryList)
+                {
+                    XmlRpcStruct rpcstruct = new XmlRpcStruct();
+                    rpcstruct.Add("categoryid", category.ID.ToString()); // Category ID
+                    rpcstruct.Add("title", category.Title.Raw); // Category Title
+                    rpcstruct.Add("description", "Description is not available"); // Category Description
+                    categories[ii] = rpcstruct;
+                    ii++;
+                }
+
+                return categories;
             }
-            return categories;
+
+            return new XmlRpcStruct[0];
 
         }
         #endregion
@@ -235,26 +241,32 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var entryList = EntryManager.GetBlogEntries(new ID(blogid), numberOfPosts);
-
-            XmlRpcStruct[] posts = new XmlRpcStruct[entryList.Length];
-
-            //Populate structure with post entities
-            foreach (EntryItem entry in entryList)
+            var blog = DataUtil.GetContentDatabase().GetItem(blogid);
+            if (blog != null)
             {
-                XmlRpcStruct rpcstruct = new XmlRpcStruct();
-                rpcstruct.Add("title", entry.Title.Raw);
-                rpcstruct.Add("link", entry.Url);
-                rpcstruct.Add("description", entry.Content.Text);
-                rpcstruct.Add("pubDate", entry.InnerItem.Statistics.Created.ToString());
-                rpcstruct.Add("guid", entry.ID.ToString());
-                rpcstruct.Add("postid", entry.ID.ToString());
-                rpcstruct.Add("keywords", entry.Tags.Raw);
-                rpcstruct.Add("author", entry.InnerItem.Statistics.CreatedBy);
-                posts[ii] = rpcstruct;
-                ii++;
+                var entryList = ManagerFactory.EntryManagerInstance.GetBlogEntries(blog, numberOfPosts, string.Empty, string.Empty);
+
+                XmlRpcStruct[] posts = new XmlRpcStruct[entryList.Length];
+
+                //Populate structure with post entities
+                foreach (EntryItem entry in entryList)
+                {
+                    XmlRpcStruct rpcstruct = new XmlRpcStruct();
+                    rpcstruct.Add("title", entry.Title.Raw);
+                    rpcstruct.Add("link", entry.Url);
+                    rpcstruct.Add("description", entry.Content.Text);
+                    rpcstruct.Add("pubDate", entry.InnerItem.Statistics.Created.ToString());
+                    rpcstruct.Add("guid", entry.ID.ToString());
+                    rpcstruct.Add("postid", entry.ID.ToString());
+                    rpcstruct.Add("keywords", entry.Tags.Raw);
+                    rpcstruct.Add("author", entry.InnerItem.Statistics.CreatedBy);
+                    posts[ii] = rpcstruct;
+                    ii++;
+                }
+                return posts;
             }
-            return posts;
+
+            return new XmlRpcStruct[0];
         }
         #endregion
 
@@ -327,24 +339,29 @@ namespace Sitecore.Modules.WeBlog
                 string EntryTitle = rpcstruct["title"].ToString();
                 string EntryDescription = rpcstruct["description"].ToString();
 
-                Item currentBlog = BlogManager.GetCurrentBlogItem(new ID(blogid), "master");
+                var currentBlog = DataUtil.GetContentDatabase().GetItem(blogid);
 
-                TemplateID template = new TemplateID(Settings.EntryTemplateId);
-                Item newItem = ItemManager.AddFromTemplate(EntryTitle, template, currentBlog);
-
-                EntryItem createdEntry = new EntryItem(newItem);
-                createdEntry.BeginEdit();
-                createdEntry.Title.Field.Value = EntryTitle;
-                createdEntry.Content.Field.Value = EntryDescription;
-                createdEntry.Category.Field.Value = GetCategoriesAsString(currentBlog.ID, rpcstruct);
-                createdEntry.EndEdit();
-
-                if (publish)
+                if (currentBlog != null)
                 {
-                    Publish.PublishItem(createdEntry.ID);
-                }
+                    var template = new TemplateID(Settings.EntryTemplateId);
+                    var newItem = ItemManager.AddFromTemplate(EntryTitle, template, currentBlog);
 
-                return createdEntry.ID.ToString();
+                    var createdEntry = new EntryItem(newItem);
+                    createdEntry.BeginEdit();
+                    createdEntry.Title.Field.Value = EntryTitle;
+                    createdEntry.Content.Field.Value = EntryDescription;
+                    createdEntry.Category.Field.Value = GetCategoriesAsString(currentBlog.ID, rpcstruct);
+                    createdEntry.EndEdit();
+
+                    if (publish)
+                    {
+                        Publish.PublishItem(createdEntry.ID);
+                    }
+
+                    return createdEntry.ID.ToString();
+                }
+                else
+                    return string.Empty;
             }
         }
 
@@ -370,9 +387,8 @@ namespace Sitecore.Modules.WeBlog
 
             using(new SecurityDisabler())
             {
-                Database master = Factory.GetDatabase("master");
-                Item item = master.GetItem(new ID(postid));
-                EntryItem entry = new EntryItem(item);
+                var item = DataUtil.GetContentDatabase().GetItem(new ID(postid));
+                var entry = new EntryItem(item);
 
                 entry.BeginEdit();
                 entry.Title.Field.Value = rpcstruct["title"].ToString();
@@ -403,11 +419,11 @@ namespace Sitecore.Modules.WeBlog
 
             CheckUserRights(postid, username);
 
-            XmlRpcStruct rpcstruct = new XmlRpcStruct();
-            var entryItem = Sitecore.Context.Database.GetItem(postid);
+            var rpcstruct = new XmlRpcStruct();
+            var entryItem = DataUtil.GetContentDatabase().GetItem(postid);
             if (entryItem != null)
             {
-                EntryItem entry = new EntryItem(entryItem);
+                var entry = new EntryItem(entryItem);
 
                 rpcstruct.Add("title", entry.Title.Raw);
                 rpcstruct.Add("link", entry.Url);
@@ -440,7 +456,7 @@ namespace Sitecore.Modules.WeBlog
 
             try
             {
-                EntryManager.DeleteEntry(postid);
+                ManagerFactory.EntryManagerInstance.DeleteEntry(postid);
             }
             catch (Exception)
             {
@@ -465,25 +481,25 @@ namespace Sitecore.Modules.WeBlog
             // Check user validation
             Authenticate(username, password);
 
-            string name = rpcstruct["name"].ToString();
-            string type = rpcstruct["type"].ToString();
-            byte[] media = (byte[])rpcstruct["bits"];
-            string blogName = string.Empty;
+            var name = rpcstruct["name"].ToString();
+            var type = rpcstruct["type"].ToString();
+            var media = (byte[])rpcstruct["bits"];
+            var blogName = string.Empty;
 
-            Item currentBlog = BlogManager.GetBlogByID(new ID(blogid));
+            var currentBlog = DataUtil.GetContentDatabase().GetItem(blogid);
             blogName = currentBlog.Name;
             // Get filename
-            string file = name.Substring(49 + 1);
+            var file = name.Substring(49 + 1);
             // Split filename and extension
-            string[] imageName = name.Substring(49 + 1).Split('.'); ;
+            var imageName = name.Substring(49 + 1).Split('.'); ;
 
             // Replace invalid characters which Live Writer puts around image names
-            string fileName = file.Replace("[", "");
+            var fileName = file.Replace("[", "");
             fileName = fileName.Replace("]", "");
 
             // Create strem from byte array
-            MemoryStream memStream = new MemoryStream(media);
-            MediaCreatorOptions md = new MediaCreatorOptions();
+            var memStream = new MemoryStream(media);
+            var md = new MediaCreatorOptions();
             md.Destination = @"/sitecore/media library/Modules/Blog/" + blogName + "/" + imageName[0].ToString();
             md.Database = Sitecore.Configuration.Factory.GetDatabase("master");
             md.AlternateText = fileName;
@@ -503,7 +519,7 @@ namespace Sitecore.Modules.WeBlog
             memStream.Dispose();
 
             // Get the mediaitem url and return it
-            XmlRpcStruct rstruct = new XmlRpcStruct();
+            var rstruct = new XmlRpcStruct();
             rstruct.Add("url", MediaManager.GetMediaUrl(mediaItem));
             return rstruct;
 
@@ -518,22 +534,19 @@ namespace Sitecore.Modules.WeBlog
                 using (new SecurityDisabler())
                 {
                     string entryId = HttpContext.Current.Request.QueryString["entryId"].ToString();
+                    var currentID = ID.Parse(entryId);
 
-                    Database db = Factory.GetDatabase("master");
-                    ID currentID = ID.Parse(entryId);
-                    TemplateID templateID = new TemplateID(Settings.CommentTemplateId);
-                    Item currentItem = db.GetItem(currentID);
+                    var comment = new Model.Comment()
+                    {
+                        AuthorName = "Automatic pingback",
+                        Text = string.Format("Pingkback from {0}", sourceUri)
+                    };
+                    
+                    comment.Fields.Add(Constants.Fields.Website, sourceUri);
 
-                    Item newPingbackItem = currentItem.Add("Pingback", templateID);
+                    var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(currentID, comment);
 
-                    CommentItem newPingbackComment = new CommentItem(newPingbackItem);
-                    newPingbackComment.BeginEdit();
-                    newPingbackComment.Comment.Field.Value = string.Format("Pingkback from {0}", sourceUri);
-                    newPingbackComment.Website.Field.Value = sourceUri;
-                    newPingbackComment.Name.Field.Value = "Automatic pingback";
-                    newPingbackComment.EndEdit();
-
-                    Publish.PublishItem(newPingbackItem);
+                    Publish.PublishItem(commentId);
                 }
             }
             catch (Exception)

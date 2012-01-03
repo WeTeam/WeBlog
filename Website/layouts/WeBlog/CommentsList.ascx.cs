@@ -23,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual void LoadComments(CommentItem addedComment)
         {
             // Comments enabled and exist?
-            if (CurrentEntry.DisableComments.Checked || CommentManager.GetCommentsCount() == 0)
+            if (CurrentEntry.DisableComments.Checked || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
             {
                 if (CommentList != null)
                 {
@@ -34,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 if (ListViewComments != null)
                 {
-                    CommentItem[] comments = CommentManager.GetEntryComments();
+                    CommentItem[] comments = ManagerFactory.CommentManagerInstance.GetEntryComments();
                     //if a comment has been added but is not coming back yet (i.e. being indexed), fake it
                     if (addedComment != null && comments.Count(comment => comment.ID == addedComment.ID) == 0)
                     {

@@ -76,7 +76,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                     comment.Fields.Add(Constants.Fields.Website, txtCommentWebsite.Text);
                 comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
 
-                var submissionResult = CommentManager.SubmitComment(Sitecore.Context.Item.ID, comment);
+                var submissionResult = ManagerFactory.CommentManagerInstance.SubmitComment(Sitecore.Context.Item.ID, comment);
                 if (submissionResult.IsNull)
                 {
                     SetErrorMessage(Translate.Text("COMMENT_SUBMIT_ERROR"));
@@ -89,7 +89,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
                 //check if added comment is available. if so, send it along with the event
                 //won't happen unless publishing and indexing is really fast, but worth a try
-                CommentItem newComment = CommentManager.GetEntryComments(Sitecore.Context.Item).Where(item => item.ID == submissionResult).SingleOrDefault();
+                CommentItem newComment = ManagerFactory.CommentManagerInstance.GetEntryComments(Sitecore.Context.Item).Where(item => item.ID == submissionResult).SingleOrDefault();
                 Sitecore.Events.Event.RaiseEvent(Constants.Events.UI.COMMENT_ADDED, new object[] { newComment });
 
                 //display javascript to scroll right to the comments list

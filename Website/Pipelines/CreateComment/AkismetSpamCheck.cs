@@ -19,7 +19,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                 if (workflow != null)
                 {
-                    var api = new Akismet(Settings.AkismetAPIKey, BlogManager.GetCurrentBlog().Url, "WeBlog/2.1");
+                    var api = new Akismet(Settings.AkismetAPIKey, ManagerFactory.BlogManagerInstance.GetCurrentBlog().Url, "WeBlog/2.1");
                     var isSpam = api.CommentCheck(args.CommentItem);
 
                     if (isSpam)

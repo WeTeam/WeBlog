@@ -8,7 +8,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
 	{
         public void Page_Load(object sender, EventArgs args)
         {
-            int y = 0;
         }
 
         protected void uxCaptchaValidator_ServerValidate(object source, ServerValidateEventArgs args)

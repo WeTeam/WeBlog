@@ -11,7 +11,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             var totalToShow = CurrentBlog.DisplayCommentSidebarCountNumeric;
 
-            if (CommentManager.GetCommentsByBlog(CurrentBlog.ID, totalToShow).Length == 0)
+            if (ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog.ID, totalToShow).Length == 0)
             {
                 if(PanelRecentComments != null)
                     PanelRecentComments.Visible = false;
@@ -20,7 +20,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 if (ListViewRecentComments != null)
                 {
-                    ListViewRecentComments.DataSource = CommentManager.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
+                    ListViewRecentComments.DataSource = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
                     ListViewRecentComments.DataBind();
                 }
             }
@@ -34,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual string GetEntryUrlForComment(CommentItem comment) 
         {
             if (comment != null)
-                return LinkManager.GetItemUrl(EntryManager.GetBlogEntryByComment(comment).InnerItem);
+                return LinkManager.GetItemUrl(ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(comment).InnerItem);
             else
                 return string.Empty;
         }

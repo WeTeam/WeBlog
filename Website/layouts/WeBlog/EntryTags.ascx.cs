@@ -30,7 +30,7 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
             // Load tags
             if (!Sitecore.Context.PageMode.IsPageEditorEditing)
             {
-                var tags = TagManager.GetTagsByEntry(current);
+                var tags = ManagerFactory.TagManagerInstance.GetTagsByEntry(current);
                 var list = LoginViewTags.FindControl("TagList") as ListView;
 
                 if (list != null)

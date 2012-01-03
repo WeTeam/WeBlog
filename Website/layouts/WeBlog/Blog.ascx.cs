@@ -11,10 +11,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected void Page_Load(object sender, EventArgs e)
         {
             if(fieldtextItem != null)
-                fieldtextItem.DataSource = BlogManager.GetCurrentBlog().ID.ToString();
+                fieldtextItem.DataSource = ManagerFactory.BlogManagerInstance.GetCurrentBlog().ID.ToString();
 
             if(HyperlinkBlog != null)
-                HyperlinkBlog.NavigateUrl = LinkManager.GetItemUrl(BlogManager.GetCurrentBlog().InnerItem);
+                HyperlinkBlog.NavigateUrl = LinkManager.GetItemUrl(ManagerFactory.BlogManagerInstance.GetCurrentBlog().InnerItem);
 
             // Add the title to the page
             Page.Title = CurrentBlog.Title.Text;

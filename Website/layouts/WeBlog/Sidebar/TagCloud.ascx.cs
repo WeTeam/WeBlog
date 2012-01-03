@@ -22,14 +22,14 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// </summary>
         protected virtual void LoadTags()
         {
-            if (TagManager.GetAllTags().Count == 0)
+            if (ManagerFactory.TagManagerInstance.GetAllTags().Count == 0)
             {
                 if(PanelTagCloud != null)
                     PanelTagCloud.Visible = false;
             }
             else
             {
-                var tags = TagManager.GetAllTags();
+                var tags = ManagerFactory.TagManagerInstance.GetAllTags();
 
                 m_min = (from tag in tags select tag.Value).Min();
                 m_max = (from tag in tags select tag.Value).Max();

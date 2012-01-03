@@ -54,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         {
             get
             {
-                return CommentManager.GetCommentsCount(this.ID);
+                return ManagerFactory.CommentManagerInstance.GetCommentsCount(this.ID);
             }
         }
 

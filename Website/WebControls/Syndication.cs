@@ -12,7 +12,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
     {
         protected override void DoRender(HtmlTextWriter output)
         {
-            var blog = BlogManager.GetCurrentBlog();
+            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
 
             if (blog.EnableRSS.Checked)
             {

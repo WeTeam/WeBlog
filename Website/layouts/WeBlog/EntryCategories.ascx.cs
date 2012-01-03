@@ -28,7 +28,7 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
             EntryItem current = new EntryItem(Sitecore.Context.Item);
 
             // Fill categories
-            ListViewCategories.DataSource = CategoryManager.GetCategoriesByEntryID(current.ID);
+            ListViewCategories.DataSource = ManagerFactory.CategoryManagerInstance.GetCategoriesByEntryID(current.ID);
             ListViewCategories.DataBind();
 
             //TODO Create edit possibilities for assigning categories on frontend

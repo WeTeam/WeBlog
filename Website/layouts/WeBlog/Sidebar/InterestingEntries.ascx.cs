@@ -96,16 +96,16 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
 
         protected virtual void PopulateList()
         {
-            var blogItem = BlogManager.GetCurrentBlog();
+            var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
 
             switch (Algorithm)
             {
                 case InterestingEntriesAlgorithm.Comments:
-                    Items.DataSource = EntryManager.GetPopularEntriesByComment(blogItem, MaximumCount);
+                    Items.DataSource = ManagerFactory.EntryManagerInstance.GetPopularEntriesByComment(blogItem, MaximumCount);
                     break;
 
                 case InterestingEntriesAlgorithm.PageViews:
-                    Items.DataSource = EntryManager.GetPopularEntriesByView(blogItem, MaximumCount);
+                    Items.DataSource = ManagerFactory.EntryManagerInstance.GetPopularEntriesByView(blogItem, MaximumCount);
                     break;
 
                 case InterestingEntriesAlgorithm.Custom:

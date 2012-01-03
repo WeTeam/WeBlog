@@ -106,7 +106,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentForEntry_Small()
         {
             var entry = m_smallTree.Axes.GetDescendant("Entry" + SMALL_SPECIFIC_ENTRY.ToString());
-            var comments = Mod.CommentManager.GetEntryComments(entry);
+            var comments = new Mod.CommentManager().GetEntryComments(entry);
             Assert.AreEqual(m_smallTreeCommentCountForEntry, comments.Length);
         }
 
@@ -114,7 +114,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentForEntry_Medium()
         {
             var entry = m_mediumTree.Axes.GetDescendant("Entry" + MEDIUM_SPECIFIC_ENTRY.ToString());
-            var comments = Mod.CommentManager.GetEntryComments(entry);
+            var comments = new Mod.CommentManager().GetEntryComments(entry);
             Assert.AreEqual(m_mediumTreeCommentCountForEntry, comments.Length);
         }
 
@@ -122,7 +122,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentForEntry_Large()
         {
             var entry = m_largeTree.Axes.GetDescendant("Entry" + LARGE_SPECIFIC_ENTRY.ToString());
-            var comments = Mod.CommentManager.GetEntryComments(entry);
+            var comments = new Mod.CommentManager().GetEntryComments(entry);
             Assert.AreEqual(m_largeTreeCommentCountForEntry, comments.Length);
         }
 
@@ -130,7 +130,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentCount_Small()
         {
             var entry = m_smallTree.Axes.GetDescendant("Entry" + SMALL_SPECIFIC_ENTRY.ToString());
-            var commentCount = Mod.CommentManager.GetCommentsCount(entry);
+            var commentCount = new Mod.CommentManager().GetCommentsCount(entry);
             Assert.AreEqual(m_smallTreeCommentCountForEntry, commentCount);
         }
 
@@ -138,7 +138,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentCount_Medium()
         {
             var entry = m_mediumTree.Axes.GetDescendant("Entry" + MEDIUM_SPECIFIC_ENTRY.ToString());
-            var commentCount = Mod.CommentManager.GetCommentsCount(entry);
+            var commentCount = new Mod.CommentManager().GetCommentsCount(entry);
             Assert.AreEqual(m_mediumTreeCommentCountForEntry, commentCount);
         }
 
@@ -146,14 +146,14 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentCount_Large()
         {
             var entry = m_largeTree.Axes.GetDescendant("Entry" + LARGE_SPECIFIC_ENTRY.ToString());
-            var commentCount = Mod.CommentManager.GetCommentsCount(entry);
+            var commentCount = new Mod.CommentManager().GetCommentsCount(entry);
             Assert.AreEqual(m_largeTreeCommentCountForEntry, commentCount);
         }
 
         [Test]
         public void GetCommentsByBlog_Small()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_smallTree, int.MaxValue);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_smallTree, int.MaxValue);
             Assert.AreEqual(m_smallTreeCommentCount, comments.Length);
         }
 
@@ -161,14 +161,14 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentsByBlog_Medium()
         {
             //System.Threading.Thread.Sleep(5000);
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_mediumTree, int.MaxValue);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_mediumTree, int.MaxValue);
             Assert.AreEqual(m_mediumTreeCommentCount, comments.Length);
         }
 
         [Test]
         public void GetCommentsByBlog_Large()
         {
-            var comments = Mod.CommentManager.GetCommentsByBlog(m_largeTree, int.MaxValue);
+            var comments = new Mod.CommentManager().GetCommentsByBlog(m_largeTree, int.MaxValue);
             Assert.AreEqual(m_largeTreeCommentCount, comments.Length);
         }
 

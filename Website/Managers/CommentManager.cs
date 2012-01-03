@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Linq;
 using System.ServiceModel;
 using Sitecore.Configuration;
@@ -8,24 +7,19 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Modules.WeBlog.Services;
-using Sitecore.Modules.WeBlog.Utilities;
-using Sitecore.SecurityModel;
-using Sitecore.Web;
 using Sitecore.Modules.WeBlog.Import;
-using Sitecore.Search;
-using Sitecore.Sites;
-using Joel.Net;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
+using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
     /// <summary>
     /// Provides utilities for working with comments
     /// </summary>
-    public static class CommentManager
+    public class CommentManager : ICommentManager
     {
         /// <summary>
         /// Adds a comment to a blog
@@ -33,7 +27,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="entryId">The ID of the entry to add the comment to</param>
         /// <param name="comment">The comment to add to the entry</param>
         /// <returns>The ID of the created comment item, or ID.Null if creation failed</returns>
-        public static ID AddCommentToEntry(ID entryId, Model.Comment comment)
+        public ID AddCommentToEntry(ID entryId, Model.Comment comment)
         {
             var args = new CreateCommentArgs();
             args.EntryID = entryId;
@@ -48,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return ID.Null;
         }
 
-        internal static void AddComment(EntryItem entryItem, WpComment wpComment)
+        /*protected void AddComment(EntryItem entryItem, WpComment wpComment)
         {
             string itemName = Utilities.Items.MakeSafeItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
 
@@ -60,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             commentItem.Website.Field.Value = wpComment.Url;
             commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
             commentItem.EndEdit();
-        }
+        }*/
 
         /// <summary>
         /// Submit a comment for inclusion on a post. This method will either update Sitecore or submit the comment through the comment service, depending on settings
@@ -69,7 +63,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="Email">The user's email address</param>
         /// <param name="Website">The user's URL</param>
         /// <param name="CommentText">The comment text being submitted</param>
-        public static ID SubmitComment(ID EntryId, Model.Comment comment)
+        public ID SubmitComment(ID EntryId, Model.Comment comment)
         {
             if (Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false))
             {
@@ -91,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the number of comments for the current entry.
         /// </summary>
         /// <returns>The number of comments</returns>
-        public static int GetCommentsCount()
+        public int GetCommentsCount()
         {
             return GetCommentsCount(Context.Item);
         }
@@ -101,7 +95,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entry">The entry to get the comment count for</param>
         /// <returns>The number of comments</returns>
-        public static int GetCommentsCount(Item entry)
+        public int GetCommentsCount(Item entry)
         {
             return GetEntryComments(entry).Length;
         }
@@ -111,7 +105,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entryId">The ID of the entry to get the comment count for</param>
         /// <returns></returns>
-        public static int GetCommentsCount(ID entryId)
+        public int GetCommentsCount(ID entryId)
         {
             var entry = GetDatabase().GetItem(entryId);
             if (entry != null)
@@ -126,7 +120,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="blogId">The ID of the blog to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public static CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount)
+        public CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount)
         {
             if (blogId != (ID)null)
             {
@@ -146,7 +140,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="blogItem">The blog to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public static CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
+        public CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
         {
             return GetCommentsFor(blogItem, maximumCount);
         }
@@ -155,7 +149,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the comments for the current blog entry
         /// </summary>
         /// <returns>The comments for the blog entry</returns>
-        public static CommentItem[] GetEntryComments()
+        public CommentItem[] GetEntryComments()
         {
             return GetEntryComments(Context.Item, int.MaxValue);
         }
@@ -165,7 +159,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public static CommentItem[] GetEntryComments(int maximumCount)
+        public CommentItem[] GetEntryComments(int maximumCount)
         {
             return GetEntryComments(Context.Item, maximumCount);
         }
@@ -175,7 +169,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entryItem">The blog entry to get the comments for</param>
         /// <returns>The comments for the blog entry</returns>
-        public static CommentItem[] GetEntryComments(Item entryItem)
+        public CommentItem[] GetEntryComments(Item entryItem)
         {
             return GetEntryComments(entryItem, int.MaxValue);
         }
@@ -186,7 +180,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="entryItem">The blog entry to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public static CommentItem[] GetEntryComments(Item entryItem, int maximumCount)
+        public CommentItem[] GetEntryComments(Item entryItem, int maximumCount)
         {
             if (entryItem != null)
             {
@@ -206,7 +200,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="item">The item to get the comments under</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments which are decendants of the given item</returns>
-        public static CommentItem[] GetCommentsFor(Item item, int maximumCount)
+        public CommentItem[] GetCommentsFor(Item item, int maximumCount)
         {
             if (item != null && maximumCount > 0)
             {
@@ -227,7 +221,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="array">The comments to sort</param>
         /// <returns>A sorted list of comments</returns>
-        public static CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
+        public CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
         {
             var commentItemList = new List<CommentItem>();
             var template = GetDatabase().GetTemplate(Settings.CommentTemplateId);
@@ -252,12 +246,12 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the appropriate database to be reading data from
         /// </summary>
         /// <returns>The appropriate content database</returns>
-        private static Database GetDatabase()
+        protected Database GetDatabase()
         {
             return Context.ContentDatabase ?? Context.Database;
         }
 
-        #region Obsolete Methods
+        /*#region Obsolete Methods
         /// <summary>
         /// Gets the comments for the given blog entry as Items
         /// </summary>
@@ -266,7 +260,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         [Obsolete("Use GetEntryComments(Item entryItem).InnerItem instead")]
         public static Item[] GetEntryCommentsAsItems(Item targetEntry)
         {
-            return (from comment in GetEntryComments(targetEntry) select comment.InnerItem).ToArray();
+            return (from comment in new CommentManager().GetEntryComments(targetEntry) select comment.InnerItem).ToArray();
         }
 
         /// <summary>
@@ -278,7 +272,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         [Obsolete("Use GetCommentsByBlog(ID blogId, int maximumCount).InnerItem instead")]
         public static Item[] GetCommentItemsByBlog(ID blogId, int maximumCount)
         {
-            return (from comment in GetCommentsByBlog(blogId, maximumCount) select comment.InnerItem).ToArray();
+            return (from comment in new CommentManager().GetCommentsByBlog(blogId, maximumCount) select comment.InnerItem).ToArray();
         }
 
         /// <summary>
@@ -300,6 +294,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             commentItemList.Sort(new ItemDateComparerDesc());
             return commentItemList.ToArray();
         }
-        #endregion
+        #endregion*/
     }
 }
