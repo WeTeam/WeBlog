@@ -189,7 +189,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             return Context.ContentDatabase ?? Context.Database;
         }
 
-        /*#region Obsolete Methods
+        #region Obsolete Methods
         /// <summary>
         /// Gets the categories by entry ID.
         /// </summary>
@@ -200,6 +200,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             return (from category in new CategoryManager().GetCategoriesByEntryID(EntryID) select category.InnerItem).ToArray();
         }
-        #endregion*/
+        #endregion
     }
 }

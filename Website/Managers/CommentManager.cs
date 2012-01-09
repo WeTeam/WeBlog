@@ -251,7 +251,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             return Context.ContentDatabase ?? Context.Database;
         }
 
-        /*#region Obsolete Methods
+        #region Obsolete Methods
         /// <summary>
         /// Gets the comments for the given blog entry as Items
         /// </summary>
@@ -294,6 +294,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             commentItemList.Sort(new ItemDateComparerDesc());
             return commentItemList.ToArray();
         }
-        #endregion*/
+        #endregion
     }
 }

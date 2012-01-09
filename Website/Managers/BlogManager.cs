@@ -132,7 +132,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return null;
         }
 
-        /*#region Obsolete Methods
+        #region Obsolete Methods
         /// <summary>
         /// Gets the current blog ID.
         /// </summary>
@@ -195,6 +195,6 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             return null;
         }
-        #endregion*/
+        #endregion
     }
 }

@@ -405,7 +405,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             return postItemList.ToArray();
         }
 
-        /*#region Obsolete Methods
+        #region Obsolete Methods
         /// <summary>
         /// Deletes a blog post
         /// </summary>
@@ -514,6 +514,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             return (from entry in sortedList
                     select entry.InnerItem).ToArray();
         }
-        #endregion*/
+        #endregion
     }
 }
