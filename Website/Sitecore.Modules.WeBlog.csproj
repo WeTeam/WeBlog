@@ -361,10 +361,12 @@
     <Compile Include="WebControls\RsdIncludes.cs" />
     <Compile Include="WebControls\Syndication.cs" />
     <Compile Include="WebControls\ThemeIncludes.cs" />
+    <Compile Include="Workflow\DeleteItemAction.cs" />
     <Compile Include="Workflow\ExtendedMailAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <Content Include="Change Log.txt" />
     <Content Include="layouts\WeBlog\Blog.ascx" />
     <Content Include="layouts\WeBlog\Captcha.ascx" />
     <Content Include="layouts\WeBlog\CommentsList.ascx" />

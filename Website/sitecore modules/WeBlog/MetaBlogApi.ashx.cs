@@ -337,29 +337,20 @@ namespace Sitecore.Modules.WeBlog
             // TODO: Remove the security disabler and use the permissions of the user
             using (new SecurityDisabler())
             {
-                string EntryTitle = rpcstruct["title"].ToString();
-                string EntryDescription = rpcstruct["description"].ToString();
-
+                var entryTitle = rpcstruct["title"].ToString();
                 var currentBlog = DataUtil.GetContentDatabase().GetItem(blogid);
 
                 if (currentBlog != null)
                 {
                     var template = new TemplateID(Settings.EntryTemplateId);
-                    var newItem = ItemManager.AddFromTemplate(EntryTitle, template, currentBlog);
+                    var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
 
-                    var createdEntry = new EntryItem(newItem);
-                    createdEntry.BeginEdit();
-                    createdEntry.Title.Field.Value = EntryTitle;
-                    createdEntry.Content.Field.Value = EntryDescription;
-                    createdEntry.Category.Field.Value = GetCategoriesAsString(currentBlog.ID, rpcstruct);
-                    createdEntry.EndEdit();
+                    SetItemData(newItem, rpcstruct);
 
                     if (publish)
-                    {
-                        Publish.PublishItem(createdEntry.ID);
-                    }
+                        Publish.PublishItem(newItem.ID);
 
-                    return createdEntry.ID.ToString();
+                    return newItem.ID.ToString();
                 }
                 else
                     return string.Empty;
@@ -392,23 +383,10 @@ namespace Sitecore.Modules.WeBlog
 
                 if (item != null)
                 {
-                    var entry = new EntryItem(item);
-
-                    entry.BeginEdit();
-
-                    if (rpcstruct["title"] != null)
-                        entry.Title.Field.Value = rpcstruct["title"].ToString();
-
-                    if (rpcstruct["description"] != null)
-                        entry.Content.Field.Value = rpcstruct["description"].ToString();
-
-                    if (rpcstruct["categories"] != null)
-                        entry.Category.Field.Value = GetCategoriesAsString(postid, rpcstruct);
-
-                    entry.EndEdit();
+                    SetItemData(item, rpcstruct);
 
                     if (publish)
-                        Publish.PublishItem(entry.ID);
+                        Publish.PublishItem(item.ID);
                 }
                 else
                     return false;
@@ -417,6 +395,39 @@ namespace Sitecore.Modules.WeBlog
             return true;
         }
         #endregion
+
+        /// <summary>
+        /// Sets the item data from an XML RPC struct
+        /// </summary>
+        /// <param name="item">The item to set the data on</param>
+        /// <param name="rpcstruct">The struct to read the data from</param>
+        private void SetItemData(Item item, XmlRpcStruct rpcstruct)
+        {
+            if (item != null)
+            {
+                var entry = new EntryItem(item);
+
+                entry.BeginEdit();
+
+                if (rpcstruct["title"] != null)
+                    entry.Title.Field.Value = rpcstruct["title"].ToString();
+
+                if (rpcstruct["description"] != null)
+                    entry.Content.Field.Value = rpcstruct["description"].ToString();
+
+                if (rpcstruct["categories"] != null)
+                    entry.Category.Field.Value = GetCategoriesAsString(item.ID.ToString(), rpcstruct);
+
+                if (rpcstruct["dateCreated"] != null)
+                {
+                    DateTime publishDate = DateTime.MinValue;
+                    if (DateTime.TryParse(rpcstruct["dateCreated"].ToString(), out publishDate))
+                        entry.InnerItem.Publishing.PublishDate = publishDate;
+                }
+
+                entry.EndEdit();
+            }
+        }
 
         #region metaWeblog.getPost
         /// <summary>

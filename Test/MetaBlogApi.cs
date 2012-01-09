@@ -12,6 +12,7 @@ using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog;
 using CookComputing.XmlRpc;
 using Sitecore.Data;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -60,7 +61,10 @@ namespace Sitecore.Modules.WeBlog.Test
                 var entry12Check = m_blog1.Axes.GetDescendant("Entry12");
 
                 if (entry12Check == null)
+                {
+                    System.Threading.Thread.Sleep(2000);
                     m_blog1.Add("Entry12", template);
+                }
                 // END: Workaround
 
                 var rules = new AccessRuleCollection();
@@ -179,7 +183,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var names = (from entry in result
                          select entry["title"] as string).ToArray();
 
-            Assert.Contains("Entry11", names);
+            Assert.Contains("Entry12", names);
         }
 
         [Test]
@@ -204,10 +208,38 @@ namespace Sitecore.Modules.WeBlog.Test
             var newItem = m_blog1.Database.GetItem(newId);
 
             try
-            {
-                
+            {   
                 Assert.AreEqual("the title", newItem["title"]);
                 Assert.AreEqual("the description", newItem["content"]);
+            }
+            finally
+            {
+                using (new SecurityDisabler())
+                {
+                    newItem.Delete();
+                }
+            }
+        }
+
+        [Test]
+        public void NewPost_ValidUserFuturePublish()
+        {
+            var publishDate = new DateTime(2020, 10, 10, 13, 12, 12);
+
+            var entryContent = new XmlRpcStruct();
+            entryContent.Add("title", "the title");
+            entryContent.Add("description", "the description");
+            entryContent.Add("dateCreated", publishDate);
+
+            var newId = m_api.newPost(m_blog1.ID.ToString(), m_userAuthor.Name, PASSWORD, entryContent, false);
+
+            Assert.IsNotNullOrEmpty(newId);
+
+            var newItem = m_blog1.Database.GetItem(newId);
+
+            try
+            {
+                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate);
             }
             finally
             {
@@ -244,8 +276,10 @@ namespace Sitecore.Modules.WeBlog.Test
             Assert.IsNotNullOrEmpty(newId);
 
             // Edit the entry
+            var publishDate = new DateTime(2020, 3, 6);
             var updatedContent = new XmlRpcStruct();
             updatedContent.Add("description", "updated");
+            updatedContent.Add("dateCreated", publishDate);
 
             var result = m_api.editPost(newId, m_userAuthor.Name, PASSWORD, updatedContent, false);
             Assert.IsTrue(result);
@@ -256,6 +290,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 Assert.AreEqual("the title", newItem["title"]);
                 Assert.AreEqual("updated", newItem["content"]);
+                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate);
             }
             finally
             {

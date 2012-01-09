@@ -1,0 +1,9 @@
+﻿WeBlog Change Log
+=================
+
+20100109 AD: Added "Delete Comment" action to Spam state of Comment workflow. Makes bulk deletion of spam from the workbox easier.
+20120109 AD: Updated MetaWeblog API service to accept publish date on posts
+20120109 AD: Added tests for the MetaWeblog API service
+20120104 AD: Implemented the ManagerFactory class and updated the manager classes to support it's use. Do not use manager classes directly. Instead use the ManagerFactory to obtain the instance you're after. This allows users to override the managers classes.
+20120102 AD: Added Akismet support
+20120102 AD: Updated comment creation process to use a pipeline. This will make it easier for users to alter the creation process through configuration

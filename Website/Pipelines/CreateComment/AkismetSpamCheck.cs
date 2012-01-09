@@ -11,9 +11,8 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         public void Process(CreateCommentArgs args)
         {
             Assert.IsNotNull(args.CommentItem, "Comment Item cannot be null");
-            Assert.IsNotNullOrEmpty(Settings.AkismetAPIKey, "Akismet API key must be set");
 
-            if (!string.IsNullOrEmpty(Settings.CommentWorkflowCommandSpam))
+            if (!string.IsNullOrEmpty(Settings.AkismetAPIKey) && !string.IsNullOrEmpty(Settings.CommentWorkflowCommandSpam))
             {
                 var workflow = args.Database.WorkflowProvider.GetWorkflow(args.CommentItem);
 
