@@ -5,7 +5,7 @@ using Sitecore.Publishing;
 
 namespace Sitecore.Modules.WeBlog.Utilities
 {
-    class Publish
+    public class Publish
     {
         /// <summary>
         /// Publishes the item.

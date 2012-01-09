@@ -66,15 +66,15 @@ sitecore\admin
 ----version----
 language: de
 version: 1
-revision: 45d88a68-fad7-4717-8b23-24affcf9d647
+revision: 01e40c73-81b9-4138-a400-d03fadb3885a
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 39
+content-length: 45
 
-The following fields are not filled in:
+Die Folgenden Felder wurden nicht ausgefüllt:
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -95,14 +95,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-45d88a68-fad7-4717-8b23-24affcf9d647
+01e40c73-81b9-4138-a400-d03fadb3885a
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134715:634547152350916032
+20120105T214006:634613964068684554
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

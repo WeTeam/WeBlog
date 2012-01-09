@@ -66,15 +66,15 @@ sitecore\admin
 ----version----
 language: de
 version: 1
-revision: ac94cb52-9b3f-4f9e-a94b-43e97ddf611c
+revision: d755e104-9c63-4b4f-93f5-1931103f8bbe
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 9
+content-length: 17
 
-Posted on
+Veröffentlicht am
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -95,14 +95,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-ac94cb52-9b3f-4f9e-a94b-43e97ddf611c
+d755e104-9c63-4b4f-93f5-1931103f8bbe
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134714:634547152345515724
+20120105T214006:634613964068024516
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

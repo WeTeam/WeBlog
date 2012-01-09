@@ -73,6 +73,10 @@
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Dependencies\Third-party\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
     <Reference Include="CustomItemGenerator, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Third-party\CustomItemGenerator.dll</HintPath>
@@ -126,6 +130,9 @@
     <Content Include="test data\entry manager content.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="test data\MetaBlog content.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="test data\tag manager content.xml" />
     <Content Include="test data\template content.xml">
       <SubType>Designer</SubType>
@@ -141,6 +148,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="EntryManager.cs" />
     <Compile Include="EntryManagerPerformance.cs" />
+    <Compile Include="MetaBlogApi.cs" />
     <Compile Include="Utilities\Items.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">

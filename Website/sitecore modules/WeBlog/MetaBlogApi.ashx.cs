@@ -108,7 +108,7 @@ namespace Sitecore.Modules.WeBlog
 
                 var selectedCategories = string.Empty;
 
-                if (((object[])rpcstruct["categories"]).Count() != 0)
+                if (rpcstruct["categories"] != null && ((object[])rpcstruct["categories"]).Count() != 0)
                 {
                     var categories = (string[])rpcstruct["categories"];
 
@@ -333,7 +333,8 @@ namespace Sitecore.Modules.WeBlog
             Authenticate(username, password);
 
             CheckUserRights(blogid, username);
-
+            
+            // TODO: Remove the security disabler and use the permissions of the user
             using (new SecurityDisabler())
             {
                 string EntryTitle = rpcstruct["title"].ToString();
@@ -388,16 +389,29 @@ namespace Sitecore.Modules.WeBlog
             using(new SecurityDisabler())
             {
                 var item = DataUtil.GetContentDatabase().GetItem(new ID(postid));
-                var entry = new EntryItem(item);
 
-                entry.BeginEdit();
-                entry.Title.Field.Value = rpcstruct["title"].ToString();
-                entry.Content.Field.Value = rpcstruct["description"].ToString();
-                entry.Category.Field.Value = GetCategoriesAsString(postid, rpcstruct);
-                entry.EndEdit();
+                if (item != null)
+                {
+                    var entry = new EntryItem(item);
 
-                Publish.PublishItem(entry.ID);
+                    entry.BeginEdit();
 
+                    if (rpcstruct["title"] != null)
+                        entry.Title.Field.Value = rpcstruct["title"].ToString();
+
+                    if (rpcstruct["description"] != null)
+                        entry.Content.Field.Value = rpcstruct["description"].ToString();
+
+                    if (rpcstruct["categories"] != null)
+                        entry.Category.Field.Value = GetCategoriesAsString(postid, rpcstruct);
+
+                    entry.EndEdit();
+
+                    if (publish)
+                        Publish.PublishItem(entry.ID);
+                }
+                else
+                    return false;
             }
 
             return true;
@@ -456,13 +470,16 @@ namespace Sitecore.Modules.WeBlog
 
             try
             {
-                ManagerFactory.EntryManagerInstance.DeleteEntry(postid);
+                // TODO: Remove the security disabler and use the permissions of the user
+                using (new SecurityDisabler())
+                {
+                    return ManagerFactory.EntryManagerInstance.DeleteEntry(postid, DataUtil.GetContentDatabase());
+                }
             }
             catch (Exception)
             {
                 return false;
             }
-            return true;
         }
         #endregion
 

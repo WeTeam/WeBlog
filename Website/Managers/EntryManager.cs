@@ -54,23 +54,39 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>True if the post was deleted, otherwise False</returns>
         public bool DeleteEntry(string postID)
         {
+            return DeleteEntry(postID, Sitecore.Context.Database);
+        }
+
+        /// <summary>
+        /// Deletes a blog post
+        /// </summary>
+        /// <param name="postID">The ID of the post to delete</param>
+        /// <param name="db">The database to delete the entry from</param>
+        /// <returns>True if the post was deleted, otherwise False</returns>
+        public bool DeleteEntry(string postID, Database db)
+        {
+            Assert.IsNotNull(db, "Database cannot be null");
+
             if (!string.IsNullOrEmpty(postID))
             {
-                var blogPost = Sitecore.Context.Database.GetItem(postID);
+                var blogPost = db.GetItem(postID);
 
-                try
+                if (blogPost != null)
                 {
-                    blogPost.Delete();
-                }
-                catch(Exception)
-                {
-                    return false;
-                }
+                    try
+                    {
+                        blogPost.Delete();
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
 
-                return true;
+                    return true;
+                }
             }
-            else
-                return false;
+            
+            return false;
         }
 
         /// <summary>
