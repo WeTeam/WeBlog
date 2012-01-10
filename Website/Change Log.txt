@@ -1,6 +1,8 @@
 ﻿WeBlog Change Log
 =================
 
+Release 2.1
+-----------
 20100109 AD: Added "Delete Comment" action to Spam state of Comment workflow. Makes bulk deletion of spam from the workbox easier.
 20120109 AD: Updated MetaWeblog API service to accept publish date on posts
 20120109 AD: Added tests for the MetaWeblog API service
