@@ -28,7 +28,9 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         {
             get
             {
-                return LinkManager.GetItemUrl(InnerItem, new UrlOptions { AlwaysIncludeServerUrl = true });
+                UrlOptions urlOptions = UrlOptions.DefaultOptions;
+                urlOptions.AlwaysIncludeServerUrl = true;
+                return LinkManager.GetItemUrl(InnerItem, urlOptions);
             }
         }
 
