@@ -87,9 +87,15 @@ Blog entry
 {
     color: #336699;
 }
-.wb-entry-categories
+.wb-entry-categories h3, .wb-entry-categories h3 ul
 {
-    display: inline;
+    float: left;
+    margin: 0 5px 10px 0;
+}
+
+.wb-entry-categories ul li
+{
+    margin-right: 5px;
 }
 
 /*************************************************************************************

@@ -142,7 +142,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The comments for the blog entry</returns>
         public CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
         {
-            return GetCommentsFor(blogItem, maximumCount);
+            return GetCommentsFor(blogItem, maximumCount, true, true);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var template = GetDatabase().GetTemplate(Settings.EntryTemplateIdString);
                 if (Utilities.Items.TemplateIsOrBasedOn(entryItem, template))
                 {
-                    return GetCommentsFor(entryItem, maximumCount);
+                    return GetCommentsFor(entryItem, maximumCount, true);
                 }
             }
 
@@ -200,7 +200,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="item">The item to get the comments under</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments which are decendants of the given item</returns>
-        public CommentItem[] GetCommentsFor(Item item, int maximumCount)
+        public CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false)
         {
             if (item != null && maximumCount > 0)
             {
@@ -210,36 +210,16 @@ namespace Sitecore.Modules.WeBlog.Managers
                 query.Add(new FieldQuery(Constants.Index.Fields.Template, Settings.CommentTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
                 query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
 
-                return Utilities.Search.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem));
+                string sortField = null;
+                if (sort)
+                {
+                    sortField = Constants.Index.Fields.Created;
+                }
+                var comments = Utilities.Search.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
+                return comments;
             }
 
             return new CommentItem[0];
-        }
-
-        /// <summary>
-        /// Sort the comments list using the CommentDateComparerDesc comparer
-        /// </summary>
-        /// <param name="array">The comments to sort</param>
-        /// <returns>A sorted list of comments</returns>
-        public CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
-        {
-            var commentItemList = new List<CommentItem>();
-            var template = GetDatabase().GetTemplate(Settings.CommentTemplateId);
-
-            if (template != null)
-            {
-                foreach (Item item in array)
-                {
-                    if (Utilities.Items.TemplateIsOrBasedOn(item, template) && item.Versions.Count > 0)
-                    {
-                        commentItemList.Add(new CommentItem(item));
-                    }
-                }
-
-                commentItemList.Sort(new CommentDateComparerDesc());
-            }
-
-            return commentItemList.ToArray();
         }
 
         /// <summary>
@@ -292,6 +272,33 @@ namespace Sitecore.Modules.WeBlog.Managers
                 }
             }
             commentItemList.Sort(new ItemDateComparerDesc());
+            return commentItemList.ToArray();
+        }
+
+        /// <summary>
+        /// Sort the comments list using the CommentDateComparerDesc comparer
+        /// </summary>
+        /// <param name="array">The comments to sort</param>
+        /// <returns>A sorted list of comments</returns>
+        [Obsolete("Use sorting options on GetCommentsFor")]
+        public CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
+        {
+            var commentItemList = new List<CommentItem>();
+            var template = GetDatabase().GetTemplate(Settings.CommentTemplateId);
+
+            if (template != null)
+            {
+                foreach (Item item in array)
+                {
+                    if (Utilities.Items.TemplateIsOrBasedOn(item, template) && item.Versions.Count > 0)
+                    {
+                        commentItemList.Add(new CommentItem(item));
+                    }
+                }
+
+                commentItemList.Sort(new CommentDateComparerDesc());
+            }
+
             return commentItemList.ToArray();
         }
         #endregion

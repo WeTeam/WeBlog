@@ -2,6 +2,7 @@
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
+using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -94,7 +95,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="item">The item to get the comments under</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments which are decendants of the given item</returns>
-        CommentItem[] GetCommentsFor(Item item, int maximumCount);
+        CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false);
 
         /// <summary>
         /// Sort the comments list using the CommentDateComparerDesc comparer

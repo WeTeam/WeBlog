@@ -11,7 +11,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             var totalToShow = CurrentBlog.DisplayCommentSidebarCountNumeric;
 
-            if (ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog.ID, totalToShow).Length == 0)
+            var comments = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
+            if (comments.Length == 0)
             {
                 if(PanelRecentComments != null)
                     PanelRecentComments.Visible = false;
@@ -20,7 +21,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 if (ListViewRecentComments != null)
                 {
-                    ListViewRecentComments.DataSource = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
+                    ListViewRecentComments.DataSource = comments;
                     ListViewRecentComments.DataBind();
                 }
             }
