@@ -2,6 +2,7 @@
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.SecurityModel;
+using Sitecore.Sites;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -23,24 +24,28 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 {
                     string itemName = Utilities.Items.MakeSafeItemName("Comment by " + args.Comment.AuthorName + " at " + DateTime.Now.ToString("d"));
 
-                    using (new SecurityDisabler())
+                    //need to emulate creation within shell site to ensure workflow is applied to comment
+                    using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))
                     {
-                        var newItem = entryItem.Add(itemName, template);
-
-                        var newComment = new CommentItem(newItem);
-                        newComment.BeginEdit();
-                        newComment.Name.Field.Value = args.Comment.AuthorName;
-                        newComment.Email.Field.Value = args.Comment.AuthorEmail;
-                        newComment.Comment.Field.Value = args.Comment.Text;
-
-                        foreach (var key in args.Comment.Fields.AllKeys)
+                        using (new SecurityDisabler())
                         {
-                            newComment.InnerItem[key] = args.Comment.Fields[key];
+                            var newItem = entryItem.Add(itemName, template);
+
+                            var newComment = new CommentItem(newItem);
+                            newComment.BeginEdit();
+                            newComment.Name.Field.Value = args.Comment.AuthorName;
+                            newComment.Email.Field.Value = args.Comment.AuthorEmail;
+                            newComment.Comment.Field.Value = args.Comment.Text;
+
+                            foreach (var key in args.Comment.Fields.AllKeys)
+                            {
+                                newComment.InnerItem[key] = args.Comment.Fields[key];
+                            }
+
+                            newComment.EndEdit();
+
+                            args.CommentItem = newComment;
                         }
-
-                        newComment.EndEdit();
-
-                        args.CommentItem = newComment;
                     }
                 }
                 else

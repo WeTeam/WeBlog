@@ -8,6 +8,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -50,10 +51,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
             else
             {
                 if(ValidationSummaryComments != null)
-				    ValidationSummaryComments.HeaderText = Translate.Text("REQUIRED_FIELDS");
+				    ValidationSummaryComments.HeaderText = Translator.Text("REQUIRED_FIELDS");
 
                 if(buttonSaveComment != null)
-				    buttonSaveComment.Text = Translate.Text("POST");
+                    buttonSaveComment.Text = Translator.Text("POST");
             }
         }
 
@@ -79,11 +80,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 var submissionResult = ManagerFactory.CommentManagerInstance.SubmitComment(Sitecore.Context.Item.ID, comment);
                 if (submissionResult.IsNull)
                 {
-                    SetErrorMessage(Translate.Text("COMMENT_SUBMIT_ERROR"));
+                    SetErrorMessage(Translator.Text("COMMENT_SUBMIT_ERROR"));
                 }
                 else
                 {
-                    SetSuccessMessage(Translate.Text("COMMENT_SUBMIT_SUCCESS"));
+                    SetSuccessMessage(Translator.Text("COMMENT_SUBMIT_SUCCESS"));
                     ResetCommentFields();
                 }
 

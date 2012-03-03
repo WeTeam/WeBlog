@@ -8,6 +8,7 @@ using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -59,7 +60,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                 }
                 else
                 {
-                    SheerResponse.Input("Enter the name of your new category:", "", Configuration.Settings.ItemNameValidation, Translate.Text("'$Input' is not a valid name."), 100);
+                    SheerResponse.Input("Enter the name of your new category:", "", Configuration.Settings.ItemNameValidation, Translator.Text("'$Input' is not a valid name."), 100);
                     args.WaitForPostBack(true);
                 }
             }
