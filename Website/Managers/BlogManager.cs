@@ -8,7 +8,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Security.Accounts;
 using Sitecore.Data.Managers;
-using Sitecore.Modules.WeBlog.Utilities;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -33,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public Items.WeBlog.BlogHomeItem GetCurrentBlog(Item item)
         {
-            var blogItem = Utilities.Items.GetCurrentItem(item, Settings.BlogTemplateIdString);
+            var blogItem = item.GetCurrentItem(Settings.BlogTemplateIdString);
 
             if (blogItem != null)
                 return new Items.WeBlog.BlogHomeItem(blogItem);
@@ -50,7 +50,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var blogList = new List<Items.WeBlog.BlogHomeItem>();
 
-            var blogs = GetAllBlogs(DataUtil.GetContentDatabase());
+            var blogs = GetAllBlogs(ContentHelper.GetContentDatabase());
             var account = Account.FromName(username, AccountType.User);
 
             foreach (var blog in blogs)
@@ -75,7 +75,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             // TODO: Store the result of this call in cache and clear it from cache on publish
             var blogTemplate = database.GetTemplate(Settings.BlogTemplateIdString);
             var contentRoot = database.GetItem(Settings.ContentRootPath);
-            var blogItems = Utilities.Items.FindItemsByTemplateOrDerivedTemplate(contentRoot, blogTemplate);
+            var blogItems = contentRoot.FindItemsByTemplateOrDerivedTemplate(blogTemplate);
             return (from item in blogItems select new BlogHomeItem(item)).ToArray();
         }
 

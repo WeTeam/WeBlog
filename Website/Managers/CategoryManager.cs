@@ -6,6 +6,7 @@ using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Data.Managers;
 using Sitecore.Configuration;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -40,7 +41,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 {
                     foreach (Item category in categoryRoot.GetChildren())
                     {
-                        if (Utilities.Items.TemplateIsOrBasedOn(category, categoryTemplate) && category.Versions.Count > 0)
+                        if (category.TemplateIsOrBasedOn(categoryTemplate) && category.Versions.Count > 0)
                         {
                             categoryList.Add(new CategoryItem(category));
                         }
@@ -90,7 +91,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (template != null)
             {
                 //Check if current item equals blogroot
-                while (blogItem != null && !Utilities.Items.TemplateIsOrBasedOn(blogItem, template))
+                while (blogItem != null && !blogItem.TemplateIsOrBasedOn(template))
                 {
                     blogItem = blogItem.Parent;
                 }
@@ -119,7 +120,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (template != null)
             {
                 //Check if current item equals blogroot
-                while (blogItem != null && !Utilities.Items.TemplateIsOrBasedOn(blogItem, template))
+                while (blogItem != null && !blogItem.TemplateIsOrBasedOn(template))
                 {
                     blogItem = blogItem.Parent;
                 }

@@ -39,6 +39,7 @@ using Sitecore.Security.Accounts;
 using Sitecore.Security;
 using Sitecore.Modules.WeBlog.Managers;
 using System.Web.Security;
+using Sitecore.Modules.WeBlog.Extensions;
 
 #endregion
 
@@ -129,11 +130,11 @@ namespace Sitecore.Modules.WeBlog.Workflow
             velocityContext.Put("time", DateTime.Now);
 
             Items.WeBlog.EntryItem entryItem = null;
-            if (Utilities.Items.TemplateIsOrBasedOn(args.DataItem, Settings.EntryTemplateId))
+            if (args.DataItem.TemplateIsOrBasedOn(Settings.EntryTemplateId))
             {
                 entryItem = new Items.WeBlog.EntryItem(args.DataItem);
             }
-            else if (Utilities.Items.TemplateIsOrBasedOn(args.DataItem, Settings.CommentTemplateId))
+            else if (args.DataItem.TemplateIsOrBasedOn(Settings.CommentTemplateId))
             {
                 Items.WeBlog.CommentItem commentItem = new Items.WeBlog.CommentItem(args.DataItem);
                 entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(commentItem);

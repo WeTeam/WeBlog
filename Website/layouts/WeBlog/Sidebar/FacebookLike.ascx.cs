@@ -4,9 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Utilities;
 
-namespace Sitecore.Modules.WeBlog.layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.Layouts.WeBlog
 {
     public partial class BlogFacebookLike : System.Web.UI.UserControl
     {

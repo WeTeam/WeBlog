@@ -1,4 +1,5 @@
 ﻿using System;
+using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.SecurityModel;
@@ -22,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                 if (entryItem != null)
                 {
-                    string itemName = Utilities.Items.MakeSafeItemName("Comment by " + args.Comment.AuthorName + " at " + DateTime.Now.ToString("d"));
+                    string itemName = ItemUtil.ProposeValidItemName("Comment by " + args.Comment.AuthorName + " at " + DateTime.Now.ToString("d"));
 
                     //need to emulate creation within shell site to ensure workflow is applied to comment
                     using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))

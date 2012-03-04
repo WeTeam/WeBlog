@@ -5,7 +5,6 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Modules.WeBlog.Globalization;
@@ -45,7 +44,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                             var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
                             Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
 
-                            Publish.PublishItem(newItem);
+                            ContentHelper.PublishItem(newItem);
                         }
                     }
                 }

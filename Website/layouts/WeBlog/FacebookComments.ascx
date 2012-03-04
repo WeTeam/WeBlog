@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogFacebookComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.layouts.WeBlog.BlogFacebookComments" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogFacebookComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.WeBlog.BlogFacebookComments" %>
 
 <div class="wb-facebook-comments wb-panel">
 <script>

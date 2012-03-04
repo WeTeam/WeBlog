@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogFacebook.ascx.cs" Inherits="Sitecore.Modules.WeBlog.layouts.WeBlog.BlogFacebookLike" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogFacebook.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.WeBlog.BlogFacebookLike" %>
 
 <div class="wb-facebook wb-panel">
 <script>

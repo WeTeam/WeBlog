@@ -1,13 +1,10 @@
 ﻿using System.Collections.Specialized;
-using Sitecore.Configuration;
 using Sitecore.Data;
-using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Utilities;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
-using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Commands
@@ -18,8 +15,8 @@ namespace Sitecore.Modules.WeBlog.Commands
         {
             if (context.Items.Length == 1)
             {
-                Item item = context.Items[0];
-                NameValueCollection parameters = new NameValueCollection();
+                var item = context.Items[0];
+                var parameters = new NameValueCollection();
                 parameters["currentid"] = item.ID.ToString();
                 parameters["tid"] = item.TemplateID.ToString();
                 parameters["database"] = item.Database.Name;
@@ -35,15 +32,15 @@ namespace Sitecore.Modules.WeBlog.Commands
                 {
                     string itemTitle = args.Result;
 
-                    Database current = Factory.GetDatabase("master");
-                    TemplateID template = new TemplateID(Settings.CategoryTemplateId);
+                    var db = ContentHelper.GetContentDatabase();
+                    var template = new TemplateID(Settings.CategoryTemplateId);
 
-                    Item currentItem = current.GetItem(args.Parameters["currentid"]);
-                    Item categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
+                    var currentItem = db.GetItem(args.Parameters["currentid"]);
+                    var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
 
-                    Item newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
+                    var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
 
-                    Publish.PublishItem(newItem);
+                    ContentHelper.PublishItem(newItem);
 
                     SheerResponse.Eval("scForm.browser.getParentWindow(scForm.browser.getFrameElement(window).ownerDocument).location.reload(true)");
 
@@ -52,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                string currentTID = args.Parameters["tid"];
+                var currentTID = args.Parameters["tid"];
 
                 if (currentTID != Settings.BlogTemplateIdString && currentTID != Settings.EntryTemplateIdString)
                 {

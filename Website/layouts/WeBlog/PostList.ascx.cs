@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Utilities;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -93,7 +93,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 //TODO: Does this logic belong elsewhere? Possibly consolidate title logic somewhere.
                 Page.Title = "Posts tagged \"" + tag + "\" | " + CurrentBlog.Title.Text;
             }
-            else if (Utilities.Items.TemplateIsOrBasedOn(Sitecore.Context.Item, categoryTemplate))
+            else if (Sitecore.Context.Item.TemplateIsOrBasedOn(categoryTemplate))
             {
                 CategoryItem category = Sitecore.Context.Item;
                 entries = ManagerFactory.EntryManagerInstance.GetBlogEntryByCategorie(CurrentBlog.ID, Sitecore.Context.Item.Name);

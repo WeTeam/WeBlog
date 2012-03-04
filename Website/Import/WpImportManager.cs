@@ -49,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Import
             {
                 if (!string.IsNullOrEmpty(post.Content))
                 {
-                    EntryItem entry = ItemManager.AddFromTemplate(Utilities.Items.MakeSafeItemName(post.Title), entryTemplate.ID, blogItem);
+                    EntryItem entry = ItemManager.AddFromTemplate(ItemUtil.ProposeValidItemName(post.Title), entryTemplate.ID, blogItem);
 
                     entry.BeginEdit();
                     entry.Title.Field.Value = post.Title;

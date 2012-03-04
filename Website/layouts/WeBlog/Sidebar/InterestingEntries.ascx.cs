@@ -1,10 +1,9 @@
 ﻿using System;
 using Sitecore.Modules.WeBlog.Search;
-using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Diagnostics;
 
-namespace Sitecore.Modules.WeBlog.layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogInterestingEntries : System.Web.UI.UserControl
     {
@@ -101,19 +100,19 @@ namespace Sitecore.Modules.WeBlog.layouts.WeBlog
             switch (Algorithm)
             {
                 case InterestingEntriesAlgorithm.Comments:
-                    Items.DataSource = ManagerFactory.EntryManagerInstance.GetPopularEntriesByComment(blogItem, MaximumCount);
+                    ItemList.DataSource = ManagerFactory.EntryManagerInstance.GetPopularEntriesByComment(blogItem, MaximumCount);
                     break;
 
                 case InterestingEntriesAlgorithm.PageViews:
-                    Items.DataSource = ManagerFactory.EntryManagerInstance.GetPopularEntriesByView(blogItem, MaximumCount);
+                    ItemList.DataSource = ManagerFactory.EntryManagerInstance.GetPopularEntriesByView(blogItem, MaximumCount);
                     break;
 
                 case InterestingEntriesAlgorithm.Custom:
-                    Items.DataSource = CustomAlgorithm.GetEntries(blogItem, MaximumCount);
+                    ItemList.DataSource = CustomAlgorithm.GetEntries(blogItem, MaximumCount);
                     break;
             }
 
-            Items.DataBind();
+            ItemList.DataBind();
         }
     }
 }

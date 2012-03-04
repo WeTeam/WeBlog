@@ -9,7 +9,6 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Resources.Media;
 using Sitecore.Security.Accounts;
 using Sitecore.Security.Authentication;
@@ -31,10 +30,9 @@ namespace Sitecore.Modules.WeBlog
         /// <param name="password">Password</param>
         private static void Authenticate(string username, string password)
         {
-            //Check user credentials using form authentication
-            bool allowed = new AuthenticationHelper(AuthenticationManager.Provider).ValidateUser(username, password);
+            var allowed = AuthenticationManager.Login(username, password);
 
-            if (allowed == false)
+            if (!allowed)
             {
                 throw new System.Security.Authentication.InvalidCredentialException("Invalid credentials. Access denied");
             }
@@ -42,12 +40,9 @@ namespace Sitecore.Modules.WeBlog
 
         private static void CheckUserRights(string blogid, string username)
         {
-            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, DataUtil.GetContentDatabase());
-
-            var account = Account.FromName(username, AccountType.User);
-
-            if (blog != null && !blog.Security.CanWrite(account))
-                throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");
+            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, ContentHelper.GetContentDatabase());
+            if (blog != null && !blog.Security.CanWrite(Sitecore.Context.User))
+                throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");            
         }
 
         /// <summary>
@@ -58,7 +53,7 @@ namespace Sitecore.Modules.WeBlog
         /// <returns></returns>
         private static string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
         {
-            var postItem = DataUtil.GetContentDatabase().GetItem(postid);
+            var postItem = ContentHelper.GetContentDatabase().GetItem(postid);
             Item blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(postItem).InnerItem;
             var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
 
@@ -101,7 +96,7 @@ namespace Sitecore.Modules.WeBlog
         /// <returns></returns>
         private static string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
         {
-            var blog = DataUtil.GetContentDatabase().GetItem(BlogID);
+            var blog = ContentHelper.GetContentDatabase().GetItem(BlogID);
             if (blog != null)
             {
                 var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
@@ -201,7 +196,7 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var blog = DataUtil.GetContentDatabase().GetItem(blogid);
+            var blog = ContentHelper.GetContentDatabase().GetItem(blogid);
             if (blog != null)
             {
                 var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
@@ -241,7 +236,7 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var blog = DataUtil.GetContentDatabase().GetItem(blogid);
+            var blog = ContentHelper.GetContentDatabase().GetItem(blogid);
             if (blog != null)
             {
                 var entryList = ManagerFactory.EntryManagerInstance.GetBlogEntries(blog, numberOfPosts, string.Empty, string.Empty);
@@ -331,30 +326,29 @@ namespace Sitecore.Modules.WeBlog
         public string newPost(string blogid, string username, string password, XmlRpcStruct rpcstruct, bool publish)
         {
             Authenticate(username, password);
-
             CheckUserRights(blogid, username);
             
-            // TODO: Remove the security disabler and use the permissions of the user
-            using (new SecurityDisabler())
+            var entryTitle = rpcstruct["title"].ToString();
+            var currentBlog = ContentHelper.GetContentDatabase().GetItem(blogid);
+
+            if (currentBlog != null)
             {
-                var entryTitle = rpcstruct["title"].ToString();
-                var currentBlog = DataUtil.GetContentDatabase().GetItem(blogid);
+                // test
+                var access = Sitecore.Security.AccessControl.AuthorizationManager.GetAccess(currentBlog, Sitecore.Context.User, Sitecore.Security.AccessControl.AccessRight.ItemCreate);
+                // end test
 
-                if (currentBlog != null)
-                {
-                    var template = new TemplateID(Settings.EntryTemplateId);
-                    var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
+                var template = new TemplateID(Settings.EntryTemplateId);
+                var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
 
-                    SetItemData(newItem, rpcstruct);
+                SetItemData(newItem, rpcstruct);
 
-                    if (publish)
-                        Publish.PublishItem(newItem.ID);
+                if (publish)
+                    ContentHelper.PublishItem(newItem.ID);
 
-                    return newItem.ID.ToString();
-                }
-                else
-                    return string.Empty;
+                return newItem.ID.ToString();
             }
+            else
+                return string.Empty;
         }
 
 
@@ -374,23 +368,19 @@ namespace Sitecore.Modules.WeBlog
         public bool editPost(string postid, string username, string password, XmlRpcStruct rpcstruct, bool publish)
         {
             Authenticate(username, password);
-
             CheckUserRights(postid, username);
 
-            using(new SecurityDisabler())
+            var item = ContentHelper.GetContentDatabase().GetItem(new ID(postid));
+
+            if (item != null)
             {
-                var item = DataUtil.GetContentDatabase().GetItem(new ID(postid));
+                SetItemData(item, rpcstruct);
 
-                if (item != null)
-                {
-                    SetItemData(item, rpcstruct);
-
-                    if (publish)
-                        Publish.PublishItem(item.ID);
-                }
-                else
-                    return false;
+                if (publish)
+                    ContentHelper.PublishItem(item.ID);
             }
+            else
+                return false;
 
             return true;
         }
@@ -445,7 +435,7 @@ namespace Sitecore.Modules.WeBlog
             CheckUserRights(postid, username);
 
             var rpcstruct = new XmlRpcStruct();
-            var entryItem = DataUtil.GetContentDatabase().GetItem(postid);
+            var entryItem = ContentHelper.GetContentDatabase().GetItem(postid);
             if (entryItem != null)
             {
                 var entry = new EntryItem(entryItem);
@@ -476,16 +466,11 @@ namespace Sitecore.Modules.WeBlog
         public bool deletePost(string appKey, string postid, string userName, string password, bool publish)
         {
             Authenticate(userName, password);
-
             CheckUserRights(postid, userName);
 
             try
             {
-                // TODO: Remove the security disabler and use the permissions of the user
-                using (new SecurityDisabler())
-                {
-                    return ManagerFactory.EntryManagerInstance.DeleteEntry(postid, DataUtil.GetContentDatabase());
-                }
+                return ManagerFactory.EntryManagerInstance.DeleteEntry(postid, ContentHelper.GetContentDatabase());
             }
             catch (Exception)
             {
@@ -514,7 +499,7 @@ namespace Sitecore.Modules.WeBlog
             var media = (byte[])rpcstruct["bits"];
             var blogName = string.Empty;
 
-            var currentBlog = DataUtil.GetContentDatabase().GetItem(blogid);
+            var currentBlog = ContentHelper.GetContentDatabase().GetItem(blogid);
             blogName = currentBlog.Name;
             // Get filename
             var file = name.Substring(49 + 1);
@@ -528,19 +513,15 @@ namespace Sitecore.Modules.WeBlog
             // Create strem from byte array
             var memStream = new MemoryStream(media);
             var md = new MediaCreatorOptions();
-            md.Destination = @"/sitecore/media library/Modules/Blog/" + blogName + "/" + imageName[0].ToString();
-            md.Database = Sitecore.Configuration.Factory.GetDatabase("master");
+            md.Destination = string.Join("/", new string[]{Constants.Paths.WeBlogMedia, blogName, imageName[0].ToString()});
+            md.Database = ContentHelper.GetContentDatabase();
             md.AlternateText = fileName;
 
             // Create mediaitem
-            MediaItem mediaItem;
-            using (new SecurityDisabler())
-            {
-                mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
-            }
+            var mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
 
             // Publish mediaitem to web database
-            Publish.PublishItem(mediaItem);
+            ContentHelper.PublishItem(mediaItem);
 
             // Close stream
             memStream.Close();
@@ -559,23 +540,20 @@ namespace Sitecore.Modules.WeBlog
         {
             try
             {
-                using (new SecurityDisabler())
+                string entryId = HttpContext.Current.Request.QueryString["entryId"].ToString();
+                var currentID = ID.Parse(entryId);
+
+                var comment = new Model.Comment()
                 {
-                    string entryId = HttpContext.Current.Request.QueryString["entryId"].ToString();
-                    var currentID = ID.Parse(entryId);
-
-                    var comment = new Model.Comment()
-                    {
-                        AuthorName = "Automatic pingback",
-                        Text = string.Format("Pingkback from {0}", sourceUri)
-                    };
+                    AuthorName = "Automatic pingback",
+                    Text = string.Format("Pingkback from {0}", sourceUri)
+                };
                     
-                    comment.Fields.Add(Constants.Fields.Website, sourceUri);
+                comment.Fields.Add(Constants.Fields.Website, sourceUri);
 
-                    var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(currentID, comment);
+                var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(currentID, comment);
 
-                    Publish.PublishItem(commentId);
-                }
+                ContentHelper.PublishItem(commentId);
             }
             catch (Exception)
             {

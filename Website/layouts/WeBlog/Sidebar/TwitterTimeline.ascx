@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTwitter.ascx.cs" Inherits="Sitecore.Modules.WeBlog.layouts.WeBlog.BlogTwitter" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTwitter.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.WeBlog.BlogTwitter" %>
 
 <div class="wb-twitter wb-panel">
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>

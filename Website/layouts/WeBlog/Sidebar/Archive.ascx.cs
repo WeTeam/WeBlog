@@ -5,7 +5,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Utilities;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {

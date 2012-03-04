@@ -149,7 +149,7 @@
     <Compile Include="EntryManager.cs" />
     <Compile Include="EntryManagerPerformance.cs" />
     <Compile Include="MetaBlogApi.cs" />
-    <Compile Include="Utilities\Items.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>

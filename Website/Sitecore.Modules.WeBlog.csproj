@@ -347,17 +347,13 @@
       <DependentUpon>rsd.ashx</DependentUpon>
     </Compile>
     <Compile Include="sitecore\shell\Applications\WeBlog\WordpressImport.cs" />
-    <Compile Include="Utilities\Akismet.cs" />
-    <Compile Include="Utilities\Crypto.cs" />
-    <Compile Include="Utilities\DataUtil.cs" />
-    <Compile Include="Utilities\Extensions.cs" />
-    <Compile Include="Utilities\Items.cs" />
-    <Compile Include="Utilities\Presentation.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Utilities\Publish.cs" />
-    <Compile Include="Utilities\Search.cs" />
-    <Compile Include="Utilities\SublayoutParamHelper.cs" />
+    <Compile Include="External Code\Akismet.cs" />
+    <Compile Include="Crypto.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
+    <Compile Include="ContentHelper.cs" />
+    <Compile Include="Search\Searcher.cs" />
+    <Compile Include="layouts\SublayoutParamHelper.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
     <Compile Include="WebControls\Syndication.cs" />
     <Compile Include="WebControls\ThemeIncludes.cs" />

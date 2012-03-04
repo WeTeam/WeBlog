@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
-using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -11,8 +10,10 @@ using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
 using Sitecore.Modules.WeBlog.Services;
+using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Pipelines;
 using Sitecore.Search;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -32,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var args = new CreateCommentArgs();
             args.EntryID = entryId;
             args.Comment = comment;
-            args.Database = Factory.GetDatabase("master");
+            args.Database = ContentHelper.GetContentDatabase();
 
             CorePipeline.Run("weblogCreateComment", args, true);
 
@@ -42,9 +43,9 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return ID.Null;
         }
 
-        /*protected void AddComment(EntryItem entryItem, WpComment wpComment)
+        protected void AddComment(EntryItem entryItem, WpComment wpComment)
         {
-            string itemName = Utilities.Items.MakeSafeItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
+            string itemName = ItemUtil.ProposeValidItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
 
             CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID(CommentItem.TemplateId)));
             commentItem.BeginEdit();
@@ -54,7 +55,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             commentItem.Website.Field.Value = wpComment.Url;
             commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
             commentItem.EndEdit();
-        }*/
+        }
 
         /// <summary>
         /// Submit a comment for inclusion on a post. This method will either update Sitecore or submit the comment through the comment service, depending on settings
@@ -185,7 +186,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (entryItem != null)
             {
                 var template = GetDatabase().GetTemplate(Settings.EntryTemplateIdString);
-                if (Utilities.Items.TemplateIsOrBasedOn(entryItem, template))
+                if (entryItem.TemplateIsOrBasedOn(template))
                 {
                     return GetCommentsFor(entryItem, maximumCount, true);
                 }
@@ -215,8 +216,9 @@ namespace Sitecore.Modules.WeBlog.Managers
                 {
                     sortField = Constants.Index.Fields.Created;
                 }
-                var comments = Utilities.Search.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
-                return comments;
+
+                var searcher = new Searcher();
+                return searcher.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
             }
 
             return new CommentItem[0];
@@ -290,7 +292,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 foreach (Item item in array)
                 {
-                    if (Utilities.Items.TemplateIsOrBasedOn(item, template) && item.Versions.Count > 0)
+                    if (item.TemplateIsOrBasedOn(template) && item.Versions.Count > 0)
                     {
                         commentItemList.Add(new CommentItem(item));
                     }

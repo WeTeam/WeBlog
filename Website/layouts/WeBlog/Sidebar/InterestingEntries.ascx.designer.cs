@@ -7,19 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.WeBlog.layouts.WeBlog {
-
-
-    public partial class BlogInterestingEntries
-    {
+namespace Sitecore.Modules.WeBlog.Layouts {
+    
+    
+    public partial class BlogInterestingEntries {
         
         /// <summary>
-        /// Items control.
+        /// ItemList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Items;
+        protected global::System.Web.UI.WebControls.Repeater ItemList;
     }
 }

@@ -39,5 +39,11 @@ namespace Sitecore.Modules.WeBlog
                 public const string COMMENT_ADDED = "weblog:comment:added";
             }
         }
+
+        public static class Paths
+        {
+            public const string WeBlogMedia = "/sitecore/media library/Modules/Blog";
+            public const string PublishingTargets = "/sitecore/system/publishing targets";
+        }
     }
 }

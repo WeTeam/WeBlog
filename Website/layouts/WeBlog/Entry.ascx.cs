@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Web.UI;
-using Sitecore.Modules.WeBlog.Utilities;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {

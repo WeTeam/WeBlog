@@ -6,7 +6,6 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Globalization;
 

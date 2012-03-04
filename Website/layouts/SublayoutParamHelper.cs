@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 
-namespace Sitecore.Modules.WeBlog.Utilities
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public class SublayoutParamHelper
     {

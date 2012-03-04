@@ -59,7 +59,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             var baseUrl = Settings.GravatarImageServiceUrl;
             if (!string.IsNullOrEmpty(baseUrl))
             {
-                return baseUrl + "/" + Utilities.Crypto.GetMD5Hash(email) + ".jpg" +
+                return baseUrl + "/" + Crypto.GetMD5Hash(email) + ".jpg" +
                     "?s=" + CurrentBlog.GravatarSizeNumeric.ToString() +
                     "&d=" + CurrentBlog.DefaultGravatarStyle.Raw +
                     "&r=" + CurrentBlog.GravatarRating.Raw;

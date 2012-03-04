@@ -52,7 +52,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected Checkbox ImportComments;
         protected Checkbox ImportTags;
 
-        protected Database db = Factory.GetDatabase("master");
+        protected Database db = ContentHelper.GetContentDatabase();
         #endregion
 
         private string jobStatus;
@@ -129,7 +129,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             Item root = db.GetItem(litSummaryPath.Text);
 
             BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchId);
-            BlogHomeItem blogItem = root.Add(Utilities.Items.MakeSafeItemName(litSettingsName.Value), newBlog);
+            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(litSettingsName.Value), newBlog);
 
             blogItem.BeginEdit();
             blogItem.Email.Field.Value = litSettingsEmail.Value;

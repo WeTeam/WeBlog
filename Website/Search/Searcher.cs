@@ -5,28 +5,17 @@ using System.Collections.Generic;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Search.Search;
 
-namespace Sitecore.Modules.WeBlog.Utilities
+namespace Sitecore.Modules.WeBlog.Search
 {
-    public static class Search
+    public class Searcher
     {
         /// <summary>
         /// Gets the WeBlog search index
         /// </summary>
         /// <returns>The index as found my the SearchManager</returns>
-        public static Index GetSearchIndex()
+        protected Index GetSearchIndex()
         {
             return SearchManager.GetIndex(Settings.SearchIndexName);
-        }
-
-        /// <summary>
-        /// Transforms an input to remove the whitespace and allow tokenising on other characters
-        /// </summary>
-        /// <param name="value">The string to transform</param>
-        /// <returns>The transformed string</returns>
-        public static string TransformCSV(string value)
-        {
-            var collapsed = value.Replace(" ", string.Empty);
-            return collapsed.Replace(',', ' ');
         }
 
         /// <summary>
@@ -37,7 +26,7 @@ namespace Sitecore.Modules.WeBlog.Utilities
         /// <param name="maximumResults">The maximum number of results</param>
         /// <param name="sortField">The index field to sort on</param>
         /// <returns>An array of search results, or an empty array if there was an issue</returns>
-        public static T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func, string sortField, bool reverseSort)
+        public T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func, string sortField, bool reverseSort)
         {
             if (query is CombinedQuery)
             {
@@ -50,7 +39,7 @@ namespace Sitecore.Modules.WeBlog.Utilities
 
             if (maximumResults > 0)
             {
-                var index = Utilities.Search.GetSearchIndex();
+                var index = GetSearchIndex();
                 if (index != null && index.GetDocumentCount() > 0)
                 {
                     using (var searchContext = new SortableIndexSearchContext(index))
@@ -85,7 +74,7 @@ namespace Sitecore.Modules.WeBlog.Utilities
         /// <summary>
         /// Performs a search in the WeBlog search index, without a sort
         /// </summary>
-        public static T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func)
+        public T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func)
         {
             return Execute<T>(query, maximumResults, func, null, false);
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -6,7 +7,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
     {
         protected string GetItemTitle()
         {
-            return Utilities.Presentation.GetItemTitle(Sitecore.Context.Item);
+            return Sitecore.Context.Item.GetItemTitle();
         }
     }
 }

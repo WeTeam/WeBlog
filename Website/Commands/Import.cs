@@ -10,7 +10,6 @@ using Sitecore.Web.UI.Sheer;
 using Sitecore.Data.Managers;
 using Sitecore.Configuration;
 using Sitecore.Web;
-using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Links;
 using Sitecore.Shell.Applications.WebEdit.Commands;

@@ -11,10 +11,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             var item = args.DataItem;
             if (item != null)
             {
-                using (new SecurityDisabler())
-                {
-                    item.Delete();
-                }
+                item.Delete();
             }
         }
     }

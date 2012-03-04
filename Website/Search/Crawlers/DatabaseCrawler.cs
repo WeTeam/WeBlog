@@ -39,7 +39,7 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
                 {
                     if (item.Fields[fieldName] != null)
                     {
-                        document.Add(new Field(fieldName, Utilities.Search.TransformCSV(item.Fields[fieldName].Value), Field.Store.YES, Field.Index.TOKENIZED));
+                        document.Add(new Field(fieldName, TransformCSV(item.Fields[fieldName].Value), Field.Store.YES, Field.Index.TOKENIZED));
                     }
                 }
             }
@@ -97,6 +97,17 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
         protected virtual void AddDataField(string field)
         {
             m_dataFieldNames.Add(field);
+        }
+
+        /// <summary>
+        /// Transforms an input to remove the whitespace and allow tokenising on other characters
+        /// </summary>
+        /// <param name="value">The string to transform</param>
+        /// <returns>The transformed string</returns>
+        public static string TransformCSV(string value)
+        {
+            var collapsed = value.Replace(" ", string.Empty);
+            return collapsed.Replace(',', ' ');
         }
     }
 }

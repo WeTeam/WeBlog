@@ -11,8 +11,11 @@ using System.Threading;
 using Sitecore.StringExtensions;
 using Sitecore.Search;
 using Sitecore.Analytics;
+using Sitecore.Modules.WeBlog.Extensions;
 #if !PRE_65
 using Sitecore.Analytics.Data.DataAccess.DataAdapters;
+using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.Search.Crawlers;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -39,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog entry</returns>
         public EntryItem GetCurrentBlogEntry(Item item)
         {
-            var entryItem = Utilities.Items.GetCurrentItem(item, Settings.EntryTemplateIdString);
+            var entryItem = item.GetCurrentItem(Settings.EntryTemplateIdString);
 
             if (entryItem != null)
                 return new Items.WeBlog.EntryItem(entryItem);
@@ -215,7 +218,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 query.Add(new FieldQuery(Constants.Index.Fields.Template, Settings.EntryTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
 
                 if(!string.IsNullOrEmpty(tag))
-                    query.Add(new FieldQuery(Constants.Index.Fields.Tags, Utilities.Search.TransformCSV(tag)), QueryOccurance.Must);
+                    query.Add(new FieldQuery(Constants.Index.Fields.Tags, DatabaseCrawler.TransformCSV(tag)), QueryOccurance.Must);
 
                 if(!string.IsNullOrEmpty(category))
                 {
@@ -228,7 +231,8 @@ namespace Sitecore.Modules.WeBlog.Managers
                     query.Add(new FieldQuery(Constants.Index.Fields.Category, id.ToShortID().ToString().ToLower()), QueryOccurance.Must);
                 }
 
-                var result = Utilities.Search.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.Created, true);
+                var searcher = new Searcher();
+                var result = searcher.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.Created, true);
 
                 return result;
             }
@@ -393,7 +397,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 foreach (Item item in array)
                 {
-                    if (Utilities.Items.TemplateIsOrBasedOn(item, template) && item.Versions.GetVersions().Length > 0)
+                    if (item.TemplateIsOrBasedOn(template) && item.Versions.GetVersions().Length > 0)
                     {
                         postItemList.Add(new EntryItem(item));
                     }

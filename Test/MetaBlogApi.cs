@@ -4,7 +4,6 @@ using System.Web;
 using NUnit.Framework;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Utilities;
 using Sitecore.Search;
 using Sitecore.Security.AccessControl;
 using Sitecore.Security.Accounts;
@@ -33,8 +32,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [TestFixtureSetUp()]
         public void TestFixtureSetUp()
         {
-            m_userAuthor = Sitecore.Security.Accounts.User.Create("sitecore\\user1", PASSWORD);
-            m_userNothing = Sitecore.Security.Accounts.User.Create("sitecore\\user2", PASSWORD);
+         //   m_userAuthor = Sitecore.Security.Accounts.User.Create("sitecore\\user1", PASSWORD);
+         //   m_userNothing = Sitecore.Security.Accounts.User.Create("sitecore\\user2", PASSWORD);
+
+            m_userAuthor = User.FromName("sitecore\\user1", false);
+            m_userNothing = User.FromName("sitecore\\user2", false);
+
+            // Add users to roles
+            m_userAuthor.Roles.Add(Role.FromName("sitecore\\Sitecore Client Authoring"));
 
             // Create test content
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
@@ -68,19 +73,19 @@ namespace Sitecore.Modules.WeBlog.Test
                 // END: Workaround
 
                 var rules = new AccessRuleCollection();
-                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemWrite, PropagationType.Any, AccessPermission.Allow));
-                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemDelete, PropagationType.Any, AccessPermission.Allow));
+                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemWrite, PropagationType.Descendants, AccessPermission.Allow));
+                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemDelete, PropagationType.Descendants, AccessPermission.Allow));
 
                 m_blog1.Security.SetAccessRules(rules);
                 m_blog2.Security.SetAccessRules(rules);
 
-                Publish.PublishItemAndRequiredAncestors(m_blog1, Sitecore.Configuration.Factory.GetDatabase("web"));
+                ContentHelper.PublishItemAndRequiredAncestors(m_blog1, Sitecore.Configuration.Factory.GetDatabase("web"));
 
                 var entry11 = m_blog1.Axes.GetDescendant("Entry11");
-                Publish.PublishItemAndRequiredAncestors(entry11, Sitecore.Configuration.Factory.GetDatabase("web"));
+                ContentHelper.PublishItemAndRequiredAncestors(entry11, Sitecore.Configuration.Factory.GetDatabase("web"));
 
                 var entry12 = m_blog1.Axes.GetDescendant("Entry12");
-                Publish.PublishItemAndRequiredAncestors(entry12, Sitecore.Configuration.Factory.GetDatabase("web"));
+                ContentHelper.PublishItemAndRequiredAncestors(entry12, Sitecore.Configuration.Factory.GetDatabase("web"));
 
                 // Rebuild the search index to ensure all manager calls work as expected
                 var index = SearchManager.GetIndex(Settings.SearchIndexName);
@@ -100,12 +105,12 @@ namespace Sitecore.Modules.WeBlog.Test
                     m_testRoot.Delete();
 
                     // Publish to remove test content from the web DB
-                    Publish.PublishItem(m_testRoot.Parent);
+                    ContentHelper.PublishItem(m_testRoot.Parent);
                 }
             }
 
-            m_userAuthor.Delete();
-            m_userNothing.Delete();
+           // m_userAuthor.Delete();
+           // m_userNothing.Delete();
         }
 
         [Test]
