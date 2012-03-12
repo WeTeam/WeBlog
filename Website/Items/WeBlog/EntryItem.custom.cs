@@ -21,10 +21,20 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         }
 
         /// <summary>
-        /// Gets or sets the URL.
+        /// Gets the URL of the entry
         /// </summary>
-        /// <value>The URL.</value>
         public string Url
+        {
+            get
+            {
+                return LinkManager.GetItemUrl(InnerItem);
+            }
+        }
+
+        /// <summary>
+        /// Gets the absolute URL of the entry including the server
+        /// </summary>
+        public string AbsoluteUrl
         {
             get
             {

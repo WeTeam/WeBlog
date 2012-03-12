@@ -151,7 +151,7 @@ namespace Sitecore.Modules.WeBlog
                 XmlRpcStruct rpcstruct = new XmlRpcStruct();
                 rpcstruct.Add("blogid", blog.ID.ToString()); // Blog Id
                 rpcstruct.Add("blogName", blog.Title.Raw); // Blog Name
-                rpcstruct.Add("url", blog.Url);
+                rpcstruct.Add("url", blog.AbsoluteUrl);
                 blogs[ii] = rpcstruct;
                 ii++;
             }
@@ -248,7 +248,7 @@ namespace Sitecore.Modules.WeBlog
                 {
                     XmlRpcStruct rpcstruct = new XmlRpcStruct();
                     rpcstruct.Add("title", entry.Title.Raw);
-                    rpcstruct.Add("link", entry.Url);
+                    rpcstruct.Add("link", entry.AbsoluteUrl);
                     rpcstruct.Add("description", entry.Content.Text);
                     rpcstruct.Add("pubDate", entry.InnerItem.Statistics.Created.ToString());
                     rpcstruct.Add("guid", entry.ID.ToString());
@@ -441,7 +441,7 @@ namespace Sitecore.Modules.WeBlog
                 var entry = new EntryItem(entryItem);
 
                 rpcstruct.Add("title", entry.Title.Raw);
-                rpcstruct.Add("link", entry.Url);
+                rpcstruct.Add("link", entry.AbsoluteUrl);
                 rpcstruct.Add("description", entry.Introduction.Raw);
                 rpcstruct.Add("pubDate", entry.InnerItem.Statistics.Created.ToString());
                 rpcstruct.Add("guid", entry.ID.ToString());

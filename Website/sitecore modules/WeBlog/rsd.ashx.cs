@@ -49,7 +49,7 @@ namespace Sitecore.Modules.WeBlog
                 rsd.WriteStartElement("service");
                 rsd.WriteElementString("engineName", "Sitecore WeBlog Module");
                 rsd.WriteElementString("engineLink", "http://" + WebUtil.GetHostName());
-                rsd.WriteElementString("homePageLink", currentBlog.Url);
+                rsd.WriteElementString("homePageLink", currentBlog.AbsoluteUrl);
 
                 // APIs
                 rsd.WriteStartElement("apis");

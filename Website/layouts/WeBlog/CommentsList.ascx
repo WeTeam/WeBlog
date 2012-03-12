@@ -14,7 +14,7 @@
             <li>
                 <% if (CurrentBlog.EnableGravatar.Checked)
                     { %>
-                <img src="<%# GetGravatarUrl((Container.DataItem as CommentItem).Email.Raw) %>" alt="<%#(Container.DataItem as CommentItem).Name.Raw%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
+                <img src="<%# GetGravatarUrl((Container.DataItem as CommentItem).Email.Text) %>" alt="<%#(Container.DataItem as CommentItem).Name.Text%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
                 <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>' CssClass="wb-comment-name">
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_NAME", (Container.DataItem as CommentItem).Name.Text) %>

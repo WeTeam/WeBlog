@@ -12,7 +12,7 @@
         <ItemTemplate>
             <li>
                 <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# GetEntryUrlForComment(Container.DataItem as CommentItem) %>'>
-                    <%#(Container.DataItem as CommentItem).Name.Rendered%> wrote: <%#(Container.DataItem as CommentItem).Comment.Rendered%>
+                    <%#(Container.DataItem as CommentItem).Name.Text%> wrote: <%#(Container.DataItem as CommentItem).Comment.Text%>
                 </asp:HyperLink>
             </li>
         </ItemTemplate>

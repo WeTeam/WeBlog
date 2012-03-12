@@ -12,10 +12,10 @@ using Sitecore.StringExtensions;
 using Sitecore.Search;
 using Sitecore.Analytics;
 using Sitecore.Modules.WeBlog.Extensions;
-#if !PRE_65
-using Sitecore.Analytics.Data.DataAccess.DataAdapters;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
+#if !PRE_65
+using Sitecore.Analytics.Data.DataAccess.DataAdapters;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -230,7 +230,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                     query.Add(new FieldQuery(Constants.Index.Fields.Category, id.ToShortID().ToString().ToLower()), QueryOccurance.Must);
                 }
-
+                
                 var searcher = new Searcher();
                 var result = searcher.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.Created, true);
 

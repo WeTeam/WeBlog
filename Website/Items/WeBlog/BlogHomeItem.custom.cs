@@ -90,11 +90,27 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
             return Size.Empty;
         }
 
+        /// <summary>
+        /// Gets the URL of the blog item
+        /// </summary>
         public string Url
         {
             get
             {
-                return "http://" + WebUtil.GetHostName() + LinkManager.GetItemUrl(InnerItem);
+                return LinkManager.GetItemUrl(InnerItem);
+            }
+        }
+
+        /// <summary>
+        /// Gets the absolute URL of the blog item including the server
+        /// </summary>
+        public string AbsoluteUrl
+        {
+            get
+            {
+                UrlOptions urlOptions = UrlOptions.DefaultOptions;
+                urlOptions.AlwaysIncludeServerUrl = true;
+                return LinkManager.GetItemUrl(InnerItem, urlOptions);
             }
         }
 

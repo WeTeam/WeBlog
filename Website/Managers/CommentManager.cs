@@ -35,7 +35,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Comment = comment;
             args.Database = ContentHelper.GetContentDatabase();
 
+#if PRE_65
+            CorePipeline.Run("weblogCreateComment", args);
+#else
             CorePipeline.Run("weblogCreateComment", args, true);
+#endif
 
             if (args.CommentItem != null)
                 return args.CommentItem.ID;
