@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogCommentsList.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogCommentsList" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Extensions" %>
 <%@ Register TagPrefix="gl" Namespace="Sitecore.Modules.WeBlog.Globalization" Assembly="Sitecore.Modules.WeBlog" %>
 
 <asp:Panel ID="CommentList" runat="server" CssClass="wb-entry-comments wb-panel">
@@ -29,7 +30,7 @@
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>
                 </div>
                 <p>
-                    <%#(Container.DataItem as CommentItem).Comment.Rendered%>
+                    <%#(Container.DataItem as CommentItem).Comment.HtmlEncode()%>
                 </p>
             </li>
         </ItemTemplate>
@@ -52,7 +53,7 @@
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>
                 </div>
                 <p>
-                    <%#(Container.DataItem as CommentItem).Comment.Rendered%>
+                    <%#(Container.DataItem as CommentItem).Comment.HtmlEncode()%>
                 </p>
             </li>
         </AlternatingItemTemplate>

@@ -135,6 +135,7 @@
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Extensions\CustomTextFieldExtensions.cs" />
     <Compile Include="Globalization\ItemAndPublishEventHandler.cs" />
     <Compile Include="Globalization\Translator.cs" />
     <Compile Include="Globalization\TranslatorControl.cs" />
