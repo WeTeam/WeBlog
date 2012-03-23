@@ -343,7 +343,7 @@ namespace Sitecore.Modules.WeBlog
                 SetItemData(newItem, rpcstruct);
 
                 if (publish)
-                    ContentHelper.PublishItem(newItem.ID);
+                    ContentHelper.PublishItemAndRequiredAncestors(newItem.ID);
 
                 return newItem.ID.ToString();
             }
@@ -377,7 +377,7 @@ namespace Sitecore.Modules.WeBlog
                 SetItemData(item, rpcstruct);
 
                 if (publish)
-                    ContentHelper.PublishItem(item.ID);
+                    ContentHelper.PublishItemAndRequiredAncestors(item.ID);
             }
             else
                 return false;
@@ -521,7 +521,7 @@ namespace Sitecore.Modules.WeBlog
             var mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
 
             // Publish mediaitem to web database
-            ContentHelper.PublishItem(mediaItem);
+            ContentHelper.PublishItemAndRequiredAncestors(mediaItem.ID);
 
             // Close stream
             memStream.Close();
@@ -553,7 +553,7 @@ namespace Sitecore.Modules.WeBlog
 
                 var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(currentID, comment);
 
-                ContentHelper.PublishItem(commentId);
+                ContentHelper.PublishItemAndRequiredAncestors(commentId);
             }
             catch (Exception)
             {

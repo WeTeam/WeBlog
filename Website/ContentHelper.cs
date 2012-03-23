@@ -2,6 +2,7 @@
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Publishing;
+using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog
 {
@@ -27,18 +28,63 @@ namespace Sitecore.Modules.WeBlog
         {
             DateTime publishDate = DateTime.Now;
             Sitecore.Data.Database master = GetContentDatabase();
-            Sitecore.Data.Items.Item targets = master.GetItem(Constants.Paths.PublishingTargets);
-            foreach (Sitecore.Data.Items.Item target in targets.Children)
+            var targetDBs = GetPublishingTargets(master);
+
+            foreach (var db in targetDBs)
             {
-                string targetDBName = target["target database"];
-                Sitecore.Data.Database targetDB = Sitecore.Configuration.Factory.GetDatabase(targetDBName);
                 foreach (Sitecore.Globalization.Language language in master.Languages)
                 {
-                    Sitecore.Publishing.PublishOptions publishOptions = new Sitecore.Publishing.PublishOptions(master, targetDB, Sitecore.Publishing.PublishMode.SingleItem, language, publishDate);
+                    Sitecore.Publishing.PublishOptions publishOptions = new Sitecore.Publishing.PublishOptions(master, db, Sitecore.Publishing.PublishMode.SingleItem, language, publishDate);
                     publishOptions.RootItem = targetItem;
                     publishOptions.Deep = childs;
                     Sitecore.Publishing.Publisher publisher = new Sitecore.Publishing.Publisher(publishOptions); publisher.Publish();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the publishing targets of a database
+        /// </summary>
+        /// <returns>An array of databases that are publishing targets for the given database</returns>
+        public static IEnumerable<Database> GetPublishingTargets(Database source)
+        {
+            var targetDefRoot = source.GetItem(Constants.Paths.PublishingTargets);
+            if (targetDefRoot != null)
+            {
+                var targetDefs = targetDefRoot.GetChildren();
+                foreach (Item target in targetDefs)
+                {
+                    var dbname = target["target database"];
+                    var targetDB = Sitecore.Configuration.Factory.GetDatabase(dbname);
+                    if (targetDB != null)
+                        yield return targetDB;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Publish the item and recursivley any ancestors that haven't yet been published
+        /// </summary>
+        /// <param name="item">The item to publish</param>
+        public static void PublishItemAndRequiredAncestors(ID itemID)
+        {
+            var db = GetContentDatabase();
+            var item = db.GetItem(itemID);
+            PublishItemAndRequiredAncestors(item);
+        }
+
+        /// <summary>
+        /// Publish the item and recursivley any ancestors that haven't yet been published
+        /// </summary>
+        /// <param name="item">The item to publish</param>
+        public static void PublishItemAndRequiredAncestors(Item item)
+        {
+            if (item != null)
+            {
+                var db = GetContentDatabase();
+                var targetDBs = GetPublishingTargets(db);
+                foreach (var target in targetDBs)
+                    PublishItemAndRequiredAncestors(item, target);
             }
         }
 

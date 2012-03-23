@@ -360,6 +360,7 @@
     <Compile Include="WebControls\ThemeIncludes.cs" />
     <Compile Include="Workflow\DeleteItemAction.cs" />
     <Compile Include="Workflow\ExtendedMailAction.cs" />
+    <Compile Include="Workflow\PublishItemAndAncestorsAction.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
