@@ -7,5 +7,6 @@
         public const string FolderTemplate = "common/folder";
         public const string CategoryTemplate = "{61FF8D49-90D7-4E59-878D-DF6E03400D3B}";
         public const string CommentTemplate = "{70949D4E-35D8-4581-A7A2-52928AA119D5}";
+        public const string EntryTemplate = "{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}";
     }
 }

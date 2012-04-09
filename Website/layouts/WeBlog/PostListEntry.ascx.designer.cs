@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.WeBlog.layouts.WeBlog {
+namespace Sitecore.Modules.WeBlog.Layouts.WeBlog {
     
     
     public partial class BlogPostListEntry {

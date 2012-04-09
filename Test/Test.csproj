@@ -150,6 +150,8 @@
     <Compile Include="EntryManagerPerformance.cs" />
     <Compile Include="MetaBlogApi.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
+    <Compile Include="Pipelines\GetSummary\AutoGenerateTest.cs" />
+    <Compile Include="Pipelines\GetSummary\FirstContentBlockTest.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>

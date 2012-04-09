@@ -44,7 +44,7 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
             }
         }
 
-        public string IntroductionText
+        /*public string IntroductionText
         {
             get
             {
@@ -57,7 +57,7 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                 return this.Introduction.Rendered;
                 
             }
-        }
+        }*/
 
         /// <summary>
         /// Gets the count of comments for this blog entry.

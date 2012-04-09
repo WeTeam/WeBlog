@@ -78,6 +78,9 @@
     <Reference Include="CustomItemGenerator">
       <HintPath>..\Dependencies\Third-party\CustomItemGenerator.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>$(SitecorePathCurrent)\bin\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Lucene.Net, Version=2.3.1.3, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePathCurrent)\bin\Lucene.Net.dll</HintPath>
@@ -330,6 +333,12 @@
     <Compile Include="Pipelines\CreateComment\CreateCommentItem.cs" />
     <Compile Include="Pipelines\CreateComment\ICreateCommentProcessor.cs" />
     <Compile Include="Pipelines\CreateComment\WorkflowSubmit.cs" />
+    <Compile Include="Pipelines\GetSummary\AutoGenerate.cs" />
+    <Compile Include="Pipelines\GetSummary\FirstContentBlock.cs" />
+    <Compile Include="Pipelines\GetSummary\GetSummaryArgs.cs" />
+    <Compile Include="Pipelines\GetSummary\GetSummaryProcessorBase.cs" />
+    <Compile Include="Pipelines\GetSummary\IGetSummaryProcessor.cs" />
+    <Compile Include="Pipelines\GetSummary\IntroductionField.cs" />
     <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
