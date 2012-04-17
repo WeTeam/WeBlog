@@ -8,6 +8,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Modules.WeBlog.Globalization;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -20,7 +21,6 @@ namespace Sitecore.Modules.WeBlog.Commands
                 Item item = context.Items[0];
                 NameValueCollection parameters = new NameValueCollection();
                 parameters["currentid"] = item.ID.ToString();
-                parameters["tid"] = item.TemplateID.ToString();
                 parameters["database"] = item.Database.Name;
                 Context.ClientPage.Start(this, "Run", parameters);
             }
@@ -34,7 +34,6 @@ namespace Sitecore.Modules.WeBlog.Commands
                 {
                     var itemTitle = args.Result;
 
-                    var template = new TemplateID(Settings.EntryTemplateId);
                     var db = Sitecore.Configuration.Factory.GetDatabase(args.Parameters["database"]);
                     if (db != null)
                     {
@@ -42,6 +41,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                         if (currentItem != null)
                         {
                             var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
+                            var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
                             Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
 
                             ContentHelper.PublishItem(newItem);
@@ -51,9 +51,18 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                string currentTID = args.Parameters["tid"];
+                var db = Sitecore.Configuration.Factory.GetDatabase(args.Parameters["database"]);
+                if (db == null)
+                {
+                    return;
+                }
+                var currentItem = db.GetItem(args.Parameters["currentid"]);
+                if (currentItem == null)
+                {
+                    return;
+                }
 
-                if (currentTID != Settings.BlogTemplateIdString && currentTID != Settings.EntryTemplateIdString && currentTID != Settings.EntryTemplateIdString)
+                if (!currentItem.TemplateIsOrBasedOn(Settings.BlogTemplateID) && !currentItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
                 {
                     Context.ClientPage.ClientResponse.Alert("Please create or select a blog first");
                 }

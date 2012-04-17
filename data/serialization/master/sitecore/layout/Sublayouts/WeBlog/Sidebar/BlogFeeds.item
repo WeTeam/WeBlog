@@ -6,8 +6,8 @@ path: /sitecore/layout/Sublayouts/WeBlog/Sidebar/BlogFeeds
 parent: {78C79C5D-F7FE-412B-9580-64ADB22EFDE5}
 name: BlogFeeds
 master: {00000000-0000-0000-0000-000000000000}
-template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
-templatekey: Sublayout
+template: {A3475FCD-1FE2-4B20-BF05-4A2BB4334A76}
+templatekey: Blog Sublayout
 
 ----field----
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
@@ -34,6 +34,13 @@ content-length: 1
 field: {8B6D532B-6128-4486-A044-CA06D90948BA}
 name: VaryByData
 key: varybydata
+content-length: 0
+
+
+----field----
+field: {3AD2506A-DC39-4B1E-959F-9D524ADDBF50}
+name: VaryByParm
+key: varybyparm
 content-length: 1
 
 1
@@ -47,7 +54,7 @@ content-length: 144
 ----version----
 language: en
 version: 1
-revision: bb4283f0-edcd-468d-9cd8-27d933e01b41
+revision: 82b98c03-7944-4342-87d5-7a523c41abbc
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -83,14 +90,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-bb4283f0-edcd-468d-9cd8-27d933e01b41
+82b98c03-7944-4342-87d5-7a523c41abbc
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T173804:634547290846006909
+20120401T175954:634688999946015625
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

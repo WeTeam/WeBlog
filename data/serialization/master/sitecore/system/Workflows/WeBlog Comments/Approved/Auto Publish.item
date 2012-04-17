@@ -13,9 +13,9 @@ templatekey: Action
 field: {A291A22B-99E2-46BB-A27B-8EC744275396}
 name: Type
 key: type
-content-length: 56
+content-length: 86
 
-Sitecore.Workflows.Simple.PublishAction, Sitecore.Kernel
+Sitecore.Modules.WeBlog.Workflow.PublishItemAndAncestorsAction,Sitecore.Modules.WeBlog
 ----field----
 field: {1507131D-CEE3-49E9-AF32-DE5403A37B49}
 name: Parameters
@@ -141,7 +141,7 @@ sitecore\admin
 ----version----
 language: en
 version: 1
-revision: 8e86b263-6cde-4ea7-bc5b-739b7f626440
+revision: 236abd80-dc75-4b40-b1e3-1639427051f1
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -170,21 +170,21 @@ name: __Revision
 key: __revision
 content-length: 36
 
-8e86b263-6cde-4ea7-bc5b-739b7f626440
+236abd80-dc75-4b40-b1e3-1639427051f1
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T142508:634547175086669434
+20120401T093052:634688694525634766
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin
 ----version----
 language: ja-JP
 version: 1

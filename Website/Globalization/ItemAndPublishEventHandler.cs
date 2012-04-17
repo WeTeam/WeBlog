@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
         public void OnItemSaved(object sender, EventArgs args)
         {
             Item item = Event.ExtractParameter(args, 0) as Item;
-            if (item != null && item.TemplateID == Settings.DictionaryEntryTemplateId)
+            if (item != null && item.TemplateID == Settings.DictionaryEntryTemplateID)
             {
                 Log.Info("Dictionary Entry saved, clearing Translator cache", this);
                 Translator.ClearCaches();

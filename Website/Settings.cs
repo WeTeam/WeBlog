@@ -19,7 +19,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the entry template from Sitecore settings as a string
         /// </summary>
-        public static string EntryTemplateIdString
+        public static string EntryTemplateIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.EntryTemplateID", "{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}"); }
         }
@@ -27,12 +27,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the entry template from Sitecore settings
         /// </summary>
-        public static ID EntryTemplateId
+        public static ID EntryTemplateID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(EntryTemplateIdString, out id);
+                ID.TryParse(EntryTemplateIDString, out id);
                 return id;
             }
         }
@@ -40,7 +40,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the comment template from Sitecore settings as a string
         /// </summary>
-        public static string CommentTemplateIdString
+        public static string CommentTemplateIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.CommentTemplateID", "{70949D4E-35D8-4581-A7A2-52928AA119D5}"); }
         }
@@ -48,12 +48,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the comment template from Sitecore settings
         /// </summary>
-        public static ID CommentTemplateId
+        public static ID CommentTemplateID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(CommentTemplateIdString, out id);
+                ID.TryParse(CommentTemplateIDString, out id);
                 return id;
             }
         }
@@ -61,7 +61,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the blog template from Sitecore settings as a string
         /// </summary>
-        public static string BlogTemplateIdString
+        public static string BlogTemplateIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.BlogTemplateID", "{46663E05-A6B8-422A-8E13-36CD2B041278}"); }
         }
@@ -69,12 +69,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the blog template from Sitecore settings
         /// </summary>
-        public static ID BlogTemplateId
+        public static ID BlogTemplateID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(BlogTemplateIdString, out id);
+                ID.TryParse(BlogTemplateIDString, out id);
                 return id;
             }
         }
@@ -82,7 +82,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the category template from Sitecore settings as a string
         /// </summary>
-        public static string CategoryTemplateIdString
+        public static string CategoryTemplateIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.CategoryTemplateID", "{61FF8D49-90D7-4E59-878D-DF6E03400D3B}"); }
         }
@@ -90,12 +90,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the category template from Sitecore settings
         /// </summary>
-        public static ID CategoryTemplateId
+        public static ID CategoryTemplateID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(CategoryTemplateIdString, out id);
+                ID.TryParse(CategoryTemplateIDString, out id);
                 return id;
             }
         }
@@ -103,7 +103,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the RSS Feed template from Sitecore settings as a string
         /// </summary>
-        public static string RssFeedTemplateIdString
+        public static string RssFeedTemplateIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.RSSFeedTemplateID", "{B960CBE4-381F-4A2B-9F44-A43C7A991A0B}"); }
         }
@@ -111,12 +111,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the RSS Feed template from Sitecore settings
         /// </summary>
-        public static ID RssFeedTemplateId
+        public static ID RssFeedTemplateID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(RssFeedTemplateIdString, out id);
+                ID.TryParse(RssFeedTemplateIDString, out id);
                 return id;
             }
         }
@@ -124,7 +124,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the blog branch from Sitecore settings as a string
         /// </summary>
-        public static string BlogBranchIdString
+        public static string BlogBranchIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.BlogBranchTemplateID", "{6FC4278C-E043-458B-9D5D-BBA775A9C386}"); }
         }
@@ -132,12 +132,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ID of the blog branch from Sitecore settings
         /// </summary>
-        public static ID BlogBranchId
+        public static ID BlogBranchID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(BlogBranchIdString, out id);
+                ID.TryParse(BlogBranchIDString, out id);
                 return id;
             }
         }
@@ -225,7 +225,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the dictionary entry templateid as string.
         /// </summary>
-        public static string DictionaryEntryTemplateIdString
+        public static string DictionaryEntryTemplateIDString
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Globalization.DictonaryEntryTemplateId"); }
         }
@@ -233,12 +233,12 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the dictionary entry template id.
         /// </summary>
-        public static ID DictionaryEntryTemplateId
+        public static ID DictionaryEntryTemplateID
         {
             get
             {
                 var id = ID.Null;
-                ID.TryParse(DictionaryEntryTemplateIdString, out id);
+                ID.TryParse(DictionaryEntryTemplateIDString, out id);
                 return id;
             }
         }

@@ -17,7 +17,7 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("MetaBlogApi")]
-    public class MetaBlogApi
+    public class MetaBlogApi : UnitTestBase
     {
         private const string PASSWORD = "password1";
 
@@ -57,7 +57,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 // Ensure blog 1 entries. Current NewsMover has a bug which is removing them as they are created.
                 // Remove the following section once the bug has been fixed
                 // START: Workaround
-                var template = m_blog1.Database.Templates[Settings.EntryTemplateId];
+                var template = m_blog1.Database.Templates[Settings.EntryTemplateID];
                 var entry11Check = m_blog1.Axes.GetDescendant("Entry11");
 
                 if (entry11Check == null)

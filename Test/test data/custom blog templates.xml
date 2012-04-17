@@ -1,0 +1,129 @@
+﻿<item name="test templates" key="test templates" id="{7E6F073A-B0BB-40A9-BD45-6CE2FFE42D80}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template folder" parentid="{F7834F56-2F60-40DF-8FB6-1A64DC3BB0FC}">
+    <version language="en" version="1">
+        <fields>
+            <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                <content>sitecore\admin</content>
+            </field>
+            <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                <content>sitecore\admin</content>
+            </field>
+            <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                <content>53cfb6a0-c078-4fb1-a65e-c04a0c8e2cf1</content>
+            </field>
+            <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                <content>20120401T113552</content>
+            </field>
+            <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                <content>20120401T114022:634688772227265625</content>
+            </field>
+        </fields>
+    </version>
+    <item name="CustomBlog" key="customblog" id="{7796BF68-DF2D-4783-BD91-FACDE9386CFE}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{7E6F073A-B0BB-40A9-BD45-6CE2FFE42D80}">
+        <version language="en" version="1">
+            <fields>
+                <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                    <content>63100547-0325-4a10-8ac2-b6383ff7ae95</content>
+                </field>
+                <field tfid="{001DD393-96C5-490B-924A-B0F25CD9EFD8}" key="" type="">
+                    <content>&lt;r owner="sitecore\admin" date="20120401T113538" /&gt;</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                    <content>20120401T113537</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                    <content>20120401T113603:634688769638076172</content>
+                </field>
+                <field tfid="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" key="__base template" type="tree list">
+                    <content>{46663E05-A6B8-422A-8E13-36CD2B041278}</content>
+                </field>
+            </fields>
+        </version>
+    </item>
+    <item name="CustomCategory" key="customcategory" id="{8A6ED3E2-F2B7-4D95-B482-0E07A511211E}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{7E6F073A-B0BB-40A9-BD45-6CE2FFE42D80}">
+        <version language="en" version="1">
+            <fields>
+                <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                    <content>6aea7c8c-a5dc-4f2d-a3b3-c5be014f0656</content>
+                </field>
+                <field tfid="{001DD393-96C5-490B-924A-B0F25CD9EFD8}" key="" type="">
+                    <content>&lt;r owner="sitecore\admin" date="20120401T115113" /&gt;</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                    <content>20120401T115112</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                    <content>20120401T115113:634688778730429687</content>
+                </field>
+                <field tfid="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" key="__base template" type="tree list">
+                    <content>{61FF8D49-90D7-4E59-878D-DF6E03400D3B}</content>
+                </field>
+            </fields>
+        </version>
+    </item>
+    <item name="CustomComment" key="customcomment" id="{D9BF196A-794A-4C53-814D-C36FD1A103D2}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{7E6F073A-B0BB-40A9-BD45-6CE2FFE42D80}">
+        <version language="en" version="1">
+            <fields>
+                <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                    <content>51467369-787f-48c2-b25d-8f5d85b0b71f</content>
+                </field>
+                <field tfid="{001DD393-96C5-490B-924A-B0F25CD9EFD8}" key="" type="">
+                    <content>&lt;r owner="sitecore\admin" date="20120401T115055" /&gt;</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                    <content>20120401T115055</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                    <content>20120401T115055:634688778550742187</content>
+                </field>
+                <field tfid="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" key="__base template" type="tree list">
+                    <content>{70949D4E-35D8-4581-A7A2-52928AA119D5}</content>
+                </field>
+            </fields>
+        </version>
+    </item>
+    <item name="CustomEntry" key="customentry" id="{1E194C29-026B-40B7-8C85-2CD1FE828F75}" tid="{AB86861A-6030-46C5-B394-E8F99E8B87DB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="template" parentid="{7E6F073A-B0BB-40A9-BD45-6CE2FFE42D80}">
+        <version language="en" version="1">
+            <fields>
+                <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                    <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                    <content>645b1657-b2e2-4a0a-b290-567d13349c20</content>
+                </field>
+                <field tfid="{001DD393-96C5-490B-924A-B0F25CD9EFD8}" key="" type="">
+                    <content>&lt;r owner="sitecore\admin" date="20120401T115034" /&gt;</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                    <content>20120401T115034</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                    <content>20120401T115034:634688778346992187</content>
+                </field>
+                <field tfid="{12C33F3F-86C5-43A5-AEB4-5598CEC45116}" key="__base template" type="tree list">
+                    <content>{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}</content>
+                </field>
+            </fields>
+        </version>
+    </item>
+</item>

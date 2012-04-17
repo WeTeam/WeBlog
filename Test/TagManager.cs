@@ -14,8 +14,9 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("TagManager")]
-    public class TagManager
+    public class TagManager : UnitTestBase
     {
+        Item m_home = null;
         Item m_testRoot = null;
         Item m_blog1 = null;
         Item m_entry1 = null;
@@ -26,14 +27,18 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
+                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
             }
+            Initialize();
+        }
 
+        protected void Initialize()
+        {
             // Retrieve created content items
-            m_testRoot = home.Axes.GetChild("blog testroot");
+            m_testRoot = m_home.Axes.GetChild("blog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("myblog");
 
             m_entry1 = m_blog1.Axes.GetDescendant("Entry1");
@@ -61,16 +66,20 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetAllTags_Blog1()
         {
             var tags = new Mod.TagManager().GetAllTags(new Items.WeBlog.BlogHomeItem(m_blog1));
+            Assert.IsTrue(tags.ContainsKey("taga"), "taga not found");
+            Assert.IsTrue(tags.ContainsKey("tagb"), "tagb not found");
+            Assert.IsTrue(tags.ContainsKey("tagc"), "tagc not found");
             Assert.AreEqual(1, tags["tagb"]);
             Assert.AreEqual(2, tags["tagc"]);
             Assert.AreEqual(3, tags["taga"]);
         }
 
         [Test]
-        public void GetAllTags_NonBlogItem()
+        public void GetAllTags_EntryItem()
         {
             var tags = new Mod.TagManager().GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
-            Assert.AreEqual(1, tags.Count);
+            //entry is part of blog w/ 3 tags
+            Assert.AreEqual(3, tags.Count);
         }
 
         [Test]
@@ -97,10 +106,11 @@ namespace Sitecore.Modules.WeBlog.Test
         }
 
         [Test]
-        public void GetTagsByBlog_NonBlogID()
+        public void GetTagsByBlog_EntryID()
         {
             var tags = new Mod.TagManager().GetTagsByBlog(m_entry1.ID);
-            Assert.AreEqual(1, tags.Length);
+            //entry is part of blog w/ 3 tags
+            Assert.AreEqual(3, tags.Length);
         }
 
         [Test]

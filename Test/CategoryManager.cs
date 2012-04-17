@@ -14,8 +14,9 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("CategoryManager")]
-    public class CategoryManager
+    public class CategoryManager : UnitTestBase
     {
+        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_categoryRoot = null;
@@ -31,15 +32,19 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
                 // Don't change IDs as blog item references category by ID
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
+                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
             }
+            Initialize();
+        }
 
+        protected void Initialize()
+        {
             // Retrieve created content items
-            m_testRoot = home.Axes.GetChild("blog test root");
+            m_testRoot = m_home.Axes.GetChild("blog test root");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
 
             m_categoryRoot = m_blog1.Axes.GetChild("categories");

@@ -13,10 +13,11 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("BlogManager")]
-    public class BlogManager
+    public class BlogManager : UnitTestBase
     {
         private const string TESTUSERNAME = "test1";
 
+        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_blog2 = null;
@@ -28,12 +29,12 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
                 try
                 {
-                    home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
+                    m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
                 }
                 catch
                 {
@@ -41,10 +42,30 @@ namespace Sitecore.Modules.WeBlog.Test
                     int y = 0;
                     y++;
                 }
-            }
+                Initialize();
 
+                // Create test user
+                try
+                {
+                    var user = Sitecore.Security.Accounts.User.Create("sitecore\\" + TESTUSERNAME, TESTUSERNAME);
+                    Roles.AddUserToRole("sitecore\\" + TESTUSERNAME, "sitecore\\sitecore client authoring");
+
+                    var accessRule = AccessRule.Create(user, AccessRight.ItemWrite, PropagationType.Any, AccessPermission.Allow);
+                    var accessRules = new AccessRuleCollection();
+                    accessRules.Add(accessRule);
+                    m_blog1.Security.SetAccessRules(accessRules);
+                }
+                catch
+                {
+                    Membership.DeleteUser("sitecore\\" + TESTUSERNAME);
+                }
+            }
+        }
+
+        protected void Initialize()
+        {
             // Retrieve created content items
-            m_testRoot = home.Axes.GetChild("weblog testroot");
+            m_testRoot = m_home.Axes.GetChild("weblog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
@@ -52,22 +73,6 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment111 = m_entry11.Axes.GetDescendant("comment1");
 
             m_entry21 = m_blog2.Axes.GetDescendant("entry1");
-
-            // Create test user
-            try
-            {
-                var user = Sitecore.Security.Accounts.User.Create("sitecore\\" + TESTUSERNAME, TESTUSERNAME);
-                Roles.AddUserToRole("sitecore\\" + TESTUSERNAME, "sitecore\\sitecore client authoring");
-
-                var accessRule = AccessRule.Create(user, AccessRight.ItemWrite, PropagationType.Any, AccessPermission.Allow);
-                var accessRules = new AccessRuleCollection();
-                accessRules.Add(accessRule);
-                m_blog1.Security.SetAccessRules(accessRules);
-            }
-            catch
-            {
-                Membership.DeleteUser("sitecore\\" + TESTUSERNAME);
-            }
         }
 
         [TestFixtureTearDown]
@@ -76,7 +81,9 @@ namespace Sitecore.Modules.WeBlog.Test
             using (new SecurityDisabler())
             {
                 if (m_testRoot != null)
+                {
                     m_testRoot.Delete();
+                }
             }
 
             Membership.DeleteUser("sitecore\\" + TESTUSERNAME);

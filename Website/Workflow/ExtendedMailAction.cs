@@ -130,11 +130,11 @@ namespace Sitecore.Modules.WeBlog.Workflow
             velocityContext.Put("time", DateTime.Now);
 
             Items.WeBlog.EntryItem entryItem = null;
-            if (args.DataItem.TemplateIsOrBasedOn(Settings.EntryTemplateId))
+            if (args.DataItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
             {
                 entryItem = new Items.WeBlog.EntryItem(args.DataItem);
             }
-            else if (args.DataItem.TemplateIsOrBasedOn(Settings.CommentTemplateId))
+            else if (args.DataItem.TemplateIsOrBasedOn(Settings.CommentTemplateID))
             {
                 Items.WeBlog.CommentItem commentItem = new Items.WeBlog.CommentItem(args.DataItem);
                 entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(commentItem);

@@ -115,7 +115,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="tag">A tag the entry must contain</param>
         /// <param name="category">A category the entry must contain</param>
         /// <returns></returns>
-        EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category);
+        EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null);
 
         /// <summary>
         /// Gets the blog entries for a particular month and year.

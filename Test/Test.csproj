@@ -124,6 +124,7 @@
     </Content>
     <Content Include="test data\comments out of order.xml" />
     <Content Include="test data\comments reverse order.xml" />
+    <Content Include="test data\custom blog templates.xml" />
     <Content Include="test data\entries in order.xml" />
     <Content Include="test data\entries out of order.xml" />
     <Content Include="test data\entries reverse order.xml" />
@@ -142,10 +143,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogManager.cs" />
+    <Compile Include="CustomBlog\BlogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CommentManager.cs" />
     <Compile Include="CommentManagerPerformance.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="CustomBlog\CategoryManager.cs" />
+    <Compile Include="CustomBlog\CommentManager.cs" />
+    <Compile Include="CustomBlog\EntryManager.cs" />
+    <Compile Include="CustomBlog\Extensions.cs" />
+    <Compile Include="CustomBlog\TagManager.cs" />
     <Compile Include="EntryManager.cs" />
     <Compile Include="EntryManagerPerformance.cs" />
     <Compile Include="MetaBlogApi.cs" />
@@ -160,6 +167,7 @@
     <Compile Include="Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -169,6 +177,9 @@
       <Project>{26FE5F3A-F140-40C4-85A0-C1866DA26F16}</Project>
       <Name>Sitecore.Modules.WeBlog</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.Test.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
@@ -180,7 +191,7 @@
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePathCurrent) != ''" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="bin\*.dll;test.aspx;test data\**\*.*" Exclude="**\.svn\**\*.*">
+    <CreateItem Include="bin\*.dll;test.aspx;test data\**\*.*;App_Config\**\*.*" Exclude="**\.svn\**\*.*">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePathCurrent)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />

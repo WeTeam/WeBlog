@@ -6,6 +6,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Modules.WeBlog.Globalization;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -18,7 +19,6 @@ namespace Sitecore.Modules.WeBlog.Commands
                 var item = context.Items[0];
                 var parameters = new NameValueCollection();
                 parameters["currentid"] = item.ID.ToString();
-                parameters["tid"] = item.TemplateID.ToString();
                 parameters["database"] = item.Database.Name;
                 Context.ClientPage.Start(this, "Run", parameters);
             }
@@ -33,7 +33,8 @@ namespace Sitecore.Modules.WeBlog.Commands
                     string itemTitle = args.Result;
 
                     var db = ContentHelper.GetContentDatabase();
-                    var template = new TemplateID(Settings.CategoryTemplateId);
+                    var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
+                    var template = new TemplateID(blogItem.BlogSettings.CategoryTemplateID);
 
                     var currentItem = db.GetItem(args.Parameters["currentid"]);
                     var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
@@ -49,9 +50,10 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                var currentTID = args.Parameters["tid"];
+                var db = ContentHelper.GetContentDatabase();
+                var currentItem = db.GetItem(args.Parameters["currentid"]);
 
-                if (currentTID != Settings.BlogTemplateIdString && currentTID != Settings.EntryTemplateIdString)
+                if (!currentItem.TemplateIsOrBasedOn(Settings.BlogTemplateID) && !currentItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
                 {
                     Context.ClientPage.ClientResponse.Alert("Please create or select a blog first");
                 }

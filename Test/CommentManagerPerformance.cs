@@ -15,7 +15,7 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("CommentManagerPerformance")]
-    public class CommentManagerPerformance
+    public class CommentManagerPerformance : UnitTestBase
     {
         private const int SMALL_COUNT = 50;
         private const int MEDIUM_COUNT = 300;
@@ -191,7 +191,7 @@ namespace Sitecore.Modules.WeBlog.Test
             commentCountForEntry = 0;
 
             var db = parent.Database;
-            var branchName = Sitecore.Configuration.Settings.GetSetting("Blog.BlogBranchTemplateID");
+            var branchName = Settings.BlogBranchID;
             var branchTemplate = (BranchItem)db.GetItem(branchName);
 
             var blog = parent.Add(name, branchTemplate);

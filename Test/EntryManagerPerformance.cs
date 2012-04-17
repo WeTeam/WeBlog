@@ -17,7 +17,7 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("EntryManagerPerformance")]
-    public class EntryManagerPerformance
+    public class EntryManagerPerformance : UnitTestBase
     {
         private const int SMALL_COUNT = 50;
         private const int MEDIUM_COUNT = 300;

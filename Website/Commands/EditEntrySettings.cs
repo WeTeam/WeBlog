@@ -5,6 +5,7 @@ using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -23,7 +24,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
                 args.Parameters.Add("uri", context.Items[0].Uri.ToString());
-                if (context.Items[0].TemplateID == Settings.EntryTemplateId)
+                if (context.Items[0].TemplateIsOrBasedOn(Settings.EntryTemplateID))
                 {
                     Context.ClientPage.Start(this, "StartFieldEditor", args);
                 }

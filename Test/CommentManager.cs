@@ -9,16 +9,18 @@ using Sitecore;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("CommentManager")]
-    public class CommentManager
+    public class CommentManager : UnitTestBase
     {
         private string FOLDER_TEMPLATE = "common/folder";
         private readonly string m_commentTemplateId;
 
+        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_entry11 = null;
@@ -38,18 +40,22 @@ namespace Sitecore.Modules.WeBlog.Test
             m_commentTemplateId = Sitecore.Configuration.Settings.GetSetting("WeBlog.CommentTemplateID");
         }
 
-        [SetUp]
+        [TestFixtureSetUp]
         public void SetUp()
         {
             // Create test content
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
+                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
             }
+            Initialize();
+        }
 
+        protected void Initialize()
+        {
             // Retrieve created content items
-            m_testRoot = home.Axes.GetChild("blog test root");
+            m_testRoot = m_home.Axes.GetChild("blog test root");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
@@ -71,18 +77,21 @@ namespace Sitecore.Modules.WeBlog.Test
             index.Rebuild();
         }
 
-        [TearDown]
+        [TestFixtureTearDown]
         public void TearDown()
         {
             using (new SecurityDisabler())
             {
                 if (m_testRoot != null)
+                {
                     m_testRoot.Delete();
+                }
             }
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedCommentsList_InOrder()
+        public virtual void MakeSortedCommentsList_InOrder()
         {
             using (new SecurityDisabler())
             {
@@ -111,8 +120,9 @@ namespace Sitecore.Modules.WeBlog.Test
             }
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedCommentsList_ReverseOrder()
+        public virtual void MakeSortedCommentsList_ReverseOrder()
         {
             using (new SecurityDisabler())
             {
@@ -141,8 +151,9 @@ namespace Sitecore.Modules.WeBlog.Test
             }
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedCommentsList_OutOfOrder()
+        public virtual void MakeSortedCommentsList_OutOfOrder()
         {
             using (new SecurityDisabler())
             {
@@ -172,8 +183,9 @@ namespace Sitecore.Modules.WeBlog.Test
             }
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedCommentsList_WithNonComment()
+        public virtual void MakeSortedCommentsList_WithNonComment()
         {
             Item commentFolder = null;
 
@@ -411,7 +423,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var ids = (from comment in comments
                        select comment.ID).ToArray();
 
-            Assert.Contains(m_comment113.ID, ids);
+            Assert.Contains(m_comment111.ID, ids);
             Assert.Contains(m_comment112.ID, ids);
         }
 
@@ -434,18 +446,10 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             // Perform this test in master DB as comments get created there
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var home = db.GetItem("/sitecore/content/home");
-            using (new SecurityDisabler())
-            {
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
-            }
-
-            // Retrieve created content items
-            var testRoot = home.Axes.GetChild("blog test root");
-            var blog1 = m_testRoot.Axes.GetChild("blog1");
+            var blogSettings = new BlogHomeItem(m_blog1).BlogSettings;
             var entry12 = m_blog1.Axes.GetDescendant("Entry2");
 
-            var originalCount = entry12.Axes.GetDescendants().Count(i => i.TemplateID.ToString() == m_commentTemplateId);
+            var originalCount = entry12.Axes.GetDescendants().Count(i => i.TemplateID == blogSettings.CommentTemplateID);
             ID commentId = null;
 
             try
@@ -461,7 +465,7 @@ namespace Sitecore.Modules.WeBlog.Test
                 comment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.Website] = "website";
 
                 commentId = new Mod.CommentManager().AddCommentToEntry(m_entry12.ID, comment);
-                var childCount = m_entry12.Axes.GetDescendants().Count(i => i.TemplateID.ToString() == m_commentTemplateId);
+                var childCount = m_entry12.Axes.GetDescendants().Count(i => i.TemplateID == blogSettings.CommentTemplateID);
 
                 Assert.IsTrue(commentId != ID.Null);
                 Assert.AreEqual(originalCount + 1, childCount);
@@ -480,17 +484,26 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 var webDb = Sitecore.Configuration.Factory.GetDatabase("web");
 
-                if (testRoot != null)
-                {
-                    using (new SecurityDisabler())
-                    {
-                        testRoot.Delete();
-                    }
-                }
+                //if (testRoot != null)
+                //{
+                //    using (new SecurityDisabler())
+                //    {
+                //        testRoot.Delete();
+                //    }
+                //}
 
                 if (commentId != (ID)null)
                 {
-                    var commentItem = webDb.GetItem(commentId);
+                    var commentItem = db.GetItem(commentId);
+                    if (commentItem != null)
+                    {
+                        using (new SecurityDisabler())
+                        {
+                            commentItem.Delete();
+                        }
+                    }
+
+                    commentItem = webDb.GetItem(commentId);
                     if (commentItem != null)
                     {
                         using (new SecurityDisabler())

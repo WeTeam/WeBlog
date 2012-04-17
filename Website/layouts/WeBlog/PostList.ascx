@@ -6,7 +6,7 @@
 <div class="wb-entry-list wb-panel">
     <asp:ListView ID="EntryList" runat="server" OnItemDataBound="EntryDataBound">
     <LayoutTemplate>
-        <ul>
+        <ul class="wb-entry-list-entries">
             <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
         </ul>
     </LayoutTemplate>

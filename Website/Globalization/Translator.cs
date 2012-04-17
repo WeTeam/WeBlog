@@ -183,7 +183,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
             }
 
             IEnumerable<Item> entries = dictionaryItem.Axes.GetDescendants();
-            entries = entries.Where(entry => entry.TemplateID == Settings.DictionaryEntryTemplateId);
+            entries = entries.Where(entry => entry.TemplateID == Settings.DictionaryEntryTemplateID);
             foreach (Item entry in entries)
             {
                 string key = entry[KEY].Trim();

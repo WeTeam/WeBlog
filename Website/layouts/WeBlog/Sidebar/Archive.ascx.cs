@@ -11,10 +11,19 @@ namespace Sitecore.Modules.WeBlog.Layouts
     public partial class BlogArchive : BaseSublayout
     {
         protected DateTime m_startedDate = DateTime.Now;
-        public Dictionary<int, Items.WeBlog.EntryItem[]> m_entriesByMonthAndYear = null;
+        public Dictionary<int, List<EntryItem>> m_entriesByMonthAndYear = null;
 
         /// <summary>
-        /// Gets or sets whether individual posts in each month should be shown
+        /// Gets or sets whether individual months in each year should be shown by default
+        /// </summary>
+        public bool ExpandMonthsOnLoad
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets whether individual posts in each month should be shown by default
         /// </summary>
         public bool ExpandPostsOnLoad
         {
@@ -24,9 +33,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected virtual void Page_Load(object sender, EventArgs e)
         {
+            ExpandMonthsOnLoad = true;
             SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
 
-            m_entriesByMonthAndYear = new Dictionary<int, EntryItem[]>();
+            m_entriesByMonthAndYear = new Dictionary<int, List<EntryItem>>();
             m_startedDate = CurrentBlog.InnerItem.Statistics.Created;
             
             LoadEntries();
@@ -42,14 +52,26 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// </summary>
         protected void LoadEntries()
         {
-            m_entriesByMonthAndYear = new Dictionary<int, EntryItem[]>();
+            m_entriesByMonthAndYear = new Dictionary<int, List<EntryItem>>();
+
             var years = GetYears();
             foreach (var year in years)
             {
                 for (int i = 1; i <= 12; i++)
                 {
                     var key = (year * 100) + i;
-                    m_entriesByMonthAndYear.Add(key, ManagerFactory.EntryManagerInstance.GetBlogEntriesByMonthAndYear(i, year));
+                    m_entriesByMonthAndYear.Add(key, new List<EntryItem>());
+                }
+            }
+
+            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries();
+            foreach (var entry in entries)
+            {
+                DateTime created = entry.Created;
+                var key = (created.Year * 100) + created.Month;
+                if (m_entriesByMonthAndYear.ContainsKey(key))
+                {
+                    m_entriesByMonthAndYear[key].Add(entry);
                 }
             }
         }
@@ -105,7 +127,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <returns>The number of entries for the given year and month</returns>
         protected virtual int GetEntryCountForYearAndMonth(int yearAndMonth)
         {
-            return GetEntriesForYearAndMonth(yearAndMonth).Length;
+            return GetEntriesForYearAndMonth(yearAndMonth).Count;
         }
 
         /// <summary>
@@ -113,12 +135,12 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// </summary>
         /// <param name="yearAndMonth">The year and month in yyyyMM format</param>
         /// <returns>The entries for the given year and month</returns>
-        protected virtual EntryItem[] GetEntriesForYearAndMonth(int yearAndMonth)
+        protected virtual List<EntryItem> GetEntriesForYearAndMonth(int yearAndMonth)
         {
             if (m_entriesByMonthAndYear.ContainsKey(yearAndMonth))
                 return m_entriesByMonthAndYear[yearAndMonth];
             else
-                return new EntryItem[0];
+                return new List<EntryItem>();
         }
 
         protected virtual void MonthDataBound(object sender, RepeaterItemEventArgs args)

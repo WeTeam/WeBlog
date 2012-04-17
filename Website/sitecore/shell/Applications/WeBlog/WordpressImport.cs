@@ -128,7 +128,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             jobStatus = "Creating blog";
             Item root = db.GetItem(litSummaryPath.Text);
 
-            BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchId);
+            BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchID);
             BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(litSettingsName.Value), newBlog);
 
             blogItem.BeginEdit();

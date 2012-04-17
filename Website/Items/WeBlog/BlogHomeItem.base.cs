@@ -38,6 +38,15 @@ public static implicit operator Item(BlogHomeItem customItem)
 #region Field Instance Methods
 
 
+public CustomLookupField DefinedCategoryTemplate
+{
+	get
+	{
+		return new CustomLookupField(InnerItem, InnerItem.Fields["Defined Category Template"]);
+	}
+}
+
+
 public CustomCheckboxField EnableRSS
 {
 	get
@@ -52,6 +61,24 @@ public CustomTextField Title
 	get
 	{
 		return new CustomTextField(InnerItem, InnerItem.Fields["Title"]);
+	}
+}
+
+
+public CustomTextField titleCategories
+{
+	get
+	{
+		return new CustomTextField(InnerItem, InnerItem.Fields["titleCategories"]);
+	}
+}
+
+
+public CustomLookupField DefinedEntryTemplate
+{
+	get
+	{
+		return new CustomLookupField(InnerItem, InnerItem.Fields["Defined Entry Template"]);
 	}
 }
 
@@ -74,6 +101,24 @@ public CustomCheckboxField EnableComments
 }
 
 
+public CustomTextField titleRecentComments
+{
+	get
+	{
+		return new CustomTextField(InnerItem, InnerItem.Fields["titleRecentComments"]);
+	}
+}
+
+
+public CustomLookupField DefinedCommentTemplate
+{
+	get
+	{
+		return new CustomLookupField(InnerItem, InnerItem.Fields["Defined Comment Template"]);
+	}
+}
+
+
 public CustomCheckboxField ShowEmailWithinComments
 {
 	get
@@ -88,6 +133,15 @@ public CustomLookupField Theme
 	get
 	{
 		return new CustomLookupField(InnerItem, InnerItem.Fields["Theme"]);
+	}
+}
+
+
+public CustomTextField titleAdministration
+{
+	get
+	{
+		return new CustomTextField(InnerItem, InnerItem.Fields["titleAdministration"]);
 	}
 }
 
@@ -110,6 +164,15 @@ public CustomCheckboxField EnableLiveWriter
 }
 
 
+public CustomTextField titleTagcloud
+{
+	get
+	{
+		return new CustomTextField(InnerItem, InnerItem.Fields["titleTagcloud"]);
+	}
+}
+
+
 public CustomTextField DisplayCommentSidebarCount
 {
 	get
@@ -128,6 +191,15 @@ public CustomCheckboxField EnableGravatar
 }
 
 
+public CustomTextField titleComments
+{
+	get
+	{
+		return new CustomTextField(InnerItem, InnerItem.Fields["titleComments"]);
+	}
+}
+
+
 public CustomTextField GravatarSize
 {
 	get
@@ -142,6 +214,15 @@ public CustomTextField MaximumGeneratedIntroductionCharacters
 	get
 	{
 		return new CustomTextField(InnerItem, InnerItem.Fields["Maximum Generated Introduction Characters"]);
+	}
+}
+
+
+public CustomTextField titleAddYourComment
+{
+	get
+	{
+		return new CustomTextField(InnerItem, InnerItem.Fields["titleAddYourComment"]);
 	}
 }
 

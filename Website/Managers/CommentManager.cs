@@ -189,7 +189,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (entryItem != null)
             {
-                var template = GetDatabase().GetTemplate(Settings.EntryTemplateIdString);
+                var template = GetDatabase().GetTemplate(Settings.EntryTemplateIDString);
                 if (entryItem.TemplateIsOrBasedOn(template))
                 {
                     return GetCommentsFor(entryItem, maximumCount, true);
@@ -209,20 +209,24 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (item != null && maximumCount > 0)
             {
-                var query = new CombinedQuery();
-
-                // TODO: What about items using templates derived from entryemplateid? need to accommodate those
-                query.Add(new FieldQuery(Constants.Index.Fields.Template, Settings.CommentTemplateId.ToShortID().ToString().ToLower()), QueryOccurance.Must);
-                query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
-
-                string sortField = null;
-                if (sort)
+                BlogHomeItem blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
+                if (blog != null)
                 {
-                    sortField = Constants.Index.Fields.Created;
-                }
+                    var query = new CombinedQuery();
 
-                var searcher = new Searcher();
-                return searcher.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
+                    // TODO: What about items using templates derived from commenttemplateid? need to accommodate those
+                    query.Add(new FieldQuery(Constants.Index.Fields.Template, blog.BlogSettings.CommentTemplateID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
+                    query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
+
+                    string sortField = null;
+                    if (sort)
+                    {
+                        sortField = Constants.Index.Fields.Created;
+                    }
+
+                    var searcher = new Searcher();
+                    return searcher.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
+                }
             }
 
             return new CommentItem[0];
@@ -272,7 +276,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var commentItemList = new List<Item>();
             foreach (Item item in array)
             {
-                if (item.TemplateID == Settings.CommentTemplateId && item.Versions.GetVersions().Length > 0)
+                if (item.TemplateID == Settings.CommentTemplateID && item.Versions.GetVersions().Length > 0)
                 {
                     commentItemList.Add(item);
                 }
@@ -290,7 +294,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
         {
             var commentItemList = new List<CommentItem>();
-            var template = GetDatabase().GetTemplate(Settings.CommentTemplateId);
+            var template = GetDatabase().GetTemplate(Settings.CommentTemplateID);
 
             if (template != null)
             {

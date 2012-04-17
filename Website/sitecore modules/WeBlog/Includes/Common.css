@@ -94,16 +94,16 @@ Generic classes
 /*************************************************************************************
 Blog entry
 *************************************************************************************/
-.wb-entry-list ul
+ul.wb-entry-list-entries
 {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-    .wb-entry-list ul li
-    {
-        margin-bottom: 10px;
-    }
+li.wb-entry-list-entry
+{
+    margin-bottom: 10px;
+}
 .wb-entry-list,
 .wb-entry
 {   
@@ -314,11 +314,6 @@ Misc
 {
     float: left;
     margin: 0 15px 15px 0;
-}
-
-.wb-entry-detail
-{
-    margin-left: 65px;
 }
 
 .wb-view-more-wrapper

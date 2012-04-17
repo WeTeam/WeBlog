@@ -48,7 +48,7 @@ Blog entry
     font-size: 0.8em;
     line-height: 175%;
 }
-.wb-entry-list li
+li.wb-entry-list-entry
 {
     padding-bottom: 25px;
     margin-bottom: 25px;

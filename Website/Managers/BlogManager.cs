@@ -33,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public Items.WeBlog.BlogHomeItem GetCurrentBlog(Item item)
         {
-            var blogItem = item.GetCurrentItem(Settings.BlogTemplateIdString);
+            var blogItem = item.GetCurrentItem(Settings.BlogTemplateIDString);
 
             if (blogItem != null)
                 return new Items.WeBlog.BlogHomeItem(blogItem);
@@ -73,7 +73,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 database = Context.Database;
 
             // TODO: Store the result of this call in cache and clear it from cache on publish
-            var blogTemplate = database.GetTemplate(Settings.BlogTemplateIdString);
+            var blogTemplate = database.GetTemplate(Settings.BlogTemplateIDString);
             var contentRoot = database.GetItem(Settings.ContentRootPath);
             var blogItems = contentRoot.FindItemsByTemplateOrDerivedTemplate(blogTemplate);
             return (from item in blogItems select new BlogHomeItem(item)).ToArray();

@@ -5,6 +5,7 @@ using Sitecore.Data;
 using Sitecore.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -23,7 +24,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
                 args.Parameters.Add("uri", context.Items[0].Uri.ToString());
-                if (context.Items[0].TemplateID == Settings.BlogTemplateId)
+                if (context.Items[0].TemplateIsOrBasedOn(Settings.BlogTemplateID))
                 {
                     Context.ClientPage.Start(this, "StartFieldEditor", args);
                 }
@@ -51,7 +52,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             Sitecore.Diagnostics.Assert.IsNotNull(uri, URI);
             Sitecore.Data.Items.Item item = Sitecore.Data.Database.GetItem(uri);
 
-            while (item.TemplateID != Settings.BlogTemplateId)
+            while (!item.TemplateIsOrBasedOn(Settings.BlogTemplateID))
             {
                 item = item.Parent;
             }

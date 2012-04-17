@@ -17,8 +17,9 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
     [Category("EntryManager")]
-    public class EntryManager
+    public class EntryManager : UnitTestBase
     {
+        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_entry11 = null;
@@ -38,14 +39,18 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entry manager content.xml")), false, PasteMode.Overwrite);
+                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entry manager content.xml")), false, PasteMode.Overwrite);
             }
+            Initialize();
+        }
 
+        protected void Initialize()
+        {
             // Retrieve created content items
-            m_testRoot = home.Axes.GetChild("weblog testroot");
+            m_testRoot = m_home.Axes.GetChild("weblog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
@@ -73,19 +78,22 @@ namespace Sitecore.Modules.WeBlog.Test
 #if PRE_65
             //Sitecore.Analytics.AnalyticsTracker.Current.
 #else
-            // Register DMS page views for popular items
-            var visitor = new Visitor(Guid.NewGuid());
-            visitor.CreateVisit(Guid.NewGuid());
-            visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
-            visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
-            visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
+            if (Sitecore.Configuration.Settings.Analytics.Enabled)
+            {
+                // Register DMS page views for popular items
+                var visitor = new Visitor(Guid.NewGuid());
+                visitor.CreateVisit(Guid.NewGuid());
+                visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
+                visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
+                visitor.CurrentVisit.CreatePage().ItemId = m_entry13.ID.ToGuid();
 
-            visitor.CurrentVisit.CreatePage().ItemId = m_entry11.ID.ToGuid();
-            visitor.CurrentVisit.CreatePage().ItemId = m_entry11.ID.ToGuid();
+                visitor.CurrentVisit.CreatePage().ItemId = m_entry11.ID.ToGuid();
+                visitor.CurrentVisit.CreatePage().ItemId = m_entry11.ID.ToGuid();
 
-            visitor.CurrentVisit.CreatePage().ItemId = m_entry12.ID.ToGuid();
+                visitor.CurrentVisit.CreatePage().ItemId = m_entry12.ID.ToGuid();
 
-            visitor.Submit();
+                visitor.Submit();
+            }
 #endif
         }
 
@@ -176,13 +184,13 @@ namespace Sitecore.Modules.WeBlog.Test
         }
 
         [Test]
-        public void GetBlogEntries_Blog1_NonBlogItem()
+        public void GetBlogEntries_Blog1_EntryItem()
         {
             var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_entry11, int.MaxValue, null, null)
                             select entry.ID).ToArray();
 
-            Assert.AreEqual(1, entryIds.Length);
-            Assert.Contains(m_entry11.ID, entryIds);
+            //entry is part of blog with 3 items
+            Assert.AreEqual(3, entryIds.Length);
         }
 
         [Test]
@@ -290,8 +298,9 @@ namespace Sitecore.Modules.WeBlog.Test
             Assert.AreEqual(m_entry21.ID, entry.ID);
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedEntriesList_InOrder()
+        public virtual void MakeSortedEntriesList_InOrder()
         {
             using (new SecurityDisabler())
             {
@@ -327,8 +336,9 @@ namespace Sitecore.Modules.WeBlog.Test
             }
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedEntriesList_ReverseOrder()
+        public virtual void MakeSortedEntriesList_ReverseOrder()
         {
             using (new SecurityDisabler())
             {
@@ -364,8 +374,9 @@ namespace Sitecore.Modules.WeBlog.Test
             }
         }
 
+        [Ignore]
         [Test]
-        public void MakeSortedEntriesList_OutOfOrder()
+        public virtual void MakeSortedEntriesList_OutOfOrder()
         {
             using (new SecurityDisabler())
             {
@@ -486,6 +497,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem()
         {
+            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
 
@@ -498,6 +510,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem_Limited()
         {
+            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, 1)
                             select entry.ID).ToArray();
 
@@ -508,16 +521,17 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_InvalidItem()
         {
+            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
 
-            Assert.AreEqual(1, entryIds.Length);
-            Assert.AreEqual(m_entry12.ID, entryIds[0]);
+            Assert.AreEqual(0, entryIds.Length);
         }
 
         [Test]
         public void GetPopularEntriesByView_NullItem()
         {
+            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(null, 1)
                             select entry.ID).ToArray();
 

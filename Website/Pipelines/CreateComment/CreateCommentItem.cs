@@ -4,6 +4,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
+using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -15,14 +16,13 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
             Assert.IsNotNull(args.Comment, "Comment cannot be null");
             Assert.IsNotNull(args.EntryID, "Entry ID cannot be null");
 
-            var template = args.Database.GetTemplate(Settings.CommentTemplateId);
-
-            if (template != null)
+            var entryItem = args.Database.GetItem(args.EntryID);
+            if (entryItem != null)
             {
-                var entryItem = args.Database.GetItem(args.EntryID);
-
-                if (entryItem != null)
+                var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entryItem);
+                if (blogItem != null)
                 {
+                    var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
                     string itemName = ItemUtil.ProposeValidItemName("Comment by " + args.Comment.AuthorName + " at " + DateTime.Now.ToString("d"));
 
                     //need to emulate creation within shell site to ensure workflow is applied to comment
@@ -51,12 +51,15 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 }
                 else
                 {
-                    string message = "WeBlog.CommentManager: Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
+                    string message = "Failed to find blog for entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
                     Log.Error(string.Format(message, args.EntryID, args.Comment.AuthorName, args.Comment.AuthorEmail, args.Comment.Text), typeof(CreateCommentItem));
                 }
             }
             else
-                Log.Error("WeBlog.CommentManager: Failed to find comment template", typeof(CreateCommentItem));
+            {
+                string message = "Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
+                Log.Error(string.Format(message, args.EntryID, args.Comment.AuthorName, args.Comment.AuthorEmail, args.Comment.Text), typeof(CreateCommentItem));
+            }
         }
     }
 }

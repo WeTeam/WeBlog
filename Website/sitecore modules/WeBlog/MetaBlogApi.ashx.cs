@@ -337,7 +337,8 @@ namespace Sitecore.Modules.WeBlog
                 var access = Sitecore.Security.AccessControl.AuthorizationManager.GetAccess(currentBlog, Sitecore.Context.User, Sitecore.Security.AccessControl.AccessRight.ItemCreate);
                 // end test
 
-                var template = new TemplateID(Settings.EntryTemplateId);
+                BlogHomeItem blogItem = currentBlog;
+                var template = new TemplateID(blogItem.BlogSettings.EntryTemplateID);
                 var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
 
                 SetItemData(newItem, rpcstruct);

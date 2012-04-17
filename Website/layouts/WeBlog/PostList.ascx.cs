@@ -83,7 +83,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected virtual void BindEntries(string tag)
         {
-            var categoryTemplateID = Settings.CategoryTemplateId;
+            var categoryTemplateID = Settings.CategoryTemplateID;
             var categoryTemplate = new TemplateItem(Sitecore.Context.Database.GetItem(categoryTemplateID));
 
             IEnumerable<EntryItem> entries;
