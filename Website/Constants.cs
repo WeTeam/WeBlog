@@ -15,6 +15,7 @@ namespace Sitecore.Modules.WeBlog
                 public const string Category = "category";
                 public const string Created = "_created";
                 public const string Template = "template";
+                public const string Publish = "publish";
             }
         }
 

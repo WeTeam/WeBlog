@@ -6,7 +6,7 @@
             <h2>
                 <a href="<%#(((ListViewDataItem)Container).DataItem as EntryItem).Url%>"><%#(((ListViewDataItem)Container).DataItem as EntryItem).Title.Rendered%></a>
             </h2>
-            <div class="wb-details"><%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", (((ListViewDataItem)Container).DataItem as EntryItem).Created, (((ListViewDataItem)Container).DataItem as EntryItem).CreatedBy.LocalName)%></div>
+            <div class="wb-details"><%# Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", GetPublishDate(((ListViewDataItem)Container).DataItem as EntryItem), (((ListViewDataItem)Container).DataItem as EntryItem).CreatedBy.LocalName)%></div>
             
             <%# GetSummary(((ListViewDataItem)Container).DataItem as EntryItem)%>
             

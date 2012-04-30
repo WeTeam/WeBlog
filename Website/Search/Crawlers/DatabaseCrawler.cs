@@ -27,6 +27,9 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
                 // Sitecore 6.2 does not include template
                 document.Add(new Field(Constants.Index.Fields.Template, TransformValue(item.TemplateID), Field.Store.NO, Field.Index.TOKENIZED));
 
+                // Add publishable field to allow for publishing restrictions
+                document.Add(new Field(Constants.Index.Fields.Publish, Sitecore.DateUtil.ToIsoDate(item.Publishing.PublishDate), Field.Store.NO, Field.Index.TOKENIZED));
+
                 // Add multilist fields
                 foreach (var fieldName in m_multilistFields)
                 {
@@ -59,7 +62,7 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
         /// Tranforms a multilist field for use in the index
         /// </summary>
         /// <param name="field">The field tgo transform</param>
-        /// <returns>A value suitab;e for usage with the index</returns>
+        /// <returns>A value suitable for usage with the index</returns>
         protected virtual string TransformMultilistValue(Sitecore.Data.Fields.MultilistField field)
         {
             var buffer = new StringBuilder();

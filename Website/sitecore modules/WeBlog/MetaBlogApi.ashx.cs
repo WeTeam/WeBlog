@@ -502,21 +502,17 @@ namespace Sitecore.Modules.WeBlog
 
             var currentBlog = ContentHelper.GetContentDatabase().GetItem(blogid);
             blogName = currentBlog.Name;
-            // Get filename
-            var file = name.Substring(49 + 1);
-            // Split filename and extension
-            var imageName = name.Substring(49 + 1).Split('.'); ;
 
-            // Replace invalid characters which Live Writer puts around image names
-            var fileName = file.Replace("[", "");
-            fileName = fileName.Replace("]", "");
+            // Get filename
+            var fileName = Path.GetFileName(name);
+            var imageName = ItemUtil.ProposeValidItemName(Path.GetFileNameWithoutExtension(fileName));
 
             // Create strem from byte array
             var memStream = new MemoryStream(media);
             var md = new MediaCreatorOptions();
-            md.Destination = string.Join("/", new string[]{Constants.Paths.WeBlogMedia, blogName, imageName[0].ToString()});
+            md.Destination = string.Join("/", new string[]{Constants.Paths.WeBlogMedia, blogName, imageName});
             md.Database = ContentHelper.GetContentDatabase();
-            md.AlternateText = fileName;
+            md.AlternateText = imageName;
 
             // Create mediaitem
             var mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
@@ -530,7 +526,14 @@ namespace Sitecore.Modules.WeBlog
 
             // Get the mediaitem url and return it
             var rstruct = new XmlRpcStruct();
-            rstruct.Add("url", MediaManager.GetMediaUrl(mediaItem));
+
+            var options = new MediaUrlOptions()
+            {
+                AbsolutePath = false,
+                UseItemPath = false
+            };
+
+            rstruct.Add("url", MediaManager.GetMediaUrl(mediaItem, options));
             return rstruct;
 
         }

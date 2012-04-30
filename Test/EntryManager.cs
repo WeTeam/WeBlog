@@ -497,7 +497,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem()
         {
+#if PRE_65
+            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
+#else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+#endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
 
@@ -510,7 +514,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem_Limited()
         {
+#if PRE_65
+            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
+#else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+#endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, 1)
                             select entry.ID).ToArray();
 
@@ -521,7 +529,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_InvalidItem()
         {
+#if PRE_65
+            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
+#else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+#endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
 
@@ -531,7 +543,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_NullItem()
         {
+#if PRE_65
+            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
+#else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+#endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(null, 1)
                             select entry.ID).ToArray();
 

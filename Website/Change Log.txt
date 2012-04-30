@@ -1,9 +1,13 @@
 ﻿WeBlog Change Log
 =================
 
+Release 2.2
+-----------
+20120429 AD: Updated database crawler to include publish field to take into account publishing retrictions and sort order on list page
+
 Release 2.1
 -----------
-20100109 AD: Added "Delete Comment" action to Spam state of Comment workflow. Makes bulk deletion of spam from the workbox easier.
+20120109 AD: Added "Delete Comment" action to Spam state of Comment workflow. Makes bulk deletion of spam from the workbox easier.
 20120109 AD: Updated MetaWeblog API service to accept publish date on posts
 20120109 AD: Added tests for the MetaWeblog API service
 20120104 AD: Implemented the ManagerFactory class and updated the manager classes to support it's use. Do not use manager classes directly. Instead use the ManagerFactory to obtain the instance you're after. This allows users to override the managers classes.

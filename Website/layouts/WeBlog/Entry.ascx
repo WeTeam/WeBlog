@@ -11,6 +11,7 @@
     <% if (ShowEntryMetadata == CHECKBOX_TRUE) { %>
         <div class="wb-details"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created, CurrentEntry.CreatedBy.LocalName) %></div>
     <% } %>
+    <% if (ShowEntryIntroduction == CHECKBOX_TRUE) { %>
     <sc:Placeholder runat="server" key="phBlogBelowEntryTitle" />
     <% if(DoesFieldRequireWrapping("Introduction")) { %>
     <p>
@@ -18,6 +19,7 @@
         <sc:Text ID="txtIntroduction" Field="Introduction" runat="server" />
     <% if(DoesFieldRequireWrapping("Introduction")) { %>
     </p>
+    <% } %>
     <% } %>
     <% if(DoesFieldRequireWrapping("Content")) { %>
     <p>

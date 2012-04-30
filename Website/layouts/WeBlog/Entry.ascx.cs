@@ -11,6 +11,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         public string ShowEntryTitle { get; set; }
         public string ShowEntryImage { get; set; }
         public string ShowEntryMetadata { get; set; }
+        public string ShowEntryIntroduction { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -336,10 +336,10 @@
     <Compile Include="Pipelines\CreateComment\WorkflowSubmit.cs" />
     <Compile Include="Pipelines\GetSummary\AutoGenerate.cs" />
     <Compile Include="Pipelines\GetSummary\FirstContentBlock.cs" />
+    <Compile Include="Pipelines\GetSummary\FromField.cs" />
     <Compile Include="Pipelines\GetSummary\GetSummaryArgs.cs" />
     <Compile Include="Pipelines\GetSummary\GetSummaryProcessorBase.cs" />
     <Compile Include="Pipelines\GetSummary\IGetSummaryProcessor.cs" />
-    <Compile Include="Pipelines\GetSummary\IntroductionField.cs" />
     <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
