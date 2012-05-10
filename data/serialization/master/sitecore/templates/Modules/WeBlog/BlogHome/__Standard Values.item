@@ -71,13 +71,6 @@ content-length: 1
 
 5
 ----field----
-field: {4913AA1B-A16D-481E-ABC0-58AF46DBFA87}
-name: Maximum Generated Introduction Characters
-key: maximum generated introduction characters
-content-length: 3
-
-500
-----field----
 field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
 name: Enable RSS
 key: enable rss

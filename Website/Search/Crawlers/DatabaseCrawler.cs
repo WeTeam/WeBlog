@@ -27,8 +27,12 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
                 // Sitecore 6.2 does not include template
                 document.Add(new Field(Constants.Index.Fields.Template, TransformValue(item.TemplateID), Field.Store.NO, Field.Index.TOKENIZED));
 
-                // Add publishable field to allow for publishing restrictions
-                document.Add(new Field(Constants.Index.Fields.Publish, Sitecore.DateUtil.ToIsoDate(item.Publishing.PublishDate), Field.Store.NO, Field.Index.TOKENIZED));
+                // Add publish (or created) date field to allow for publishing restrictions and correct ordering
+                var date = item.Publishing.PublishDate;
+                if (item.Statistics.Created > date)
+                    date = item.Statistics.Created;
+
+                document.Add(new Field(Constants.Index.Fields.Publish, Sitecore.DateUtil.ToIsoDate(date), Field.Store.NO, Field.Index.TOKENIZED));
 
                 // Add multilist fields
                 foreach (var fieldName in m_multilistFields)

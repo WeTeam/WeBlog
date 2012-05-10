@@ -12,7 +12,7 @@ templatekey: Template section
 ----version----
 language: en
 version: 1
-revision: 92dc1663-7ab7-4256-b9ac-09e75ce18c0a
+revision: 0d5b0955-5f31-49d4-a3bd-cec363b1bcc3
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -41,18 +41,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-92dc1663-7ab7-4256-b9ac-09e75ce18c0a
+0d5b0955-5f31-49d4-a3bd-cec363b1bcc3
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111018T143904:634545455446000991
+20120510T114700:634722472208245528
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin

@@ -3,7 +3,15 @@
 
 Release 2.2
 -----------
+20120430 AD: Fixed issues with media file naming with uploaded media from Live Writer
 20120429 AD: Updated database crawler to include publish field to take into account publishing retrictions and sort order on list page
+20120417 NW: Added ability to set templates to use in blog settings
+20120409 AD: Added pipeline to handle getting the summary for an entry
+20120323 AD: Ensure entries created through Live Writer publish correctly including any ancestor folders on the entry or associated media
+20120322 AD: Fixed XSS vulnerability in CommentsList.ascx
+20120312 AD: Fixed issue with WCF service under Sitecore 6.2
+20120312 AD: Fixed issue with LinkManager LinkOptions not being followed
+20120304 NW: Fixes for comment workflow and translation API
 
 Release 2.1
 -----------

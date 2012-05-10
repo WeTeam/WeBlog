@@ -8,19 +8,37 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {
     public class AutoGenerate : GetSummaryProcessorBase
     {
+        /// <summary>
+        /// Gets or sets the maximum number of characters in the generated summary
+        /// </summary>
         public int MaximumCharacterCount
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets whether tags should be stripped or preserved
+        /// </summary>
         public bool StripTags
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the text to append to the end of the summary if the field is truncated
+        /// </summary>
         public string MoreString
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the name of the field to extract the summary from
+        /// </summary>
+        public string FieldName
         {
             get;
             set;
@@ -31,6 +49,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
             MaximumCharacterCount = 500;
             StripTags = true;
             MoreString = "...";
+            FieldName = "Content";
         }
 
         protected override void GetSummary(GetSummaryArgs args)
@@ -38,7 +57,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
             if (args.Entry == null)
                 return;
 
-            var content = args.Entry.Content.Text;
+            var content = args.Entry[FieldName];
             if(StripTags)
                 content = StringUtil.RemoveTags(content);
 

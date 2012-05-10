@@ -19,7 +19,7 @@ content-length: 3
 ----version----
 language: en
 version: 1
-revision: c367148a-c318-4270-b417-bbf3f2fae889
+revision: 5c7b5d42-701f-4c09-9a45-68e3a8e1c759
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,18 +48,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-c367148a-c318-4270-b417-bbf3f2fae889
+5c7b5d42-701f-4c09-9a45-68e3a8e1c759
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111018T143904:634545455449361183
+20120510T114701:634722472216115978
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin

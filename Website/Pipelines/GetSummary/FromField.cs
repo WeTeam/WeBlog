@@ -1,9 +1,13 @@
 ﻿using System;
+using Sitecore.Web.UI.WebControls;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {
     public class FromField : GetSummaryProcessorBase
     {
+        /// <summary>
+        /// Gets or sets the name of the field to extract the summary from
+        /// </summary>
         public string FieldName
         {
             get;
@@ -17,7 +21,11 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 
         protected override void GetSummary(GetSummaryArgs args)
         {
-            args.Summary = args.Entry.InnerItem[FieldName];
+            var renderer = new FieldRenderer();
+            renderer.Item = args.Entry;
+            renderer.FieldName = FieldName;
+
+            args.Summary = renderer.Render();
         }
     }
 }
