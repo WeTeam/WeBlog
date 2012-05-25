@@ -115,9 +115,14 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <returns>The friendly month name</returns>
         protected virtual string GetFriendlyMonthName(int yearAndMonth)
         {
-            var month = int.Parse(yearAndMonth.ToString().Substring(4, 2));
-            DateTimeFormatInfo dtft = new DateTimeFormatInfo();
-            return dtft.GetMonthName(month);
+            if (yearAndMonth > 99999)
+            {
+                var month = int.Parse(yearAndMonth.ToString().Substring(4, 2));
+                DateTimeFormatInfo dtft = new DateTimeFormatInfo();
+                return dtft.GetMonthName(month);
+            }
+            else
+                return "[unknown]";
         }
 
         /// <summary>

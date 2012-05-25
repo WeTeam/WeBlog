@@ -26,19 +26,25 @@ namespace Sitecore.Modules.WeBlog.Commands
 
         protected void Run(ClientPipelineArgs args)
         {
+            var db = ContentHelper.GetContentDatabase();
+            var currentItem = db.GetItem(args.Parameters["currentid"]);
+
             if (args.IsPostBack)
             {
                 if (args.HasResult)
                 {
                     string itemTitle = args.Result;
 
-                    var db = ContentHelper.GetContentDatabase();
-                    var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
+                    var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
+
+                    if(blogItem == null)
+                    {
+                        SheerResponse.Alert("Failed to locate the blog item to add the category to.", true);
+                        return;
+                    }
+
                     var template = new TemplateID(blogItem.BlogSettings.CategoryTemplateID);
-
-                    var currentItem = db.GetItem(args.Parameters["currentid"]);
                     var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
-
                     var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
 
                     ContentHelper.PublishItem(newItem);
@@ -50,9 +56,6 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                var db = ContentHelper.GetContentDatabase();
-                var currentItem = db.GetItem(args.Parameters["currentid"]);
-
                 if (!currentItem.TemplateIsOrBasedOn(Settings.BlogTemplateID) && !currentItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
                 {
                     Context.ClientPage.ClientResponse.Alert("Please create or select a blog first");

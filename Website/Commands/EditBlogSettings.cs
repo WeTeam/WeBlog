@@ -17,6 +17,18 @@ namespace Sitecore.Modules.WeBlog.Commands
         /// </summary>
         private const string URI = "uri";
 
+        public override CommandState QueryState(CommandContext context)
+        {
+            Assert.ArgumentNotNull(context, "context");
+            if (context.Items.Length >= 1)
+            {
+                if (!context.Items[0].TemplateIsOrBasedOn(Settings.BlogTemplateID))
+                    return CommandState.Disabled;
+            }
+
+            return base.QueryState(context);
+        }
+
         public override void Execute(CommandContext context)
         {
             Assert.ArgumentNotNull(context, "context");
@@ -63,10 +75,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             List<Sitecore.Data.FieldDescriptor> fields = new List<Sitecore.Data.FieldDescriptor>();
             try
             {
-                string[] fieldNames = new string[] { "Title", "Email", "Theme", "DisplayItemCount", "DisplayCommentSidebarCount", "Enable RSS",
-                "Enable Comments", "Show Email Within Comments", "EnableLiveWriter" };
-
-                foreach (string fieldName in fieldNames)
+                foreach (string fieldName in GetFieldNames())
                 {
                     fields.Add(new Sitecore.Data.FieldDescriptor(item, item.Fields[fieldName].Name));
                 }
@@ -82,6 +91,30 @@ namespace Sitecore.Modules.WeBlog.Commands
             options.DialogTitle = "Blog settings";
             options.Icon = item.Appearance.Icon;
             return options;
+        }
+
+        /// <summary>
+        /// Gets the field names to display on the field editor
+        /// </summary>
+        /// <returns>The names of the fields to display on the field editor</returns>
+        protected virtual IEnumerable<string> GetFieldNames()
+        {
+            yield return "Title";
+            yield return "Email";
+            yield return "Theme";
+            yield return "DisplayItemCount";
+            yield return "DisplayCommentSidebarCount";
+            yield return "Maximum Entry Image Size";
+            yield return "Maximum Thumbnail Image Size";
+            yield return "Enable RSS";
+            yield return "Enable Comments";
+            yield return "Show Email Within Comments";
+            yield return "EnableLiveWriter";
+            yield return "Enable Gravatar";
+            yield return "Gravatar Size";
+            yield return "Default Gravatar Style";
+            yield return "Gravatar Rating";
+            yield return "Custom Dictionary Folder";
         }
     }
 }

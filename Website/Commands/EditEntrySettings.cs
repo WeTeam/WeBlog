@@ -17,6 +17,18 @@ namespace Sitecore.Modules.WeBlog.Commands
         /// </summary>
         private const string URI = "uri";
 
+        public override CommandState QueryState(CommandContext context)
+        {
+            Assert.ArgumentNotNull(context, "context");
+            if (context.Items.Length >= 1)
+            {
+                if (!context.Items[0].TemplateIsOrBasedOn(Settings.EntryTemplateID))
+                    return CommandState.Disabled;
+            }
+
+            return base.QueryState(context);
+        }
+
         public override void Execute(CommandContext context)
         {
             Assert.ArgumentNotNull(context, "context");
@@ -58,9 +70,7 @@ namespace Sitecore.Modules.WeBlog.Commands
 
             try
             {
-                string[] fieldNames = new string[] { "Category", "Disable comments" };
-
-                foreach (string fieldName in fieldNames)
+                foreach (string fieldName in GetFieldNames())
                 {
                     fields.Add(new Sitecore.Data.FieldDescriptor(item, item.Fields[fieldName].Name));
                 }
@@ -78,7 +88,15 @@ namespace Sitecore.Modules.WeBlog.Commands
             
             return options;
         }
-        
-            
+
+        /// <summary>
+        /// Gets the field names to display on the field editor
+        /// </summary>
+        /// <returns>The names of the fields to display on the field editor</returns>
+        protected virtual IEnumerable<string> GetFieldNames()
+        {
+            yield return "Category";
+            yield return "Disable comments";
+        }
     }
 }

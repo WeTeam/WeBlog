@@ -419,7 +419,9 @@
     <Content Include="sitecore modules\WeBlog\Themes\techphoria.css" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\body-2col-bg.png" />
     <Content Include="sitecore modules\WeBlog\Themes\techphoria\images\entry-list-separator.png" />
-    <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml" />
+    <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="How to build.txt" />

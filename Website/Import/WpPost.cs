@@ -53,10 +53,14 @@ namespace Sitecore.Modules.WeBlog.Import
             XNamespace nsContent = ContentNamespace;
             XNamespace wpContent = WordpressNamespace;
 
-            Title = postXml.Element("title").Value;
-            Content = postXml.Element(nsContent + "encoded").Value;
+            if(postXml.Element("title") != null)
+                Title = postXml.Element("title").Value;
 
-            PublicationDate = DateTime.Parse(postXml.Element(wpContent + "post_date").Value);
+            if (postXml.Element(nsContent + "encoded") != null)
+                Content = postXml.Element(nsContent + "encoded").Value;
+
+            if (postXml.Element(wpContent + "post_date") != null)
+                PublicationDate = DateTime.Parse(postXml.Element(wpContent + "post_date").Value);
 
             Categories = new List<string>();
             Tags = new List<string>();

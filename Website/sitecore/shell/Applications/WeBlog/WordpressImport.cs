@@ -21,6 +21,7 @@ using Sitecore.Configuration;
 using Sitecore.Web;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Jobs;
+using Sitecore.StringExtensions;
 
 namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 {
@@ -41,7 +42,11 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected Literal litSummaryComments;
         protected Literal litSummaryTags;
         protected Literal StatusMessage;
+        protected Literal ProgressMessage;
         protected Literal Status;
+        protected Memo ResultText;
+        protected Border ResultLabel;
+        protected Border ShowResultPane;
 
         protected Edit litSettingsName;
         protected Edit litSettingsEmail;
@@ -54,8 +59,6 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 
         protected Database db = ContentHelper.GetContentDatabase();
         #endregion
-
-        private string jobStatus;
 
         protected override void OnLoad(EventArgs e)
         {
@@ -106,6 +109,13 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 NextButton.Disabled = true;
                 StartImport();
             }
+
+            if (page == "LastPage")
+            {
+                NextButton.Disabled = true;
+                BackButton.Disabled = true;
+                CancelButton.Disabled = false;
+            }
         }
 
         private void StartImport()
@@ -113,6 +123,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             // Start job for index rebuild
             var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog");
             var job = JobManager.Start(options);
+            job.Status.Total = 0;
             JobHandle.Value = job.Handle.ToString();
 
             // Start client pipeline to check progress
@@ -121,11 +132,11 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 
         private void ImportBlog()
         {
-            jobStatus = "Reading import file";
+            LogMessage("Reading import file");
             string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
             List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
 
-            jobStatus = "Creating blog";
+            LogMessage("Creating blog");
             Item root = db.GetItem(litSummaryPath.Text);
 
             BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchID);
@@ -135,29 +146,47 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             blogItem.Email.Field.Value = litSettingsEmail.Value;
             blogItem.EndEdit();
 
-            jobStatus = "Importing posts";
-            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db);
+            LogMessage("Importing posts");
+            LogTotal(listWordpressPosts.Count);
+            
+            var importCount = 0;
 
-            this.NextButton.Disabled = true;
-            this.BackButton.Disabled = true;
-            this.CancelButton.Disabled = true;
+            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db, itemName =>
+                                                                              {
+                                                                                  importCount++;
+                                                                                  LogMessage("Importing entry " + itemName);
+                                                                                  LogProgress(importCount);
+                                                                              });
         }
 
         protected void CheckStatus()
         {
-            var handle = Handle.Parse(JobHandle.Value);
-            if (handle != null)
+            var job = GetJob();
+            if (job != null)
             {
-                var job = JobManager.GetJob(handle);
-                if (job != null && jobStatus != null)
-                {
-                    StatusMessage.Text = jobStatus;
-                }
+                if (job.Status.Messages.Count >= 1)
+                    StatusMessage.Text = job.Status.Messages[job.Status.Messages.Count - 1];
+
+                ProgressMessage.Text = "Processed {0} entries of {1} total".FormatWith(job.Status.Processed,
+                                                                                       job.Status.Total);
 
                 if (job.IsDone)
                 {
+                    if (job.Status.Failed)
+                    {
+                        Status.Text = "Import failed";
+
+                        foreach (var line in job.Status.Messages)
+                        {
+                            ResultText.Value += line + "\r\n";
+                        }
+                    }
+                    else
+                    {
+                        Status.Text = ProgressMessage.Text;
+                    }
+
                     Active = "LastPage";
-                    Status.Text = StatusMessage.Text;
                 }
                 else
                     Context.ClientPage.ClientResponse.Timer("CheckStatus", 500);
@@ -174,7 +203,46 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 return;
             }
         }
-        
+
+        protected void ShowResult()
+        {
+            ShowResultPane.Visible = false;
+            ResultText.Visible = true;
+            ResultLabel.Visible = true;
+        }
+
+        private Job GetJob()
+        {
+            var handle = Handle.Parse(JobHandle.Value);
+            if (handle != null)
+            {
+                return JobManager.GetJob(handle);
+            }
+
+            return null;
+        }
+
+        private void LogMessage(string message)
+        {
+            var job = GetJob();
+            if (job != null)
+                job.Status.Messages.Add(message);
+        }
+
+        private void LogProgress(int count)
+        {
+            var job = GetJob();
+            if (job != null)
+                job.Status.Processed = count;
+        }
+
+        private void LogTotal(int total)
+        {
+            var job = GetJob();
+            if (job != null)
+                job.Status.Total = total;
+        }
+
         #region Upload XML
         [HandleMessage("installer:upload", true)]
         protected void Upload(ClientPipelineArgs args)

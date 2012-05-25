@@ -165,8 +165,16 @@
 
           <Border Align="center" GridPanel.Align="center" GridPanel.Style="font-weight:bold">
             <Literal Text="Creating blog and importing xml..."/>
-            <Literal ID="StatusMessage"/>
           </Border>
+					<Space Height="16"/>
+					<Border Align="center" GridPanel.Align="center">
+						<Literal ID="StatusMessage"/>
+					</Border>
+					<Space Height="16"/>
+					<Border Align="center" GridPanel.Align="center">
+						<Literal ID="ProgressMessage"/>
+					</Border>
+					
 
         </GridPanel>
       </WizardFormPage>

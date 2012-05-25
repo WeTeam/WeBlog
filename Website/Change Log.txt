@@ -3,6 +3,8 @@
 
 Release 2.2
 -----------
+20120522 AD: Updates to "edit settings" commands for page editor
+20120522 AD: Fixed issue in CreateCategory command
 20120430 AD: Fixed issues with media file naming with uploaded media from Live Writer
 20120429 AD: Updated database crawler to include publish field to take into account publishing retrictions and sort order on list page
 20120417 NW: Added ability to set templates to use in blog settings
