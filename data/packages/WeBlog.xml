@@ -470,54 +470,6 @@ Create a Blog
       <Exclude />
       <Name>Devices</Name>
     </xitems>
-    <items>
-      <Database>core</Database>
-      <Root>{0D6A1C29-23A5-4602-B0D3-57862CA9F542}</Root>
-      <SkipVersions>False</SkipVersions>
-      <Converter>
-        <ItemToEntryConverter>
-          <Transforms />
-        </ItemToEntryConverter>
-      </Converter>
-      <Include>
-        <ItemNameFilter>
-          <Pattern />
-          <FilterSearchType>Simple</FilterSearchType>
-        </ItemNameFilter>
-        <ItemDateFilter>
-          <FilterType>CreatedFilter</FilterType>
-          <NotOlderThan />
-          <ActionDateTo />
-          <ActionDateFrom />
-        </ItemDateFilter>
-        <ItemDateFilter>
-          <FilterType>ModifiedFilter</FilterType>
-          <NotOlderThan />
-          <ActionDateTo />
-          <ActionDateFrom />
-        </ItemDateFilter>
-        <ItemPublishFilter>
-          <PublishDate />
-          <CheckWorkflow>True</CheckWorkflow>
-        </ItemPublishFilter>
-        <ItemTemplateFilter>
-          <Templates />
-        </ItemTemplateFilter>
-        <ItemUserFilter>
-          <FilterType>Created</FilterType>
-          <Accounts />
-        </ItemUserFilter>
-        <ItemUserFilter>
-          <FilterType>Modified</FilterType>
-          <Accounts />
-        </ItemUserFilter>
-        <ItemLanguageFilter>
-          <Languages />
-        </ItemLanguageFilter>
-      </Include>
-      <Exclude />
-      <Name>rebuild search index</Name>
-    </items>
     <files>
       <Root>/layouts/WeBlog</Root>
       <Converter>
@@ -832,30 +784,6 @@ Create a Blog
       <Exclude />
       <Name>Thumbnails</Name>
     </items>
-    <xitems>
-      <Entries>
-        <x-item>/core/sitecore/content/Documents and settings/All users/Start menu/Programs/WeBlog/{CA1347F6-7F5B-4280-9E76-03552CD6D2DF}/invariant/0</x-item>
-        <x-item>/core/sitecore/content/Documents and settings/All users/Start menu/Programs/WeBlog/Import Wordpress Blog/{26859657-2389-4066-9D56-463089DBD7FE}/invariant/0</x-item>
-      </Entries>
-      <SkipVersions>False</SkipVersions>
-      <Converter>
-        <ItemToEntryConverter>
-          <Transforms>
-            <InstallerConfigurationTransform>
-              <Options>
-                <BehaviourOptions>
-                  <ItemMode>Undefined</ItemMode>
-                  <ItemMergeMode>Undefined</ItemMergeMode>
-                </BehaviourOptions>
-              </Options>
-            </InstallerConfigurationTransform>
-          </Transforms>
-        </ItemToEntryConverter>
-      </Converter>
-      <Include />
-      <Exclude />
-      <Name>WordPress Import App</Name>
-    </xitems>
     <items>
       <Database>master</Database>
       <Root>{CAC00CD7-54B1-4397-B05C-04FAFF112CF5}</Root>
@@ -913,6 +841,21 @@ Create a Blog
       <Exclude />
       <Name>Workflow</Name>
     </items>
+    <xitems>
+      <Entries>
+        <x-item>/core/sitecore/content/Applications/Control Panel/Database/Import Wordpress Blog/{32BA24F8-5A9D-4B6D-A7F6-A6293E8145FA}/invariant/0</x-item>
+        <x-item>/core/sitecore/content/Applications/Control Panel/Database/Rebuild WeBlog search index/{0D6A1C29-23A5-4602-B0D3-57862CA9F542}/invariant/0</x-item>
+      </Entries>
+      <SkipVersions>False</SkipVersions>
+      <Converter>
+        <ItemToEntryConverter>
+          <Transforms />
+        </ItemToEntryConverter>
+      </Converter>
+      <Include />
+      <Exclude />
+      <Name>Control Panel Items</Name>
+    </xitems>
   </Sources>
   <Converter>
     <TrivialConverter>

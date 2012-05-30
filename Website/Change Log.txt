@@ -3,6 +3,8 @@
 
 Release 2.2
 -----------
+20120530 AD: Updates to WordPress import wizard for reporting progress
+20120527 AD: Fixed issues with WordPress import wizard with some WordPress XML format
 20120522 AD: Updates to "edit settings" commands for page editor
 20120522 AD: Fixed issue in CreateCategory command
 20120430 AD: Fixed issues with media file naming with uploaded media from Live Writer
