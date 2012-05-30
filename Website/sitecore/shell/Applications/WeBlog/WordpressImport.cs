@@ -148,14 +148,11 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 
             LogMessage("Importing posts");
             LogTotal(listWordpressPosts.Count);
-            
-            var importCount = 0;
 
-            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db, itemName =>
+            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db, (itemName, count) =>
                                                                               {
-                                                                                  importCount++;
                                                                                   LogMessage("Importing entry " + itemName);
-                                                                                  LogProgress(importCount);
+                                                                                  LogProgress(count);
                                                                               });
         }
 

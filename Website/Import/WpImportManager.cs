@@ -4,7 +4,6 @@ using System.Xml.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
-using Sitecore.Data.Templates;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using System.Xml;
@@ -14,34 +13,15 @@ namespace Sitecore.Modules.WeBlog.Import
 {
     public static class WpImportManager
     {
-
         /// <summary>
         /// Imports the specified file.
         /// </summary>
         /// <param name="fileLocation">The file location.</param>
-        public static void Import(string fileLocation)
-        {
-            var xmlDoc = XDocument.Load(fileLocation);
-            var items = xmlDoc.Descendants("item");
-
-            var posts = (from item in xmlDoc.Descendants("item")
-                                  select new WpPost(item)).ToList();
-        }
-
-        /// <summary>
-        /// Imports the specified file.
-        /// </summary>
-        /// <param name="fileLocation">The file location.</param>
+        /// <param name="includeComments">Determines if comments should be imported</param>
+        /// <param name="includeCategories">Determines if categories should be imported</param>
+        /// <param name="includeTags">Determines if tags should be imported</param>
         public static List<WpPost> Import(string fileLocation, bool includeComments, bool includeCategories, bool includeTags)
         {
-            /*var doc = new XmlDocument();
-            doc.Load(fileLocation);
-
-            var nav = doc.CreateNavigator();
-
-            var nsm = new XmlNamespaceManager(nav.NameTable);
-            nsm.AddNamespace("atom", "http://www.w3.org/2005/Atom");*/
-
             var nsm = new XmlNamespaceManager(new NameTable());
             nsm.AddNamespace("atom", "http://www.w3.org/2005/Atom");
 
@@ -51,54 +31,29 @@ namespace Sitecore.Modules.WeBlog.Import
                 var doc = XDocument.Load(reader);
 
                 var posts = (from item in doc.Descendants("item")
-                             //var posts = (from item in nav.Select("item")
                              select new WpPost(item, includeComments, includeCategories, includeTags)).ToList();
 
                 return posts;
             }
-
-            /*var doc = new XmlDocument();
-            doc.NameTable.Add("atom");
-            doc.Load(fileLocation);
-
-            var items = doc.SelectNodes("//item");
-
-            var reader = new XmlTextReader(fileLocation)
-                             {
-                                 Namespaces = false
-                             };
-            var xmlDoc = XDocument.Load(reader);*/
-            /*var nsm = new XmlNamespaceManager(new NameTable());
-            nsm.AddNamespace("atom", "http://www.w3.org/2005/Atom");*/
-
-            
-
-
-            /*var xmlDoc = XDocument.Load(fileLocation);
-            var items = xmlDoc.Descendants("item");*/
-
-           // var items = nav.Select("item");
-
-            /*var posts = (from item in xmlDoc.Descendants("item")
-            //var posts = (from item in nav.Select("item")
-                                  select new WpPost(item, includeComments, includeCategories, includeTags)).ToList();
-
-            return posts;*/
         }
 
-        internal static void ImportPosts(Data.Items.Item blogItem, List<WpPost> listWordpressPosts, Database db, Action<string> logger = null)
+        internal static void ImportPosts(Item blogItem, List<WpPost> listWordpressPosts, Database db, Action<string, int> logger = null)
         {
             BlogHomeItem customBlogItem = blogItem;
             var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, db);
 
+            var processCount = 0;
+
             foreach (WpPost post in listWordpressPosts)
             {
+                processCount++;
+
                 if (!string.IsNullOrEmpty(post.Content))
                 {
                     var name = ItemUtil.ProposeValidItemName(post.Title);
 
                     if (logger != null)
-                        logger(name);
+                        logger(name, processCount);
 
                     EntryItem entry = ItemManager.AddFromTemplate(name, entryTemplate.ID, blogItem);
 
@@ -126,7 +81,7 @@ namespace Sitecore.Modules.WeBlog.Import
                         ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
                     }
 
-                    entry.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(post.PublicationDate);
+                    entry.InnerItem.Fields[FieldIDs.Created].Value = DateUtil.ToIsoDate(post.PublicationDate);
                     entry.EndEdit();
                 }
             }

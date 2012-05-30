@@ -59,8 +59,8 @@ namespace Sitecore.Modules.WeBlog.Import
             if (postXml.Element(nsContent + "encoded") != null)
                 Content = postXml.Element(nsContent + "encoded").Value;
 
-            if (postXml.Element(wpContent + "post_date") != null)
-                PublicationDate = DateTime.Parse(postXml.Element(wpContent + "post_date").Value);
+            if (postXml.Element("pubDate") != null)
+                PublicationDate = DateTime.Parse(postXml.Element("pubDate").Value);
 
             Categories = new List<string>();
             Tags = new List<string>();
@@ -69,7 +69,8 @@ namespace Sitecore.Modules.WeBlog.Import
             if (includeCategories)
             {
                 Categories = (from category in postXml.Elements("category")
-                              where category.Attribute("domain").Value == "category"
+                              let domain = category.Attribute("domain")
+                              where domain != null && domain.Value == "category"
                               orderby category.Value
                               select category.Value).ToList();
             }
@@ -77,7 +78,8 @@ namespace Sitecore.Modules.WeBlog.Import
             if (includeTags)
             {
                 Tags = (from tag in postXml.Elements("category")
-                        where tag.Attribute("domain").Value == "post_tag"
+                        let domain = tag.Attribute("domain")
+                        where domain != null && domain.Value == "post_tag"
                         orderby tag.Value
                         select tag.Value).ToList();
             }
