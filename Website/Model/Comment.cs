@@ -1,5 +1,5 @@
-﻿
-using System.Collections.Specialized;
+﻿using System.Collections.Generic;
+
 namespace Sitecore.Modules.WeBlog.Model
 {
     /// <summary>
@@ -37,7 +37,7 @@ namespace Sitecore.Modules.WeBlog.Model
         /// <summary>
         /// Gets or sets a collection of additional fields for this comment submission
         /// </summary>
-        public NameValueCollection Fields
+        public Dictionary<string,string> Fields
         {
             get;
             set;
@@ -45,7 +45,7 @@ namespace Sitecore.Modules.WeBlog.Model
 
         public Comment()
         {
-            Fields = new NameValueCollection();
+            Fields = new Dictionary<string, string>();
         }
     }
 }

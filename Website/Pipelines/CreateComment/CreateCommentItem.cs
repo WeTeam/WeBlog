@@ -38,9 +38,9 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                             newComment.Email.Field.Value = args.Comment.AuthorEmail;
                             newComment.Comment.Field.Value = args.Comment.Text;
 
-                            foreach (var key in args.Comment.Fields.AllKeys)
+                            foreach (var entry in args.Comment.Fields)
                             {
-                                newComment.InnerItem[key] = args.Comment.Fields[key];
+                                newComment.InnerItem[entry.Key] = entry.Value;
                             }
 
                             newComment.EndEdit();
