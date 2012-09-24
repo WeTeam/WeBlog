@@ -1,6 +1,5 @@
 ﻿using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Managers;
-using System.Runtime.Serialization;
 
 namespace Sitecore.Modules.WeBlog.Services
 {

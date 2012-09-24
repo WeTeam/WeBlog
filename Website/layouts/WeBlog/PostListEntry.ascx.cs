@@ -26,7 +26,7 @@ namespace Sitecore.Modules.WeBlog.Layouts.WeBlog
                 EntryImage.MaxHeight = maxEntryImage.Height;
             }
 
-            if (string.IsNullOrEmpty(EntryImage.Item[EntryImage.Field]))
+            if (EntryImage.Item != null && string.IsNullOrEmpty(EntryImage.Item[EntryImage.Field]))
                 EntryImage.Field = "Image";
         }
 
