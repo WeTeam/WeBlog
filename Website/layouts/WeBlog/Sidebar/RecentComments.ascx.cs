@@ -28,14 +28,27 @@ namespace Sitecore.Modules.WeBlog.Layouts
         }
 
         /// <summary>
-        /// Get the URL of the blog a comment was made against
+        /// Get the URL of the blog entry a comment was made against
         /// </summary>
-        /// <param name="comment">The comment to find the blog URL for</param>
+        /// <param name="comment">The comment to find the blog entry URL for</param>
         /// <returns>The URL if found, otherwise an empty string</returns>
         protected virtual string GetEntryUrlForComment(CommentItem comment) 
         {
             if (comment != null)
                 return LinkManager.GetItemUrl(ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(comment).InnerItem);
+            else
+                return string.Empty;
+        }
+
+        /// <summary>
+        /// Get the name of the blog entry a comment was made against
+        /// </summary>
+        /// <param name="comment">The comment to find the blog entry title for</param>
+        /// <returns>The title if found, otherwise an empty string</returns>
+        protected virtual string GetEntryTitleForComment(CommentItem comment)
+        {
+            if (comment != null)
+                return ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(comment).Title.Text;
             else
                 return string.Empty;
         }
