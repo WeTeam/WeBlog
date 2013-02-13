@@ -2,5 +2,12 @@
 bin
 obj
 
+# Other VS user files
+*.suo
+*.user
+
+# Local deployment files
+deploy.targets
+
 # mstest test results
 TestResults

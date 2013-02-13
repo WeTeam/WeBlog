@@ -2,9 +2,9 @@
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
-using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {

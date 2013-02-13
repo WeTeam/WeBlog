@@ -27,19 +27,17 @@
 
 using System;
 using System.IO;
+using System.Net.Mail;
 using NVelocity;
 using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Workflows.Simple;
-using System.Net.Mail;
-using Sitecore.Modules.WeBlog;
-using Sitecore.Security.Accounts;
-using Sitecore.Security;
-using Sitecore.Modules.WeBlog.Managers;
-using System.Web.Security;
 using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Security;
+using Sitecore.Security.Accounts;
+using Sitecore.Workflows.Simple;
 
 #endregion
 

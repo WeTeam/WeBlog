@@ -1,8 +1,8 @@
-﻿using System;
-using Joel.Net;
+﻿using Joel.Net;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sites;
-using Sitecore.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -18,7 +18,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                 if (workflow != null)
                 {
-                    var api = new Akismet(Settings.AkismetAPIKey, ManagerFactory.BlogManagerInstance.GetCurrentBlog().Url, "WeBlog/2.1");
+                    var api = new Akismet(Settings.AkismetAPIKey, ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.Url), "WeBlog/2.1");
                     var isSpam = api.CommentCheck(args.CommentItem);
 
                     if (isSpam)

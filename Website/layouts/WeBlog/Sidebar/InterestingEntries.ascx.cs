@@ -1,7 +1,7 @@
 ﻿using System;
-using Sitecore.Modules.WeBlog.Search;
-using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {

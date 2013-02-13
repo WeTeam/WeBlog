@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using Sitecore.Data.Items;
-using Sitecore.Links;
-using Sitecore.Web;
-using Sitecore.Data;
 using Sitecore.Data.Managers;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Items.WeBlog

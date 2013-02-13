@@ -6,14 +6,14 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
-using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
 using Sitecore.Search;
-using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {

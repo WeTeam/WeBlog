@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
             var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
 
             // If Live Writer is enabled then add the rsd link
-            if (blog.EnableLiveWriter.Checked)
+            if (blog != null && blog.EnableLiveWriter.Checked)
             {
                 AddLinkToOutput(output, blog);
             }

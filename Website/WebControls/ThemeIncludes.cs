@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.Web.UI;
-using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Data.Items;
+﻿using System.Web.UI;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using System.Web.UI;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.WebControls
 {
@@ -16,7 +11,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
         {
             var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
 
-            if (!string.IsNullOrEmpty(blog.Theme.Raw))
+            if (blog != null && !string.IsNullOrEmpty(blog.Theme.Raw))
             {
                 var themeItem = blog.Theme.Item;
                 var currentTheme = new ThemeItem(themeItem);

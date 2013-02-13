@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Data.Managers;
-using Sitecore.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {

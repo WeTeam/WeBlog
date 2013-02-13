@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.Text;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sites;
+using Sitecore.Text;
 
 namespace Sitecore.Modules.WeBlog.WebControls
 {
@@ -25,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
             if (!string.IsNullOrEmpty(varyByBlog) && bool.TrueString.Equals(varyByBlog, StringComparison.OrdinalIgnoreCase))
             {
                 var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
-                key = key + "_#blog:" + currentBlog.ID.ToShortID().ToString();
+                key = key + "_#blog:" + currentBlog.SafeGet(x => x.ID).SafeGet(x => x.ToShortID()).SafeGet(x => x.ToString());
             }
             return key;
         }

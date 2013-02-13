@@ -1,14 +1,13 @@
 ﻿using System.Collections.Specialized;
-using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
-using Sitecore.Globalization;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
-using Sitecore.Modules.WeBlog.Globalization;
-using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -41,10 +40,15 @@ namespace Sitecore.Modules.WeBlog.Commands
                         if (currentItem != null)
                         {
                             var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
-                            var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
-                            Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
+                            if (currentBlog != null)
+                            {
+                                var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
+                                Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
 
-                            ContentHelper.PublishItem(newItem);
+                                ContentHelper.PublishItem(newItem);
+                            }
+                            else
+                                Log.Error("Failed to locate blog root item", this);
                         }
                     }
                 }

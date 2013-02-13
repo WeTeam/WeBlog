@@ -3,16 +3,14 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using CookComputing.XmlRpc;
-using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Resources.Media;
-using Sitecore.Security.Accounts;
 using Sitecore.Security.Authentication;
-using Sitecore.SecurityModel;
 
 namespace Sitecore.Modules.WeBlog
 {
@@ -54,7 +52,7 @@ namespace Sitecore.Modules.WeBlog
         private static string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
         {
             var postItem = ContentHelper.GetContentDatabase().GetItem(postid);
-            Item blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(postItem).InnerItem;
+            Item blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(postItem).SafeGet(x => x.InnerItem);
             var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
 
             if (categoryList.Length != 0)

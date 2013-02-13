@@ -1,5 +1,4 @@
 ﻿using System;
-using Sitecore.Data.Items;
 using Joel.Net;
 using Sitecore.Modules.WeBlog.Managers;
 
@@ -36,8 +35,15 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         /// <returns>An Akismet comment</returns>
         public static implicit operator AkismetComment(CommentItem comment)
         {
+            var url = string.Empty;
+            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
+            if(blog != null)
+                url = blog.Url;
+            else
+                url = Context.Site.HostName;
+
             var akismetComment = new AkismetComment();
-            akismetComment.Blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog().Url;
+            akismetComment.Blog = url;
             akismetComment.UserIp = comment.IPAddress.Text;
             akismetComment.UserAgent = ""; // TODO
             akismetComment.CommentContent = comment.Comment.Text;

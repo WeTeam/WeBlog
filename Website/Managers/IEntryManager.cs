@@ -1,8 +1,7 @@
-﻿using System;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Data.Items;
+﻿using System.Collections;
 using Sitecore.Data;
-using System.Collections;
+using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {

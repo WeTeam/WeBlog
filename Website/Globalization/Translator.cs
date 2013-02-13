@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Sitecore.Caching;
-using Sitecore.Web.UI.WebControls;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Data;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Data.Managers;
+using Sitecore.Web.UI.WebControls;
 
 namespace Sitecore.Modules.WeBlog.Globalization
 {
@@ -178,7 +176,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
             _cacheRootID = dictionaryItem.ID;
             if (dictionaryItem == null)
             {
-                Log.Error("No dictionary configured for blog " + ManagerFactory.BlogManagerInstance.GetCurrentBlog().Name, typeof(Translator));
+                Log.Error("No dictionary configured for blog " + ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.Name), typeof(Translator));
                 return;
             }
 

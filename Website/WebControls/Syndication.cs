@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Items.Feeds;
+﻿using System.Linq;
 using System.Web.UI;
+using Sitecore.Modules.WeBlog.Items.Feeds;
+using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.WebControls
 {
@@ -14,7 +11,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
         {
             var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
 
-            if (blog.EnableRSS.Checked)
+            if (blog != null && blog.EnableRSS.Checked)
             {
                 var feeds = blog.SyndicationFeeds;
                 if (feeds != null && feeds.Count() > 0)

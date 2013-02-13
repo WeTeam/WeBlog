@@ -7,10 +7,8 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using System.Threading;
 using Sitecore.StringExtensions;
 using Sitecore.Search;
-using Sitecore.Analytics;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
@@ -267,8 +265,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the month and year from the current blog</returns>
         public EntryItem[] GetBlogEntriesByMonthAndYear(int month, int year)
         {
-            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
-            return GetBlogEntriesByMonthAndYear(blog.InnerItem, month, year);
+            return GetBlogEntriesByMonthAndYear(ManagerFactory.BlogManagerInstance.GetCurrentBlog(), month, year);
         }
 
         /// <summary>
