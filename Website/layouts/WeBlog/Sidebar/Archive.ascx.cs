@@ -37,7 +37,9 @@ namespace Sitecore.Modules.WeBlog.Layouts
             SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
 
             m_entriesByMonthAndYear = new Dictionary<int, List<EntryItem>>();
-            m_startedDate = CurrentBlog.InnerItem.Statistics.Created;
+
+            if(CurrentBlog != null)
+                m_startedDate = CurrentBlog.InnerItem.Statistics.Created;
             
             LoadEntries();
             if (Years != null)
@@ -99,7 +101,9 @@ namespace Sitecore.Modules.WeBlog.Layouts
             var yearKey = year * 100;
 
             var months = new List<int>();
-            for (int i = 0; i < 12; i++)
+            // put this in for (int i = 1; i <= 12; i++)
+            //for (int i = 0; i < 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
                 if (m_entriesByMonthAndYear.ContainsKey(yearKey + i))
                     months.Add(yearKey + i);
