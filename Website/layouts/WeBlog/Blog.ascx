@@ -15,6 +15,6 @@
             <sc:placeholder ID="phBlogSidebar" key="phBlogSidebar" runat="server" />
         </div>
 
-        <div class="wb-footer">Powered by <a href="http://trac.sitecore.net/WeBlog">WeBlog</a></div>
+        <div class="wb-footer">Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a></div>
     </div>
 </div>
