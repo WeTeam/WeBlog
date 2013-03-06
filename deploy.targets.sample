@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup>
-		<SitecorePath>C:\websites\EviBlog-65\Website</SitecorePath>
-		<SitecorePathPre65>C:\websites\EviBlog-62\Website</SitecorePathPre65>
+		<SitecorePath>C:\websites\WeBlog-65\Website</SitecorePath>
+		<SitecorePathCD>C:\websites\WeBlog-65-CD\Website</SitecorePathCD>
+		<SitecorePathPre65>C:\websites\WeBlog-62\Website</SitecorePathPre65>
 	</PropertyGroup>
 </Project>
