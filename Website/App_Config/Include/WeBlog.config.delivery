@@ -18,6 +18,14 @@
       <event name="publish:end">
         <handler type="Sitecore.Modules.WeBlog.Globalization.ItemAndPublishEventHandler, Sitecore.Modules.WeBlog" method="OnPublishEnd"/>
       </event>
+      <!-- Clear HTML caches after index update is complete. Add any additional WeBlog sites to the site list below (or via patch). -->
+      <event name="database:propertychanged">
+          <handler type="Sitecore.Modules.WeBlog.Search.IndexUpdateHtmlCacheClearer, Sitecore.Modules.WeBlog" method="OnPropertyChanged">
+              <sites hint="list">
+                  <site>website</site>
+              </sites>
+          </handler>
+      </event>
     </events>
     <commands>
       <command name="blog:newblog" type="Sitecore.Modules.WeBlog.Commands.NewBlog,Sitecore.Modules.WeBlog"/>

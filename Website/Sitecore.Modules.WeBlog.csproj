@@ -363,6 +363,7 @@
     <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
+    <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
     <Compile Include="Search\InterestingEntries\InterestingEntriesAlgorithm.cs" />
     <Compile Include="Search\SortableIndexSearchContext.cs" />
