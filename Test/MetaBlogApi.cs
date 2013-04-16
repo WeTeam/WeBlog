@@ -115,7 +115,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
         }
 
-        /*[Test]
+        [Test]
         public void GetUsersBlogs_ValidUserMultiple()
         {
             var result = m_api.getUsersBlogs("test", m_userAuthor.Name, PASSWORD);
@@ -360,7 +360,7 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var entry11 = m_blog1.Axes.GetDescendant("Entry11");
             var content = m_api.getPost(entry11.ID.ToString(), "sitecore\\a", "a");
-        }*/
+        }
 
         [Test]
         public void DeletePost_ExistingEntry()
@@ -379,7 +379,7 @@ namespace Sitecore.Modules.WeBlog.Test
             Assert.IsTrue(result);
         }
 
-        /*[Test]
+        [Test]
         public void DeletePost_InvalidEntry()
         {
             var result = m_api.deletePost("test", ID.NewID.ToString(), m_userAuthor.Name, PASSWORD, false);
@@ -391,6 +391,6 @@ namespace Sitecore.Modules.WeBlog.Test
         public void DeletePost_InvalidUser()
         {
             var newId = m_api.deletePost("test", ID.NewID.ToString(), "sitecore\\a", "a", false);
-        }*/
+        }
     }
 }

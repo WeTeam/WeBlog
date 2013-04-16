@@ -553,5 +553,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             Assert.AreEqual(0, entryIds.Length);            
         }
+
+        // TODO: Write tests for methods accepting language
     }
 }

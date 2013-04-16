@@ -3,6 +3,7 @@ using Sitecore.Pipelines;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Data;
+using Sitecore.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -39,6 +40,12 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         /// Gets or sets the database to create the comment in
         /// </summary>
         public Database Database
+        {
+            get;
+            set;
+        }
+
+        public Language Language
         {
             get;
             set;

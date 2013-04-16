@@ -1,5 +1,6 @@
 ﻿using System.ServiceModel;
 using Sitecore.Data;
+using Sitecore.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Services
 {
@@ -7,6 +8,6 @@ namespace Sitecore.Modules.WeBlog.Services
     public interface ICommentService
     {
         [OperationContract]
-        ID SubmitComment(ID EntryId, Model.Comment comment);
+        ID SubmitComment(ID EntryId, Model.Comment comment, Language language);
     }
 }

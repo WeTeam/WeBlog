@@ -14,6 +14,8 @@ using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
 using Sitecore.Search;
+using Sitecore.Globalization;
+using Sitecore.Modules.WeBlog.Search.Crawlers;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -27,13 +29,15 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entryId">The ID of the entry to add the comment to</param>
         /// <param name="comment">The comment to add to the entry</param>
+        /// <param name="language">The language to create the comment in</param>
         /// <returns>The ID of the created comment item, or ID.Null if creation failed</returns>
-        public ID AddCommentToEntry(ID entryId, Model.Comment comment)
+        public ID AddCommentToEntry(ID entryId, Model.Comment comment, Language language = null)
         {
             var args = new CreateCommentArgs();
             args.EntryID = entryId;
             args.Comment = comment;
             args.Database = ContentHelper.GetContentDatabase();
+            args.Language = language ?? Context.Language;
 
 #if PRE_65
             CorePipeline.Run("weblogCreateComment", args);
@@ -49,6 +53,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
         protected void AddComment(EntryItem entryItem, WpComment wpComment)
         {
+            // todo: Wizard to ask user which language to import into
             string itemName = ItemUtil.ProposeValidItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
 
             CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID(CommentItem.TemplateId)));
@@ -64,11 +69,11 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>
         /// Submit a comment for inclusion on a post. This method will either update Sitecore or submit the comment through the comment service, depending on settings
         /// </summary>
-        /// <param name="Name">The name of the user submitting the comment</param>
-        /// <param name="Email">The user's email address</param>
-        /// <param name="Website">The user's URL</param>
-        /// <param name="CommentText">The comment text being submitted</param>
-        public ID SubmitComment(ID EntryId, Model.Comment comment)
+        /// <param name="entryId">The ID of the entry to add the comment to</param>
+        /// <param name="comment">The comment to add to the entry</param>
+        /// <param name="language">The language to create the comment in</param>
+        /// <returns>The ID of the created comment item, or ID.Null if creation failed</returns>
+        public ID SubmitComment(ID entryId, Model.Comment comment, Language language = null)
         {
             if (Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false))
             {
@@ -76,23 +81,28 @@ namespace Sitecore.Modules.WeBlog.Managers
                 ChannelFactory<ICommentService> commentProxy = new ChannelFactory<ICommentService>("WeBlogCommentService");
                 commentProxy.Open();
                 ICommentService service = commentProxy.CreateChannel();
-                var result = service.SubmitComment(Context.Item.ID, comment);
+                var result = service.SubmitComment(Context.Item.ID, comment, language);
                 commentProxy.Close();
                 if (result == ID.Null)
                     Log.Error("WeBlog.CommentManager: Comment submission through WCF failed. Check server Sitecore log for details", typeof(CommentManager));
                 return result;
             }
             else
-                return AddCommentToEntry(Context.Item.ID, comment);
+                return AddCommentToEntry(Context.Item.ID, comment, language);
         }
 
         /// <summary>
         /// Gets the number of comments for the current entry.
         /// </summary>
+        /// <param name="language">The language to check comments in</param>
         /// <returns>The number of comments</returns>
-        public int GetCommentsCount()
+        public int GetCommentsCount(Language language = null)
         {
-            return GetCommentsCount(Context.Item);
+            var item = Context.Item;
+            if (language != null)
+                item = item.Database.GetItem(item.ID, language);
+
+            return GetCommentsCount(item);
         }
 
         /// <summary>
@@ -109,10 +119,17 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the number of comments under the given entry.
         /// </summary>
         /// <param name="entryId">The ID of the entry to get the comment count for</param>
-        /// <returns></returns>
-        public int GetCommentsCount(ID entryId)
+        /// <param name="language">The language to check comments in</param>
+        /// <returns>The number of comments</returns>
+        public int GetCommentsCount(ID entryId, Language language = null)
         {
-            var entry = GetDatabase().GetItem(entryId);
+            Item entry = null;
+
+            if(language != null)
+                entry = GetDatabase().GetItem(entryId, language);
+            else
+                entry = GetDatabase().GetItem(entryId);
+
             if (entry != null)
                 return GetCommentsCount(entry);
             else
@@ -124,12 +141,19 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blogId">The ID of the blog to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
+        /// <param name="language">The language to get the comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount)
+        public CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount, Language language = null)
         {
             if (blogId != (ID)null)
             {
-                var blogItem = GetDatabase().GetItem(blogId);
+                Item blogItem = null;
+
+                if (language != null)
+                    blogItem = GetDatabase().GetItem(blogId, language);
+                else
+                    blogItem = GetDatabase().GetItem(blogId);
+
                 if (blogItem != null)
                 {
                     return GetCommentsByBlog(blogItem, maximumCount);
@@ -153,20 +177,25 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>
         /// Gets the comments for the current blog entry
         /// </summary>
+        /// <param name="language">The language to get comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetEntryComments()
+        public CommentItem[] GetEntryComments(Language language = null)
         {
-            return GetEntryComments(Context.Item, int.MaxValue);
+            return GetEntryComments(int.MaxValue, language);
         }
 
         /// <summary>
         /// Gets the comments for the current blog entry
         /// </summary>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
+        /// <param name="language">The language to get comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetEntryComments(int maximumCount)
+        public CommentItem[] GetEntryComments(int maximumCount, Language language = null)
         {
-            return GetEntryComments(Context.Item, maximumCount);
+            var blogItem = Context.Item;
+            if (language != null && blogItem.Language != language && blogItem.Languages.Contains(language))
+                blogItem = blogItem.Database.GetItem(blogItem.ID, language);
+            return GetEntryComments(blogItem, maximumCount);
         }
 
         /// <summary>
@@ -204,12 +233,13 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="item">The item to get the comments under</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
+        /// <param name="language">The language to get the comments in</param>
         /// <returns>The comments which are decendants of the given item</returns>
         public CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false)
         {
             if (item != null && maximumCount > 0)
             {
-                BlogHomeItem blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
+                var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
                 if (blog != null)
                 {
                     var query = new CombinedQuery();

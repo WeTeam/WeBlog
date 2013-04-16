@@ -71,6 +71,31 @@
                     </field>
                 </fields>
             </version>
+          <version language="de" version="1">
+            <fields>
+              <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                <content>a6d841d2-2216-4441-8d5b-7d1085aaa4af</content>
+              </field>
+              <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                <content>20110303T083101</content>
+              </field>
+              <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                <content>{7C592089-260E-434F-B3FC-CD8AC6F8DF5B}|{AB424819-2077-43B5-BB98-81009B1B9E0B}</content>
+              </field>
+              <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                <content>Entry2 in German</content>
+              </field>
+              <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                <content>20110303T083123:634347378835587631</content>
+              </field>
+              <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                <content>-0303083101</content>
+              </field>
+            </fields>
+          </version>
 
             <item name="Comment5" key="comment5" id="{E9948E75-A1D8-43F0-B5E8-E62A09A51172}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-304072348" template="blogcomment" parentid="{8836017E-E27C-473C-B877-2D07765290E5}">
                 <version language="en" version="1">
@@ -154,6 +179,31 @@
                     </field>
                 </fields>
             </version>
+          <!--<version language="de" version="1">
+            <fields>
+              <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                <content>sitecore\admin</content>
+              </field>
+              <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                <content>299e4130-1dc5-4b5e-9dbb-db93e288560f</content>
+              </field>
+              <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                <content>20110303T083056</content>
+              </field>
+              <field tfid="{E9697E18-C3C9-47F9-B18D-D25FC1DAD8AF}" key="category" type="Multilist">
+                <content>{7B721AC3-FCC5-4573-8724-C7629C9FA96B}|{AB424819-2077-43B5-BB98-81009B1B9E0B}</content>
+              </field>
+              <field tfid="{A99A1591-F367-48A0-8900-E5DCBC8B528F}" key="title" type="Single-Line Text">
+                <content>German Entry1</content>
+              </field>
+              <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                <content>20110303T083112:634347378720564209</content>
+              </field>
+              <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                <content>-0303083056</content>
+              </field>
+            </fields>
+          </version>-->
 
             <item name="Comment3" key="comment3" id="{32216C5F-2FDB-42BA-8304-4C34C15331DE}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-304072323" template="blogcomment" parentid="{58E02733-8CFC-48F2-BC32-035D8904AB06}">
                 <version language="en" version="1">
@@ -236,6 +286,33 @@
                     </fields>
                 </version>
             </item>
+          <!--<item name="de-Comment1" key="de-comment1" id="{C128E4B2-FC43-4BB4-4BC1-35A3D9C599A6}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" template="blogcomment" parentid="{58E02733-8CFC-48F2-BC32-035D8904AB06}">
+            <version language="de" version="1">
+              <fields>
+                <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+                  <content>330645cf-9a15-445b-87dd-7b683738347c</content>
+                </field>
+                <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+                  <content>20110303T172631</content>
+                </field>
+                <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+                  <content>sitecore\admin</content>
+                </field>
+                <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+                  <content>20110303T172631:634347699911568074</content>
+                </field>
+                <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
+                  <content>-0303172631</content>
+                </field>
+              </fields>
+            </version>
+          </item>-->
 
         </item>
         <item name="Categories" key="categories" id="{2390CE6E-4F6D-49A6-BE32-0F44410DFE1E}" tid="{0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}" mid="{6FC4278C-E043-458B-9D5D-BBA775A9C386}" sortorder="100" template="template folder" parentid="{4361F9F1-2B47-4F2C-8FF6-28F5966C8F49}">

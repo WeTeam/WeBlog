@@ -49,6 +49,9 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
                         document.Add(new Field(fieldName, TransformCSV(item.Fields[fieldName].Value), Field.Store.YES, Field.Index.TOKENIZED));
                     }
                 }
+
+                // Add modified language code to deal with dash in region specific languages
+                document.Add(new Field(Constants.Index.Fields.Language, TransformLanguageCode(item.Language.Name), Field.Store.NO, Field.Index.TOKENIZED));
             }
         }
 
@@ -115,6 +118,16 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
         {
             var collapsed = value.Replace(" ", string.Empty);
             return collapsed.Replace(',', ' ');
+        }
+
+        /// <summary>
+        /// Transforms a language code to allow tokenising for Lucene
+        /// </summary>
+        /// <param name="langCode">The language code to transform</param>
+        /// <returns>The transformed language code</returns>
+        public static string TransformLanguageCode(string langCode)
+        {
+            return langCode.ToLower().Replace("-", string.Empty).PadRight(4, 'z');
         }
     }
 }

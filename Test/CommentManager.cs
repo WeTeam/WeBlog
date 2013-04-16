@@ -10,6 +10,7 @@ using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -27,6 +28,7 @@ namespace Sitecore.Modules.WeBlog.Test
         private Item m_comment111 = null;
         private Item m_comment112 = null;
         private Item m_comment113 = null;
+        private Item m_deComment111 = null;
         private Item m_entry12 = null;
         private Item m_comment121 = null;
         private Item m_comment122 = null;
@@ -63,6 +65,7 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment111 = m_entry11.Axes.GetDescendant("Comment1");
             m_comment112 = m_entry11.Axes.GetDescendant("Comment2");
             m_comment113 = m_entry11.Axes.GetDescendant("Comment3");
+            m_deComment111 = m_entry11.Axes.GetDescendant("de-Comment1");
 
             m_entry12 = m_blog1.Axes.GetDescendant("Entry2");
             m_comment121 = m_entry12.Axes.GetDescendant("Comment4");
@@ -84,7 +87,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 if (m_testRoot != null)
                 {
-                    m_testRoot.Delete();
+                 //   m_testRoot.Delete();
                 }
             }
         }
@@ -231,9 +234,21 @@ namespace Sitecore.Modules.WeBlog.Test
         }
 
         [Test]
+        public void GetCommentsCount_WithLanguage_Entry11()
+        {
+            Assert.AreEqual(1, new Mod.CommentManager().GetCommentsCount(m_deComment111));
+        }
+
+        [Test]
         public void GetCommentsCount_Entry11_ById()
         {
             Assert.AreEqual(3, new Mod.CommentManager().GetCommentsCount(m_entry11.ID));
+        }
+
+        [Test]
+        public void GetCommentsCount_WithLanguage_Entry11_ById()
+        {
+            Assert.AreEqual(1, new Mod.CommentManager().GetCommentsCount(m_entry11.ID, Language.Parse("de")));
         }
 
         [Test]
@@ -388,6 +403,16 @@ namespace Sitecore.Modules.WeBlog.Test
         }
 
         [Test]
+        public void GetEntryComments_WithLanguage_Entry11()
+        {
+            var comments = new Mod.CommentManager().GetEntryComments(m_deComment111);
+            Assert.AreEqual(1, comments.Length);
+
+            var ids = (from comment in comments
+                       select comment.ID).ToArray();
+        }
+
+        [Test]
         public void GetEntryComments_Entry21()
         {
             var comments = new Mod.CommentManager().GetEntryComments(m_entry21);
@@ -403,7 +428,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetEntryComments_Null()
         {
-            var comments = new Mod.CommentManager().GetEntryComments(null);
+            var comments = new Mod.CommentManager().GetEntryComments((Item)null);
             Assert.AreEqual(0, comments.Length);
         }
 
@@ -447,9 +472,8 @@ namespace Sitecore.Modules.WeBlog.Test
             // Perform this test in master DB as comments get created there
             var db = Sitecore.Configuration.Factory.GetDatabase("master");
             var blogSettings = new BlogHomeItem(m_blog1).BlogSettings;
-            var entry12 = m_blog1.Axes.GetDescendant("Entry2");
 
-            var originalCount = entry12.Axes.GetDescendants().Count(i => i.TemplateID == blogSettings.CommentTemplateID);
+            var originalCount = m_entry12.Axes.GetDescendants().Count(i => i.TemplateID == blogSettings.CommentTemplateID);
             ID commentId = null;
 
             try
@@ -483,15 +507,6 @@ namespace Sitecore.Modules.WeBlog.Test
             finally
             {
                 var webDb = Sitecore.Configuration.Factory.GetDatabase("web");
-
-                //if (testRoot != null)
-                //{
-                //    using (new SecurityDisabler())
-                //    {
-                //        testRoot.Delete();
-                //    }
-                //}
-
                 if (commentId != (ID)null)
                 {
                     var commentItem = db.GetItem(commentId);
@@ -504,6 +519,63 @@ namespace Sitecore.Modules.WeBlog.Test
                     }
 
                     commentItem = webDb.GetItem(commentId);
+                    if (commentItem != null)
+                    {
+                        using (new SecurityDisabler())
+                        {
+                            commentItem.Delete();
+                        }
+                    }
+                }
+            }
+        }
+
+        // TODO: Write tests for methods accepting language
+        [Test]
+        public void AddCommentToEntry_WithLanguage()
+        {
+            // Perform this test in master DB as comments get created there
+            var db = Sitecore.Configuration.Factory.GetDatabase("master");
+
+            ID germanCommentId = null;
+
+            try
+            {
+                var germanComment = new Sitecore.Modules.WeBlog.Model.Comment()
+                {
+                    AuthorEmail = "agerman@b.com",
+                    AuthorName = "german commentor",
+                    Text = "My German Comment"
+                };
+
+                germanComment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.IpAddress] = "127.0.0.1";
+                germanComment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.Website] = "website";
+
+                germanCommentId = new Mod.CommentManager().AddCommentToEntry(m_entry12.ID, germanComment, Sitecore.Globalization.Language.Parse("de"));
+
+                var germanCommentItem = db.GetItem(germanCommentId);
+                Assert.IsNotNull(germanCommentItem);
+
+                // Ensure the item only contains a version in German
+                Assert.AreEqual(1, germanCommentItem.Versions.Count);
+                Assert.AreEqual("de", germanCommentItem.Versions[new Sitecore.Data.Version(1)].Language.Name);
+            }
+            finally
+            {
+                var webDb = Sitecore.Configuration.Factory.GetDatabase("web");
+
+                if (germanCommentId != (ID)null)
+                {
+                    var commentItem = db.GetItem(germanCommentId);
+                    if (commentItem != null)
+                    {
+                        using (new SecurityDisabler())
+                        {
+                            commentItem.Delete();
+                        }
+                    }
+
+                    commentItem = webDb.GetItem(germanCommentId);
                     if (commentItem != null)
                     {
                         using (new SecurityDisabler())

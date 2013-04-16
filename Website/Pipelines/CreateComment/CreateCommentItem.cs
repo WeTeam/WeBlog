@@ -16,7 +16,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
             Assert.IsNotNull(args.Comment, "Comment cannot be null");
             Assert.IsNotNull(args.EntryID, "Entry ID cannot be null");
 
-            var entryItem = args.Database.GetItem(args.EntryID);
+            var entryItem = args.Database.GetItem(args.EntryID, args.Language);
             if (entryItem != null)
             {
                 var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entryItem);
