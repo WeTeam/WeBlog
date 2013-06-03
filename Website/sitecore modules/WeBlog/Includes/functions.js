@@ -1,36 +1,37 @@
-﻿jQuery = jQuery.noConflict();
-jQuery(function () {
-    blogViewMore();
-});
+﻿(function ($) {
+    $(document).ready(function () {
+        // infinite scroll
+        $('.wb-view-more', '#wb-view-more-wrapper').click(function () {
+            var viewMore = $(this);
+            var loading = viewMore.next(".wb-loading-animation");
+            var entries = $("#wb-entry-list ul");
+            viewMore.hide();
+            loading.show();
 
-function ToggleVisibility(elementId, caller) {
-    var el = jQuery("#" + elementId);
-    el.toggle('200');
-    if (caller != null)
-        jQuery(caller).toggleClass('expanded');
-}
+            $.url.setUrl(document.location);
+            var params = {
+                startIndex: entries.children().length,
+                blogAjax: 1
+            };
+            if ($.url.param("tag") != null) {
+                params.tag = $.url.param("tag");
+            }
 
-function blogViewMore() {
-    jQuery(".wb-view-more").live("click", function () {
-        var viewMore = jQuery(this);
-        var loading = viewMore.next(".wb-loading-animation");
-        viewMore.hide();
-        loading.show();
-        jQuery.url.setUrl(document.location);
-        var params = {
-            startIndex: jQuery(".wb-entry-list ul").children().length,
-            blogAjax: 1
-        }
-        if (jQuery.url.param("tag") != null) {
-            params.tag = jQuery.url.param("tag");
-        }
-        var url = jQuery.url.setUrl(jQuery(this).attr("href")).attr("path");
-        jQuery.get(url, params, function (data) {
-            var posts = jQuery(data).find('ul li');
-            loading.parent().parent().find('ul').append(posts);
-            loading.hide();
-            viewMore.show();
+            var url = $.url.setUrl(viewMore.attr("href")).attr("path");
+            $.get(url, params, function (data) {
+                var posts = jQuery(data).find('ul li');
+                entries.append(posts);
+                loading.hide();
+                viewMore.show();
+            });
+            return false;
         });
-        return false;
+
+        // archive toggle
+        $('#wb-archive .wb-year, #wb-archive .wb-month').click(function () {
+            var ctl = $(this);
+            ctl.next('ul').toggle('200');
+            ctl.toggleClass('expanded');
+        });
     });
-}
+})(jQuery);

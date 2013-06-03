@@ -157,7 +157,6 @@
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="DataUtil.cs" />
     <Compile Include="Extensions\CustomTextFieldExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
     <Compile Include="Globalization\ItemAndPublishEventHandler.cs" />
@@ -465,9 +464,6 @@
   <ItemGroup>
     <Content Include="sitecore modules\WeBlog\MetaBlogApi.ashx" />
     <Content Include="sitecore modules\WeBlog\rsd.ashx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App_Config\Include\WeBlog.config.delivery" />
