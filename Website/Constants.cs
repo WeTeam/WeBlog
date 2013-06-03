@@ -5,6 +5,8 @@ namespace Sitecore.Modules.WeBlog
 {
     public static class Constants
     {
+        public const string CookieName = "weblog-comment-submissions";
+
         public static class Index
         {
             public static class Fields

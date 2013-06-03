@@ -45,6 +45,9 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
             set;
         }
 
+        /// <summary>
+        /// Gets or sets the language to create the comment in
+        /// </summary>
         public Language Language
         {
             get;

@@ -47,5 +47,15 @@ namespace Sitecore.Modules.WeBlog.Model
         {
             Fields = new Dictionary<string, string>();
         }
+
+        /// <summary>
+        /// Gets a hash for this comment
+        /// </summary>
+        /// <returns>A hash of the comment</returns>
+        public virtual string GetHash()
+        {
+            var data = AuthorName + "-" + "-" + AuthorEmail + "-" + Text;
+            return Crypto.GetMD5Hash(data);
+        }
     }
 }
