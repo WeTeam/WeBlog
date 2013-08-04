@@ -2,6 +2,8 @@
 using System.Drawing;
 using System.Web.UI;
 using System.ComponentModel;
+using Sitecore.Security.Authentication;
+using Sitecore.Security.Accounts;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {

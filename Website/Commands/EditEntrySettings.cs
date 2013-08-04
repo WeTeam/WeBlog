@@ -95,6 +95,9 @@ namespace Sitecore.Modules.WeBlog.Commands
         protected virtual IEnumerable<string> GetFieldNames()
         {
             yield return "Category";
+            yield return "Tags";
+            yield return "Author";
+            yield return "Entry Date";
             yield return "Disable comments";
         }
     }

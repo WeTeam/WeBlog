@@ -33,12 +33,19 @@ content-length: 3
 ----version----
 language: en
 version: 1
-revision: 14e5606d-16c1-42d3-8db3-52b03fc539a7
+revision: a8df4553-5c5d-4416-aeec-14ddfa288cef
 
 ----field----
 field: {19A69332-A23E-4E70-8D16-B2640CB24CC8}
 name: Title
 key: title
+content-length: 0
+
+
+----field----
+field: {9541E67D-CE8C-4225-803D-33F7F29F09EF}
+name: __Short description
+key: __short description
 content-length: 58
 
 Please fill in the tags that describe your blog entry best
@@ -69,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-14e5606d-16c1-42d3-8db3-52b03fc539a7
+a8df4553-5c5d-4416-aeec-14ddfa288cef
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20110710T212630:634459299907595516
+20130804T135154:635112211145776867
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

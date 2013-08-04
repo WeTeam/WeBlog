@@ -8,7 +8,7 @@
         <h2><sc:Text ID="txtTitle" Field="Title" runat="server" /></h2>
     <% } %>
     <% if (ShowEntryMetadata) { %>
-        <div class="wb-details"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created, CurrentEntry.CreatedBy.LocalName) %></div>
+        <div class="wb-details"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created, CurrentEntry.AuthorName)%></div>
     <% } %>
     <% if (ShowEntryIntroduction) { %>
     <sc:Placeholder runat="server" key="weblog-below-entry-title" />

@@ -44,21 +44,6 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
             }
         }
 
-        /*public string IntroductionText
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(this.Introduction.Rendered))
-                {
-                    int x = this.Content.Rendered.Length > 500 ? 500 : this.Content.Rendered.Length;
-                    
-                    return this.Content.Rendered.Substring(0, x);
-                }
-                return this.Introduction.Rendered;
-                
-            }
-        }*/
-
         /// <summary>
         /// Gets the count of comments for this blog entry.
         /// </summary>
@@ -77,7 +62,7 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         {
             get
             {
-                return InnerItem.Statistics.Created;
+                return EntryDate.DateTime != DateTime.MinValue ? EntryDate.DateTime : InnerItem.Statistics.Created;
             }
         }
 
@@ -92,6 +77,33 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                     return User.FromName(createdBy, AccountType.User) as User;
                 }
                 return null;
+            }
+        }
+
+        public string AuthorName
+        {
+            get
+            {
+                if (Author.Raw.Contains("\\"))
+                {
+                    // if we find the user, return the local name
+                    if (User.Exists(Author.Raw))
+                    {
+                        var user = User.FromName(Author.Raw, false);
+                        if (user != null)
+                        {
+                            var name = user.LocalName;
+                            if (user.Profile != null && !string.IsNullOrEmpty(user.Profile.FullName))
+                                name = user.Profile.FullName;
+
+                            return name;
+                        }
+                    }
+                }
+                else if (Author.Raw == "$username")
+                    return CreatedBy.LocalName;
+
+                return Author.Rendered;
             }
         }
 

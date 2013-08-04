@@ -86,6 +86,21 @@ public CustomTextField Content
 	}
 }
 
+public CustomTextField Author
+{
+    get
+    {
+        return new CustomTextField(InnerItem, InnerItem.Fields["Author"]);
+    }
+}
+
+public CustomDateField EntryDate
+{
+    get
+    {
+        return new CustomDateField(InnerItem, InnerItem.Fields["Entry Date"]);
+    }
+}
 
 public CustomImageField Image
 {
