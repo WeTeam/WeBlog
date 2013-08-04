@@ -5,6 +5,7 @@ using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
+using Sitecore.StringExtensions;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -25,12 +26,23 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                     var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
                     var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", DateTime.Now.ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
 
+                    // verify the comment item name is unique for this entry
+                    var query = "fast:{0}//{1}".FormatWith(entryItem.Paths.FullPath, itemName);
+                    var num = 1;
+                    var nondupItemName = itemName;
+                    while (entryItem.Database.SelectSingleItem(query) != null)
+                    {
+                        nondupItemName = itemName + " " + num;
+                        num++;
+                        query = "fast:{0}//{1}".FormatWith(entryItem.Paths.FullPath, nondupItemName);
+                    }
+
                     //need to emulate creation within shell site to ensure workflow is applied to comment
                     using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext(Sitecore.Constants.ShellSiteName)))
                     {
                         using (new SecurityDisabler())
                         {
-                            var newItem = entryItem.Add(itemName, template);
+                            var newItem = entryItem.Add(nondupItemName, template);
 
                             var newComment = new CommentItem(newItem);
                             newComment.BeginEdit();
