@@ -15,7 +15,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         public BaseEntrySublayout()
         {
-            CurrentEntry = new EntryItem(Sitecore.Context.Item);
+            CurrentEntry = new EntryItem(DataSourceItem);
         }
     }
 }
