@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -46,8 +46,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //will populate the custom PostTemplate value if present
-            SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
             if (string.IsNullOrEmpty(PostTemplate))
             {
                 PostTemplate = DEFAULT_POST_TEMPLATE;

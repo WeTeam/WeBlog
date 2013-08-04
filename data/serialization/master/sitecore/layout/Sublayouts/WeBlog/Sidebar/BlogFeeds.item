@@ -6,9 +6,16 @@ path: /sitecore/layout/Sublayouts/WeBlog/Sidebar/BlogFeeds
 parent: {78C79C5D-F7FE-412B-9580-64ADB22EFDE5}
 name: BlogFeeds
 master: {00000000-0000-0000-0000-000000000000}
-template: {A3475FCD-1FE2-4B20-BF05-4A2BB4334A76}
-templatekey: Blog Sublayout
+template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
+templatekey: Sublayout
 
+----field----
+field: {E28F0784-53EC-4B5C-803E-638FDB1EC15D}
+name: Parameters Template
+key: parameters template
+content-length: 38
+
+{43ABB60C-C4D4-40B9-95CE-04473C492FE2}
 ----field----
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
@@ -23,6 +30,13 @@ key: placeholder
 content-length: 13
 
 phBlogSidebar
+----field----
+field: {AD6A7DB0-C741-4509-A5EB-FA582642E960}
+name: Parameters
+key: parameters
+content-length: 15
+
+VaryByBlog=true
 ----field----
 field: {3D08DB46-2267-41B0-BC52-BE69FD618633}
 name: Cacheable
@@ -54,7 +68,7 @@ content-length: 144
 ----version----
 language: en
 version: 1
-revision: 82b98c03-7944-4342-87d5-7a523c41abbc
+revision: 5ba4cd36-e7cc-4bb1-874e-107437fcf1a1
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -90,14 +104,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-82b98c03-7944-4342-87d5-7a523c41abbc
+5ba4cd36-e7cc-4bb1-874e-107437fcf1a1
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20120401T175954:634688999946015625
+20130804T123814:635112166948866521
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Pipelines.GetSummary;
 using Sitecore.SecurityModel;

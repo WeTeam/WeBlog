@@ -18,8 +18,8 @@ content-length: 1
 1
 ----field----
 field: {A13B14C3-50D8-491D-AA90-4A0E29EF028A}
-name: Number of Tweets
-key: number of tweets
+name: NumberOfTweets
+key: numberoftweets
 content-length: 1
 
 4
@@ -39,29 +39,29 @@ content-length: 0
 
 ----field----
 field: {95F562DE-090C-4DBF-A849-90B5904E77DB}
-name: Shell Background
-key: shell background
+name: ShellBackground
+key: shellbackground
 content-length: 7
 
 #4a463e
 ----field----
 field: {C2169EDC-2C5E-4889-A354-B1AA4B51A1BC}
-name: Shell Text
-key: shell text
+name: ShellText
+key: shelltext
 content-length: 7
 
 #f2ead7
 ----field----
 field: {0CBE41C4-2215-45B6-B1D3-CB3426D9DA80}
-name: Tweet Background
-key: tweet background
+name: TweetBackground
+key: tweetbackground
 content-length: 7
 
 #f3e9d8
 ----field----
 field: {AB5691BF-8D8F-4712-8D4F-4A98EC47C881}
-name: Tweet Text
-key: tweet text
+name: TweetText
+key: tweettext
 content-length: 7
 
 #33302a

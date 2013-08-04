@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {AA1239DA-A2F2-455B-A087-52F6A7F9F936}
+database: master
+path: /sitecore/layout/Placeholder Settings/weblog-below-entry-title
+parent: {1CE3B36C-9B0C-4EB5-A996-BFCB4EAA5287}
+name: weblog-below-entry-title
+master: {00000000-0000-0000-0000-000000000000}
+template: {5C547D4E-7111-4995-95B0-6B561751BF2E}
+templatekey: Placeholder
+
+----field----
+field: {7256BDAB-1FD2-49DD-B205-CB4873D2917C}
+name: Placeholder Key
+key: placeholder key
+content-length: 24
+
+weblog-below-entry-title
+----field----
+field: {E391B526-D0C5-439D-803E-17512EAE6222}
+name: Allowed Controls
+key: allowed controls
+content-length: 272
+
+{8D7408D6-0E04-4BDF-BECE-EEEB08EB9B4A}|{D5DE2CA5-8550-4F46-9545-3C4376BF7E0F}|{DE1B6D0B-6988-4B31-B469-EAD66F2F6ED3}|{FCCDE0B2-DD05-4E1E-A253-E53D42659726}|{2C63DA92-46FA-4244-9684-EAC101BED6C7}|{9E95604C-C69C-4CBC-A087-B1D9236B77D7}|{FE9601F1-7522-48E6-BB71-4791C617F4B2}
+----version----
+language: en
+version: 1
+revision: 26e73057-e607-443b-9119-238ab8533056
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111021T091600
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+26e73057-e607-443b-9119-238ab8533056
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130804T125016:635112174165530756
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

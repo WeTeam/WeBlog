@@ -31,13 +31,6 @@ content-length: 0
 
 
 ----field----
-field: {B12E4906-B96B-495E-B343-CD2E92DC6347}
-name: ValidationText
-key: validationtext
-content-length: 0
-
-
-----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
 key: __sortorder
@@ -56,6 +49,13 @@ key: title
 content-length: 3
 
 Fra
+----field----
+field: {B12E4906-B96B-495E-B343-CD2E92DC6347}
+name: ValidationText
+key: validationtext
+content-length: 0
+
+
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
 name: __Display name
@@ -118,6 +118,13 @@ content-length: 3
 
 Von
 ----field----
+field: {B12E4906-B96B-495E-B343-CD2E92DC6347}
+name: ValidationText
+key: validationtext
+content-length: 0
+
+
+----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
 name: __Display name
 key: __display name
@@ -179,6 +186,13 @@ content-length: 4
 
 From
 ----field----
+field: {B12E4906-B96B-495E-B343-CD2E92DC6347}
+name: ValidationText
+key: validationtext
+content-length: 0
+
+
+----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
 key: __owner
@@ -232,6 +246,13 @@ key: title
 content-length: 3
 
 差出人
+----field----
+field: {B12E4906-B96B-495E-B343-CD2E92DC6347}
+name: ValidationText
+key: validationtext
+content-length: 0
+
+
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
 name: __Display name

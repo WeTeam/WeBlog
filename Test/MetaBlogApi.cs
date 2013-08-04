@@ -1,18 +1,17 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
+using CookComputing.XmlRpc;
 using NUnit.Framework;
-using Sitecore.Data.Events;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Search;
 using Sitecore.Security.AccessControl;
 using Sitecore.Security.Accounts;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog;
-using CookComputing.XmlRpc;
-using Sitecore.Data;
-using System;
-using System.Web.Security;
 
 namespace Sitecore.Modules.WeBlog.Test
 {

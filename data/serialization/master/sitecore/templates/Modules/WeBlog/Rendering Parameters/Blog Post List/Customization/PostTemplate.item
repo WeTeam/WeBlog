@@ -33,8 +33,15 @@ content-length: 3
 ----version----
 language: en
 version: 1
-revision: b4f7c899-9915-4985-978e-3aa636e9b483
+revision: 523f72d8-17be-409f-baac-e4aa4e67bda4
 
+----field----
+field: {19A69332-A23E-4E70-8D16-B2640CB24CC8}
+name: Title
+key: title
+content-length: 13
+
+Post Template
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -62,18 +69,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-b4f7c899-9915-4985-978e-3aa636e9b483
+523f72d8-17be-409f-baac-e4aa4e67bda4
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111012T224340:634540562207445637
+20130803T203332:635111588125397650
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin

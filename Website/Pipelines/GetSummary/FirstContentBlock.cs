@@ -1,5 +1,4 @@
-﻿using System;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {

@@ -83,7 +83,7 @@ fieldset
 }
 .tagName:hover 
 { 
-	background:#efefef url("/sitecore modules/Blog/Images/bullet_toggle_minus.png") right 2px no-repeat; 
+	background:#efefef url("/sitecore/shell/Themes/Standard/Images/collapse9x9.png") right 2px no-repeat; 
 	-moz-border-radius: 4px;
 }
 .updatepost

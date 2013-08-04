@@ -1,5 +1,4 @@
-﻿using System;
-using Sitecore.Web.UI.WebControls;
+﻿using Sitecore.Web.UI.WebControls;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {

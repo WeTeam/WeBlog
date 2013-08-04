@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Sitecore.Events;
 using Sitecore.Data.Managers;
+using Sitecore.Events;
 using Sitecore.Publishing;
 
 namespace Sitecore.Modules.WeBlog.Search

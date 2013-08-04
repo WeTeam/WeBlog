@@ -24,7 +24,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                     if (isSpam)
                     {
                         //Need to switch to shell website to execute workflow
-                        using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))
+                        using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext(Sitecore.Constants.ShellSiteName)))
                         {
                             workflow.Execute(Settings.CommentWorkflowCommandSpam, args.CommentItem, "Akismet classified this comment as spam", false, new object[0]);
                         }

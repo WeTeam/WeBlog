@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Globalization;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -35,7 +31,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             SuccessCssClass = "wb-successtext";
             ErrorCssClass = "wb-errortext";
-            SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
             LoadEntry();
         }
 

@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {

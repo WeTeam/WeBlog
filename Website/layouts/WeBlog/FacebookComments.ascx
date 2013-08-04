@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogFacebookComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.WeBlog.BlogFacebookComments" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogFacebookComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogFacebookComments" %>
 
 <div class="wb-facebook-comments wb-panel">
 <script>
@@ -16,5 +16,5 @@
         fjs.parentNode.insertBefore(js, fjs);
     } (document, 'script', 'facebook-jssdk'));
 </script>
-<div class="fb-comments" data-href="<%=UrlToCommentOn %>" data-num-posts="<%=Helper.GetParam("Number of Posts") %>" data-width="<%=Helper.GetParam("Width") %>" data-colorscheme="<%=Helper.GetParam("Color Scheme") %>"></div>
+<div class="fb-comments" data-href="<%= UrlToCommentOn %>" data-num-posts="<%= NumberOfPosts %>" data-width="<%= Width %>" data-colorscheme="<%= ColorScheme %>"></div>
 </div>

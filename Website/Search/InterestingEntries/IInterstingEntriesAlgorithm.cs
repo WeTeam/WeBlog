@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Data.Items;
 
 namespace Sitecore.Modules.WeBlog.Search
 {

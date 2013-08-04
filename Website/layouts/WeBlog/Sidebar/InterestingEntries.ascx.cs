@@ -5,7 +5,7 @@ using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
-    public partial class BlogInterestingEntries : System.Web.UI.UserControl
+    public partial class BlogInterestingEntries : BaseSublayout
     {
         private string m_title = string.Empty;
 
@@ -78,8 +78,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         protected virtual void SetProperties()
         {
-            var helper = new SublayoutParamHelper(this, true);
-
             if (!string.IsNullOrEmpty(Mode))
             {
                 try

@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {
     public abstract class GetSummaryProcessorBase : IGetSummaryProcessor

@@ -1,25 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Pipelines.GetSummary;
-using Sitecore.Pipelines;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
 using System.Drawing;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Pipelines.GetSummary;
+using Sitecore.Pipelines;
 
-namespace Sitecore.Modules.WeBlog.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogPostListEntry : BaseEntrySublayout
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //will map rendering properties
-            SublayoutParamHelper paramHelper = new SublayoutParamHelper(this, true);
-
-            var maxEntryImage = CurrentBlog.MaximumThumbnailImageSizeDimension;
+            Size maxEntryImage = CurrentBlog.MaximumThumbnailImageSizeDimension;
             if (maxEntryImage != Size.Empty)
             {
                 EntryImage.MaxWidth = maxEntryImage.Width;
@@ -35,7 +27,7 @@ namespace Sitecore.Modules.WeBlog.Layouts.WeBlog
             var args = new GetSummaryArgs();
             args.Entry = entry;
 
-#if PRE_65
+#if SC62 || SC64
             CorePipeline.Run("weblogGetSummary", args);
 #else
             CorePipeline.Run("weblogGetSummary", args, true);
@@ -46,8 +38,8 @@ namespace Sitecore.Modules.WeBlog.Layouts.WeBlog
 
         protected DateTime GetPublishDate(EntryItem entry)
         {
-            var publishDate = ((Item)entry).Publishing.PublishDate;
-            var createdDate = entry.Created;
+            DateTime publishDate = ((Item) entry).Publishing.PublishDate;
+            DateTime createdDate = entry.Created;
             return (publishDate > createdDate) ? publishDate : createdDate;
         }
     }

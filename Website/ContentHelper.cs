@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Publishing;
-using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog
 {

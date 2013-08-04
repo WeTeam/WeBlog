@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTwitter.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.WeBlog.BlogTwitter" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTwitter.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogTwitter" %>
 
 <div class="wb-twitter wb-panel">
 <script src="http://widgets.twimg.com/j/2/widget.js"></script>
@@ -6,30 +6,30 @@
     new TWTR.Widget({
         version: 2,
         type: 'profile',
-        rpp: <%=Helper.GetParam("Number of Tweets") %>,
+        rpp: <%= NumberOfTweets %>,
         interval: 30000,
-        width: <%=string.IsNullOrEmpty(Helper.GetParam("Width")) ? "'auto'" : Helper.GetParam("Width") %>,
-        height: <%=Helper.GetParam("Height") %>,
+        width: <%= Width %>,
+        height: <%= Height %>,
         theme: {
             shell: {
-                background: '<%=Helper.GetParam("Shell Background") %>',
-                color: '<%=Helper.GetParam("Shell Text") %>'
+                background: '<%= ShellBackground %>',
+                color: '<%= ShellText %>'
             },
             tweets: {
-                background: '<%=Helper.GetParam("Tweet Background") %>',
-                color: '<%=Helper.GetParam("Tweet Text") %>',
-                links: '<%=Helper.GetParam("Links") %>'
+                background: '<%= TweetBackground %>',
+                color: '<%= TweetText %>',
+                links: '<%= Links %>'
             }
         },
         features: {
-            scrollbar: <%=Helper.GetParam("Scrollbar") == "1" ? "true" : "false" %>,
+            scrollbar: <%= Scrollbar %>,
             loop: false,
-            live: <%=Helper.GetParam("Polling") == "1" ? "true" : "false" %>,
-            hashtags: <%=Helper.GetParam("Hashtags") == "1" ? "true" : "false" %>,
-            timestamp: <%=Helper.GetParam("Timestamp") == "1" ? "true" : "false" %>,
-            avatars: <%=Helper.GetParam("Avatars") == "1" ? "true" : "false" %>,
+            live: <%= Polling %>,
+            hashtags: <%= Hashtags %>,
+            timestamp: <%= Timestamps %>,
+            avatars: <%= Avatars %>,
             behavior: 'all'
         }
-    }).render().setUser('<%=Helper.GetParam("Username") %>').start();
+    }).render().setUser('<%= Username %>').start();
 </script>
 </div>

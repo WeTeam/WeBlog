@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.UI;
-using Sitecore.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.Globalization
 {

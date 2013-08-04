@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Layouts;
+using Sitecore.Data.Items;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Links;
-using Sitecore.Data.Items;
 
-namespace Sitecore.Modules.WeBlog.layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogEntryTags : BaseEntrySublayout
     {

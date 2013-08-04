@@ -31,7 +31,7 @@
     <asp:Label ID="lblCommentText" runat="server" AssociatedControlID="txtCommentText"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("COMMENT")%></asp:Label>  
     <asp:TextBox ID="txtCommentText" runat="server" TextMode="MultiLine" Rows="10" Columns="60"></asp:TextBox>
     <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
-    <sc:PlaceHolder runat="server" key="phBlogCommentForm" />
+    <sc:PlaceHolder runat="server" key="weblog-comment-form" />
     <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" CssClass="wb-submit" />
 </asp:Panel>
 

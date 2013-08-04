@@ -7,7 +7,6 @@ using Sitecore.Data.Items;
 using Sitecore.Security.AccessControl;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
-using System;
 
 namespace Sitecore.Modules.WeBlog.Test
 {

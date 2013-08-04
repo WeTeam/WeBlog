@@ -11,8 +11,8 @@ templatekey: Facebook
 
 ----field----
 field: {17253DB7-5A35-4BC5-862A-5E9947776B14}
-name: Layout Style
-key: layout style
+name: LayoutStyle
+key: layoutstyle
 content-length: 8
 
 standard
@@ -25,8 +25,8 @@ content-length: 3
 300
 ----field----
 field: {21F0FA50-403F-4987-9B01-DF876F5F98B6}
-name: Color Scheme
-key: color scheme
+name: ColorScheme
+key: colorscheme
 content-length: 5
 
 light

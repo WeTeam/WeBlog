@@ -1,14 +1,12 @@
-﻿using System;
+﻿using System.IO;
 using System.Linq;
-using NUnit.Framework;
-using Sitecore.Data.Items;
-using Sitecore.SecurityModel;
-using System.IO;
 using System.Web;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
-using System.Collections.Generic;
-using Mod = Sitecore.Modules.WeBlog.Managers;
+using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.SecurityModel;
+using Mod = Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Test
 {

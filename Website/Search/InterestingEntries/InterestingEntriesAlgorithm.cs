@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sitecore.Modules.WeBlog.Search
+﻿namespace Sitecore.Modules.WeBlog.Search
 {
     public enum InterestingEntriesAlgorithm
     {

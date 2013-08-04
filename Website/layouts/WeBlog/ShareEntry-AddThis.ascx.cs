@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Sitecore.Modules.WeBlog.layouts.Blog
+namespace Sitecore.Modules.WeBlog.Layouts
 {
-    public partial class ShareEntry_AddThis : System.Web.UI.UserControl
+    public partial class ShareEntryAddThis : System.Web.UI.UserControl
     {
         protected string AddThisAccountName
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
@@ -16,6 +16,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <summary>
         /// Gets or sets whether individual months in each year should be shown by default
         /// </summary>
+        [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
         public bool ExpandMonthsOnLoad
         {
             get;
@@ -25,6 +26,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <summary>
         /// Gets or sets whether individual posts in each month should be shown by default
         /// </summary>
+        [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
         public bool ExpandPostsOnLoad
         {
             get;
@@ -34,7 +36,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual void Page_Load(object sender, EventArgs e)
         {
             ExpandMonthsOnLoad = true;
-            SublayoutParamHelper helper = new SublayoutParamHelper(this, true);
 
             m_entriesByMonthAndYear = new Dictionary<int, List<EntryItem>>();
 
@@ -99,10 +100,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual int[] GetMonths(int year)
         {
             var yearKey = year * 100;
-
             var months = new List<int>();
-            // put this in for (int i = 1; i <= 12; i++)
-            //for (int i = 0; i < 12; i++)
+
             for (int i = 1; i <= 12; i++)
             {
                 if (m_entriesByMonthAndYear.ContainsKey(yearKey + i))

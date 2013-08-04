@@ -12,8 +12,10 @@ using Sitecore.Search;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
-#if !PRE_65
+#if SC66
 using Sitecore.Analytics.Data.DataAccess.DataAdapters;
+#else
+using Sitecore.Analytics;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -343,7 +345,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             
             if (entryIds.Count() > 0)
             {
-#if PRE_65
+#if SC62 || SC64
                 sql = sql.Replace("$page_table$", "page");
                 var ids = AnalyticsManager.ReadMany<ID>(sql, reader =>
                 {

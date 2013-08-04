@@ -19,43 +19,58 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.WeBlog", "Website\Sitecore.Modules.WeBlog.csproj", "{26FE5F3A-F140-40C4-85A0-C1866DA26F16}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug Content Delivery|Any CPU = Debug Content Delivery|Any CPU
-		Debug pre 6.5|Any CPU = Debug pre 6.5|Any CPU
-		Debug|Any CPU = Debug|Any CPU
-		Release pre 6.5|Any CPU = Release pre 6.5|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug sc6.2|Any CPU = Debug sc6.2|Any CPU
+		Debug sc6.4|Any CPU = Debug sc6.4|Any CPU
+		Debug sc6.6|Any CPU = Debug sc6.6|Any CPU
+		Debug sc7.0|Any CPU = Debug sc7.0|Any CPU
+		Release sc6.2|Any CPU = Release sc6.2|Any CPU
+		Release sc6.4|Any CPU = Release sc6.4|Any CPU
+		Release sc6.6|Any CPU = Release sc6.6|Any CPU
+		Release sc7.0|Any CPU = Release sc7.0|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug Content Delivery|Any CPU.ActiveCfg = Debug Content Delivery|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug Content Delivery|Any CPU.Build.0 = Debug Content Delivery|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug pre 6.5|Any CPU.ActiveCfg = Debug pre 6.5|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug pre 6.5|Any CPU.Build.0 = Debug pre 6.5|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release pre 6.5|Any CPU.ActiveCfg = Release pre 6.5|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release pre 6.5|Any CPU.Build.0 = Release pre 6.5|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug Content Delivery|Any CPU.ActiveCfg = Debug Content Delivery|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug Content Delivery|Any CPU.Build.0 = Debug Content Delivery|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug pre 6.5|Any CPU.ActiveCfg = Debug pre 6.5|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug pre 6.5|Any CPU.Build.0 = Debug pre 6.5|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release pre 6.5|Any CPU.ActiveCfg = Release pre 6.5|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release pre 6.5|Any CPU.Build.0 = Release pre 6.5|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc6.2|Any CPU.ActiveCfg = Debug sc6.2|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc6.2|Any CPU.Build.0 = Debug sc6.2|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc6.4|Any CPU.ActiveCfg = Debug sc6.4|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc6.4|Any CPU.Build.0 = Debug sc6.4|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc6.6|Any CPU.ActiveCfg = Debug sc6.6|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc6.6|Any CPU.Build.0 = Debug sc6.6|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc7.0|Any CPU.ActiveCfg = Debug sc7.0|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Debug sc7.0|Any CPU.Build.0 = Debug sc7.0|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc6.2|Any CPU.ActiveCfg = Release sc6.2|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc6.2|Any CPU.Build.0 = Release sc6.2|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc6.4|Any CPU.ActiveCfg = Release sc6.4|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc6.4|Any CPU.Build.0 = Release sc6.4|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc6.6|Any CPU.ActiveCfg = Release sc6.6|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc6.6|Any CPU.Build.0 = Release sc6.6|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc7.0|Any CPU.ActiveCfg = Release sc7.0|Any CPU
+		{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}.Release sc7.0|Any CPU.Build.0 = Release sc7.0|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc6.2|Any CPU.ActiveCfg = Debug sc6.2|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc6.2|Any CPU.Build.0 = Debug sc6.2|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc6.4|Any CPU.ActiveCfg = Debug sc6.4|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc6.4|Any CPU.Build.0 = Debug sc6.4|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc6.6|Any CPU.ActiveCfg = Debug sc6.6|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc6.6|Any CPU.Build.0 = Debug sc6.6|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc7.0|Any CPU.ActiveCfg = Debug sc7.0|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Debug sc7.0|Any CPU.Build.0 = Debug sc7.0|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc6.2|Any CPU.ActiveCfg = Release sc6.2|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc6.2|Any CPU.Build.0 = Release sc6.2|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc6.4|Any CPU.ActiveCfg = Release sc6.4|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc6.4|Any CPU.Build.0 = Release sc6.4|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc6.6|Any CPU.ActiveCfg = Release sc6.6|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc6.6|Any CPU.Build.0 = Release sc6.6|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc7.0|Any CPU.ActiveCfg = Release sc7.0|Any CPU
+		{26FE5F3A-F140-40C4-85A0-C1866DA26F16}.Release sc7.0|Any CPU.Build.0 = Release sc7.0|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0CDFF1D0-EB1E-44DF-A49C-EA83F3DAC88E} = {720A7BEF-0695-49FD-95FC-15BEF4822B59}
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal

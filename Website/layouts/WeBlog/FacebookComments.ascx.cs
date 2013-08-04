@@ -1,27 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Sitecore.Sharedsource.Web.UI.Sublayouts;
 
-namespace Sitecore.Modules.WeBlog.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.Layouts
 {
-    public partial class BlogFacebookComments : System.Web.UI.UserControl
+    public partial class BlogFacebookComments : SublayoutBase
     {
-        protected SublayoutParamHelper Helper { get; set; }
-        protected string UrlToCommentOn;
+        public string UrlToCommentOn { get; set; }
+        public int NumberOfPosts { get; set; }
+        public int Width { get; set; }
+        public string ColorScheme { get; set; }
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-            Helper = new SublayoutParamHelper(this, false);
+            base.OnLoad(e);
 
-            UrlToCommentOn = Helper.GetParam("Url to Comment on");
             if (string.IsNullOrEmpty(UrlToCommentOn))
-            {
-                // Use current page
-                UrlToCommentOn = Sitecore.Links.LinkManager.GetItemUrl(Sitecore.Context.Item, new Sitecore.Links.UrlOptions { AlwaysIncludeServerUrl = true });
-            }
+                UrlToCommentOn = Sitecore.Links.LinkManager.GetItemUrl(DataSourceItem, new Sitecore.Links.UrlOptions { AlwaysIncludeServerUrl = true });
         }
     }
 }

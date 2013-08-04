@@ -1,9 +1,7 @@
-﻿using System;
-using Sitecore.Modules.WeBlog.Managers;
+﻿using System.Collections.Generic;
+using System.Text;
 using Lucene.Net.Documents;
 using Sitecore.Data;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Sitecore.Modules.WeBlog.Search.Crawlers
 {

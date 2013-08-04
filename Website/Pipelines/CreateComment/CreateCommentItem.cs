@@ -23,10 +23,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 if (blogItem != null)
                 {
                     var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
-                    string itemName = ItemUtil.ProposeValidItemName("Comment by " + args.Comment.AuthorName + " at " + DateTime.Now.ToString("d"));
+                    var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", DateTime.Now.ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
 
                     //need to emulate creation within shell site to ensure workflow is applied to comment
-                    using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))
+                    using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext(Sitecore.Constants.ShellSiteName)))
                     {
                         using (new SecurityDisabler())
                         {
@@ -51,13 +51,13 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 }
                 else
                 {
-                    string message = "Failed to find blog for entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
+                    var message = "Failed to find blog for entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
                     Log.Error(string.Format(message, args.EntryID, args.Comment.AuthorName, args.Comment.AuthorEmail, args.Comment.Text), typeof(CreateCommentItem));
                 }
             }
             else
             {
-                string message = "Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
+                var message = "Failed to find blog entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
                 Log.Error(string.Format(message, args.EntryID, args.Comment.AuthorName, args.Comment.AuthorEmail, args.Comment.Text), typeof(CreateCommentItem));
             }
         }

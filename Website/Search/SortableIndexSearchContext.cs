@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using Lucene.Net.Search;
 using Sitecore.Search;
-using Lucene.Net;
-using Lucene.Net.Search;
 
 namespace Sitecore.Modules.WeBlog.Search.Search
 {

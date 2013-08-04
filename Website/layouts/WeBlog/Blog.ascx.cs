@@ -10,8 +10,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
         #region Page methods
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (fieldtextItem != null)
-                fieldtextItem.DataSource = ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.ID).SafeGet(x => x.ToString());
+            if (FieldTextItem != null)
+                FieldTextItem.DataSource = ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.ID).SafeGet(x => x.ToString());
 
             if (HyperlinkBlog != null)
                 HyperlinkBlog.NavigateUrl = ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.Url);

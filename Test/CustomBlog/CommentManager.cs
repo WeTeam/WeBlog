@@ -1,9 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using NUnit.Framework;
-using System;
+﻿using NUnit.Framework;
 
 namespace Sitecore.Modules.WeBlog.Test.CustomBlog
 {

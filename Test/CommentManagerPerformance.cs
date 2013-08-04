@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using NUnit.Framework;
-using Sitecore.Data.Items;
 using Sitecore.Data;
-using Sitecore.Search;
+using Sitecore.Data.Items;
 using Sitecore.Jobs;
 using Sitecore.Publishing;
+using Sitecore.Search;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 

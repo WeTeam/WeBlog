@@ -1,11 +1,10 @@
-﻿using System;
-using Sitecore.Pipelines;
+﻿using Sitecore.Data;
+using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Model;
-using Sitecore.Data;
-using Sitecore.Globalization;
+using Sitecore.Pipelines;
 
-namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
+namespace Sitecore.Modules.WeBlog.Pipelines
 {
     public class CreateCommentArgs : PipelineArgs
     {

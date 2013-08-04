@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
+﻿namespace Sitecore.Modules.WeBlog.Pipelines
 {
     public interface ICreateCommentProcessor
     {

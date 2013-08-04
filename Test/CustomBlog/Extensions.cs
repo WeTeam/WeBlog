@@ -1,12 +1,9 @@
 ﻿using System.IO;
-using System.Linq;
 using System.Web;
-using System.Web.Security;
-using Sitecore.Data.Items;
-using Sitecore.SecurityModel;
-using System;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.SecurityModel;
 
 namespace Sitecore.Modules.WeBlog.Test.CustomBlog
 {

@@ -1,6 +1,4 @@
-﻿using System;
-using Sitecore.Workflows.Simple;
-using Sitecore.SecurityModel;
+﻿using Sitecore.Workflows.Simple;
 
 namespace Sitecore.Modules.WeBlog.Workflow
 {

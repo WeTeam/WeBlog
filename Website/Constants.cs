@@ -1,5 +1,4 @@
-﻿using System;
-using Sitecore.Data;
+﻿using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog
 {

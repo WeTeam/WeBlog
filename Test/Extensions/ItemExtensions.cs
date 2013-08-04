@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.IO;
 using System.Linq;
+using System.Web;
 using NUnit.Framework;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
-using System.IO;
-using System.Web;
 using Mod = Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Test.Extensions

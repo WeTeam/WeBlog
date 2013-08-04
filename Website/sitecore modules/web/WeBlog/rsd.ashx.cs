@@ -1,10 +1,10 @@
 ﻿using System.Text;
 using System.Web;
 using System.Xml;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Web;
-using Sitecore.Configuration;
 
 namespace Sitecore.Modules.WeBlog
 {

@@ -1,5 +1,4 @@
-﻿using System;
-using Sitecore.Modules.WeBlog.Extensions;
+﻿using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {

@@ -15,7 +15,7 @@ name: __Base template
 key: __base template
 content-length: 38
 
-{8CA06D6A-B353-44E8-BC31-B528C7306971}
+{43ABB60C-C4D4-40B9-95CE-04473C492FE2}
 ----field----
 field: {F7D48A55-2158-4F02-9356-756654404F73}
 name: __Standard values
@@ -33,7 +33,7 @@ applications/16x16/gear.png
 ----version----
 language: en
 version: 1
-revision: a5fc35fb-3845-4c21-89de-a1ac69837ee9
+revision: 8031bcc1-54e1-4448-b2a1-49f9722f6a9c
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -62,18 +62,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a5fc35fb-3845-4c21-89de-a1ac69837ee9
+8031bcc1-54e1-4448-b2a1-49f9722f6a9c
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111019T160249:634546369699363142
+20130804T123921:635112167618966061
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
-content-length: 19
+content-length: 14
 
-sitecore\nwesselman
+sitecore\admin

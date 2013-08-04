@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Sitecore.Data.Items;
-using Sitecore.SecurityModel;
 using Sitecore.Modules.WeBlog.Pipelines.GetSummary;
+using Sitecore.SecurityModel;
 
 namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
 {

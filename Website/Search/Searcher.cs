@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Linq;
-using Sitecore.Search;
 using System.Collections.Generic;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Search.Search;
+using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
+using Sitecore.Modules.WeBlog.Search.Search;
+using Sitecore.Search;
 
 namespace Sitecore.Modules.WeBlog.Search
 {
@@ -70,6 +70,10 @@ namespace Sitecore.Modules.WeBlog.Search
                             }
                         }
                     }
+                }
+                else
+                {
+                    Log.Warn("WeBlog index was not found or didn't contain any documents", this);
                 }
             }
 

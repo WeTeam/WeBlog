@@ -1,27 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Sitecore.Web.UI.Sheer;
-using Sitecore.Web.UI.HtmlControls;
-using Sitecore.Shell.Applications.Install.Dialogs;
-using Sitecore.Shell.Applications.Install;
-using Sitecore.Diagnostics;
-using Sitecore.Shell.Applications.Dialogs.ItemLister;
-using System.Text;
-using Sitecore.Data.Templates;
-using Sitecore.Data.Items;
-using Sitecore.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Import;
-using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
-using Sitecore.Data.Managers;
-using Sitecore.SecurityModel;
-using Sitecore.Configuration;
-using Sitecore.Web;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Jobs;
+using Sitecore.Modules.WeBlog.Import;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Shell.Applications.Install;
+using Sitecore.Shell.Applications.Install.Dialogs;
 using Sitecore.StringExtensions;
+using Sitecore.Web.UI.HtmlControls;
+using Sitecore.Web.UI.Sheer;
+using Sitecore.Web.UI.WebControls;
 
 namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 {

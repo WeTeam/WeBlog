@@ -6,9 +6,16 @@ path: /sitecore/layout/Sublayouts/WeBlog/Sidebar/TagCloud
 parent: {78C79C5D-F7FE-412B-9580-64ADB22EFDE5}
 name: TagCloud
 master: {00000000-0000-0000-0000-000000000000}
-template: {A3475FCD-1FE2-4B20-BF05-4A2BB4334A76}
-templatekey: Blog Sublayout
+template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
+templatekey: Sublayout
 
+----field----
+field: {E28F0784-53EC-4B5C-803E-638FDB1EC15D}
+name: Parameters Template
+key: parameters template
+content-length: 38
+
+{43ABB60C-C4D4-40B9-95CE-04473C492FE2}
 ----field----
 field: {E42081B6-8A95-4A11-89CE-DF70ED502F57}
 name: Path
@@ -22,7 +29,7 @@ name: Parameters
 key: parameters
 content-length: 15
 
-varyByBlog=true
+VaryByBlog=true
 ----field----
 field: {3D08DB46-2267-41B0-BC52-BE69FD618633}
 name: Cacheable
@@ -54,7 +61,7 @@ content-length: 138
 ----version----
 language: en
 version: 1
-revision: c185a41c-0688-4f44-823b-d4513e1d6124
+revision: 12a148f9-59a3-4976-8cd5-3c3a079cc08c
 
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
@@ -90,14 +97,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-c185a41c-0688-4f44-823b-d4513e1d6124
+12a148f9-59a3-4976-8cd5-3c3a079cc08c
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20120401T175816:634688998961640625
+20130804T123949:635112167895612741
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

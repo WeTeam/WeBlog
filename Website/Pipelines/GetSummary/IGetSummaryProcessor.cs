@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
+﻿namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {
     public interface IGetSummaryProcessor
     {

@@ -1,7 +1,6 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using System.Collections.Generic;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Managers

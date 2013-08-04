@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Web;
 using Sitecore.Pipelines.PreprocessRequest;
-using System.Web;
 
 namespace Sitecore.Modules.WeBlog.Pipelines
 {

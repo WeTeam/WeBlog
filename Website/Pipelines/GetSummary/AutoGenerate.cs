@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using HtmlAgilityPack;
+﻿using HtmlAgilityPack;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 {

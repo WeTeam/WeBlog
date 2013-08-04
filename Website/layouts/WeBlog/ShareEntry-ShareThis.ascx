@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ShareEntry-ShareThis.ascx.cs" Inherits="Sitecore.Modules.WeBlog.layouts.Blog.ShareEntry_ShareThis" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ShareEntry-ShareThis.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.ShareEntryShareThis" %>
 <div class="wb-entry-share wb-panel">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("SHARE")%></h3>
     <div class="wb-entries">

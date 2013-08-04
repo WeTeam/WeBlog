@@ -5,17 +5,16 @@ using System.ServiceModel;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
+using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
 using Sitecore.Search;
-using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Search.Crawlers;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -39,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Database = ContentHelper.GetContentDatabase();
             args.Language = language ?? Context.Language;
 
-#if PRE_65
+#if SC62 || SC64
             CorePipeline.Run("weblogCreateComment", args);
 #else
             CorePipeline.Run("weblogCreateComment", args, true);

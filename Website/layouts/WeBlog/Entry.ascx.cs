@@ -1,23 +1,30 @@
 ﻿using System;
 using System.Drawing;
 using System.Web.UI;
+using System.ComponentModel;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
     public partial class BlogEntry : BaseEntrySublayout
     {
-        protected const string CHECKBOX_TRUE = "1";
+        [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
+        public bool ShowEntryTitle { get; set; }
 
-        public string ShowEntryTitle { get; set; }
-        public string ShowEntryImage { get; set; }
-        public string ShowEntryMetadata { get; set; }
-        public string ShowEntryIntroduction { get; set; }
+        [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
+        public bool ShowEntryImage
+        {
+            get { return EntryImage.Visible; }
+            set { EntryImage.Visible = value; }
+        }
+
+        [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
+        public bool ShowEntryMetadata { get; set; }
+
+        [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
+        public bool ShowEntryIntroduction { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //will map rendering properties
-            SublayoutParamHelper paramHelper = new SublayoutParamHelper(this, true);
-
             Page.Title = CurrentEntry.Title.Text + " | " + CurrentBlog.Title.Text;
 
             var maxEntryImage = CurrentBlog.MaximumEntryImageSizeDimension;

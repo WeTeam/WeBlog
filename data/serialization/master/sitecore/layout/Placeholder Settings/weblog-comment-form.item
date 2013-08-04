@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {5F31D61F-4AB7-499A-9219-3F9CD172A516}
+database: master
+path: /sitecore/layout/Placeholder Settings/weblog-comment-form
+parent: {1CE3B36C-9B0C-4EB5-A996-BFCB4EAA5287}
+name: weblog-comment-form
+master: {00000000-0000-0000-0000-000000000000}
+template: {5C547D4E-7111-4995-95B0-6B561751BF2E}
+templatekey: Placeholder
+
+----field----
+field: {7256BDAB-1FD2-49DD-B205-CB4873D2917C}
+name: Placeholder Key
+key: placeholder key
+content-length: 19
+
+weblog-comment-form
+----field----
+field: {E391B526-D0C5-439D-803E-17512EAE6222}
+name: Allowed Controls
+key: allowed controls
+content-length: 77
+
+{53F12198-7C37-4611-8F28-386FE944B4D2}|{F8A28E5F-10BF-4BDA-8CBB-6105E73AB5DC}
+----version----
+language: en
+version: 1
+revision: d12270d2-380c-4d65-9053-965f8c5c7870
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20110403T190424
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 18
+
+sitecore\Anonymous
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+d12270d2-380c-4d65-9053-965f8c5c7870
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 34
+
+20130804T125010:635112174108359747
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

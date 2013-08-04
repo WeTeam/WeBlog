@@ -11,3 +11,6 @@ deploy.targets
 
 # mstest test results
 TestResults
+
+# Local WIP files
+todo.txt

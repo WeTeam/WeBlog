@@ -22,30 +22,30 @@ namespace Sitecore.Modules.WeBlog.Layouts {
         protected global::System.Web.UI.WebControls.HyperLink HyperlinkBlog;
         
         /// <summary>
-        /// fieldtextItem control.
+        /// FieldTextItem control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Sitecore.Web.UI.WebControls.Text fieldtextItem;
+        protected global::Sitecore.Web.UI.WebControls.Text FieldTextItem;
         
         /// <summary>
-        /// phBlogMain control.
+        /// WeBlogMain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Sitecore.Web.UI.WebControls.Placeholder phBlogMain;
+        protected global::Sitecore.Web.UI.WebControls.Placeholder WeBlogMain;
         
         /// <summary>
-        /// phBlogSidebar control.
+        /// WeBlogSidebar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Sitecore.Web.UI.WebControls.Placeholder phBlogSidebar;
+        protected global::Sitecore.Web.UI.WebControls.Placeholder WeBlogSidebar;
     }
 }

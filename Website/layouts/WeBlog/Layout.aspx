@@ -8,20 +8,20 @@
     <title><%= GetItemTitle() %></title>
     <wb:Syndication runat="server" Cacheable="true" VaryByData="true" />
     <wb:RsdIncludes runat="server" Cacheable="true" VaryByData="true" />
-    <link href="/sitecore modules/WeBlog/Includes/Common.css" rel="stylesheet" />
+    <link href="/sitecore modules/web/WeBlog/Includes/Common.css" rel="stylesheet" />
     <wb:ThemeIncludes runat="server" Cacheable="true" VaryByData="true" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         if (typeof jQuery == 'undefined') {
-            document.write(unescape("%3Cscript src='/sitecore modules/WeBlog/Includes/jquery-1.10.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+            document.write(unescape("%3Cscript src='/sitecore modules/web/WeBlog/Includes/jquery-1.10.1.min.js' type='text/javascript'%3E%3C/script%3E"));
         }
     </script>
-    <script src="/sitecore modules/WeBlog/Includes/jquery.url.js" type="text/javascript"></script>
-    <script src="/sitecore modules/WeBlog/Includes/functions.js" type="text/javascript"></script>
+    <script src="/sitecore modules/web/WeBlog/Includes/jquery.url.js" type="text/javascript"></script>
+    <script src="/sitecore modules/web/WeBlog/Includes/functions.js" type="text/javascript"></script>
   </head>
   <body>
   <form method="post" runat="server" id="mainform">
-    <sc:placeholder ID="phContent" key="phContent" runat="server" />
+    <sc:placeholder key="weblog-content" runat="server" />
   
   </form>
   </body>

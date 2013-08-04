@@ -7,7 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.WeBlog.Layouts.WeBlog {
+namespace Sitecore.Modules.WeBlog.Layouts
+{
     
     
     public partial class BlogTwitter {

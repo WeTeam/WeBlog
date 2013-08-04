@@ -8,8 +8,10 @@ using System.IO;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
+
+#if SC62 || SC64
 using Sitecore.Analytics;
-#if !PRE_65
+#elif SC66
 using Sitecore.Analytics.Data.DataAccess;
 #endif
 
@@ -75,7 +77,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
-#if PRE_65
+#if SC62 || SC64
             //Sitecore.Analytics.AnalyticsTracker.Current.
 #else
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
@@ -497,7 +499,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem()
         {
-#if PRE_65
+#if SC62 || SC64
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
@@ -514,7 +516,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem_Limited()
         {
-#if PRE_65
+#if SC62 || SC64
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
@@ -529,7 +531,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_InvalidItem()
         {
-#if PRE_65
+#if SC62 || SC64
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
@@ -543,7 +545,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_NullItem()
         {
-#if PRE_65
+#if SC62 || SC64
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");

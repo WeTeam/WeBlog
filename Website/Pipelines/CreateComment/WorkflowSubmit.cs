@@ -1,5 +1,4 @@
-﻿using System;
-using Sitecore.Sites;
+﻿using Sitecore.Sites;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -14,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 if (workflow != null)
                 {
                     //Need to switch to shell website to execute workflow
-                    using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext("shell")))
+                    using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext(Sitecore.Constants.ShellSiteName)))
                     {
                         workflow.Execute(Settings.CommentWorkflowCommandCreated, args.CommentItem, "WeBlog automated submit", false, new object[0]);
                     }

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Sitecore.Data.Items;
-using Sitecore.Events;
-using Sitecore.Diagnostics;
 using Sitecore.Data.Events;
+using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
+using Sitecore.Events;
 
 namespace Sitecore.Modules.WeBlog.Globalization
 {
@@ -19,6 +16,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
             HandleOnItemSaved(item);
         }
 
+#if SC64 || SC66
         public void OnItemSavedRemote(object sender, EventArgs args)
         {
             Assert.ArgumentNotNull(sender, "sender");
@@ -30,6 +28,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
             }
             HandleOnItemSaved(args2.Item);
         }
+#endif
 
         protected void HandleOnItemSaved(Item item)
         {

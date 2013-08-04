@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.WeBlog.layouts.Blog
+namespace Sitecore.Modules.WeBlog.Layouts
 {
 
 
-    public partial class ShareEntry_AddThis
+    public partial class ShareEntryAddThis
     {
     }
 }
