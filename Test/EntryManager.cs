@@ -11,7 +11,7 @@ using Sitecore.Search;
 
 #if SC62 || SC64
 using Sitecore.Analytics;
-#elif SC66
+#else
 using Sitecore.Analytics.Data.DataAccess;
 #endif
 

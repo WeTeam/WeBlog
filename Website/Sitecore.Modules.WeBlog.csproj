@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="..\deploy.targets" Condition="Exists('..\deploy.targets')" />
   <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion />
@@ -12,7 +15,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Modules.WeBlog</RootNamespace>
     <AssemblyName>Sitecore.Modules.WeBlog</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -23,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisLogFile>bin\Sitecore.Modules.WeBlog.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
@@ -43,19 +45,24 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Release sc6.4'">
     <DefineConstants>SC64</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Release sc6.6'">
     <DefineConstants>SC66</DefineConstants>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0'">
     <DefineConstants>SC70</DefineConstants>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
       <HintPath>..\Dependencies\Third-party\.net 2\AntiXSSLibrary.dll</HintPath>
+      <Aliases>antixss</Aliases>
     </Reference>
-    <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v4.0'">
+    <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v4.0' or '$(TargetFrameworkVersion)' == 'v4.5'">
       <HintPath>..\Dependencies\Third-party\.net 4\AntiXSSLibrary.dll</HintPath>
+      <Aliases>antixss</Aliases>
     </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
       <HintPath>..\Dependencies\Third-party\CookComputing.XmlRpcV2.dll</HintPath>
@@ -95,6 +102,10 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.Kernel" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0'">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -111,6 +122,10 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0'">
+    <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
+    <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogSettings.cs" />
@@ -367,6 +382,7 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
     <Content Include="Change Log.txt" />
@@ -438,7 +454,8 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
@@ -460,6 +477,7 @@
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="NoRemoteEventsConfig" Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Release sc6.2'" />
+    <CallTarget Targets="ItemBucketsConfig" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0'" />
     <CallTarget Targets="ContentDeliveryConfig" />
   </Target>
   <Target Name="DeployToWeb">
@@ -483,5 +501,8 @@
   </Target>
   <Target Name="NoRemoteEventsConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.noremote.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" Condition="$(SitecorePath) != ''" />
+  </Target>
+  <Target Name="ItemBucketsConfig">
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" Condition="$(SitecorePath) != ''" />
   </Target>
 </Project>

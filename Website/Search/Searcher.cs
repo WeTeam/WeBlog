@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Lucene.Net.Search;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
@@ -52,7 +53,11 @@ namespace Sitecore.Modules.WeBlog.Search
                         SearchHits hits;
                         if (!string.IsNullOrEmpty(sortField))
                         {
+#if SC62 || SC64 || SC66
                             var sort = new Lucene.Net.Search.Sort(sortField, reverseSort);
+#else
+                            var sort = new Lucene.Net.Search.Sort(new SortField(sortField, SortField.STRING, reverseSort));
+#endif
                             hits = searchContext.Search(query, sort);
                         }
                         else

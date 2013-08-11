@@ -16,7 +16,7 @@ namespace Sitecore.Modules.WeBlog.Search.Search
         }
         public SearchHits Search(string query, ISearchContext context, Sort sort)
         {
-            return this.Search(Parse(query, context), sort);
+            return Search(Parse(query, context), sort);
         }
         public SearchHits Search(Query query, Sort sort)
         {
@@ -32,11 +32,16 @@ namespace Sitecore.Modules.WeBlog.Search.Search
         }
         public SearchHits Search(QueryBase query, ISearchContext context, Sort sort)
         {
-            return this.Search(Prepare(Translate(query), context), sort);
+            return Search(Prepare(Translate(query), context), sort);
         }
         public SearchHits Search(PreparedQuery query, Sort sort)
         {
+#if SC62 || SC64 || SC66
             return new SearchHits(Searcher.Search(query.Query, sort));
+#else
+            var results = Searcher.Search(query.Query, null, 500, sort);
+            return new SearchHits(results.ScoreDocs);
+#endif
         }
     }
 }

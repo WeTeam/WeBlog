@@ -22,21 +22,27 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
 
             if (item != null && document != null)
             {
+#if SC70
+                var fieldAnalysis = Field.Index.ANALYZED;
+#else
+                var fieldAnalysis = Field.Index.TOKENIZED;
+#endif
+
                 // Sitecore 6.2 does not include template
-                document.Add(new Field(Constants.Index.Fields.Template, TransformValue(item.TemplateID), Field.Store.NO, Field.Index.TOKENIZED));
+                document.Add(new Field(Constants.Index.Fields.Template, TransformValue(item.TemplateID), Field.Store.NO, fieldAnalysis));
 
                 // Add publish (or created) date field to allow for publishing restrictions and correct ordering
                 var date = item.Publishing.PublishDate;
                 if (item.Statistics.Created > date)
                     date = item.Statistics.Created;
 
-                document.Add(new Field(Constants.Index.Fields.Publish, Sitecore.DateUtil.ToIsoDate(date), Field.Store.NO, Field.Index.TOKENIZED));
+                document.Add(new Field(Constants.Index.Fields.Publish, Sitecore.DateUtil.ToIsoDate(date), Field.Store.NO, fieldAnalysis));
 
                 // Add multilist fields
                 foreach (var fieldName in m_multilistFields)
                 {
                     if(item.Fields[fieldName] != null)
-                        document.Add(new Field(fieldName, TransformMultilistValue(item.Fields[fieldName]), Field.Store.YES, Field.Index.TOKENIZED));
+                        document.Add(new Field(fieldName, TransformMultilistValue(item.Fields[fieldName]), Field.Store.YES, fieldAnalysis));
                 }
 
                 // Add additional fields
@@ -44,12 +50,12 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
                 {
                     if (item.Fields[fieldName] != null)
                     {
-                        document.Add(new Field(fieldName, TransformCSV(item.Fields[fieldName].Value), Field.Store.YES, Field.Index.TOKENIZED));
+                        document.Add(new Field(fieldName, TransformCSV(item.Fields[fieldName].Value), Field.Store.YES, fieldAnalysis));
                     }
                 }
 
                 // Add modified language code to deal with dash in region specific languages
-                document.Add(new Field(Constants.Index.Fields.Language, TransformLanguageCode(item.Language.Name), Field.Store.NO, Field.Index.TOKENIZED));
+                document.Add(new Field(Constants.Index.Fields.Language, TransformLanguageCode(item.Language.Name), Field.Store.NO, fieldAnalysis));
             }
         }
 

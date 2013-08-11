@@ -12,10 +12,11 @@ using Sitecore.Search;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
-#if SC66
-using Sitecore.Analytics.Data.DataAccess.DataAdapters;
-#else
+
+#if SC62 || SC64
 using Sitecore.Analytics;
+#else
+using Sitecore.Analytics.Data.DataAccess.DataAdapters;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers

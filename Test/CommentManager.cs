@@ -85,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 if (m_testRoot != null)
                 {
-                 //   m_testRoot.Delete();
+                    m_testRoot.Delete();
                 }
             }
         }
@@ -549,9 +549,11 @@ namespace Sitecore.Modules.WeBlog.Test
                 germanComment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.IpAddress] = "127.0.0.1";
                 germanComment.Fields[Sitecore.Modules.WeBlog.Constants.Fields.Website] = "website";
 
-                germanCommentId = new Mod.CommentManager().AddCommentToEntry(m_entry12.ID, germanComment, Sitecore.Globalization.Language.Parse("de"));
+                var language = Sitecore.Globalization.Language.Parse("de");
 
-                var germanCommentItem = db.GetItem(germanCommentId);
+                germanCommentId = new Mod.CommentManager().AddCommentToEntry(m_entry12.ID, germanComment, language);
+
+                var germanCommentItem = db.GetItem(germanCommentId, language);
                 Assert.IsNotNull(germanCommentItem);
 
                 // Ensure the item only contains a version in German

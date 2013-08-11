@@ -86,7 +86,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 }
                 catch (ArgumentException ex)
                 {
-                    Log.Warn("Failed to parse Mode as InterestingEntriesAlgorithm: " + Mode, this);
+                    Log.Warn("Failed to parse Mode as InterestingEntriesAlgorithm: " + Mode, ex, this);
                 }
             }
         }

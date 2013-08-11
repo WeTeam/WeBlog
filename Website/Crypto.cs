@@ -8,7 +8,7 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Generate an MD5 hash of a string
         /// </summary>
-        /// <param name="email">The string to hash</param>
+        /// <param name="input">The string to hash</param>
         /// <returns>The MD5 hash</returns>
         public static string GetMD5Hash(string input)
         {
