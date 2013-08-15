@@ -72,6 +72,7 @@
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>$(SitecorePath)\bin\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
@@ -89,6 +90,7 @@
     </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Client">
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>

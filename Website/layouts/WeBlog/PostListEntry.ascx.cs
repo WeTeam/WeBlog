@@ -35,12 +35,5 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
             return args.Summary;
         }
-
-        protected DateTime GetPublishDate(EntryItem entry)
-        {
-            DateTime publishDate = ((Item) entry).Publishing.PublishDate;
-            DateTime createdDate = entry.Created;
-            return (publishDate > createdDate) ? publishDate : createdDate;
-        }
     }
 }
