@@ -5,6 +5,8 @@ namespace Sitecore.Modules.WeBlog.Search.Search
 {
     public class SortableIndexSearchContext : IndexSearchContext
     {
+        protected const int DefaultMaximumResults = 500;
+
         public SortableIndexSearchContext(ILuceneIndex index)
         {
             Initialize(index, true);
@@ -34,13 +36,12 @@ namespace Sitecore.Modules.WeBlog.Search.Search
         {
             return Search(Prepare(Translate(query), context), sort);
         }
-        public SearchHits Search(PreparedQuery query, Sort sort)
+        public SearchHits Search(PreparedQuery query, Sort sort, int maxResults = DefaultMaximumResults)
         {
 #if SC62 || SC64 || SC66
             return new SearchHits(Searcher.Search(query.Query, sort));
 #else
-            var results = Searcher.Search(query.Query, null, 500, sort);
-            return new SearchHits(results.ScoreDocs);
+            return new SearchHits(Searcher.Search(query.Query, null, maxResults, sort), Searcher.IndexReader);
 #endif
         }
     }
