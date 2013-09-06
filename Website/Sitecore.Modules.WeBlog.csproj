@@ -384,7 +384,9 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
-    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt" />
+    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
     <Content Include="Change Log.txt" />

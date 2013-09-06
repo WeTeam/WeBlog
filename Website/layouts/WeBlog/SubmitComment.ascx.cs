@@ -71,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                     comment.Fields.Add(Constants.Fields.Website, txtCommentWebsite.Text);
                 comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
 
-                var submissionResult = ManagerFactory.CommentManagerInstance.SubmitComment(Sitecore.Context.Item.ID, comment);
+                var submissionResult = ManagerFactory.CommentManagerInstance.SubmitComment(Sitecore.Context.Item.ID, comment, Sitecore.Context.Language);
                 if (submissionResult.IsNull)
                 {
                     SetErrorMessage(Translator.Text("COMMENT_SUBMIT_ERROR"));

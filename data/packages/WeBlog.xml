@@ -17,7 +17,14 @@
 
 Create a Blog
 =============
-* Create a new blog using the Modules/WeBlog/Blog branch</Readme>
+* Create a new blog using the Modules/WeBlog/Blog branch
+
+Content Delivery Servers
+========================
+If deploying in a staged environment to a content delivery
+server, enable the App_Config\Include\WeBlog.delivery.config
+file.
+</Readme>
       <Publisher>Sitecore Shared Source</Publisher>
       <PostStep />
       <PackageID />
