@@ -1,8 +1,6 @@
 ﻿using System;
 using Joel.Net;
 using Sitecore.Modules.WeBlog.Managers;
-using System.Text;
-using System.Security.Cryptography;
 
 namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {

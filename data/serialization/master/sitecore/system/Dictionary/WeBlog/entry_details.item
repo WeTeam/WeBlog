@@ -66,15 +66,15 @@ sitecore\admin
 ----version----
 language: de
 version: 1
-revision: 446577d9-4aa6-4826-8566-ed3b6219b8d5
+revision: cd42a3ff-d69b-4a37-b537-ab37aa56a7e5
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 5
+content-length: 30
 
-{0:d}
+{0:d MMMM yyyy h:mm tt} by {1}
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -95,14 +95,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-446577d9-4aa6-4826-8566-ed3b6219b8d5
+cd42a3ff-d69b-4a37-b537-ab37aa56a7e5
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T134712:634547152328874772
+20130908T220505:635142747051813355
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
@@ -113,15 +113,15 @@ sitecore\admin
 ----version----
 language: en
 version: 1
-revision: 5dc15a50-7620-4129-b2be-7537e8346193
+revision: bfd9a0af-cc1d-4830-8af7-ef143fce0f57
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 19
+content-length: 37
 
-Posted {0:d} by {1}
+Posted {0:d MMMM yyyy h:mm tt} by {1}
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -149,14 +149,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-5dc15a50-7620-4129-b2be-7537e8346193
+bfd9a0af-cc1d-4830-8af7-ef143fce0f57
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111020T175416:634547300569533062
+20130908T224805:635142772851116947
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

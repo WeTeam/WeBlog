@@ -5,10 +5,22 @@
 <div class="wb-entry">
     <sc:Image runat="server" ID="EntryImage" Field="Image" CssClass="wb-image" />
     <% if (ShowEntryTitle) { %>
-        <h2><sc:Text ID="txtTitle" Field="Title" runat="server" /></h2>
+        <h2>
+            <% if (!string.IsNullOrEmpty(CurrentEntry["title"]) || Sitecore.Context.PageMode.IsPageEditor) { %>
+            <sc:Text ID="txtTitle" Field="Title" runat="server" />
+            <% } else { %>
+            <%= CurrentEntry.Name %>
+            <% } %>
+        </h2>
     <% } %>
     <% if (ShowEntryMetadata) { %>
-        <div class="wb-details"><%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created, CurrentEntry.AuthorName)%></div>
+        <div class="wb-details">
+            <% if(Sitecore.Context.PageMode.IsPageEditor) { %>
+            <%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.EntryDate.Rendered, CurrentEntry.Author.Rendered) %>
+            <% } else { %>
+            <%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.EntryDate.DateTime, CurrentEntry.AuthorName) %>
+            <%} %>
+        </div>
     <% } %>
     <% if (ShowEntryIntroduction) { %>
     <sc:Placeholder runat="server" key="weblog-below-entry-title" />

@@ -2,7 +2,6 @@
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.Accounts;
-using Sitecore.Web;
 
 namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
@@ -104,6 +103,20 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                     return CreatedBy.LocalName;
 
                 return Author.Rendered;
+            }
+        }
+
+        /// <summary>
+        /// Gets the title of the entry or the name if the title is empty
+        /// </summary>
+        public string DisplayTitle
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Title.Text))
+                    return Title.Text;
+
+                return Name;
             }
         }
 

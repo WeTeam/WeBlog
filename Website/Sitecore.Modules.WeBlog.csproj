@@ -155,6 +155,7 @@
     <Compile Include="Items\WeBlog\BlogHomeItem.base.cs" />
     <Compile Include="Items\WeBlog\BlogHomeItem.custom.cs" />
     <Compile Include="Items\WeBlog\CategoryItem.base.cs" />
+    <Compile Include="Items\WeBlog\CategoryItem.custom.cs" />
     <Compile Include="Items\WeBlog\CommentItem.base.cs" />
     <Compile Include="Items\WeBlog\CommentItem.custom.cs" />
     <Compile Include="Items\WeBlog\EntryItem.base.cs" />

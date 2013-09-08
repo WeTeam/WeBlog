@@ -22,7 +22,12 @@
     <xsl:attribute name="value">true</xsl:attribute>
   </xsl:template>
 
-  <xsl:template match="/configuration/sitecore/commands"/>
+  <xsl:template match="/configuration/sitecore/commands/command[@name='blog:newblog']"/>
+  <xsl:template match="/configuration/sitecore/commands/command[@name='blog:newentry']"/>
+  <xsl:template match="/configuration/sitecore/commands/command[@name='blog:newcategory']"/>
+  <xsl:template match="/configuration/sitecore/commands/command[@name='blog:blogsettings']"/>
+  <xsl:template match="/configuration/sitecore/commands/command[@name='blog:entrysettings']"/>
+  <xsl:template match="/configuration/sitecore/commands/command[@name='blog:import']"/>
 
   <xsl:template match="/configuration/sitecore/pipelines/NewsMover.MoveCompleted"/>
 
