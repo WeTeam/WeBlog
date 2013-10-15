@@ -13,6 +13,13 @@ namespace Sitecore.Modules.WeBlog.Layouts
             LoadComments();
             Sitecore.Events.Event.Subscribe(Constants.Events.UI.COMMENT_ADDED, new EventHandler(this.CommentAdded));
         }
+        
+        public override void Dispose()
+        {
+            // without unsubscribing there will be a memory leak from the subscription in the Page_Load event.
+            Sitecore.Events.Event.Unsubscribe(Constants.Events.UI.COMMENT_ADDED, new EventHandler(this.CommentAdded));
+        } 
+        
 
         protected virtual void LoadComments()
         {
