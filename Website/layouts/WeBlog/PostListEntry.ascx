@@ -12,7 +12,7 @@
             <%# GetSummary(((ListViewDataItem)Container).DataItem as EntryItem)%>
             
             <asp:HyperLink ID="BlogPostLink" runat="server" CssClass="wb-read-more" NavigateUrl='<%# Eval("Url") %>'><%#Sitecore.Modules.WeBlog.Globalization.Translator.Text("READ_MORE")%></asp:HyperLink>
-            <span class="wb-comment-count">
+            <span class="wb-comment-count" runat="server" Visible="<%# !(((ListViewDataItem)Container).DataItem as EntryItem).DisableComments %>">
                 <%#Sitecore.Modules.WeBlog.Globalization.Translator.Render("COMMENTS")%> (<%#(((ListViewDataItem)Container).DataItem as EntryItem).CommentCount%>)
             </span>
         </div>
