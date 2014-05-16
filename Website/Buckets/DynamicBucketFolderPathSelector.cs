@@ -9,20 +9,24 @@ namespace Sitecore.Modules.WeBlog.Buckets
 {
     public class DynamicBucketFolderPathSelector : IDynamicBucketFolderPath
     {
+        [Obsolete]
         public string GetFolderPath(Data.ID newItemId, Data.ID parentItemId, DateTime creationDateOfNewItem)
         {
-            if (Sitecore.Context.ContentDatabase == null)
+            return GetFolderPath(Sitecore.Context.ContentDatabase, string.Empty, null, newItemId, parentItemId,
+                          creationDateOfNewItem);
+        }
+
+        public string GetFolderPath(Data.Database database, string name, Data.ID templateId, Data.ID newItemId, Data.ID parentItemId,
+                                    DateTime creationDateOfNewItem)
+        {
+            if (database == null)
                 return string.Empty;
 
-            var parentItem = Sitecore.Context.ContentDatabase.GetItem(parentItemId);
+            var parentItem = database.GetItem(parentItemId);
             if (parentItem != null)
             {
                 // Ensure we're at the root of the bucket
                 parentItem = parentItem.GetParentBucketItemOrRootOrSelf();
-
-                var parentTemplateId = parentItem.TemplateID;
-                var parentName = parentItem.Name;
-
                 // The following is a Sitecore config path query, not a Sitecore content tree path
                 var xpath = "/sitecore/WeBlog/DynamicBucketFolderPathSelector/*[includeTemplates/*[text() = '{0}'] or paths/*[text() = '{1}']]/handler"
                     .FormatWith(
@@ -31,11 +35,17 @@ namespace Sitecore.Modules.WeBlog.Buckets
 
                 if (configNode != null)
                 {
-                    var handler = Sitecore.Configuration.Factory.CreateObject <IDynamicBucketFolderPath>(configNode);
+                    var handler = Sitecore.Configuration.Factory.CreateObject<IDynamicBucketFolderPath>(configNode);
                     if (handler != null)
                     {
+#if SC70
                         return (handler as IDynamicBucketFolderPath).GetFolderPath(newItemId, parentItemId,
                                                                                    creationDateOfNewItem);
+#endif
+#if SC72
+                        return (handler as IDynamicBucketFolderPath).GetFolderPath(database, name, templateId, newItemId,
+                                                                                   parentItemId, creationDateOfNewItem);
+#endif
                     }
                 }
             }
