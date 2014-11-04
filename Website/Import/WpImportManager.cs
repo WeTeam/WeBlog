@@ -81,7 +81,9 @@ namespace Sitecore.Modules.WeBlog.Import
                         ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
                     }
 
-                    entry.InnerItem.Fields[FieldIDs.Created].Value = DateUtil.ToIsoDate(post.PublicationDate);
+                    var publicationDate = DateUtil.ToIsoDate(post.PublicationDate);
+                    entry.InnerItem.Fields[FieldIDs.Created].Value = publicationDate;
+                    entry.InnerItem.Fields["Entry Date"].Value = publicationDate;
                     entry.EndEdit();
                 }
             }

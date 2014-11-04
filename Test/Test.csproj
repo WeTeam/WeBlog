@@ -22,7 +22,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Debug sc7.0'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Debug sc7.2'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
@@ -36,7 +36,7 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2' or '$(Configuration)' == 'Release sc6.4' or '$(Configuration)' == 'Release sc6.6' or '$(Configuration)' == 'Release sc7.0'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2' or '$(Configuration)' == 'Release sc6.4' or '$(Configuration)' == 'Release sc6.6' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Release sc7.2'">
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
@@ -55,6 +55,11 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2'">
+    <DefineConstants>SC72</DefineConstants>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>  
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -67,6 +72,9 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.0'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.2'">
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>  
   <ItemGroup>
     <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
