@@ -264,7 +264,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string CommentWorkflowCommandCreated
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created",""); }
         }
 
         /// <summary>

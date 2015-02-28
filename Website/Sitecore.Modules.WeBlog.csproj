@@ -21,7 +21,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Debug sc7.2'">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Debug sc8.1'">
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
@@ -35,7 +35,8 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2' or '$(Configuration)' == 'Release sc6.4' or '$(Configuration)' == 'Release sc6.6' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Release sc7.2'">
+  <!-- <PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2' or '$(Configuration)' == 'Release sc6.4' or '$(Configuration)' == 'Release sc6.6' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Release sc7.2' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Release sc8.1'"> -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2' or '$(Configuration)' == 'Release sc6.4' or '$(Configuration)' == 'Release sc6.6' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Release sc7.2' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Release sc8.1'">
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
@@ -58,7 +59,19 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2'">
     <DefineConstants>SC72</DefineConstants>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>  
+  </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5'">
+    <DefineConstants>SC75</DefineConstants>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0'">
+    <DefineConstants>SC80</DefineConstants>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
+    <DefineConstants>SC81</DefineConstants>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>       
   <ItemGroup>
     <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
       <HintPath>..\Dependencies\Third-party\.net 2\AntiXSSLibrary.dll</HintPath>
@@ -100,6 +113,18 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.ContentSearch" Condition="'$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Sitecore.ContentSearch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq" Condition="'$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Sitecore.ContentSearch.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceEditor" Condition="'$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
+      <HintPath>$(SitecorePath)\bin\Sitecore.ExperienceEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
@@ -108,7 +133,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Buckets" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2'">
+    <Reference Include="Sitecore.Buckets" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2' or '$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
       <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -119,9 +144,9 @@
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -129,9 +154,11 @@
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2'">
+  <ItemGroup Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2' or '$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
+    <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
+    <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogSettings.cs" />
@@ -389,11 +416,9 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
-    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
+    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt" />
+    <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="Change Log.txt" />
     <Content Include="layouts\WeBlog\Blog.ascx" />
     <Content Include="layouts\WeBlog\Captcha.ascx" />
@@ -447,7 +472,7 @@
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.config">
       <SubType>Designer</SubType>
-      <TransformOnBuild>true</TransformOnBuild>
+	  <TransformOnBuild>true</TransformOnBuild>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -457,11 +482,16 @@
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="sitecore modules\web\WeBlog\MetaBlogApi.ashx" />
-    <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
+  <!-- <ItemGroup Condition="'$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'"> -->
+  <ItemGroup Condition="'$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+	<Content Include="sitecore modules\web\WeBlog\MetaBlogApi.ashx" />
+    <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />   
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -486,7 +516,8 @@
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="NoRemoteEventsConfig" Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Release sc6.2'" />
-    <CallTarget Targets="ItemBucketsConfig" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2'" />
+   <!--  <CallTarget Targets="ItemBucketsConfig" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2' or '$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'" /> -->
+    <CallTarget Targets="ItemBucketsConfig" Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'" />
     <CallTarget Targets="ContentDeliveryConfig" />
   </Target>
   <Target Name="DeployToWeb">
