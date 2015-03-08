@@ -79,7 +79,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
 #if SC62 || SC64
             //Sitecore.Analytics.AnalyticsTracker.Current.
-#elif  SC64 || SC66 || SC72
+#else
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
             {
                 // Register DMS page views for popular items
@@ -95,10 +95,6 @@ namespace Sitecore.Modules.WeBlog.Test
                 visitor.CurrentVisit.CreatePage().ItemId = m_entry12.ID.ToGuid();
 
                 visitor.Submit();
-            }
-#else
-             if (Sitecore.Configuration.Settings.Analytics.Enabled)
-            {
             }
 #endif
         }
