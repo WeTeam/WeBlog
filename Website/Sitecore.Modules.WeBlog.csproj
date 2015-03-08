@@ -480,9 +480,8 @@
   <ItemGroup>
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
-  </ItemGroup>
-  <!-- <ItemGroup Condition="'$(Configuration)' == 'Debug sc7.5' or '$(Configuration)' == 'Release sc7.5' or '$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'"> -->
-  <ItemGroup Condition="'$(Configuration)' == 'Debug sc8.0' or '$(Configuration)' == 'Release sc8.0' or '$(Configuration)' == 'Debug sc8.1' or '$(Configuration)' == 'Release sc8.1'">
+  </ItemGroup>  
+  <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
       <SubType>Designer</SubType>
     </Content>
