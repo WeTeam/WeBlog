@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party", "Third-party"
 		Dependencies\Third-party\Recaptcha.dll = Dependencies\Third-party\Recaptcha.dll
 		Dependencies\Third-party\RssToolkit.dll = Dependencies\Third-party\RssToolkit.dll
 		Dependencies\Third-party\Sitecore.Captcha.dll = Dependencies\Third-party\Sitecore.Captcha.dll
+		Dependencies\Third-party\SublayoutParameterHelper.dll = Dependencies\Third-party\SublayoutParameterHelper.dll
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}"

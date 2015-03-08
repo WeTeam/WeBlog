@@ -314,5 +314,13 @@ namespace Sitecore.Modules.WeBlog
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.TagManager"); }
         }
+
+        /// <summary>
+        /// Gets the date format setting
+        /// </summary>
+        public static string DateFormat
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat","MMMM dd yyyy"); }
+        }
     }
 }
