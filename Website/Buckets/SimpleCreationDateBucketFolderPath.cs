@@ -1,5 +1,5 @@
 ﻿// This file is conditionally included in the project for Sitecore versions supporting item buckets (currently Sitecore 7.0)
-
+#if SC70 || SC72 || SC80 || SC81
 using System;
 using Sitecore.Buckets.Util;
 
@@ -20,3 +20,4 @@ namespace Sitecore.Modules.WeBlog.Buckets
         }
     }
 }
+#endif

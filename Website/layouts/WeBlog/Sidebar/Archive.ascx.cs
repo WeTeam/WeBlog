@@ -102,8 +102,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
             if (entries.Any())
             {
-                startYear = ((EntryItem)entries.First()).EntryDate.DateTime.Year;
-                endYear = ((EntryItem)entries.Last()).EntryDate.DateTime.Year;
+                startYear = ((EntryItem)entries.First()).Created.Year;
+                endYear = ((EntryItem)entries.Last()).Created.Year;
 
                 if (startYear != 0 && endYear != 0)
                 {

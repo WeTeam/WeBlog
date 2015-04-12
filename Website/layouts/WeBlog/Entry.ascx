@@ -16,9 +16,9 @@
     <% if (ShowEntryMetadata) { %>
         <div class="wb-details">
             <% if(Sitecore.Context.PageMode.IsPageEditor) { %>
-            <%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.EntryDate.Rendered, CurrentEntry.Author.Rendered) %>
+            <%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), CurrentEntry.Author.Rendered) %>
             <% } else { %>
-            <%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.EntryDate.DateTime, CurrentEntry.AuthorName) %>
+            <%=Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), CurrentEntry.AuthorName) %>
             <%} %>
         </div>
     <% } %>
