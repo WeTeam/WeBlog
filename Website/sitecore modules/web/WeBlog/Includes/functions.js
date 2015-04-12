@@ -22,7 +22,8 @@
                 var posts = jQuery(data).find('ul li');
                 entries.append(posts);
                 loading.hide();
-                viewMore.show();
+                if (posts.length>0)
+                    viewMore.show();
             });
             return false;
         });
