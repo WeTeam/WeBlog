@@ -348,7 +348,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
 #if SC62 || SC64
                 sql = sql.Replace("$page_table$", "page");
-                var ids = AnalyticsManager.ReadMany<ID>(sql, reader =>
+                var ids = Sitecore.Analytics. AnalyticsManager.ReadMany<ID>(sql, reader =>
                 {
                     return new ID(AnalyticsManager.GetGuid(0, reader));
                 }, new object[0]);

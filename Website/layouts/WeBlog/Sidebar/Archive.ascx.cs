@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -33,21 +34,32 @@ namespace Sitecore.Modules.WeBlog.Layouts
             set;
         }
 
+        /// <summary>
+        /// Gets or set years have blog entries
+        /// </summary>
+        public int[] BlogEntry_Years
+        {
+            get;
+            set;
+        }
+
         protected virtual void Page_Load(object sender, EventArgs e)
         {
             ExpandMonthsOnLoad = true;
 
             m_entriesByMonthAndYear = new Dictionary<int, List<EntryItem>>();
 
-            if(CurrentBlog != null)
+            if (CurrentBlog != null)
                 m_startedDate = CurrentBlog.InnerItem.Statistics.Created;
-            
+
             LoadEntries();
-            if (Years != null)
+            if (Years != null && BlogEntry_Years != null && BlogEntry_Years.Any())
             {
-                Years.DataSource = GetYears();
+                Years.DataSource = BlogEntry_Years;
                 Years.DataBind();
             }
+            else
+                Visible = false;
         }
 
         /// <summary>
@@ -57,17 +69,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             m_entriesByMonthAndYear = new Dictionary<int, List<EntryItem>>();
 
-            var years = GetYears();
-            foreach (var year in years)
-            {
-                for (int i = 1; i <= 12; i++)
-                {
-                    var key = (year * 100) + i;
-                    m_entriesByMonthAndYear.Add(key, new List<EntryItem>());
-                }
-            }
-
             var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries();
+
             foreach (var entry in entries)
             {
                 DateTime created = entry.Created;
@@ -76,18 +79,43 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 {
                     m_entriesByMonthAndYear[key].Add(entry);
                 }
+                else
+                {
+                    var listTemp = new List<EntryItem>();
+                    listTemp.Add(entry);
+                    m_entriesByMonthAndYear.Add(key, listTemp);
+                }
             }
+
+            BlogEntry_Years = GetYears(entries);
         }
 
         /// <summary>
-        /// Gets the years from the current year to the year the blog was started
+        /// Gets the years from latest blog entry's year to oldest blog entry's year
         /// </summary>
         /// <returns></returns>
-        protected virtual int[] GetYears()
+        protected virtual int[] GetYears(EntryItem[] entries)
         {
             var years = new List<int>();
-            for (var year = DateTime.Now.Year; year >= m_startedDate.Year; year--)
-                years.Add(year);
+            var startYear = 0;
+            var endYear = 0;
+
+            if (entries.Any())
+            {
+                startYear = ((EntryItem)entries.First()).EntryDate.DateTime.Year;
+                endYear = ((EntryItem)entries.Last()).EntryDate.DateTime.Year;
+
+                if (startYear != 0 && endYear != 0)
+                {
+                    for (var year = startYear; year >= endYear; year--)
+                    {
+                        if (YearHasBlogEntries(year))
+                        {
+                            years.Add(year);
+                        }
+                    }
+                }
+            }
 
             return years.ToArray();
         }
@@ -149,6 +177,23 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 return m_entriesByMonthAndYear[yearAndMonth];
             else
                 return new List<EntryItem>();
+        }
+
+        /// <summary>
+        /// Check if we have blog entries for given year or not
+        /// </summary>
+        /// <param name="year"></param>
+        /// <returns></returns>
+        protected virtual bool YearHasBlogEntries(int year)
+        {
+            foreach (var key in m_entriesByMonthAndYear.Keys)
+            {
+                if (key.ToString().Contains(year.ToString()))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         protected virtual void MonthDataBound(object sender, RepeaterItemEventArgs args)
