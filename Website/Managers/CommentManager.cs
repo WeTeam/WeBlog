@@ -43,11 +43,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Database = ContentHelper.GetContentDatabase();
             args.Language = language ?? Context.Language;
 
-#if SC62 || SC64
-            CorePipeline.Run("weblogCreateComment", args);
-#else
+//#if SC62 || SC64
+            //CorePipeline.Run("weblogCreateComment", args);
+//#else
             CorePipeline.Run("weblogCreateComment", args, true);
-#endif
+//#endif
 
             if (args.CommentItem != null)
                 return args.CommentItem.ID;

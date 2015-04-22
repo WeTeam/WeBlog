@@ -1,5 +1,5 @@
-﻿// This file is conditionally included in the project for Sitecore versions supporting item buckets (currently Sitecore 7.0)
-#if SC70 || SC72 || SC80 || SC81
+﻿// This file is conditionally included in the project for Sitecore versions supporting item buckets
+#if FEATURE_ITEM_BUCKETS
 using System;
 using Sitecore.Buckets.Util;
 

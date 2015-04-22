@@ -16,7 +16,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
             HandleOnItemSaved(item);
         }
 
-#if !SC62
+#if FEATURE_REMOTE_EVENTS
         public void OnItemSavedRemote(object sender, EventArgs args)
         {
             Assert.ArgumentNotNull(sender, "sender");

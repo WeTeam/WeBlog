@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+		<DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('Release'))">
+		<DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.2'))">
+		<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_OMS</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.4'))">
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_REMOTE_EVENTS;FEATURE_OMS;FEATURE_FAST_QUERY</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.6'))">
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_REMOTE_EVENTS;FEATURE_DMS;FEATURE_FAST_QUERY</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc7.0'))">
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_ITEM_BUCKETS;FEATURE_CONTENT_SEARCH;FEATURE_REMOTE_EVENTS;FEATURE_DMS;FEATURE_FAST_QUERY;SC70</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc7.5'))">
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_ITEM_BUCKETS;FEATURE_CONTENT_SEARCH;FEATURE_REMOTE_EVENTS;FEATURE_XDB;FEATURE_FAST_QUERY</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc8.0'))">
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_ITEM_BUCKETS;FEATURE_CONTENT_SEARCH;FEATURE_REMOTE_EVENTS;FEATURE_XDB;FEATURE_FAST_QUERY;FEATURE_EXPERIENCE_EDITOR</DefineConstants>
+	</PropertyGroup>
+</Project>

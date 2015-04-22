@@ -22,7 +22,7 @@ namespace Sitecore.Modules.WeBlog.Search.Crawlers
 
             if (item != null && document != null)
             {
-#if SC70 || SC72 || SC80 || SC81
+#if FEATURE_CONTENT_SEARCH
                 var fieldAnalysis = Field.Index.ANALYZED;
 #else
                 var fieldAnalysis = Field.Index.TOKENIZED;

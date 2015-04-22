@@ -13,16 +13,19 @@ using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
 
-#if SC62 || SC64
+#if FEATURE_OMS
 using Sitecore.Analytics;
-#elif SC80 || SC81
+#elif FEATURE_DMS
+using Sitecore.Analytics.Data.DataAccess.DataAdapters;
+#else
 using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
-using Sitecore.ContentSearch;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using System.Linq.Expressions;
+#endif
+
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
-#else
-using Sitecore.Analytics.Data.DataAccess.DataAdapters;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -383,7 +386,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             if (entryIds.Count() > 0)
             {
-#if SC62 || SC64
+#if FEATURE_OMS
                 sql = sql.Replace("$page_table$", "page");
                 var ids = Sitecore.Analytics. AnalyticsManager.ReadMany<ID>(sql, reader =>
                 {

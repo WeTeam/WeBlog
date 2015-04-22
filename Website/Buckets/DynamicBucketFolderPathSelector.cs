@@ -39,10 +39,10 @@ namespace Sitecore.Modules.WeBlog.Buckets
                     if (handler != null)
                     {
 #if SC70
+// We only target specific Sitecore versions when there's an API contention
                         return (handler as IDynamicBucketFolderPath).GetFolderPath(newItemId, parentItemId,
                                                                                    creationDateOfNewItem);
-#endif
-#if SC72
+#else
                         return (handler as IDynamicBucketFolderPath).GetFolderPath(database, name, templateId, newItemId,
                                                                                    parentItemId, creationDateOfNewItem);
 #endif

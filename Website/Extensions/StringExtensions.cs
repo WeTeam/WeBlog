@@ -23,7 +23,7 @@
 
             return true;
         }
-
+      /* will probably need a target framework check for this method
 #if SC62
         /// <summary>
         /// Limits a strings length to a maximum number of characters
@@ -35,7 +35,7 @@
         {
             return MaxLength(input, length, "...");
         }
-#endif
+#endif*/
 
         /// <summary>
         /// Limits a strings length to a maximum number of characters
