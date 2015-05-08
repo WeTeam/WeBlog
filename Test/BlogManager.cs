@@ -121,6 +121,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllBlogs()
         {
+          // todo: Update method to allow passing in content root to search from. Will make this test more robust
             var blogIds = (from blog in new Mod.BlogManager().GetAllBlogs(null)
                        select blog.ID).ToArray();
 

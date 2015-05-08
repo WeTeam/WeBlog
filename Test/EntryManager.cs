@@ -77,9 +77,16 @@ namespace Sitecore.Modules.WeBlog.Test
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
-#if FEATURE_XDB
+#if FEATURE_OMS
+          if (Analytics.Configuration.AnalyticsSettings.Enabled)
+          {
+            // todo
+          }
+
+#elif FEATURE_XDB
           // todo
 #else
+          
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
             {
                 // Register DMS page views for popular items

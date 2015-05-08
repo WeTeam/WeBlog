@@ -64,8 +64,16 @@ namespace Sitecore.Modules.WeBlog.Test
                 // END: Workaround
 
                 // Create test users
-                m_userAuthor = Sitecore.Security.Accounts.User.Create("sitecore\\user1", PASSWORD);
-                m_userNothing = Sitecore.Security.Accounts.User.Create("sitecore\\user2", PASSWORD);
+              if (User.Exists("sitecore\\user1"))
+                m_userAuthor = User.FromName("m_userAuthor", true);
+              else
+                m_userAuthor = User.Create("sitecore\\user1", PASSWORD);
+
+              if (User.Exists("sitecore\\user2"))
+                m_userNothing = User.FromName("sitecore\\user2", true);
+              else
+                m_userNothing = User.Create("sitecore\\user2", PASSWORD);
+
 
                 // Add users to roles
                 m_userAuthor.Roles.Add(Role.FromName("sitecore\\Sitecore Client Authoring"));

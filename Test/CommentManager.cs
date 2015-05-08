@@ -85,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 if (m_testRoot != null)
                 {
-                    m_testRoot.Delete();
+//                    m_testRoot.Delete();
                 }
             }
         }
@@ -234,7 +234,8 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetCommentsCount_WithLanguage_Entry11()
         {
-            Assert.AreEqual(1, new Mod.CommentManager().GetCommentsCount(m_deComment111));
+          // todo: add overload to GetCommentsCount(Item, Language). This test is currently redundant
+          Assert.AreEqual(1, new Mod.CommentManager().GetCommentsCount(m_entry11.ID, Language.Parse("de")));
         }
 
         [Test]

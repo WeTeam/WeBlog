@@ -12,6 +12,7 @@ using Sitecore.Search;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
+using System.Linq.Expressions;
 
 #if FEATURE_OMS
 using Sitecore.Analytics;
@@ -19,13 +20,12 @@ using Sitecore.Analytics;
 using Sitecore.Analytics.Data.DataAccess.DataAdapters;
 #else
 using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
-using Sitecore.Modules.WeBlog.Search.SearchTypes;
-using System.Linq.Expressions;
 #endif
 
 #if FEATURE_CONTENT_SEARCH
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
+using Sitecore.Modules.WeBlog.Search.SearchTypes;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -239,7 +239,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
 
             List<EntryItem> result = new List<EntryItem>();
-#if SC80 || SC81
+#if FEATURE_CONTENT_SEARCH
             var indexName = Settings.SearchIndexName;
             if (!string.IsNullOrEmpty(indexName))
             {
@@ -577,7 +577,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
         #endregion
     }
-#if SC80 || SC81
+#if FEATURE_CONTENT_SEARCH
     public class PredicateController
     {
         // Blog tag
