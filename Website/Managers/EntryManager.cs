@@ -255,7 +255,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             var searcher = new Searcher();
-            var result = searcher.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true);
+            var result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true);
 
             return result;
         }

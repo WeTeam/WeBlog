@@ -254,7 +254,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     }
 
                     var searcher = new Searcher();
-                    return searcher.Execute<CommentItem>(query, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
+                    return searcher.Execute<CommentItem>(query, item.Language, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
                 }
             }
 

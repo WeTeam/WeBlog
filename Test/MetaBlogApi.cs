@@ -19,6 +19,7 @@ namespace Sitecore.Modules.WeBlog.Test
     [Category("MetaBlogApi")]
     public class MetaBlogApi : UnitTestBase
     {
+        private static Random m_random = new Random();
         private const string PASSWORD = "password1";
 
         private User m_userAuthor = null;
@@ -64,15 +65,17 @@ namespace Sitecore.Modules.WeBlog.Test
                 // END: Workaround
 
                 // Create test users
-                m_userAuthor = Sitecore.Security.Accounts.User.Create("sitecore\\user1", PASSWORD);
-                m_userNothing = Sitecore.Security.Accounts.User.Create("sitecore\\user2", PASSWORD);
+                // Use random usernames to ensure we're not trying to create users that might already exist
+                m_userAuthor = Sitecore.Security.Accounts.User.Create("sitecore\\user" + m_random.Next(999999), PASSWORD);
+                m_userNothing = Sitecore.Security.Accounts.User.Create("sitecore\\user" + m_random.Next(999999), PASSWORD);
 
                 // Add users to roles
                 m_userAuthor.Roles.Add(Role.FromName("sitecore\\Sitecore Client Authoring"));
 
                 var rules = new AccessRuleCollection();
-                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemWrite, PropagationType.Descendants, AccessPermission.Allow));
-                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemDelete, PropagationType.Descendants, AccessPermission.Allow));
+                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemWrite, PropagationType.Any, AccessPermission.Allow));
+                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemDelete, PropagationType.Any, AccessPermission.Allow));
+                rules.Add(AccessRule.Create(m_userAuthor, AccessRight.ItemCreate, PropagationType.Any, AccessPermission.Allow));
 
                 m_blog1.Security.SetAccessRules(rules);
                 m_blog2.Security.SetAccessRules(rules);
@@ -189,7 +192,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var names = (from entry in result
                          select entry["title"] as string).ToArray();
 
-            Assert.Contains("Entry12", names);
+            Assert.Contains("Entry11", names);
         }
 
         [Test]

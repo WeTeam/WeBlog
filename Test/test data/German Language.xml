@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<item name="de" key="de" id="{882B9E3C-D094-4ACF-9683-4DA0AEA11B66}" tid="{F68F13A6-3395-426A-B9A1-FA2DC60D94EB}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="100" template="language" parentid="{64C4F646-A3FA-4205-B98E-4DE2C609B60F}">
+  <version language="de" version="1">
+    <fields>
+      <field tfid="{C437E416-8948-427D-A982-8ED37AE3F553}" key="iso" type="text">
+        <content>de</content>
+      </field>
+      <field tfid="{8728D8FF-66D9-40C2-8B34-C4FC1466942E}" key="encoding" type="text">
+        <content>utf-8</content>
+      </field>
+      <field tfid="{990596CE-0024-43F3-BF4C-A991BFA69B45}" key="code page" type="text">
+        <content>65001</content>
+      </field>
+      <field tfid="{49E5E8F3-ED4A-4A06-ABE1-B9408951DEE9}" key="charset" type="text">
+        <content>iso-8859-1</content>
+      </field>
+      <field tfid="{06D5295C-ED2F-4A54-9BF2-26228D113318}" key="__icon" type="Icon">
+        <content>flags/16x16/flag_Germany.PNG</content>
+      </field>
+      <field tfid="{60669E54-7B9C-4B55-A0C4-8F25059D8B94}" key="dictionary" type="text">
+        <content>de-DE.tdf</content>
+      </field>
+      <field tfid="{0620F810-9294-4F14-AF9F-F5772EFCA0B2}" key="regional iso code" type="text">
+        <content>de</content>
+      </field>
+    </fields>
+  </version>
+  <version language="en" version="1">
+    <fields>
+      <field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
+        <content>20131204T210917</content>
+      </field>
+      <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
+        <content>20131204T210918:635217881582707808</content>
+      </field>
+      <field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
+        <content>sitecore\admin</content>
+      </field>
+      <field tfid="{5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}" key="__created by" type="text">
+        <content>sitecore\admin</content>
+      </field>
+      <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
+        <content>sitecore\admin</content>
+      </field>
+      <field tfid="{8CDC337E-A112-42FB-BBB4-4143751E123F}" key="__revision" type="text">
+        <content>d3871211-9996-4b9a-84b3-47f9070b1514</content>
+      </field>
+      <field tfid="{C437E416-8948-427D-A982-8ED37AE3F553}" key="iso" type="text">
+        <content>de</content>
+      </field>
+      <field tfid="{8728D8FF-66D9-40C2-8B34-C4FC1466942E}" key="encoding" type="text">
+        <content>utf-8</content>
+      </field>
+      <field tfid="{990596CE-0024-43F3-BF4C-A991BFA69B45}" key="code page" type="text">
+        <content>65001</content>
+      </field>
+      <field tfid="{49E5E8F3-ED4A-4A06-ABE1-B9408951DEE9}" key="charset" type="text">
+        <content>iso-8859-1</content>
+      </field>
+      <field tfid="{06D5295C-ED2F-4A54-9BF2-26228D113318}" key="__icon" type="Icon">
+        <content>flags/16x16/flag_Germany.PNG</content>
+      </field>
+      <field tfid="{60669E54-7B9C-4B55-A0C4-8F25059D8B94}" key="dictionary" type="text">
+        <content>de-DE.tdf</content>
+      </field>
+      <field tfid="{0620F810-9294-4F14-AF9F-F5772EFCA0B2}" key="regional iso code" type="text">
+        <content>de</content>
+      </field>
+    </fields>
+  </version>
+</item>

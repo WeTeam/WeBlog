@@ -59,7 +59,7 @@
     <DefineConstants>SC72</DefineConstants>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-  </PropertyGroup>  
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
   </PropertyGroup>
@@ -74,7 +74,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.2'">
     <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -139,6 +139,7 @@
     <Content Include="test data\entry manager content.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="test data\German Language.xml" />
     <Content Include="test data\MetaBlog content.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -176,6 +177,7 @@
     <Compile Include="Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TestUtil.cs" />
     <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>

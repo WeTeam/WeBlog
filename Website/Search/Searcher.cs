@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Lucene.Net.Search;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
 using Sitecore.Modules.WeBlog.Search.Search;
 using Sitecore.Search;
@@ -25,10 +26,11 @@ namespace Sitecore.Modules.WeBlog.Search
         /// </summary>
         /// <typeparam name="T">The type of the items to be returned from the search</typeparam>
         /// <param name="query">The query to execute</param>
+        /// <param name="language">The language of items to retrieve</param>
         /// <param name="maximumResults">The maximum number of results</param>
         /// <param name="sortField">The index field to sort on</param>
         /// <returns>An array of search results, or an empty array if there was an issue</returns>
-        public T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func, string sortField, bool reverseSort)
+        public T[] Execute<T>(QueryBase query, Language language, int maximumResults, Action<List<T>, Item> func, string sortField, bool reverseSort)
         {
             if (query is CombinedQuery)
             {
@@ -36,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Search
                 (query as CombinedQuery).Add(new FieldQuery(Sitecore.Search.BuiltinFields.Database, Sitecore.Context.Database.Name), QueryOccurance.Must);
 
                 // Add language
-                var langCode = DatabaseCrawler.TransformLanguageCode(Sitecore.Context.Language.Name);
+                var langCode = DatabaseCrawler.TransformLanguageCode(language.Name);
                 (query as CombinedQuery).Add(new FieldQuery(Constants.Index.Fields.Language, langCode), QueryOccurance.Must);
             }
 
@@ -88,9 +90,9 @@ namespace Sitecore.Modules.WeBlog.Search
         /// <summary>
         /// Performs a search in the WeBlog search index, without a sort
         /// </summary>
-        public T[] Execute<T>(QueryBase query, int maximumResults, Action<List<T>, Item> func)
+        public T[] Execute<T>(QueryBase query, Language language, int maximumResults, Action<List<T>, Item> func)
         {
-            return Execute<T>(query, maximumResults, func, null, false);
+            return Execute<T>(query, language, maximumResults, func, null, false);
         }
     }
 }

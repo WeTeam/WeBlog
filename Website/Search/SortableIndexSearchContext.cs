@@ -40,6 +40,7 @@ namespace Sitecore.Modules.WeBlog.Search.Search
         {
 #if SC62 || SC64 || SC66
             return new SearchHits(Searcher.Search(query.Query, sort));
+          //return new SearchHits(Searcher.Search(query.Query));
 #else
             return new SearchHits(Searcher.Search(query.Query, null, maxResults, sort), Searcher.IndexReader);
 #endif
