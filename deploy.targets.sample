@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<SitecorePath Condition="'$(Configuration)' == 'Debug 6.2' or '$(Configuration)' == 'Release 6.2'">C:\websites\WeBlog-62\Website</SitecorePath>
-		<SitecorePath Condition="'$(Configuration)' == 'Debug 6.4' or '$(Configuration)' == 'Release 6.4'">C:\websites\WeBlog-64\Website</SitecorePath>
-		<SitecorePath Condition="'$(Configuration)' == 'Debug 6.6' or '$(Configuration)' == 'Release 6.6'">C:\websites\WeBlog-66\Website</SitecorePath>
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.2'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 6.2\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 6.2\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.4'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 6.4\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 6.4\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.6'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 6.6\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 6.6\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc7.0'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 7.0\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 7.0\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc7.5'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 7.5\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 7.5\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc8.0'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 8.0\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 8.0\cd\Website</SitecoreCDPath>
 	</PropertyGroup>
 </Project>
