@@ -264,7 +264,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         public static string CommentWorkflowCommandCreated
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created",""); }
         }
 
         /// <summary>
@@ -313,6 +313,14 @@ namespace Sitecore.Modules.WeBlog
         public static string TagManagerClass
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Implementation.TagManager"); }
+        }
+
+        /// <summary>
+        /// Gets the date format setting
+        /// </summary>
+        public static string DateFormat
+        {
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat","MMMM dd yyyy"); }
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\build configurations.targets" />
   <Import Project="..\deploy.targets" Condition="Exists('..\deploy.targets')" />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -21,12 +22,14 @@
     <DefineConstants>TRACE</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Debug sc7.2'">
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>CODE_ANALYSIS;DEBUG;TRACE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
-    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisLogFile>bin\Sitecore.Modules.WeBlog.Test.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
@@ -36,45 +39,11 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
     <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2' or '$(Configuration)' == 'Release sc6.4' or '$(Configuration)' == 'Release sc6.6' or '$(Configuration)' == 'Release sc7.0' or '$(Configuration)' == 'Release sc7.2'">
+  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2' or '$(Configuration)' == 'Release sc6.2'">
-    <DefineConstants>SC62</DefineConstants>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.4' or '$(Configuration)' == 'Release sc6.4'">
-    <DefineConstants>SC64</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.6' or '$(Configuration)' == 'Release sc6.6'">
-    <DefineConstants>SC66</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.0' or '$(Configuration)' == 'Release sc7.0'">
-    <DefineConstants>SC70</DefineConstants>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.2' or '$(Configuration)' == 'Release sc7.2'">
-    <DefineConstants>SC72</DefineConstants>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.4'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.6'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.0'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.2'">
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-  </PropertyGroup>
+  <Import Project="..\sc version properties.targets" />
   <ItemGroup>
     <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -84,16 +53,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Dependencies\Third-party\CustomItemGenerator.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.core">
       <HintPath>..\Dependencies\Third-party\nunit.core.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core.interfaces, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.core.interfaces">
       <HintPath>..\Dependencies\Third-party\nunit.core.interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework, Version=2.4.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="nunit.framework">
       <HintPath>..\Dependencies\Third-party\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -202,7 +168,7 @@
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="bin\*.dll;test.aspx;test data\**\*.*;App_Config\**\*.*" Exclude="**\.svn\**\*.*">
+    <CreateItem Include="@(Content);$(OutDir)\*.dll">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />

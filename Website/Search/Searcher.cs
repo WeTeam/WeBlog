@@ -55,12 +55,12 @@ namespace Sitecore.Modules.WeBlog.Search
                         SearchHits hits;
                         if (!string.IsNullOrEmpty(sortField))
                         {
-#if SC62 || SC64 || SC66
-                            var sort = new Lucene.Net.Search.Sort(sortField, reverseSort);
+#if FEATURE_CONTENT_SEARCH
+                          var sort = new Lucene.Net.Search.Sort(new SortField(sortField, SortField.STRING, reverseSort));
 #else
-                            var sort = new Lucene.Net.Search.Sort(new SortField(sortField, SortField.STRING, reverseSort));
+                          var sort = new Lucene.Net.Search.Sort(sortField, reverseSort);
 #endif
-                            hits = searchContext.Search(query, sort);
+                          hits = searchContext.Search(query, sort);
                         }
                         else
                         {

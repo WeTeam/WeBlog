@@ -5,6 +5,7 @@ obj
 # Other VS user files
 *.suo
 *.user
+*.userprefs
 
 # Local deployment files
 deploy.targets

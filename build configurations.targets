@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.2'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.4'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc6.6'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.0'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc7.5'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc8.0'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc6.2'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc6.4'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc6.6'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc7.0'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc7.5'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc8.0'"/>
+</Project>

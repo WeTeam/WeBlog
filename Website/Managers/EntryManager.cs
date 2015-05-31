@@ -12,11 +12,20 @@ using Sitecore.Search;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.Crawlers;
+using System.Linq.Expressions;
 
-#if SC62 || SC64
+#if FEATURE_OMS
 using Sitecore.Analytics;
-#else
+#elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess.DataAdapters;
+#else
+using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
+#endif
+
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.Linq.Utilities;
+using Sitecore.Modules.WeBlog.Search.SearchTypes;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -228,6 +237,37 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return new EntryItem[0];
             }
 
+
+            List<EntryItem> result = new List<EntryItem>();
+#if FEATURE_CONTENT_SEARCH
+            var indexName = Settings.SearchIndexName;
+            if (!string.IsNullOrEmpty(indexName))
+            {
+
+                using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext())
+                {
+                    var builder = PredicateBuilder.True<EntryResultItem>();
+                    var id = Settings.EntryTemplateID;
+                    builder = builder.And(i => i.TemplateId==id);
+                    // Tag
+                    if (!String.IsNullOrEmpty(tag))
+                    {
+                        builder = builder.And(PredicateController.BlogTags(tag));
+                    }
+                    // Categories
+                    if (!string.IsNullOrEmpty(category))
+                    {
+                        builder = builder.And(PredicateController.BlogCategory(category));
+                    }
+                    var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
+                    if (indexresults.Any())
+                    {
+                        result = indexresults.Select(i => new EntryItem(i.GetItem())).ToList();
+                        result = result.OrderByDescending(post => post.Created).Take(maxNumber).ToList();
+                    }
+                }
+            }
+#else 
             var query = new CombinedQuery();
             //query.Add(new FieldQuery(Constants.Index.Fields.BlogID, blog.ID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
             query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, customBlogItem.ID.ToShortID().ToString()), QueryOccurance.Must);
@@ -255,9 +295,9 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             var searcher = new Searcher();
-            var result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true);
-
-            return result;
+            result = searcher.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true).ToList();
+#endif
+            return result.ToArray();
         }
 
         /// <summary>
@@ -346,7 +386,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             
             if (entryIds.Count() > 0)
             {
-#if SC62 || SC64
+#if FEATURE_OMS
                 sql = sql.Replace("$page_table$", "page");
                 var ids = Sitecore.Analytics. AnalyticsManager.ReadMany<ID>(sql, reader =>
                 {
@@ -410,7 +450,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var postItemList = new List<EntryItem>();
             var template = Sitecore.Context.Database.GetTemplate(Settings.EntryTemplateID);
 
-            if(template != null)
+            if (template != null)
             {
                 foreach (Item item in array)
                 {
@@ -537,4 +577,29 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
         #endregion
     }
+#if FEATURE_CONTENT_SEARCH
+    public class PredicateController
+    {
+        // Blog tag
+        public static Expression<Func<EntryResultItem, bool>> BlogTags(string tag)
+        {
+            var predicate = PredicateBuilder.False<EntryResultItem>();
+            predicate = predicate.Or(p => p.Tags.Contains(tag));
+            return predicate;
+        }
+
+        internal static Expression<Func<EntryResultItem, bool>> BlogCategory(string category)
+        {
+            Item categoryItem = Sitecore.Context.Item;
+            if (categoryItem != null && categoryItem.TemplateIsOrBasedOn(Settings.CategoryTemplateID))
+            {
+                string normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+                var predicate = PredicateBuilder.False<EntryResultItem>();
+                predicate = predicate.Or(p => p.Category.Contains(normalizedID));
+                return predicate;
+            }
+            return null;
+        }
+    }
+#endif
 }

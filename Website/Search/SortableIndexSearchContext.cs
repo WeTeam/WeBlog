@@ -38,11 +38,10 @@ namespace Sitecore.Modules.WeBlog.Search.Search
         }
         public SearchHits Search(PreparedQuery query, Sort sort, int maxResults = DefaultMaximumResults)
         {
-#if SC62 || SC64 || SC66
-            return new SearchHits(Searcher.Search(query.Query, sort));
-          //return new SearchHits(Searcher.Search(query.Query));
+#if FEATURE_CONTENT_SEARCH
+          return new SearchHits(Searcher.Search(query.Query, null, maxResults, sort), Searcher.IndexReader);
 #else
-            return new SearchHits(Searcher.Search(query.Query, null, maxResults, sort), Searcher.IndexReader);
+            return new SearchHits(Searcher.Search(query.Query, sort));
 #endif
         }
     }

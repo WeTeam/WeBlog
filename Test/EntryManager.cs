@@ -9,9 +9,9 @@ using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
 
-#if SC62 || SC64
+#if FEATURE_OMS
 using Sitecore.Analytics;
-#else
+#elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess;
 #endif
 
@@ -77,9 +77,16 @@ namespace Sitecore.Modules.WeBlog.Test
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
-#if SC62 || SC64
-            //Sitecore.Analytics.AnalyticsTracker.Current.
+#if FEATURE_OMS
+          if (Analytics.Configuration.AnalyticsSettings.Enabled)
+          {
+            // todo
+          }
+
+#elif FEATURE_XDB
+          // todo
 #else
+          
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
             {
                 // Register DMS page views for popular items
@@ -499,10 +506,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem()
         {
-#if SC62 || SC64
+#if FEATURE_OMS
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
-            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
 #endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
@@ -516,10 +523,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem_Limited()
         {
-#if SC62 || SC64
+#if FEATURE_OMS
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
-            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
 #endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, 1)
                             select entry.ID).ToArray();
@@ -531,10 +538,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_InvalidItem()
         {
-#if SC62 || SC64
+#if FEATURE_OMS
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
-            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
 #endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
@@ -545,10 +552,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_NullItem()
         {
-#if SC62 || SC64
+#if FEATURE_OMS
             Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
 #else
-            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
 #endif
             var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(null, 1)
                             select entry.ID).ToArray();

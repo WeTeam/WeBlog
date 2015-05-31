@@ -15,6 +15,11 @@ using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
 using Sitecore.Search;
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.Linq.Utilities;
+using Sitecore.Modules.WeBlog.Search.SearchTypes;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -38,11 +43,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Database = ContentHelper.GetContentDatabase();
             args.Language = language ?? Context.Language;
 
-#if SC62 || SC64
-            CorePipeline.Run("weblogCreateComment", args);
-#else
+//#if SC62 || SC64
+            //CorePipeline.Run("weblogCreateComment", args);
+//#else
             CorePipeline.Run("weblogCreateComment", args, true);
-#endif
+//#endif
 
             if (args.CommentItem != null)
                 return args.CommentItem.ID;
@@ -124,7 +129,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             Item entry = null;
 
-            if(language != null)
+            if (language != null)
                 entry = GetDatabase().GetItem(entryId, language);
             else
                 entry = GetDatabase().GetItem(entryId);
@@ -241,11 +246,34 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
                 if (blog != null)
                 {
+#if FEATURE_CONTENT_SEARCH
+                    var indexName = Settings.SearchIndexName;
+                    List<CommentItem> result = new List<CommentItem>();
+                    if (!string.IsNullOrEmpty(indexName))
+                    {
+
+                        using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext())
+                        {
+                            var builder = PredicateBuilder.True<CommentResultItem>();
+                            builder = builder.And(i => i.Path.Contains(item.Paths.FullPath));
+                            builder = builder.And(i => i.TemplateId == Settings.CommentTemplateID);
+                            var indexresults = context.GetQueryable<CommentResultItem>().Where(builder);
+                            if (indexresults.Any())
+                            {
+                                result = indexresults.Select(i => new CommentItem(i.GetItem())).ToList();
+                                result = result.Distinct().OrderBy(comment => comment.InnerItem.Statistics.Created).Take(maximumCount).ToList();
+
+                            }
+                        }
+                    }
+                    return result.ToArray();
+#else
                     var query = new CombinedQuery();
 
                     // TODO: What about items using templates derived from commenttemplateid? need to accommodate those
                     query.Add(new FieldQuery(Constants.Index.Fields.Template, blog.BlogSettings.CommentTemplateID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
                     query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
+                    query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Language, item.Language.Name), QueryOccurance.Must);
 
                     string sortField = null;
                     if (sort)
@@ -255,9 +283,9 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                     var searcher = new Searcher();
                     return searcher.Execute<CommentItem>(query, item.Language, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
+#endif
                 }
             }
-
             return new CommentItem[0];
         }
 

@@ -28,7 +28,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
 					// verify the comment item name is unique for this entry
 					var query = "{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
-#if !SC62
+#if FEATURE_FAST_QUERY
 					query = "fast:" + query;
 #endif
 
