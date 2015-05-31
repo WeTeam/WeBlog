@@ -147,7 +147,7 @@ namespace Sitecore.Modules.WeBlog.Test
                             select entry.ID).ToArray();
 
             Assert.AreEqual(2, entryIds.Length);
-            Assert.Contains(m_entry12.ID, entryIds);
+            Assert.Contains(m_entry11.ID, entryIds);
             Assert.Contains(m_entry13.ID, entryIds);
         }
 

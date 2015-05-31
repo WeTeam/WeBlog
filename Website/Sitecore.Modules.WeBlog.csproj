@@ -436,9 +436,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="How to build.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.config">
       <SubType>Designer</SubType>
       <TransformOnBuild>true</TransformOnBuild>

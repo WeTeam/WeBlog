@@ -105,6 +105,7 @@
     <Content Include="test data\entry manager content.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="test data\German Language.xml" />
     <Content Include="test data\MetaBlog content.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -142,6 +143,7 @@
     <Compile Include="Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TestUtil.cs" />
     <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
   <ItemGroup>

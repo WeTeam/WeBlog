@@ -96,6 +96,9 @@
                     <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                         <content>-0425180743</content>
                     </field>
+                  <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                    <content>20110406T220200:634350457201154960</content>
+                  </field>
                 </fields>
             </version>
 
@@ -182,6 +185,9 @@
                     <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                         <content>-0325180736</content>
                     </field>
+                  <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                    <content>20110306T213952:634350443924226381</content>
+                  </field>
                 </fields>
             </version>
             <item name="Comment4" key="comment4" id="{407A3203-60E6-4942-997E-9AC5F948BBB3}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-1018112702" template="blogcomment" parentid="{A6EE8468-E129-4145-8518-9CD18FF15ECE}">
@@ -293,6 +299,9 @@
                     <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                         <content>-0325180716</content>
                     </field>
+                  <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                    <content>20110306T220207:634350457276191092</content>
+                  </field>
                 </fields>
             </version>
             <item name="Comment1" key="comment1" id="{74892200-BD8E-4FBD-BEC0-4C0C31FD7D9A}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-225180757" template="blogcomment" parentid="{CEC67B25-45B7-4C94-BA02-814232210FC3}">
@@ -503,6 +512,9 @@
                     <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                         <content>-0225180743</content>
                     </field>
+                  <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                    <content>20110306T214027:634350444270078989</content>
+                  </field>
                 </fields>
             </version>
         </item>
@@ -533,6 +545,9 @@
                     <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                         <content>-0225180736</content>
                     </field>
+                  <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                    <content>20110306T220213:634350457337655200</content>
+                  </field>
                 </fields>
             </version>
         </item>
@@ -563,6 +578,9 @@
                     <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                         <content>-0225180716</content>
                     </field>
+                  <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                    <content>20110306T214014:634350444144498768</content>
+                  </field>
                 </fields>
             </version>
             <item name="Comment1" key="comment1" id="{8AC707CE-78A2-4A6C-93A7-B58331A41118}" tid="{70949D4E-35D8-4581-A7A2-52928AA119D5}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-225180757" template="blogcomment" parentid="{01755A9C-2C6B-418E-81D9-313713FAD050}">

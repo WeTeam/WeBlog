@@ -375,6 +375,9 @@
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105232617</content>
 							</field>
+              <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                <content>20120105T231237:634614019578909557</content>
+              </field>
 						</fields>
 					</version>
 					<version language="da" version="1">
@@ -496,6 +499,9 @@
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105231237</content>
 							</field>
+              <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                <content>20120105T233207:634614031275658573</content>
+              </field>
 						</fields>
 					</version>
 					<version language="da" version="1">
@@ -617,6 +623,9 @@
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105231237</content>
 							</field>
+              <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                <content>20120105T233145:634614031052195792</content>
+              </field>
 						</fields>
 					</version>
 					<version language="da" version="1">
@@ -1405,6 +1414,9 @@
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105230904</content>
 							</field>
+              <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
+                <content>20120105T220957:634613981979018967</content>
+              </field>
 						</fields>
 					</version>
 					<version language="es" version="1">

@@ -98,7 +98,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     return true;
                 }
             }
-
+            
             return false;
         }
 
@@ -295,7 +295,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             var searcher = new Searcher();
-            result = searcher.Execute<EntryItem>(query, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true).ToList();
+            result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true).ToList();
 #endif
             return result.ToArray();
         }
@@ -382,8 +382,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         public EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
             var entryIds = from entry in GetBlogEntries(blogItem) select entry.ID.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
-
+            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));                     
+            
             if (entryIds.Count() > 0)
             {
 #if FEATURE_OMS
@@ -397,7 +397,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
                 {
                     return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
-                }, new object[0]);
+                }, new object[0]); 
 #endif
                 var limitedIds = ids.Take(maxCount).ToArray();
                 return (from id in limitedIds select new EntryItem(blogItem.Database.GetItem(id))).ToArray();

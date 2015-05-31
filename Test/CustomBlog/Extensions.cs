@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Web;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.SecurityModel;
@@ -27,31 +28,49 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
             var items = testRootItem.Axes.GetDescendants();
             foreach (var item in items)
             {
+              // Ensure the item exists in this language, or find which language it does exist in
+              var wipItem = item;
+              if (wipItem.Versions.Count == 0)
+              {
+                foreach (var language in wipItem.Languages)
+                {
+                  wipItem = wipItem.Database.GetItem(wipItem.ID, language);
+                  if (wipItem.Versions.Count > 0)
+                    break;
+                }
+              }
+
+              if (wipItem.Versions.Count == 0)
+                continue;
+
                 using (new SecurityDisabler())
                 {
-                    if (item.TemplateID == Settings.BlogTemplateID)
+                  using (new EventDisabler())
+                  {
+                    if (wipItem.TemplateID == Settings.BlogTemplateID)
                     {
-                        item.ChangeTemplate(blogTemplate);
-                        using (new EditContext(item))
-                        {
-                            BlogHomeItem blogItem = item;
-                            blogItem.DefinedEntryTemplate.Field.Value = entryTemplate.InnerItem.ID.ToString();
-                            blogItem.DefinedCommentTemplate.Field.Value = commentTemplate.InnerItem.ID.ToString();
-                            blogItem.DefinedCategoryTemplate.Field.Value = categoryTemplate.InnerItem.ID.ToString();
-                        }
+                      wipItem.ChangeTemplate(blogTemplate);
+                      using (new EditContext(wipItem))
+                      {
+                        BlogHomeItem blogItem = wipItem;
+                        blogItem.DefinedEntryTemplate.Field.Value = entryTemplate.InnerItem.ID.ToString();
+                        blogItem.DefinedCommentTemplate.Field.Value = commentTemplate.InnerItem.ID.ToString();
+                        blogItem.DefinedCategoryTemplate.Field.Value = categoryTemplate.InnerItem.ID.ToString();
+                      }
                     }
-                    else if (item.TemplateID == Settings.EntryTemplateID)
+                    else if (wipItem.TemplateID == Settings.EntryTemplateID)
                     {
-                        item.ChangeTemplate(entryTemplate);
+                      wipItem.ChangeTemplate(entryTemplate);
                     }
-                    else if (item.TemplateID == Settings.CommentTemplateID)
+                    else if (wipItem.TemplateID == Settings.CommentTemplateID)
                     {
-                        item.ChangeTemplate(commentTemplate);
+                      wipItem.ChangeTemplate(commentTemplate);
                     }
-                    else if (item.TemplateID == Settings.CategoryTemplateID)
+                    else if (wipItem.TemplateID == Settings.CategoryTemplateID)
                     {
-                        item.ChangeTemplate(categoryTemplate);
+                      wipItem.ChangeTemplate(categoryTemplate);
                     }
+                  }
                 }
             }
         }

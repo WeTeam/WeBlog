@@ -35,6 +35,9 @@ namespace Sitecore.Modules.WeBlog.Test
         private Item m_comment211 = null;
         private Item m_comment212 = null;
 
+        private Item m_germanLanguageDef = null;
+        private bool m_revertLanguage = false;
+
         public CommentManager()
         {
             m_commentTemplateId = Sitecore.Configuration.Settings.GetSetting("WeBlog.CommentTemplateID");
@@ -43,6 +46,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [TestFixtureSetUp]
         public void SetUp()
         {
+            m_revertLanguage = !TestUtil.IsGermanRegistered(Sitecore.Context.Database);
+
+            if (m_revertLanguage)
+              m_germanLanguageDef = TestUtil.RegisterGermanLanaguage(Sitecore.Context.Database);
+
             // Create test content
             m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
@@ -63,7 +71,9 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment111 = m_entry11.Axes.GetDescendant("Comment1");
             m_comment112 = m_entry11.Axes.GetDescendant("Comment2");
             m_comment113 = m_entry11.Axes.GetDescendant("Comment3");
-            m_deComment111 = m_entry11.Axes.GetDescendant("de-Comment1");
+
+            var deEntry = m_entry11.Database.GetItem(m_entry11.ID, Language.Parse("de"));
+            m_deComment111 = deEntry.Axes.GetDescendant("de-Comment1");
 
             m_entry12 = m_blog1.Axes.GetDescendant("Entry2");
             m_comment121 = m_entry12.Axes.GetDescendant("Comment4");
@@ -87,6 +97,14 @@ namespace Sitecore.Modules.WeBlog.Test
                 {
 //                    m_testRoot.Delete();
                 }
+
+                if (m_revertLanguage)
+                {
+                  using (new SecurityDisabler())
+                  {
+                    m_germanLanguageDef.Delete();
+            }
+        }
             }
         }
 
@@ -362,6 +380,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentsByBlog_Blog1_Limited_ById()
         {
             var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, 4);
+          
             Assert.AreEqual(4, comments.Length);
 
             var ids = (from comment in comments
@@ -404,7 +423,9 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetEntryComments_WithLanguage_Entry11()
         {
-            var comments = new Mod.CommentManager().GetEntryComments(m_deComment111);
+          var deEntry = m_entry11.Database.GetItem(m_entry11.ID, Language.Parse("de"));
+
+          var comments = new Mod.CommentManager().GetEntryComments(deEntry);
             Assert.AreEqual(1, comments.Length);
 
             var ids = (from comment in comments

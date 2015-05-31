@@ -41,7 +41,7 @@ namespace Sitecore.Modules.WeBlog.Search.Search
 #if FEATURE_CONTENT_SEARCH
           return new SearchHits(Searcher.Search(query.Query, null, maxResults, sort), Searcher.IndexReader);
 #else
-          return new SearchHits(Searcher.Search(query.Query, sort));
+            return new SearchHits(Searcher.Search(query.Query, sort));
 #endif
         }
     }
