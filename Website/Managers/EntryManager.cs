@@ -248,7 +248,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
                     var id = Settings.EntryTemplateID;
-                    builder = builder.And(i => i.TemplateId==id);
+                    builder = builder.And(i => i.TemplateId == id);
                     // Tag
                     if (!String.IsNullOrEmpty(tag))
                     {
@@ -259,6 +259,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     {
                         builder = builder.And(PredicateController.BlogCategory(category));
                     }
+                    builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
                     if (indexresults.Any())
                     {
