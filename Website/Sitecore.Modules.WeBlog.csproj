@@ -451,7 +451,7 @@
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="!$(Configuration.Contains('sc7.0'))">
     <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
       <SubType>Designer</SubType>
     </Content>
@@ -462,6 +462,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.Search.config" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc7.0'))">
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config" />      
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
