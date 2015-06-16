@@ -257,6 +257,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                             var builder = PredicateBuilder.True<CommentResultItem>();
                             builder = builder.And(i => i.Path.Contains(item.Paths.FullPath));
                             builder = builder.And(i => i.TemplateId == Settings.CommentTemplateID);
+                            builder = builder.And(i => i.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
                             var indexresults = context.GetQueryable<CommentResultItem>().Where(builder);
                             if (indexresults.Any())
                             {

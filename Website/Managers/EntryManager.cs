@@ -98,7 +98,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -248,7 +248,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
                     var id = Settings.EntryTemplateID;
-                    builder = builder.And(i => i.TemplateId==id);
+                    builder = builder.And(i => i.TemplateId == id);
                     // Tag
                     if (!String.IsNullOrEmpty(tag))
                     {
@@ -259,6 +259,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     {
                         builder = builder.And(PredicateController.BlogCategory(category));
                     }
+                    builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
                     if (indexresults.Any())
                     {
@@ -382,8 +383,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         public EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
             var entryIds = from entry in GetBlogEntries(blogItem) select entry.ID.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));                     
-            
+            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
+
             if (entryIds.Count() > 0)
             {
 #if FEATURE_OMS
@@ -397,7 +398,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
                 {
                     return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
-                }, new object[0]); 
+                }, new object[0]);
 #endif
                 var limitedIds = ids.Take(maxCount).ToArray();
                 return (from id in limitedIds select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
