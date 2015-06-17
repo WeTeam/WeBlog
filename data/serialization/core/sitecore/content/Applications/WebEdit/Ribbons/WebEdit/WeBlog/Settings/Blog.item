@@ -10,13 +10,6 @@ template: {1DB34C92-03B0-4475-9A39-DA14E4D9D8FC}
 templatekey: Large Button
 
 ----field----
-field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
-name: __Sortorder
-key: __sortorder
-content-length: 3
-
-200
-----field----
 field: {D47ED548-84D5-4622-9886-5CC164727507}
 name: Icon
 key: icon
@@ -30,10 +23,24 @@ key: click
 content-length: 17
 
 blog:blogsettings
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+200
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 377
+
+<r>   <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">     <r id="{28D7AA23-A9A3-4ABC-9DE6-AA717F6177CD}" par="Id=EditBlogSettingsButton&amp;Click=trigger%3abutton%3aclick&amp;Command=EditBlogSettings&amp;PageCodeScriptFileName=%2fsitecore%2fshell%2fclient%2fWeBlog%2fExperienceEditor%2fCommands%2fEditBlogSettings.js" uid="{2A54193D-DB5E-4EF8-87D9-426E890A9297}" />   </d> </r>
 ----version----
 language: en
 version: 1
-revision: dfdd1dab-e650-4258-b1af-d47efa75b4ed
+revision: b06bfc79-6f43-4d41-8baf-90ccb96fb5f1
 
 ----field----
 field: {4DF6DA21-E745-444C-956E-1D4A96AB8821}
@@ -76,14 +83,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-dfdd1dab-e650-4258-b1af-d47efa75b4ed
+b06bfc79-6f43-4d41-8baf-90ccb96fb5f1
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111017T165828:634544675088019909
+20150611T212150:635696545109452656
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

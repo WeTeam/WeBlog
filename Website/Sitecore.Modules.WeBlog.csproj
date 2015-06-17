@@ -94,6 +94,9 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.ExperienceEditor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.ExperienceEditor.Speak" Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+      <HintPath>$(SitecorePath)\bin\Sitecore.ExperienceEditor.Speak.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
@@ -128,6 +131,14 @@
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
+  </ItemGroup>
+  <ItemGroup  Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+    <Compile Include="ExperienceEditor\CanExecuteWeBlogCommands.cs" />
+    <Compile Include="ExperienceEditor\IsEntryItem.cs" />
+    <Compile Include="ExperienceEditor\NewCategory.cs" />
+    <Compile Include="ExperienceEditor\NewEntry.cs" />
+    <Compile Include="ExperienceEditor\GetCurrentBlogId.cs" />
+    <Compile Include="ExperienceEditor\GenerateFieldEditorUrl.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlogSettings.cs" />
@@ -435,6 +446,12 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewCategory.js" />
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewEntry.js" />
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
+  </ItemGroup>  
   <ItemGroup>
     <Content Include="How to build.txt" />
   </ItemGroup>
@@ -462,6 +479,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.Search.config" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+    <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
