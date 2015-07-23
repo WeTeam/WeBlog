@@ -489,6 +489,7 @@
     <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />
     <CallTarget Targets="ItemBucketsConfig" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))" />
     <CallTarget Targets="ContentDeliveryConfig" />
+    <CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
   </Target>
   <Target Name="DeployToWeb">
     <!--
@@ -517,5 +518,8 @@
   </Target>
   <Target Name="ItemBucketsConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
+  </Target>
+  <Target Name="ContentSearchConfig">
+    <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.Search.config" />
   </Target>
 </Project>

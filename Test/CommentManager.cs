@@ -10,6 +10,11 @@ using Sitecore.Search;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.Maintenance;
+#endif
+
 namespace Sitecore.Modules.WeBlog.Test
 {
     [TestFixture]
@@ -52,9 +57,11 @@ namespace Sitecore.Modules.WeBlog.Test
               m_germanLanguageDef = TestUtil.RegisterGermanLanaguage(Sitecore.Context.Database);
 
             // Create test content
-            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            var template = Sitecore.Context.Database.Templates[Constants.FolderTemplate];
+
             using (new SecurityDisabler())
             {
+                m_home = Sitecore.Context.Database.GetItem(Sitecore.Constants.ContentPath).Add(ID.NewID.ToShortID().ToString(), template);
                 m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
             }
             Initialize();
@@ -84,8 +91,13 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment212 = m_entry21.Axes.GetDescendant("Comment2");
 
             // rebuild the WeBlog search index (or the comment manager won't work)
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
-            index.Rebuild();
+#if FEATURE_CONTENT_SEARCH
+          var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
+          IndexCustodian.FullRebuild(index);
+#else
+          var index = SearchManager.GetIndex(Settings.SearchIndexName);
+          index.Rebuild();
+#endif
         }
 
         [TestFixtureTearDown]
@@ -95,7 +107,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 if (m_testRoot != null)
                 {
-//                    m_testRoot.Delete();
+                    m_testRoot.Delete();
                 }
 
                 if (m_revertLanguage)

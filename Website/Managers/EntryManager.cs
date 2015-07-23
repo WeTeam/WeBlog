@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sitecore.ContentSearch.Security;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +9,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.StringExtensions;
-using Sitecore.Search;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Search;
-using Sitecore.Modules.WeBlog.Search.Crawlers;
 using System.Linq.Expressions;
 
 #if FEATURE_OMS
@@ -244,9 +242,10 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (!string.IsNullOrEmpty(indexName))
             {
 
-                using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext())
+              using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
+                
                     var id = Settings.EntryTemplateID;
                     builder = builder.And(i => i.TemplateId == id);
                     // Tag
@@ -261,6 +260,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     }
                     builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
+                
                     if (indexresults.Any())
                     {
                         result = indexresults.Select(i => new EntryItem(i.GetItem())).ToList();

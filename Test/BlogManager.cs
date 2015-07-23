@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 using NUnit.Framework;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Security.AccessControl;
 using Sitecore.SecurityModel;
@@ -28,19 +29,12 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            var template = Sitecore.Context.Database.Templates[Constants.FolderTemplate];
+            
             using (new SecurityDisabler())
             {
-                try
-                {
-                    m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
-                }
-                catch
-                {
-                    // this "catch" is used to debug issues with the Paste() method call above
-                    int y = 0;
-                    y++;
-                }
+                m_home = Sitecore.Context.Database.GetItem(Sitecore.Constants.ContentPath).Add(ID.NewID.ToShortID().ToString(), template);
+                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
                 Initialize();
 
                 // Create test user

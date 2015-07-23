@@ -13,7 +13,11 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         {
             get
             {
-                return InnerItem.Statistics.Created;
+#if FEATURE_UTC_DATE
+              return DateUtil.ToServerTime(InnerItem.Statistics.Created);
+#else
+              return InnerItem.Statistics.Created;
+#endif
             }
         }
 
