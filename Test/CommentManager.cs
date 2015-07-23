@@ -332,76 +332,70 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetCommentsByBlog_Blog1_NoLimit()
         {
             var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1, int.MaxValue);
-            Assert.AreEqual(5, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment111.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
-            Assert.Contains(m_comment121.ID, ids);
-            Assert.Contains(m_comment122.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_comment111.ID,
+              m_comment112.ID,
+              m_comment113.ID,
+              m_comment121.ID,
+              m_comment122.ID
+            }));
         }
 
         [Test]
         public void GetCommentsByBlog_Blog1_NoLimit_ByID()
         {
             var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, int.MaxValue);
-            Assert.AreEqual(5, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment111.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
-            Assert.Contains(m_comment121.ID, ids);
-            Assert.Contains(m_comment122.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_comment111.ID,
+              m_comment112.ID,
+              m_comment113.ID,
+              m_comment121.ID,
+              m_comment122.ID
+            }));
         }
 
         [Test]
         public void GetCommentsByBlog_Blog2_NoLimit()
         {
             var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog2, int.MaxValue);
-            Assert.AreEqual(2, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment211.ID, ids);
-            Assert.Contains(m_comment212.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_comment211.ID,
+              m_comment212.ID
+            }));
         }
 
         [Test]
         public void GetCommentsByBlog_Blog1_Limited()
         {
             var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1, 4);
-            Assert.AreEqual(4, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment122.ID, ids);
-            Assert.Contains(m_comment121.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_comment122.ID,
+              m_comment121.ID,
+              m_comment113.ID,
+              m_comment112.ID
+            }));
         }
 
         [Test]
         public void GetCommentsByBlog_Blog1_Limited_ById()
         {
             var comments = new Mod.CommentManager().GetCommentsByBlog(m_blog1.ID, 4);
-          
-            Assert.AreEqual(4, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment122.ID, ids);
-            Assert.Contains(m_comment121.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_comment122.ID,
+              m_comment121.ID,
+              m_comment113.ID,
+              m_comment112.ID
+            }));
         }
 
         [Test]
@@ -422,14 +416,13 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetEntryComments_Entry11()
         {
             var comments = new Mod.CommentManager().GetEntryComments(m_entry11);
-            Assert.AreEqual(3, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment111.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
-            Assert.Contains(m_comment113.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_comment111.ID,
+              m_comment112.ID,
+              m_comment113.ID
+            }));
         }
 
         [Test]

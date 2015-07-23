@@ -254,20 +254,27 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                         using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext())
                         {
-                            var builder = PredicateBuilder.True<CommentResultItem>();
-                            builder = builder.And(i => i.Path.Contains(item.Paths.FullPath));
-                            builder = builder.And(i => i.TemplateId == Settings.CommentTemplateID);
-                            builder = builder.And(i => i.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
-                            var indexresults = context.GetQueryable<CommentResultItem>().Where(builder);
+                            var indexresults = context.GetQueryable<CommentResultItem>().Where(x => 
+                              x.Paths.Contains(item.ID) &&
+                              x.TemplateId == Settings.CommentTemplateID &&
+                              x.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture) &&
+                              x.Language == item.Language.Name
+                              );
                             if (indexresults.Any())
                             {
-                                result = indexresults.Select(i => new CommentItem(i.GetItem())).ToList();
-                                result = result.Distinct().OrderBy(comment => comment.InnerItem.Statistics.Created).Take(maximumCount).ToList();
+                              if(sort)
+                                indexresults = indexresults.OrderByDescending(x => x.CreatedDate);
+                                
+                              else if (reverse)
+                                indexresults = indexresults.OrderBy(x => x.CreatedDate);
 
+                              result = indexresults.Take(maximumCount).Select(x => new CommentItem(x.GetItem())).ToList();
                             }
                         }
                     }
                     return result.ToArray();
+
+                  
 #else
                     var query = new CombinedQuery();
 
