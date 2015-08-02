@@ -9,6 +9,11 @@ using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
 
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.Maintenance;
+#endif
+
 #if FEATURE_OMS
 using Sitecore.Analytics;
 #elif FEATURE_DMS
@@ -21,38 +26,37 @@ namespace Sitecore.Modules.WeBlog.Test
     [Category("EntryManager")]
     public class EntryManager : UnitTestBase
     {
-        private Item m_home = null;
-        private Item m_testRoot = null;
-        private Item m_blog1 = null;
-        private Item m_entry11 = null;
-        private Item m_entry12 = null;
-        private Item m_entry13 = null;
-        private Item m_category12 = null;
-        private Item m_category13 = null;
-        private Item m_blog2 = null;
-        private Item m_entry21 = null;
-        private Item m_entry22 = null;
-        private Item m_entry23 = null;
-        private Item m_category21 = null;
-        private Item m_category22 = null;
-        private Item m_comment1 = null;
+        protected Item m_testRoot = null;
+        protected Item m_blog1 = null;
+        protected Item m_entry11 = null;
+        protected Item m_entry12 = null;
+        protected Item m_entry13 = null;
+        protected Item m_category12 = null;
+        protected Item m_category13 = null;
+        protected Item m_blog2 = null;
+        protected Item m_entry21 = null;
+        protected Item m_entry22 = null;
+        protected Item m_entry23 = null;
+        protected Item m_category21 = null;
+        protected Item m_category22 = null;
+        protected Item m_comment1 = null;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
             // Create test content
-            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entry manager content.xml")), false, PasteMode.Overwrite);
+              m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entry manager content.xml")), false, PasteMode.Overwrite);
             }
+
             Initialize();
         }
 
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_home.Axes.GetChild("weblog testroot");
+            m_testRoot = m_testContentRoot.Axes.GetChild("weblog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
@@ -74,8 +78,15 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment1 = m_entry21.Axes.GetDescendant("comment1");
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
-            index.Rebuild();
+#if FEATURE_CONTENT_SEARCH
+            var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
+          index.Rebuild();
+          //IndexCustodian.FullRebuild(index);
+
+#else
+          var index = SearchManager.GetIndex(Settings.SearchIndexName);
+          index.Rebuild();
+#endif
 
 #if FEATURE_OMS
           if (Analytics.Configuration.AnalyticsSettings.Enabled)
@@ -106,96 +117,93 @@ namespace Sitecore.Modules.WeBlog.Test
 #endif
         }
 
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            using (new SecurityDisabler())
-            {
-                if (m_testRoot != null)
-                    m_testRoot.Delete();
-            }
-        }
-
         [Test]
         public void GetBlogEntries_Blog1()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, null)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, null, (DateTime?)null);
 
-            Assert.AreEqual(3, entryIds.Length);
-            Assert.Contains(m_entry11.ID, entryIds);
-            Assert.Contains(m_entry12.ID, entryIds);
-            Assert.Contains(m_entry13.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry11.ID,
+            m_entry12.ID,
+            m_entry13.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_Blog2()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog2, int.MaxValue, null, null)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog2, int.MaxValue, null, null, (DateTime?)null);
 
-            Assert.AreEqual(3, entryIds.Length);
-            Assert.Contains(m_entry21.ID, entryIds);
-            Assert.Contains(m_entry22.ID, entryIds);
-            Assert.Contains(m_entry23.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry21.ID,
+            m_entry22.ID,
+            m_entry23.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_Blog1_WithLimit()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, 2, null, null)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, 2, null, null, (DateTime?)null);
 
-            Assert.AreEqual(2, entryIds.Length);
-            Assert.Contains(m_entry11.ID, entryIds);
-            Assert.Contains(m_entry13.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry11.ID,
+            m_entry13.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_Blog1_WithTag()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tagb", null)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tagb", null, (DateTime?)null);
 
-            Assert.AreEqual(2, entryIds.Length);
-            Assert.Contains(m_entry11.ID, entryIds);
-            Assert.Contains(m_entry12.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry11.ID,
+            m_entry12.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_TagWithSpace()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tag with space", null)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tag with space", null, (DateTime?)null);
 
-            Assert.AreEqual(1, entryIds.Length);
-            Assert.Contains(m_entry13.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry13.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_Blog1_WithCategory()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, m_category13.Name)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, m_category13.Name, (DateTime?)null);
 
-            Assert.AreEqual(1, entryIds.Length);
-            Assert.Contains(m_entry13.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry13.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_Blog1_WithLimitAndCategory()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, 1, null, m_category12.Name)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, 1, null, m_category12.Name, (DateTime?)null);
 
-            Assert.AreEqual(1, entryIds.Length);
-            Assert.Contains(m_entry13.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry13.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntries_Blog1_EntryItem()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_entry11, int.MaxValue, null, null)
+            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_entry11, int.MaxValue, null, null, (DateTime?)null)
                             select entry.ID).ToArray();
 
             //entry is part of blog with 3 items
@@ -205,7 +213,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithZeroLimit()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, 0, null, null)
+            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, 0, null, null, (DateTime?)null)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
@@ -214,7 +222,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithNegativeLimit()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, -7, null, null)
+            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, -7, null, null, (DateTime?)null)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
@@ -223,7 +231,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithInvalidCategory()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, "bler")
+            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, "bler", (DateTime?)null)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
@@ -232,7 +240,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithInvalidTag()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "bler", null)
+            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "bler", null, (DateTime?)null)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
@@ -241,23 +249,25 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntryByCategorie_Blog2_Category1_ById()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.ID)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.ID);
 
-            Assert.AreEqual(2, entryIds.Length);
-            Assert.Contains(m_entry21.ID, entryIds);
-            Assert.Contains(m_entry22.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry21.ID,
+            m_entry22.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntryByCategorie_Blog2_Category1()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.Name)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.Name);
 
-            Assert.AreEqual(2, entryIds.Length);
-            Assert.Contains(m_entry21.ID, entryIds);
-            Assert.Contains(m_entry22.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry21.ID,
+            m_entry22.ID
+          }));
         }
 
         [Test]
@@ -272,22 +282,24 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_Blog1_March2011()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 3, 2011)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 3, 2011);
 
-            Assert.AreEqual(2, entryIds.Length);
-            Assert.Contains(m_entry11.ID, entryIds);
-            Assert.Contains(m_entry12.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry11.ID,
+            m_entry12.ID
+          }));
         }
 
         [Test]
         public void GetBlogEntriesByMonthAndYear_Blog1_April2011()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 4, 2011)
-                            select entry.ID).ToArray();
+          var entries = new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 4, 2011);
 
-            Assert.AreEqual(1, entryIds.Length);
-            Assert.Contains(m_entry13.ID, entryIds);
+          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_entry13.ID
+          }));
         }
 
         [Test]

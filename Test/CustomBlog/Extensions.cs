@@ -10,7 +10,7 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
 {
     public static class Extensions
     {
-        public static void SetupCustomBlogs(this Database database, string testRoot)
+        public static void SetupCustomBlogs(this Database database, Item testRoot)
         {
             var templateRoot = database.GetItem("/sitecore/templates/user defined");
             using (new SecurityDisabler())
@@ -18,14 +18,12 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
                 templateRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\custom blog templates.xml")), false, PasteMode.Overwrite);
             }
 
-            var home = database.GetItem("/sitecore/content/home");
-            var testRootItem = home.Axes.GetChild(testRoot);
             var blogTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomBlog");
             var entryTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomEntry");
             var commentTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomComment");
             var categoryTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomCategory");
 
-            var items = testRootItem.Axes.GetDescendants();
+            var items = testRoot.Axes.GetDescendants();
             foreach (var item in items)
             {
               // Ensure the item exists in this language, or find which language it does exist in

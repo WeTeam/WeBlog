@@ -129,7 +129,6 @@
     <Compile Include="CustomBlog\BlogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CommentManager.cs" />
-    <Compile Include="CommentManagerPerformance.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CustomBlog\CategoryManager.cs" />
     <Compile Include="CustomBlog\CommentManager.cs" />
@@ -137,7 +136,6 @@
     <Compile Include="CustomBlog\Extensions.cs" />
     <Compile Include="CustomBlog\TagManager.cs" />
     <Compile Include="EntryManager.cs" />
-    <Compile Include="EntryManagerPerformance.cs" />
     <Compile Include="MetaBlogApi.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="Pipelines\GetSummary\AutoGenerateTest.cs" />
@@ -180,11 +178,11 @@
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))"/>
+    <CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
   </Target>
   <Target Name="ContentSearchConfig">
     <!-- This patch file patches the older search config -->
-    <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.Test.config"/>
+    <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.Test.config" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>

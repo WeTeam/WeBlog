@@ -63,8 +63,7 @@ namespace Codeflood.Testing
             {
                 for (int i = 0; i < cblCategories.Items.Count; i++)
                 {
-                    if (!cblCategories.Items[i].Text.ToLower().Contains("performance"))
-                        categories.Add(cblCategories.Items[i].Value);
+                    categories.Add(cblCategories.Items[i].Value);
                 }
             }
 

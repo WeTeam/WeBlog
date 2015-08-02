@@ -1,4 +1,6 @@
-﻿using Sitecore.ContentSearch.Security;
+﻿using Sitecore.Shell.Applications.Xaml;
+using System.Diagnostics;
+using Sitecore.ContentSearch.Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -106,7 +108,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the current blog</returns>
         public EntryItem[] GetBlogEntries()
         {
-            return GetBlogEntries(Context.Item, int.MaxValue, null, null);
+            return GetBlogEntries(Context.Item, int.MaxValue, null, null, (DateTime?)null);
         }
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the current blog</returns>
         public EntryItem[] GetBlogEntries(int maxNumber)
         {
-            return GetBlogEntries(Context.Item, maxNumber, null, null);
+            return GetBlogEntries(Context.Item, maxNumber, null, null, (DateTime?)null);
         }
 
         /// <summary>
@@ -126,7 +128,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the current blog containing the given tag</returns>
         public EntryItem[] GetBlogEntries(string tag)
         {
-            return GetBlogEntries(Context.Item, int.MaxValue, tag, null);
+            return GetBlogEntries(Context.Item, int.MaxValue, tag, null, (DateTime?)null);
         }
 
         /// <summary>
@@ -137,7 +139,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the current blog containing the given tag</returns>
         public EntryItem[] GetBlogEntries(int maxNumber, string tag)
         {
-            return GetBlogEntries(Context.Item, maxNumber, tag, null);
+            return GetBlogEntries(Context.Item, maxNumber, tag, null, (DateTime?)null);
         }
 
         /// <summary>
@@ -147,7 +149,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The entries for the current blog</returns>
         public EntryItem[] GetBlogEntries(Item blogItem)
         {
-            return GetBlogEntries(blogItem, int.MaxValue, null, null);
+            return GetBlogEntries(blogItem, int.MaxValue, null, null, (DateTime?)null);
         }
 
         /// <summary>
@@ -172,7 +174,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var blog = database.GetItem(blogID);
             if (blog != null)
-                return GetBlogEntries(blog, maxNumber, null, null);
+                return GetBlogEntries(blog, maxNumber, null, null, (DateTime?)null);
             else
                 return new EntryItem[0];
         }
@@ -201,7 +203,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             var blog = database.GetItem(blogID);
             if (blog != null)
-                return GetBlogEntries(blog, maxNumber, tag, null);
+                return GetBlogEntries(blog, maxNumber, tag, null, (DateTime?)null);
             else
                 return new EntryItem[0];
         }
@@ -214,7 +216,41 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="tag">A tag the entry must contain</param>
         /// <param name="category">A category the entry must contain</param>
         /// <returns></returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?) instead")]
         public EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null)
+        {
+          if(datePrefix.Length != 6)
+              return new EntryItem[0];
+
+          // First four digits should be year
+          var yearStr = datePrefix.Substring(0, 4);
+          var year = 0;
+          if(!int.TryParse(yearStr, out year))
+              return new EntryItem[0];
+
+          // Next two digits should be month
+          var monthStr = datePrefix.Substring(4, 2);
+          var month = 0;
+          if(!int.TryParse(monthStr, out month))
+              return new EntryItem[0];
+
+          if (month >= 13)
+                return new EntryItem[0];
+
+            return GetBlogEntries(blog, Int32.MaxValue, null, null, new DateTime(year, month, 1));
+        }
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blog">The blog item to get the entries for</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <param name="category">A category the entry must contain</param>
+        /// <param name="minimumDate">The minimum date for entries</param>
+        /// <param name="maximumDate">The maximum date for the entries</param>
+        /// <returns></returns>
+        public EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, DateTime? minimumDate = null, DateTime? maximumDate = null)
         {
             if (blog == null || maxNumber <= 0)
             {
@@ -248,17 +284,37 @@ namespace Sitecore.Modules.WeBlog.Managers
                 
                     var id = Settings.EntryTemplateID;
                     builder = builder.And(i => i.TemplateId == id);
+                    builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
+                    builder = builder.And(i => i.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture));
+                    builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
+
                     // Tag
                     if (!String.IsNullOrEmpty(tag))
                     {
-                        builder = builder.And(PredicateController.BlogTags(tag));
+                        //builder = builder.And(PredicateController.BlogTags(tag));
+                        builder = builder.And(i => i.Tags.Contains(tag));
                     }
+
                     // Categories
                     if (!string.IsNullOrEmpty(category))
                     {
-                        builder = builder.And(PredicateController.BlogCategory(category));
+                      var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, category);
+
+                      // If the category is unknown, don't return any results.
+                      if (categoryItem == null)
+                          return new EntryItem[0];
+
+                      var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+                      builder = builder.And(i => i.Category.Contains(normalizedID));
+                        
                     }
-                    builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
+
+                    if (minimumDate != null)
+                      builder = builder.And(i => i.CreatedDate >= minimumDate);
+
+                    if(maximumDate != null)
+                      builder = builder.And(i => i.CreatedDate < maximumDate);
+                    
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
                 
                     if (indexresults.Any())
@@ -284,16 +340,17 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(blog, category);
                 ID id = ID.Null;
 
-                if (categoryItem != null)
-                    id = categoryItem.ID;
+                // If the category is unknown, don't return any results.
+                if (categoryItem == null)
+                    return new EntryItem[0];
+
+                id = categoryItem.ID;
                 
                 query.Add(new FieldQuery(Constants.Index.Fields.Category, id.ToShortID().ToString().ToLower()), QueryOccurance.Must);
             }
 
-            if (!string.IsNullOrEmpty(datePrefix))
-            {
-                query.Add(new FieldQuery(Constants.Index.Fields.Created, datePrefix + "*"), QueryOccurance.Must);
-            }
+            if (minimumDate != null)
+                query.Add(new FieldQuery(Constants.Index.Fields.Created, minimumDate.Year.ToString() + minimumDate.Month.ToString() + "*"), QueryOccurance.Must);
 
             var searcher = new Searcher();
             result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true).ToList();
@@ -323,14 +380,19 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (month >= 13)
                 return new EntryItem[0];
 
-            var monthStr = month.ToString();
+            /*var monthStr = month.ToString();
             if (monthStr.Length == 1)
             {
                 monthStr = "0" + monthStr;
             }
             var datePrefix = year.ToString() + monthStr;
 
-            return GetBlogEntries(blog, Int32.MaxValue, null, null, datePrefix);
+            return GetBlogEntries(blog, Int32.MaxValue, null, null, datePrefix);*/
+
+            var minDate = new DateTime(year, month, 1);
+            var maxDate = minDate.AddMonths(1);
+
+            return GetBlogEntries(blog, Int32.MaxValue, null, null, minDate, maxDate);
         }
 
         /// <summary>
@@ -369,7 +431,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var categoryItem = Sitecore.Context.Database.GetItem(categoryId);
 
             if (blogItem != null && categoryItem != null)
-                return GetBlogEntries(blogItem, int.MaxValue, string.Empty, categoryItem.Name);
+                return GetBlogEntries(blogItem, int.MaxValue, string.Empty, categoryItem.Name, (DateTime?)null);
             else
                 return new EntryItem[0];
         }
@@ -466,6 +528,30 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             return postItemList.ToArray();
         }
+
+/*#if FEATURE_CONTENT_SEARCH
+        
+        // Blog tag
+        protected Expression<Func<EntryResultItem, bool>> BlogTags(string tag)
+        {
+            var predicate = PredicateBuilder.False<EntryResultItem>();
+            predicate = predicate.Or(p => p.Tags.Contains(tag));
+            return predicate;
+        }
+
+        protected Expression<Func<EntryResultItem, bool>> BlogCategory(string category)
+        {
+            Item categoryItem = Sitecore.Context.Item;
+            if (categoryItem != null && categoryItem.TemplateIsOrBasedOn(Settings.CategoryTemplateID))
+            {
+              string normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+              var predicate = PredicateBuilder.False<EntryResultItem>();
+              predicate = predicate.Or(p => p.Category.Contains(normalizedID));
+              return predicate;
+            }
+            return null;
+        }
+#endif*/
 
         #region Obsolete Methods
         /// <summary>
@@ -578,29 +664,4 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
         #endregion
     }
-#if FEATURE_CONTENT_SEARCH
-    public class PredicateController
-    {
-        // Blog tag
-        public static Expression<Func<EntryResultItem, bool>> BlogTags(string tag)
-        {
-            var predicate = PredicateBuilder.False<EntryResultItem>();
-            predicate = predicate.Or(p => p.Tags.Contains(tag));
-            return predicate;
-        }
-
-        internal static Expression<Func<EntryResultItem, bool>> BlogCategory(string category)
-        {
-            Item categoryItem = Sitecore.Context.Item;
-            if (categoryItem != null && categoryItem.TemplateIsOrBasedOn(Settings.CategoryTemplateID))
-            {
-                string normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
-                var predicate = PredicateBuilder.False<EntryResultItem>();
-                predicate = predicate.Or(p => p.Category.Contains(normalizedID));
-                return predicate;
-            }
-            return null;
-        }
-    }
-#endif
 }

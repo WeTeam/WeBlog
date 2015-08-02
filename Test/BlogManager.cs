@@ -17,7 +17,6 @@ namespace Sitecore.Modules.WeBlog.Test
     {
         private const string TESTUSERNAME = "test1";
 
-        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_blog2 = null;
@@ -29,12 +28,9 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            var template = Sitecore.Context.Database.Templates[Constants.FolderTemplate];
-            
             using (new SecurityDisabler())
             {
-                m_home = Sitecore.Context.Database.GetItem(Sitecore.Constants.ContentPath).Add(ID.NewID.ToShortID().ToString(), template);
-                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
+                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
                 Initialize();
 
                 // Create test user
@@ -58,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Test
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_home.Axes.GetChild("weblog testroot");
+            m_testRoot = m_testContentRoot.Axes.GetChild("weblog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
@@ -71,14 +67,6 @@ namespace Sitecore.Modules.WeBlog.Test
         [TestFixtureTearDown]
         public void TestFixtureTearDown()
         {
-            using (new SecurityDisabler())
-            {
-                if (m_testRoot != null)
-                {
-                    m_testRoot.Delete();
-                }
-            }
-
             Membership.DeleteUser("sitecore\\" + TESTUSERNAME);
         }
 

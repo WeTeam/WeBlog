@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
@@ -114,7 +115,20 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="tag">A tag the entry must contain</param>
         /// <param name="category">A category the entry must contain</param>
         /// <returns></returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead")]
         EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null);
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blog">The blog item to get the entries for</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <param name="category">A category the entry must contain</param>
+        /// <param name="minimumDate">The minimum date for entries</param>
+        /// <param name="maximumDate">The maximum date for the entries</param>
+        /// <returns></returns>
+        EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, DateTime? minimumDate = null, DateTime? maximumDate = null);
 
         /// <summary>
         /// Gets the blog entries for a particular month and year.

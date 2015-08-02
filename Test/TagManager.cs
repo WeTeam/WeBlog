@@ -14,29 +14,28 @@ namespace Sitecore.Modules.WeBlog.Test
     [Category("TagManager")]
     public class TagManager : UnitTestBase
     {
-        Item m_home = null;
-        Item m_testRoot = null;
-        Item m_blog1 = null;
-        Item m_entry1 = null;
-        Item m_entry2 = null;
-        Item m_entry3 = null;
+        protected Item m_testRoot = null;
+        protected Item m_blog1 = null;
+        protected Item m_entry1 = null;
+        protected Item m_entry2 = null;
+        protected Item m_entry3 = null;
 
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
             // Create test content
-            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
+              m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
             }
+
             Initialize();
         }
 
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_home.Axes.GetChild("blog testroot");
+            m_testRoot = m_testContentRoot.Axes.GetChild("blog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("myblog");
 
             m_entry1 = m_blog1.Axes.GetDescendant("Entry1");
@@ -46,18 +45,6 @@ namespace Sitecore.Modules.WeBlog.Test
             // rebuild the WeBlog search index (or some aspects of TagManager won't work)
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            if (m_testRoot != null)
-            {
-                using (new SecurityDisabler())
-                {
-                    m_testRoot.Delete();
-                }
-            }
         }
 
         [Test]

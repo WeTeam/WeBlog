@@ -41,7 +41,7 @@
 		</asp:GridView>
 		<hr />
 		<h2>Category Filter</h2>
-		If no categories are selected the entire suite will run excluding the performance tests.
+		If no categories are selected the entire suite will run.
 		<asp:CheckBoxList runat="server" ID="cblCategories" RepeatColumns="8" RepeatDirection="Horizontal" RepeatLayout="Table" />
 		<asp:Button runat="server" ID="btnRun" Text="Run" OnClick="RunClick" /><br />
     </div>

@@ -34,14 +34,12 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            var db = Sitecore.Configuration.Factory.GetDatabase("master");
-            var home = db.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
+                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
 
                 // Retrieve created content items
-                m_testRoot = home.Axes.GetChild("test content");
+                m_testRoot = m_testContentRoot.Axes.GetChild("test content");
                 m_blog1 = m_testRoot.Axes.GetChild("blog1");
                 m_blog2 = m_testRoot.Axes.GetChild("blog2");
                 m_blog3 = m_testRoot.Axes.GetChild("blog3");
@@ -103,8 +101,6 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 using (new SecurityDisabler())
                 {
-                    m_testRoot.Delete();
-
                     // Publish to remove test content from the web DB
                     ContentHelper.PublishItem(m_testRoot.Parent);
                 }

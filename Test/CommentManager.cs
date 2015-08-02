@@ -24,7 +24,6 @@ namespace Sitecore.Modules.WeBlog.Test
         private string FOLDER_TEMPLATE = "common/folder";
         private readonly string m_commentTemplateId;
 
-        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_entry11 = null;
@@ -57,20 +56,18 @@ namespace Sitecore.Modules.WeBlog.Test
               m_germanLanguageDef = TestUtil.RegisterGermanLanaguage(Sitecore.Context.Database);
 
             // Create test content
-            var template = Sitecore.Context.Database.Templates[Constants.FolderTemplate];
-
             using (new SecurityDisabler())
-            {
-                m_home = Sitecore.Context.Database.GetItem(Sitecore.Constants.ContentPath).Add(ID.NewID.ToShortID().ToString(), template);
-                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
+            {                
+                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
             }
+
             Initialize();
         }
 
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_home.Axes.GetChild("blog test root");
+            m_testRoot = m_testContentRoot.Axes.GetChild("blog test root");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 
@@ -93,7 +90,8 @@ namespace Sitecore.Modules.WeBlog.Test
             // rebuild the WeBlog search index (or the comment manager won't work)
 #if FEATURE_CONTENT_SEARCH
           var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
-          IndexCustodian.FullRebuild(index);
+//          IndexCustodian.FullRebuild(index);
+          index.Rebuild();
 #else
           var index = SearchManager.GetIndex(Settings.SearchIndexName);
           index.Rebuild();
@@ -105,18 +103,13 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             using (new SecurityDisabler())
             {
-                if (m_testRoot != null)
-                {
-                    m_testRoot.Delete();
-                }
-
                 if (m_revertLanguage)
                 {
-                  using (new SecurityDisabler())
-                  {
-                    m_germanLanguageDef.Delete();
-            }
-        }
+                    using (new SecurityDisabler())
+                    {
+                        m_germanLanguageDef.Delete();
+                    }
+                }
             }
         }
 

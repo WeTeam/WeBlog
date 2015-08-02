@@ -14,7 +14,6 @@ namespace Sitecore.Modules.WeBlog.Test
     [Category("CategoryManager")]
     public class CategoryManager : UnitTestBase
     {
-        private Item m_home = null;
         private Item m_testRoot = null;
         private Item m_blog1 = null;
         private Item m_categoryRoot = null;
@@ -30,11 +29,10 @@ namespace Sitecore.Modules.WeBlog.Test
         public void TestFixtureSetUp()
         {
             // Create test content
-            m_home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
                 // Don't change IDs as blog item references category by ID
-                m_home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
+                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
             }
             Initialize();
         }
@@ -42,7 +40,7 @@ namespace Sitecore.Modules.WeBlog.Test
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_home.Axes.GetChild("blog test root");
+            m_testRoot = m_testContentRoot.Axes.GetChild("blog test root");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
 
             m_categoryRoot = m_blog1.Axes.GetChild("categories");
@@ -55,16 +53,6 @@ namespace Sitecore.Modules.WeBlog.Test
             m_entry2 = m_blog1.Axes.GetDescendant("entry2");
 
             m_comment1 = m_entry1.Axes.GetDescendant("comment1");
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            using (new SecurityDisabler())
-            {
-                if (m_testRoot != null)
-                    m_testRoot.Delete();
-            }
         }
 
         [Test]
