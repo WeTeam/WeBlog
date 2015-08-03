@@ -80,12 +80,11 @@ namespace Sitecore.Modules.WeBlog.Test
             // rebuild the WeBlog search index (or the entry manager won't work)
 #if FEATURE_CONTENT_SEARCH
             var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
-          index.Rebuild();
-          //IndexCustodian.FullRebuild(index);
+            index.Rebuild();
 
 #else
-          var index = SearchManager.GetIndex(Settings.SearchIndexName);
-          index.Rebuild();
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            index.Rebuild();
 #endif
 
 #if FEATURE_OMS

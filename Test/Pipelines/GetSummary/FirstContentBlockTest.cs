@@ -7,7 +7,7 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
 {
     [TestFixture]
     [Category("GetSummary FirstContentBlock")]
-    public class FirstContentBlockTest
+    public class FirstContentBlockTest : UnitTestBase
     {
         Item m_testRoot = null;
         Item m_contentContainsHr = null;
@@ -18,29 +18,16 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
             var folderTemplate = Sitecore.Context.Database.GetTemplate(Constants.FolderTemplate);
             var template = Sitecore.Context.Database.GetTemplate(Constants.EntryTemplate);
 
             using (new SecurityDisabler())
             {
-                m_testRoot = home.Add("test root", folderTemplate);
+                m_testRoot = m_testContentRoot.Add("test root", folderTemplate);
                 m_contentContainsHr = CreateTestContentItem(m_testRoot, template, "contains hr", "Lorem ipsum<hr/> dolor sit amet");
                 m_contentContainsSpan = CreateTestContentItem(m_testRoot, template, "contains span", "Nullam et arcu dui, in pharetra diam. In vitae ante ac orci mollis egestas a <span>vitae nunc</span>.");
                 m_contentNoTags = CreateTestContentItem(m_testRoot, template, "no tags", "Lorem ipsum dolor sit amet");
                 m_contentSurroundingTag = CreateTestContentItem(m_testRoot, template, "surrounding tag", "<div>Lorem ipsum<hr/> dolor sit amet</div>");
-            }
-        }
-
-        [TestFixtureTearDown]
-        public void TestFixtureTearDown()
-        {
-            if (m_testRoot != null)
-            {
-                using (new SecurityDisabler())
-                {
-                    m_testRoot.Delete();
-                }
             }
         }
 

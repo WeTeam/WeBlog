@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using CookComputing.XmlRpc;
 using NUnit.Framework;
+using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Search;
@@ -87,8 +88,13 @@ namespace Sitecore.Modules.WeBlog.Test
                 ContentHelper.PublishItemAndRequiredAncestors(entry12, Sitecore.Configuration.Factory.GetDatabase("web"));
 
                 // Rebuild the search index to ensure all manager calls work as expected
+#if FEATURE_CONTENT_SEARCH
+                var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
+                index.Rebuild();
+#else
                 var index = SearchManager.GetIndex(Settings.SearchIndexName);
                 index.Rebuild();
+#endif
             }
 
             m_api = new Mod.MetaBlogApi();
@@ -244,7 +250,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate);
+                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate.ToLocalTime());
             }
             finally
             {
@@ -295,7 +301,10 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 Assert.AreEqual("the title", newItem["title"]);
                 Assert.AreEqual("updated", newItem["content"]);
-                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate);
+
+              //var expectedDate = newItem.Publishing.PublishDate.ToLocalTime();
+
+                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate.ToLocalTime());
             }
             finally
             {
