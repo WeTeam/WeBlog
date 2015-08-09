@@ -18,16 +18,12 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            var folderTemplate = Sitecore.Context.Database.GetTemplate(Constants.FolderTemplate);
-            var template = Sitecore.Context.Database.GetTemplate(Constants.EntryTemplate);
-
             using (new SecurityDisabler())
             {
-                m_testRoot = m_testContentRoot.Add("test root", folderTemplate);
-                m_contentContainsHr = CreateTestContentItem(m_testRoot, template, "contains hr", "Lorem ipsum<hr/> dolor sit amet");
-                m_contentContainsSpan = CreateTestContentItem(m_testRoot, template, "contains span", "Nullam et arcu dui, in pharetra diam. In vitae ante ac orci mollis egestas a <span>vitae nunc</span>.");
-                m_contentNoTags = CreateTestContentItem(m_testRoot, template, "no tags", "Lorem ipsum dolor sit amet");
-                m_contentSurroundingTag = CreateTestContentItem(m_testRoot, template, "surrounding tag", "<div>Lorem ipsum<hr/> dolor sit amet</div>");
+              m_contentContainsHr = CreateTestContentItem(m_testContentRoot, "contains hr", "Lorem ipsum<hr/> dolor sit amet");
+              m_contentContainsSpan = CreateTestContentItem(m_testContentRoot, "contains span", "Nullam et arcu dui, in pharetra diam. In vitae ante ac orci mollis egestas a <span>vitae nunc</span>.");
+              m_contentNoTags = CreateTestContentItem(m_testContentRoot, "no tags", "Lorem ipsum dolor sit amet");
+              m_contentSurroundingTag = CreateTestContentItem(m_testContentRoot, "surrounding tag", "<div>Lorem ipsum<hr/> dolor sit amet</div>");
             }
         }
 
@@ -35,6 +31,7 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
         public void ContainsSelfClosingTag()
         {
             var procesor = new FirstContentBlock();
+            procesor.FieldName = "Text";
             procesor.XPath = "//hr";
 
             var args = new GetSummaryArgs();
@@ -49,6 +46,7 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
         public void ContainsSurroundingTag()
         {
             var procesor = new FirstContentBlock();
+            procesor.FieldName = "Text";
             procesor.XPath = "//span";
 
             var args = new GetSummaryArgs();
@@ -63,6 +61,7 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
         public void ContainsNoTag()
         {
             var procesor = new FirstContentBlock();
+            procesor.FieldName = "Text";
             procesor.XPath = "//hr";
 
             var args = new GetSummaryArgs();
@@ -77,6 +76,7 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
         public void ContainsCutTag()
         {
             var procesor = new FirstContentBlock();
+            procesor.FieldName = "Text";
             procesor.XPath = "//hr";
 
             var args = new GetSummaryArgs();
@@ -87,11 +87,13 @@ namespace Sitecore.Modules.WeBlog.Test.Pipelines.GetSummary
             Assert.AreEqual("<div>Lorem ipsum</div>", args.Summary);
         }
 
-        private Item CreateTestContentItem(Item item, TemplateItem template, string name, string content)
+        private Item CreateTestContentItem(Item item, string name, string content)
         {
+            var template = item.Database.Templates["sample/sample item"];
+
             var child = item.Add(name, template);
             child.Editing.BeginEdit();
-            child["content"] = content;
+            child["text"] = content;
             child.Editing.EndEdit();
 
             return child;
