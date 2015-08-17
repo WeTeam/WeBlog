@@ -64,8 +64,14 @@
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MSCaptcha">
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))">
       <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.5'))">
+      <HintPath>..\Dependencies\Third-party\WFFM 7.5\MSCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
+      <HintPath>..\Dependencies\Third-party\WFFM 8.0\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="RadEditor.Net2">
       <HintPath>$(SitecorePath)\bin\RadEditor.Net2.dll</HintPath>
@@ -337,7 +343,9 @@
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Pipelines\CaptchaProcessor.cs" />
+    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))"/>
+    <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))"/>
+    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0'))"/>
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
     <Compile Include="Pipelines\CreateComment\AkismetSpamCheck.cs" />
     <Compile Include="Pipelines\CreateComment\CreateCommentItem.cs" />
@@ -461,7 +469,7 @@
     <Content Include="App_Config\Include\WeBlog.Search.config" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc7.0'))">
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config" />      
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

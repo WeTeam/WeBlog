@@ -2,12 +2,15 @@
 using System.Linq;
 using System.Web;
 using NUnit.Framework;
-using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Search;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
+
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Test
 {

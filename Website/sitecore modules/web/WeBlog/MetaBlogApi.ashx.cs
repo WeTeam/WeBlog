@@ -248,7 +248,7 @@ namespace Sitecore.Modules.WeBlog
                     rpcstruct.Add("title", entry.Title.Raw);
                     rpcstruct.Add("link", entry.AbsoluteUrl);
                     rpcstruct.Add("description", entry.Content.Text);
-                    rpcstruct.Add("pubDate", entry.InnerItem.Statistics.Created.ToString());
+                    rpcstruct.Add("pubDate", entry.EntryDate.DateTime);
                     rpcstruct.Add("guid", entry.ID.ToString());
                     rpcstruct.Add("postid", entry.ID.ToString());
                     rpcstruct.Add("keywords", entry.Tags.Raw);

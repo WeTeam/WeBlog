@@ -20,7 +20,7 @@
 				<content>20120105T220055</content>
 			</field>
 			<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-				<content>20120105T220055:634613976554928726</content>
+				<content>20120105T220055</content>
 			</field>
 			<field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
 				<content>sitecore\admin</content>
@@ -64,10 +64,10 @@
 					<content>f65ff5e4-17d3-4509-a3ea-c36830bc6bd0</content>
 				</field>
 				<field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-					<content>20120105T220905:634613981455879045</content>
+					<content>20120105T220905</content>
 				</field>
 				<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-					<content>20120105T230905:634614017455508106</content>
+					<content>20120105T230905</content>
 				</field>
 				<field tfid="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" key="__security" type="security">
 					<content>au|sitecore\user1|p*|+item:write|</content>
@@ -99,7 +99,7 @@
 					<content>sitecore\admin</content>
 				</field>
 				<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-					<content>20120105T220830:634613981102758847</content>
+					<content>20120105T220830</content>
 				</field>
 				<field tfid="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" key="__security" type="security">
 					<content>au|sitecore\user1|p*|+item:write|</content>
@@ -223,7 +223,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T232616:634614027768437972</content>
+						<content>20120105T232616</content>
 					</field>
 					<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 						<content>-2012</content>
@@ -316,7 +316,7 @@
 							<content>11790a07-b7a0-47d0-bfd9-69b41ad164d8</content>
 						</field>
 						<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-							<content>20120105T232616:634614027768807993</content>
+							<content>20120105T232616</content>
 						</field>
 						<field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
 							<content>sitecore\admin</content>
@@ -370,13 +370,13 @@
 								<content>Entry13</content>
 							</field>
 							<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-								<content>20120105T231237:634614019578909557</content>
+								<content>20120105T231237</content>
 							</field>
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105232617</content>
 							</field>
               <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                <content>20120105T231237:634614019578909557</content>
+                <content>20120107T231237</content>
               </field>
 						</fields>
 					</version>
@@ -494,13 +494,13 @@
 								<content>Entry11</content>
 							</field>
 							<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-								<content>20120105T233207:634614031275658573</content>
+								<content>20120105T233207</content>
 							</field>
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105231237</content>
 							</field>
               <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                <content>20120105T233207:634614031275658573</content>
+                <content>20120105T233207</content>
               </field>
 						</fields>
 					</version>
@@ -618,13 +618,13 @@
 								<content>Entry12</content>
 							</field>
 							<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-								<content>20120105T233145:634614031052195792</content>
+								<content>20120105T233145</content>
 							</field>
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105231237</content>
 							</field>
               <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                <content>20120105T233145:634614031052195792</content>
+                <content>20120106T233145</content>
               </field>
 						</fields>
 					</version>
@@ -761,7 +761,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T220830:634613981104368939</content>
+						<content>20120105T220830</content>
 					</field>
 					<field tfid="{1172F251-DAD4-4EFB-A329-0C63500E4F1E}" key="__masters" type="TreelistEx">
 						<content>{61FF8D49-90D7-4E59-878D-DF6E03400D3B}</content>
@@ -849,7 +849,7 @@
 							<content>sitecore\admin</content>
 						</field>
 						<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-							<content>20120105T220842:634613981220935607</content>
+							<content>20120105T220842</content>
 						</field>
 						<field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
 							<content>Category11</content>
@@ -906,7 +906,7 @@
 							<content>sitecore\admin</content>
 						</field>
 						<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-							<content>20120105T220848:634613981284819261</content>
+							<content>20120105T220848</content>
 						</field>
 						<field tfid="{E6ACFE8B-F489-4955-BE43-1A831556A463}" key="title" type="Single-Line Text">
 							<content>Category12</content>
@@ -978,7 +978,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T220830:634613981105499004</content>
+						<content>20120105T220830</content>
 					</field>
 					<field tfid="{D9409DA1-2614-4CFF-AD9B-6ED1A1688B33}" key="cacheable" type="Checkbox">
 						<content>1</content>
@@ -1083,10 +1083,10 @@
 					<content>54f55ed5-0815-4efb-81dd-fe575f29f982</content>
 				</field>
 				<field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-					<content>20120105T220908:634613981485550742</content>
+					<content>20120105T220908</content>
 				</field>
 				<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-					<content>20120105T230905:634614017455608111</content>
+					<content>20120105T230905</content>
 				</field>
 				<field tfid="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" key="__security" type="security">
 					<content>au|sitecore\user1|p*|+item:write|</content>
@@ -1118,7 +1118,7 @@
 					<content>sitecore\admin</content>
 				</field>
 				<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-					<content>20120105T220857:634613981375534449</content>
+					<content>20120105T220857</content>
 				</field>
 				<field tfid="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" key="__security" type="security">
 					<content>au|sitecore\user1|p*|+item:write|</content>
@@ -1242,7 +1242,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T232619:634614027791779307</content>
+						<content>20120105T232619</content>
 					</field>
 					<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 						<content>-2012</content>
@@ -1335,7 +1335,7 @@
 							<content>444b2706-254c-4b75-b30e-fa7e60df0f91</content>
 						</field>
 						<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-							<content>20120105T232619:634614027792279335</content>
+							<content>20120105T232619</content>
 						</field>
 						<field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
 							<content>sitecore\admin</content>
@@ -1409,13 +1409,13 @@
 								<content>sitecore\admin</content>
 							</field>
 							<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-								<content>20120105T220957:634613981979018967</content>
+								<content>20120105T220957</content>
 							</field>
 							<field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
 								<content>-0105230904</content>
 							</field>
               <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                <content>20120105T220957:634613981979018967</content>
+                <content>20120105T220957</content>
               </field>
 						</fields>
 					</version>
@@ -1528,7 +1528,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T220830:634613981104368939</content>
+						<content>20120105T220830</content>
 					</field>
 					<field tfid="{1172F251-DAD4-4EFB-A329-0C63500E4F1E}" key="__masters" type="TreelistEx">
 						<content>{61FF8D49-90D7-4E59-878D-DF6E03400D3B}</content>
@@ -1607,13 +1607,13 @@
 							<content>d16e388f-a11b-48be-b86f-d3b0895c3744</content>
 						</field>
 						<field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-							<content>20120107T221247:634615711676034219</content>
+							<content>20120107T221247</content>
 						</field>
 						<field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
 							<content>sitecore\admin</content>
 						</field>
 						<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-							<content>20120107T221247:634615711676034219</content>
+							<content>20120107T221247</content>
 						</field>
 					</fields>
 				</version>
@@ -1664,13 +1664,13 @@
 							<content>b049841a-4af9-4a3a-bb3b-6ec4bb0af897</content>
 						</field>
 						<field tfid="{25BED78C-4957-4165-998A-CA1B52F67497}" key="__created" type="datetime">
-							<content>20120107T221413:634615712533943288</content>
+							<content>20120107T221413</content>
 						</field>
 						<field tfid="{52807595-0F8F-4B20-8D2A-CB71D28C6103}" key="__owner" type="text">
 							<content>sitecore\admin</content>
 						</field>
 						<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-							<content>20120107T221413:634615712533943288</content>
+							<content>20120107T221413</content>
 						</field>
 					</fields>
 				</version>
@@ -1745,7 +1745,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T220857:634613981376534506</content>
+						<content>20120105T220857</content>
 					</field>
 					<field tfid="{D9409DA1-2614-4CFF-AD9B-6ED1A1688B33}" key="cacheable" type="Checkbox">
 						<content>1</content>
@@ -1862,7 +1862,7 @@
 					<content>sitecore\admin</content>
 				</field>
 				<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-					<content>20120105T220922:634613981623708644</content>
+					<content>20120105T220922</content>
 				</field>
 			</fields>
 		</version>
@@ -1923,7 +1923,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T220922:634613981624848709</content>
+						<content>20120105T220922</content>
 					</field>
 					<field tfid="{1172F251-DAD4-4EFB-A329-0C63500E4F1E}" key="__masters" type="TreelistEx">
 						<content>{61FF8D49-90D7-4E59-878D-DF6E03400D3B}</content>
@@ -2026,7 +2026,7 @@
 						<content>sitecore\admin</content>
 					</field>
 					<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-						<content>20120105T220922:634613981625648755</content>
+						<content>20120105T220922</content>
 					</field>
 					<field tfid="{D9409DA1-2614-4CFF-AD9B-6ED1A1688B33}" key="cacheable" type="Checkbox">
 						<content>1</content>

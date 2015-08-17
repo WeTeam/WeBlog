@@ -5,14 +5,19 @@ using System.Web;
 using System.Web.Security;
 using CookComputing.XmlRpc;
 using NUnit.Framework;
-using Sitecore.ContentSearch;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
+using Sitecore.Eventing;
 using Sitecore.Search;
 using Sitecore.Security.AccessControl;
 using Sitecore.Security.Accounts;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog;
+
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -39,7 +44,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
 
-                // Retrieve created content items
+              // Retrieve created content items
                 m_testRoot = m_testContentRoot.Axes.GetChild("test content");
                 m_blog1 = m_testRoot.Axes.GetChild("blog1");
                 m_blog2 = m_testRoot.Axes.GetChild("blog2");
@@ -52,15 +57,26 @@ namespace Sitecore.Modules.WeBlog.Test
                 var entry11Check = m_blog1.Axes.GetDescendant("Entry11");
 
                 if (entry11Check == null)
-                    m_blog1.Add("Entry11", template);
+                {
+                  var entry = m_blog1.Add("Entry11", template);
+                  using (new EditContext(entry))
+                  {
+                    entry["Entry Date"] = "20120105T233207";
+                  }
+                }
 
                 var entry12Check = m_blog1.Axes.GetDescendant("Entry12");
 
                 if (entry12Check == null)
                 {
                     System.Threading.Thread.Sleep(2000);
-                    m_blog1.Add("Entry12", template);
+                    var entry = m_blog1.Add("Entry12", template);
+                    using (new EditContext(entry))
+                    {
+                      entry["Entry Date"] = "20120106T233145";
+                    }
                 }
+
                 // END: Workaround
 
                 // Create test users
@@ -124,13 +140,11 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var result = m_api.getUsersBlogs("test", m_userAuthor.Name, PASSWORD);
 
-            Assert.AreEqual(2, result.Length);
-
-            var ids = (from entry in result
-                        select entry["blogid"] as string).ToArray();
-
-            Assert.Contains(m_blog1.ID.ToString(), ids);
-            Assert.Contains(m_blog2.ID.ToString(), ids);
+            Assert.That(result.Select(x => x["blogid"]), Is.EquivalentTo(new[]
+            {
+              m_blog1.ID.ToString(),
+              m_blog2.ID.ToString()
+            }));
         }
 
         [Test]
@@ -153,13 +167,11 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var result = m_api.getCategories(m_blog1.ID.ToString(), m_userAuthor.Name, PASSWORD);
 
-            Assert.AreEqual(2, result.Length);
-
-            var names = (from entry in result
-                         select entry["title"] as string).ToArray();
-
-            Assert.Contains("Category11", names);
-            Assert.Contains("Category12", names);
+            Assert.That(result.Select(x => x["title"]), Is.EquivalentTo(new[]
+            {
+              "Category11",
+              "Category12"
+            }));
         }
 
         [Test]
@@ -175,13 +187,12 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var result = m_api.getRecentPosts(m_blog1.ID.ToString(), m_userAuthor.Name, PASSWORD, 5);
 
-            Assert.AreEqual(2, result.Length);
-
-            var names = (from entry in result
-                         select entry["title"] as string).ToArray();
-
-            Assert.Contains("Entry11", names);
-            Assert.Contains("Entry12", names);
+            Assert.That(result.Select(x => x["title"]), Is.EquivalentTo(new[]
+            {
+              "Entry11",
+              "Entry12",
+              "Entry13"
+            }));
         }
 
         [Test]
@@ -189,12 +200,10 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var result = m_api.getRecentPosts(m_blog1.ID.ToString(), m_userAuthor.Name, PASSWORD, 1);
 
-            Assert.AreEqual(1, result.Length);
-
-            var names = (from entry in result
-                         select entry["title"] as string).ToArray();
-
-            Assert.Contains("Entry11", names);
+            Assert.That(result.Select(x => x["title"]), Is.EquivalentTo(new[]
+            {
+              "Entry11"
+            }));
         }
 
         [Test]
@@ -250,7 +259,12 @@ namespace Sitecore.Modules.WeBlog.Test
 
             try
             {
-                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate.ToLocalTime());
+#if FEATURE_UTC_DATE
+                var expectedDate = newItem.Publishing.PublishDate.ToLocalTime();
+#else
+                var expectedDate = newItem.Publishing.PublishDate;
+#endif
+                Assert.AreEqual(publishDate, expectedDate);
             }
             finally
             {
@@ -302,9 +316,13 @@ namespace Sitecore.Modules.WeBlog.Test
                 Assert.AreEqual("the title", newItem["title"]);
                 Assert.AreEqual("updated", newItem["content"]);
 
-              //var expectedDate = newItem.Publishing.PublishDate.ToLocalTime();
+#if FEATURE_UTC_DATE
+                var expectedDate = newItem.Publishing.PublishDate.ToLocalTime();
+#else
+                var expectedDate = newItem.Publishing.PublishDate;
+#endif
 
-                Assert.AreEqual(publishDate, newItem.Publishing.PublishDate.ToLocalTime());
+                Assert.AreEqual(publishDate, expectedDate);
             }
             finally
             {

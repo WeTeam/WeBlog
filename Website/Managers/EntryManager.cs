@@ -1,6 +1,5 @@
 ﻿using Sitecore.Shell.Applications.Xaml;
 using System.Diagnostics;
-using Sitecore.ContentSearch.Security;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -25,7 +24,12 @@ using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
 #if FEATURE_CONTENT_SEARCH
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
+using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
+#else
+using Sitecore.Search;
+using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.Search.Crawlers;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -320,11 +324,11 @@ namespace Sitecore.Modules.WeBlog.Managers
                     if (indexresults.Any())
                     {
                         result = indexresults.Select(i => new EntryItem(i.GetItem())).ToList();
-                        result = result.OrderByDescending(post => post.Created).Take(maxNumber).ToList();
+                        result = result.OrderBy(post => post.EntryDate.DateTime).Take(maxNumber).ToList();
                     }
                 }
             }
-#else 
+#else
             var query = new CombinedQuery();
             //query.Add(new FieldQuery(Constants.Index.Fields.BlogID, blog.ID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
             query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, customBlogItem.ID.ToShortID().ToString()), QueryOccurance.Must);
@@ -350,10 +354,10 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             if (minimumDate != null)
-                query.Add(new FieldQuery(Constants.Index.Fields.Created, minimumDate.Year.ToString() + minimumDate.Month.ToString() + "*"), QueryOccurance.Must);
+                query.Add(new FieldQuery(Constants.Index.Fields.Created, minimumDate.Value.Year.ToString() + minimumDate.Value.Month.ToString() + "*"), QueryOccurance.Must);
 
             var searcher = new Searcher();
-            result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, true).ToList();
+            result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, false).ToList();
 #endif
             return result.ToArray();
         }
