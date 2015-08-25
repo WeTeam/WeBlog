@@ -9,6 +9,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.StringExtensions;
 
 
 #if FEATURE_XDB
@@ -470,7 +471,7 @@ namespace Sitecore.Modules.WeBlog.Managers
               var ids = query.OrderedEntryIds;
 #elif FEATURE_DMS
               var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
+            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", (object[]) entryIds.ToArray()));
               sql = sql.Replace("$page_table$", "pages");
                 var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
                 {

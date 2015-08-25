@@ -483,8 +483,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem()
         {
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new[] {m_entry13.ID, m_entry11.ID, m_entry12.ID});
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByComment(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
@@ -498,8 +502,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem_Limited()
         {
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByComment(m_blog1, 2)
                             select entry.ID).ToArray();
@@ -512,8 +520,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_InvalidItem()
         {
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new ID[0]);
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByComment(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
@@ -525,8 +537,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_NullItem()
         {
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new ID[0]);
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByComment(null, int.MaxValue)
                             select entry.ID).ToArray();
@@ -539,8 +555,12 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             VerifyAnalyticsSetup();
 
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByView(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
@@ -556,8 +576,12 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             VerifyAnalyticsSetup();
 
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByView(m_blog1, 1)
                             select entry.ID).ToArray();
@@ -571,8 +595,12 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             VerifyAnalyticsSetup();
 
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new ID[0]);
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByView(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
@@ -585,8 +613,12 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             VerifyAnalyticsSetup();
 
+#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(new ID[0]);
             var manager = new Mod.EntryManager(reportProvider);
+#else
+            var manager = new Mod.EntryManager();
+#endif
 
             var entryIds = (from entry in manager.GetPopularEntriesByView(null, 1)
                             select entry.ID).ToArray();

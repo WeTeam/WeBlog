@@ -135,8 +135,10 @@
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_XDB'))">
     <Compile Include="Analytics\Reporting\EntriesByViewQuery.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="BlogSettings.cs" />
     <Compile Include="Commands\EditBlogSettings.cs" />
     <Compile Include="Commands\EditEntrySettings.cs" />
