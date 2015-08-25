@@ -1,5 +1,4 @@
-﻿using Sitecore.Shell.Applications.Xaml;
-using System.Diagnostics;
+﻿
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,14 +8,16 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.StringExtensions;
 using Sitecore.Modules.WeBlog.Extensions;
-using System.Linq.Expressions;
 
-#if FEATURE_OMS
-using Sitecore.Analytics;
+
+#if FEATURE_XDB
+using Sitecore.Modules.WeBlog.Analytics.Reporting;
+using Sitecore.Analytics.Reporting;
 #elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess.DataAdapters;
+#elif FEATURE_OMS
+using Sitecore.Analytics;
 #else
 using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
 #endif
@@ -39,6 +40,16 @@ namespace Sitecore.Modules.WeBlog.Managers
     /// </summary>
     public class EntryManager : IEntryManager
     {
+#if FEATURE_XDB
+      /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
+      private ReportDataProviderBase reportDataProvider = null;
+
+      public EntryManager(ReportDataProviderBase reportDataProvider = null)
+      {
+        this.reportDataProvider = reportDataProvider;
+      }
+#endif
+
         /// <summary>
         /// Gets the current context item as a blog entry
         /// </summary>
@@ -448,25 +459,37 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            var entryIds = from entry in GetBlogEntries(blogItem) select entry.ID.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
+            var entryIds = (from entry in GetBlogEntries(blogItem) select entry.ID).ToArray();
 
-            if (entryIds.Count() > 0)
+            if (entryIds.Any())
             {
-#if FEATURE_OMS
+#if FEATURE_XDB
+              var query = new EntriesByViewQuery(this.reportDataProvider);
+              query.EntryIds = entryIds;
+              query.Execute();
+              var ids = query.OrderedEntryIds;
+#elif FEATURE_DMS
+              var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
+            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
+              sql = sql.Replace("$page_table$", "pages");
+                var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
+                {
+                    return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
+                }, new object[0]);
+#elif FEATURE_OMS
+              var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
+            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
                 sql = sql.Replace("$page_table$", "page");
                 var ids = Sitecore.Analytics. AnalyticsManager.ReadMany<ID>(sql, reader =>
                 {
                     return new ID(AnalyticsManager.GetGuid(0, reader));
                 }, new object[0]);
-#else
-                sql = sql.Replace("$page_table$", "pages");
-                var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
-                {
-                    return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
-                }, new object[0]);
 #endif
-                var limitedIds = ids.Take(maxCount).ToArray();
+
+              if (!ids.Any())
+                return new EntryItem[0];
+
+              var limitedIds = ids.Take(maxCount).ToArray();
                 return (from id in limitedIds select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
             }
             else

@@ -421,26 +421,25 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetEntryComments_WithLanguage_Entry11()
         {
-          var deEntry = m_entry11.Database.GetItem(m_entry11.ID, Language.Parse("de"));
+            var deEntry = m_entry11.Database.GetItem(m_entry11.ID, Language.Parse("de"));
+            var comments = new Mod.CommentManager().GetEntryComments(deEntry);
 
-          var comments = new Mod.CommentManager().GetEntryComments(deEntry);
-            Assert.AreEqual(1, comments.Length);
-
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+              m_deComment111.ID
+            }));
         }
 
         [Test]
         public void GetEntryComments_Entry21()
         {
             var comments = new Mod.CommentManager().GetEntryComments(m_entry21);
-            Assert.AreEqual(2, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment211.ID, ids);
-            Assert.Contains(m_comment212.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+                m_comment211.ID,
+                m_comment212.ID
+            }));
         }
 
         [Test]
@@ -461,13 +460,12 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetEntryComments_Entry11_WithLimit()
         {
             var comments = new Mod.CommentManager().GetEntryComments(m_entry11, 2);
-            Assert.AreEqual(2, comments.Length);
 
-            var ids = (from comment in comments
-                       select comment.ID).ToArray();
-
-            Assert.Contains(m_comment111.ID, ids);
-            Assert.Contains(m_comment112.ID, ids);
+            Assert.That(comments.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
+                m_comment113.ID,
+                m_comment112.ID
+            }));
         }
 
         [Test]

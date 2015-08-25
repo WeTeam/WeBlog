@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Moq;
+using System;
 using System.Linq;
 using System.Web;
 using NUnit.Framework;
@@ -11,10 +12,13 @@ using Sitecore.Search;
 
 #if FEATURE_CONTENT_SEARCH
 using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.Maintenance;
+using System.Data;
 #endif
 
-#if FEATURE_OMS
+#if FEATURE_XDB
+using Sitecore.Analytics.Reporting;
+using System.Collections.Generic;
+#elif FEATURE_OMS
 using Sitecore.Analytics;
 #elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess;
@@ -80,22 +84,17 @@ namespace Sitecore.Modules.WeBlog.Test
             // rebuild the WeBlog search index (or the entry manager won't work)
 #if FEATURE_CONTENT_SEARCH
             var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
-            index.Rebuild();
-
 #else
             var index = SearchManager.GetIndex(Settings.SearchIndexName);
-            index.Rebuild();
 #endif
+            index.Rebuild();
 
 #if FEATURE_OMS
-          if (Analytics.Configuration.AnalyticsSettings.Enabled)
-          {
-            // todo
-          }
-
-#elif FEATURE_XDB
-          // todo
-#else
+            if (Analytics.Configuration.AnalyticsSettings.Enabled)
+            {
+              // todo
+            }
+#elif FEATURE_DMS
           
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
             {
@@ -113,6 +112,15 @@ namespace Sitecore.Modules.WeBlog.Test
 
                 visitor.Submit();
             }
+#endif
+        }
+
+        public void VerifyAnalyticsSetup()
+        {
+#if FEATURE_OMS
+            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
+#elif FEATURE_DMS
+            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
 #endif
         }
 
@@ -149,8 +157,8 @@ namespace Sitecore.Modules.WeBlog.Test
 
           Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
           {
-            m_entry11.ID,
-            m_entry13.ID
+            m_entry13.ID,
+            m_entry12.ID
           }));
         }
 
@@ -475,7 +483,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByComment(m_blog1, int.MaxValue)
+            var reportProvider = CreateMockReportDataProvider(new[] {m_entry13.ID, m_entry11.ID, m_entry12.ID});
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByComment(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(3, entryIds.Length);
@@ -487,7 +498,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem_Limited()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByComment(m_blog1, 2)
+            var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByComment(m_blog1, 2)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(2, entryIds.Length);
@@ -498,7 +512,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_InvalidItem()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByComment(m_entry12, int.MaxValue)
+            var reportProvider = CreateMockReportDataProvider(new ID[0]);
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByComment(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(1, entryIds.Length);
@@ -508,7 +525,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_NullItem()
         {
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByComment(null, int.MaxValue)
+            var reportProvider = CreateMockReportDataProvider(new ID[0]);
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByComment(null, int.MaxValue)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
@@ -517,12 +537,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem()
         {
-#if FEATURE_OMS
-            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
-#else
-          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
-#endif
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, int.MaxValue)
+            VerifyAnalyticsSetup();
+
+            var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByView(m_blog1, int.MaxValue)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(3, entryIds.Length);
@@ -534,12 +554,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_ValidItem_Limited()
         {
-#if FEATURE_OMS
-            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
-#else
-          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
-#endif
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_blog1, 1)
+            VerifyAnalyticsSetup();
+
+            var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByView(m_blog1, 1)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(1, entryIds.Length);
@@ -549,12 +569,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_InvalidItem()
         {
-#if FEATURE_OMS
-            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
-#else
-          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
-#endif
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(m_entry12, int.MaxValue)
+            VerifyAnalyticsSetup();
+
+            var reportProvider = CreateMockReportDataProvider(new ID[0]);
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByView(m_entry12, int.MaxValue)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);
@@ -563,17 +583,44 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByView_NullItem()
         {
-#if FEATURE_OMS
-            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
-#else
-          Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
-#endif
-            var entryIds = (from entry in new Mod.EntryManager().GetPopularEntriesByView(null, 1)
+            VerifyAnalyticsSetup();
+
+            var reportProvider = CreateMockReportDataProvider(new ID[0]);
+            var manager = new Mod.EntryManager(reportProvider);
+
+            var entryIds = (from entry in manager.GetPopularEntriesByView(null, 1)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);            
         }
 
         // TODO: Write tests for methods accepting language
+
+#if FEATURE_XDB
+      protected ReportDataProviderBase CreateMockReportDataProvider(IEnumerable<ID> ids)
+      {
+        var dataTable = new DataTable();
+        dataTable.Columns.AddRange(new[]
+        {
+          new DataColumn("ItemId", typeof(Guid))
+        });
+
+        foreach (var id in ids)
+        {
+          dataTable.Rows.Add(id.Guid);
+        }
+
+        var reportingProvider = Mock.Of<ReportDataProviderBase>(x =>
+          x.GetData(It.IsAny<string>(), It.IsAny<ReportDataQuery>(), It.IsAny<CachingPolicy>()) == new ReportDataResponse(() => dataTable));
+
+        return reportingProvider;
+      }
+
+      private bool Blah(ReportDataQuery a)
+      {
+        var b = 0;
+        return false;
+      }
+#endif
     }
 }

@@ -103,13 +103,13 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllBlogs()
         {
-          // todo: Update method to allow passing in content root to search from. Will make this test more robust
-            var blogIds = (from blog in new Mod.BlogManager().GetAllBlogs(null)
-                       select blog.ID).ToArray();
+          var blogs = new Mod.BlogManager().GetAllBlogs(null).Where(x => m_testContentRoot.Axes.IsAncestorOf(x));
 
-            Assert.AreEqual(2, blogIds.Length);
-            Assert.Contains(m_blog1.ID, blogIds);
-            Assert.Contains(m_blog2.ID, blogIds);
+          Assert.That(blogs.Select(x => x.ID), Is.EquivalentTo(new[]
+          {
+            m_blog1.ID,
+            m_blog2.ID
+          }));
         }
 
         [Test]

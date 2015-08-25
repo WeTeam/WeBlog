@@ -43,7 +43,7 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
 
                 using (new SecurityDisabler())
                 {
-                  using (new EventDisabler())
+                  
                   {
                     if (wipItem.TemplateID == Settings.BlogTemplateID)
                     {
@@ -58,14 +58,17 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
                     }
                     else if (wipItem.TemplateID == Settings.EntryTemplateID)
                     {
+                      using (new EventDisabler())
                       wipItem.ChangeTemplate(entryTemplate);
                     }
                     else if (wipItem.TemplateID == Settings.CommentTemplateID)
                     {
+                      using (new EventDisabler())
                       wipItem.ChangeTemplate(commentTemplate);
                     }
                     else if (wipItem.TemplateID == Settings.CategoryTemplateID)
                     {
+                      //using (new EventDisabler())
                       wipItem.ChangeTemplate(categoryTemplate);
                     }
                   }

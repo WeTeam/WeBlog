@@ -323,7 +323,7 @@
                             <content>sitecore\admin</content>
                         </field>
                         <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
-                            <content>20110225T180757:634342540770816276</content>
+                            <content>20110225T180757</content>
                         </field>
                         <field tfid="{BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}" key="__sortorder" type="text">
                             <content>-0225180757</content>

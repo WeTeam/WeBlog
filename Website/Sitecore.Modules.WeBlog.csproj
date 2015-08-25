@@ -136,6 +136,7 @@
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Analytics\Reporting\EntriesByViewQuery.cs" />
     <Compile Include="BlogSettings.cs" />
     <Compile Include="Commands\EditBlogSettings.cs" />
     <Compile Include="Commands\EditEntrySettings.cs" />
@@ -343,9 +344,9 @@
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))"/>
-    <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))"/>
-    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0'))"/>
+    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))" />
+    <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
+    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0'))" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
     <Compile Include="Pipelines\CreateComment\AkismetSpamCheck.cs" />
     <Compile Include="Pipelines\CreateComment\CreateCommentItem.cs" />
@@ -456,7 +457,7 @@
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
   </ItemGroup>
-  <ItemGroup Condition="!$(Configuration.Contains('sc7.0'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
     <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
       <SubType>Designer</SubType>
     </Content>
@@ -466,11 +467,11 @@
     <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.Search.config" />
+    <Content Include="App_Config\Include\WeBlog.Search.config" Condition="!$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
   </ItemGroup>
-  <ItemGroup Condition="$(Configuration.Contains('sc7.0'))">
+  <!--<ItemGroup Condition="$(Configuration.Contains('sc7.0'))">
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config" />
-  </ItemGroup>
+  </ItemGroup>-->
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -497,7 +498,7 @@
     <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />
     <CallTarget Targets="ItemBucketsConfig" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))" />
     <CallTarget Targets="ContentDeliveryConfig" />
-    <CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
+    <!--<CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />-->
   </Target>
   <Target Name="DeployToWeb">
     <!--
@@ -527,7 +528,8 @@
   <Target Name="ItemBucketsConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
   </Target>
+  <!--
   <Target Name="ContentSearchConfig">
     <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.Search.config" />
-  </Target>
+  </Target>-->
 </Project>

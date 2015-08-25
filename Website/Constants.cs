@@ -48,5 +48,12 @@ namespace Sitecore.Modules.WeBlog
             public const string WeBlogMedia = "/sitecore/media library/Modules/Blog";
             public const string PublishingTargets = "/sitecore/system/publishing targets";
         }
+
+#if FEATURE_XDB
+        public static class ReportingQueries
+        {
+            public static readonly ID EntriesByView = new ID("{75C64874-2803-40FD-A3B2-3E89637BF8EA}");
+        }
+#endif
     }
 }
