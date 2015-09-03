@@ -58,12 +58,12 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
                     }
                     else if (wipItem.TemplateID == Settings.EntryTemplateID)
                     {
-                      using (new EventDisabler())
+                      //using (new EventDisabler())
                       wipItem.ChangeTemplate(entryTemplate);
                     }
                     else if (wipItem.TemplateID == Settings.CommentTemplateID)
                     {
-                      using (new EventDisabler())
+                      //using (new EventDisabler())
                       wipItem.ChangeTemplate(commentTemplate);
                     }
                     else if (wipItem.TemplateID == Settings.CategoryTemplateID)

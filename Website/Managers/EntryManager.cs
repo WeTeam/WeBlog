@@ -298,14 +298,15 @@ namespace Sitecore.Modules.WeBlog.Managers
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
                 
-                    var id = Settings.EntryTemplateID;
+                    //var id = Settings.EntryTemplateID;
+                    var id = customBlogItem.BlogSettings.EntryTemplateID;
                     builder = builder.And(i => i.TemplateId == id);
                     builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
                     builder = builder.And(i => i.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture));
                     builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
 
                     // Tag
-                    if (!String.IsNullOrEmpty(tag))
+                    if (!string.IsNullOrEmpty(tag))
                     {
                         //builder = builder.And(PredicateController.BlogTags(tag));
                         builder = builder.And(i => i.Tags.Contains(tag));
@@ -320,8 +321,8 @@ namespace Sitecore.Modules.WeBlog.Managers
                       if (categoryItem == null)
                           return new EntryItem[0];
 
-                      var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
-                      builder = builder.And(i => i.Category.Contains(normalizedID));
+                      //var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+                      builder = builder.And(i => i.Category.Contains(categoryItem.ID));
                         
                     }
 
