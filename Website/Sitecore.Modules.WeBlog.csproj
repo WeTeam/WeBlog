@@ -349,7 +349,6 @@
     <Compile Include="Pipelines\GetSummary\GetSummaryArgs.cs" />
     <Compile Include="Pipelines\GetSummary\GetSummaryProcessorBase.cs" />
     <Compile Include="Pipelines\GetSummary\IGetSummaryProcessor.cs" />
-    <Compile Include="Pipelines\GetSummary\Wrap.cs" />
     <Compile Include="Pipelines\ICreateCommentProcessor.cs" />
     <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
