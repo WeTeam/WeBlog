@@ -9,7 +9,9 @@
             </h2>
             <div class="wb-details"><%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("ENTRY_DETAILS", (((ListViewDataItem)Container).DataItem as EntryItem).Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), (((ListViewDataItem)Container).DataItem as EntryItem).AuthorName)%></div>
             
-            <%# GetSummary(((ListViewDataItem)Container).DataItem as EntryItem)%>
+            <div class="wb-summary">
+                <%# GetSummary(((ListViewDataItem)Container).DataItem as EntryItem)%>
+            </div>
             
             <asp:HyperLink ID="BlogPostLink" runat="server" CssClass="wb-read-more" NavigateUrl='<%# Eval("Url") %>'><%#Sitecore.Modules.WeBlog.Globalization.Translator.Text("READ_MORE")%></asp:HyperLink>
             <span class="wb-comment-count" runat="server" Visible="<%# (((ListViewDataItem)Container).DataItem as EntryItem).CommentCount > 0 || !(((ListViewDataItem)Container).DataItem as EntryItem).DisableComments.Checked %>">
