@@ -97,7 +97,7 @@
                         <content>-0425180743</content>
                     </field>
                   <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                    <content>20110406T220200:634350457201154960</content>
+                    <content>20110406T220200</content>
                   </field>
                 </fields>
             </version>
@@ -186,7 +186,7 @@
                         <content>-0325180736</content>
                     </field>
                   <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                    <content>20110306T213952:634350443924226381</content>
+                    <content>20110306T223952</content>
                   </field>
                 </fields>
             </version>
@@ -300,7 +300,7 @@
                         <content>-0325180716</content>
                     </field>
                   <field tfid="{CBDA26A1-E7E5-437A-9FD7-95EF15810E50}" key="entry date" type="datetime">
-                    <content>20110306T220207:634350457276191092</content>
+                    <content>20110306T220207</content>
                   </field>
                 </fields>
             </version>
