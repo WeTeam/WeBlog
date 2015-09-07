@@ -471,6 +471,11 @@
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.Search.config" Condition="!$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <!--<ItemGroup Condition="$(Configuration.Contains('sc7.0'))">
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config" />
   </ItemGroup>-->
@@ -497,6 +502,7 @@
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
+    <CallTarget Targets="SC70Tweaks" Condition="$(SitecorePath) != '' AND $(DefineConstants.Contains('SC70'))" />
     <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />
     <CallTarget Targets="ItemBucketsConfig" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))" />
     <CallTarget Targets="ContentDeliveryConfig" />
@@ -508,7 +514,7 @@
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />-->
-    <CreateItem Include="@(Content);$(OutDir)\*.dll">
+    <CreateItem Include="@(Content);$(OutDir)\*.dll" Exclude="**\*.SC70.*;App_Config\Include\*.xslt">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
@@ -518,6 +524,16 @@
     </CreateItem>
     <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecorePath)\bin" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecoreCDPath)\bin" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <!-- Adjust configs not required -->
+    <!--<Delete Files="$(SitecorePath)\App_Config\Include\*.SC70"
+    <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />-->
+    <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
+  </Target>
+  <Target Name="SC70Tweaks">
+    <!--<CreateItem Include="App_Config\Include\*.SC70.config">
+      <Output ItemName="DeployFiles" TaskParameter="Include" />
+    </CreateItem>-->
+    <!--<Copy -->
   </Target>
   <Target Name="ContentDeliveryConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />

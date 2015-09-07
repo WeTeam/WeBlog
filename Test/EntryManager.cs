@@ -602,7 +602,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var manager = new Mod.EntryManager();
 #endif
 
-            var entryIds = (from entry in manager.GetPopularEntriesByView(m_entry12, int.MaxValue)
+            var entryIds = (from entry in manager.GetPopularEntriesByView(m_testRoot, int.MaxValue)
                             select entry.ID).ToArray();
 
             Assert.AreEqual(0, entryIds.Length);

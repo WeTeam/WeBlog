@@ -298,7 +298,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
                 
-                    //var id = Settings.EntryTemplateID;
                     var id = customBlogItem.BlogSettings.EntryTemplateID;
                     builder = builder.And(i => i.TemplateId == id);
                     builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
@@ -308,7 +307,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                     // Tag
                     if (!string.IsNullOrEmpty(tag))
                     {
-                        //builder = builder.And(PredicateController.BlogTags(tag));
                         builder = builder.And(i => i.Tags.Contains(tag));
                     }
 
@@ -320,9 +318,12 @@ namespace Sitecore.Modules.WeBlog.Managers
                       // If the category is unknown, don't return any results.
                       if (categoryItem == null)
                           return new EntryItem[0];
-
-                      //var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+#if SC70
+                      var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+                      builder = builder.And(i => i.Category.Contains(normalizedID));
+#else
                       builder = builder.And(i => i.Category.Contains(categoryItem.ID));
+#endif
                         
                     }
 
@@ -397,15 +398,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (month >= 13)
                 return new EntryItem[0];
 
-            /*var monthStr = month.ToString();
-            if (monthStr.Length == 1)
-            {
-                monthStr = "0" + monthStr;
-            }
-            var datePrefix = year.ToString() + monthStr;
-
-            return GetBlogEntries(blog, Int32.MaxValue, null, null, datePrefix);*/
-
             var minDate = new DateTime(year, month, 1);
             var maxDate = minDate.AddMonths(1);
 
@@ -466,18 +458,15 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (entryIds.Any())
             {
 #if FEATURE_XDB
-              var query = new EntriesByViewQuery(this.reportDataProvider);
-              query.EntryIds = entryIds;
-              query.Execute();
-              var ids = query.OrderedEntryIds;
+                var query = new EntriesByViewQuery(this.reportDataProvider);
+                query.EntryIds = entryIds;
+                query.Execute();
+                var ids = query.OrderedEntryIds;
 #elif FEATURE_DMS
-              var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", (object[]) entryIds.ToArray()));
-              sql = sql.Replace("$page_table$", "pages");
-                var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader =>
-                {
-                    return new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader));
-                }, new object[0]);
+                var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
+                var sql = "select {{0}}ItemId{{1}} from pages where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", (object[])queryIds.ToArray()));
+              
+                var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader => new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader)), new[]{"a"});
 #elif FEATURE_OMS
               var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
             var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
@@ -488,11 +477,14 @@ namespace Sitecore.Modules.WeBlog.Managers
                 }, new object[0]);
 #endif
 
-              if (!ids.Any())
-                return new EntryItem[0];
+                if (!ids.Any())
+                  return new EntryItem[0];
 
-              var limitedIds = ids.Take(maxCount).ToArray();
-                return (from id in limitedIds select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
+                var limitedIds = ids.Take(maxCount).ToArray();
+                return (from id in limitedIds
+                        let item = blogItem.Database.GetItem(id)
+                        where item != null
+                        select new EntryItem(item)).ToArray();
             }
             else
                 return new EntryItem[0];
@@ -557,30 +549,6 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             return postItemList.ToArray();
         }
-
-/*#if FEATURE_CONTENT_SEARCH
-        
-        // Blog tag
-        protected Expression<Func<EntryResultItem, bool>> BlogTags(string tag)
-        {
-            var predicate = PredicateBuilder.False<EntryResultItem>();
-            predicate = predicate.Or(p => p.Tags.Contains(tag));
-            return predicate;
-        }
-
-        protected Expression<Func<EntryResultItem, bool>> BlogCategory(string category)
-        {
-            Item categoryItem = Sitecore.Context.Item;
-            if (categoryItem != null && categoryItem.TemplateIsOrBasedOn(Settings.CategoryTemplateID))
-            {
-              string normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
-              var predicate = PredicateBuilder.False<EntryResultItem>();
-              predicate = predicate.Or(p => p.Category.Contains(normalizedID));
-              return predicate;
-            }
-            return null;
-        }
-#endif*/
 
         #region Obsolete Methods
         /// <summary>

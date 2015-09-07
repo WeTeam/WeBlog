@@ -114,7 +114,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             Item blogItem = item;
             var template = GetDatabase().GetTemplate(Settings.BlogTemplateID);
-            
 
             if (template != null)
             {

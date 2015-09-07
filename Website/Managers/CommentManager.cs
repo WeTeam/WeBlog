@@ -43,11 +43,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Database = ContentHelper.GetContentDatabase();
             args.Language = language ?? Context.Language;
 
-//#if SC62 || SC64
+#if SC62 || SC64
             //CorePipeline.Run("weblogCreateComment", args);
-//#else
+#else
             CorePipeline.Run("weblogCreateComment", args, true);
-//#endif
+#endif
 
             if (args.CommentItem != null)
                 return args.CommentItem.ID;
@@ -256,7 +256,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                         {
                             var indexresults = context.GetQueryable<CommentResultItem>().Where(x => 
                               x.Paths.Contains(item.ID) &&
-                              //x.TemplateId == Settings.CommentTemplateID &&
                               x.TemplateId == blog.BlogSettings.CommentTemplateID &&
                               x.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture) &&
                               x.Language == item.Language.Name

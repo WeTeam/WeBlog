@@ -27,11 +27,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
             var args = new GetSummaryArgs();
             args.Entry = entry;
 
-//#if SC62 || SC64
-  //          CorePipeline.Run("weblogGetSummary", args);
-//#else
+#if SC62 || SC64
+            CorePipeline.Run("weblogGetSummary", args);
+#else
             CorePipeline.Run("weblogGetSummary", args, true);
-//#endif
+#endif
 
             return args.Summary;
         }
