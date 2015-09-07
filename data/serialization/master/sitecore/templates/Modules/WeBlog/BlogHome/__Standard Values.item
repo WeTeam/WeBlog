@@ -10,6 +10,27 @@ template: {46663E05-A6B8-422A-8E13-36CD2B041278}
 templatekey: BlogHome
 
 ----field----
+field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
+name: Enable RSS
+key: enable rss
+content-length: 1
+
+1
+----field----
+field: {85184F37-810A-4A0C-BE78-FF6B60034C15}
+name: Enable Comments
+key: enable comments
+content-length: 1
+
+1
+----field----
+field: {ED011016-AC3D-4377-8C8B-2EA6EF2860FC}
+name: Gravatar Size
+key: gravatar size
+content-length: 2
+
+45
+----field----
 field: {A0CB3965-8884-4C7A-8815-B6B2E5CED162}
 name: __Editors
 key: __editors
@@ -70,27 +91,6 @@ key: displaycommentsidebarcount
 content-length: 1
 
 5
-----field----
-field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
-name: Enable RSS
-key: enable rss
-content-length: 1
-
-1
-----field----
-field: {85184F37-810A-4A0C-BE78-FF6B60034C15}
-name: Enable Comments
-key: enable comments
-content-length: 1
-
-1
-----field----
-field: {ED011016-AC3D-4377-8C8B-2EA6EF2860FC}
-name: Gravatar Size
-key: gravatar size
-content-length: 2
-
-45
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
