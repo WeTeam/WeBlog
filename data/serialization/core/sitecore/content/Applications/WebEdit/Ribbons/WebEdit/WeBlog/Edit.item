@@ -10,6 +10,13 @@ template: {8F3D8F9B-2D76-4ACE-803F-35415D2B230A}
 templatekey: Chunk
 
 ----field----
+field: {8BB9A5E3-CAE8-49C6-B830-258A51D970C9}
+name: ID
+key: id
+content-length: 9
+
+EditChunk
+----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
 key: __sortorder
@@ -17,16 +24,16 @@ content-length: 2
 
 49
 ----field----
-field: {8BB9A5E3-CAE8-49C6-B830-258A51D970C9}
-name: ID
-key: id
-content-length: 9
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 189
 
-EditChunk
+<r>   <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">     <r id="{B8CC30CD-725A-4353-9EA6-CD9832CB3996}" par="Id=WeBlogEditChunk" uid="{C2193362-7E78-46DB-9F48-19CD759D37CD}" />   </d> </r>
 ----version----
 language: en
 version: 1
-revision: e0fa2deb-8a01-467b-b89f-16677d89626c
+revision: bdbed865-3cf7-4fb7-b63e-4f036e11620b
 
 ----field----
 field: {C95D21BD-66C3-444B-A37F-D346CBAF2B55}
@@ -62,14 +69,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e0fa2deb-8a01-467b-b89f-16677d89626c
+bdbed865-3cf7-4fb7-b63e-4f036e11620b
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20081218T222643:633652360033801648
+20150611T212611:635696547711103046
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
