@@ -10,6 +10,13 @@ template: {EC6D62A5-5D00-4329-8958-8AC1AD100EBB}
 templatekey: Strip
 
 ----field----
+field: {12C1CEB4-F549-472A-97ED-99BFF70EB84E}
+name: ID
+key: id
+content-length: 11
+
+WeBlogStrip
+----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
 key: __sortorder
@@ -17,16 +24,16 @@ content-length: 3
 
 125
 ----field----
-field: {12C1CEB4-F549-472A-97ED-99BFF70EB84E}
-name: ID
-key: id
-content-length: 11
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 181
 
-WeBlogStrip
+<r>  <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">    <r id="{2AA9FC5A-9F89-4508-A210-5282E9B58468}" par="Id=WeBlogStrip" uid="{E55CA084-BA86-4E4D-9038-64A9A1641845}" />  </d></r>
 ----version----
 language: en
 version: 1
-revision: 6d7cfb70-2946-4015-85ae-5f5ad02f097a
+revision: ca1b7bde-c16c-4246-95a7-026a121461e8
 
 ----field----
 field: {5453DC07-6A17-48BA-8D05-17DB90A2E795}
@@ -62,14 +69,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-6d7cfb70-2946-4015-85ae-5f5ad02f097a
+ca1b7bde-c16c-4246-95a7-026a121461e8
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 34
 
-20111017T164336:634544666160003708
+20150617T193612:635701665728414922
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
