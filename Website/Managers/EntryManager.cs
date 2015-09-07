@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +8,6 @@ using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.StringExtensions;
-
 
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
@@ -321,8 +318,8 @@ namespace Sitecore.Modules.WeBlog.Managers
                       if (categoryItem == null)
                           return new EntryItem[0];
 
-                      //var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
-                      builder = builder.And(i => i.Category.Contains(categoryItem.ID));
+                      var normalizedID = ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+                      builder = builder.And(i => i.Category.Contains(normalizedID));
                         
                     }
 
@@ -337,7 +334,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     if (indexresults.Any())
                     {
                         result = indexresults.Select(i => new EntryItem(i.GetItem())).ToList();
-                        result = result.OrderBy(post => post.EntryDate.DateTime).Take(maxNumber).ToList();
+                        result = result.OrderByDescending(post => post.EntryDate.DateTime).Take(maxNumber).ToList();
                     }
                 }
             }
