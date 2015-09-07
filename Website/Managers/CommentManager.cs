@@ -251,7 +251,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                     List<CommentItem> result = new List<CommentItem>();
                     if (!string.IsNullOrEmpty(indexName))
                     {
-
                         using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext())
                         {
                             var indexresults = context.GetQueryable<CommentResultItem>().Where(x => 
@@ -268,7 +267,17 @@ namespace Sitecore.Modules.WeBlog.Managers
                               else if (reverse)
                                 indexresults = indexresults.OrderBy(x => x.CreatedDate);
 
-                              result = indexresults.Take(maximumCount).Select(x => new CommentItem(x.GetItem())).ToList();
+                              indexresults = indexresults.Take(maximumCount);
+
+                              // Had some odd issues with the linq layer. Array to avoid them.
+                              var indexresultsList = indexresults.ToArray();
+
+                              var items = from resultItem in indexresultsList
+                                let i = resultItem.GetItem()
+                                where i != null
+                                select i;
+
+                              result = items.Select(x => new CommentItem(x)).ToList();
                             }
                         }
                     }

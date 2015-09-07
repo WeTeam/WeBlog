@@ -88,14 +88,7 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment212 = m_entry21.Axes.GetDescendant("Comment2");
 
             // rebuild the WeBlog search index (or the comment manager won't work)
-#if FEATURE_CONTENT_SEARCH
-          var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
-//          IndexCustodian.FullRebuild(index);
-          index.Rebuild();
-#else
-          var index = SearchManager.GetIndex(Settings.SearchIndexName);
-          index.Rebuild();
-#endif
+          RebuildIndex();
         }
 
         [TestFixtureTearDown]
@@ -543,6 +536,7 @@ namespace Sitecore.Modules.WeBlog.Test
                         }
                     }
                 }
+                RebuildIndex();
             }
         }
 
@@ -602,7 +596,20 @@ namespace Sitecore.Modules.WeBlog.Test
                         }
                     }
                 }
+
+                RebuildIndex();
             }
+        }
+
+        private void RebuildIndex()
+        {
+#if FEATURE_CONTENT_SEARCH
+            var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
+            index.Rebuild();
+#else
+            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            index.Rebuild();
+#endif
         }
     }
 }
