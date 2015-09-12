@@ -338,7 +338,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     if (indexresults.Any())
                     {
                         result = indexresults.Select(i => new EntryItem(i.GetItem())).ToList();
-                        result = result.OrderBy(post => post.EntryDate.DateTime).Take(maxNumber).ToList();
+                        result = result.OrderByDescending(post => post.EntryDate.DateTime).Take(maxNumber).ToList();
                     }
                 }
             }
