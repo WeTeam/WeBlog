@@ -30,6 +30,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 
         public void Process(GetSummaryArgs args)
         {
+            // This processor is to compensate for messy markup. It shouldn't be required when editing (and it can break EE)
+            if (Context.PageMode.IsPageEditor)
+                return;
+
             if (!OnlyWhenRequired || !args.Summary.StartsWith("<" + WrappingTag + ">"))
                 args.Summary = "<{0}>{1}</{0}>".FormatWith(WrappingTag, args.Summary);
         }
