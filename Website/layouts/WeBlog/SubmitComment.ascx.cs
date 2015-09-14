@@ -39,15 +39,15 @@ namespace Sitecore.Modules.WeBlog.Layouts
             // Comments enabled?
             if (CurrentEntry.DisableComments.Checked)
             {
-                if(CommentsPanel != null)
+                if (CommentsPanel != null)
                     CommentsPanel.Visible = false;
             }
             else
             {
-                if(ValidationSummaryComments != null)
-				    ValidationSummaryComments.HeaderText = Translator.Text("REQUIRED_FIELDS");
+                if (ValidationSummaryComments != null)
+                    ValidationSummaryComments.HeaderText = Translator.Text("REQUIRED_FIELDS");
 
-                if(buttonSaveComment != null)
+                if (buttonSaveComment != null)
                     buttonSaveComment.Text = Translator.Text("POST");
             }
         }
@@ -67,8 +67,12 @@ namespace Sitecore.Modules.WeBlog.Layouts
                     Text = txtCommentText != null ? txtCommentText.Text : string.Empty
                 };
 
-                if(txtCommentWebsite != null)
-                    comment.Fields.Add(Constants.Fields.Website, txtCommentWebsite.Text);
+                if (txtCommentWebsite != null)
+                {
+                    string website = txtCommentWebsite.Text;
+                    website = website.Contains("://") ? website : String.Format("//{0}", website);
+                    comment.Fields.Add(Constants.Fields.Website, website);
+                }
                 comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
 
                 var submissionResult = ManagerFactory.CommentManagerInstance.SubmitComment(Sitecore.Context.Item.ID, comment, Sitecore.Context.Language);
@@ -104,7 +108,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 MessagePanel.CssClass = ErrorCssClass;
             }
 
-            if(Message != null)
+            if (Message != null)
                 Message.Text = message;
         }
 
@@ -120,22 +124,22 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 MessagePanel.CssClass = SuccessCssClass;
             }
 
-            if(Message != null)
+            if (Message != null)
                 Message.Text = message;
         }
 
         private void ResetCommentFields()
         {
-            if(txtCommentName != null)
+            if (txtCommentName != null)
                 txtCommentName.Text = string.Empty;
 
-            if(txtCommentEmail != null)
+            if (txtCommentEmail != null)
                 txtCommentEmail.Text = string.Empty;
 
-            if(txtCommentWebsite != null)
+            if (txtCommentWebsite != null)
                 txtCommentWebsite.Text = string.Empty;
 
-            if(txtCommentText != null)
+            if (txtCommentText != null)
                 txtCommentText.Text = string.Empty;
         }
     }
