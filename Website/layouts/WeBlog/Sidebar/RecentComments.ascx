@@ -19,7 +19,7 @@
                 <%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("AT") %> <span class="wb-datetime">
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>
                 </span>
-                <span class="wb-comment-content"><%# (Container.DataItem as CommentItem).Comment.Text.MaxLength(150) %></span>
+                <span class="wb-comment-content"><%# (Container.DataItem as CommentItem).Comment.HtmlEncode().MaxLength(150) %></span>
             </li>
         </ItemTemplate>
     </asp:ListView>
