@@ -23,19 +23,6 @@
 
             return true;
         }
-      /* will probably need a target framework check for this method
-#if SC62
-        /// <summary>
-        /// Limits a strings length to a maximum number of characters
-        /// </summary>
-        /// <param name="input">The input to process</param>
-        /// <param name="length">The maximum length of the string</param>
-        /// <returns>A string with less than or the same number of characters as specified in the length</returns>
-        public static string MaxLength(this string input, int length)
-        {
-            return MaxLength(input, length, "...");
-        }
-#endif*/
 
         /// <summary>
         /// Limits a strings length to a maximum number of characters

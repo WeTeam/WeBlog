@@ -64,7 +64,7 @@
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))">
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
       <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.5'))">
@@ -88,11 +88,11 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
+    <Reference Include="Sitecore.ContentSearch">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
+    <Reference Include="Sitecore.ContentSearch.Linq">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
@@ -111,7 +111,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Buckets" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))">
+    <Reference Include="Sitecore.Buckets">
       <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -132,7 +132,7 @@
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
+  <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
@@ -141,7 +141,7 @@
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_XDB'))">
     <Compile Include="Analytics\Reporting\EntriesByViewQuery.cs" />
   </ItemGroup>
-  <ItemGroup  Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Compile Include="ExperienceEditor\CanExecuteWeBlogCommands.cs" />
     <Compile Include="ExperienceEditor\IsEntryItem.cs" />
     <Compile Include="ExperienceEditor\NewCategory.cs" />
@@ -357,7 +357,7 @@
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))" />
+    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0'))" />
     <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
     <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0'))" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
@@ -375,11 +375,9 @@
     <Compile Include="Pipelines\ICreateCommentProcessor.cs" />
     <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
     <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
     <Compile Include="Search\InterestingEntries\InterestingEntriesAlgorithm.cs" />
-    <Compile Include="Search\SortableIndexSearchContext.cs" />
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="sitecore modules\web\WeBlog\Comment.svc.cs">
@@ -397,7 +395,6 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="ContentHelper.cs" />
-    <Compile Include="Search\Searcher.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
     <Compile Include="WebControls\Syndication.cs" />
     <Compile Include="WebControls\ThemeIncludes.cs" />
@@ -462,7 +459,7 @@
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewEntry.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
-  </ItemGroup>  
+  </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.config">
       <SubType>Designer</SubType>
@@ -476,7 +473,7 @@
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
     <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
+  <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
       <SubType>Designer</SubType>
     </Content>
@@ -486,7 +483,7 @@
     <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.Search.config" Condition="!$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
+    <Content Include="App_Config\Include\WeBlog.Search.config"/>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config">
@@ -519,18 +516,10 @@
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
-    <CallTarget Targets="SC70Tweaks" Condition="$(SitecorePath) != '' AND $(DefineConstants.Contains('SC70'))" />
-    <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />
-    <CallTarget Targets="ItemBucketsConfig" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
-    <!--<CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />-->
   </Target>
   <Target Name="DeployToWeb">
-    <!--
-    <CreateItem Include="App_Config\**\*.*;bin\*.dll;layouts\**\*.aspx;layouts\**\*.ascx;sitecore modules\**\*.aspx;sitecore\**\*.xml;sitecore modules\**\*.ashx;sitecore modules\**\*.ascx;sitecore modules\**\*.svc;sitecore modules\**\*.js;sitecore modules\**\*.css;sitecore modules\**\*.xml;sitecore modules\**\*.vm;sitecore modules\**\*.gif;sitecore modules\**\*.png" Exclude="**\.svn\**\*.*;App_Config\**\*.xslt">
-      <Output ItemName="DeployFiles" TaskParameter="Include" />
-    </CreateItem>
-    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />-->
     <CreateItem Include="@(Content);$(OutDir)\*.dll" Exclude="**\*.SC70.*;App_Config\Include\*.xslt">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
@@ -541,30 +530,11 @@
     </CreateItem>
     <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecorePath)\bin" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecoreCDPath)\bin" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
-    <!-- Adjust configs not required -->
-    <!--<Delete Files="$(SitecorePath)\App_Config\Include\*.SC70"
-    <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />-->
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
-  </Target>
-  <Target Name="SC70Tweaks">
-    <!--<CreateItem Include="App_Config\Include\*.SC70.config">
-      <Output ItemName="DeployFiles" TaskParameter="Include" />
-    </CreateItem>-->
-    <!--<Copy -->
   </Target>
   <Target Name="ContentDeliveryConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
-  <Target Name="NoRemoteEventsConfig">
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.noremote.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" Condition="$(SitecorePath) != ''" />
-  </Target>
-  <Target Name="ItemBucketsConfig">
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
-  </Target>
-  <!--
-  <Target Name="ContentSearchConfig">
-    <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.Search.config" />
-  </Target>-->
 </Project>

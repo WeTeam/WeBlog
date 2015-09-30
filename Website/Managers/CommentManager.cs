@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -11,15 +12,9 @@ using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Pipelines;
-using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
-using Sitecore.Search;
-#if FEATURE_CONTENT_SEARCH
-using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.Linq.Utilities;
-using Sitecore.Modules.WeBlog.Search.SearchTypes;
-#endif
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -43,11 +38,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Database = ContentHelper.GetContentDatabase();
             args.Language = language ?? Context.Language;
 
-#if SC62 || SC64
-            //CorePipeline.Run("weblogCreateComment", args);
-#else
             CorePipeline.Run("weblogCreateComment", args, true);
-#endif
 
             if (args.CommentItem != null)
                 return args.CommentItem.ID;
@@ -246,7 +237,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
                 if (blog != null)
                 {
-#if FEATURE_CONTENT_SEARCH
                     var indexName = Settings.SearchIndexName;
                     List<CommentItem> result = new List<CommentItem>();
                     if (!string.IsNullOrEmpty(indexName))
@@ -282,25 +272,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                         }
                     }
                     return result.ToArray();
-
-                  
-#else
-                    var query = new CombinedQuery();
-
-                    // TODO: What about items using templates derived from commenttemplateid? need to accommodate those
-                    query.Add(new FieldQuery(Constants.Index.Fields.Template, blog.BlogSettings.CommentTemplateID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
-                    query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
-                    query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Language, item.Language.Name), QueryOccurance.Must);
-
-                    string sortField = null;
-                    if (sort)
-                    {
-                        sortField = Constants.Index.Fields.Created;
-                    }
-
-                    var searcher = new Searcher();
-                    return searcher.Execute<CommentItem>(query, item.Language, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
-#endif
                 }
             }
             return new CommentItem[0];

@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,28 +9,18 @@ using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.StringExtensions;
-
+using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.Linq.Utilities;
+using Sitecore.ContentSearch.Security;
+using Sitecore.Modules.WeBlog.Search.SearchTypes;
 
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Analytics.Reporting;
 #elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess.DataAdapters;
-#elif FEATURE_OMS
-using Sitecore.Analytics;
 #else
 using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
-#endif
-
-#if FEATURE_CONTENT_SEARCH
-using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.Linq.Utilities;
-using Sitecore.ContentSearch.Security;
-using Sitecore.Modules.WeBlog.Search.SearchTypes;
-#else
-using Sitecore.Search;
-using Sitecore.Modules.WeBlog.Search;
-using Sitecore.Modules.WeBlog.Search.Crawlers;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -289,8 +278,8 @@ namespace Sitecore.Modules.WeBlog.Managers
 
 
             List<EntryItem> result = new List<EntryItem>();
-#if FEATURE_CONTENT_SEARCH
             var indexName = Settings.SearchIndexName;
+
             if (!string.IsNullOrEmpty(indexName))
             {
 
@@ -342,37 +331,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     }
                 }
             }
-#else
-            var query = new CombinedQuery();
-            //query.Add(new FieldQuery(Constants.Index.Fields.BlogID, blog.ID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
-            query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, customBlogItem.ID.ToShortID().ToString()), QueryOccurance.Must);
-            query.Add(new FieldQuery(Constants.Index.Fields.Template, customBlogItem.BlogSettings.EntryTemplateID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
 
-            if (!string.IsNullOrEmpty(tag))
-            {
-                query.Add(new FieldQuery(Constants.Index.Fields.Tags, DatabaseCrawler.TransformCSV(tag)), QueryOccurance.Must);
-            }
-
-            if (!string.IsNullOrEmpty(category))
-            {
-                var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(blog, category);
-                ID id = ID.Null;
-
-                // If the category is unknown, don't return any results.
-                if (categoryItem == null)
-                    return new EntryItem[0];
-
-                id = categoryItem.ID;
-                
-                query.Add(new FieldQuery(Constants.Index.Fields.Category, id.ToShortID().ToString().ToLower()), QueryOccurance.Must);
-            }
-
-            if (minimumDate != null)
-                query.Add(new FieldQuery(Constants.Index.Fields.Created, minimumDate.Value.Year.ToString() + minimumDate.Value.Month.ToString() + "*"), QueryOccurance.Must);
-
-            var searcher = new Searcher();
-            result = searcher.Execute<EntryItem>(query, blog.Language, maxNumber, (list, item) => list.Add((EntryItem)item), Constants.Index.Fields.EntryDate, false).ToList();
-#endif
             return result.ToArray();
         }
 
@@ -467,14 +426,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var sql = "select {{0}}ItemId{{1}} from pages where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", (object[])queryIds.ToArray()));
               
                 var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader => new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader)), new[]{"a"});
-#elif FEATURE_OMS
-              var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "select {{0}}ItemId{{1}} from $page_table$ where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", entryIds.ToArray()));
-                sql = sql.Replace("$page_table$", "page");
-                var ids = Sitecore.Analytics. AnalyticsManager.ReadMany<ID>(sql, reader =>
-                {
-                    return new ID(AnalyticsManager.GetGuid(0, reader));
-                }, new object[0]);
 #endif
 
                 if (!ids.Any())

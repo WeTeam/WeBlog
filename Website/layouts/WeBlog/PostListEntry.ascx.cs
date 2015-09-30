@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Pipelines.GetSummary;
 using Sitecore.Pipelines;
@@ -27,11 +26,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             var args = new GetSummaryArgs();
             args.Entry = entry;
 
-#if SC62 || SC64
-            CorePipeline.Run("weblogGetSummary", args);
-#else
             CorePipeline.Run("weblogGetSummary", args, true);
-#endif
 
             return args.Summary;
         }

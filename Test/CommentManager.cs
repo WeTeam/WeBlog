@@ -2,18 +2,13 @@
 using System.Linq;
 using System.Web;
 using NUnit.Framework;
+using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Search;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
-
-#if FEATURE_CONTENT_SEARCH
-using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.Maintenance;
-#endif
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -603,13 +598,8 @@ namespace Sitecore.Modules.WeBlog.Test
 
         private void RebuildIndex()
         {
-#if FEATURE_CONTENT_SEARCH
             var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
-#else
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
-            index.Rebuild();
-#endif
         }
     }
 }
