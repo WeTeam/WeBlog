@@ -221,7 +221,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="tag">A tag the entry must contain</param>
         /// <param name="category">A category the entry must contain</param>
         /// <returns></returns>
-        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?) instead")]
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?) instead")] // deprecated in 2.4
         public EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null)
         {
           if(datePrefix.Length != 6)
@@ -500,116 +500,5 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             return postItemList.ToArray();
         }
-
-        #region Obsolete Methods
-        /// <summary>
-        /// Deletes a blog post
-        /// </summary>
-        /// <param name="postId">The ID of the post to delete</param>
-        /// <returns>True if the post was deleted, otherwise False</returns>
-        [Obsolete("Use DeleteEntry(string postID) instead")]
-        public static bool DeletePost(string postId)
-        {
-            return new EntryManager().DeleteEntry(postId);
-        }
-
-        [Obsolete("Use GetBlogEntries(int maxNumber) instead")]
-        public static EntryItem[] GetAllEntries(int maxNumber)
-        {
-            return new EntryManager().GetBlogEntries(maxNumber);
-        }
-
-        /// <summary>
-        /// Gets all blog posts.
-        /// </summary>
-        /// <param name="BlogID">The blog ID.</param>
-        /// <param name="MaxNumber">The max number.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetBlogEntries(ID BlogID, int MaxNumber).InnerItem instead")]
-        public static Item[] GetBlogEntriesAsItems(ID blogId, int maxNumber)
-        {
-            return (from entry in new EntryManager().GetBlogEntries(blogId, maxNumber) select entry.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Gets the blog entries.
-        /// </summary>
-        /// <param name="Tag">The tag.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetBlogEntries(string).InnerItem instead")]
-        public static Item[] GetBlogEntryItems(string tag)
-        {
-            return (from entry in new EntryManager().GetBlogEntries(tag) select entry.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Gets the blog entries.
-        /// </summary>
-        /// <param name="Tag">The tag.</param>
-        /// <param name="MaxNumber">The max number.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetBlogEntries(int maxNumber, string tag) instead")]
-        public static EntryItem[] GetBlogEntries(string tag, int maxNumber)
-        {
-            return new EntryManager().GetBlogEntries(maxNumber, tag);
-        }
-
-        /// <summary>
-        /// Gets the blog posty by ID.
-        /// </summary>
-        /// <param name="BlogPostID">The blog post ID.</param>
-        /// <returns></returns>
-        [Obsolete("Retrieve the item directly from the databse")]
-        public static Item GetBlogEntryByID(ID blogPostId)
-        {
-            var entry = Context.Database.GetItem(blogPostId);
-            if (entry == null)
-                Log.Error("Could not find blog item:" + blogPostId, typeof(EntryManager));
-
-            return entry;
-        }
-
-        /// <summary>
-        /// Gets the blog posty by ID.
-        /// </summary>
-        /// <param name="BlogPostID">The blog post ID.</param>
-        /// <returns></returns>
-        [Obsolete("Create a new Entry instance from the item given by the ID")]
-        public static EntryItem GetBlogEntry(ID blogPostId)
-        {
-            var entry = GetBlogEntryByID(blogPostId);
-            if (entry != null)
-                return new EntryItem(entry);
-            else
-                return null;
-        }
-
-        /// <summary>
-        /// Gets the blog entry by categorie.
-        /// </summary>
-        /// <param name="BlogID">The blog ID.</param>
-        /// <param name="CategorieID">ID of the categorie.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetBlogEntryByCategorie().InnerItem instead")]
-        public static Item[] GetBlogEntryByCategorieAsItem(ID blogID, string categorieId)
-        {
-            var entries = new EntryManager().GetBlogEntryByCategorie(blogID, categorieId);
-            return (from entry in entries
-                    select entry.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Makes the sorted post item list.
-        /// </summary>
-        /// <param name="array">The array.</param>
-        /// <returns></returns>
-        [Obsolete("Use MakeSortedEntriesList().InnerItem instead")]
-        public static Item[] MakeSortedItemList(IList array)
-        {
-            var sortedList = new EntryManager().MakeSortedEntriesList(array);
-            return (from entry in sortedList
-                    select entry.InnerItem).ToArray();
-        }
-        #endregion
     }
 }

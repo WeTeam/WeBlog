@@ -483,9 +483,6 @@
     <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.Search.config"/>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config">
       <SubType>Designer</SubType>
     </Content>

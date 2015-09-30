@@ -7,7 +7,6 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
@@ -285,77 +284,5 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             return Context.ContentDatabase ?? Context.Database;
         }
-
-        #region Obsolete Methods
-        /// <summary>
-        /// Gets the comments for the given blog entry as Items
-        /// </summary>
-        /// <param name="entryItem">The blog entry to get the comments for</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetEntryComments(Item entryItem).InnerItem instead")]
-        public static Item[] GetEntryCommentsAsItems(Item targetEntry)
-        {
-            return (from comment in new CommentManager().GetEntryComments(targetEntry) select comment.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Gets the comments for the blog entry as items
-        /// </summary>
-        /// <param name="blogId">The ID of the blog to get the comments for</param>
-        /// <param name="maximumCount">The maximum number of comments to retrieve</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetCommentsByBlog(ID blogId, int maximumCount).InnerItem instead")]
-        public static Item[] GetCommentItemsByBlog(ID blogId, int maximumCount)
-        {
-            return (from comment in new CommentManager().GetCommentsByBlog(blogId, maximumCount) select comment.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Makes the sorted comment item list.
-        /// </summary>
-        /// <param name="array">The array.</param>
-        /// <returns></returns>
-        [Obsolete("Use InnerItem of comment object")]
-        public static Item[] MakeSortedCommentsListAsItems(System.Collections.IList array)
-        {
-            var commentItemList = new List<Item>();
-            foreach (Item item in array)
-            {
-                if (item.TemplateID == Settings.CommentTemplateID && item.Versions.GetVersions().Length > 0)
-                {
-                    commentItemList.Add(item);
-                }
-            }
-            commentItemList.Sort(new ItemDateComparerDesc());
-            return commentItemList.ToArray();
-        }
-
-        /// <summary>
-        /// Sort the comments list using the CommentDateComparerDesc comparer
-        /// </summary>
-        /// <param name="array">The comments to sort</param>
-        /// <returns>A sorted list of comments</returns>
-        [Obsolete("Use sorting options on GetCommentsFor")]
-        public CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
-        {
-            var commentItemList = new List<CommentItem>();
-            var template = GetDatabase().GetTemplate(Settings.CommentTemplateID);
-
-            if (template != null)
-            {
-                foreach (Item item in array)
-                {
-                    if (item.TemplateIsOrBasedOn(template) && item.Versions.Count > 0)
-                    {
-                        commentItemList.Add(new CommentItem(item));
-                    }
-                }
-
-                commentItemList.Sort(new CommentDateComparerDesc());
-            }
-
-            return commentItemList.ToArray();
-        }
-        #endregion
     }
 }

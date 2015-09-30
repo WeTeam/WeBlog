@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -187,18 +186,5 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             return Context.ContentDatabase ?? Context.Database;
         }
-
-        #region Obsolete Methods
-        /// <summary>
-        /// Gets the categories by entry ID.
-        /// </summary>
-        /// <param name="EntryID">The entry ID.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetCategoriesByEntryID(ID EntryID).InnerItem instead")]
-        public static Item[] GetCategoriesItemsByEntryID(ID EntryID)
-        {
-            return (from category in new CategoryManager().GetCategoriesByEntryID(EntryID) select category.InnerItem).ToArray();
-        }
-        #endregion
     }
 }
