@@ -42,43 +42,47 @@
   </PropertyGroup>
   <Import Project="..\sc version properties.targets" />
   <ItemGroup>
-    <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
-      <HintPath>..\Dependencies\Third-party\.net 2\AntiXSSLibrary.dll</HintPath>
-      <Aliases>antixss</Aliases>
-    </Reference>
-    <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v4.0' or '$(TargetFrameworkVersion)' == 'v4.5'">
-      <HintPath>..\Dependencies\Third-party\.net 4\AntiXSSLibrary.dll</HintPath>
-      <Aliases>antixss</Aliases>
+    <!--<Reference Include="AntiXssLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>-->
+    <Reference Include="AntiXssLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
-      <HintPath>..\Dependencies\Third-party\CookComputing.XmlRpcV2.dll</HintPath>
+      <HintPath>..\lib\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
     <Reference Include="CustomItemGenerator">
-      <HintPath>..\Dependencies\Third-party\CustomItemGenerator.dll</HintPath>
+      <HintPath>..\lib\CustomItemGenerator.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>$(SitecorePath)\bin\HtmlAgilityPack.dll</HintPath>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
-      <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
+      <HintPath>..\lib\MSCaptcha\v1.0\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.5'))">
-      <HintPath>..\Dependencies\Third-party\WFFM 7.5\MSCaptcha.dll</HintPath>
+      <HintPath>..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
-      <HintPath>..\Dependencies\Third-party\WFFM 8.0\MSCaptcha.dll</HintPath>
+      <HintPath>..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="RadEditor.Net2">
       <HintPath>$(SitecorePath)\bin\RadEditor.Net2.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Recaptcha">
-      <HintPath>..\Dependencies\Third-party\Recaptcha.dll</HintPath>
+      <HintPath>..\lib\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
@@ -490,6 +494,9 @@
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -522,11 +529,11 @@
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
-    <CreateItem Include="..\dependencies\third-party\*.dll">
+    <!--<CreateItem Include="..\dependencies\third-party\*.dll">
       <Output ItemName="DependencyFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecorePath)\bin" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecoreCDPath)\bin" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecoreCDPath)\bin" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />-->
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
   </Target>
   <Target Name="ContentDeliveryConfig">

@@ -3,22 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{720A7BEF-0695-49FD-95FC-15BEF4822B59}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Third-party", "Third-party", "{0CDFF1D0-EB1E-44DF-A49C-EA83F3DAC88E}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\Third-party\AntiXSSLibrary.dll = Dependencies\Third-party\AntiXSSLibrary.dll
-		Dependencies\Third-party\CookComputing.XmlRpcV2.dll = Dependencies\Third-party\CookComputing.XmlRpcV2.dll
-		Dependencies\Third-party\CustomItemGenerator.dll = Dependencies\Third-party\CustomItemGenerator.dll
-		Dependencies\Third-party\MSCaptcha.dll = Dependencies\Third-party\MSCaptcha.dll
-		Dependencies\Third-party\Recaptcha.dll = Dependencies\Third-party\Recaptcha.dll
-		Dependencies\Third-party\RssToolkit.dll = Dependencies\Third-party\RssToolkit.dll
-		Dependencies\Third-party\Sitecore.Captcha.dll = Dependencies\Third-party\Sitecore.Captcha.dll
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.WeBlog", "Website\Sitecore.Modules.WeBlog.csproj", "{26FE5F3A-F140-40C4-85A0-C1866DA26F16}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{940E394D-1D3F-4988-91D4-038C75910D8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
