@@ -21,6 +21,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DebugSymbols>true</DebugSymbols>
@@ -77,10 +78,6 @@
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
       <HintPath>..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="RadEditor.Net2">
-      <HintPath>$(SitecorePath)\bin\RadEditor.Net2.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\lib\Recaptcha.dll</HintPath>
     </Reference>
@@ -109,7 +106,10 @@
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.NVelocity">
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
@@ -129,6 +129,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -164,7 +168,19 @@
     <Compile Include="Commands\RebuildIndex.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
+    <Compile Include="Components\ILinkInclude.cs" />
+    <Compile Include="Components\IRsdInclude.cs" />
+    <Compile Include="Components\ISyndicationInclude.cs" />
+    <Compile Include="Components\IThemeInclude.cs" />
+    <Compile Include="Components\RsdLink.cs" />
+    <Compile Include="Components\SyndicationLink.cs" />
+    <Compile Include="Components\ThemeLink.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\LinkIncludeController.cs" />
+    <Compile Include="Controllers\RsdIncludesController.cs" />
+    <Compile Include="Controllers\ThemeIncludesController.cs" />
+    <Compile Include="Controllers\BlogSyndicationController.cs" />
     <Compile Include="Converters\ExtendedBooleanConverter.cs" />
     <Compile Include="Extensions\CustomTextFieldExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
@@ -360,6 +376,7 @@
     <Compile Include="Managers\ITagManager.cs" />
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
+    <Compile Include="Model\BlogRenderingModel.cs" />
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0'))" />
     <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
@@ -493,6 +510,17 @@
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
+  </ItemGroup>
+  <ItemGroup>    
+	<Content Include="Views\WeBlog\Blog.cshtml" />
+  </ItemGroup>  
+  <ItemGroup>
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\MvcLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

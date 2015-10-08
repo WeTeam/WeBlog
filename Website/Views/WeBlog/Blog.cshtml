@@ -1,0 +1,21 @@
+﻿@model Sitecore.Modules.WeBlog.Model.BlogRenderingModel
+
+<div class="wb">
+    <div class="wb-header">
+        <a href="@Model.Hyperlink">
+            @Html.Sitecore().Field("Title", @Model.BlogItem)
+        </a>
+    </div>
+
+    <div class="wb-wrapper">
+        <div class="wb-leftcolumn">
+            @Html.Sitecore().Placeholder("weblog-main")
+        </div>
+
+        <div class="wb-rightcolumn">
+            @Html.Sitecore().Placeholder("weblog-sidebar")
+        </div>
+        @*Feel free to remove the following line from your implementation*@
+        <div class="wb-footer">Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a></div>
+    </div>
+</div>

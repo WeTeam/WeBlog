@@ -1,37 +1,40 @@
-﻿using System.Linq;
-using System.Web.UI;
+﻿using System.Web.UI;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Items.Feeds;
-using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.WebControls
 {
     public class Syndication : Sitecore.Web.UI.WebControl
     {
+        protected ISyndicationInclude SyndicationLink;
+
+        public Syndication(ISyndicationInclude sl = null)
+        {
+            SyndicationLink = sl ?? new SyndicationLink();
+        }
+
+
         protected override void DoRender(HtmlTextWriter output)
         {
-            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
-
-            if (blog != null && blog.EnableRSS.Checked)
+            if (SyndicationLink.ShouldInclude)
             {
-                var feeds = blog.SyndicationFeeds;
-                if (feeds != null && feeds.Count() > 0)
-                {
-                    foreach (RSSFeedItem feed in feeds)
-                    {
-                        AddFeedToOutput(output, feed);
-                    }
-                }
+                AddFeedToOutput(output);
             }
         }
 
-        protected virtual void AddFeedToOutput(HtmlTextWriter output, RSSFeedItem feed)
+        protected virtual void AddFeedToOutput(HtmlTextWriter output)
         {
-            output.AddAttribute(HtmlTextWriterAttribute.Rel, "alternate");
-            output.AddAttribute(HtmlTextWriterAttribute.Title, feed.Title.Text);
-            output.AddAttribute(HtmlTextWriterAttribute.Type, "application/rss+xml");
-            output.AddAttribute(HtmlTextWriterAttribute.Href, feed.Url);
-            output.RenderBeginTag(HtmlTextWriterTag.Link);
-            output.RenderEndTag();
+            foreach (RSSFeedItem feed in SyndicationLink.Feeds)
+            {
+                foreach (var a in SyndicationLink.Attributes)
+                {
+                    output.AddAttribute(a.Key, a.Value);
+                }
+                output.AddAttribute(HtmlTextWriterAttribute.Title, feed.Title.Text);
+                output.AddAttribute(HtmlTextWriterAttribute.Href, feed.Url);
+                output.RenderBeginTag(HtmlTextWriterTag.Link);
+                output.RenderEndTag();
+            }
         }
     }
 }
