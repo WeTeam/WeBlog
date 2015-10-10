@@ -1,4 +1,6 @@
-﻿namespace Sitecore.Modules.WeBlog.Items.WeBlog
+﻿using Sitecore.Links;
+
+namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
     public partial class CategoryItem
     {
@@ -14,6 +16,15 @@
 
                 return Name;
             }
+        }
+
+        /// <summary>
+        /// Gets the URL for a category
+        /// </summary>
+        /// <returns>The URL of the category</returns>
+        public object GetUrl()
+        {
+            return LinkManager.GetItemUrl(Context.Database.GetItem(ID));
         }
     }
 }

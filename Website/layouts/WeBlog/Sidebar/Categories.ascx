@@ -11,7 +11,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <a href="<%# GetCategoryUrl(Container.DataItem as CategoryItem) %>"><%# (Container.DataItem as CategoryItem).DisplayTitle %></a>
+                <a href="<%# (Container.DataItem as CategoryItem).GetUrl() %>"><%# (Container.DataItem as CategoryItem).DisplayTitle %></a>
             </li>
         </ItemTemplate>
     </asp:ListView>
