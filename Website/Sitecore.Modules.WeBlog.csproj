@@ -143,7 +143,11 @@
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
+    <Compile Include="Components\Archive\ArchiveCore.cs" />
+    <Compile Include="Components\Archive\IArchiveCore.cs" />
     <Compile Include="Controllers\BlogCategoriesController.cs" />
+    <Compile Include="Controllers\BlogArchiveController.cs" />
+    <Compile Include="Model\ArchiveRenderingModel.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
@@ -528,6 +532,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\Categories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Archive.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

@@ -1,0 +1,33 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Model.ArchiveRenderingModel
+
+<div class="wb-archive wb-panel" id="wb-archive">
+    <h3>@Translator.Render("ARCHIVE").ToHtmlString()</h3>
+    <ul>
+        @foreach (var y in Model.ArchiveCore.MonthsByYear)
+        {
+            <li>
+                <a class="wb-year @(Model.ExpandMonthsOnLoad ? "expanded" : "")">@y.Key</a>
+                <ul id="month-@y.Key" class="wb-month" style="@(Model.ExpandMonthsOnLoad ? "" : "display:none;")">
+                    @foreach (var m in y.Value)
+                    {
+                        var monthName = Model.ArchiveCore.GetFriendlyMonthName(m);
+                        var entries = Model.ArchiveCore.EntriesByMonthAndYear[@m];
+                        <li>
+                            <a class="wb-month @(Model.ExpandPostsOnLoad ? "expanded" : "")">@monthName (@entries.Count)</a>
+                            <ul id="entries-@monthName" class="wb-entries" style="@(Model.ExpandPostsOnLoad ? "" : "display:none;")">
+                                @foreach (var e in entries)
+                                {
+                                    <li>
+                                        <a href="@e.Url">@e.Title.Rendered.ToHtmlString()</a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
