@@ -1,14 +1,19 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Controllers
 {
-    public class BlogCategoriesController : Controller
+    public class BlogCategoriesController : BlogBaseController
     {
         public ActionResult Index()
         {
             var categoryItems = ManagerFactory.CategoryManagerInstance.GetCategories();
-            return View("~/Views/WeBlog/Categories.cshtml", categoryItems);
+            if (categoryItems.Any())
+            {
+                return View("~/Views/WeBlog/Categories.cshtml", categoryItems);
+            }
+            return null;
         }
     }
 }

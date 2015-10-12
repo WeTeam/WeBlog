@@ -9,185 +9,134 @@
 // <url>http://trac.sitecore.net/SublayoutParameterHelper/</url>
 //-------------------------------------------------------------------------------------------------
 
+using System;
+using System.Web.UI;
+using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.layouts;
+using Sitecore.Web.UI.WebControls;
+
 namespace Sitecore.Sharedsource.Web.UI.Sublayouts
 {
-  using System;
-  using System.Collections.Specialized;
-
-  /// <summary>
-  /// Helper class to parse parameters and data source passed to a sublayout.
-  /// </summary>
-  public class SublayoutParameterHelper
-  {
-    #region Private members
-
     /// <summary>
-    /// Sublayout data source item.
+    /// Helper class to parse parameters and data source passed to a sublayout.
     /// </summary>
-    private Sitecore.Data.Items.Item dataSourceItem = null;
-
-    #endregion
-
-    #region Public constructors
-
-    /// <summary>
-    /// Initializes a new instance of the SublayoutParameterHelper class. Parses
-    /// parameters and applies properties as directed.
-    /// </summary>
-    /// <param name="control">Pass "this" from the user control</param>
-    /// <param name="applyProperties">Set user control properties corresponding to
-    /// parameter names to parameter values.</param>
-    public SublayoutParameterHelper(
-      System.Web.UI.UserControl control,
-      bool applyProperties)
+    public class SublayoutParameterHelper : ParameterHelperBase<UserControl>
     {
-      this.BindingControl = control.Parent as Sitecore.Web.UI.WebControls.Sublayout;
+        #region Private members
 
-      // Parse parameters passed to the sc:sublayout control.
-      if (this.BindingControl == null)
-      {
-        return;
-      }
+        /// <summary>
+        /// Sublayout data source item.
+        /// </summary>
+        private Item dataSourceItem = null;
 
-      this.Parameters = Sitecore.Web.WebUtil.ParseUrlParameters(
-        this.BindingControl.Parameters);
+        #endregion
 
-      if (applyProperties)
-      {
-        this.ApplyProperties(control);
-      }
-    }
+        #region Public constructors
 
-    #endregion
-
-    #region Public properties
-
-    /// <summary>
-    /// Sets the path to the Sitecore data source item.
-    /// </summary>
-    public string DataSource
-    {
-      set
-      {
-        this.DataSourceItem = Sitecore.Context.Database.GetItem(value);
-      }
-    }
-
-    /// <summary>
-    /// Gets or sets the data source item.
-    /// </summary>
-    public Sitecore.Data.Items.Item DataSourceItem
-    {
-      get
-      {
-        // If the data source has not been set 
-        // and this code can access properties of the binding control
-        if (this.dataSourceItem == null)
+        /// <summary>
+        /// Initializes a new instance of the SublayoutParameterHelper class. Parses
+        /// parameters and applies properties as directed.
+        /// </summary>
+        /// <param name="control">Pass "this" from the user control</param>
+        /// <param name="applyProperties">Set user control properties corresponding to
+        /// parameter names to parameter values.</param>
+        public SublayoutParameterHelper(UserControl control, bool applyProperties)
         {
-          if (this.BindingControl == null
-              || String.IsNullOrEmpty(this.BindingControl.DataSource))
-          {
-            this.dataSourceItem = Sitecore.Context.Item;
-          }
-          else if (Sitecore.Context.Database != null)
-          {
-            this.dataSourceItem =
-              Sitecore.Context.Database.GetItem(this.BindingControl.DataSource);
-          }
+            BindingControl = control.Parent as Sitecore.Web.UI.WebControls.Sublayout;
+
+            // Parse parameters passed to the sc:sublayout control.
+            if (BindingControl == null)
+            {
+                return;
+            }
+
+            Parameters = Sitecore.Web.WebUtil.ParseUrlParameters(BindingControl.Parameters);
+
+            if (applyProperties)
+            {
+                ApplyProperties(control);
+            }
         }
 
-        return this.dataSourceItem;
-      }
+        #endregion
 
-      set
-      {
-        this.dataSourceItem = value;
-      }
+        #region Public properties
+
+        /// <summary>
+        /// Sets the path to the Sitecore data source item.
+        /// </summary>
+        public string DataSource
+        {
+            set
+            {
+                DataSourceItem = Context.Database.GetItem(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the data source item.
+        /// </summary>
+        public Item DataSourceItem
+        {
+            get
+            {
+                // If the data source has not been set 
+                // and this code can access properties of the binding control
+                if (dataSourceItem == null)
+                {
+                    if (BindingControl == null || String.IsNullOrEmpty(BindingControl.DataSource))
+                    {
+                        dataSourceItem = Context.Item;
+                    }
+                    else if (Context.Database != null)
+                    {
+                        dataSourceItem =
+                          Context.Database.GetItem(BindingControl.DataSource);
+                    }
+                }
+
+                return dataSourceItem;
+            }
+            set
+            {
+                dataSourceItem = value;
+            }
+        }
+
+        #endregion
+
+        #region Protected properties
+
+        /// <summary>
+        /// Gets or sets the sublayout control used when user control binds to Sitecore
+        /// placeholder,  or using sc:sublayout control. Otherwiwse Null (when user control
+        /// is bound using ASP.NET).
+        /// </summary>
+        protected Sublayout BindingControl
+        {
+            get;
+            set;
+        }
+
+        #endregion
+
+        #region Protected methods
+
+        /// <summary>
+        /// Apply parameters passed to the sublayout as properties of the user control.
+        /// </summary>
+        /// <param name="control">The user control.</param>
+        protected void ApplyProperties(UserControl control)
+        {
+            ApplyParameters(control);
+            if (String.IsNullOrEmpty(BindingControl.DataSource))
+            {
+                return;
+            }
+
+            Reflection.ReflectionUtil.SetProperty(control, "datasource", DataSourceItem.Paths.FullPath);
+            Reflection.ReflectionUtil.SetProperty(control, "datasourceitem", DataSourceItem);
+        }
+        #endregion
     }
-
-    #endregion
-
-    #region Protected properties
-
-    /// <summary>
-    /// Gets or sets the parameters passed to the sublayout.
-    /// </summary>
-    protected NameValueCollection Parameters
-    {
-      get;
-      set;
-    }
-
-    /// <summary>
-    /// Gets or sets the sublayout control used when user control binds to Sitecore
-    /// placeholder,  or using sc:sublayout control. Otherwiwse Null (when user control
-    /// is bound using ASP.NET).
-    /// </summary>
-    protected Sitecore.Web.UI.WebControls.Sublayout BindingControl
-    {
-      get;
-      set;
-    }
-
-    #endregion
-
-    #region Public methods
-
-    /// <summary>
-    /// Return the value of a specific parameter.
-    /// </summary>
-    /// <param name="key">Parameter name.</param>
-    /// <returns>Value of specified parameter.</returns>
-    public string GetParameter(string key)
-    {
-      if (this.Parameters == null)
-      {
-        return String.Empty;
-      }
-
-      string result = this.Parameters[key];
-
-      if (String.IsNullOrEmpty(result))
-      {
-        return String.Empty;
-      }
-
-      return result;
-    }
-
-    #endregion
-
-    #region Protected methods
-
-    /// <summary>
-    /// Apply parameters passed to the sublayout as properties of the user control.
-    /// </summary>
-    /// <param name="control">The user control.</param>
-    protected void ApplyProperties(System.Web.UI.UserControl control)
-    {
-      foreach (string key in this.Parameters.Keys)
-      {
-        Sitecore.Reflection.ReflectionUtil.SetProperty(
-          control,
-          key,
-          this.Parameters[key]);
-      }
-
-      if (String.IsNullOrEmpty(this.BindingControl.DataSource))
-      {
-        return;
-      }
-
-      Sitecore.Reflection.ReflectionUtil.SetProperty(
-        control,
-        "datasource",
-        this.DataSourceItem.Paths.FullPath);
-      Sitecore.Reflection.ReflectionUtil.SetProperty(
-        control,
-        "datasourceitem",
-        this.DataSourceItem);
-    }
-
-    #endregion
-  }
 }

@@ -16,10 +16,17 @@ key: controller
 content-length: 14
 
 BlogCategories
+----field----
+field: {13F89250-AD6B-4548-882E-118A12C18094}
+name: Parameters Template
+key: parameters template
+content-length: 38
+
+{43ABB60C-C4D4-40B9-95CE-04473C492FE2}
 ----version----
 language: en
 version: 1
-revision: 479fdb6d-222a-4937-a51a-34005127bcf0
+revision: 4383b367-43fa-4301-961f-ec75e92bcda8
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-479fdb6d-222a-4937-a51a-34005127bcf0
+4383b367-43fa-4301-961f-ec75e92bcda8
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151008T205641Z
+20151010T074457Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

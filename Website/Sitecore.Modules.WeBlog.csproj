@@ -147,7 +147,11 @@
     <Compile Include="Components\Archive\IArchiveCore.cs" />
     <Compile Include="Controllers\BlogCategoriesController.cs" />
     <Compile Include="Controllers\BlogArchiveController.cs" />
+    <Compile Include="Controllers\BlogBaseController.cs" />
+    <Compile Include="layouts\ParameterHelperBase.cs" />
+    <Compile Include="layouts\RenderingParameterHelper.cs" />
     <Compile Include="Model\ArchiveRenderingModel.cs" />
+    <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>

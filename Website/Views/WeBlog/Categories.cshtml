@@ -2,17 +2,14 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Items.WeBlog.CategoryItem[]
 
-@if (Model.Length != 0)
-{
-    <div class="wb-categories wb-panel">
-        <h3>@Translator.Render("CATEGORIES").ToHtmlString()</h3>
-        <ul>
-            @foreach (var categoryItem in Model)
+<div class="wb-categories wb-panel">
+    <h3>@Translator.Render("CATEGORIES").ToHtmlString()</h3>
+    <ul>
+        @foreach (var categoryItem in Model)
             {
-                <li>
-                    <a href="@categoryItem.GetUrl()">@categoryItem.DisplayTitle.ToHtmlString()</a>
-                </li>
-            }
-        </ul>
-    </div>
-}
+            <li>
+                <a href="@categoryItem.GetUrl()">@categoryItem.DisplayTitle.ToHtmlString()</a>
+            </li>
+        }
+    </ul>
+</div>

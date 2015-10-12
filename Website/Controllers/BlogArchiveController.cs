@@ -6,7 +6,7 @@ using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Controllers
 {
-    public class BlogArchiveController : Controller
+    public class BlogArchiveController : BlogBaseController
     {
         protected IArchiveCore ArchiveCore { get; set; }
 
