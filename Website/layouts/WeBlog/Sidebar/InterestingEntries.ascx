@@ -2,7 +2,7 @@
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
 
 <div class="wb-panel">
-    <h3><%= Title %></h3>
+    <h3><%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("POPULAR_POSTS") %></h3>
     <asp:Repeater runat="server" ID="ItemList">
         <HeaderTemplate>
             <ul>
