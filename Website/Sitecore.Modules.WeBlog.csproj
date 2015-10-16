@@ -154,6 +154,8 @@
     <Compile Include="Controllers\BlogArchiveController.cs" />
     <Compile Include="Controllers\BlogBaseController.cs" />
     <Compile Include="Controllers\BlogFeedsController.cs" />
+    <Compile Include="Controllers\ShareEntryAddThisController.cs" />
+    <Compile Include="Controllers\ShareEntryShareThisController.cs" />
     <Compile Include="Controllers\BlogInterestingEntriesController.cs" />
     <Compile Include="Controllers\BlogRecentCommentsController.cs" />
     <Compile Include="Controllers\BlogTagCloudController.cs" />
@@ -567,6 +569,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\InterestingEntries.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\ShareEntry-ShareThis.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\ShareEntry-AddThis.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
