@@ -23,13 +23,6 @@ namespace Sitecore.Modules.WeBlog.Pipelines
                     }
                 }
             }
-
-            if (args.SourceField.Value.Contains("$username"))
-            {
-                var user = Context.User;
-                if (user != null)
-                    args.Result = args.SourceField.Value.Replace("$username", user.Name);
-            }
         }
     }
 }

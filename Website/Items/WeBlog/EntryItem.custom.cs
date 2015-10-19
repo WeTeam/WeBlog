@@ -99,7 +99,7 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                         }
                     }
                 }
-                else if (string.IsNullOrEmpty(Author.Raw) || Author.Raw == "$username")
+                else if (string.IsNullOrEmpty(Author.Raw) || Author.Raw == "$currentuser")
                     return CreatedBy.LocalName;
 
                 return Author.Rendered;
