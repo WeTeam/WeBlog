@@ -158,8 +158,8 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
 
                     return name;
                 }
-                
-                if (string.IsNullOrEmpty(Author.Raw) || Author.Raw == "$username") return CreatedBy.LocalName;
+
+                if (string.IsNullOrEmpty(Author.Raw) || Author.Raw == "$currentuser") return CreatedBy.LocalName;
 
                 return Author.Rendered;
             }
