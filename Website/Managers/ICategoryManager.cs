@@ -52,8 +52,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>
         /// Gets the categories for the blog entry given by ID
         /// </summary>
-        /// <param name="EntryID">The ID of the blog entry to get teh categories from</param>
+        /// <param name="entryId">The ID of the blog entry to get teh categories from</param>
         /// <returns>The categories of the blog</returns>
-        CategoryItem[] GetCategoriesByEntryID(ID EntryID);
+        CategoryItem[] GetCategoriesByEntryID(ID entryId);
     }
 }

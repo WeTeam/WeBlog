@@ -1,5 +1,5 @@
-﻿using CustomItemGenerator.Fields.SimpleTypes;
-using Microsoft.Security.Application;
+﻿using Microsoft.Security.Application;
+using Sitecore.Modules.WeBlog.Items.Custom;
 
 namespace Sitecore.Modules.WeBlog.Extensions
 {

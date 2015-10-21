@@ -92,7 +92,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>True if RSS is enabled, otherwise False</returns>
         public bool EnableRSS(Items.WeBlog.BlogHomeItem blog)
         {
-            return blog.EnableRSS.Checked;
+            return blog.EnableRss.Checked;
         }
 
         /// <summary>
