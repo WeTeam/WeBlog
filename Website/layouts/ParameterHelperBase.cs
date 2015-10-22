@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq.Expressions;
+using Sitecore.Diagnostics;
+using Sitecore.Reflection;
 
 namespace Sitecore.Modules.WeBlog.layouts
 {
@@ -18,8 +21,24 @@ namespace Sitecore.Modules.WeBlog.layouts
         {
             foreach (string key in Parameters.Keys)
             {
-                Reflection.ReflectionUtil.SetProperty(presentationComponent, key, Parameters[key]);
+                try
+                {
+                    ReflectionUtil.SetProperty(presentationComponent, key, Parameters[key]);
+                }
+                catch (Exception e)
+                {
+                    Log.Error("WeBlog.ParameterHelperBase: Unable to set rendering/sublayout property", e, this);
+                    Type propertyType = ReflectionUtil.GetPropertyInfo(presentationComponent, key).PropertyType;
+                    ReflectionUtil.SetProperty(presentationComponent, key, GetDefaultValueForType(propertyType));
+                }
             }
+        }
+
+        public static object GetDefaultValueForType(Type type)
+        {
+            if (type == null) return null;
+            Expression<Func<object>> e = Expression.Lambda<Func<object>>(Expression.Convert(Expression.Default(type), typeof(object)));
+            return e.Compile()();
         }
 
         /// <summary>

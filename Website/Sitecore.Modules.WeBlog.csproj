@@ -157,6 +157,7 @@
     <Compile Include="Controllers\ShareEntryAddThisController.cs" />
     <Compile Include="Controllers\ShareEntryShareThisController.cs" />
     <Compile Include="Controllers\BlogInterestingEntriesController.cs" />
+    <Compile Include="Controllers\BlogTwitterController.cs" />
     <Compile Include="Controllers\BlogRecentCommentsController.cs" />
     <Compile Include="Controllers\BlogTagCloudController.cs" />
     <Compile Include="Controllers\BlogFacebookLikeController.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Model\FacebookLikeRenderingModel.cs" />
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
     <Compile Include="Model\TagCloudRenderingModel.cs" />
+    <Compile Include="Model\TwitterTimelineRenderingModel.cs" />
     <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
@@ -535,9 +537,9 @@
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
   </ItemGroup>
-  <ItemGroup>    
-	<Content Include="Views\WeBlog\Blog.cshtml" />
-  </ItemGroup>  
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Blog.cshtml" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
@@ -569,6 +571,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\InterestingEntries.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\TwitterTimeline.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\ShareEntry-ShareThis.cshtml" />
