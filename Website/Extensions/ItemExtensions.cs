@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Links;
 
 namespace Sitecore.Modules.WeBlog.Extensions
 {
@@ -151,6 +152,16 @@ namespace Sitecore.Modules.WeBlog.Extensions
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Get the URL for an item
+        /// </summary>
+        /// <param name="item">The item to get the URL for</param>
+        /// <returns>The URL for the item if valid, otherwise an empty string</returns>
+        public static string GetUrl(this Item item)
+        {
+            return LinkManager.GetItemUrl(item);
         }
     }
 }

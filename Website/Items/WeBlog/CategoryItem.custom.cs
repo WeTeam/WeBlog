@@ -1,4 +1,5 @@
 ﻿using Sitecore.Links;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Items.WeBlog
 {
@@ -22,9 +23,9 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
         /// Gets the URL for a category
         /// </summary>
         /// <returns>The URL of the category</returns>
-        public object GetUrl()
+        public string GetUrl()
         {
-            return LinkManager.GetItemUrl(Context.Database.GetItem(ID));
+            return InnerItem.GetUrl();
         }
     }
 }

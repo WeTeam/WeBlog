@@ -12,6 +12,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
     public class BlogBaseController : Controller
     {
         private BlogHomeItem _currentBlog;
+        private EntryItem _currentEntry;
         private Item _datasource;
         public RenderingParameterHelper RenderingParameterHelper { get; set; }
 
@@ -21,6 +22,11 @@ namespace Sitecore.Modules.WeBlog.Controllers
         public BlogHomeItem CurrentBlog
         {
             get { return _currentBlog ?? (_currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog()); }
+        }
+
+        public EntryItem CurrentEntry
+        {
+            get { return _currentEntry ?? (_currentEntry = new EntryItem(DataSourceItem)); }
         }
 
         public Item DataSourceItem
