@@ -157,6 +157,7 @@
     <Compile Include="Controllers\BlogBaseController.cs" />
     <Compile Include="Controllers\BlogEntryCategoriesController.cs" />
     <Compile Include="Controllers\BlogEntryTagsController.cs" />
+    <Compile Include="Controllers\BlogFacebookCommentsController.cs" />
     <Compile Include="Controllers\BlogFeedsController.cs" />
     <Compile Include="Controllers\ShareEntryAddThisController.cs" />
     <Compile Include="Controllers\ShareEntryShareThisController.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="layouts\ParameterHelperBase.cs" />
     <Compile Include="layouts\RenderingParameterHelper.cs" />
     <Compile Include="Model\ArchiveRenderingModel.cs" />
+    <Compile Include="Model\FacebookCommentsRenderingModel.cs" />
     <Compile Include="Model\FacebookLikeRenderingModel.cs" />
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
     <Compile Include="Model\TagCloudRenderingModel.cs" />
@@ -590,6 +592,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\EntryTags.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\FacebookComments.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
