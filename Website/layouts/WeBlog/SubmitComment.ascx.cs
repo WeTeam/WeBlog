@@ -70,7 +70,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 if (txtCommentWebsite != null)
                 {
                     string website = txtCommentWebsite.Text;
-                    website = website.Contains("://") ? website : String.Format("//{0}", website);
+                    if (!String.IsNullOrEmpty(website))
+                    {
+                        website = website.Contains("://") ? website : String.Format("//{0}", website);
+                    }
                     comment.Fields.Add(Constants.Fields.Website, website);
                 }
                 comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
