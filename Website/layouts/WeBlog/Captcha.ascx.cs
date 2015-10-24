@@ -4,16 +4,23 @@ using System.Web.UI.WebControls;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
-	public partial class Captcha : System.Web.UI.UserControl
-	{
+    public partial class Captcha : System.Web.UI.UserControl
+    {
         protected void uxCaptchaValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (uxCaptchaCode != null)
             {
-                uxCaptchaCode.ValidateCaptcha(uxCaptchaText.Text);
-                uxCaptchaCode.CaptchaMaxTimeout = (int)Settings.CaptchaMaximumTimeout.TotalSeconds;
-                uxCaptchaCode.CaptchaMinTimeout = (int)Settings.CaptchaMinimumTimeout.TotalSeconds;
-                args.IsValid = uxCaptchaCode.UserValidated;
+                try
+                {
+                    uxCaptchaCode.ValidateCaptcha(uxCaptchaText.Text);
+                    uxCaptchaCode.CaptchaMaxTimeout = (int)Settings.CaptchaMaximumTimeout.TotalSeconds;
+                    uxCaptchaCode.CaptchaMinTimeout = (int)Settings.CaptchaMinimumTimeout.TotalSeconds;
+                    args.IsValid = uxCaptchaCode.UserValidated;
+                }
+                catch (NullReferenceException)
+                {
+                    Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                }
             }
         }
 
@@ -24,5 +31,5 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 uxCaptchaText.Focus();
             }
         }
-	}
+    }
 }
