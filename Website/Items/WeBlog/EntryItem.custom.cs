@@ -1,5 +1,6 @@
 ﻿using System;
 using Sitecore.Links;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.Accounts;
 
@@ -160,6 +161,11 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                 }
             }
             return (string[])result.ToArray(typeof(string));
+        }
+
+        public bool DoesFieldRequireWrapping(string fieldName)
+        {
+            return InnerItem.DoesFieldRequireWrapping(fieldName);
         }
     }
 }

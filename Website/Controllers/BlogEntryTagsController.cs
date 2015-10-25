@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using Sitecore.Modules.WeBlog.Components.EntryTags;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Mvc.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Controllers
 {

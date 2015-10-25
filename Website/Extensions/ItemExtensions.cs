@@ -66,7 +66,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
             else
             {
                 bool result = false;
-                foreach(var template in itemTemplate.BaseTemplates)
+                foreach (var template in itemTemplate.BaseTemplates)
                 {
                     result = TemplateIsOrBasedOn(template, baseTemplate);
                     if (result)
@@ -100,12 +100,12 @@ namespace Sitecore.Modules.WeBlog.Extensions
                     derivedTemplates.Add((TemplateItem)source);
                 else
                 {
-                    if(source.Axes.IsDescendantOf(rootItem))
+                    if (source.Axes.IsDescendantOf(rootItem))
                         foundItems.Add(source);
                 }
             }
 
-            foreach(var derivedTemplate in derivedTemplates)
+            foreach (var derivedTemplate in derivedTemplates)
             {
                 foundItems.AddRange(FindItemsByTemplateOrDerivedTemplate(rootItem, derivedTemplate));
             }
@@ -162,6 +162,17 @@ namespace Sitecore.Modules.WeBlog.Extensions
         public static string GetUrl(this Item item)
         {
             return LinkManager.GetItemUrl(item);
+        }
+
+        /// <summary>
+        /// Determines if the field given by name needs to have it's output wrapped in an additional tag
+        /// </summary>
+        /// <param name="item">The item to check field on</param>
+        /// <param name="fieldName">The name of the field to check</param>
+        /// <returns>True if wrapping is required, otherwsie false  </returns>
+        public static bool DoesFieldRequireWrapping(this Item item, string fieldName)
+        {
+            return !item[fieldName].StartsWith("<p>");
         }
     }
 }

@@ -159,6 +159,7 @@
     <Compile Include="Controllers\BlogBaseController.cs" />
     <Compile Include="Controllers\BlogCommentsListController.cs" />
     <Compile Include="Controllers\BlogEntryCategoriesController.cs" />
+    <Compile Include="Controllers\BlogEntryController.cs" />
     <Compile Include="Controllers\BlogEntryTagsController.cs" />
     <Compile Include="Controllers\BlogFacebookCommentsController.cs" />
     <Compile Include="Controllers\BlogFeedsController.cs" />
@@ -169,9 +170,11 @@
     <Compile Include="Controllers\BlogRecentCommentsController.cs" />
     <Compile Include="Controllers\BlogTagCloudController.cs" />
     <Compile Include="Controllers\BlogFacebookLikeController.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="layouts\ParameterHelperBase.cs" />
     <Compile Include="layouts\RenderingParameterHelper.cs" />
     <Compile Include="Model\ArchiveRenderingModel.cs" />
+    <Compile Include="Model\EntryRenderingModel.cs" />
     <Compile Include="Model\CommentsListRenderingModel.cs" />
     <Compile Include="Model\FacebookCommentsRenderingModel.cs" />
     <Compile Include="Model\FacebookLikeRenderingModel.cs" />
@@ -602,6 +605,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\CommentsList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Entry.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

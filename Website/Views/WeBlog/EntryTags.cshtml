@@ -5,7 +5,7 @@
 <div class="wb-entry-tags wb-panel">
     <h3>@Translator.Render("TAGS").ToHtmlString() </h3>
     <ul>
-        @if (Sitecore.Context.User.IsAuthenticated)
+        @if (Sitecore.Context.PageMode.IsPageEditorEditing)
         {
             @Html.Sitecore().Field("Tags")
         }
