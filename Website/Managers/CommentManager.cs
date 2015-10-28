@@ -54,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             commentItem.BeginEdit();
             commentItem.Comment.Field.Value = wpComment.Content;
             commentItem.Email.Field.Value = wpComment.Email;
-            commentItem.IPAddress.Field.Value = wpComment.IP;
+            commentItem.IpAddress.Field.Value = wpComment.IP;
             commentItem.Website.Field.Value = wpComment.Url;
             commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
             commentItem.EndEdit();

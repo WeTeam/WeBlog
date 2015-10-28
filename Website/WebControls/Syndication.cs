@@ -11,12 +11,12 @@ namespace Sitecore.Modules.WeBlog.WebControls
         {
             var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
 
-            if (blog != null && blog.EnableRSS.Checked)
+            if (blog != null && blog.EnableRss.Checked)
             {
                 var feeds = blog.SyndicationFeeds;
                 if (feeds != null && feeds.Count() > 0)
                 {
-                    foreach (RSSFeedItem feed in feeds)
+                    foreach (RssFeedItem feed in feeds)
                     {
                         AddFeedToOutput(output, feed);
                     }
@@ -24,7 +24,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
             }
         }
 
-        protected virtual void AddFeedToOutput(HtmlTextWriter output, RSSFeedItem feed)
+        protected virtual void AddFeedToOutput(HtmlTextWriter output, RssFeedItem feed)
         {
             output.AddAttribute(HtmlTextWriterAttribute.Rel, "alternate");
             output.AddAttribute(HtmlTextWriterAttribute.Title, feed.Title.Text);

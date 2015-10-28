@@ -139,6 +139,8 @@ namespace Sitecore.Modules.WeBlog.Managers
                 }
 
                 // Category doesn't exist so create it
+                if (blogItem == null) return null;
+                
                 var categoriesFolder = blogItem.Axes.GetChild("Categories");
                 
                 CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, new ID(CategoryItem.TemplateId), categoriesFolder);
@@ -154,26 +156,19 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>
         /// Gets the categories for the blog entry given by ID
         /// </summary>
-        /// <param name="EntryID">The ID of the blog entry to get teh categories from</param>
+        /// <param name="entryId">The ID of the blog entry to get teh categories from</param>
         /// <returns>The categories of the blog</returns>
-        public CategoryItem[] GetCategoriesByEntryID(ID EntryID)
+        public CategoryItem[] GetCategoriesByEntryID(ID entryId)
         {
             var categoryList = new List<CategoryItem>();
 
-            var item = GetDatabase().GetItem(EntryID);
+            var item = GetDatabase().GetItem(entryId);
 
-            if (item != null)
-            {
-                var currentEntry = new EntryItem(item);
+            if (item == null) return categoryList.ToArray();
 
-                if (currentEntry != null)
-                {
-                    foreach (var cat in currentEntry.Category.ListItems)
-                    {
-                        categoryList.Add(new CategoryItem(cat));
-                    }
-                }
-            }
+            var currentEntry = new EntryItem(item);
+
+            categoryList.AddRange(currentEntry.Category.ListItems.Select(cat => new CategoryItem(cat)));
 
             return categoryList.ToArray();
         }
