@@ -167,6 +167,7 @@
     <Compile Include="Controllers\BlogFeedsController.cs" />
     <Compile Include="Controllers\BlogPostListController.cs" />
     <Compile Include="Controllers\BlogPostListEntryController.cs" />
+    <Compile Include="Controllers\RecaptchaController.cs" />
     <Compile Include="Controllers\ShareEntryAddThisController.cs" />
     <Compile Include="Controllers\ShareEntryShareThisController.cs" />
     <Compile Include="Controllers\BlogInterestingEntriesController.cs" />
@@ -618,6 +619,9 @@
   <ItemGroup>
     <Content Include="Views\WeBlog\PostList.cshtml" />
     <Content Include="Views\WeBlog\PostListEntry.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Recaptcha.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

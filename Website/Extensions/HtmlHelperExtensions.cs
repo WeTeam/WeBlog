@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Web;
+using System.Web.Mvc;
+using System.Web.UI;
+using Recaptcha;
 using Sitecore.Data.Items;
 using Sitecore.Mvc.Helpers;
 
@@ -29,6 +33,21 @@ namespace Sitecore.Modules.WeBlog.Extensions
                 htmlHelper.BeginField(fieldName, item, parameters),
                 htmlHelper.EndField());
             return new HtmlString(value);
+        }
+
+        public static string GenerateReCaptcha(this HtmlHelper helper, string id, string theme)
+        {
+            if (string.IsNullOrEmpty(Settings.ReCaptchaPublicKey) || string.IsNullOrEmpty(Settings.ReCaptchaPrivateKey))
+                throw new ApplicationException("reCAPTCHA needs to be configured with a public & private key.");
+            RecaptchaControl recaptchaControl1 = new RecaptchaControl();
+            recaptchaControl1.ID = id;
+            recaptchaControl1.Theme = theme;
+            recaptchaControl1.PublicKey = Settings.ReCaptchaPublicKey;
+            recaptchaControl1.PrivateKey = Settings.ReCaptchaPrivateKey;
+            RecaptchaControl recaptchaControl2 = recaptchaControl1;
+            HtmlTextWriter writer = new HtmlTextWriter(new StringWriter());
+            recaptchaControl2.RenderControl(writer);
+            return writer.InnerWriter.ToString();
         }
     }
 }
