@@ -13,8 +13,8 @@
         <ItemTemplate>
             <li>
                 <span class="wb-comment-author"><%# (Container.DataItem as CommentItem).Name.Text %></span> <%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("ON") %>
-                <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# GetEntryUrlForComment(Container.DataItem as CommentItem) %>'>
-                     <%# GetEntryTitleForComment(Container.DataItem as CommentItem) %>
+                <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# RecentCommentsCore.GetEntryUrlForComment(Container.DataItem as CommentItem) %>'>
+                     <%# RecentCommentsCore.GetEntryTitleForComment(Container.DataItem as CommentItem) %>
                 </asp:HyperLink>
                 <%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("AT") %> <span class="wb-datetime">
                     <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>

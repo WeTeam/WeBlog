@@ -1,0 +1,20 @@
+﻿@model Sitecore.Modules.WeBlog.Model.TwitterTimelineRenderingModel
+
+<div class="wb-twitter wb-panel">
+    <a class="twitter-timeline"
+       data-screen-name="@Model.Username"
+       data-widget-id="@Model.WidgetId"
+       data-theme="@Model.Theme"
+       data-tweet-limit="@Model.TweetLimit"
+       data-chrome="@Model.Chrome"
+       data-border-color="@Model.BorderColor"
+       data-link-color="@Model.LinkColor"
+       height="@Model.Height"
+       width="@Model.Width">
+        @if (String.IsNullOrEmpty(Model.WidgetId) && Sitecore.Context.PageMode.IsPageEditor)
+        {
+            @:<b>WidgetId</b> parameter is missing.
+        }
+    </a>
+    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+</div>

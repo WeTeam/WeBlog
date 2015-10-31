@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Links;
 
 namespace Sitecore.Modules.WeBlog.Extensions
 {
@@ -65,7 +66,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
             else
             {
                 bool result = false;
-                foreach(var template in itemTemplate.BaseTemplates)
+                foreach (var template in itemTemplate.BaseTemplates)
                 {
                     result = TemplateIsOrBasedOn(template, baseTemplate);
                     if (result)
@@ -99,12 +100,12 @@ namespace Sitecore.Modules.WeBlog.Extensions
                     derivedTemplates.Add((TemplateItem)source);
                 else
                 {
-                    if(source.Axes.IsDescendantOf(rootItem))
+                    if (source.Axes.IsDescendantOf(rootItem))
                         foundItems.Add(source);
                 }
             }
 
-            foreach(var derivedTemplate in derivedTemplates)
+            foreach (var derivedTemplate in derivedTemplates)
             {
                 foundItems.AddRange(FindItemsByTemplateOrDerivedTemplate(rootItem, derivedTemplate));
             }
@@ -151,6 +152,27 @@ namespace Sitecore.Modules.WeBlog.Extensions
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Get the URL for an item
+        /// </summary>
+        /// <param name="item">The item to get the URL for</param>
+        /// <returns>The URL for the item if valid, otherwise an empty string</returns>
+        public static string GetUrl(this Item item)
+        {
+            return LinkManager.GetItemUrl(item);
+        }
+
+        /// <summary>
+        /// Determines if the field given by name needs to have it's output wrapped in an additional tag
+        /// </summary>
+        /// <param name="item">The item to check field on</param>
+        /// <param name="fieldName">The name of the field to check</param>
+        /// <returns>True if wrapping is required, otherwsie false  </returns>
+        public static bool DoesFieldRequireWrapping(this Item item, string fieldName)
+        {
+            return !item[fieldName].StartsWith("<p>");
         }
     }
 }

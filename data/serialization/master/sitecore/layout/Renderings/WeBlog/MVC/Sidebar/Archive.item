@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {B1D7C514-F638-4531-9824-070AC21932B8}
+database: master
+path: /sitecore/layout/Renderings/WeBlog/MVC/Sidebar/Archive
+parent: {5B297E4F-329F-45BC-B2E4-AC95380EA779}
+name: Archive
+master: {00000000-0000-0000-0000-000000000000}
+template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
+templatekey: Controller rendering
+
+----field----
+field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
+name: Controller
+key: controller
+content-length: 11
+
+BlogArchive
+----field----
+field: {13F89250-AD6B-4548-882E-118A12C18094}
+name: Parameters Template
+key: parameters template
+content-length: 38
+
+{43ABB60C-C4D4-40B9-95CE-04473C492FE2}
+----version----
+language: en
+version: 1
+revision: 4cf15ab6-fdc4-4988-b2ed-28cd33d3d11f
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20151008T204054Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+4cf15ab6-fdc4-4988-b2ed-28cd33d3d11f
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20151011T205730Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

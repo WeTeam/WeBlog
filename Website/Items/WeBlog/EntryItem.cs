@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Links;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Items.Custom;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.Accounts;
@@ -148,11 +149,11 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                     if (!User.Exists(Author.Raw)) return Author.Rendered;
 
                     var user = User.FromName(Author.Raw, false);
-                    
+
                     if (user == null) return Author.Rendered;
 
                     var name = user.LocalName;
-                    
+
                     if (user.Profile != null && !string.IsNullOrEmpty(user.Profile.FullName))
                         name = user.Profile.FullName;
 
@@ -203,6 +204,12 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                 result.Add(isEncode ? System.Web.HttpUtility.HtmlEncode(tag) : tag.Trim());
             }
             return (string[])result.ToArray(typeof(string));
+        }
+
+
+        public bool DoesFieldRequireWrapping(string fieldName)
+        {
+            return InnerItem.DoesFieldRequireWrapping(fieldName);
         }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Web.UI;
+using System.Web.UI.WebControls;
+using Sitecore.Modules.WeBlog.Components.SubmitComment;
 using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
@@ -12,19 +14,18 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// <summary>
         /// Gets or sets the CSS class to set on the message panel for error messages
         /// </summary>
-        public string ErrorCssClass
-        {
-            get;
-            set;
-        }
+        public string ErrorCssClass { get; set; }
 
         /// <summary>
         /// Gets or sets the CSS class to set on the message panel for success messages
         /// </summary>
-        public string SuccessCssClass
+        public string SuccessCssClass { get; set; }
+
+        public ISubmitCommentCore SubmitCommentCore { get; set; }
+
+        public BlogSubmitComment(ISubmitCommentCore submitCommentCore = null)
         {
-            get;
-            set;
+            SubmitCommentCore = submitCommentCore ?? new SubmitCommentCore();
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -60,22 +61,16 @@ namespace Sitecore.Modules.WeBlog.Layouts
             }
             if (Page.IsValid)
             {
-                Model.Comment comment = new Model.Comment()
+                Comment comment = new Comment
                 {
-                    AuthorName = txtCommentName != null ? txtCommentName.Text : string.Empty,
-                    AuthorEmail = txtCommentEmail != null ? txtCommentEmail.Text : string.Empty,
-                    Text = txtCommentText != null ? txtCommentText.Text : string.Empty
+                    AuthorName = GetFormValue(txtCommentName),
+                    AuthorEmail = GetFormValue(txtCommentEmail),
+                    Text = GetFormValue(txtCommentText)
                 };
-
-                if (txtCommentWebsite != null)
-                {
-                    string website = txtCommentWebsite.Text;
-                    website = website.Contains("://") ? website : String.Format("//{0}", website);
-                    comment.Fields.Add(Constants.Fields.Website, website);
-                }
+                comment.Fields.Add(Constants.Fields.Website, GetFormValue(txtCommentWebsite));
                 comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
 
-                var submissionResult = ManagerFactory.CommentManagerInstance.SubmitComment(Sitecore.Context.Item.ID, comment, Sitecore.Context.Language);
+                var submissionResult = SubmitCommentCore.Submit(comment);
                 if (submissionResult.IsNull)
                 {
                     SetErrorMessage(Translator.Text("COMMENT_SUBMIT_ERROR"));
@@ -94,6 +89,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 //display javascript to scroll right to the comments list
                 CommentScroll.Visible = true;
             }
+        }
+
+        protected virtual string GetFormValue(TextBox textBox)
+        {
+            return textBox != null ? textBox.Text : string.Empty;
         }
 
         /// <summary>
