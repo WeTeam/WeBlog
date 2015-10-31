@@ -120,6 +120,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
@@ -156,6 +157,8 @@
     <Compile Include="Components\PostList\PostListCore.cs" />
     <Compile Include="Components\RecentComments\IRecentCommentsCore.cs" />
     <Compile Include="Components\RecentComments\RecentCommentsCore.cs" />
+    <Compile Include="Components\SubmitComment\ISubmitCommentCore.cs" />
+    <Compile Include="Components\SubmitComment\SubmitCommentCore.cs" />
     <Compile Include="Components\TagCloud\ITagCloudCore.cs" />
     <Compile Include="Components\TagCloud\TagCloudCore.cs" />
     <Compile Include="Controllers\BlogCategoriesController.cs" />
@@ -170,6 +173,7 @@
     <Compile Include="Controllers\BlogPostListController.cs" />
     <Compile Include="Controllers\BlogPostListEntryController.cs" />
     <Compile Include="Controllers\RecaptchaController.cs" />
+    <Compile Include="Controllers\BlogSubmitCommentController.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Controllers\ShareEntryAddThisController.cs" />
     <Compile Include="Controllers\ShareEntryShareThisController.cs" />
@@ -190,6 +194,7 @@
     <Compile Include="Model\PostListEntryRenderingModel.cs" />
     <Compile Include="Model\PostListRenderingModel.cs" />
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
+    <Compile Include="Model\SubmitCommentRenderingModel.cs" />
     <Compile Include="Model\TagCloudRenderingModel.cs" />
     <Compile Include="Model\TwitterTimelineRenderingModel.cs" />
     <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
@@ -628,7 +633,16 @@
     <Content Include="Views\WeBlog\Captcha.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\WeBlog\SubmitComment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\WeBlog\Recaptcha.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\SubmitComment\MessagePanel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\SubmitComment\CommentScroll.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -642,7 +656,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.-->
   <Target Name="BeforeBuild">
     <Message Text="Configuration: $(Configuration)" />

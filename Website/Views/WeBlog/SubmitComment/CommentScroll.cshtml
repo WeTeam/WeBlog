@@ -1,0 +1,10 @@
+﻿@if (TempData["ScrollTo"] != null || TempData["Submitted"] != null)
+{
+    <script type="text/javascript">
+        jQuery(function () {
+            var offset = jQuery('.wb-entry-add-comment').offset();
+            window.scrollTo(offset.left, offset.top);
+        });
+    </script>
+}
+

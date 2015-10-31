@@ -171,7 +171,7 @@ Add Comment
         width: 100%;
         float: none;
     }
-    
+
     .wb-entry-add-comment label.wb-captchaInput
     {
         width: 196px;
@@ -181,6 +181,7 @@ Add Comment
     {
         float: left;
         margin: 4px 0px 4px 0px;
+		width: 220px;
     }
      
 /*************************************************************************************
