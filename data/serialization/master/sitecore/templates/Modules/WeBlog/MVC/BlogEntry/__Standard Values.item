@@ -19,8 +19,29 @@ content-length: 1912
 ----version----
 language: en
 version: 1
-revision: 48e5aedf-ec72-4a9d-9907-74f1fddbb8c6
+revision: 59a0bb49-b886-49c2-9054-0efbb29cb23d
 
+----field----
+field: {A99A1591-F367-48A0-8900-E5DCBC8B528F}
+name: Title
+key: title
+content-length: 5
+
+$name
+----field----
+field: {B1755FF7-EAA6-4E04-9D25-BEBFFE9546F6}
+name: Author
+key: author
+content-length: 12
+
+$currentuser
+----field----
+field: {CBDA26A1-E7E5-437A-9FD7-95EF15810E50}
+name: Entry Date
+key: entry date
+content-length: 5
+
+$date
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -48,14 +69,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-48e5aedf-ec72-4a9d-9907-74f1fddbb8c6
+59a0bb49-b886-49c2-9054-0efbb29cb23d
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151031T152927Z
+20151031T162712Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

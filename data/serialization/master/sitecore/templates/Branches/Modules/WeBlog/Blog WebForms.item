@@ -1,0 +1,11 @@
+----item----
+version: 1
+id: {6FC4278C-E043-458B-9D5D-BBA775A9C386}
+database: master
+path: /sitecore/templates/Branches/Modules/WeBlog/Blog WebForms
+parent: {953EDE24-CB86-4CF5-92DD-E768B18639F5}
+name: Blog WebForms
+master: {00000000-0000-0000-0000-000000000000}
+template: {35E75C72-4985-4E09-88C3-0EAC6CD1E64F}
+templatekey: Branch
+

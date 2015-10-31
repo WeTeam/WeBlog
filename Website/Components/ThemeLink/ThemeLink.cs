@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Web.UI;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
@@ -22,7 +23,11 @@ namespace Sitecore.Modules.WeBlog.Components.ThemeLink
         {
             get
             {
-                return new ThemeItem(Blog.Theme.Item);
+                if (Blog != null && !string.IsNullOrEmpty(Blog.Theme.Raw))
+                {
+                    return new ThemeItem(Blog.Theme.Item);
+                }
+                return null;
             }
         }
 
@@ -31,10 +36,15 @@ namespace Sitecore.Modules.WeBlog.Components.ThemeLink
             Blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
             Attributes = new Dictionary<HtmlTextWriterAttribute, string>
             {
-                {HtmlTextWriterAttribute.Href, CurrentTheme.FileLocation.Raw.Trim()},
+                {HtmlTextWriterAttribute.Href, GetThemeUrl()},
                 {HtmlTextWriterAttribute.Rel, "stylesheet"},
                 {HtmlTextWriterAttribute.Type, "text/css"}
             };
+        }
+
+        protected string GetThemeUrl()
+        {
+            return CurrentTheme != null ? CurrentTheme.FileLocation.Raw.Trim() : String.Empty;
         }
     }
 }

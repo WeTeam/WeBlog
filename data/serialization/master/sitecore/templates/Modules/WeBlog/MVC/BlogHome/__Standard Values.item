@@ -10,6 +10,34 @@ template: {0AB5AAD6-6C0F-4F1E-AF20-37571248F7C4}
 templatekey: BlogHome
 
 ----field----
+field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
+name: Enable RSS
+key: enable rss
+content-length: 1
+
+1
+----field----
+field: {85184F37-810A-4A0C-BE78-FF6B60034C15}
+name: Enable Comments
+key: enable comments
+content-length: 1
+
+1
+----field----
+field: {ED011016-AC3D-4377-8C8B-2EA6EF2860FC}
+name: Gravatar Size
+key: gravatar size
+content-length: 2
+
+45
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{BE9675B1-4951-4E11-B935-A698227B6A97}
+----field----
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
@@ -19,8 +47,36 @@ content-length: 1390
 ----version----
 language: en
 version: 1
-revision: a60bd880-915f-451d-9116-f83b79e0ea43
+revision: 8de7ae91-9de4-4eac-94e5-5219e04b1175
 
+----field----
+field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
+name: Title
+key: title
+content-length: 5
+
+$name
+----field----
+field: {DF7CAB47-015F-430F-8BAE-452A4D2D7A17}
+name: Theme
+key: theme
+content-length: 38
+
+{2AC5A271-0770-4B54-942D-CA1467D22B43}
+----field----
+field: {BAD8E75C-BD7C-475A-A7B8-8B3600BAA26C}
+name: DisplayItemCount
+key: displayitemcount
+content-length: 2
+
+10
+----field----
+field: {04AAD5FA-BA6B-4E0E-9540-E75E53B23F34}
+name: DisplayCommentSidebarCount
+key: displaycommentsidebarcount
+content-length: 1
+
+5
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -48,14 +104,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a60bd880-915f-451d-9116-f83b79e0ea43
+8de7ae91-9de4-4eac-94e5-5219e04b1175
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151031T154601Z
+20151031T162640Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
