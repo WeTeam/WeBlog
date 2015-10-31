@@ -1,0 +1,147 @@
+----item----
+version: 1
+id: {E28B2E5F-690E-4CE2-B075-5ACF789496DF}
+database: master
+path: /sitecore/templates/Modules/WeBlog/WebForms/BlogEntry/__Standard Values
+parent: {5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}
+templatekey: BlogEntry
+
+----field----
+field: {A0CB3965-8884-4C7A-8815-B6B2E5CED162}
+name: __Editors
+key: __editors
+content-length: 0
+
+
+----field----
+field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
+name: __Icon
+key: __icon
+content-length: 0
+
+
+----field----
+field: {0C894AAB-962B-4A84-B923-CB24B05E60D2}
+name: __Ribbon
+key: __ribbon
+content-length: 0
+
+
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 1912
+
+<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"><r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="weblog-content" uid="{D1140E82-9243-4204-88C5-09F31484942E}" /><r ds="" id="{80DFF945-FF0C-460F-A669-1F66EEE4FAA4}" par="ShowEntryTitle=1&amp;ShowEntryImage=1&amp;ShowEntryMetadata=1&amp;ShowEntryIntroduction" ph="weblog-main" uid="{2EA8EA8F-7D2C-4264-AEEC-A674C01BED19}" /><r ds="" id="{D5DE2CA5-8550-4F46-9545-3C4376BF7E0F}" mvt="" par="" ph="weblog-below-entry-title" uid="{C44F79BC-8EEA-4807-930E-0F707FF0CF41}" /><r ds="" id="{DE1B6D0B-6988-4B31-B469-EAD66F2F6ED3}" par="" ph="weblog-below-entry" uid="{711F84E7-A3EC-4263-90A3-DAB060CCE2F6}" /><r ds="" id="{2C63DA92-46FA-4244-9684-EAC101BED6C7}" par="" ph="weblog-below-entry" uid="{5F6462C4-F39F-4135-A80B-270C7E5DE90E}" /><r ds="" id="{FE9601F1-7522-48E6-BB71-4791C617F4B2}" par="" ph="weblog-below-entry" uid="{5D63C372-6711-4864-A4FB-AB4000E37460}" /><r ds="" id="{8D7408D6-0E04-4BDF-BECE-EEEB08EB9B4A}" par="" ph="weblog-below-entry" uid="{709D2B5A-E08D-40F4-BA33-C382B075D5BA}" /><r ds="" id="{53F12198-7C37-4611-8F28-386FE944B4D2}" mvt="" par="" ph="weblog-comment-form" uid="{BA21B9CD-22E8-43D2-B2B6-480C15AAEC5B}" /><r cac="1" ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{BD1F0138-A016-4075-829C-E318D4C66BC0}" vbp="1" /><r cac="1" ds="" id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{F162F0AA-4647-4732-A5C2-A33749A001A3}" vbp="1" /><r cac="1" ds="" id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{2D97DF06-5EC9-44C0-9B9E-D183BF9936EF}" vbp="1" /><r cac="1" ds="" id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{E009BD95-D398-4329-8176-EB7C6CD1648E}" vbp="1" /></d></r>
+----version----
+language: en
+version: 1
+revision: e67c7b27-dd67-4893-bfdd-fd5c74bf44eb
+
+----field----
+field: {A99A1591-F367-48A0-8900-E5DCBC8B528F}
+name: Title
+key: title
+content-length: 5
+
+$name
+----field----
+field: {B1755FF7-EAA6-4E04-9D25-BEBFFE9546F6}
+name: Author
+key: author
+content-length: 12
+
+$currentuser
+----field----
+field: {CBDA26A1-E7E5-437A-9FD7-95EF15810E50}
+name: Entry Date
+key: entry date
+content-length: 5
+
+$date
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20081030T214100
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e67c7b27-dd67-4893-bfdd-fd5c74bf44eb
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20151031T144957Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
+----version----
+language: ja
+version: 1
+revision: a7786e2f-8670-4b86-9b2f-5581de8a64a4
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 15
+
+20111021T090000
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+a7786e2f-8670-4b86-9b2f-5581de8a64a4
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20151031T144957Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
