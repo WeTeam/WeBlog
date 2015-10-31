@@ -172,6 +172,11 @@ Add Comment
         float: none;
     }
     
+    .wb-entry-add-comment label.wb-captchaInput
+    {
+        width: 196px;
+    }
+    
     .wb-entry-add-comment input.wb-textbox
     {
         float: left;
