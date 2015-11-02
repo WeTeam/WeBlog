@@ -31,6 +31,20 @@ content-length: 2
 
 45
 ----field----
+field: {11F0464C-52CF-44E8-9431-C1278C2A146E}
+name: Defined Category Template
+key: defined category template
+content-length: 38
+
+{46663E05-A6B8-422A-8E13-36CD2B041278}
+----field----
+field: {BC8DC567-A580-45C0-8B52-C4F10A10A1E7}
+name: Defined Entry Template
+key: defined entry template
+content-length: 38
+
+{5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}
+----field----
 field: {A0CB3965-8884-4C7A-8815-B6B2E5CED162}
 name: __Editors
 key: __editors
@@ -61,7 +75,7 @@ content-length: 1390
 ----version----
 language: en
 version: 1
-revision: 5893a869-202b-46a1-8bfa-fb1a94ad54dc
+revision: e175c10b-e260-4dc2-9666-d95542146f6c
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -118,14 +132,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-5893a869-202b-46a1-8bfa-fb1a94ad54dc
+e175c10b-e260-4dc2-9666-d95542146f6c
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 16
+content-length: 35
 
-20151031T144903Z
+20151102T101959:635820563994695139Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
