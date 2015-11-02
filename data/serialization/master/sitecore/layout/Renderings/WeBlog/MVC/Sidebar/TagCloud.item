@@ -23,10 +23,17 @@ key: parameters template
 content-length: 38
 
 {43ABB60C-C4D4-40B9-95CE-04473C492FE2}
+----field----
+field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
+name: __Thumbnail
+key: __thumbnail
+content-length: 138
+
+<image mediaid="{C9455D3F-CEFA-4C00-BE2D-E6AEAED2804F}" mediapath="/Modules/WeBlog/Tagcloud" src="~/media/Modules/WeBlog/Tagcloud.ashx" />
 ----version----
 language: en
 version: 1
-revision: 550de9e9-65a3-4f3e-aa93-814c5fdd3258
+revision: f5e05788-249e-491a-81a2-93d706a03f78
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -41,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-550de9e9-65a3-4f3e-aa93-814c5fdd3258
+f5e05788-249e-491a-81a2-93d706a03f78
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151012T173704Z
+20151102T180131Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

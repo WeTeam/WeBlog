@@ -23,10 +23,17 @@ key: parameters template
 content-length: 38
 
 {43ABB60C-C4D4-40B9-95CE-04473C492FE2}
+----field----
+field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
+name: __Thumbnail
+key: __thumbnail
+content-length: 144
+
+<image mediaid="{21DF52BE-CA82-4329-A937-1A85C2041044}" mediapath="/Modules/WeBlog/Syndication" src="~/media/Modules/WeBlog/Syndication.ashx" />
 ----version----
 language: en
 version: 1
-revision: cbef7bad-ed73-41be-89e2-341db18898c9
+revision: 77c6f7cf-f6aa-48b3-b383-268b073ed9da
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -41,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-cbef7bad-ed73-41be-89e2-341db18898c9
+77c6f7cf-f6aa-48b3-b383-268b073ed9da
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151011T211110Z
+20151102T180104Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
