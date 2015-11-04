@@ -20,8 +20,6 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
                 var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
                 var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
 
-                ContentHelper.PublishItem(newItem);
-
                 return new PipelineProcessorResponseValue
                 {
                     Value = newItem.ID.Guid

@@ -20,8 +20,6 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
                 var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
                 Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
 
-                ContentHelper.PublishItem(newItem);
-
                 return new PipelineProcessorResponseValue
                 {
                     Value = newItem.ID.Guid

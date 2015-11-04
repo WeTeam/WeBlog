@@ -1,4 +1,5 @@
 ﻿using System.Collections.Specialized;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
@@ -33,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                 {
                     var itemTitle = args.Result;
 
-                    var db = Sitecore.Configuration.Factory.GetDatabase(args.Parameters["database"]);
+                    var db = Factory.GetDatabase(args.Parameters["database"]);
                     if (db != null)
                     {
                         var currentItem = db.GetItem(args.Parameters["currentid"]);
@@ -43,9 +44,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                             if (currentBlog != null)
                             {
                                 var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
-                                Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
-
-                                ContentHelper.PublishItem(newItem);
+                                ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
                             }
                             else
                                 Log.Error("Failed to locate blog root item", this);
@@ -55,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                var db = Sitecore.Configuration.Factory.GetDatabase(args.Parameters["database"]);
+                var db = Factory.GetDatabase(args.Parameters["database"]);
                 if (db == null)
                 {
                     return;
