@@ -31,13 +31,13 @@ namespace Sitecore.Modules.WeBlog.Managers
     public class EntryManager : IEntryManager
     {
 #if FEATURE_XDB
-      /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
-      private ReportDataProviderBase reportDataProvider = null;
+        /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
+        private ReportDataProviderBase reportDataProvider = null;
 
-      public EntryManager(ReportDataProviderBase reportDataProvider = null)
-      {
-        this.reportDataProvider = reportDataProvider;
-      }
+        public EntryManager(ReportDataProviderBase reportDataProvider = null)
+        {
+            this.reportDataProvider = reportDataProvider;
+        }
 #endif
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                         var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
                         builder = builder.And(i => i.Category.Contains(normalizedID));
 #else
-                      builder = builder.And(i => i.Category.Contains(categoryItem.ID));
+                        builder = builder.And(i => i.Category.Contains(categoryItem.ID));
 #endif
 
                     }
@@ -412,7 +412,8 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            var entryIds = (from entry in GetBlogEntries(blogItem) select entry.ID).ToArray();
+            var blogEntries = GetBlogEntries(blogItem);
+            var entryIds = (from entry in blogEntries select entry.ID).ToArray();
 
             if (entryIds.Any())
             {
@@ -427,7 +428,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     };
 
                     query.Execute();
-                    
+
                     var itemViews = query.Views;
 #elif FEATURE_DMS
                     var queryId = id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
@@ -442,10 +443,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                 var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
 
-                return (from id in ids
-                        let item = blogItem.Database.GetItem(id)
-                        where item != null
-                        select new EntryItem(item)).ToArray();
+                return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
             }
             else
                 return new EntryItem[0];
