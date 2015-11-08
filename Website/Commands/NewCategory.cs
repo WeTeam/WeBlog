@@ -36,7 +36,7 @@ namespace Sitecore.Modules.WeBlog.Commands
 
                     var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
 
-                    if(blogItem == null)
+                    if (blogItem == null)
                     {
                         SheerResponse.Alert("Failed to locate the blog item to add the category to.", true);
                         return;
@@ -44,9 +44,7 @@ namespace Sitecore.Modules.WeBlog.Commands
 
                     var template = new TemplateID(blogItem.BlogSettings.CategoryTemplateID);
                     var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
-                    var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
-
-                    ContentHelper.PublishItem(newItem);
+                    ItemManager.AddFromTemplate(itemTitle, template, categories);
 
                     SheerResponse.Eval("scForm.browser.getParentWindow(scForm.browser.getFrameElement(window).ownerDocument).location.reload(true)");
 
