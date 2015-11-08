@@ -42,10 +42,6 @@
   </PropertyGroup>
   <Import Project="..\sc version properties.targets" />
   <ItemGroup>
-    <!--<Reference Include="AntiXssLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
-    </Reference>-->
     <Reference Include="AntiXssLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
       <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
       <Private>True</Private>
@@ -149,6 +145,7 @@
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_XDB'))">
     <Compile Include="Analytics\Reporting\EntriesByViewQuery.cs" />
+    <Compile Include="Analytics\Reporting\ItemVisitsQuery.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Compile Include="ExperienceEditor\CanExecuteWeBlogCommands.cs" />
