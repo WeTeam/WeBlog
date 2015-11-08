@@ -24,11 +24,9 @@ Perform the following before opening the solution in Visual Studio.
 In addition to building the project and deploying the files, you must also restore the WeBlog Sitecore items.
 
 1. Copy the `data\serialization` folder to the `data` folder of the Sitecore instance.
-1. Log into Sitecore Desktop as an administrator and swap to the core DB.
-1. Open the content editor and switch to the `Developer` tab.
-	1. If the `Developer` tab is not visible, right-click on the tabs to enable it.
-1. Click the `Update Database` command.
-1. Swap back to the master DB.
-1. Open the content editor and switch to the `Developer` tab.
-1. Click the `Update Database` command.
-1. Perform a full publish
+1. If using a Sitecore version with RDB (Sitecore 7.5+), copy the folders from inside the `master-rdb-additional` folder into the `master` folder.
+1. Access the Serialization utility page `/sitecore/admin/serialization.aspx`.
+1. Select the `core` and `master` databases
+1. Click the `Update {core, master} databasees` button.
+1. Log into the Sitecore desktop.
+1. Perform a full publish.

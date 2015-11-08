@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using Sitecore.Analytics.Reporting;
 using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Analytics.Reporting
 {
     /// <summary>
-    /// A reporting query to order Item IDs by views
+    /// A reporting query to retrieve the total visits for an item.
     /// </summary>
-    [Obsolete("Use the ItemVisitsQuery class instead.")] // Deprecated in release 2.5
-    public class EntriesByViewQuery
+    public class ItemVisitsQuery
 #if !SC75
         : ItemBasedReportingQuery
 #endif
@@ -20,31 +17,31 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         private ReportDataProviderBase _reportProvider = null;
 #endif
-
+    
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
         /// <param name="reportProvider">The <see cref="ReportDataProviderBase"/> to read reporting data from.</param>
-        public EntriesByViewQuery(ReportDataProviderBase reportProvider = null)
+        public ItemVisitsQuery(ReportDataProviderBase reportProvider = null)
 #if !SC75
-            : base(Constants.ReportingQueries.EntriesByView, reportProvider)
+            : base(Constants.ReportingQueries.ItemVisits, reportProvider)
         {
         }
 #else
         {
-            _reportProvider = reportProvider ?? new ReportDataProvider();
+          _reportProvider = reportProvider ?? new ReportDataProvider();
         }
 #endif
 
         /// <summary>
-        /// Gets or sets the IDs of the entries to get the visits for.
+        /// Gets or sets the ID of the item to retrieve the visits for.
         /// </summary>
-        public IEnumerable<ID> EntryIds { get; set; }
+        public ID ItemId { get; set; }
 
         /// <summary>
-        /// Gets the entry IDs ordered by visits.
+        /// Gets the visit count.
         /// </summary>
-        public IEnumerable<ID> OrderedEntryIds { get; protected set; }
+        public long Visits { get; protected set; }
 
         /// <summary>
         /// Executes the query against the reporting database.
@@ -55,25 +52,24 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
         public void Execute()
 #endif
         {
-            var entryIdStr = string.Join("','", this.EntryIds);
             var parameters = new Dictionary<string, object>
             {
-                {"@EntryIds", entryIdStr}
+                {"@ItemId", ItemId}
             };
-#if !SC75
 
+#if !SC75
             var dt = this.ExecuteQuery(parameters);
 #else
-            var query = new ReportDataQuery(Constants.ReportingQueries.EntriesByView.ToString(), parameters);
+            var query = new ReportDataQuery(Constants.ReportingQueries.ItemVisits.ToString(), parameters);
             var queryResponse = _reportProvider.GetData("item", query, new CachingPolicy());
             var dt = queryResponse.GetDataTable();
 #endif
-            if (dt != null)
+            if (dt != null && dt.Rows.Count > 0)
             {
-                OrderedEntryIds = from DataRow row in dt.Rows
-                                  select new ID((Guid)row["ItemId"]);
+                var result = dt.Rows[0]["Visits"];
+                if(result != null && result != DBNull.Value)
+                    Visits = (long)dt.Rows[0]["Visits"];
             }
         }
-
     }
 }

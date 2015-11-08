@@ -31,13 +31,13 @@ namespace Sitecore.Modules.WeBlog.Managers
     public class EntryManager : IEntryManager
     {
 #if FEATURE_XDB
-      /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
-      private ReportDataProviderBase reportDataProvider = null;
+        /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
+        private ReportDataProviderBase reportDataProvider = null;
 
-      public EntryManager(ReportDataProviderBase reportDataProvider = null)
-      {
-        this.reportDataProvider = reportDataProvider;
-      }
+        public EntryManager(ReportDataProviderBase reportDataProvider = null)
+        {
+            this.reportDataProvider = reportDataProvider;
+        }
 #endif
 
         /// <summary>
@@ -224,22 +224,22 @@ namespace Sitecore.Modules.WeBlog.Managers
         [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?) instead")] // deprecated in 2.4
         public EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null)
         {
-          if(datePrefix.Length != 6)
-              return new EntryItem[0];
+            if (datePrefix.Length != 6)
+                return new EntryItem[0];
 
-          // First four digits should be year
-          var yearStr = datePrefix.Substring(0, 4);
-          var year = 0;
-          if(!int.TryParse(yearStr, out year))
-              return new EntryItem[0];
+            // First four digits should be year
+            var yearStr = datePrefix.Substring(0, 4);
+            var year = 0;
+            if (!int.TryParse(yearStr, out year))
+                return new EntryItem[0];
 
-          // Next two digits should be month
-          var monthStr = datePrefix.Substring(4, 2);
-          var month = 0;
-          if(!int.TryParse(monthStr, out month))
-              return new EntryItem[0];
+            // Next two digits should be month
+            var monthStr = datePrefix.Substring(4, 2);
+            var month = 0;
+            if (!int.TryParse(monthStr, out month))
+                return new EntryItem[0];
 
-          if (month >= 13)
+            if (month >= 13)
                 return new EntryItem[0];
 
             return GetBlogEntries(blog, Int32.MaxValue, null, null, new DateTime(year, month, 1));
@@ -283,10 +283,10 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (!string.IsNullOrEmpty(indexName))
             {
 
-              using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
+                using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
-                
+
                     var id = customBlogItem.BlogSettings.EntryTemplateID;
                     builder = builder.And(i => i.TemplateId == id);
                     builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
@@ -302,28 +302,28 @@ namespace Sitecore.Modules.WeBlog.Managers
                     // Categories
                     if (!string.IsNullOrEmpty(category))
                     {
-                      var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, category);
+                        var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, category);
 
-                      // If the category is unknown, don't return any results.
-                      if (categoryItem == null)
-                          return new EntryItem[0];
+                        // If the category is unknown, don't return any results.
+                        if (categoryItem == null)
+                            return new EntryItem[0];
 #if SC70
-                      var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
-                      builder = builder.And(i => i.Category.Contains(normalizedID));
+                        var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
+                        builder = builder.And(i => i.Category.Contains(normalizedID));
 #else
-                      builder = builder.And(i => i.Category.Contains(categoryItem.ID));
+                        builder = builder.And(i => i.Category.Contains(categoryItem.ID));
 #endif
-                        
+
                     }
 
                     if (minimumDate != null)
-                      builder = builder.And(i => i.CreatedDate >= minimumDate);
+                        builder = builder.And(i => i.CreatedDate >= minimumDate);
 
-                    if(maximumDate != null)
-                      builder = builder.And(i => i.CreatedDate < maximumDate);
-                    
+                    if (maximumDate != null)
+                        builder = builder.And(i => i.CreatedDate < maximumDate);
+
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
-                
+
                     if (indexresults.Any())
                     {
                         result = indexresults.Select(i => new EntryItem(i.GetItem())).ToList();
@@ -412,30 +412,38 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            var entryIds = (from entry in GetBlogEntries(blogItem) select entry.ID).ToArray();
+            var blogEntries = GetBlogEntries(blogItem);
+            var entryIds = (from entry in blogEntries select entry.ID).ToArray();
 
             if (entryIds.Any())
             {
+                var views = new Dictionary<ID, long>();
+
+                foreach (var id in entryIds)
+                {
 #if FEATURE_XDB
-                var query = new EntriesByViewQuery(this.reportDataProvider);
-                query.EntryIds = entryIds;
-                query.Execute();
-                var ids = query.OrderedEntryIds;
+                    var query = new ItemVisitsQuery(this.reportDataProvider)
+                    {
+                        ItemId = id
+                    };
+
+                    query.Execute();
+
+                    var itemViews = query.Visits;
 #elif FEATURE_DMS
-                var queryIds = from id in entryIds select id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-                var sql = "select {{0}}ItemId{{1}} from pages where itemid in ('{0}') group by {{0}}ItemId{{1}} order by count({{0}}ItemId{{1}}) desc".FormatWith(string.Join("','", (object[])queryIds.ToArray()));
-              
-                var ids = DataAdapterManager.ReportingSql.ReadMany<ID>(sql, reader => new ID(DataAdapterManager.ReportingSql.GetGuid(0, reader)), new[]{"a"});
+                    var queryId = id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
+                    var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
+
+                    var itemViews = DataAdapterManager.ReportingSql.ReadOne(sql, reader => DataAdapterManager.ReportingSql.GetLong(0, reader));
 #endif
 
-                if (!ids.Any())
-                  return new EntryItem[0];
+                    if (itemViews > 0)
+                        views.Add(id, itemViews);
+                }
 
-                var limitedIds = ids.Take(maxCount).ToArray();
-                return (from id in limitedIds
-                        let item = blogItem.Database.GetItem(id)
-                        where item != null
-                        select new EntryItem(item)).ToArray();
+                var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
+
+                return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
             }
             else
                 return new EntryItem[0];
