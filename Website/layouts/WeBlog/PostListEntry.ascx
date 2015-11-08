@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogPostListEntry.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogPostListEntry" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
     <li class="wb-entry-list-entry">
         <sc:Image runat="server" ID="EntryImage" Item="<%# (((ListViewDataItem)Container).DataItem as EntryItem) %>" Field="Thumbnail Image" CssClass="wb-image" />
         <div class="wb-entry-detail">

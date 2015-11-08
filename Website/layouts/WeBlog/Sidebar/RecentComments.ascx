@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogRecentComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogRecentComments" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Extensions" %>
 
 <asp:Panel ID="PanelRecentComments" runat="server" CssClass="wb-recent-comments wb-panel">

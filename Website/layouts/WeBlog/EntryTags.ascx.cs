@@ -3,7 +3,7 @@ using System.Linq;
 using System.Web.UI.WebControls;
 using Sitecore.Data.Items;
 using Sitecore.Links;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts

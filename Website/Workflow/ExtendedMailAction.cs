@@ -33,6 +33,7 @@ using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security;
@@ -127,14 +128,14 @@ namespace Sitecore.Modules.WeBlog.Workflow
             velocityContext.Put("site", Sitecore.Context.Site);
             velocityContext.Put("time", DateTime.Now);
 
-            Items.WeBlog.EntryItem entryItem = null;
+            EntryItem entryItem = null;
             if (args.DataItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
             {
-                entryItem = new Items.WeBlog.EntryItem(args.DataItem);
+                entryItem = new EntryItem(args.DataItem);
             }
             else if (args.DataItem.TemplateIsOrBasedOn(Settings.CommentTemplateID))
             {
-                Items.WeBlog.CommentItem commentItem = new Items.WeBlog.CommentItem(args.DataItem);
+                CommentItem commentItem = new CommentItem(args.DataItem);
                 entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(commentItem);
                 velocityContext.Put("comment", commentItem);
             }
@@ -153,7 +154,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
                     velocityContext.Put("entryUpdatedBy", updatedBy);
                 }
 
-                Items.WeBlog.BlogHomeItem blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entryItem);
+                BlogHomeItem blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entryItem);
                 velocityContext.Put("blog", blog);
             }
         }

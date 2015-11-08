@@ -1,5 +1,5 @@
 ﻿using Microsoft.Security.Application;
-using Sitecore.Modules.WeBlog.Items.Custom;
+using Sitecore.Modules.WeBlog.Data.Fields;
 
 namespace Sitecore.Modules.WeBlog.Extensions
 {

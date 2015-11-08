@@ -5,9 +5,9 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Items.Custom;
+using Sitecore.Modules.WeBlog.Data.Fields;
 
-namespace Sitecore.Modules.WeBlog.Items.WeBlog
+namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class BlogHomeItem : CustomItem
     {
@@ -285,11 +285,11 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
             }
         }
 
-        public IEnumerable<Feeds.RssFeedItem> SyndicationFeeds
+        public IEnumerable<RssFeedItem> SyndicationFeeds
         {
             get
             {
-                List<Feeds.RssFeedItem> feeds = null;
+                List<RssFeedItem> feeds = null;
                 if (this.EnableRss.Checked)
                 {
                     var rssTemplateId = Settings.RssFeedTemplateIDString;
@@ -297,10 +297,10 @@ namespace Sitecore.Modules.WeBlog.Items.WeBlog
                      
                     if (feedItems != null)
                     {
-                        feeds = new List<Feeds.RssFeedItem>();
+                        feeds = new List<RssFeedItem>();
                         foreach (Item item in feedItems)
                         {
-                            feeds.Add(new Feeds.RssFeedItem(item));
+                            feeds.Add(new RssFeedItem(item));
                         }
                     }
                 }

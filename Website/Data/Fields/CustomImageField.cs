@@ -2,7 +2,7 @@
 using Sitecore.Data.Items;
 using Sitecore.Resources.Media;
 
-namespace Sitecore.Modules.WeBlog.Items.Custom
+namespace Sitecore.Modules.WeBlog.Data.Fields
 {
     public class CustomImageField : CustomFieldBase<ImageField>
     {

@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogArchive.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogArchive" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 
 <div class="wb-archive wb-panel" id="wb-archive">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("ARCHIVE")%></h3>

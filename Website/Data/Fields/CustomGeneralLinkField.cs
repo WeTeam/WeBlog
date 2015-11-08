@@ -7,7 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Resources.Media;
 
-namespace Sitecore.Modules.WeBlog.Items.Custom
+namespace Sitecore.Modules.WeBlog.Data.Fields
 {
     public class CustomGeneralLinkField : CustomFieldBase<LinkField>
     {

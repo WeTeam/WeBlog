@@ -4,6 +4,7 @@ using System.Xml;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Web;
 
 namespace Sitecore.Modules.WeBlog
@@ -36,7 +37,7 @@ namespace Sitecore.Modules.WeBlog
                 Database web = Factory.GetDatabase("web");
                 Item currentBlogItem = web.GetItem(new ID(HttpContext.Current.Request.QueryString["blogid"].ToString()));
 
-                Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem currentBlog = new Sitecore.Modules.WeBlog.Items.WeBlog.BlogHomeItem(currentBlogItem);
+                BlogHomeItem currentBlog = new BlogHomeItem(currentBlogItem);
 
                 rsd.Formatting = Formatting.Indented;
                 rsd.WriteStartDocument();

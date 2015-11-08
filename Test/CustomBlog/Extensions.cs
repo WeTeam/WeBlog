@@ -3,7 +3,7 @@ using System.Web;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
 
 namespace Sitecore.Modules.WeBlog.Test.CustomBlog

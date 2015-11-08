@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Web.UI;
-using Sitecore.Modules.WeBlog.Items.Feeds;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.WebControls

@@ -4,7 +4,7 @@ using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Comparers;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -77,7 +77,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blog">The blog to get the tags for</param>
         /// <returns>A sorted array of tags with counts</returns>
-        public Dictionary<string, int> GetAllTags(Items.WeBlog.BlogHomeItem blog)
+        public Dictionary<string, int> GetAllTags(BlogHomeItem blog)
         {
             var tagList = new List<string>();
 

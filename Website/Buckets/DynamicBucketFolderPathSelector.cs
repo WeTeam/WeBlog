@@ -1,8 +1,7 @@
-﻿// This file is conditionally included in the project for Sitecore versions supporting item buckets (currently Sitecore 7.0)
-
-using System;
+﻿using System;
 using Sitecore.Buckets.Extensions;
 using Sitecore.Buckets.Util;
+using Sitecore.Data;
 using Sitecore.StringExtensions;
 
 namespace Sitecore.Modules.WeBlog.Buckets
@@ -10,13 +9,13 @@ namespace Sitecore.Modules.WeBlog.Buckets
     public class DynamicBucketFolderPathSelector : IDynamicBucketFolderPath
     {
         [Obsolete]
-        public string GetFolderPath(Data.ID newItemId, Data.ID parentItemId, DateTime creationDateOfNewItem)
+        public string GetFolderPath(ID newItemId, ID parentItemId, DateTime creationDateOfNewItem)
         {
             return GetFolderPath(Sitecore.Context.ContentDatabase, string.Empty, null, newItemId, parentItemId,
                           creationDateOfNewItem);
         }
 
-        public string GetFolderPath(Data.Database database, string name, Data.ID templateId, Data.ID newItemId, Data.ID parentItemId,
+        public string GetFolderPath(Database database, string name, ID templateId, ID newItemId, ID parentItemId,
                                     DateTime creationDateOfNewItem)
         {
             if (database == null)

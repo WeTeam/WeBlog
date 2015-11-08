@@ -5,6 +5,7 @@ using NUnit.Framework;
 using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 
@@ -50,7 +51,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllTags_Blog1()
         {
-            var tags = new Mod.TagManager().GetAllTags(new Items.WeBlog.BlogHomeItem(m_blog1));
+            var tags = new Mod.TagManager().GetAllTags(new BlogHomeItem(m_blog1));
             Assert.IsTrue(tags.ContainsKey("taga"), "taga not found");
             Assert.IsTrue(tags.ContainsKey("tagb"), "tagb not found");
             Assert.IsTrue(tags.ContainsKey("tagc"), "tagc not found");
@@ -62,7 +63,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllTags_EntryItem()
         {
-            var tags = new Mod.TagManager().GetAllTags(new Items.WeBlog.BlogHomeItem(m_entry1));
+            var tags = new Mod.TagManager().GetAllTags(new BlogHomeItem(m_entry1));
             //entry is part of blog w/ 3 tags
             Assert.AreEqual(3, tags.Count);
         }

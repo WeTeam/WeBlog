@@ -9,7 +9,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;

@@ -1,5 +1,6 @@
 ﻿using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Data.Items;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -9,27 +10,27 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the current blog for the context item
         /// </summary>
         /// <returns>The current blog if found, otherwise null</returns>
-        Items.WeBlog.BlogHomeItem GetCurrentBlog();
+        BlogHomeItem GetCurrentBlog();
 
         /// <summary>
         /// Gets the current blog for the item
         /// </summary>
         /// <param name="item">The item to find the current blog for</param>
         /// <returns>The current blog if found, otherwise null</returns>
-        Items.WeBlog.BlogHomeItem GetCurrentBlog(Item item);
+        BlogHomeItem GetCurrentBlog(Item item);
 
         /// Get all blogs the user has write access to
         /// </summary>
         /// <param name="username">The name of the user requiring write access to the blog</param>
         /// <returns>The blogs the user has write access to</returns>
-        Items.WeBlog.BlogHomeItem[] GetUserBlogs(string username);        
+        BlogHomeItem[] GetUserBlogs(string username);        
 
         /// <summary>
         /// Gets all the blogs.
         /// </summary>
         /// <param name="database">The database to get the blogs from. If null, use the context database</param>
         /// <returns>The list of all blogs</returns>
-        Items.WeBlog.BlogHomeItem[] GetAllBlogs(Database database);
+        BlogHomeItem[] GetAllBlogs(Database database);
 
         /// <summary>
         /// Checks if the current blog has RSS enabled
@@ -42,7 +43,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blog">The blog to read the setting from</param>
         /// <returns>True if RSS is enabled, otherwise False</returns>
-        bool EnableRSS(Items.WeBlog.BlogHomeItem blog);
+        bool EnableRSS(BlogHomeItem blog);
 
         /// <summary>
         /// Checks if emails should be displayed with comments
@@ -55,7 +56,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// /// <param name="blog">The blog to read the setting from</param>
         /// <returns>True if email should be shown, otherwise False</returns>
-        bool ShowEmailWithinComments(Items.WeBlog.BlogHomeItem blog);
+        bool ShowEmailWithinComments(BlogHomeItem blog);
 
         /// <summary>
         /// Returns the dictionary item.

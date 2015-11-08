@@ -2,7 +2,7 @@
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
 
-namespace Sitecore.Modules.WeBlog.Items.Custom
+namespace Sitecore.Modules.WeBlog.Data.Fields
 {
     public class CustomDateField : CustomFieldBase<DateField>
     {

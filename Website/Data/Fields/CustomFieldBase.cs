@@ -2,7 +2,7 @@
 using Sitecore.Data.Items;
 using Sitecore.Web.UI.WebControls;
 
-namespace Sitecore.Modules.WeBlog.Items.Custom
+namespace Sitecore.Modules.WeBlog.Data.Fields
 {
     public abstract class CustomFieldBase<T> where T : CustomField
     {

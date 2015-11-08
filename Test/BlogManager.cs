@@ -5,6 +5,7 @@ using System.Web.Security;
 using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Security.AccessControl;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
@@ -115,25 +116,25 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void EnableRSS_BlogEnabled()
         {
-            Assert.IsTrue(new Mod.BlogManager().EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog1)));
+            Assert.IsTrue(new Mod.BlogManager().EnableRSS(new BlogHomeItem(m_blog1)));
         }
 
         [Test]
         public void EnableRSS_BlogDisabled()
         {
-            Assert.IsFalse(new Mod.BlogManager().EnableRSS(new Items.WeBlog.BlogHomeItem(m_blog2)));
+            Assert.IsFalse(new Mod.BlogManager().EnableRSS(new BlogHomeItem(m_blog2)));
         }
 
         [Test]
         public void ShowEmailWithinComments_BlogEnabled()
         {
-            Assert.IsTrue(new Mod.BlogManager().ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog1)));
+            Assert.IsTrue(new Mod.BlogManager().ShowEmailWithinComments(new BlogHomeItem(m_blog1)));
         }
 
         [Test]
         public void ShowEmailWithinComments_BlogDisabled()
         {
-            Assert.IsFalse(new Mod.BlogManager().ShowEmailWithinComments(new Items.WeBlog.BlogHomeItem(m_blog2)));
+            Assert.IsFalse(new Mod.BlogManager().ShowEmailWithinComments(new BlogHomeItem(m_blog2)));
         }
 
         [Test]

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Pipelines.GetSummary;
 using Sitecore.Pipelines;
 

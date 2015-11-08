@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sharedsource.Web.UI.Sublayouts;
 using Sitecore.Sites;

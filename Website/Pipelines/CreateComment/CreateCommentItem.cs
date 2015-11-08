@@ -1,7 +1,7 @@
 ﻿using System;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;

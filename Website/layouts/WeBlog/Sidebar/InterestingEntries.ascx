@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogInterestingEntries.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogInterestingEntries" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.WeBlog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 
 <div class="wb-panel">
     <h3><%= Title %></h3>

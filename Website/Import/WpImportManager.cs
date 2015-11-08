@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using System.Xml;
 using System;

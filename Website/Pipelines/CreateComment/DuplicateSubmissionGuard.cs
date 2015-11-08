@@ -1,6 +1,6 @@
 ﻿using System;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.StringExtensions;
 

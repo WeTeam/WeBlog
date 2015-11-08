@@ -1,7 +1,7 @@
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.Custom;
+using Sitecore.Modules.WeBlog.Data.Fields;
 
-namespace Sitecore.Modules.WeBlog.Items.WeBlog
+namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class ThemeItem : CustomItem
     {

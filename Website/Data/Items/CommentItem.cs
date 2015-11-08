@@ -1,10 +1,10 @@
 using System;
 using Joel.Net;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Items.Custom;
+using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.Items.WeBlog
+namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public partial class CommentItem : CustomItem
     {

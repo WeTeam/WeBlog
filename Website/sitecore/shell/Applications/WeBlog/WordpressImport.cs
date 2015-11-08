@@ -6,7 +6,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Shell.Applications.Install;
 using Sitecore.Shell.Applications.Install.Dialogs;
 using Sitecore.StringExtensions;

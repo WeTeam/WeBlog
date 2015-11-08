@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="BlogFeeds.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogFeeds" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Items.Feeds" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 
 <asp:Panel ID="PanelFeeds" runat="server" CssClass="wb-feeds wb-panel">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("SYNDICATION")%></h3>

@@ -1,9 +1,9 @@
 using Sitecore.Data.Items;
 using Sitecore.Links;
-using Sitecore.Modules.WeBlog.Items.Custom;
+using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Syndication;
 
-namespace Sitecore.Modules.WeBlog.Items.Feeds
+namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class RssFeedItem : CustomItem
     {

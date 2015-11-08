@@ -136,14 +136,14 @@
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
-    <Compile Include="Items\Custom\CustomFieldBase.cs" />
-    <Compile Include="Items\Custom\CustomCheckboxField.cs" />
-    <Compile Include="Items\Custom\CustomDateField.cs" />
-    <Compile Include="Items\Custom\CustomGeneralLinkField.cs" />
-    <Compile Include="Items\Custom\CustomImageField.cs" />
-    <Compile Include="Items\Custom\CustomLookupField.cs" />
-    <Compile Include="Items\Custom\CustomMultiListField.cs" />
-    <Compile Include="Items\Custom\CustomTextField.cs" />
+    <Compile Include="Data\Fields\CustomFieldBase.cs" />
+    <Compile Include="Data\Fields\CustomCheckboxField.cs" />
+    <Compile Include="Data\Fields\CustomDateField.cs" />
+    <Compile Include="Data\Fields\CustomGeneralLinkField.cs" />
+    <Compile Include="Data\Fields\CustomImageField.cs" />
+    <Compile Include="Data\Fields\CustomLookupField.cs" />
+    <Compile Include="Data\Fields\CustomMultiListField.cs" />
+    <Compile Include="Data\Fields\CustomTextField.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
@@ -179,12 +179,12 @@
     <Compile Include="Import\WpComment.cs" />
     <Compile Include="Import\WpImportManager.cs" />
     <Compile Include="Import\WpPost.cs" />
-    <Compile Include="Items\Feeds\RSSFeedItem.cs" />
-    <Compile Include="Items\WeBlog\BlogHomeItem.cs" />
-    <Compile Include="Items\WeBlog\CategoryItem.cs" />
-    <Compile Include="Items\WeBlog\CommentItem.cs" />
-    <Compile Include="Items\WeBlog\EntryItem.cs" />
-    <Compile Include="Items\WeBlog\ThemeItem.cs" />
+    <Compile Include="Data\Items\RSSFeedItem.cs" />
+    <Compile Include="Data\Items\BlogHomeItem.cs" />
+    <Compile Include="Data\Items\CategoryItem.cs" />
+    <Compile Include="Data\Items\CommentItem.cs" />
+    <Compile Include="Data\Items\EntryItem.cs" />
+    <Compile Include="Data\Items\ThemeItem.cs" />
     <Compile Include="layouts\SublayoutBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

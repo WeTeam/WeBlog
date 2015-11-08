@@ -3,7 +3,7 @@ using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Security.Accounts;
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -17,7 +17,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the current blog for the context item
         /// </summary>
         /// <returns>The current blog if found, otherwise null</returns>
-        public Items.WeBlog.BlogHomeItem GetCurrentBlog()
+        public BlogHomeItem GetCurrentBlog()
         {
             return GetCurrentBlog(Context.Item);
         }
@@ -27,12 +27,12 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="item">The item to find the current blog for</param>
         /// <returns>The current blog if found, otherwise null</returns>
-        public Items.WeBlog.BlogHomeItem GetCurrentBlog(Item item)
+        public BlogHomeItem GetCurrentBlog(Item item)
         {
             var blogItem = item.GetCurrentItem(Settings.BlogTemplateIDString);
 
             if (blogItem != null)
-                return new Items.WeBlog.BlogHomeItem(blogItem);
+                return new BlogHomeItem(blogItem);
             else
                 return null;
         }
@@ -42,9 +42,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="username">The name of the user requiring write access to the blog</param>
         /// <returns>The blogs the user has write access to</returns>
-        public Items.WeBlog.BlogHomeItem[] GetUserBlogs(string username)
+        public BlogHomeItem[] GetUserBlogs(string username)
         {
-            var blogList = new List<Items.WeBlog.BlogHomeItem>();
+            var blogList = new List<BlogHomeItem>();
 
             var blogs = GetAllBlogs(ContentHelper.GetContentDatabase());
             var account = Account.FromName(username, AccountType.User);
@@ -63,7 +63,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="database">The database to get the blogs from. If null, use the context database</param>
         /// <returns>The list of all blogs</returns>
-        public Items.WeBlog.BlogHomeItem[] GetAllBlogs(Database database)
+        public BlogHomeItem[] GetAllBlogs(Database database)
         {
             if (database == null)
                 database = Context.Database;
@@ -90,7 +90,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blog">The blog to read the setting from</param>
         /// <returns>True if RSS is enabled, otherwise False</returns>
-        public bool EnableRSS(Items.WeBlog.BlogHomeItem blog)
+        public bool EnableRSS(BlogHomeItem blog)
         {
             return blog.EnableRss.Checked;
         }
@@ -110,7 +110,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// /// <param name="blog">The blog to read the setting from</param>
         /// <returns>True if email should be shown, otherwise False</returns>
-        public bool ShowEmailWithinComments(Items.WeBlog.BlogHomeItem blog)
+        public bool ShowEmailWithinComments(BlogHomeItem blog)
         {
             return blog.ShowEmailWithinComments.Checked;
         }
