@@ -10,6 +10,7 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
     /// <summary>
     /// A reporting query to order Item IDs by views
     /// </summary>
+    [Obsolete("Use the ItemVisitsQuery class instead.")] // Deprecated in release 2.5
     public class EntriesByViewQuery
 #if !SC75
         : ItemBasedReportingQuery

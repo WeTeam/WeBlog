@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {75C64874-2803-40FD-A3B2-3E89637BF8EA}
+id: {9BECF823-2838-467C-87A7-3664524F5AFE}
 database: master
-path: /sitecore/system/Modules/WeBlog/Report Queries/Entries By View
+path: /sitecore/system/Modules/WeBlog/Report Queries/Item Visits
 parent: {32B18DFC-0F7C-43C2-AA62-ACEE79981CA5}
-name: Entries By View
+name: Item Visits
 master: {00000000-0000-0000-0000-000000000000}
 template: {A90F48C4-4D4F-41D7-8497-070A9A50304E}
 templatekey: ReportQuery
@@ -20,18 +20,14 @@ reporting
 field: {A61CC636-3272-4FB6-BCF9-762940047A78}
 name: Query
 key: query
-content-length: 125
+content-length: 83
 
 SELECT
-	[ItemId]
+	SUM(Visits) as Visits
 FROM
 	[Fact_PageViews]
 WHERE
-	[ItemId] in (@EntryIds)
-GROUP BY
-	[ItemId]
-ORDER BY
-	SUM(Visits) DESC
+	[ItemId] = @ItemId
 ----version----
 language: da
 version: 1
@@ -143,7 +139,7 @@ sitecore\admin
 ----version----
 language: en
 version: 1
-revision: bf20f17f-c538-46b4-ac57-51034fc4ace1
+revision: 8a87a67c-1092-4e91-879f-884f0bedcff4
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -172,14 +168,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-bf20f17f-c538-46b4-ac57-51034fc4ace1
+8a87a67c-1092-4e91-879f-884f0bedcff4
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 35
 
-20150820T113049:635756670491441762Z
+20151016T113456:635805920969160319Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

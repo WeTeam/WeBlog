@@ -145,7 +145,7 @@
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_XDB'))">
     <Compile Include="Analytics\Reporting\EntriesByViewQuery.cs" />
-      <Compile Include="Analytics\Reporting\ItemViewsQuery.cs" />
+    <Compile Include="Analytics\Reporting\ItemVisitsQuery.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Compile Include="ExperienceEditor\CanExecuteWeBlogCommands.cs" />

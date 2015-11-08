@@ -6,9 +6,9 @@ using Sitecore.Data;
 namespace Sitecore.Modules.WeBlog.Analytics.Reporting
 {
     /// <summary>
-    /// A reporting query to retrieve the total views for an item.
+    /// A reporting query to retrieve the total visits for an item.
     /// </summary>
-    public class ItemViewsQuery
+    public class ItemVisitsQuery
 #if !SC75
         : ItemBasedReportingQuery
 #endif
@@ -22,9 +22,9 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
         /// Creates a new instance of the class.
         /// </summary>
         /// <param name="reportProvider">The <see cref="ReportDataProviderBase"/> to read reporting data from.</param>
-        public ItemViewsQuery(ReportDataProviderBase reportProvider = null)
+        public ItemVisitsQuery(ReportDataProviderBase reportProvider = null)
 #if !SC75
-            : base(Constants.ReportingQueries.ItemViews, reportProvider)
+            : base(Constants.ReportingQueries.ItemVisits, reportProvider)
         {
         }
 #else
@@ -34,14 +34,14 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
 #endif
 
         /// <summary>
-        /// Gets or sets the ID of the item to retrieve the views for.
+        /// Gets or sets the ID of the item to retrieve the visits for.
         /// </summary>
         public ID ItemId { get; set; }
 
         /// <summary>
-        /// Gets the view count.
+        /// Gets the visit count.
         /// </summary>
-        public long Views { get; protected set; }
+        public long Visits { get; protected set; }
 
         /// <summary>
         /// Executes the query against the reporting database.
@@ -60,7 +60,7 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
 #if !SC75
             var dt = this.ExecuteQuery(parameters);
 #else
-            var query = new ReportDataQuery(Constants.ReportingQueries.ItemViews.ToString(), parameters);
+            var query = new ReportDataQuery(Constants.ReportingQueries.ItemVisits.ToString(), parameters);
             var queryResponse = _reportProvider.GetData("item", query, new CachingPolicy());
             var dt = queryResponse.GetDataTable();
 #endif
@@ -68,7 +68,7 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
             {
                 var result = dt.Rows[0]["Visits"];
                 if(result != null && result != DBNull.Value)
-                    Views = (long)dt.Rows[0]["Visits"];
+                    Visits = (long)dt.Rows[0]["Visits"];
             }
         }
     }

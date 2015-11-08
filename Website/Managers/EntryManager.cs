@@ -422,14 +422,14 @@ namespace Sitecore.Modules.WeBlog.Managers
                 foreach (var id in entryIds)
                 {
 #if FEATURE_XDB
-                    var query = new ItemViewsQuery(this.reportDataProvider)
+                    var query = new ItemVisitsQuery(this.reportDataProvider)
                     {
                         ItemId = id
                     };
 
                     query.Execute();
 
-                    var itemViews = query.Views;
+                    var itemViews = query.Visits;
 #elif FEATURE_DMS
                     var queryId = id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
                     var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
