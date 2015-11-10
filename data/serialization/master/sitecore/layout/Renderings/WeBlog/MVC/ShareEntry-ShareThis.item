@@ -6,20 +6,27 @@ path: /sitecore/layout/Renderings/WeBlog/MVC/ShareEntry-ShareThis
 parent: {8B102FCF-A4DD-417D-86C0-260CFC23923E}
 name: ShareEntry-ShareThis
 master: {00000000-0000-0000-0000-000000000000}
-template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
-templatekey: Controller rendering
+template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
+templatekey: View rendering
 
 ----field----
-field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
-name: Controller
-key: controller
-content-length: 19
+field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
+name: Path
+key: path
+content-length: 41
 
-ShareEntryShareThis
+/Views/WeBlog/ShareEntry-ShareThis.cshtml
+----field----
+field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
+name: Model
+key: model
+content-length: 51
+
+/sitecore/layout/Models/WeBlog/ShareEntry-ShareThis
 ----version----
 language: en
 version: 1
-revision: faf277e3-9e56-40d0-a2b2-9d67ed2e39bb
+revision: b410ab4e-2094-4b53-bdc5-28e4a60a278c
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-faf277e3-9e56-40d0-a2b2-9d67ed2e39bb
+b410ab4e-2094-4b53-bdc5-28e4a60a278c
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151019T215642Z
+20151109T221616Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

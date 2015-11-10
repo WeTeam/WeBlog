@@ -1,4 +1,5 @@
 ﻿@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Model.ShareEntryAddThis
 
 <div class="wb-entry-share wb-panel">
     <h3>@Translator.Render("SHARE")</h3>
@@ -9,7 +10,7 @@
             <a class="addthis_button_tweet"></a>
             <a class="addthis_counter addthis_pill_style"></a>
         </div>
-        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js@(Model)"></script>
+        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js@(Model.AddThisAccountName)"></script>
         <!-- AddThis Button END -->
     </div>
 </div>

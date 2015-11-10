@@ -6,20 +6,27 @@ path: /sitecore/layout/Renderings/WeBlog/MVC/EntryTags
 parent: {8B102FCF-A4DD-417D-86C0-260CFC23923E}
 name: EntryTags
 master: {00000000-0000-0000-0000-000000000000}
-template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
-templatekey: Controller rendering
+template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
+templatekey: View rendering
 
 ----field----
-field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
-name: Controller
-key: controller
-content-length: 13
+field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
+name: Path
+key: path
+content-length: 30
 
-BlogEntryTags
+/Views/WeBlog/EntryTags.cshtml
+----field----
+field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
+name: Model
+key: model
+content-length: 40
+
+/sitecore/layout/Models/WeBlog/EntryTags
 ----version----
 language: en
 version: 1
-revision: 46a5f12b-5684-4ecb-aaaa-6eed4ae8ef7b
+revision: ea907c2a-19e1-4785-889d-625c7400eb96
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-46a5f12b-5684-4ecb-aaaa-6eed4ae8ef7b
+ea907c2a-19e1-4785-889d-625c7400eb96
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151022T195033Z
+20151109T221500Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

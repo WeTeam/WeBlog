@@ -1,10 +1,10 @@
 ﻿@using Sitecore.Modules.WeBlog
 @using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
-@model Sitecore.Modules.WeBlog.Model.PostListEntryRenderingModel
+@model Sitecore.Modules.WeBlog.Model.PostListEntry
 
 <li class="wb-entry-list-entry">
-    @Html.Sitecore().Field("Thumbnail Image", new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
+    @Html.Sitecore().Field("Thumbnail Image", Model.EntryItem, new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
     <div class="wb-entry-detail">
         <h2>
             <a href="@Model.EntryItem.Url">@Model.EntryItem.DisplayTitle.ToHtmlString()</a>

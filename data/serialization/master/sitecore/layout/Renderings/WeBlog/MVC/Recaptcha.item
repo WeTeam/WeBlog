@@ -6,27 +6,27 @@ path: /sitecore/layout/Renderings/WeBlog/MVC/Recaptcha
 parent: {8B102FCF-A4DD-417D-86C0-260CFC23923E}
 name: Recaptcha
 master: {00000000-0000-0000-0000-000000000000}
-template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
-templatekey: Controller rendering
+template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
+templatekey: View rendering
 
 ----field----
-field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
-name: Controller
-key: controller
-content-length: 9
+field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
+name: Path
+key: path
+content-length: 30
 
-Recaptcha
+/Views/WeBlog/Recaptcha.cshtml
 ----field----
-field: {DED9E431-3604-4921-A4B3-A6EC7636A5B6}
-name: Controller Action
-key: controller action
+field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
+name: Model
+key: model
 content-length: 0
 
 
 ----version----
 language: en
 version: 1
-revision: ec780a72-b7ec-4c7c-8224-4486f1e17eea
+revision: 856e8c28-c4f3-4768-a949-f1f036f47a89
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -41,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-ec780a72-b7ec-4c7c-8224-4486f1e17eea
+856e8c28-c4f3-4768-a949-f1f036f47a89
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151030T183909Z
+20151109T235354Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

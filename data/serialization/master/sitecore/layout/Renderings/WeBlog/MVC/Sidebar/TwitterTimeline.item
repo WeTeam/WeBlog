@@ -6,25 +6,32 @@ path: /sitecore/layout/Renderings/WeBlog/MVC/Sidebar/TwitterTimeline
 parent: {5B297E4F-329F-45BC-B2E4-AC95380EA779}
 name: TwitterTimeline
 master: {00000000-0000-0000-0000-000000000000}
-template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
-templatekey: Controller rendering
+template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
+templatekey: View rendering
 
 ----field----
-field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
-name: Controller
-key: controller
-content-length: 11
+field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
+name: Path
+key: path
+content-length: 36
 
-BlogTwitter
+/Views/WeBlog/TwitterTimeline.cshtml
 ----field----
-field: {13F89250-AD6B-4548-882E-118A12C18094}
+field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
+name: Model
+key: model
+content-length: 46
+
+/sitecore/layout/Models/WeBlog/TwitterTimeline
+----field----
+field: {7D24E54F-5C16-4314-90C9-6051AA1A7DA1}
 name: Parameters Template
 key: parameters template
 content-length: 38
 
 {C296AC1E-3FE6-4BB9-86EE-7840FFA4368B}
 ----field----
-field: {94069F66-609C-48B0-8281-521C30FB269D}
+field: {EF7C5528-7307-4E19-863B-DA19EED6A9ED}
 name: Open Properties after Add
 key: open properties after add
 content-length: 1
@@ -40,7 +47,7 @@ content-length: 136
 ----version----
 language: en
 version: 1
-revision: 70b387ac-73f2-455a-8214-bc8bf0fbfec4
+revision: 47ba4833-0e21-4e4f-86af-7d4801b053b2
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -55,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-70b387ac-73f2-455a-8214-bc8bf0fbfec4
+47ba4833-0e21-4e4f-86af-7d4801b053b2
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151102T180135Z
+20151109T221636Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

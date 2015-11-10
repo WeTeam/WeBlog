@@ -1,7 +1,7 @@
 ﻿@using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
 @using Sitecore.Modules.WeBlog.Model
-@model PostListRenderingModel
+@model PostList
 
 <div class="wb-entry-list wb-panel" id="wb-entry-list">
 
@@ -9,8 +9,7 @@
     <ul class="wb-entry-list-entries">
         @foreach (var entry in Model.Entries)
         {
-            var postModel = new PostListEntryRenderingModel { EntryItem = entry, PostTemplate = Model.PostTemplate };
-            Html.RenderAction("Index", "BlogPostListEntry", postModel);
+            Html.RenderPartial(Model.PostTemplate, new PostListEntry(entry));
         }
     </ul>
     <div class="wb-view-more-wrapper" id="wb-view-more-wrapper">

@@ -1,4 +1,5 @@
 ﻿@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Model.ShareEntryShareThis
 
 <div class="wb-entry-share wb-panel">
     <h3>@Translator.Render("SHARE")</h3>
@@ -10,9 +11,9 @@
     var switchTo5x = true;
 </script>
 <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
-@if (!String.IsNullOrEmpty(Model))
+@if (!String.IsNullOrEmpty(Model.ShareThisPublisherId))
 {
     <script type="text/javascript">
-        stLight.options({ publisher: '@Model' });
+        stLight.options({ publisher: '@Model.ShareThisPublisherId' });
     </script>
 }

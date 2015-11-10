@@ -1,12 +1,10 @@
-using System.Collections.Specialized;
-using System.Web.Mvc;
 using Sitecore.Mvc.Presentation;
 
 namespace Sitecore.Modules.WeBlog.layouts
 {
-    public class RenderingParameterHelper : ParameterHelperBase<Controller>
+    public class RenderingParameterHelper<T> : ParameterHelperBase<T>
     {
-        public RenderingParameterHelper(Controller controller, bool applyProperties)
+        public RenderingParameterHelper(T controller, bool applyProperties)
         {
             var renderingContext = RenderingContext.CurrentOrNull;
             if (renderingContext != null)

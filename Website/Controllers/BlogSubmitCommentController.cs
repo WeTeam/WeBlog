@@ -70,7 +70,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
             {
                 AuthorName = model.UserName,
                 Text = model.Comment,
-                AuthorEmail = model.Email,
+                AuthorEmail = model.Email
             };
             comment.Fields.Add(Constants.Fields.Website, model.Website);
             comment.Fields.Add(Constants.Fields.IpAddress, HttpContext.Request.UserHostAddress);
