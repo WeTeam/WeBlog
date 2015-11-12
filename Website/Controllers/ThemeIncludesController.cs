@@ -1,4 +1,4 @@
-﻿using Sitecore.Modules.WeBlog.Components.ThemeLink;
+﻿using Sitecore.Modules.WeBlog.Components;
 
 namespace Sitecore.Modules.WeBlog.Controllers
 {

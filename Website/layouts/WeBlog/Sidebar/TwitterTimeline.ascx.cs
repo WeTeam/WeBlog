@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using Sitecore.Sharedsource.Web.UI.Sublayouts;
 
 namespace Sitecore.Modules.WeBlog.Layouts

@@ -1,4 +1,4 @@
-namespace Sitecore.Modules.WeBlog.Components.RsdLink
+namespace Sitecore.Modules.WeBlog.Components
 {
     public interface IRsdInclude : ILinkInclude
     {

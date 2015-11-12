@@ -5,7 +5,7 @@ using System.Linq;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.Components.Archive
+namespace Sitecore.Modules.WeBlog.Components
 {
     public class ArchiveCore : IArchiveCore
     {

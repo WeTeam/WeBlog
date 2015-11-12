@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Sitecore.Modules.WeBlog.Components.PostList;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Mvc.Presentation;
 

@@ -6,7 +6,7 @@ using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Web;
 
-namespace Sitecore.Modules.WeBlog.Components.TagCloud
+namespace Sitecore.Modules.WeBlog.Components
 {
     public class TagCloudCore : ITagCloudCore
     {

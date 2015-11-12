@@ -3,7 +3,7 @@ using System.Linq;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.Components.CommentsList
+namespace Sitecore.Modules.WeBlog.Components
 {
     public class CommentsListCore : ICommentsListCore
     {

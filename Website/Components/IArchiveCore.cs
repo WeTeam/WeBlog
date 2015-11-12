@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 
-namespace Sitecore.Modules.WeBlog.Components.Archive
+namespace Sitecore.Modules.WeBlog.Components
 {
     public interface IArchiveCore
     {

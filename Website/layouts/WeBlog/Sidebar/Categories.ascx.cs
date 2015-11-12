@@ -1,6 +1,4 @@
 ﻿using System;
-using Sitecore.Links;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts

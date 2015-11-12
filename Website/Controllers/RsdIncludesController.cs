@@ -1,4 +1,4 @@
-﻿using Sitecore.Modules.WeBlog.Components.RsdLink;
+﻿using Sitecore.Modules.WeBlog.Components;
 
 namespace Sitecore.Modules.WeBlog.Controllers
 {

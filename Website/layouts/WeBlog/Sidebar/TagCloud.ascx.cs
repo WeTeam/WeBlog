@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Sitecore.Modules.WeBlog.Components.Archive;
-using Sitecore.Modules.WeBlog.Components.TagCloud;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts

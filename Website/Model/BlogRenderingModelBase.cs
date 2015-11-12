@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Components.Parameters;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Modules.WeBlog.layouts;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Mvc.Presentation;
 

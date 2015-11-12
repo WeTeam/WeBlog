@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Components.PostList;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 
 namespace Sitecore.Modules.WeBlog.Layouts

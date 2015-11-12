@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using Sitecore.Modules.WeBlog.Components.RecentComments;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 

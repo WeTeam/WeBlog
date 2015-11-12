@@ -1,6 +1,6 @@
 using Sitecore.Mvc.Presentation;
 
-namespace Sitecore.Modules.WeBlog.layouts
+namespace Sitecore.Modules.WeBlog.Components.Parameters
 {
     public class RenderingParameterHelper<T> : ParameterHelperBase<T>
     {

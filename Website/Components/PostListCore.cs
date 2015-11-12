@@ -7,7 +7,7 @@ using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.Components.PostList
+namespace Sitecore.Modules.WeBlog.Components
 {
     public class PostListCore : IPostListCore
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Components.EntryTags;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts

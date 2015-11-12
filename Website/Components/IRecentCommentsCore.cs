@@ -1,6 +1,6 @@
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 
-namespace Sitecore.Modules.WeBlog.Components.RecentComments
+namespace Sitecore.Modules.WeBlog.Components
 {
     public interface IRecentCommentsCore
     {

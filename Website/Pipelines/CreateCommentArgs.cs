@@ -1,7 +1,6 @@
 ﻿using Sitecore.Data;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
-using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Pipelines;
 using Comment = Sitecore.Modules.WeBlog.Model.Comment;
 

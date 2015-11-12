@@ -1,5 +1,5 @@
 ﻿using System.Web.UI;
-using Sitecore.Modules.WeBlog.Components.RsdLink;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.WebControls

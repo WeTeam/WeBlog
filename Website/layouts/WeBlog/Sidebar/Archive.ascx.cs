@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Components.Archive;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Converters;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 

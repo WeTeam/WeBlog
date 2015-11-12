@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.UI.WebControls;
-using Sitecore.Modules.WeBlog.Components.SubmitComment;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;

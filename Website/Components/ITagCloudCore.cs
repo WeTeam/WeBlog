@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sitecore.Modules.WeBlog.Components.TagCloud
+namespace Sitecore.Modules.WeBlog.Components
 {
     public interface ITagCloudCore
     {

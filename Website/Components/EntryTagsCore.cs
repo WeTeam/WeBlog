@@ -1,7 +1,7 @@
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 
-namespace Sitecore.Modules.WeBlog.Components.EntryTags
+namespace Sitecore.Modules.WeBlog.Components
 {
     public class EntryTagsCore : IEntryTagsCore
     {

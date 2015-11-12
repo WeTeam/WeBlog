@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using Recaptcha;
 using Sitecore.Modules.WeBlog.Captcha;
-using Sitecore.Modules.WeBlog.Components.SubmitComment;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Controllers

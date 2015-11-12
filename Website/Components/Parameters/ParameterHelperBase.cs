@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using Sitecore.Diagnostics;
 using Sitecore.Reflection;
 
-namespace Sitecore.Modules.WeBlog.layouts
+namespace Sitecore.Modules.WeBlog.Components.Parameters
 {
     public abstract class ParameterHelperBase<T>
     {
@@ -48,7 +48,7 @@ namespace Sitecore.Modules.WeBlog.layouts
         /// <returns>Value of specified parameter.</returns>
         public string GetParameter(string key)
         {
-            if (this.Parameters == null)
+            if (Parameters == null)
             {
                 return String.Empty;
             }

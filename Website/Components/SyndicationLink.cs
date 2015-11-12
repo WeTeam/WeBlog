@@ -1,34 +1,39 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.UI;
+using Sitecore.Modules.WeBlog.Items.Feeds;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Web;
 
-namespace Sitecore.Modules.WeBlog.Components.RsdLink
+namespace Sitecore.Modules.WeBlog.Components
 {
-    public class RsdLink : IRsdInclude
+    public class SyndicationLink : ISyndicationInclude
     {
         protected BlogHomeItem Blog;
         public Dictionary<HtmlTextWriterAttribute, string> Attributes { get; set; }
+        public IEnumerable<RssFeedItem> Feeds { get; set; }
 
         public virtual bool ShouldInclude
         {
             get
             {
-                // If Live Writer is enabled then add the rsd link
-                return Blog != null && Blog.EnableLiveWriter.Checked;
+                if (Blog != null && Blog.EnableRss.Checked)
+                {
+                    var feeds = Blog.SyndicationFeeds;
+                    return feeds != null && feeds.Any();
+                }
+                return false;
             }
         }
 
-        public RsdLink()
+        public SyndicationLink()
         {
             Blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
+            Feeds = Blog.SyndicationFeeds;
             Attributes = new Dictionary<HtmlTextWriterAttribute, string>
             {
-                {HtmlTextWriterAttribute.Href, "http://" + WebUtil.GetHostName() + "/sitecore modules/WeBlog/rsd.ashx?blogid=" + Blog.ID},
-                {HtmlTextWriterAttribute.Rel, "EditURI"},
+                {HtmlTextWriterAttribute.Rel, "alternate"},
                 {HtmlTextWriterAttribute.Type, "application/rsd+xml"},
-                {HtmlTextWriterAttribute.Title, "RSD"}
             };
         }
     }

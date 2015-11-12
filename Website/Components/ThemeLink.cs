@@ -4,7 +4,7 @@ using System.Web.UI;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.Components.ThemeLink
+namespace Sitecore.Modules.WeBlog.Components
 {
     public class ThemeLink : IThemeInclude
     {

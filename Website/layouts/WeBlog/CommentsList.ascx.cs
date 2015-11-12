@@ -1,5 +1,5 @@
 ﻿using System;
-using Sitecore.Modules.WeBlog.Components.CommentsList;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 

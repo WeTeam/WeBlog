@@ -34,7 +34,6 @@ namespace Sitecore.Modules.WeBlog.Controllers
                             _datasource = Context.Database.GetItem(renderingContext.Rendering.DataSource);
                         }
                     }
-
                 }
                 return _datasource;
             }

@@ -1,5 +1,5 @@
 ﻿using System.Web.UI;
-using Sitecore.Modules.WeBlog.Components.SyndicationLink;
+using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Items.Feeds;
 
 namespace Sitecore.Modules.WeBlog.WebControls

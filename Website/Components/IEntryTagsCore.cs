@@ -1,4 +1,4 @@
-namespace Sitecore.Modules.WeBlog.Components.EntryTags
+namespace Sitecore.Modules.WeBlog.Components
 {
     public interface IEntryTagsCore
     {
