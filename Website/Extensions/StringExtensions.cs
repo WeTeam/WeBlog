@@ -1,4 +1,6 @@
-﻿namespace Sitecore.Modules.WeBlog.Extensions
+﻿using System.Web;
+
+namespace Sitecore.Modules.WeBlog.Extensions
 {
     public static class StringExtensions
     {
@@ -40,10 +42,20 @@
                 return input;
 
             var originalCount = length - continuesToken.Length - 1;
-            if(originalCount < 0)
+            if (originalCount < 0)
                 originalCount = 0;
 
             return input.Substring(0, originalCount) + continuesToken;
+        }
+
+        /// <summary>
+        /// Converts string input into MvcHtmlString
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns>New instance of MvcHtmlString with input as an argument.</returns>
+        public static HtmlString ToHtmlString(this string input)
+        {
+            return new HtmlString(input);
         }
     }
 }

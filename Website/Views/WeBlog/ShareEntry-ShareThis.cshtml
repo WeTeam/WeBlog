@@ -1,0 +1,19 @@
+﻿@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Model.ShareEntryShareThis
+
+<div class="wb-entry-share wb-panel">
+    <h3>@Translator.Render("SHARE")</h3>
+    <div class="wb-entries">
+        <span class='st_facebook_hcount' displayText='Facebook'></span><span class='st_twitter_hcount' displayText='Tweet'></span><span class='st_sharethis_hcount' displayText='ShareThis'></span>
+    </div>
+</div>
+<script type="text/javascript">
+    var switchTo5x = true;
+</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+@if (!String.IsNullOrEmpty(Model.ShareThisPublisherId))
+{
+    <script type="text/javascript">
+        stLight.options({ publisher: '@Model.ShareThisPublisherId' });
+    </script>
+}

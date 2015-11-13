@@ -3,7 +3,6 @@ using Sitecore.Shell.Applications.Dialogs.ProgressBoxes;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.StringExtensions;
-using System;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {

@@ -21,6 +21,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DebugSymbols>true</DebugSymbols>
@@ -70,10 +71,6 @@
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
       <HintPath>..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="RadEditor.Net2">
-      <HintPath>$(SitecorePath)\bin\RadEditor.Net2.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\lib\Recaptcha.dll</HintPath>
     </Reference>
@@ -102,7 +99,10 @@
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\Sitecore.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.NVelocity">
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
@@ -113,6 +113,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
@@ -122,6 +123,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -140,6 +145,59 @@
     <Compile Include="Data\Fields\CustomLookupField.cs" />
     <Compile Include="Data\Fields\CustomMultiListField.cs" />
     <Compile Include="Data\Fields\CustomTextField.cs" />
+    <Compile Include="Components\IRsdInclude.cs" />
+    <Compile Include="Components\Parameters\ParameterHelperBase.cs" />
+    <Compile Include="Components\Parameters\RenderingParameterHelper.cs" />
+    <Compile Include="Components\Parameters\SublayoutParameterHelper.cs" />
+    <Compile Include="Components\RsdLink.cs" />
+    <Compile Include="Components\ISyndicationInclude.cs" />
+    <Compile Include="Components\SyndicationLink.cs" />
+    <Compile Include="Components\IThemeInclude.cs" />
+    <Compile Include="Components\ThemeLink.cs" />
+    <Compile Include="Captcha\CaptchaValidator.cs" />
+    <Compile Include="Captcha\CaptchaValidatorAttribute.cs" />
+    <Compile Include="Components\ArchiveCore.cs" />
+    <Compile Include="Components\IArchiveCore.cs" />
+    <Compile Include="Components\CommentsListCore.cs" />
+    <Compile Include="Components\ICommentsListCore.cs" />
+    <Compile Include="Components\EntryTagsCore.cs" />
+    <Compile Include="Components\IEntryTagsCore.cs" />
+    <Compile Include="Components\InterestingEntriesCore.cs" />
+    <Compile Include="Components\IPostListCore.cs" />
+    <Compile Include="Components\PostListCore.cs" />
+    <Compile Include="Components\IRecentCommentsCore.cs" />
+    <Compile Include="Components\RecentCommentsCore.cs" />
+    <Compile Include="Components\ISubmitCommentCore.cs" />
+    <Compile Include="Components\SubmitCommentCore.cs" />
+    <Compile Include="Components\ITagCloudCore.cs" />
+    <Compile Include="Components\TagCloudCore.cs" />
+    <Compile Include="Controllers\BlogBaseController.cs" />
+    <Compile Include="Controllers\BlogSubmitCommentController.cs" />
+    <Compile Include="Controllers\BlogRecentCommentsController.cs" />
+    <Compile Include="Controllers\BlogTagCloudController.cs" />
+    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
+    <Compile Include="Model\Archive.cs" />
+    <Compile Include="Model\Captcha.cs" />
+    <Compile Include="Model\BlogRenderingModelBase.cs" />
+    <Compile Include="Model\Blog.cs" />
+    <Compile Include="Model\Entry.cs" />
+    <Compile Include="Model\CommentsList.cs" />
+    <Compile Include="Model\FacebookLike.cs" />
+    <Compile Include="Model\FacebookComments.cs" />
+    <Compile Include="Model\InterestingEntries.cs" />
+    <Compile Include="Model\PostList.cs" />
+    <Compile Include="Model\ShareEntryAddThis.cs" />
+    <Compile Include="Model\ShareEntryShareThis.cs" />
+    <Compile Include="Model\Twitter.cs" />
+    <Compile Include="Model\Feeds.cs" />
+    <Compile Include="Model\Categories.cs" />
+    <Compile Include="Model\EntryCategories.cs" />
+    <Compile Include="Model\EntryTags.cs" />
+    <Compile Include="Model\PostListEntry.cs" />
+    <Compile Include="Model\RecentCommentsRenderingModel.cs" />
+    <Compile Include="Model\SubmitCommentRenderingModel.cs" />
+    <Compile Include="Model\TagCloudRenderingModel.cs" />
+    <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
@@ -166,7 +224,12 @@
     <Compile Include="Commands\RebuildIndex.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
+    <Compile Include="Components\ILinkInclude.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Controllers\LinkIncludeController.cs" />
+    <Compile Include="Controllers\RsdIncludesController.cs" />
+    <Compile Include="Controllers\ThemeIncludesController.cs" />
+    <Compile Include="Controllers\BlogSyndicationController.cs" />
     <Compile Include="Converters\ExtendedBooleanConverter.cs" />
     <Compile Include="Extensions\CustomTextFieldExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
@@ -185,7 +248,6 @@
     <Compile Include="layouts\SublayoutBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="layouts\SublayoutParameterHelper.cs" />
     <Compile Include="layouts\WeBlog\BaseEntrySublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -483,7 +545,85 @@
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\WeBlog\Blog.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\MvcLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Categories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Archive.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\TagCloud.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Feeds.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\RecentComments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\FacebookLike.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\InterestingEntries.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\TwitterTimeline.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\ShareEntry-ShareThis.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\ShareEntry-AddThis.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\EntryCategories.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\EntryTags.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\FacebookComments.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\CommentsList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Entry.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\PostList.cshtml" />
+    <Content Include="Views\WeBlog\PostListEntry.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Captcha.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\SubmitComment.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\Recaptcha.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\SubmitComment\MessagePanel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\SubmitComment\CommentScroll.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\MvcLayoutAjax.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -498,7 +638,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.-->
   <Target Name="BeforeBuild">
     <Message Text="Configuration: $(Configuration)" />

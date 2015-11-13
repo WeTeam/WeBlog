@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {B4FA3FA9-FC75-42B5-99CA-499F778251BB}
+database: master
+path: /sitecore/layout/Renderings/WeBlog/MVC/PostList
+parent: {8B102FCF-A4DD-417D-86C0-260CFC23923E}
+name: PostList
+master: {00000000-0000-0000-0000-000000000000}
+template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
+templatekey: View rendering
+
+----field----
+field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
+name: Path
+key: path
+content-length: 29
+
+/Views/WeBlog/PostList.cshtml
+----field----
+field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
+name: Model
+key: model
+content-length: 39
+
+/sitecore/layout/Models/WeBlog/PostList
+----field----
+field: {7D24E54F-5C16-4314-90C9-6051AA1A7DA1}
+name: Parameters Template
+key: parameters template
+content-length: 38
+
+{DBA2C601-EFC1-43BD-AF8F-085756966CB2}
+----version----
+language: en
+version: 1
+revision: 4756bef6-53d3-4ac8-9df3-53eca9ca2d0a
+
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20151025T112429Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+4756bef6-53d3-4ac8-9df3-53eca9ca2d0a
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20151109T221549Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

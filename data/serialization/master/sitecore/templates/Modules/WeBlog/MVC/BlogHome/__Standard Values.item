@@ -1,0 +1,135 @@
+----item----
+version: 1
+id: {F70564E0-FF2A-4F1F-807F-3F067856BCEC}
+database: master
+path: /sitecore/templates/Modules/WeBlog/MVC/BlogHome/__Standard Values
+parent: {0AB5AAD6-6C0F-4F1E-AF20-37571248F7C4}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {0AB5AAD6-6C0F-4F1E-AF20-37571248F7C4}
+templatekey: BlogHome
+
+----field----
+field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
+name: Enable RSS
+key: enable rss
+content-length: 1
+
+1
+----field----
+field: {85184F37-810A-4A0C-BE78-FF6B60034C15}
+name: Enable Comments
+key: enable comments
+content-length: 1
+
+1
+----field----
+field: {ED011016-AC3D-4377-8C8B-2EA6EF2860FC}
+name: Gravatar Size
+key: gravatar size
+content-length: 2
+
+45
+----field----
+field: {11F0464C-52CF-44E8-9431-C1278C2A146E}
+name: Defined Category Template
+key: defined category template
+content-length: 38
+
+{6C455315-01BF-4E2E-9BA3-31B5695E9C77}
+----field----
+field: {BC8DC567-A580-45C0-8B52-C4F10A10A1E7}
+name: Defined Entry Template
+key: defined entry template
+content-length: 38
+
+{BE9675B1-4951-4E11-B935-A698227B6A97}
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{BE9675B1-4951-4E11-B935-A698227B6A97}
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 1390
+
+<r xmlns:xsd="http://www.w3.org/2001/XMLSchema" ><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{F90AE597-8499-4557-A0D5-64EB5135A5B7}"><r ds="" id="{B62C7429-C491-4815-81EB-214903DB76E4}" par="" ph="weblog-content" uid="{519F319A-BB46-4A00-8319-B10CD5FF6031}" /><r ds="" id="{B4FA3FA9-FC75-42B5-99CA-499F778251BB}" par="PostTemplate" ph="weblog-main" uid="{7B572A4F-D434-4EE0-8298-2784298B7EE1}" /><r cac="1" ds="" id="{1009037A-4F6B-45F0-B55F-F9D5CE37C8CE}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{9AB0519F-753B-43E5-9DB2-9D23D4334960}" vbp="1" /><r cac="1" ds="" id="{B1D7C514-F638-4531-9824-070AC21932B8}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{57F227FA-295A-4A67-BE15-1FC30303BF6A}" vbp="1" /><r cac="1" ds="" id="{46A3FA47-F01A-42AF-9F83-4EB04ACE7235}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{DAC7C38C-B5FA-4855-ABBC-AEB4EF82D4DB}" vbp="1" /><r cac="1" ds="" id="{936CF0DC-E259-4966-8944-16400899A17C}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{5DA6458D-B784-4922-946E-FAED0F7647F0}" vbp="1" /><r ds="" id="{240F2B73-20D6-4476-80E2-0D23FF841562}" par="" ph="weblog-sidebar" uid="{2C93122A-AC9A-40F6-BA99-76D8977E4C40}" /></d><d id="{CF7D07C2-F835-4313-B01D-7AADCA72D24B}" l="{EE93A8A4-6272-42B6-8329-8F28F631F412}"><r ds="" id="{B4FA3FA9-FC75-42B5-99CA-499F778251BB}" par="PostTemplate" ph="weblog-content" uid="{E7C0A81B-427F-4B72-8FCC-2FBB2A551CEA}" /></d></r>
+----version----
+language: en
+version: 1
+revision: e0067caa-3644-45f9-9f3a-51a1c6bbd416
+
+----field----
+field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
+name: Title
+key: title
+content-length: 5
+
+$name
+----field----
+field: {DF7CAB47-015F-430F-8BAE-452A4D2D7A17}
+name: Theme
+key: theme
+content-length: 38
+
+{2AC5A271-0770-4B54-942D-CA1467D22B43}
+----field----
+field: {BAD8E75C-BD7C-475A-A7B8-8B3600BAA26C}
+name: DisplayItemCount
+key: displayitemcount
+content-length: 2
+
+10
+----field----
+field: {04AAD5FA-BA6B-4E0E-9540-E75E53B23F34}
+name: DisplayCommentSidebarCount
+key: displaycommentsidebarcount
+content-length: 1
+
+5
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20151031T145431Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e0067caa-3644-45f9-9f3a-51a1c6bbd416
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 35
+
+20151102T101937:635820563774731591Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

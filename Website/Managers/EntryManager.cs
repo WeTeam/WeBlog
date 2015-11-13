@@ -8,7 +8,6 @@ using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.StringExtensions;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;

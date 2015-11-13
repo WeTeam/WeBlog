@@ -1,0 +1,17 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Model.Feeds
+
+<div class="wb-feeds wb-panel">
+    <h3>@Translator.Render("SYNDICATION").ToHtmlString()</h3>
+    <ul>
+        @foreach (var feed in Model.FeedItems)
+        {
+            <li>
+                <a id="feedImage" class="wb-feed-image" href="@feed.Url"><img src="/sitecore modules/web/WeBlog/Images/feed-icon-14x14.png" /></a>
+                <a id="feedText" class="wb-feed-text" href="@feed.Url">@feed.Title.Text.ToHtmlString()</a>
+            </li>
+        }
+    </ul>
+</div>
+

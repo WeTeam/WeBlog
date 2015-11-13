@@ -1,5 +1,6 @@
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Fields;
+using Sitecore.Modules.WeBlog.Extensions;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -34,5 +35,13 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             get { return !string.IsNullOrEmpty(Title.Text) ? Title.Text : Name; }
         }
 
+        /// <summary>
+        /// Gets the URL for a category
+        /// </summary>
+        /// <returns>The URL of the category</returns>
+        public string GetUrl()
+        {
+            return InnerItem.GetUrl();
+        }
     }
 }

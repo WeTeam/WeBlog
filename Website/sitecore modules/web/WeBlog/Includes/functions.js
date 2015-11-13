@@ -1,4 +1,11 @@
 ﻿(function ($) {
+    function getQueryStringParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name.toLowerCase() + "=([^&#]*)"),
+            results = regex.exec(location.search.toLowerCase());
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
     $(document).ready(function () {
         // infinite scroll
         $('.wb-view-more', '#wb-view-more-wrapper').click(function () {
@@ -13,6 +20,12 @@
                 startIndex: entries.children().length,
                 blogAjax: 1
             };
+
+            var startIndex = getQueryStringParameter("startIndex");
+            if (startIndex !== "") {
+                params.startIndex += parseInt(startIndex, 0);
+            }
+
             if ($.url.param("tag") != null) {
                 params.tag = $.url.param("tag");
             }
@@ -22,7 +35,7 @@
                 var posts = jQuery(data).find('ul li');
                 entries.append(posts);
                 loading.hide();
-                if (posts.length>0)
+                if (posts.length > 0)
                     viewMore.show();
             });
             return false;
