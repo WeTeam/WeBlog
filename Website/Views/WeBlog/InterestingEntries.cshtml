@@ -1,0 +1,15 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Model.InterestingEntries
+
+<div class="wb-panel">
+    <h3>@Translator.Render("POPULAR_POSTS").ToHtmlString()</h3>
+    <ul>
+        @foreach (var entry in Model.Entries)
+        {
+            <li>
+                <a href="@entry.Url">@entry.Title.Rendered.ToHtmlString()</a>
+            </li>
+        }
+    </ul>
+</div>

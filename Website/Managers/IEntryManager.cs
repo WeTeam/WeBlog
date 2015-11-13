@@ -115,7 +115,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="tag">A tag the entry must contain</param>
         /// <param name="category">A category the entry must contain</param>
         /// <returns></returns>
-        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead")]
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead")] // deprecated in 2.4
         EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null);
 
         /// <summary>

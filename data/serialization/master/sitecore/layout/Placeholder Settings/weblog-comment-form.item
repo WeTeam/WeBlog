@@ -20,13 +20,13 @@ weblog-comment-form
 field: {E391B526-D0C5-439D-803E-17512EAE6222}
 name: Allowed Controls
 key: allowed controls
-content-length: 77
+content-length: 155
 
-{53F12198-7C37-4611-8F28-386FE944B4D2}|{F8A28E5F-10BF-4BDA-8CBB-6105E73AB5DC}
+{53F12198-7C37-4611-8F28-386FE944B4D2}|{F8A28E5F-10BF-4BDA-8CBB-6105E73AB5DC}|{25C05A79-B811-4E1D-A501-A1F5B9DB11BB}|{E252152A-83E8-4423-9661-6E7CB1727E4C}
 ----version----
 language: en
 version: 1
-revision: d12270d2-380c-4d65-9053-965f8c5c7870
+revision: dd52cb05-58cd-4c6e-ba2b-e279a27f9597
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-d12270d2-380c-4d65-9053-965f8c5c7870
+dd52cb05-58cd-4c6e-ba2b-e279a27f9597
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20130804T125010:635112174108359747
+20151102T174659Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

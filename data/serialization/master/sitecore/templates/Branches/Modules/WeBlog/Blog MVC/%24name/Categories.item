@@ -1,0 +1,18 @@
+----item----
+version: 1
+id: {6A699B8E-E869-42A7-B4E7-8EAC0D917CDC}
+database: master
+path: /sitecore/templates/Branches/Modules/WeBlog/Blog MVC/$name/Categories
+parent: {F2DD30B3-7C08-47E5-B2B7-68A1A21A8C2E}
+name: Categories
+master: {00000000-0000-0000-0000-000000000000}
+template: {0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
+templatekey: Template Folder
+
+----field----
+field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
+name: __Masters
+key: __masters
+content-length: 38
+
+{6C455315-01BF-4E2E-9BA3-31B5695E9C77}

@@ -1,6 +1,4 @@
 ﻿using System;
-using Sitecore.Links;
-using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Layouts
@@ -19,7 +17,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             if (ManagerFactory.CategoryManagerInstance.GetCategories().Length == 0)
             {
-                if(PanelCategories != null)
+                if (PanelCategories != null)
                     PanelCategories.Visible = false;
             }
             else
@@ -30,19 +28,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
                     ListViewCategories.DataBind();
                 }
             }
-        }
-
-        /// <summary>
-        /// Get the URL for a category
-        /// </summary>
-        /// <param name="category">The category to get the URL for</param>
-        /// <returns>The URL if the category is valid, otherwise an emtpy string</returns>
-        protected virtual string GetCategoryUrl(CategoryItem category)
-        {
-            if (category != null)
-                return LinkManager.GetItemUrl(Sitecore.Context.Database.GetItem(category.ID));
-            else
-                return string.Empty;
         }
     }
 }

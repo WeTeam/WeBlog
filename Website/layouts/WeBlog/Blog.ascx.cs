@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Web.UI;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 

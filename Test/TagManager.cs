@@ -2,15 +2,11 @@
 using System.Linq;
 using System.Web;
 using NUnit.Framework;
+using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Search;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Managers;
-
-#if FEATURE_CONTENT_SEARCH
-using Sitecore.ContentSearch;
-#endif
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -47,13 +43,8 @@ namespace Sitecore.Modules.WeBlog.Test
             m_entry3 = m_blog1.Axes.GetDescendant("Entry3");
 
             // rebuild the WeBlog search index (or some aspects of TagManager won't work)
-#if FEATURE_CONTENT_SEARCH
             var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
-#else
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
-            index.Rebuild();
-#endif
         }
 
         [Test]

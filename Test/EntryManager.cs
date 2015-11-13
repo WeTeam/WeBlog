@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using System.Data;
 using System;
 using System.Linq;
 using System.Web;
@@ -6,20 +6,16 @@ using NUnit.Framework;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using System.IO;
+using Moq;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
-
-#if FEATURE_CONTENT_SEARCH
 using Sitecore.ContentSearch;
-using System.Data;
-#endif
+
 
 #if FEATURE_XDB
 using Sitecore.Analytics.Reporting;
 using System.Collections.Generic;
-#elif FEATURE_OMS
-using Sitecore.Analytics;
 #elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess;
 #endif
@@ -82,20 +78,10 @@ namespace Sitecore.Modules.WeBlog.Test
             m_comment1 = m_entry21.Axes.GetDescendant("comment1");
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-#if FEATURE_CONTENT_SEARCH
             var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
-#else
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
-#endif
             index.Rebuild();
-
-#if FEATURE_OMS
-            if (Analytics.Configuration.AnalyticsSettings.Enabled)
-            {
-              // todo
-            }
-#elif FEATURE_DMS
           
+#if FEATURE_DMS
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
             {
                 // Register DMS page views for popular items
@@ -117,11 +103,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
         public void VerifyAnalyticsSetup()
         {
-#if FEATURE_OMS
-            Assert.True(AnalyticsTracker.IsActive, "Sitecore.Analytics must be enabled to test");
-#elif FEATURE_DMS
             Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
-#endif
         }
 
         [Test]

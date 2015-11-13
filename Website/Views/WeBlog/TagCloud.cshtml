@@ -1,0 +1,13 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model IEnumerable<Sitecore.Modules.WeBlog.Model.TagCloudRenderingModel>
+
+<div class="wb-tagCloud wb-panel">
+    <h3>@Translator.Render("TAGCLOUD").ToHtmlString()</h3>
+    <div class="wb-entries">
+        @foreach (var tag in Model)
+        {
+            <a class="@("wb-weight" + tag.Weight)" href="@tag.Url">@tag.Name</a>
+        }
+    </div>
+</div>

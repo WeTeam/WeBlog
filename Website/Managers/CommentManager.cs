@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
+using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Modules.WeBlog.Pipelines;
-using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
-using Sitecore.Search;
-#if FEATURE_CONTENT_SEARCH
-using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.Linq.Utilities;
-using Sitecore.Modules.WeBlog.Search.SearchTypes;
-#endif
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -43,11 +37,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             args.Database = ContentHelper.GetContentDatabase();
             args.Language = language ?? Context.Language;
 
-#if SC62 || SC64
-            //CorePipeline.Run("weblogCreateComment", args);
-#else
             CorePipeline.Run("weblogCreateComment", args, true);
-#endif
 
             if (args.CommentItem != null)
                 return args.CommentItem.ID;
@@ -64,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             commentItem.BeginEdit();
             commentItem.Comment.Field.Value = wpComment.Content;
             commentItem.Email.Field.Value = wpComment.Email;
-            commentItem.IPAddress.Field.Value = wpComment.IP;
+            commentItem.IpAddress.Field.Value = wpComment.IP;
             commentItem.Website.Field.Value = wpComment.Url;
             commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
             commentItem.EndEdit();
@@ -246,7 +236,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
                 if (blog != null)
                 {
-#if FEATURE_CONTENT_SEARCH
                     var indexName = Settings.SearchIndexName;
                     List<CommentItem> result = new List<CommentItem>();
                     if (!string.IsNullOrEmpty(indexName))
@@ -282,25 +271,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                         }
                     }
                     return result.ToArray();
-
-                  
-#else
-                    var query = new CombinedQuery();
-
-                    // TODO: What about items using templates derived from commenttemplateid? need to accommodate those
-                    query.Add(new FieldQuery(Constants.Index.Fields.Template, blog.BlogSettings.CommentTemplateID.ToShortID().ToString().ToLower()), QueryOccurance.Must);
-                    query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Path, item.ID.ToShortID().ToString()), QueryOccurance.Must);
-                    query.Add(new FieldQuery(Sitecore.Search.BuiltinFields.Language, item.Language.Name), QueryOccurance.Must);
-
-                    string sortField = null;
-                    if (sort)
-                    {
-                        sortField = Constants.Index.Fields.Created;
-                    }
-
-                    var searcher = new Searcher();
-                    return searcher.Execute<CommentItem>(query, item.Language, maximumCount, (list, listItem) => list.Add((CommentItem)listItem), sortField, reverse);
-#endif
                 }
             }
             return new CommentItem[0];
@@ -314,77 +284,5 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             return Context.ContentDatabase ?? Context.Database;
         }
-
-        #region Obsolete Methods
-        /// <summary>
-        /// Gets the comments for the given blog entry as Items
-        /// </summary>
-        /// <param name="entryItem">The blog entry to get the comments for</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetEntryComments(Item entryItem).InnerItem instead")]
-        public static Item[] GetEntryCommentsAsItems(Item targetEntry)
-        {
-            return (from comment in new CommentManager().GetEntryComments(targetEntry) select comment.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Gets the comments for the blog entry as items
-        /// </summary>
-        /// <param name="blogId">The ID of the blog to get the comments for</param>
-        /// <param name="maximumCount">The maximum number of comments to retrieve</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetCommentsByBlog(ID blogId, int maximumCount).InnerItem instead")]
-        public static Item[] GetCommentItemsByBlog(ID blogId, int maximumCount)
-        {
-            return (from comment in new CommentManager().GetCommentsByBlog(blogId, maximumCount) select comment.InnerItem).ToArray();
-        }
-
-        /// <summary>
-        /// Makes the sorted comment item list.
-        /// </summary>
-        /// <param name="array">The array.</param>
-        /// <returns></returns>
-        [Obsolete("Use InnerItem of comment object")]
-        public static Item[] MakeSortedCommentsListAsItems(System.Collections.IList array)
-        {
-            var commentItemList = new List<Item>();
-            foreach (Item item in array)
-            {
-                if (item.TemplateID == Settings.CommentTemplateID && item.Versions.GetVersions().Length > 0)
-                {
-                    commentItemList.Add(item);
-                }
-            }
-            commentItemList.Sort(new ItemDateComparerDesc());
-            return commentItemList.ToArray();
-        }
-
-        /// <summary>
-        /// Sort the comments list using the CommentDateComparerDesc comparer
-        /// </summary>
-        /// <param name="array">The comments to sort</param>
-        /// <returns>A sorted list of comments</returns>
-        [Obsolete("Use sorting options on GetCommentsFor")]
-        public CommentItem[] MakeSortedCommentsList(System.Collections.IList array)
-        {
-            var commentItemList = new List<CommentItem>();
-            var template = GetDatabase().GetTemplate(Settings.CommentTemplateID);
-
-            if (template != null)
-            {
-                foreach (Item item in array)
-                {
-                    if (item.TemplateIsOrBasedOn(template) && item.Versions.Count > 0)
-                    {
-                        commentItemList.Add(new CommentItem(item));
-                    }
-                }
-
-                commentItemList.Sort(new CommentDateComparerDesc());
-            }
-
-            return commentItemList.ToArray();
-        }
-        #endregion
     }
 }

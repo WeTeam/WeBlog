@@ -105,12 +105,5 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="reverse">Determines if the sort order should be reversed</param>
         /// <returns>The comments which are decendants of the given item</returns>
         CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false);
-
-        /// <summary>
-        /// Sort the comments list using the CommentDateComparerDesc comparer
-        /// </summary>
-        /// <param name="array">The comments to sort</param>
-        /// <returns>A sorted list of comments</returns>
-        CommentItem[] MakeSortedCommentsList(System.Collections.IList array);
     }
 }

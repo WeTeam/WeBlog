@@ -120,18 +120,5 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             return sort;
         }
-
-        #region Deprecated Methods
-        /// <summary>
-        /// Gets the tags for the blog by the given blog ID
-        /// </summary>
-        /// <param name="blogId">The ID of the blog to get the tags for</param>
-        /// <returns>An array of unique tags</returns>
-        [Obsolete("Use GetTagsByBlog instead")]
-        public static string[] GetTagsByBlogID(ID blogId)
-        {
-            return new TagManager().GetTagsByBlog(blogId);
-        }
-        #endregion
     }
 }
