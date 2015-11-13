@@ -1,7 +1,0 @@
-﻿@using Sitecore.Modules.WeBlog.Extensions
-
-<div class="wb-captcha">
-    <div class="wb-captchaLabel">Please confirm you are human by typing the text you see in this image</div>
-    @Html.Raw(Html.GenerateReCaptcha("captcha1", "default"))
-    @Html.ValidationMessage("captcha1")
-</div>

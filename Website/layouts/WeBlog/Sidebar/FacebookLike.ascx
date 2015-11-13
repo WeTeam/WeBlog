@@ -16,5 +16,5 @@
         fjs.parentNode.insertBefore(js, fjs);
     } (document, 'script', 'facebook-jssdk'));
 </script>
-<div class="fb-like" data-layout="<%= LayoutStyle %>" data-href="<%= UrlToLike %>" data-send="<%= SendButton %>" data-width="<%= Width %>" data-colorscheme="<%= ColorScheme %>" data-show-faces="<%= ShowFaces %>"></div>
+<div class="fb-like" data-layout="<%= LayoutStyle %>" data-href="<%= UrlToLike %>" data-send="<%= SendButton ? "true" : "false" %>" data-width="<%= Width %>" data-colorscheme="<%= ColorScheme %>" data-show-faces="<%= ShowFaces ? "true" : "false" %>"></div>
 </div>

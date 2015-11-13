@@ -15,7 +15,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             base.OnLoad(e);
 
             if (string.IsNullOrEmpty(UrlToCommentOn))
-                UrlToCommentOn = Links.LinkManager.GetItemUrl(DataSourceItem, new Links.UrlOptions { AlwaysIncludeServerUrl = true });
+                UrlToCommentOn = Sitecore.Links.LinkManager.GetItemUrl(DataSourceItem, new Sitecore.Links.UrlOptions { AlwaysIncludeServerUrl = true });
         }
     }
 }

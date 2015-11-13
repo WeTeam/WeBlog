@@ -10,40 +10,68 @@ template: {C296AC1E-3FE6-4BB9-86EE-7840FFA4368B}
 templatekey: Twitter
 
 ----field----
+field: {570FCD3B-5A5E-4827-8D5A-F89B10D6B98A}
+name: Polling
+key: polling
+content-length: 1
+
+1
+----field----
 field: {A13B14C3-50D8-491D-AA90-4A0E29EF028A}
 name: NumberOfTweets
 key: numberoftweets
+content-length: 1
+
+4
+----field----
+field: {C14E9C9D-46A4-4076-BA5F-CB857727F46C}
+name: Timestamps
+key: timestamps
+content-length: 0
+
+
+----field----
+field: {006B64E0-7EAA-44E0-BBDF-BE4852028D1B}
+name: Hashtags
+key: hashtags
 content-length: 0
 
 
 ----field----
 field: {95F562DE-090C-4DBF-A849-90B5904E77DB}
-name: Theme
-key: theme
-content-length: 0
+name: ShellBackground
+key: shellbackground
+content-length: 7
 
-
+#4a463e
 ----field----
 field: {C2169EDC-2C5E-4889-A354-B1AA4B51A1BC}
-name: BorderColour
-key: bordercolour
-content-length: 0
+name: ShellText
+key: shelltext
+content-length: 7
 
-
+#f2ead7
 ----field----
 field: {0CBE41C4-2215-45B6-B1D3-CB3426D9DA80}
-name: LinkColour
-key: linkcolour
-content-length: 0
+name: TweetBackground
+key: tweetbackground
+content-length: 7
 
-
+#f3e9d8
 ----field----
 field: {AB5691BF-8D8F-4712-8D4F-4A98EC47C881}
-name: Chrome
-key: chrome
-content-length: 0
+name: TweetText
+key: tweettext
+content-length: 7
 
+#33302a
+----field----
+field: {5D55D49D-CAD9-483D-B40C-59FC882CB551}
+name: Links
+key: links
+content-length: 7
 
+#c93328
 ----field----
 field: {4E9BB592-C0F2-42CB-9FD8-13E540A2D825}
 name: Width
@@ -55,16 +83,16 @@ content-length: 0
 field: {730A9ACD-822D-4810-8C6E-868E8F39953E}
 name: Height
 key: height
-content-length: 0
+content-length: 3
 
-
+300
 ----field----
 field: {3094D236-5985-4C4F-AE6A-E30740885532}
 name: Caching
 key: caching
-content-length: 15
+content-length: 13
 
-0|0|0|0|0|0|0|0
+0|0|0|0|0|0|0
 ----field----
 field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
 name: __Sortorder
@@ -75,7 +103,7 @@ content-length: 3
 ----version----
 language: en
 version: 1
-revision: 979520ed-1fef-4822-9062-7815624fc53d
+revision: f91c1547-4269-43a0-9b61-b313c7323ec9
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -97,14 +125,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-979520ed-1fef-4822-9062-7815624fc53d
+f91c1547-4269-43a0-9b61-b313c7323ec9
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 16
+content-length: 34
 
-20151022T185809Z
+20111011T161337:634539464172697546
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

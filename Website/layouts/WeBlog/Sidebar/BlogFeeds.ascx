@@ -11,8 +11,8 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <asp:HyperLink ID="feedImage" runat="server" NavigateUrl="<%#(Container.DataItem as RssFeedItem).Url%>" ImageUrl="/sitecore modules/web/WeBlog/Images/feed-icon-14x14.png" CssClass="wb-feed-image" />
-                <asp:HyperLink ID="feedText" runat="server" NavigateUrl="<%#(Container.DataItem as RssFeedItem).Url%>" Text="<%#(Container.DataItem as RssFeedItem).Title.Text%>" CssClass="wb-feed-text" />
+                <asp:HyperLink ID="feedImage" runat="server" NavigateUrl="<%#(Container.DataItem as RSSFeedItem).Url%>" ImageUrl="/sitecore modules/web/WeBlog/Images/feed-icon-14x14.png" CssClass="wb-feed-image" />
+                <asp:HyperLink ID="feedText" runat="server" NavigateUrl="<%#(Container.DataItem as RSSFeedItem).Url%>" Text="<%#(Container.DataItem as RSSFeedItem).Title.Text%>" CssClass="wb-feed-text" />
             </li>
         </ItemTemplate>
     </asp:ListView>

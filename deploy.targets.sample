@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.2'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 6.2\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 6.2\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.4'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 6.4\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 6.4\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc6.6'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 6.6\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 6.6\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('sc7.0'))">
 		<SitecorePath>C:\inetpub\WeBlog\Sitecore 7.0\cm\Website</SitecorePath>
 		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 7.0\cd\Website</SitecoreCDPath>

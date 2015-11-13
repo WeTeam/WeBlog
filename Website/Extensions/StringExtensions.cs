@@ -1,6 +1,4 @@
-﻿using System.Web;
-
-namespace Sitecore.Modules.WeBlog.Extensions
+﻿namespace Sitecore.Modules.WeBlog.Extensions
 {
     public static class StringExtensions
     {
@@ -25,6 +23,19 @@ namespace Sitecore.Modules.WeBlog.Extensions
 
             return true;
         }
+      /* will probably need a target framework check for this method
+#if SC62
+        /// <summary>
+        /// Limits a strings length to a maximum number of characters
+        /// </summary>
+        /// <param name="input">The input to process</param>
+        /// <param name="length">The maximum length of the string</param>
+        /// <returns>A string with less than or the same number of characters as specified in the length</returns>
+        public static string MaxLength(this string input, int length)
+        {
+            return MaxLength(input, length, "...");
+        }
+#endif*/
 
         /// <summary>
         /// Limits a strings length to a maximum number of characters
@@ -42,20 +53,10 @@ namespace Sitecore.Modules.WeBlog.Extensions
                 return input;
 
             var originalCount = length - continuesToken.Length - 1;
-            if (originalCount < 0)
+            if(originalCount < 0)
                 originalCount = 0;
 
             return input.Substring(0, originalCount) + continuesToken;
-        }
-
-        /// <summary>
-        /// Converts string input into MvcHtmlString
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns>New instance of MvcHtmlString with input as an argument.</returns>
-        public static HtmlString ToHtmlString(this string input)
-        {
-            return new HtmlString(input);
         }
     }
 }

@@ -1,32 +1,29 @@
 ﻿using System.Web.UI;
-using Sitecore.Modules.WeBlog.Components;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.WebControls
 {
     public class ThemeIncludes : WebControl
     {
-        protected IThemeInclude ThemeLink;
-
-        public ThemeIncludes(IThemeInclude tl = null)
-        {
-            ThemeLink = tl ?? new ThemeLink();
-        }
-
         protected override void DoRender(HtmlTextWriter output)
         {
-            if (ThemeLink.ShouldInclude)
+            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
+
+            if (blog != null && !string.IsNullOrEmpty(blog.Theme.Raw))
             {
-                AddIncludeToOutput(output);
+                var themeItem = blog.Theme.Item;
+                var currentTheme = new ThemeItem(themeItem);
+                AddIncludeToOutput(output, currentTheme);
             }
         }
 
-        protected virtual void AddIncludeToOutput(HtmlTextWriter output)
+        protected virtual void AddIncludeToOutput(HtmlTextWriter output, ThemeItem themeItem)
         {
-            foreach (var a in ThemeLink.Attributes)
-            {
-                output.AddAttribute(a.Key, a.Value);
-            }
+            output.AddAttribute(HtmlTextWriterAttribute.Href, themeItem.FileLocation.Raw.Trim());
+            output.AddAttribute(HtmlTextWriterAttribute.Rel, "stylesheet");
+            output.AddAttribute(HtmlTextWriterAttribute.Type, "text/css");
             output.RenderBeginTag(HtmlTextWriterTag.Link);
             output.RenderEndTag();
         }

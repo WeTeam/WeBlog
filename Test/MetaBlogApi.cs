@@ -5,13 +5,19 @@ using System.Web;
 using System.Web.Security;
 using CookComputing.XmlRpc;
 using NUnit.Framework;
-using Sitecore.ContentSearch;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
+using Sitecore.Eventing;
+using Sitecore.Search;
 using Sitecore.Security.AccessControl;
 using Sitecore.Security.Accounts;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog;
+
+#if FEATURE_CONTENT_SEARCH
+using Sitecore.ContentSearch;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Test
 {
@@ -98,8 +104,13 @@ namespace Sitecore.Modules.WeBlog.Test
                 ContentHelper.PublishItemAndRequiredAncestors(entry12, Sitecore.Configuration.Factory.GetDatabase("web"));
 
                 // Rebuild the search index to ensure all manager calls work as expected
+#if FEATURE_CONTENT_SEARCH
                 var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
                 index.Rebuild();
+#else
+                var index = SearchManager.GetIndex(Settings.SearchIndexName);
+                index.Rebuild();
+#endif
             }
 
             m_api = new Mod.MetaBlogApi();

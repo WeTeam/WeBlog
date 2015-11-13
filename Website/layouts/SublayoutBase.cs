@@ -9,8 +9,6 @@
 // <url>http://trac.sitecore.net/SublayoutParameterHelper/</url>
 //-------------------------------------------------------------------------------------------------
 
-using Sitecore.Modules.WeBlog.Components.Parameters;
-
 namespace Sitecore.Sharedsource.Web.UI.Sublayouts
 {
   /// <summary>
@@ -79,7 +77,7 @@ namespace Sitecore.Sharedsource.Web.UI.Sublayouts
     /// <summary>
     /// Gets or sets an object that helps to parse sublayout parameters.
     /// </summary>
-    protected SublayoutParameterHelper Helper
+    protected Sitecore.Sharedsource.Web.UI.Sublayouts.SublayoutParameterHelper Helper
     {
       get;
       set;
@@ -110,7 +108,7 @@ namespace Sitecore.Sharedsource.Web.UI.Sublayouts
     protected override void OnInit(System.EventArgs e)
     {
       this.Helper =
-        new SublayoutParameterHelper(this, true);
+        new Sitecore.Sharedsource.Web.UI.Sublayouts.SublayoutParameterHelper(this, true);
     }
 
     #endregion

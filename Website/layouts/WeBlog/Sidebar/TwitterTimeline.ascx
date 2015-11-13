@@ -1,20 +1,35 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogTwitter.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogTwitter" %>
 
 <div class="wb-twitter wb-panel">
-    <a class="twitter-timeline"
-        data-screen-name="<%= Username%>"
-        data-widget-id="<%= WidgetId%>"
-        data-theme="<%= Theme%>"
-        data-tweet-limit="<%= NumberOfTweets %>"
-        data-chrome="<%= Chrome%>"
-        data-border-color="<%= BorderColour %>"
-        data-link-color="<%= LinkColour%>"
-        height="<%= Height%>"
-        width="<%= Width%>">
-        <% if (String.IsNullOrEmpty(WidgetId) && Sitecore.Context.PageMode.IsPageEditor)
-            { %>
-        <b>WidgetId</b> parameter is missing.
-        <% } %>
-    </a>
-    <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + "://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
+<script src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+    new TWTR.Widget({
+        version: 2,
+        type: 'profile',
+        rpp: <%= NumberOfTweets %>,
+        interval: 30000,
+        width: <%= Width %>,
+        height: <%= Height %>,
+        theme: {
+            shell: {
+                background: '<%= ShellBackground %>',
+                color: '<%= ShellText %>'
+            },
+            tweets: {
+                background: '<%= TweetBackground %>',
+                color: '<%= TweetText %>',
+                links: '<%= Links %>'
+            }
+        },
+        features: {
+            scrollbar: <%= Scrollbar %>,
+            loop: false,
+            live: <%= Polling %>,
+            hashtags: <%= Hashtags %>,
+            timestamp: <%= Timestamps %>,
+            avatars: <%= Avatars %>,
+            behavior: 'all'
+        }
+    }).render().setUser('<%= Username %>').start();
+</script>
 </div>

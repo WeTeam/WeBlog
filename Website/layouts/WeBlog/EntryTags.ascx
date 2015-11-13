@@ -12,7 +12,7 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <li>
-                        <asp:HyperLink runat="server" ID="TagLink" NavigateUrl='<%# EntryTagsCore.GetTagUrl(Container.DataItem as string) %>'>
+                        <asp:HyperLink runat="server" ID="TagLink" NavigateUrl='<%# GetTagUrl(Container.DataItem as string) %>'>
                             <%# Container.DataItem %>
                         </asp:HyperLink>
                     </li>

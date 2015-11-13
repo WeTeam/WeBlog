@@ -1,32 +1,30 @@
 ﻿using System.Web.UI;
-using Sitecore.Modules.WeBlog.Components;
+using Sitecore.Modules.WeBlog.Items.WeBlog;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Web;
 using Sitecore.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.WebControls
 {
     public class RsdIncludes : WebControl
     {
-        protected IRsdInclude RsdLink;
-
-        public RsdIncludes(IRsdInclude rl = null)
-        {
-            RsdLink = rl ?? new RsdLink();
-        }
-
         protected override void DoRender(HtmlTextWriter output)
         {
-            if (RsdLink.ShouldInclude)
+            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
+
+            // If Live Writer is enabled then add the rsd link
+            if (blog != null && blog.EnableLiveWriter.Checked)
             {
-                AddLinkToOutput(output);
+                AddLinkToOutput(output, blog);
             }
         }
 
-        protected virtual void AddLinkToOutput(HtmlTextWriter output)
+        protected virtual void AddLinkToOutput(HtmlTextWriter output, BlogHomeItem blogItem)
         {
-            foreach (var a in RsdLink.Attributes)
-            {
-                output.AddAttribute(a.Key, a.Value);
-            }
+            output.AddAttribute(HtmlTextWriterAttribute.Rel, "EditURI");
+            output.AddAttribute(HtmlTextWriterAttribute.Type, "application/rsd+xml");
+            output.AddAttribute(HtmlTextWriterAttribute.Title, "RSD");
+            output.AddAttribute(HtmlTextWriterAttribute.Href, "http://" + WebUtil.GetHostName() + "/sitecore modules/WeBlog/rsd.ashx?blogid=" + blogItem.ID);
             output.RenderBeginTag(HtmlTextWriterTag.Link);
             output.RenderEndTag();
         }

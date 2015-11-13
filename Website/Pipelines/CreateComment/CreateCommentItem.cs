@@ -27,7 +27,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 					var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", DateTime.Now.ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
 
 					// verify the comment item name is unique for this entry
-          var query = "fast:{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
+					var query = "{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
+#if FEATURE_FAST_QUERY
+					query = "fast:" + query;
+#endif
 
 					var num = 1;
 					var nondupItemName = itemName;

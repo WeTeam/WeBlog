@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This file is conditionally included in the project for Sitecore versions supporting item buckets
+#if FEATURE_ITEM_BUCKETS
+using System;
 using Sitecore.Buckets.Util;
 
 namespace Sitecore.Modules.WeBlog.Buckets
@@ -18,3 +20,4 @@ namespace Sitecore.Modules.WeBlog.Buckets
         }
     }
 }
+#endif

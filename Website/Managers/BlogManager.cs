@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Items.WeBlog;
 using Sitecore.Security.Accounts;
@@ -92,7 +95,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>True if RSS is enabled, otherwise False</returns>
         public bool EnableRSS(Items.WeBlog.BlogHomeItem blog)
         {
-            return blog.EnableRss.Checked;
+            return blog.EnableRSS.Checked;
         }
 
         /// <summary>
@@ -127,5 +130,70 @@ namespace Sitecore.Modules.WeBlog.Managers
             else
                 return null;
         }
+
+        #region Obsolete Methods
+        /// <summary>
+        /// Gets the current blog ID.
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use GetCurrentBlog().ID instead")]
+        public static ID GetCurrentBlogID()
+        {
+            return new BlogManager().GetCurrentBlog().ID;
+        }
+
+        /// <summary>
+        /// Gets the current blog item.
+        /// </summary>
+        /// <returns></returns>
+        [Obsolete("Use GetCurrentBlog().InnerItem instead")]
+        public static Item GetCurrentBlogItem()
+        {
+            return new BlogManager().GetCurrentBlog().InnerItem;
+        }
+
+        /// <summary>
+        /// Gets the current blog item by item.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <returns></returns>
+        [Obsolete("Use GetCurrentBlog(Item item).InnerItem instead")]
+        public static Item GetCurrentBlogItem(ID source, string dbname)
+        {
+            var database = Factory.GetDatabase(dbname);
+            Assert.IsNotNull(database, "Failed to find database");
+
+            var item = database.GetItem(source);
+            Assert.IsNotNull(item, "Failed to find item");
+
+            return new BlogManager().GetCurrentBlog(item).InnerItem;
+        }
+
+        /// <summary>
+        /// Gets the blog by ID.
+        /// </summary>
+        /// <param name="BlogID">The blog ID.</param>
+        /// <returns></returns>
+        [Obsolete("Not required. Just get the item from the database")]
+        public static Item GetBlogByID(ID BlogID)
+        {
+            Item Blog = Context.Database.GetItem(BlogID);
+
+            if (Blog != null)
+            {
+                try
+                {
+                    return Blog;
+                }
+                catch (ApplicationException)
+                {
+                    Diagnostics.Log.Error("Could not find blog item:" + BlogID, Blog);
+                    return null;
+                }
+            }
+
+            return null;
+        }
+        #endregion
     }
 }

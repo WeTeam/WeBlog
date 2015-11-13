@@ -21,7 +21,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DebugSymbols>true</DebugSymbols>
@@ -43,40 +42,43 @@
   </PropertyGroup>
   <Import Project="..\sc version properties.targets" />
   <ItemGroup>
-    <!--<Reference Include="AntiXssLibrary, Version=4.2.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
-    </Reference>-->
-    <Reference Include="AntiXssLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v3.5'">
+      <HintPath>..\Dependencies\Third-party\.net 2\AntiXSSLibrary.dll</HintPath>
+      <Aliases>antixss</Aliases>
+    </Reference>
+    <Reference Include="AntiXSSLibrary" Condition="'$(TargetFrameworkVersion)' == 'v4.0' or '$(TargetFrameworkVersion)' == 'v4.5'">
+      <HintPath>..\Dependencies\Third-party\.net 4\AntiXSSLibrary.dll</HintPath>
+      <Aliases>antixss</Aliases>
     </Reference>
     <Reference Include="CookComputing.XmlRpcV2">
-      <HintPath>..\lib\CookComputing.XmlRpcV2.dll</HintPath>
+      <HintPath>..\Dependencies\Third-party\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
+    <Reference Include="CustomItemGenerator">
+      <HintPath>..\Dependencies\Third-party\CustomItemGenerator.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack">
       <HintPath>$(SitecorePath)\bin\HtmlAgilityPack.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
-      <HintPath>..\lib\MSCaptcha\v1.0\MSCaptcha.dll</HintPath>
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))">
+      <HintPath>..\Dependencies\Third-party\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.5'))">
-      <HintPath>..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
+      <HintPath>..\Dependencies\Third-party\WFFM 7.5\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
-      <HintPath>..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
+      <HintPath>..\Dependencies\Third-party\WFFM 8.0\MSCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="RadEditor.Net2">
+      <HintPath>$(SitecorePath)\bin\RadEditor.Net2.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Recaptcha">
-      <HintPath>..\lib\Recaptcha.dll</HintPath>
+      <HintPath>..\Dependencies\Third-party\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
@@ -86,11 +88,11 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch">
+    <Reference Include="Sitecore.ContentSearch" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq">
+    <Reference Include="Sitecore.ContentSearch.Linq" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
     </Reference>
@@ -103,21 +105,17 @@
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.NVelocity">
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Buckets">
+    <Reference Include="Sitecore.Buckets" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
@@ -127,10 +125,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -138,77 +132,16 @@
     <Reference Include="System.Web.Mobile" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
-    <Compile Include="Components\IRsdInclude.cs" />
-    <Compile Include="Components\Parameters\ParameterHelperBase.cs" />
-    <Compile Include="Components\Parameters\RenderingParameterHelper.cs" />
-    <Compile Include="Components\Parameters\SublayoutParameterHelper.cs" />
-    <Compile Include="Components\RsdLink.cs" />
-    <Compile Include="Components\ISyndicationInclude.cs" />
-    <Compile Include="Components\SyndicationLink.cs" />
-    <Compile Include="Components\IThemeInclude.cs" />
-    <Compile Include="Components\ThemeLink.cs" />
-    <Compile Include="Items\Custom\CustomFieldBase.cs" />
-    <Compile Include="Items\Custom\CustomCheckboxField.cs" />
-    <Compile Include="Items\Custom\CustomDateField.cs" />
-    <Compile Include="Items\Custom\CustomGeneralLinkField.cs" />
-    <Compile Include="Items\Custom\CustomImageField.cs" />
-    <Compile Include="Items\Custom\CustomLookupField.cs" />
-    <Compile Include="Items\Custom\CustomMultiListField.cs" />
-    <Compile Include="Items\Custom\CustomTextField.cs" />
-    <Compile Include="Captcha\CaptchaValidator.cs" />
-    <Compile Include="Captcha\CaptchaValidatorAttribute.cs" />
-    <Compile Include="Components\ArchiveCore.cs" />
-    <Compile Include="Components\IArchiveCore.cs" />
-    <Compile Include="Components\CommentsListCore.cs" />
-    <Compile Include="Components\ICommentsListCore.cs" />
-    <Compile Include="Components\EntryTagsCore.cs" />
-    <Compile Include="Components\IEntryTagsCore.cs" />
-    <Compile Include="Components\InterestingEntriesCore.cs" />
-    <Compile Include="Components\IPostListCore.cs" />
-    <Compile Include="Components\PostListCore.cs" />
-    <Compile Include="Components\IRecentCommentsCore.cs" />
-    <Compile Include="Components\RecentCommentsCore.cs" />
-    <Compile Include="Components\ISubmitCommentCore.cs" />
-    <Compile Include="Components\SubmitCommentCore.cs" />
-    <Compile Include="Components\ITagCloudCore.cs" />
-    <Compile Include="Components\TagCloudCore.cs" />
-    <Compile Include="Controllers\BlogBaseController.cs" />
-    <Compile Include="Controllers\BlogSubmitCommentController.cs" />
-    <Compile Include="Controllers\BlogRecentCommentsController.cs" />
-    <Compile Include="Controllers\BlogTagCloudController.cs" />
-    <Compile Include="Extensions\HtmlHelperExtensions.cs" />
-    <Compile Include="Model\Archive.cs" />
-    <Compile Include="Model\Captcha.cs" />
-    <Compile Include="Model\BlogRenderingModelBase.cs" />
-    <Compile Include="Model\Blog.cs" />
-    <Compile Include="Model\Entry.cs" />
-    <Compile Include="Model\CommentsList.cs" />
-    <Compile Include="Model\FacebookLike.cs" />
-    <Compile Include="Model\FacebookComments.cs" />
-    <Compile Include="Model\InterestingEntries.cs" />
-    <Compile Include="Model\PostList.cs" />
-    <Compile Include="Model\ShareEntryAddThis.cs" />
-    <Compile Include="Model\ShareEntryShareThis.cs" />
-    <Compile Include="Model\Twitter.cs" />
-    <Compile Include="Model\Feeds.cs" />
-    <Compile Include="Model\Categories.cs" />
-    <Compile Include="Model\EntryCategories.cs" />
-    <Compile Include="Model\EntryTags.cs" />
-    <Compile Include="Model\PostListEntry.cs" />
-    <Compile Include="Model\RecentCommentsRenderingModel.cs" />
-    <Compile Include="Model\SubmitCommentRenderingModel.cs" />
-    <Compile Include="Model\TagCloudRenderingModel.cs" />
-    <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_XDB'))">
     <Compile Include="Analytics\Reporting\EntriesByViewQuery.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+  <ItemGroup  Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Compile Include="ExperienceEditor\CanExecuteWeBlogCommands.cs" />
     <Compile Include="ExperienceEditor\IsEntryItem.cs" />
     <Compile Include="ExperienceEditor\NewCategory.cs" />
@@ -227,12 +160,7 @@
     <Compile Include="Commands\RebuildIndex.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
-    <Compile Include="Components\ILinkInclude.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Controllers\LinkIncludeController.cs" />
-    <Compile Include="Controllers\RsdIncludesController.cs" />
-    <Compile Include="Controllers\ThemeIncludesController.cs" />
-    <Compile Include="Controllers\BlogSyndicationController.cs" />
     <Compile Include="Converters\ExtendedBooleanConverter.cs" />
     <Compile Include="Extensions\CustomTextFieldExtensions.cs" />
     <Compile Include="Extensions\GenericExtensions.cs" />
@@ -242,15 +170,21 @@
     <Compile Include="Import\WpComment.cs" />
     <Compile Include="Import\WpImportManager.cs" />
     <Compile Include="Import\WpPost.cs" />
-    <Compile Include="Items\Feeds\RSSFeedItem.cs" />
-    <Compile Include="Items\WeBlog\BlogHomeItem.cs" />
-    <Compile Include="Items\WeBlog\CategoryItem.cs" />
-    <Compile Include="Items\WeBlog\CommentItem.cs" />
-    <Compile Include="Items\WeBlog\EntryItem.cs" />
-    <Compile Include="Items\WeBlog\ThemeItem.cs" />
+    <Compile Include="Items\Feeds\RSSFeedItem.base.cs" />
+    <Compile Include="Items\Feeds\RSSFeedItem.custom.cs" />
+    <Compile Include="Items\WeBlog\BlogHomeItem.base.cs" />
+    <Compile Include="Items\WeBlog\BlogHomeItem.custom.cs" />
+    <Compile Include="Items\WeBlog\CategoryItem.base.cs" />
+    <Compile Include="Items\WeBlog\CategoryItem.custom.cs" />
+    <Compile Include="Items\WeBlog\CommentItem.base.cs" />
+    <Compile Include="Items\WeBlog\CommentItem.custom.cs" />
+    <Compile Include="Items\WeBlog\EntryItem.base.cs" />
+    <Compile Include="Items\WeBlog\EntryItem.custom.cs" />
+    <Compile Include="Items\WeBlog\ThemeItem.base.cs" />
     <Compile Include="layouts\SublayoutBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="layouts\SublayoutParameterHelper.cs" />
     <Compile Include="layouts\WeBlog\BaseEntrySublayout.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -423,7 +357,7 @@
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0'))" />
+    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc6.2')) or $(Configuration.Contains('sc6.4')) or $(Configuration.Contains('sc6.6')) or $(Configuration.Contains('sc7.0'))" />
     <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
     <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0'))" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
@@ -441,9 +375,11 @@
     <Compile Include="Pipelines\ICreateCommentProcessor.cs" />
     <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\Crawlers\DatabaseCrawler.cs" />
     <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
     <Compile Include="Search\InterestingEntries\InterestingEntriesAlgorithm.cs" />
+    <Compile Include="Search\SortableIndexSearchContext.cs" />
     <Compile Include="Services\ICommentService.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="sitecore modules\web\WeBlog\Comment.svc.cs">
@@ -461,6 +397,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="ContentHelper.cs" />
+    <Compile Include="Search\Searcher.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
     <Compile Include="WebControls\Syndication.cs" />
     <Compile Include="WebControls\ThemeIncludes.cs" />
@@ -497,6 +434,8 @@
     <Content Include="layouts\WeBlog\Sidebar\TagCloud.ascx" />
     <Content Include="layouts\WeBlog\Sidebar\TwitterTimeline.ascx" />
     <Content Include="layouts\WeBlog\SubmitComment.ascx" />
+    <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItem.xml" />
+    <Content Include="sitecore modules\Shell\CustomItemGenerator\Sitecore Xaml\xmlGenerateCustomItemByFolder.xml" />
     <Content Include="sitecore modules\web\WeBlog\Comment.svc" />
     <Content Include="sitecore modules\web\WeBlog\Images\ajax-loader.gif" />
     <Content Include="sitecore modules\web\WeBlog\Images\feed-icon-14x14.png" />
@@ -523,7 +462,7 @@
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewEntry.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
-  </ItemGroup>
+  </ItemGroup>  
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.config">
       <SubType>Designer</SubType>
@@ -531,6 +470,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\CustomItem.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.base.vm" />
+    <Content Include="sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates\CustomItem.partial.vm" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))">
     <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
       <SubType>Designer</SubType>
     </Content>
@@ -540,93 +486,15 @@
     <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.Search.config" Condition="!$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Blog.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\web.config">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\MvcLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Categories.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Archive.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\TagCloud.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Feeds.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\RecentComments.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\FacebookLike.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\InterestingEntries.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\TwitterTimeline.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\ShareEntry-ShareThis.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\ShareEntry-AddThis.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\EntryCategories.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\EntryTags.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\FacebookComments.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\CommentsList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Entry.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\PostList.cshtml" />
-    <Content Include="Views\WeBlog\PostListEntry.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Captcha.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\SubmitComment.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\Recaptcha.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\SubmitComment\MessagePanel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\SubmitComment\CommentScroll.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\WeBlog\MvcLayoutAjax.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -640,7 +508,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.-->
   <Target Name="BeforeBuild">
     <Message Text="Configuration: $(Configuration)" />
@@ -651,25 +519,52 @@
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
+    <CallTarget Targets="SC70Tweaks" Condition="$(SitecorePath) != '' AND $(DefineConstants.Contains('SC70'))" />
+    <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />
+    <CallTarget Targets="ItemBucketsConfig" Condition="$(DefineConstants.Contains('FEATURE_ITEM_BUCKETS'))" />
     <CallTarget Targets="ContentDeliveryConfig" />
+    <!--<CallTarget Targets="ContentSearchConfig" Condition="$(DefineConstants.Contains('FEATURE_CONTENT_SEARCH'))" />-->
   </Target>
   <Target Name="DeployToWeb">
+    <!--
+    <CreateItem Include="App_Config\**\*.*;bin\*.dll;layouts\**\*.aspx;layouts\**\*.ascx;sitecore modules\**\*.aspx;sitecore\**\*.xml;sitecore modules\**\*.ashx;sitecore modules\**\*.ascx;sitecore modules\**\*.svc;sitecore modules\**\*.js;sitecore modules\**\*.css;sitecore modules\**\*.xml;sitecore modules\**\*.vm;sitecore modules\**\*.gif;sitecore modules\**\*.png" Exclude="**\.svn\**\*.*;App_Config\**\*.xslt">
+      <Output ItemName="DeployFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />-->
     <CreateItem Include="@(Content);$(OutDir)\*.dll" Exclude="**\*.SC70.*;App_Config\Include\*.xslt">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
-    <!--<CreateItem Include="..\dependencies\third-party\*.dll">
+    <CreateItem Include="..\dependencies\third-party\*.dll">
       <Output ItemName="DependencyFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecorePath)\bin" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecoreCDPath)\bin" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />-->
+    <Copy SourceFiles="@(DependencyFiles)" DestinationFolder="$(SitecoreCDPath)\bin" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <!-- Adjust configs not required -->
+    <!--<Delete Files="$(SitecorePath)\App_Config\Include\*.SC70"
+    <CallTarget Targets="NoRemoteEventsConfig" Condition="!$(DefineConstants.Contains('FEATURE_REMOTE_EVENTS'))" />-->
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
+  </Target>
+  <Target Name="SC70Tweaks">
+    <!--<CreateItem Include="App_Config\Include\*.SC70.config">
+      <Output ItemName="DeployFiles" TaskParameter="Include" />
+    </CreateItem>-->
+    <!--<Copy -->
   </Target>
   <Target Name="ContentDeliveryConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
+  <Target Name="NoRemoteEventsConfig">
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.noremote.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" Condition="$(SitecorePath) != ''" />
+  </Target>
+  <Target Name="ItemBucketsConfig">
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
+  </Target>
+  <!--
+  <Target Name="ContentSearchConfig">
+    <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.Search.config" />
+  </Target>-->
 </Project>

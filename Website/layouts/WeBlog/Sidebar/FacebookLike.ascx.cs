@@ -23,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             base.OnLoad(e);
 
             if(string.IsNullOrEmpty(UrlToLike))
-                UrlToLike = Links.LinkManager.GetItemUrl(DataSourceItem, new Links.UrlOptions { AlwaysIncludeServerUrl = true });
+                UrlToLike = Sitecore.Links.LinkManager.GetItemUrl(DataSourceItem, new Sitecore.Links.UrlOptions { AlwaysIncludeServerUrl = true });
         }
     }
 }
