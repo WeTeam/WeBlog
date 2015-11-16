@@ -137,6 +137,7 @@
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
+    <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Data\Fields\CustomFieldBase.cs" />
     <Compile Include="Data\Fields\CustomCheckboxField.cs" />
     <Compile Include="Data\Fields\CustomDateField.cs" />

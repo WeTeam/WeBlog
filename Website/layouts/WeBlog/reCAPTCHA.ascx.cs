@@ -12,7 +12,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
                 recaptcha.PublicKey = Settings.ReCaptchaPublicKey;
                 recaptcha.PrivateKey = Settings.ReCaptchaPrivateKey;
             }
-            lblCaptcha.Text = Sitecore.Modules.WeBlog.Globalization.Translator.Render("CAPTCHA");
+            lblCaptcha.Text = Globalization.Translator.Render("CAPTCHA");
         }
     }
 }
