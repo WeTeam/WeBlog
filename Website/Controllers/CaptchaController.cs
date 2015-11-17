@@ -30,8 +30,16 @@ namespace Sitecore.Modules.WeBlog.Controllers
         protected virtual string BuildChallangeValue()
         {
             var clientKey = GenerateClientKey();
-            Session["Captcha"] = clientKey;
+            StoreClientKey(clientKey);
             return Crypto.GetMD5Hash(string.Format("{0}-{1}", clientKey, CaptchaImage.Text));
+        }
+
+        protected virtual void StoreClientKey(string clientKey)
+        {
+            if (Session["Captcha"] == null)
+            {
+                Session["Captcha"] = clientKey;
+            }
         }
 
         protected virtual string GenerateClientKey()

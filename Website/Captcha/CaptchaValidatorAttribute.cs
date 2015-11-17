@@ -15,8 +15,21 @@ namespace Sitecore.Modules.WeBlog.Captcha
             };
             if (recaptchaValidator.ShouldValidate())
             {
-                filterContext.ActionParameters["captchaValid"] = recaptchaValidator.Validate();
+                bool valid = recaptchaValidator.Validate();
+                if (!valid)
+                {
+                    InvalidateClientKey(filterContext);
+                }
+                filterContext.ActionParameters["captchaValid"] = valid;
                 base.OnActionExecuting(filterContext);
+            }
+        }
+
+        private void InvalidateClientKey(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Session != null)
+            {
+                filterContext.HttpContext.Session.Remove("Captcha");
             }
         }
 
