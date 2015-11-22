@@ -7,8 +7,7 @@
         ID="uxRecaptcha"
         OnInit="uxRecaptcha_Init"
         runat="server"
-        PublicKey=""            
-        PrivateKey=""
-    />
+        PublicKey=""
+        PrivateKey="" />
 </div>
 <!-- Please confirm you are human by typing the text you see in this image:-->

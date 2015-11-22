@@ -4,7 +4,7 @@
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("TAGS")%> </h3>
     <asp:LoginView ID="LoginViewTags" runat="server">
         <AnonymousTemplate>
-            <asp:ListView ID="TagList" runat="server">
+            <asp:ListView ID="TagList" runat="server" ItemType="System.String">
                 <LayoutTemplate>
                     <ul>
                         <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -12,8 +12,8 @@
                 </LayoutTemplate>
                 <ItemTemplate>
                     <li>
-                        <asp:HyperLink runat="server" ID="TagLink" NavigateUrl='<%# EntryTagsCore.GetTagUrl(Container.DataItem as string) %>'>
-                            <%# Container.DataItem %>
+                        <asp:HyperLink runat="server" ID="TagLink" NavigateUrl='<%# EntryTagsCore.GetTagUrl(Item) %>'>
+                            <%# Item %>
                         </asp:HyperLink>
                     </li>
                 </ItemTemplate>

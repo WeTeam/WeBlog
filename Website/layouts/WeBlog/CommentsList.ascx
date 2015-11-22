@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogCommentsList.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogCommentsList" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Extensions" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 
 <asp:Panel ID="CommentList" runat="server" CssClass="wb-entry-comments wb-panel">
-    <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("COMMENTS") %></h3>
-    <asp:ListView ID="ListViewComments" runat="server">
+    <h3><%=Translator.Render("COMMENTS") %></h3>
+    <asp:ListView ID="ListViewComments" runat="server" ItemType="Sitecore.Modules.WeBlog.Data.Items.CommentItem">
         <LayoutTemplate>
             <ul>
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -14,22 +14,22 @@
             <li>
                 <% if (CurrentBlog.EnableGravatar.Checked)
                     { %>
-                <img src="<%# CommentsListCore.GetGravatarUrl((Container.DataItem as CommentItem).Email.Text) %>" alt="<%#(Container.DataItem as CommentItem).Name.Text%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
+                <img src="<%# CommentsListCore.GetGravatarUrl(Item.Email.Text) %>" alt="<%#Item.Name.Text%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
-                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>' CssClass="wb-comment-name">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_NAME", (Container.DataItem as CommentItem).Name.Text) %>
+                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#Item.Website.Raw%>' CssClass="wb-comment-name">
+                    <%#Translator.Format("COMMENT_NAME", Item.Name.Text) %>
                 </asp:HyperLink>
                 <% if (CurrentBlog.ShowEmailWithinComments.Checked)
                     { %>
                 <span class="wb-comment-email">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_EMAIL", (Container.DataItem as CommentItem).Email.Text)%>
+                    <%#Translator.Format("COMMENT_EMAIL", Item.Email.Text)%>
                 </span>
                 <% } %>
                 <div class="wb-datetime">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>
+                    <%#Translator.Format("COMMENT_DATE", Item.Created)%>
                 </div>
                 <p>
-                    <%#(Container.DataItem as CommentItem).Comment.HtmlEncode()%>
+                    <%#Item.Comment.HtmlEncode()%>
                 </p>
             </li>
         </ItemTemplate>
@@ -37,24 +37,24 @@
             <li class="wb-comment-alternate">
                 <% if (CurrentBlog.EnableGravatar.Checked)
                     { %>
-                <img src="<%# CommentsListCore.GetGravatarUrl((Container.DataItem as CommentItem).Email.Text) %>" alt="<%#(Container.DataItem as CommentItem).Name.Raw%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
+                <img src="<%# CommentsListCore.GetGravatarUrl(Item.Email.Text) %>" alt="<%#Item.Name.Raw%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
-                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#(Container.DataItem as CommentItem).Website.Raw%>' CssClass="wb-comment-name">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_NAME", (Container.DataItem as CommentItem).Name.Text) %>
+                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#Item.Website.Raw%>' CssClass="wb-comment-name">
+                    <%#Translator.Format("COMMENT_NAME", Item.Name.Text) %>
                 </asp:HyperLink>
                 <% if (CurrentBlog.ShowEmailWithinComments.Checked)
                     { %>
                 <span class="wb-comment-email">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_EMAIL", (Container.DataItem as CommentItem).Email.Text)%>
+                    <%#Translator.Format("COMMENT_EMAIL", Item.Email.Text)%>
                 </span>
                 <% } %>
                 <div class="wb-datetime">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>
+                    <%#Translator.Format("COMMENT_DATE", Item.Created)%>
                 </div>
                 <p>
-                    <%#(Container.DataItem as CommentItem).Comment.HtmlEncode()%>
+                    <%#Item.Comment.HtmlEncode()%>
                 </p>
             </li>
         </AlternatingItemTemplate>
     </asp:ListView>
-</asp:Panel>  
+</asp:Panel>

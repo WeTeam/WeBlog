@@ -3,7 +3,7 @@
 
 <asp:Panel ID="PanelEntryCategories" runat="server" CssClass="wb-entry-categories">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("POSTED_IN")%></h3>
-    <asp:ListView ID="ListViewCategories" runat="server">
+    <asp:ListView ID="ListViewCategories" runat="server" ItemType="Sitecore.Modules.WeBlog.Data.Items.CategoryItem">
         <LayoutTemplate>
             <ul>
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -11,8 +11,8 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <asp:HyperLink ID="hyperlinkCategory" runat="server" NavigateUrl='<%# (Eval("InnerItem") as Sitecore.Data.Items.Item).GetUrl() %>'>
-                    <sc:Text ID="txtCategory" Field="Title" runat="server" DataSource='<%# Eval("ID") %>' />
+                <asp:HyperLink ID="hyperlinkCategory" runat="server" NavigateUrl='<%# Item.InnerItem.GetUrl() %>'>
+                    <sc:Text ID="txtCategory" Field="Title" runat="server" DataSource='<%# Item.ID %>' />
                 </asp:HyperLink>
             </li>
         </ItemTemplate>

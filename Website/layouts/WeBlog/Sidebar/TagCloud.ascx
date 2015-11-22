@@ -3,10 +3,10 @@
 <asp:Panel ID="PanelTagCloud" runat="server" CssClass="wb-tagCloud wb-panel">
     <h3><%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("TAGCLOUD") %></h3>
     <div class="wb-entries">
-        <asp:Repeater runat="server" ID="TagList">
+        <asp:Repeater runat="server" ID="TagList" ItemType="System.Collections.Generic.KeyValuePair`2[System.String,System.Int32]">
             <ItemTemplate>
-                <a class="wb-weight<%# TagCloudCore.GetTagWeightClass(((KeyValuePair<string, int>)Container.DataItem).Value) %>" href="<%# TagCloudCore.GetTagUrl(((KeyValuePair<string, int>)Container.DataItem).Key) %>">
-                    <%# ((KeyValuePair<string, int>)Container.DataItem).Key %>
+                <a class="wb-weight<%# TagCloudCore.GetTagWeightClass(Item.Value) %>" href="<%# TagCloudCore.GetTagUrl(Item.Key) %>">
+                    <%# Item.Key %>
                 </a>
             </ItemTemplate>
         </asp:Repeater>

@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogRecentComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogRecentComments" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Extensions" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 
 <asp:Panel ID="PanelRecentComments" runat="server" CssClass="wb-recent-comments wb-panel">
-    <h3><%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("RECENT_COMMENTS") %></h3>
-    <asp:ListView ID="ListViewRecentComments" runat="server">
+    <h3><%= Translator.Render("RECENT_COMMENTS") %></h3>
+    <asp:ListView ID="ListViewRecentComments" runat="server" ItemType="Sitecore.Modules.WeBlog.Data.Items.CommentItem">
         <LayoutTemplate>
             <ul>
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -12,14 +12,14 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <span class="wb-comment-author"><%# (Container.DataItem as CommentItem).Name.Text %></span> <%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("ON") %>
-                <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# RecentCommentsCore.GetEntryUrlForComment(Container.DataItem as CommentItem) %>'>
-                     <%# RecentCommentsCore.GetEntryTitleForComment(Container.DataItem as CommentItem) %>
+                <span class="wb-comment-author"><%# Item.Name.Text %></span> <%= Translator.Render("ON") %>
+                <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# RecentCommentsCore.GetEntryUrlForComment(Item) %>'>
+                     <%# RecentCommentsCore.GetEntryTitleForComment(Item) %>
                 </asp:HyperLink>
-                <%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("AT") %> <span class="wb-datetime">
-                    <%#Sitecore.Modules.WeBlog.Globalization.Translator.Format("COMMENT_DATE", (Container.DataItem as CommentItem).Created)%>
+                <%= Translator.Render("AT") %> <span class="wb-datetime">
+                    <%#Translator.Format("COMMENT_DATE", Item.Created)%>
                 </span>
-                <span class="wb-comment-content"><%# (Container.DataItem as CommentItem).Comment.HtmlEncode().MaxLength(150) %></span>
+                <span class="wb-comment-content"><%# Item.Comment.HtmlEncode().MaxLength(150) %></span>
             </li>
         </ItemTemplate>
     </asp:ListView>

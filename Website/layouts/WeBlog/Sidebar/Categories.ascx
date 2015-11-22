@@ -1,9 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogCategories.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogCategories" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 
 <asp:Panel ID="PanelCategories" runat="server" CssClass="wb-categories wb-panel">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("CATEGORIES")%></h3>
-    <asp:ListView ID="ListViewCategories" runat="server">
+    <asp:ListView ID="ListViewCategories" runat="server" ItemType="Sitecore.Modules.WeBlog.Data.Items.CategoryItem">
         <LayoutTemplate>
             <ul>
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -11,7 +10,7 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <a href="<%# (Container.DataItem as CategoryItem).GetUrl() %>"><%# (Container.DataItem as CategoryItem).DisplayTitle %></a>
+                <a href="<%# Item.GetUrl() %>"><%# Item.DisplayTitle %></a>
             </li>
         </ItemTemplate>
     </asp:ListView>

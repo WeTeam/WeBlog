@@ -1,9 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="BlogFeeds.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogFeeds" %>
-<%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 
 <asp:Panel ID="PanelFeeds" runat="server" CssClass="wb-feeds wb-panel">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("SYNDICATION")%></h3>
-    <asp:ListView ID="FeedList" runat="server">
+    <asp:ListView ID="FeedList" runat="server" ItemType="Sitecore.Modules.WeBlog.Data.Items.RssFeedItem">
         <LayoutTemplate>
             <ul>
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
@@ -11,8 +10,8 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <asp:HyperLink ID="feedImage" runat="server" NavigateUrl="<%#(Container.DataItem as RssFeedItem).Url%>" ImageUrl="/sitecore modules/web/WeBlog/Images/feed-icon-14x14.png" CssClass="wb-feed-image" />
-                <asp:HyperLink ID="feedText" runat="server" NavigateUrl="<%#(Container.DataItem as RssFeedItem).Url%>" Text="<%#(Container.DataItem as RssFeedItem).Title.Text%>" CssClass="wb-feed-text" />
+                <asp:HyperLink ID="feedImage" runat="server" NavigateUrl="<%#Item.Url%>" ImageUrl="/sitecore modules/web/WeBlog/Images/feed-icon-14x14.png" CssClass="wb-feed-image" />
+                <asp:HyperLink ID="feedText" runat="server" NavigateUrl="<%#Item.Url%>" Text="<%#Item.Title.Text%>" CssClass="wb-feed-text" />
             </li>
         </ItemTemplate>
     </asp:ListView>
