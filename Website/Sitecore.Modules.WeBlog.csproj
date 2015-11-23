@@ -175,6 +175,7 @@
     <Compile Include="Controllers\BlogSubmitCommentController.cs" />
     <Compile Include="Controllers\BlogRecentCommentsController.cs" />
     <Compile Include="Controllers\BlogTagCloudController.cs" />
+    <Compile Include="Diagnostics\Logger.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Model\Archive.cs" />
     <Compile Include="Model\Captcha.cs" />

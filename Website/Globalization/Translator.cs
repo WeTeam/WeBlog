@@ -4,7 +4,6 @@ using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Web.UI.WebControls;
 
@@ -174,12 +173,6 @@ namespace Sitecore.Modules.WeBlog.Globalization
         {
             Item dictionaryItem = ManagerFactory.BlogManagerInstance.GetDictionaryItem();
             _cacheRootID = dictionaryItem.ID;
-            if (dictionaryItem == null)
-            {
-                Log.Error("No dictionary configured for blog " + ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.Name), typeof(Translator));
-                return;
-            }
-
             IEnumerable<Item> entries = dictionaryItem.Axes.GetDescendants();
             entries = entries.Where(entry => entry.TemplateID == Settings.DictionaryEntryTemplateID);
             foreach (Item entry in entries)
