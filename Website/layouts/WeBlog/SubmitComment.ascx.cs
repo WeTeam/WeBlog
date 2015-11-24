@@ -83,7 +83,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
                 //check if added comment is available. if so, send it along with the event
                 //won't happen unless publishing and indexing is really fast, but worth a try
-                CommentItem newComment = ManagerFactory.CommentManagerInstance.GetEntryComments(Sitecore.Context.Item).Where(item => item.ID == submissionResult).SingleOrDefault();
+                CommentItem newComment = ManagerFactory.CommentManagerInstance.GetEntryComments(Sitecore.Context.Item).SingleOrDefault(item => item.ID == submissionResult);
                 Sitecore.Events.Event.RaiseEvent(Constants.Events.UI.COMMENT_ADDED, new object[] { newComment });
 
                 //display javascript to scroll right to the comments list
