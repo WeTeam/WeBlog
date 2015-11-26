@@ -197,6 +197,12 @@
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
     <Compile Include="Model\SubmitCommentRenderingModel.cs" />
     <Compile Include="Model\TagCloudRenderingModel.cs" />
+    <Compile Include="Pipelines\CreateComment\ProfanityFilter.cs" />
+    <Compile Include="Pipelines\IProfanityFilterProcessor.cs" />
+    <Compile Include="Pipelines\ProfanityFilterArgs.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\FilterWords.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\GetProfanityList.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\ValidateInput.cs" />
     <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
