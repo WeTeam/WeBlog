@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
@@ -32,7 +33,10 @@ namespace Sitecore.Modules.WeBlog.Test
             using (new SecurityDisabler())
             {
                 // Don't change IDs as blog item references category by ID
-                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
+                }
             }
             Initialize();
         }

@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Security;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Security.AccessControl;
@@ -31,7 +32,10 @@ namespace Sitecore.Modules.WeBlog.Test
             // Create test content
             using (new SecurityDisabler())
             {
-                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\blog manager content.xml")), true, PasteMode.Overwrite);
+                }
                 Initialize();
 
                 // Create test user
@@ -104,10 +108,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetAllBlogs()
         {
-          var blogs = new Mod.BlogManager().GetAllBlogs(null).Where(x => m_testContentRoot.Axes.IsAncestorOf(x));
+            var blogs = new Mod.BlogManager().GetAllBlogs(null).Where(x => m_testContentRoot.Axes.IsAncestorOf(x));
 
-          Assert.That(blogs.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(blogs.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_blog1.ID,
             m_blog2.ID
           }));

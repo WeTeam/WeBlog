@@ -175,6 +175,7 @@
     <Compile Include="Controllers\BlogSubmitCommentController.cs" />
     <Compile Include="Controllers\BlogRecentCommentsController.cs" />
     <Compile Include="Controllers\BlogTagCloudController.cs" />
+    <Compile Include="EventHandlers\SyncBucket.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Model\Archive.cs" />
     <Compile Include="Model\Captcha.cs" />
@@ -468,7 +469,6 @@
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
-    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="Change Log.txt" />
     <Content Include="layouts\WeBlog\Blog.ascx" />
@@ -649,7 +649,6 @@
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
   </Target>
   <Target Name="DeployToWeb">

@@ -4,6 +4,7 @@ using System.Web;
 using NUnit.Framework;
 using Sitecore.ContentSearch;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -52,8 +53,11 @@ namespace Sitecore.Modules.WeBlog.Test
 
             // Create test content
             using (new SecurityDisabler())
-            {                
-                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
+            {
+                using (new EventDisabler())
+                {
+                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
+                }
             }
 
             Initialize();

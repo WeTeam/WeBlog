@@ -15,13 +15,16 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
             var templateRoot = database.GetItem("/sitecore/templates/user defined");
             using (new SecurityDisabler())
             {
-                templateRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\custom blog templates.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    templateRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\custom blog templates.xml")), false, PasteMode.Overwrite);
+                }
             }
 
-            var blogTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomBlog");
-            var entryTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomEntry");
-            var commentTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomComment");
-            var categoryTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/CustomCategory");
+            var blogTemplate = Context.Database.GetTemplate("user defined/test templates/CustomBlog");
+            var entryTemplate = Context.Database.GetTemplate("user defined/test templates/CustomEntry");
+            var commentTemplate = Context.Database.GetTemplate("user defined/test templates/CustomComment");
+            var categoryTemplate = Context.Database.GetTemplate("user defined/test templates/CustomCategory");
 
             var items = testRoot.Axes.GetDescendants();
             foreach (var item in items)
