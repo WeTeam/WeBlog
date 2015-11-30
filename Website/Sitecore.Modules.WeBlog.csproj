@@ -137,6 +137,8 @@
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
+    <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
+    <Compile Include="TokenReplacer.cs" />
     <Compile Include="Data\Fields\CustomFieldBase.cs" />
     <Compile Include="Data\Fields\CustomCheckboxField.cs" />
     <Compile Include="Data\Fields\CustomDateField.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
     <Compile Include="Model\SubmitCommentRenderingModel.cs" />
     <Compile Include="Model\TagCloudRenderingModel.cs" />
+    <Compile Include="Pipelines\GetLookupSourceItems\ResolveTokens.cs" />
     <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
@@ -437,7 +440,6 @@
     <Compile Include="Pipelines\GetSummary\IGetSummaryProcessor.cs" />
     <Compile Include="Pipelines\GetSummary\Wrap.cs" />
     <Compile Include="Pipelines\ICreateCommentProcessor.cs" />
-    <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
