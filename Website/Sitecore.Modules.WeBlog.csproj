@@ -136,7 +136,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
-    <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
+    <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
+    <Compile Include="Buckets\DateBucketFolderPath.cs" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
     <Compile Include="TokenReplacer.cs" />
     <Compile Include="Data\Fields\CustomFieldBase.cs" />
