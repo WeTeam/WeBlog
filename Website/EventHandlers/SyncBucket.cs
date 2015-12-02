@@ -36,10 +36,12 @@ namespace Sitecore.Modules.WeBlog.EventHandlers
         protected virtual Item GetBucketRoot(Item item)
         {
             var current = item;
-            while (current != null && current.Parent != null && !BucketManager.IsBucket(current))
+            do
             {
                 current = current.Parent;
             }
+            while (current != null && current.Parent != null && !BucketManager.IsBucket(current));
+
             return current;
         }
 

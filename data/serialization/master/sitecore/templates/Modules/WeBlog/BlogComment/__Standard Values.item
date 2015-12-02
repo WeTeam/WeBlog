@@ -10,6 +10,13 @@ template: {70949D4E-35D8-4581-A7A2-52928AA119D5}
 templatekey: BlogComment
 
 ----field----
+field: {C9283D9E-7C29-4419-9C28-5A5C8FF53E84}
+name: __Bucketable
+key: __bucketable
+content-length: 1
+
+1
+----field----
 field: {A4F985D9-98B3-4B52-AAAF-4344F6E747C6}
 name: __Workflow
 key: __workflow
@@ -26,7 +33,7 @@ content-length: 38
 ----version----
 language: en
 version: 1
-revision: 0046777d-6cea-459c-842d-7579a943bedc
+revision: a85c0bae-6401-4878-b6e6-9131e72bee0b
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -55,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-0046777d-6cea-459c-842d-7579a943bedc
+a85c0bae-6401-4878-b6e6-9131e72bee0b
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20111020T170415:634547270553636841
+20151201T231917Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
