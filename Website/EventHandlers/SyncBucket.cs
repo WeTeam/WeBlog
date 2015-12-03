@@ -6,6 +6,7 @@ using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecore.Exceptions;
+using Sitecore.Jobs.AsyncUI;
 using Sitecore.Reflection;
 
 namespace Sitecore.Modules.WeBlog.EventHandlers
@@ -18,7 +19,7 @@ namespace Sitecore.Modules.WeBlog.EventHandlers
             Assert.ArgumentNotNull(args, "args");
 
             Item item = Event.ExtractParameter(args, 0) as Item;
-            if (item == null || !BucketManager.IsBucketable(item))
+            if (item == null || !BucketManager.IsBucketable(item) || IsPublish())
             {
                 return;
             }
@@ -31,6 +32,11 @@ namespace Sitecore.Modules.WeBlog.EventHandlers
                     BucketManager.MoveItemIntoBucket(item, bucketRoot);
                 }
             }
+        }
+
+        private bool IsPublish()
+        {
+            return JobContext.IsJob && JobContext.Job.Category == "publish";
         }
 
         protected virtual Item GetBucketRoot(Item item)
