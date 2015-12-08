@@ -9,6 +9,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
     {
         protected ITagCloudCore TagCloudCore { get; set; }
 
+        public int MaximumCount { get; set; }
+
         public BlogTagCloud(ITagCloudCore tagCloudCore = null)
         {
             TagCloudCore = tagCloudCore ?? new TagCloudCore(ManagerFactory.BlogManagerInstance);
@@ -24,7 +26,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         /// </summary>
         protected virtual void LoadTags()
         {
-            if (!TagCloudCore.Tags.Any())
+            if (!TagCloudCore.Tags.Any() || MaximumCount <= 0)
             {
                 if (PanelTagCloud != null)
                     PanelTagCloud.Visible = false;
@@ -33,7 +35,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             {
                 if (TagList != null)
                 {
-                    TagList.DataSource = TagCloudCore.Tags;
+                    TagList.DataSource = TagCloudCore.Tags.Take(MaximumCount);
                     TagList.DataBind();
                 }
             }
