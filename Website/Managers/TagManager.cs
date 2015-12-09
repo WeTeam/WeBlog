@@ -87,7 +87,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                 foreach (var entry in entries)
                 {
-                    tagList.AddRange(entry.TagsSplit);
+                    tagList.AddRange(entry.TagsSplit.Distinct());
                 }
             }
 
