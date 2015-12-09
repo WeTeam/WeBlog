@@ -9,7 +9,6 @@ using System.IO;
 using Moq;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
-using Sitecore.Search;
 using Sitecore.ContentSearch;
 
 
@@ -318,7 +317,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
             var blog = m_testRoot.Axes.GetChild("MyBlog");
@@ -356,7 +355,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
             var blog = m_testRoot.Axes.GetChild("MyBlog");
@@ -394,7 +393,7 @@ namespace Sitecore.Modules.WeBlog.Test
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
-            var index = SearchManager.GetIndex(Settings.SearchIndexName);
+            var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
 
             var blog = m_testRoot.Axes.GetChild("MyBlog");
