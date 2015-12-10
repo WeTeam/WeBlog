@@ -32,8 +32,8 @@ using NVelocity;
 using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security;
@@ -70,13 +70,13 @@ namespace Sitecore.Modules.WeBlog.Workflow
 
             if (string.IsNullOrEmpty(to))
             {
-                Sitecore.Diagnostics.Log.Error("No 'to' email available for Extended Email Action", this);
+                Logger.Error("No 'to' email available for Extended Email Action", this);
                 return;
             }
 
             if (string.IsNullOrEmpty(from))
             {
-                Sitecore.Diagnostics.Log.Error("No 'from' email available for Extended Email Action", this);
+                Logger.Error("No 'from' email available for Extended Email Action", this);
                 return;
             }
 
@@ -96,7 +96,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             }
             catch (Exception e)
             {
-                Log.Error("Exception while sending workflow email", e, this);
+                Logger.Error("Exception while sending workflow email", e, this);
             }
         }
 
@@ -173,7 +173,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             }
             catch (NVelocity.Exception.ParseErrorException ex)
             {
-                Log.Error(string.Format("Error parsing template for the {0} item \n {1}",
+                Logger.Error(string.Format("Error parsing template for the {0} item \n {1}",
                    item.Paths.Path, ex.ToString()), this);
             }
             return result.GetStringBuilder().ToString();

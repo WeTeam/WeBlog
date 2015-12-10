@@ -1,7 +1,7 @@
 using System;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
 
@@ -32,7 +32,7 @@ namespace Sitecore.Modules.WeBlog.Components
                 }
                 catch (ArgumentException ex)
                 {
-                    Log.Warn("Failed to parse Mode as InterestingEntriesAlgorithm: " + mode, ex);
+                    Logger.Warn("Failed to parse Mode as InterestingEntriesAlgorithm: " + mode, ex);
                 }
             }
             return defaultAlgorithm;

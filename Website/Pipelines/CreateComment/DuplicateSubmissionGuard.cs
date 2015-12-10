@@ -1,6 +1,7 @@
 ﻿using System;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.StringExtensions;
 
@@ -51,7 +52,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 string.Compare(commentItem.Comment.Raw, args.Comment.Text, StringComparison.OrdinalIgnoreCase) == 0)
             {
               match = true;
-              Log.Warn("[WeBlog] Duplicate comment submission. Existing item: {0}".FormatWith(commentItem.ID), this);
+              Logger.Warn("Duplicate comment submission. Existing item: {0}".FormatWith(commentItem.ID), this);
             }
           }
 

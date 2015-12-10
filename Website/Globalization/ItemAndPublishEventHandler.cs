@@ -3,6 +3,7 @@ using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
+using Sitecore.Modules.WeBlog.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.Globalization
 {
@@ -32,14 +33,14 @@ namespace Sitecore.Modules.WeBlog.Globalization
         {
             if (item != null && item.TemplateID == Settings.DictionaryEntryTemplateID)
             {
-                Log.Info("Dictionary Entry saved, clearing Translator cache", this);
+                Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
                 Translator.ClearCaches();
             }
         }
 
         public void OnPublishEnd(object sender, EventArgs args)
         {
-            Log.Info("Publish complete, clearing Translator cache", this);
+            Logger.Info("Publish complete, clearing Translator cache", this);
             Translator.ClearCaches();
         }
     }

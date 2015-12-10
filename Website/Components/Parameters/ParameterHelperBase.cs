@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Linq.Expressions;
-using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Reflection;
 
 namespace Sitecore.Modules.WeBlog.Components.Parameters
@@ -27,7 +27,7 @@ namespace Sitecore.Modules.WeBlog.Components.Parameters
                 }
                 catch (Exception e)
                 {
-                    Log.Error("WeBlog.ParameterHelperBase: Unable to set rendering/sublayout property", e, this);
+                    Logger.Error("Unable to set rendering/sublayout property", e, this);
                     Type propertyType = ReflectionUtil.GetPropertyInfo(presentationComponent, key).PropertyType;
                     ReflectionUtil.SetProperty(presentationComponent, key, GetDefaultValueForType(propertyType));
                 }

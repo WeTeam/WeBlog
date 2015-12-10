@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Modules.WeBlog.Extensions;
@@ -81,7 +82,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             catch (Exception ex)
             {
-                Sitecore.Diagnostics.Log.Error(string.Format("Could not initialize blogsettings fieldeditor. Error {0}, Stacktrace; {1}", ex.Message, ex.StackTrace), this);
+                Logger.Error(string.Format("Could not initialize blogsettings fieldeditor. Error {0}, Stacktrace; {1}", ex.Message, ex.StackTrace), this);
             }
 
             // Field editor options.

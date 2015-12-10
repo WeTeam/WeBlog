@@ -3,7 +3,7 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
-using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Managers;
@@ -47,7 +47,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                                 ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
                             }
                             else
-                                Log.Error("Failed to locate blog root item", this);
+                                Logger.Error("Failed to locate blog root item", this);
                         }
                     }
                 }

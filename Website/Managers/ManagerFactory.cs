@@ -1,5 +1,5 @@
 ﻿using System;
-using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.StringExtensions;
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -79,7 +79,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 }
                 catch(Exception ex)
                 {
-                    Log.Error("Failed to create instance of type '{0}' as type '{1}'".FormatWith(type.FullName, typeof(T).FullName), ex, typeof(ManagerFactory));
+                    Logger.Error("Failed to create instance of type '{0}' as type '{1}'".FormatWith(type.FullName, typeof(T).FullName), ex, typeof(ManagerFactory));
                 }
             }
 

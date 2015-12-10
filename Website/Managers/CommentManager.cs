@@ -5,11 +5,11 @@ using System.ServiceModel;
 using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
@@ -78,7 +78,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 var result = service.SubmitComment(Context.Item.ID, comment, language);
                 commentProxy.Close();
                 if (result == ID.Null)
-                    Log.Error("WeBlog.CommentManager: Comment submission through WCF failed. Check server Sitecore log for details", typeof(CommentManager));
+                    Logger.Error("Comment submission through WCF failed. Check server Sitecore log for details", typeof(CommentManager));
                 return result;
             }
             else
