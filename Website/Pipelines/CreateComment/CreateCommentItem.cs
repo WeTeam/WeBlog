@@ -26,6 +26,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 				{
 					var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
 					var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", DateTime.Now.ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
+                    if (itemName.Length > 100)
+                    {
+                        itemName = itemName.Substring(0, 100);
+                    }
 
 					// verify the comment item name is unique for this entry
           var query = "fast:{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
