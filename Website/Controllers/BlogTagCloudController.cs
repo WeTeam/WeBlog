@@ -13,6 +13,8 @@ namespace Sitecore.Modules.WeBlog.Controllers
 
         public BlogTagCloudController() : this(null) { }
 
+        public int MaximumCount { get; set; }
+
         public BlogTagCloudController(ITagCloudCore tagCloudCore)
         {
             TagCloudCore = tagCloudCore ?? new TagCloudCore(ManagerFactory.BlogManagerInstance);
@@ -20,7 +22,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
 
         public ActionResult Index()
         {
-            if (TagCloudCore.Tags != null)
+            if (TagCloudCore.Tags.Any() && MaximumCount > 0)
             {
                 var model = GetModel();
                 return View("~/Views/WeBlog/TagCloud.cshtml", model);
@@ -30,7 +32,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
 
         protected virtual IEnumerable<TagCloudRenderingModel> GetModel()
         {
-            return TagCloudCore.Tags.Select(tag => new TagCloudRenderingModel
+            return TagCloudCore.Tags.Take(MaximumCount).Select(tag => new TagCloudRenderingModel
             {
                 Name = tag.Key,
                 Url = TagCloudCore.GetTagUrl(tag.Key),
