@@ -234,7 +234,6 @@
     <Compile Include="Commands\NewBlog.cs" />
     <Compile Include="Commands\NewCategory.cs" />
     <Compile Include="Commands\NewEntry.cs" />
-    <Compile Include="Commands\RebuildIndex.cs" />
     <Compile Include="Comparers\PostDateComparer.cs" />
     <Compile Include="Comparers\TagWeightComparer.cs" />
     <Compile Include="Components\ILinkInclude.cs" />
