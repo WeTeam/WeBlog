@@ -146,6 +146,8 @@
     <Compile Include="Pipelines\GetSummary\AutoGenerateTest.cs" />
     <Compile Include="Pipelines\GetSummary\FirstContentBlockTest.cs" />
     <Compile Include="Pipelines\GetSummary\WrapTest.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\ValidateInputTest.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\FilterWordsTest.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
