@@ -136,8 +136,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
-    <Compile Include="Buckets\SimpleCreationDateBucketFolderPath.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
+    <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
+    <Compile Include="Buckets\DateBucketFolderPath.cs" />
+    <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
+    <Compile Include="TokenReplacer.cs" />
     <Compile Include="Data\Fields\CustomFieldBase.cs" />
     <Compile Include="Data\Fields\CustomCheckboxField.cs" />
     <Compile Include="Data\Fields\CustomDateField.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="Controllers\BlogRecentCommentsController.cs" />
     <Compile Include="Controllers\BlogTagCloudController.cs" />
     <Compile Include="Diagnostics\Logger.cs" />
+    <Compile Include="EventHandlers\SyncBucket.cs" />
     <Compile Include="Extensions\HtmlHelperExtensions.cs" />
     <Compile Include="Model\Archive.cs" />
     <Compile Include="Model\Captcha.cs" />
@@ -205,6 +209,7 @@
     <Compile Include="Pipelines\ProfanityFilter\FilterWords.cs" />
     <Compile Include="Pipelines\ProfanityFilter\GetProfanityList.cs" />
     <Compile Include="Pipelines\ProfanityFilter\ValidateInput.cs" />
+    <Compile Include="Pipelines\GetLookupSourceItems\ResolveTokens.cs" />
     <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
     <Compile Include="Search\SearchTypes\CommentResultItem.cs" />
     <Compile Include="Search\SearchTypes\EntryResultItem.cs" />
@@ -444,7 +449,6 @@
     <Compile Include="Pipelines\GetSummary\IGetSummaryProcessor.cs" />
     <Compile Include="Pipelines\GetSummary\Wrap.cs" />
     <Compile Include="Pipelines\ICreateCommentProcessor.cs" />
-    <Compile Include="Pipelines\TokenReplacer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
@@ -476,7 +480,6 @@
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
-    <Content Include="App_Config\Include\WeBlog.config.itembuckets.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="Change Log.txt" />
     <Content Include="layouts\WeBlog\Blog.ascx" />
@@ -657,7 +660,6 @@
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.itembuckets.xslt" XmlInputPaths="App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ItemBuckets.config.disabled" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
   </Target>
   <Target Name="DeployToWeb">

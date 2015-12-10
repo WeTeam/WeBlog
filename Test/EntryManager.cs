@@ -11,8 +11,7 @@ using Mod = Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Data;
 using Sitecore.Search;
 using Sitecore.ContentSearch;
-
-
+using Sitecore.Data.Events;
 #if FEATURE_XDB
 using Sitecore.Analytics.Reporting;
 using System.Collections.Generic;
@@ -47,7 +46,10 @@ namespace Sitecore.Modules.WeBlog.Test
             // Create test content
             using (new SecurityDisabler())
             {
-              m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entry manager content.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entry manager content.xml")), false, PasteMode.Overwrite);
+                }
             }
 
             Initialize();
@@ -80,7 +82,7 @@ namespace Sitecore.Modules.WeBlog.Test
             // rebuild the WeBlog search index (or the entry manager won't work)
             var index = ContentSearchManager.GetIndex(Settings.SearchIndexName);
             index.Rebuild();
-          
+
 #if FEATURE_DMS
             if (Sitecore.Configuration.Settings.Analytics.Enabled)
             {
@@ -109,10 +111,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, null, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, null, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry11.ID,
             m_entry12.ID,
             m_entry13.ID
@@ -122,10 +124,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog2()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog2, int.MaxValue, null, null, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog2, int.MaxValue, null, null, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry21.ID,
             m_entry22.ID,
             m_entry23.ID
@@ -135,10 +137,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithLimit()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, 2, null, null, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, 2, null, null, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry13.ID,
             m_entry12.ID
           }));
@@ -147,10 +149,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithTag()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tagb", null, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tagb", null, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry11.ID,
             m_entry12.ID
           }));
@@ -159,10 +161,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_TagWithSpace()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tag with space", null, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, "tag with space", null, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry13.ID
           }));
         }
@@ -170,10 +172,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithCategory()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, m_category13.Name, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, int.MaxValue, null, m_category13.Name, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry13.ID
           }));
         }
@@ -181,10 +183,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_Blog1_WithLimitAndCategory()
         {
-          var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, 1, null, m_category12.Name, (DateTime?)null);
+            var entries = new Mod.EntryManager().GetBlogEntries(m_blog1, 1, null, m_category12.Name, (DateTime?)null);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry13.ID
           }));
         }
@@ -238,10 +240,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntryByCategorie_Blog2_Category1_ById()
         {
-          var entries = new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.ID);
+            var entries = new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.ID);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry21.ID,
             m_entry22.ID
           }));
@@ -250,10 +252,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntryByCategorie_Blog2_Category1()
         {
-          var entries = new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.Name);
+            var entries = new Mod.EntryManager().GetBlogEntryByCategorie(m_blog2.ID, m_category21.Name);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry21.ID,
             m_entry22.ID
           }));
@@ -271,10 +273,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_Blog1_March2011()
         {
-          var entries = new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 3, 2011);
+            var entries = new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 3, 2011);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry11.ID,
             m_entry12.ID
           }));
@@ -283,10 +285,10 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_Blog1_April2011()
         {
-          var entries = new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 4, 2011);
+            var entries = new Mod.EntryManager().GetBlogEntriesByMonthAndYear(m_blog1, 4, 2011);
 
-          Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
-          {
+            Assert.That(entries.Select(x => x.ID), Is.EquivalentTo(new[]
+            {
             m_entry13.ID
           }));
         }
@@ -314,7 +316,11 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             using (new SecurityDisabler())
             {
-                m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries in order.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries in order.xml")), false, PasteMode.Overwrite);
+                }
+
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
@@ -352,7 +358,10 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             using (new SecurityDisabler())
             {
-                m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries reverse order.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries reverse order.xml")), false, PasteMode.Overwrite);
+                }
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
@@ -390,7 +399,10 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             using (new SecurityDisabler())
             {
-                m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries out of order.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\entries out of order.xml")), false, PasteMode.Overwrite);
+                }
             }
 
             // rebuild the WeBlog search index (or the entry manager won't work)
@@ -466,7 +478,7 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetPopularEntriesByComment_ValidItem()
         {
 #if FEATURE_XDB
-            var reportProvider = CreateMockReportDataProvider(new[] {m_entry13.ID, m_entry11.ID, m_entry12.ID});
+            var reportProvider = CreateMockReportDataProvider(new[] { m_entry13.ID, m_entry11.ID, m_entry12.ID });
             var manager = new Mod.EntryManager(reportProvider);
 #else
             var manager = new Mod.EntryManager();
@@ -605,36 +617,36 @@ namespace Sitecore.Modules.WeBlog.Test
             var entryIds = (from entry in manager.GetPopularEntriesByView(null, 1)
                             select entry.ID).ToArray();
 
-            Assert.AreEqual(0, entryIds.Length);            
+            Assert.AreEqual(0, entryIds.Length);
         }
 
         // TODO: Write tests for methods accepting language
 
 #if FEATURE_XDB
-      protected ReportDataProviderBase CreateMockReportDataProvider(IEnumerable<ID> ids)
-      {
-        var dataTable = new DataTable();
-        dataTable.Columns.AddRange(new[]
+        protected ReportDataProviderBase CreateMockReportDataProvider(IEnumerable<ID> ids)
         {
+            var dataTable = new DataTable();
+            dataTable.Columns.AddRange(new[]
+            {
           new DataColumn("ItemId", typeof(Guid))
         });
 
-        foreach (var id in ids)
-        {
-          dataTable.Rows.Add(id.Guid);
+            foreach (var id in ids)
+            {
+                dataTable.Rows.Add(id.Guid);
+            }
+
+            var reportingProvider = Mock.Of<ReportDataProviderBase>(x =>
+              x.GetData(It.IsAny<string>(), It.IsAny<ReportDataQuery>(), It.IsAny<CachingPolicy>()) == new ReportDataResponse(() => dataTable));
+
+            return reportingProvider;
         }
 
-        var reportingProvider = Mock.Of<ReportDataProviderBase>(x =>
-          x.GetData(It.IsAny<string>(), It.IsAny<ReportDataQuery>(), It.IsAny<CachingPolicy>()) == new ReportDataResponse(() => dataTable));
-
-        return reportingProvider;
-      }
-
-      private bool Blah(ReportDataQuery a)
-      {
-        var b = 0;
-        return false;
-      }
+        private bool Blah(ReportDataQuery a)
+        {
+            var b = 0;
+            return false;
+        }
 #endif
     }
 }

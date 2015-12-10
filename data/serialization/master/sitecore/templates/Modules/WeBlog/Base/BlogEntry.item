@@ -17,6 +17,13 @@ content-length: 38
 
 {1930BBEB-7805-471A-A3BE-4858AC7CF696}
 ----field----
+field: {F7D48A55-2158-4F02-9356-756654404F73}
+name: __Standard values
+key: __standard values
+content-length: 38
+
+{473BC0F2-82CA-4FE8-B40F-24643E91215B}
+----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
 key: __icon
@@ -26,7 +33,7 @@ Business/32x32/note_add.png
 ----version----
 language: en
 version: 1
-revision: a6849328-e454-4047-bfe4-ca5921412284
+revision: d7ab089c-6908-4b62-b254-cb0e069eca70
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
@@ -55,14 +62,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a6849328-e454-4047-bfe4-ca5921412284
+d7ab089c-6908-4b62-b254-cb0e069eca70
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 35
+content-length: 16
 
-20151102T101840:635820563205928086Z
+20151129T135058Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

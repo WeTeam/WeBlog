@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using NUnit.Framework;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 using Mod = Sitecore.Modules.WeBlog.Extensions;
@@ -27,19 +28,22 @@ namespace Sitecore.Modules.WeBlog.Test.Extensions
         public void TestFixtureSetUp()
         {
             // Create test content
-            var templateHome = Sitecore.Context.Database.GetItem("/sitecore/templates/user defined");
-            var home = Sitecore.Context.Database.GetItem("/sitecore/content/home");
+            var templateHome = Context.Database.GetItem("/sitecore/templates/user defined");
+            var home = Context.Database.GetItem("/sitecore/content/home");
             using (new SecurityDisabler())
             {
-                templateHome.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\templates.xml")), false, PasteMode.Overwrite);
-                home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\template content.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    templateHome.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\templates.xml")), false, PasteMode.Overwrite);
+                    home.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\template content.xml")), false, PasteMode.Overwrite);
+                }
             }
 
             // Retrieve created templates
             m_testTemplateRoot = templateHome.Axes.GetChild("Test Templates");
-            m_baseTemplate = Sitecore.Context.Database.GetTemplate("user defined/test templates/base");
-            m_d1Template = Sitecore.Context.Database.GetTemplate("user defined/test templates/d1");
-            m_d2Template = Sitecore.Context.Database.GetTemplate("user defined/test templates/d2");
+            m_baseTemplate = Context.Database.GetTemplate("user defined/test templates/base");
+            m_d1Template = Context.Database.GetTemplate("user defined/test templates/d1");
+            m_d2Template = Context.Database.GetTemplate("user defined/test templates/d2");
 
             // Retrieve created content items
             m_testRoot = home.Axes.GetChild("Test Root");

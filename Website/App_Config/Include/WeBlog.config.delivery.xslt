@@ -16,7 +16,7 @@
     </events>
   </xsl:template>
 
-  <xsl:template match="/configuration/sitecore/events/event[@name='item:saved']/handler[@type='Sitecore.Sharedsource.Tasks.NewsMover, Sitecore.Sharedsource.NewsMover']"/>
+  <xsl:template match="/configuration/sitecore/events/event[@name='item:saved']/handler[@type='Sitecore.Modules.WeBlog.EventHandlers.SyncBucket, Sitecore.Modules.WeBlog']"/>
 
   <xsl:template match="/configuration/sitecore/settings/setting[@name='WeBlog.CommentService.Enable']/@value">
     <xsl:attribute name="value">true</xsl:attribute>
@@ -29,7 +29,6 @@
   <xsl:template match="/configuration/sitecore/commands/command[@name='blog:entrysettings']"/>
   <xsl:template match="/configuration/sitecore/commands/command[@name='blog:import']"/>
 
-  <xsl:template match="/configuration/sitecore/pipelines/NewsMover.MoveCompleted"/>
 
   <xsl:template match="/configuration/sitecore/search/configuration/indexes/index[@id='WeBlog']/locations/master"/>
   

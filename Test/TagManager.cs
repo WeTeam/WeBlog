@@ -4,6 +4,7 @@ using System.Web;
 using NUnit.Framework;
 using Sitecore.ContentSearch;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
@@ -27,7 +28,10 @@ namespace Sitecore.Modules.WeBlog.Test
             // Create test content
             using (new SecurityDisabler())
             {
-              m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
+                }
             }
 
             Initialize();
@@ -124,7 +128,7 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "a", "b", "c", "A", "B", "C", "D", "d" });
             Assert.AreEqual(4, weightedTags.Count);
-            Assert.AreEqual("a", weightedTags.ElementAt(0).Key);           
+            Assert.AreEqual("a", weightedTags.ElementAt(0).Key);
             Assert.AreEqual(2, weightedTags["a"]);
             Assert.AreEqual("b", weightedTags.ElementAt(1).Key);
             Assert.AreEqual(2, weightedTags["b"]);

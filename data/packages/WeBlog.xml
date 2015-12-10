@@ -46,8 +46,6 @@ settings.
         <x-item>/bin/MSCaptcha.dll</x-item>
         <x-item>/bin/Recaptcha.dll</x-item>
         <x-item>/bin/Sitecore.Modules.WeBlog.dll</x-item>
-        <x-item>/bin/Sitecore.Sharedsource.NewsMover.dll</x-item>
-        <x-item>/bin/CustomItemGenerator.dll</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>

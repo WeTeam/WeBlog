@@ -7,6 +7,7 @@ using CookComputing.XmlRpc;
 using NUnit.Framework;
 using Sitecore.ContentSearch;
 using Sitecore.Data;
+using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Security.AccessControl;
 using Sitecore.Security.Accounts;
@@ -36,9 +37,12 @@ namespace Sitecore.Modules.WeBlog.Test
             // Create test content
             using (new SecurityDisabler())
             {
-                m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
+                using (new EventDisabler())
+                {
+                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
+                }
 
-              // Retrieve created content items
+                // Retrieve created content items
                 m_testRoot = m_testContentRoot.Axes.GetChild("test content");
                 m_blog1 = m_testRoot.Axes.GetChild("blog1");
                 m_blog2 = m_testRoot.Axes.GetChild("blog2");
@@ -52,11 +56,11 @@ namespace Sitecore.Modules.WeBlog.Test
 
                 if (entry11Check == null)
                 {
-                  var entry = m_blog1.Add("Entry11", template);
-                  using (new EditContext(entry))
-                  {
-                    entry["Entry Date"] = "20120105T233207";
-                  }
+                    var entry = m_blog1.Add("Entry11", template);
+                    using (new EditContext(entry))
+                    {
+                        entry["Entry Date"] = "20120105T233207";
+                    }
                 }
 
                 var entry12Check = m_blog1.Axes.GetDescendant("Entry12");
@@ -67,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.Test
                     var entry = m_blog1.Add("Entry12", template);
                     using (new EditContext(entry))
                     {
-                      entry["Entry Date"] = "20120106T233145";
+                        entry["Entry Date"] = "20120106T233145";
                     }
                 }
 
@@ -217,7 +221,7 @@ namespace Sitecore.Modules.WeBlog.Test
             var newItem = m_blog1.Database.GetItem(newId);
 
             try
-            {   
+            {
                 Assert.AreEqual("the title", newItem["title"]);
                 Assert.AreEqual("the description", newItem["content"]);
             }

@@ -12,7 +12,7 @@ using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
-
+using Sitecore.StringExtensions;
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Analytics.Reporting;
