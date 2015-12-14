@@ -278,9 +278,9 @@ namespace Sitecore.Modules.WeBlog
         /// <summary>
         /// Gets the ProfanityFilter file path
         /// </summary>
-        public static string ProfanityFilterFile
+        public static string ProfanityFilterCacheSize
         {
-            get { return Configuration.Settings.GetSetting("WeBlog.ProfanityFilterFile"); }
+            get { return Configuration.Settings.GetSetting("WeBlog.ProfanityFilter.CacheSize"); }
         }
 
         /// <summary>
