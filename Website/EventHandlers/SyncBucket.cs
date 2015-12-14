@@ -7,6 +7,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecore.Exceptions;
 using Sitecore.Jobs.AsyncUI;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Reflection;
 
 namespace Sitecore.Modules.WeBlog.EventHandlers
@@ -65,7 +66,7 @@ namespace Sitecore.Modules.WeBlog.EventHandlers
             IDynamicBucketFolderPath bucketFolderPath = ReflectionUtil.CreateObject(type) as IDynamicBucketFolderPath;
             if (bucketFolderPath == null)
             {
-                Log.Fatal("Could not instantiate DynamicBucketFolderPath of type " + type, this);
+                Logger.Error("Could not instantiate DynamicBucketFolderPath of type " + type, this);
                 throw new ConfigurationException("Could not instantiate DynamicBucketFolderPath of type " + type);
             }
             Database database = topParent.Database;
