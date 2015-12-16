@@ -32,10 +32,18 @@ namespace Sitecore.Modules.WeBlog.Globalization
 
         protected void HandleOnItemSaved(Item item)
         {
-            if (item != null && item.TemplateID == Settings.DictionaryEntryTemplateID)
+            if (item != null)
             {
-                Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
-                CacheManager.TranslatorCache.ClearCache();
+                if (item.TemplateID == Settings.DictionaryEntryTemplateID)
+                {
+                    Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
+                    CacheManager.TranslatorCache.ClearCache();
+                }
+                if (item.TemplateID == Settings.ProfanityListTemplateID)
+                {
+                    Logger.Info("Profanity Filter item saved, clearing cache", this);
+                    CacheManager.ProfanityFilterCache.ClearCache();
+                }
             }
         }
 

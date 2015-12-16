@@ -6,9 +6,9 @@ namespace Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter
     {
         public void Process(ProfanityFilterArgs args)
         {
-            if (CacheManager.ProfanityFilter.WorList != null)
+            if (CacheManager.ProfanityFilterCache.WorList != null)
             {
-                args.WordList = CacheManager.ProfanityFilter.WorList;
+                args.WordList = CacheManager.ProfanityFilterCache.WorList;
             }
         }
     }

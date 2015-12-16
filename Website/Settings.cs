@@ -283,6 +283,21 @@ namespace Sitecore.Modules.WeBlog
             get { return Configuration.Settings.GetSetting("WeBlog.ProfanityFilter.CacheSize"); }
         }
 
+        public static string ProfanityListTemplateIDString
+        {
+            get { return Configuration.Settings.GetSetting("WeBlog.ProfanityFilter.ProfanityListTemplateID"); }
+        }
+
+        public static ID ProfanityListTemplateID
+        {
+            get
+            {
+                var id = ID.Null;
+                ID.TryParse(ProfanityListTemplateIDString, out id);
+                return id;
+            }
+        }
+
         /// <summary>
         /// Gets the type that provides the concrete implementation of the IBlogManager interface
         /// </summary>

@@ -26,6 +26,7 @@ namespace Sitecore.Modules.WeBlog
         {
             public const string IpAddress = "IP Address";
             public const string Website = "Website";
+            public const string WordList = "WordList";
         }
 
         public static class Templates

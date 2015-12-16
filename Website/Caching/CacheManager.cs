@@ -8,7 +8,7 @@ namespace Sitecore.Modules.WeBlog.Caching
     {
         protected static Dictionary<string, IWeBlogCache> Caches = new Dictionary<string, IWeBlogCache>();
 
-        public static ProfanityFilterCache ProfanityFilter
+        public static ProfanityFilterCache ProfanityFilterCache
         {
             get
             {
