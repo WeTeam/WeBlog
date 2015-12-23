@@ -136,10 +136,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
+    <Compile Include="Caching\IWeBlogCache.cs" />
+    <Compile Include="Caching\ProfanityFilterCache.cs" />
+    <Compile Include="Caching\TranslatorCache.cs" />
+    <Compile Include="Caching\CacheManager.cs" />
+    <Compile Include="Caching\SimpleCache.cs" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
     <Compile Include="Buckets\DateBucketFolderPath.cs" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\CacheProfanityList.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\GetProfanityListFromCache.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\GetProfanityListFromItem.cs" />
     <Compile Include="TokenReplacer.cs" />
     <Compile Include="Data\Fields\CustomFieldBase.cs" />
     <Compile Include="Data\Fields\CustomCheckboxField.cs" />
@@ -207,7 +215,7 @@
     <Compile Include="Pipelines\IProfanityFilterProcessor.cs" />
     <Compile Include="Pipelines\ProfanityFilterArgs.cs" />
     <Compile Include="Pipelines\ProfanityFilter\FilterWords.cs" />
-    <Compile Include="Pipelines\ProfanityFilter\GetProfanityList.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\GetProfanityListFromFile.cs" />
     <Compile Include="Pipelines\ProfanityFilter\ValidateInput.cs" />
     <Compile Include="Pipelines\GetLookupSourceItems\ResolveTokens.cs" />
     <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />

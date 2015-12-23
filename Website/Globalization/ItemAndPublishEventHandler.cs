@@ -3,6 +3,7 @@ using Sitecore.Data.Events;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
+using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.Globalization
@@ -31,17 +32,25 @@ namespace Sitecore.Modules.WeBlog.Globalization
 
         protected void HandleOnItemSaved(Item item)
         {
-            if (item != null && item.TemplateID == Settings.DictionaryEntryTemplateID)
+            if (item != null)
             {
-                Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
-                Translator.ClearCaches();
+                if (item.TemplateID == Settings.DictionaryEntryTemplateID)
+                {
+                    Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
+                    CacheManager.TranslatorCache.ClearCache();
+                }
+                if (item.TemplateID == Settings.ProfanityListTemplateID)
+                {
+                    Logger.Info("Profanity Filter item saved, clearing cache", this);
+                    CacheManager.ProfanityFilterCache.ClearCache();
+                }
             }
         }
 
         public void OnPublishEnd(object sender, EventArgs args)
         {
             Logger.Info("Publish complete, clearing Translator cache", this);
-            Translator.ClearCaches();
+            CacheManager.TranslatorCache.ClearCache();
         }
     }
 }
