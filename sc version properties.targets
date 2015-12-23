@@ -10,6 +10,10 @@
 		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
 		<DefineConstants>$(DefineConstants);FEATURE_DMS;SC70</DefineConstants>
 	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('sc7.2'))">
+		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+		<DefineConstants>$(DefineConstants);FEATURE_DMS;SC72</DefineConstants>
+	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration.Contains('sc7.5'))">
 		<TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
 		<DefineConstants>$(DefineConstants);FEATURE_XDB;SC75</DefineConstants>

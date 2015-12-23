@@ -5,6 +5,11 @@
 		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 7.0\cd\Website</SitecoreCDPath>
 	</PropertyGroup>
 	
+	<PropertyGroup Condition="$(Configuration.Contains('sc7.2'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 7.2\cm\Website</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 7.2\cd\Website</SitecoreCDPath>
+	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('sc7.5'))">
 		<SitecorePath>C:\inetpub\WeBlog\Sitecore 7.5\cm\Website</SitecorePath>
 		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 7.5\cd\Website</SitecoreCDPath>

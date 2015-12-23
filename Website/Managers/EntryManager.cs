@@ -37,6 +37,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             this.reportDataProvider = reportDataProvider;
         }
+#else
+        public EntryManager()
+        {
+        }
 #endif
 
         /// <summary>
