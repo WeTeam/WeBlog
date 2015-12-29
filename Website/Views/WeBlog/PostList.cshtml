@@ -3,22 +3,20 @@
 @using Sitecore.Modules.WeBlog.Model
 @model PostList
 
-<div class="wb-entry-list wb-panel" id="wb-entry-list">
+<div class="wb-entry-list">
+    @foreach (var entry in Model.Entries)
+    {
+        Html.RenderPartial(Model.PostTemplate, new PostListEntry(entry));
+    }
+    @if (Model.ShowViewMoreLink)
+    {
+        <section class="wb-view-more-wrapper">
 
-
-    <ul class="wb-entry-list-entries">
-        @foreach (var entry in Model.Entries)
-        {
-            Html.RenderPartial(Model.PostTemplate, new PostListEntry(entry));
-        }
-    </ul>
-    <div class="wb-view-more-wrapper" id="wb-view-more-wrapper">
-        @if (Model.ShowViewMoreLink)
-        {
             <a id="ancViewMore" class="wb-view-more" href="@Model.ViewMoreHref">
                 @Translator.Render("VIEW_MORE").ToHtmlString()
             </a>
-        }
-        <span class="wb-loading-animation" style="display: none;">Loading...</span>
-    </div>
+
+            <span class="wb-loading-animation" style="display: none;">Loading...</span>
+        </section>
+    }
 </div>

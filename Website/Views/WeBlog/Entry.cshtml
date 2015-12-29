@@ -6,20 +6,22 @@
     ViewBag.Title = Model.Title;
 }
 
-<div class="wb-entry">
-    @Html.Sitecore().Field("Image", new { @class = "wb-image", mw = 300, mh = 200 })
-    @if (Model.ShowEntryTitle) //TODO: Chekck the difference between name and Field title
+<article>
+    <div class="thumbnail">
+        @Html.Sitecore().Field("Image", new { @class = "wb-image", mw = 300, mh = 200 })
+    </div>
+    @if (Model.ShowEntryTitle)
     {
-        <h2>
-            @if (!string.IsNullOrEmpty(Model.CurrentEntry["title"]) || Sitecore.Context.PageMode.IsPageEditor)
+        <h1>
+            @if (Sitecore.Context.PageMode.IsPageEditor)
             {
                 @Html.Sitecore().Field("Title")
             }
             else
             {
-                @Model.CurrentEntry.Name
+                @Model.Title
             }
-        </h2>
+        </h1>
     }
     @if (Model.ShowEntryMetadata)
     {
@@ -41,4 +43,4 @@
     }
     @Html.Sitecore().Field("Content", shouldWrap: Model.CurrentEntry.DoesFieldRequireWrapping("Content"))
     @Html.Sitecore().Placeholder("weblog-below-entry")
-</div>
+</article>

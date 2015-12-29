@@ -3,25 +3,31 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Model.PostListEntry
 
-<li class="wb-entry-list-entry">
-    @Html.Sitecore().Field("Thumbnail Image", Model.EntryItem, new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
-    <div class="wb-entry-detail">
+<section>
+    <header>
+        <div class="thumbnail">
+            @Html.Sitecore().Field("Thumbnail Image", Model.EntryItem, new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
+        </div>
         <h2>
             <a href="@Model.EntryItem.Url">@Model.EntryItem.DisplayTitle.ToHtmlString()</a>
         </h2>
         <div class="wb-details">
             @Translator.Format("ENTRY_DETAILS", Model.EntryItem.Created.ToString(Settings.DateFormat), Model.EntryItem.AuthorName).ToHtmlString()
         </div>
+    </header>
 
-        @Model.Summary.ToHtmlString()
+    <div class="description">
+        <div class="summary">
+            @Model.Summary.ToHtmlString()
+        </div>
 
         <a class="wb-read-more" href="@Model.EntryItem.Url">@Translator.Text("READ_MORE").ToHtmlString()</a>
 
         @if (Model.EntryItem.CommentCount > 0 || !Model.EntryItem.DisableComments.Checked)
         {
             <span class="wb-comment-count">
-                @Translator.Render("COMMENTS").ToHtmlString() (@Model.EntryItem.CommentCount)
-            </span>
+            @Translator.Render("COMMENTS").ToHtmlString() (@Model.EntryItem.CommentCount)
+        </span>
         }
     </div>
-</li>
+</section>
