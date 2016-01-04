@@ -144,6 +144,10 @@
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
     <Compile Include="Buckets\DateBucketFolderPath.cs" />
+    <Compile Include="Data\Items\FileItem.cs" />
+    <Compile Include="Data\Items\ScriptItem.cs" />
+    <Compile Include="Data\Items\StylesheetItem.cs" />
+    <Compile Include="Model\Theme.cs" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
     <Compile Include="Pipelines\ProfanityFilter\CacheProfanityList.cs" />
     <Compile Include="Pipelines\ProfanityFilter\GetProfanityListFromCache.cs" />
@@ -646,6 +650,9 @@
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC72.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\ThemeIncludes.cshtml" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -672,11 +679,16 @@
     <CallTarget Targets="ContentDeliveryConfig" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="@(Content);$(OutDir)\*.dll" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
+    <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <CreateItem Include="$(OutDir)\*.dll">
+      <Output ItemName="BinFiles" TaskParameter="Include"/>
+    </CreateItem>
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin"/>
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''"/>
     <!-- Replace version specific configs -->
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC72.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC72'))" />

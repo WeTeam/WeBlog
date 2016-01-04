@@ -1,0 +1,23 @@
+﻿@model Sitecore.Modules.WeBlog.Model.Theme
+
+@if(Model.ThemeItem != null)
+{
+
+    foreach (var stylesheet in Model.ThemeItem.Stylesheets)
+    {
+        <link rel="stylesheet" type="text/css" href="@stylesheet.Url"/>
+    }
+
+    foreach (var script in Model.ThemeItem.Scripts)
+    {
+        <script type="text/javascript" src="@script.Url"></script>
+        if (!string.IsNullOrEmpty(script.FallbackUrl) && !string.IsNullOrEmpty(script.VerificationObject))
+        {
+            <script type="text/javascript">
+                if(typeof @script.VerificationObject == "undefined") {
+                    document.write(unescape("%3Cscript src='@script.FallbackUrl' type='text/javascript'%3E%3C/script%3E"));
+                }
+            </script>
+        }
+    }
+}
