@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {A629B15F-427B-45D4-A171-CEC4FB8B5A22}
+id: {1BF19354-D79F-4F32-80F0-5A644811C137}
 database: master
-path: /sitecore/templates/Modules/WeBlog/Theme/Theme
-parent: {572C6B60-78CD-462B-8018-8A778352C90B}
-name: Theme
+path: /sitecore/templates/Modules/WeBlog/Theme - old
+parent: {086114A3-C0BC-4C50-ACD7-8E6F9742F728}
+name: Theme - old
 master: {00000000-0000-0000-0000-000000000000}
 template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
 templatekey: Template
@@ -17,31 +17,31 @@ content-length: 38
 
 {1930BBEB-7805-471A-A3BE-4858AC7CF696}
 ----field----
-field: {F7D48A55-2158-4F02-9356-756654404F73}
-name: __Standard values
-key: __standard values
-content-length: 38
-
-{BB762F2B-FC23-4ACD-8C04-D7FFC03BD570}
-----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
 key: __icon
-content-length: 23
+content-length: 66
 
-office/32x32/shapes.png
+/sitecore/shell/Themes/Standard/Applications/16x16/text_marked.png
 ----version----
 language: en
 version: 1
-revision: f616de4e-9c9d-4440-90f9-c4b57d0832ed
+revision: a5b4627a-6414-4134-80b1-2707ec976d95
 
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 16
+content-length: 15
 
-20160101T103445Z
+20090212T225100
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -55,14 +55,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-f616de4e-9c9d-4440-90f9-c4b57d0832ed
+a5b4627a-6414-4134-80b1-2707ec976d95
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 35
 
-20160101T103538:635872413385946923Z
+20160106T115412:635876780525403144Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

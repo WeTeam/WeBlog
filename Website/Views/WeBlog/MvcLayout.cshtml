@@ -10,14 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @Html.Sitecore().Rendering("{CFBDF43B-D3D4-4F5F-BDE8-BFDA3EDA3778}", new {Cacheable = true, CacheKey = "BlogSyndication", Cache_VaryByData = true})
     @Html.Sitecore().Rendering("{9AF6BA6B-221F-4549-93C5-B66DB5DF6429}", new {Cacheable = true, CacheKey = "RsdIncludes", Cache_VaryByData = true})
-    @Html.Sitecore().Rendering("{7BDD6111-5B6C-4904-8FA2-E6A334FE675E}", new {Cacheable = true, CacheKey = "ThemeIncludes", Cache_VaryByData = true})
+    @Html.Sitecore().Rendering("{1870D7B4-6FF0-49F2-A2EF-99C86C0EF21A}", new { Cacheable = true, CacheKey = "ThemeStylesheets", Cache_VaryByData = true })
 
-    <!-- aa -->
-    @Html.Sitecore().Rendering("{E6CB561E-D532-4BD2-82F4-82507B4766C7}", new { Cacheable = true, CacheKey = "ThemeIncludes2", Cache_VaryByData = true })
-    <!-- /aa -->
     
 </head>
     <body>
         @Html.Sitecore().Placeholder("weblog-content")
+        @Html.Sitecore().Rendering("{E6CB561E-D532-4BD2-82F4-82507B4766C7}", new { Cacheable = true, CacheKey = "ThemeScripts", Cache_VaryByData = true })
     </body>
 </html>

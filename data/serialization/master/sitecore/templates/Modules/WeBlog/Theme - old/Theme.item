@@ -1,26 +1,33 @@
 ----item----
 version: 1
-id: {572C6B60-78CD-462B-8018-8A778352C90B}
+id: {FB549DA9-6D4E-4418-A9CF-36122DBE9B1A}
 database: master
-path: /sitecore/templates/Modules/WeBlog/Theme
-parent: {086114A3-C0BC-4C50-ACD7-8E6F9742F728}
+path: /sitecore/templates/Modules/WeBlog/Theme - old/Theme
+parent: {1BF19354-D79F-4F32-80F0-5A644811C137}
 name: Theme
 master: {00000000-0000-0000-0000-000000000000}
-template: {0437FEE2-44C9-46A6-ABE9-28858D9FEE8C}
-templatekey: Template Folder
+template: {E269FBB5-3750-427A-9149-7AA950B49301}
+templatekey: Template section
 
 ----version----
 language: en
 version: 1
-revision: a0b28c85-c089-4f0b-ac45-0a675c400088
+revision: cd1e5bde-d442-47e9-844e-d1174dae1d74
 
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
-content-length: 16
+content-length: 15
 
-20160101T103531Z
+20090212T225154
 ----field----
 field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
 name: __Created by
@@ -34,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a0b28c85-c089-4f0b-ac45-0a675c400088
+cd1e5bde-d442-47e9-844e-d1174dae1d74
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 35
+content-length: 34
 
-20160101T103531:635872413317715503Z
+20110327T200353:634368530339169921
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

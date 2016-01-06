@@ -1,10 +1,10 @@
 ----item----
 version: 1
-id: {E6CB561E-D532-4BD2-82F4-82507B4766C7}
+id: {1870D7B4-6FF0-49F2-A2EF-99C86C0EF21A}
 database: master
-path: /sitecore/layout/Renderings/WeBlog/MVC/ThemeIncludes - new
+path: /sitecore/layout/Renderings/WeBlog/MVC/ThemeStylesheets
 parent: {8B102FCF-A4DD-417D-86C0-260CFC23923E}
-name: ThemeIncludes - new
+name: ThemeStylesheets
 master: {00000000-0000-0000-0000-000000000000}
 template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
 templatekey: View rendering
@@ -13,9 +13,9 @@ templatekey: View rendering
 field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
 name: Path
 key: path
-content-length: 34
+content-length: 37
 
-/Views/WeBlog/ThemeIncludes.cshtml
+/Views/WeBlog/ThemeStylesheets.cshtml
 ----field----
 field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
 name: Model
@@ -33,7 +33,7 @@ content-length: 38
 ----version----
 language: en
 version: 1
-revision: df179061-ad31-4132-b294-ce01a08bdabc
+revision: 021fa767-90b6-4427-bd76-b9b726787584
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-df179061-ad31-4132-b294-ce01a08bdabc
+021fa767-90b6-4427-bd76-b9b726787584
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 35
 
-20160102T121637:635873337978954217Z
+20160106T114858:635876777384443723Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

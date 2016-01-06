@@ -651,7 +651,10 @@
     <Content Include="App_Config\Include\WeBlog.ContentSearch.SC72.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\WeBlog\ThemeIncludes.cshtml" />
+    <Content Include="Views\WeBlog\ThemeScripts.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\WeBlog\ThemeStylesheets.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -685,10 +688,10 @@
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
     <CreateItem Include="$(OutDir)\*.dll">
-      <Output ItemName="BinFiles" TaskParameter="Include"/>
+      <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
-    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin"/>
-    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''"/>
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
     <!-- Replace version specific configs -->
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC72.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC72'))" />
