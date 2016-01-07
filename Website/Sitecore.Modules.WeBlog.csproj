@@ -147,6 +147,20 @@
     <Compile Include="Data\Items\FileItem.cs" />
     <Compile Include="Data\Items\ScriptItem.cs" />
     <Compile Include="Data\Items\StylesheetItem.cs" />
+    <Compile Include="layouts\WeBlog\ThemeScripts.ascx.cs">
+      <DependentUpon>ThemeScripts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\ThemeScripts.ascx.designer.cs">
+      <DependentUpon>ThemeScripts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="layouts\WeBlog\ThemeStylehseets.ascx.cs">
+      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="layouts\WeBlog\ThemeStylehseets.ascx.designer.cs">
+      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Model\Theme.cs" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
     <Compile Include="Pipelines\ProfanityFilter\CacheProfanityList.cs" />
@@ -516,6 +530,8 @@
     <Content Include="layouts\WeBlog\Sidebar\TagCloud.ascx" />
     <Content Include="layouts\WeBlog\Sidebar\TwitterTimeline.ascx" />
     <Content Include="layouts\WeBlog\SubmitComment.ascx" />
+    <Content Include="layouts\WeBlog\ThemeScripts.ascx" />
+    <Content Include="layouts\WeBlog\ThemeStylehseets.ascx" />
     <Content Include="sitecore modules\web\WeBlog\Comment.svc" />
     <Content Include="sitecore modules\web\WeBlog\Images\ajax-loader.gif" />
     <Content Include="sitecore modules\web\WeBlog\Images\feed-icon-14x14.png" />

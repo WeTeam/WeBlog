@@ -3,42 +3,44 @@
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 
-<div class="wb-entry">
-    <sc:Image runat="server" ID="EntryImage" Field="Image" CssClass="wb-image" />
+<article>
+    <div class="thumbnail">
+        <sc:Image runat="server" ID="EntryImage" Field="Image" CssClass="wb-image" />
+    </div>
     <% if (ShowEntryTitle) { %>
-        <h2>
+        <h1>
             <% if (!string.IsNullOrEmpty(CurrentEntry["title"]) || Sitecore.Context.PageMode.IsPageEditor) { %>
-            <sc:Text ID="txtTitle" Field="Title" runat="server" />
+                <sc:Text ID="txtTitle" Field="Title" runat="server" />
             <% } else { %>
-            <%= CurrentEntry.Name %>
+                <%= CurrentEntry.Name %>
             <% } %>
-        </h2>
+        </h1>
     <% } %>
     <% if (ShowEntryMetadata) { %>
         <div class="wb-details">
             <% if(Sitecore.Context.PageMode.IsPageEditor) { %>
-            <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.Author.Rendered) %>
+                <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.Author.Rendered) %>
             <% } else { %>
-            <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.AuthorName) %>
+                <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.AuthorName) %>
             <%} %>
         </div>
     <% } %>
     <% if (ShowEntryIntroduction) { %>
-    <sc:Placeholder runat="server" key="weblog-below-entry-title" />
-    <% if(DoesFieldRequireWrapping("Introduction")) { %>
-    <p>
-    <% } %>
+        <sc:Placeholder runat="server" key="weblog-below-entry-title" />
+        <% if(DoesFieldRequireWrapping("Introduction")) { %>
+            <p>
+        <% } %>
         <sc:Text ID="txtIntroduction" Field="Introduction" runat="server" />
-    <% if(DoesFieldRequireWrapping("Introduction")) { %>
-    </p>
-    <% } %>
+        <% if(DoesFieldRequireWrapping("Introduction")) { %>
+            </p>
+        <% } %>
     <% } %>
     <% if(DoesFieldRequireWrapping("Content")) { %>
-    <p>
+        <p>
     <% } %>
     <sc:Text ID="txtContent" Field="Content" runat="server" />
     <% if(DoesFieldRequireWrapping("Content")) { %>
-    </p>
+        </p>
     <% } %>
     <sc:Placeholder runat="server" key="weblog-below-entry" /> 
-</div>
+</article>

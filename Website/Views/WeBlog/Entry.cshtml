@@ -8,7 +8,7 @@
 
 <article>
     <div class="thumbnail">
-        @Html.Sitecore().Field("Image", new { @class = "wb-image", mw = 300, mh = 200 })
+        @Html.Sitecore().Field("Image", new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
     </div>
     @if (Model.ShowEntryTitle)
     {

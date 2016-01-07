@@ -11,11 +11,9 @@
     @if (Model.ShowViewMoreLink)
     {
         <section class="wb-view-more-wrapper">
-
             <a id="ancViewMore" class="wb-view-more" href="@Model.ViewMoreHref">
                 @Translator.Render("VIEW_MORE").ToHtmlString()
             </a>
-
             <span class="wb-loading-animation" style="display: none;">Loading...</span>
         </section>
     }
