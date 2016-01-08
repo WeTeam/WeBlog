@@ -30,3 +30,12 @@ In addition to building the project and deploying the files, you must also resto
 1. Click the `Update {core, master} databasees` button.
 1. Log into the Sitecore desktop.
 1. Perform a full publish.
+
+## Building the Themes ##
+
+The WeBlog themes use Grunt as a toolchain and are not included in the Visual Studio projects.
+
+1. Ensure you have Node, NPM and Grunt installed. Grunt should be installed globally.
+1. Execute `npm install` in the `Themes` directory to restore the node packages.
+1. Execute `grunt` in the `Themes` directory to build the themes.
+1. Execute `grunt deploy scxx` to deploy the theme to the desired Sitecore folder where the `xx` in `scxx` refers to the Sitecore version.
