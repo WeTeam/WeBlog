@@ -12,6 +12,8 @@ namespace Sitecore.Modules.WeBlog.Model
 
         public string Mode { get; set; }
 
+        public InterestingEntriesAlgorithm Algororithm { get; set; }
+
         public int MaximumCount { get; set; }
 
         public EntryItem[] Entries { get; set; }
@@ -21,10 +23,10 @@ namespace Sitecore.Modules.WeBlog.Model
         public InterestingEntries(IInterstingEntriesAlgorithm interestingEntriesCore)
         {
             InterestingEntriesCore = interestingEntriesCore;
-            var algororithm = Components.InterestingEntriesCore.GetAlgororithmFromString(Mode);
-            if (algororithm != InterestingEntriesAlgorithm.Custom || InterestingEntriesCore == null)
+            Algororithm = Components.InterestingEntriesCore.GetAlgororithmFromString(Mode);
+            if (Algororithm != InterestingEntriesAlgorithm.Custom || InterestingEntriesCore == null)
             {
-                InterestingEntriesCore = new InterestingEntriesCore(ManagerFactory.EntryManagerInstance, algororithm);
+                InterestingEntriesCore = new InterestingEntriesCore(ManagerFactory.EntryManagerInstance, Algororithm);
             }
         }
 
