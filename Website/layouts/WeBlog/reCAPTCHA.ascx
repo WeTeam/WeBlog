@@ -10,4 +10,4 @@
         PublicKey=""
         PrivateKey="" />
 </div>
-<!-- Please confirm you are human by typing the text you see in this image:-->
+<%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("CAPTCHA")%>
