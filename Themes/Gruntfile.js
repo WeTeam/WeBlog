@@ -4,7 +4,7 @@ const dom = require("xmldom").DOMParser;
 module.exports = function(grunt) {
 	
 	grunt.loadNpmTasks("grunt-contrib-less");
-	grunt.loadNpmTasks("grunt-copy");
+	grunt.loadNpmTasks("grunt-contrib-copy");
 	
 	grunt.initConfig({
 		pkg: grunt.file.readJSON("package.json"),
@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: ".",
-					src: ["**/*.less", "!node_modules/**/*.less", "!import_*.less"],
+					src: ["**/*.less", "!node_modules/**/*.*", "!import_*.less"],
 					dest: "build",
 					ext: ".css"
 				}]
@@ -25,6 +25,15 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: "build",
 					src: ["**/*.*"]
+					// dest is set through deploy task
+				},
+				{
+					/*options: {
+						noProcess
+					},*/
+					expand: true,
+					cwd: ".",
+					src: ["**/*.png", "**/*.gif", "!node_modules/**/*.*"]
 					// dest is set through deploy task
 				}]
 			}
@@ -46,6 +55,7 @@ module.exports = function(grunt) {
 		}
 		
 		grunt.config.set("copy.dev.files.0.dest", targetPath + "\\sitecore modules\\Web\\WeBlog\\Themes");
+		grunt.config.set("copy.dev.files.1.dest", targetPath + "\\sitecore modules\\Web\\WeBlog\\Themes");
 		grunt.task.run("copy:dev");
 	});
 	

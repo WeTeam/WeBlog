@@ -1,7 +1,7 @@
 ﻿@model Sitecore.Modules.WeBlog.Model.Blog
 
 <div class="wb">
-    <header>
+    <header id="top">
         <a href="@Model.Hyperlink">
             @Html.Sitecore().Field("Title", @Model.BlogItem)
         </a>
@@ -14,8 +14,11 @@
             @Html.Sitecore().Placeholder("weblog-sidebar")
         </aside>
     </div>
-    <footer>
+    <footer id="bottom">
         @*Feel free to remove the following line from your implementation*@
-        Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a>
+        <span>
+            Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a>
+        </span>
+        @Model.Theme.Credit
     </footer>
 </div>

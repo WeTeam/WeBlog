@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="BlogPostList.ascx.cs" Inherits="Sitecore.Modules.WeBlog.Layouts.BlogPostList" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 
-<section class="wb-entry-list">
+<div class="wb-entry-list">
     <asp:ListView ID="EntryList" runat="server" OnItemDataBound="EntryDataBound">
         <LayoutTemplate>
             <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>

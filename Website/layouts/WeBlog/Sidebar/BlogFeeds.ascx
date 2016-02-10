@@ -10,7 +10,6 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <asp:HyperLink ID="feedImage" runat="server" NavigateUrl="<%#Item.Url%>" ImageUrl="/sitecore modules/web/WeBlog/Images/feed-icon-14x14.png" CssClass="wb-feed-image" />
                 <asp:HyperLink ID="feedText" runat="server" NavigateUrl="<%#Item.Url%>" Text="<%#Item.Title.Text%>" CssClass="wb-feed-text" />
             </li>
         </ItemTemplate>

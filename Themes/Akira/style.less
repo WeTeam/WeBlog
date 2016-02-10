@@ -1,12 +1,121 @@
-@color: #000000;
-@bgcolor: #bbccbb;
+@text-color: #222222;
+@text-color-aux: lighten(@text-color, 35%);
+@bar-color: #757b8f;
 
 html {
-	background-color: @bgcolor;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:1em;
+	color: @text-color;
 }
 
-h1 {
+body {
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+	color: @text-color;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: lighten(@text-color, 50%);
+}
+
+h1, h2, h3, h4, h5, h6 {
+	text-transform: uppercase;
+}
+
+header#top {
+	font-size: 2em;
+	padding: 1em;
+	background-color: @bar-color;
+	
 	a {
-		color: @color;
+		color: #eaedf4;
+		text-transform: uppercase;
+	}
+}
+
+.wb-wrapper {
+	margin: auto;
+	max-width: 1200px;
+	display: table;
+}
+
+main {
+	padding: 1em;
+	width: 100%;
+	display: table-cell;
+	box-sizing: border-box;
+}
+
+aside {
+	min-width: 300px;
+	padding: 1em;
+	display: table-cell;
+	box-sizing: border-box;
+}
+
+footer {
+	box-shadow: 0 10px 10px -10px @bar-color inset;
+	height: 3em;
+	margin-top: 2em;
+	padding: 1em;
+	font-size: 0.8em;
+	text-align: right;
+}
+
+.thumbnail {
+	float: right;
+	margin-top: 3em;
+}
+
+.wb-entry-list {
+	section {
+		margin-bottom: 2em;
+	}
+	
+	h2 {
+		margin: 0;
+	}
+}
+
+.wb-details {
+	margin-top: 0.75em;
+	color: @text-color-aux;
+	font-size: 0.85em;
+}
+
+.wb-read-more {
+	font-size: 0.9em;
+	color: @text-color-aux;
+}
+
+.wb-comment-count {
+	font-size: 0.9em;
+	float: right;
+	color: @text-color-aux;
+}
+
+article {
+	.thumbnail {
+		float: right;
+	}
+}
+
+@media all and (max-width: 900px) {
+	.wb-wrapper {
+		display: block;
+	}
+	
+	main {
+		display: block;
+		width: 100%;
+	}
+	
+	aside {
+		display: block;
+		width: 100%;
 	}
 }

@@ -16,6 +16,11 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             ResolveThemeAssets();
         }
 
+        public string Credits
+        {
+            get { return InnerItem["Credit Markup"]; }
+        }
+
         public static implicit operator ThemeItem(Item innerItem)
         {
             return innerItem != null ? new ThemeItem(innerItem) : null;

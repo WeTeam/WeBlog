@@ -23,3 +23,6 @@ node_modules
 
 # Log files
 *.log
+
+# Theme output
+Themes\build

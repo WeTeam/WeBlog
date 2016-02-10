@@ -1,7 +1,203 @@
-@color: #0000ff;
+@text-color: #333333;
+
+@primary-border: solid 2px @text-color;
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: "Times New Roman", Times, serif;
+	font-size:1em;
+	color: @text-color;
+}
+
+a {
+	text-decoration: none;
+	color: @text-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-variant: small-caps;
+	font-family: Georgia, serif;
+	width: 100%;
+	text-align: center;
+}
 
 h1 {
+	font-size: 1.8em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+h3 {
+	font-size: 1.3em;
+}
+
+h4 {
+	font-size: 1.2em;
+}
+
+h5 {
+	font-size: 1.1em;
+}
+
+h6 {
+	font-size: 1.05em;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: lighten(@text-color, 50%);
+}
+
+header#top {
+	font-size: 1.2em;
+	text-align: center;
+	margin: 2em 0;
+	
 	a {
-		color: @color;
+		display: inline-block;
+		border: @primary-border;
+		padding: 0.5em 2em;
+		font-variant: small-caps;
+		fint-family: Georgia, serif;
+	}
+}
+
+.wb-wrapper {
+	margin: auto;
+	max-width: 1200px;
+	display: table;
+}
+
+main {
+	padding: 1em 3em 0 0;
+	width: 100%;
+	display: table-cell;
+	box-sizing: border-box;
+}
+
+aside {
+	min-width: 300px;
+	padding: 1em;
+	display: table-cell;
+	box-sizing: border-box;
+}
+
+footer {
+	text-align: center;
+	margin: 2em 0;
+	width: 100%;
+	
+	span {
+		display: inline-block;
+		border: @primary-border;
+		padding: 0.5em 2em;
+		font-variant: small-caps;		
+	}
+}
+
+.credits {
+	text-align: right;
+	font-size: 0.9em;
+	margin: 0 1em;
+	
+	a {
+		color: lighten(@text-color, 20%);
+		text-decoration: underline;
+	}
+}
+
+.thumbnail {
+	float: right;
+	margin-top: 3em;
+	//border: @primary-border;
+	border: solid 2px lighten(@text-color, 25%);
+	padding: 3px;
+}
+
+.wb-details {
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.wb-comment-count {
+	padding-left: 21px;
+	font-style: italic;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Gryphon/img/speech95.png") left center no-repeat;
+	// image from http://www.flaticon.com/free-icon/speech-bubble-outline-of-rectangular-shape_54254#term=comment&page=1&position=6
+}
+
+.wb-read-more {
+	margin-right: 1.5em;
+	float: right;
+	font-style: italic;
+}
+
+.wb-view-more-wrapper {
+	margin-top: 4em;
+	text-align: center;
+	
+	a {
+		font-variant: small-caps;
+	}
+}
+
+.wb-panel {
+	background: url("/sitecore modules/Web/WeBlog/Themes/Gryphon/img/flourish-divider.png") bottom center no-repeat;
+	// image from http://vector.me/browse/818847/swash_ornament
+	
+	padding-bottom: 30px;
+
+	ul {
+		padding: 0;
+	}
+	
+	li {
+		list-style: none;
+	}
+}
+
+.wb-categories, .wb-interesting-entries {
+	li:before {
+		content: "\21D2";
+	}
+}
+
+.wb-recent-comments {
+	li {
+		margin-bottom: 0.75em;
+	}
+}
+
+.wb-feed-text {
+	padding-left: 21px;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Gryphon/img/rss2.png") left center no-repeat;
+}
+
+.wb-month li, .wb-entries li {
+	margin-left: 1em;
+}
+
+.wb-comment-content {
+	color: lighten(@text-color, 25%);
+}
+
+@media all and (max-width: 900px) {
+	.wb-wrapper {
+		display: block;
+	}
+	
+	main {
+		display: block;
+		width: 100%;
+	}
+	
+	aside {
+		display: block;
+		width: 100%;
 	}
 }

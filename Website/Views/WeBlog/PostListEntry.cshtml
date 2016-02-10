@@ -20,14 +20,12 @@
         <div class="summary">
             @Model.Summary.ToHtmlString()
         </div>
-
-        <a class="wb-read-more" href="@Model.EntryItem.Url">@Translator.Text("READ_MORE").ToHtmlString()</a>
-
         @if (Model.EntryItem.CommentCount > 0 || !Model.EntryItem.DisableComments.Checked)
         {
             <span class="wb-comment-count">
             @Translator.Render("COMMENTS").ToHtmlString() (@Model.EntryItem.CommentCount)
         </span>
         }
+        <a class="wb-read-more" href="@Model.EntryItem.Url">@Translator.Text("READ_MORE").ToHtmlString()</a>
     </div>
 </section>
