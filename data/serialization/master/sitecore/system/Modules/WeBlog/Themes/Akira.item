@@ -12,8 +12,17 @@ templatekey: Theme
 ----version----
 language: en
 version: 1
-revision: 2c384a7b-8a56-4d4e-8333-303ca9ae4667
+revision: e1fe7d7f-09a4-4c50-9d23-ee92fbb04517
 
+----field----
+field: {A22948D6-52A2-402D-ABE7-21D11E5A6B36}
+name: Credit Markup
+key: credit markup
+content-length: 774
+
+<p class="credit">RSS icon made by <a href="http://fontawesome.io" title="Dave Gandy">Dave Gandy</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></p>
+<p class="credit">Comment icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></p>
+<p class="credit"><a href="http://dj-corny.deviantart.com/art/Portal-2-CoreBot-Eye-178854113">Atlas Eye</a> image by <a href="http://dj-corny.deviantart.com/">dj-corny</a></p>
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -27,14 +36,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-2c384a7b-8a56-4d4e-8333-303ca9ae4667
+e1fe7d7f-09a4-4c50-9d23-ee92fbb04517
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 35
 
-20160129T122313:635896669937964176Z
+20160212T110808:635908720883895206Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

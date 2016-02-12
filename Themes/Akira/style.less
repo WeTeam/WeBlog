@@ -29,7 +29,10 @@ h1, h2, h3, h4, h5, h6 {
 header#top {
 	font-size: 2em;
 	padding: 1em;
-	background-color: @bar-color;
+	background: @bar-color;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Akira/img/atlas-eye-detail.png") no-repeat right top, linear-gradient(to left, #000000, @bar-color);
+	// image from http://dj-corny.deviantart.com/art/Portal-2-CoreBot-Eye-178854113
+	// by dj-corny http://dj-corny.deviantart.com/ 
 	
 	a {
 		color: #eaedf4;
@@ -66,9 +69,13 @@ footer {
 	text-align: right;
 }
 
+.credit {
+	margin: 0;
+}
+
 .thumbnail {
 	float: right;
-	margin-top: 3em;
+	margin: 3em 0 0 2em;
 }
 
 .wb-entry-list {
@@ -102,6 +109,35 @@ article {
 	.thumbnail {
 		float: right;
 	}
+}
+
+.wb-comment-count {
+	padding-left: 21px;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Akira/img/comment.png") left center no-repeat;	
+	// image from http://www.flaticon.com/free-icon/comment-bubble-with-three-squares_14667
+}
+
+// <div>Icon made by <a href="http://fontawesome.io" title="Dave Gandy">Dave Gandy</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+
+.wb-panel {
+	ul {
+		padding: 0;
+	}
+	
+	li {
+		list-style: none;
+		margin-left: 1em;
+	}
+}
+
+.wb-feed-text {
+	padding-left: 21px;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Akira/img/rss.png") left center no-repeat;
+	// image from http://www.flaticon.com/free-icon/rss-symbol_25234
+}
+
+.wb-month li, .wb-entries li {
+	margin-left: 1em;
 }
 
 @media all and (max-width: 900px) {

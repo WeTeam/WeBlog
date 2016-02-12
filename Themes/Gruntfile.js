@@ -24,17 +24,21 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: "build",
-					src: ["**/*.*"]
-					// dest is set through deploy task
+					src: ["**/*.*"],
+					dest: ""
 				},
 				{
-					/*options: {
-						noProcess
-					},*/
 					expand: true,
 					cwd: ".",
-					src: ["**/*.png", "**/*.gif", "!node_modules/**/*.*"]
-					// dest is set through deploy task
+					src: ["**/*.png", "**/*.gif", "**/*.js", "!node_modules/**/*.*", "!bower_components/**/*.*", "!Gruntfile.js"],
+					dest: ""
+				},
+				{
+					expand: true,
+					flatten: true,
+					cwd: ".",
+					src: ["**/jquery/dist/jquery.js"],
+					dest: "common\\lib"
 				}]
 			}
 		}
@@ -54,8 +58,13 @@ module.exports = function(grunt) {
 			grunt.fail.warn("Failed to resolve path for version '" + version + "'.");
 		}
 		
-		grunt.config.set("copy.dev.files.0.dest", targetPath + "\\sitecore modules\\Web\\WeBlog\\Themes");
-		grunt.config.set("copy.dev.files.1.dest", targetPath + "\\sitecore modules\\Web\\WeBlog\\Themes");
+		var fileConfigs = grunt.config.get("copy.dev.files");
+		
+		fileConfigs.forEach(function(config, index) {
+			var path = targetPath + "\\sitecore modules\\Web\\WeBlog\\Themes\\" + config.dest;
+			grunt.config.set("copy.dev.files." + index + ".dest", path);
+		});
+		
 		grunt.task.run("copy:dev");
 	});
 	

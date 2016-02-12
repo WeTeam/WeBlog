@@ -1,0 +1,22 @@
+{
+  "name": "WeBlog_Themes",
+  "description": "Themes for the WeBlog Sitecore module",
+  "main": "",
+  "authors": [
+    "WeTeam"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}
