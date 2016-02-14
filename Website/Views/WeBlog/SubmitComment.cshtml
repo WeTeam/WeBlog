@@ -12,22 +12,30 @@
 
         { Html.RenderPartial("~/Views/WeBlog/SubmitComment/MessagePanel.cshtml"); }
 
-        @Html.ValidationMessageFor(model => model.UserName, "*")
-        @Html.LabelFor(m => m.UserName, Translator.Render("NAME"))
-        @Html.TextBoxFor(m => m.UserName, new { @class = "wb-textbox", width = 220 })
-        <br />
-        @Html.ValidationMessageFor(model => model.UserName, "*")
-        @Html.LabelFor(m => m.Email, Translator.Render("EMAIL"))
-        @Html.TextBoxFor(m => m.Email, new { @class = "wb-textbox", width = 220 })
-        <br />
-        @Html.LabelFor(m => m.Website, Translator.Render("WEBSITE"))
-        @Html.TextBoxFor(m => m.Website, new { @class = "wb-textbox", width = 220 })
-        <br />
-        @Html.ValidationMessageFor(model => model.UserName, "*")
-        @Html.LabelFor(m => m.Comment, Translator.Render("COMMENT"))
-        @Html.TextAreaFor(m => m.Comment, new { cols = "60", rows = "10" })
-
-        @Html.Sitecore().Placeholder("weblog-comment-form")
-        <input type="submit" value="@Translator.Text("POST")" />
+        <p>
+            @Html.ValidationMessageFor(model => model.UserName, "*")
+            @Html.LabelFor(m => m.UserName, Translator.Render("NAME"))
+            @Html.TextBoxFor(m => m.UserName, new {@class = "wb-textbox", width = 220})
+        </p>
+        <p>
+            @Html.ValidationMessageFor(model => model.UserName, "*")
+            @Html.LabelFor(m => m.Email, Translator.Render("EMAIL"))
+            @Html.TextBoxFor(m => m.Email, new { @class = "wb-textbox", width = 220 })
+        </p>
+        <p>
+            @Html.LabelFor(m => m.Website, Translator.Render("WEBSITE"))
+            @Html.TextBoxFor(m => m.Website, new {@class = "wb-textbox", width = 220})
+        </p>
+        <p>
+            @Html.ValidationMessageFor(model => model.UserName, "*")
+            @Html.LabelFor(m => m.Comment, Translator.Render("COMMENT"))
+            @Html.TextAreaFor(m => m.Comment, new { cols = "60", rows = "10" })
+        </p>
+        <p class="wb-comment-form-wrapper">
+            @Html.Sitecore().Placeholder("weblog-comment-form")
+        </p>
+        <p>
+            <input type="submit" value="@Translator.Text("POST")" />
+        </p>
     }
 </div>

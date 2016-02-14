@@ -117,8 +117,6 @@ article {
 	// image from http://www.flaticon.com/free-icon/comment-bubble-with-three-squares_14667
 }
 
-// <div>Icon made by <a href="http://fontawesome.io" title="Dave Gandy">Dave Gandy</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
-
 .wb-panel {
 	ul {
 		padding: 0;
@@ -138,6 +136,28 @@ article {
 
 .wb-month li, .wb-entries li {
 	margin-left: 1em;
+}
+
+.wb-entry-add-comment {
+	label {
+		display: inline-block;
+		width: 100px;
+	}
+	
+	input, textarea {
+		width: 400px;
+		margin-bottom: 0.5em;
+	}
+	
+	.wb-captcha label {
+/*		display: inline-block;
+		width: 500px;*/
+		display: inline;
+	}
+	
+	input[type='submit'] {
+		width: 100px;
+	}
 }
 
 @media all and (max-width: 900px) {

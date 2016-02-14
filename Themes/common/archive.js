@@ -1,9 +1,9 @@
 jQuery(function(){
-	jQuery(".wb-year").click(function(){
-		jQuery(this).parent().find(".wb-month").toggle();
+	jQuery("a.wb-year").click(function(){
+		jQuery(this).parent().find(".wb-month").toggleClass("collapsed");
 	});
 	
-	jQuery(".wb-month").click(function(){
-		jQuery(this).parent().find(".wb-entries").toggle();
+	jQuery("a.wb-month").click(function(){
+		jQuery(this).parent().find(".wb-entries").toggleClass("collapsed");
 	});
 });
