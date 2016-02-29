@@ -36,9 +36,9 @@
             }
         </div>
     }
+    @Html.Sitecore().Placeholder("weblog-below-entry-title")
     @if (Model.ShowEntryIntroduction)
     {
-        @Html.Sitecore().Placeholder("weblog-below-entry-title")
         @Html.Sitecore().Field("Introduction", shouldWrap: Model.CurrentEntry.DoesFieldRequireWrapping("Introduction"))
     }
     @Html.Sitecore().Field("Content", shouldWrap: Model.CurrentEntry.DoesFieldRequireWrapping("Content"))

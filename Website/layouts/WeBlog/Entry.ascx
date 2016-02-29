@@ -25,8 +25,8 @@
             <%} %>
         </div>
     <% } %>
+    <sc:Placeholder runat="server" key="weblog-below-entry-title" />
     <% if (ShowEntryIntroduction) { %>
-        <sc:Placeholder runat="server" key="weblog-below-entry-title" />
         <% if(DoesFieldRequireWrapping("Introduction")) { %>
             <p>
         <% } %>

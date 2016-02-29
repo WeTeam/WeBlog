@@ -32,7 +32,6 @@ header#top {
 	background: @bar-color;
 	background: url("/sitecore modules/Web/WeBlog/Themes/Akira/img/atlas-eye-detail.png") no-repeat right top, linear-gradient(to left, #000000, @bar-color);
 	// image from http://dj-corny.deviantart.com/art/Portal-2-CoreBot-Eye-178854113
-	// by dj-corny http://dj-corny.deviantart.com/ 
 	
 	a {
 		color: #eaedf4;
@@ -108,7 +107,24 @@ footer {
 article {
 	.thumbnail {
 		float: right;
+		margin: 0 0 2em 2em;
 	}
+	
+	.wb-comment-author {
+	    //margin-top: 0.75em;
+		color: @text-color-aux;
+		//font-size: 0.85em;
+	}
+	
+	.wb-datetime {
+		font-size: 0.9em;
+		float: right;
+		color: @text-color-aux;
+	}
+}
+
+.wb-comment-alternate {
+	background-color: #eeeeee;
 }
 
 .wb-comment-count {
@@ -138,21 +154,68 @@ article {
 	margin-left: 1em;
 }
 
+.wb-entry-categories li, .wb-entry-tags li {
+	display: inline;
+	
+	a {
+		text-decoration: underline;
+	}
+}
+
+.wb-entry-categories {
+	ul {
+		padding: 0;
+	}
+	
+	li {
+		margin-left: 1em;
+	}
+}
+
+.wb-entry-comments {
+	li {
+		padding: 0.5em;
+	}
+	
+	p {
+		margin: 0.25em 0;
+	}
+}
+
 .wb-entry-add-comment {
 	label {
 		display: inline-block;
 		width: 100px;
+		vertical-align: top;
 	}
 	
 	input, textarea {
-		width: 400px;
 		margin-bottom: 0.5em;
 	}
 	
-	.wb-captcha label {
-/*		display: inline-block;
-		width: 500px;*/
-		display: inline;
+	input {
+		width: 300px;
+	}
+	
+	textarea {
+		width: 600px;
+	}
+	
+	.wb-captcha {
+		label {
+	/*		display: inline-block;
+			width: 500px;*/
+			display: inline;
+			margin-bottom: 0.5em;
+		}
+		
+		img {
+			margin-bottom: 0.5em;
+		}
+		
+		input {
+			width: 250px;
+		}
 	}
 	
 	input[type='submit'] {
@@ -173,5 +236,11 @@ article {
 	aside {
 		display: block;
 		width: 100%;
+	}
+	
+	.wb-entry-add-comment {
+		textarea {
+			width: 300px;
+	}
 	}
 }

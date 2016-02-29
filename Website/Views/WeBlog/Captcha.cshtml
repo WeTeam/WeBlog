@@ -1,9 +1,12 @@
 ﻿@model Sitecore.Modules.WeBlog.Model.CaptchaRenderingModel
 
 <div class="wb-captcha">
-    <div class="wb-captchaLabel">Please confirm you are human by typing the text you see in this image</div>
-    <img src="@Model.ImageSource" />
-    <input type="hidden" name="captcha_challenge_field" value="@Model.ChallengeValue" />
-    <br />
-    <input type="text" name="captcha_response_field" value="" class="wb-captchaInput" />
+    <p>
+        <div class="wb-captchaLabel">Please confirm you are human by typing the text you see in this image</div>
+        <div class="blog-captcha-image">
+            <img src="@Model.ImageSource"/>
+            <input type="hidden" name="captcha_challenge_field" value="@Model.ChallengeValue" />
+        </div>
+        <input type="text" name="captcha_response_field" value="" class="wb-captchaInput" />
+    </p>
 </div>

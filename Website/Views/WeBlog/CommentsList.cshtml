@@ -16,7 +16,7 @@
                     <img src="@gravatarUrl" alt="@comment.Name.Text's gravatar" width="@Model.GravatarSizeNumeric" height="@Model.GravatarSizeNumeric" />
                 }
 
-                <a href="@comment.Website.Raw" class="wb-comment-name">
+                <a href="@comment.Website.Raw" class="wb-comment-author">
                     @Translator.Format("COMMENT_NAME", comment.Name.Text).ToHtmlString()
                 </a>
 

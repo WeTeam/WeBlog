@@ -16,7 +16,7 @@
                     { %>
                 <img src="<%# CommentsListCore.GetGravatarUrl(Item.Email.Text) %>" alt="<%#Item.Name.Text%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
-                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#Item.Website.Raw%>' CssClass="wb-comment-name">
+                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#Item.Website.Raw%>' CssClass="wb-comment-author">
                     <%#Translator.Format("COMMENT_NAME", Item.Name.Text) %>
                 </asp:HyperLink>
                 <% if (CurrentBlog.ShowEmailWithinComments.Checked)
@@ -39,7 +39,7 @@
                     { %>
                 <img src="<%# CommentsListCore.GetGravatarUrl(Item.Email.Text) %>" alt="<%#Item.Name.Raw%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
                 <% } %>
-                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#Item.Website.Raw%>' CssClass="wb-comment-name">
+                <asp:HyperLink ID="hyperlinkUsername" runat="server" NavigateUrl='<%#Item.Website.Raw%>' CssClass="wb-comment-author">
                     <%#Translator.Format("COMMENT_NAME", Item.Name.Text) %>
                 </asp:HyperLink>
                 <% if (CurrentBlog.ShowEmailWithinComments.Checked)
