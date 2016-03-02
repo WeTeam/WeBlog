@@ -80,6 +80,7 @@ footer {
 .wb-entry-list {
 	section {
 		margin-bottom: 2em;
+		clear: both;
 	}
 	
 	h2 {
@@ -111,9 +112,7 @@ article {
 	}
 	
 	.wb-comment-author {
-	    //margin-top: 0.75em;
 		color: @text-color-aux;
-		//font-size: 0.85em;
 	}
 	
 	.wb-datetime {
@@ -154,6 +153,14 @@ article {
 	margin-left: 1em;
 }
 
+.wb-entries li {
+	list-style: circle;
+}
+
+.wb-year-container {
+	margin-bottom: 1em;
+}
+
 .wb-entry-categories li, .wb-entry-tags li {
 	display: inline;
 	
@@ -163,12 +170,21 @@ article {
 }
 
 .wb-entry-categories {
+	h3 {
+		margin-top: 0.5em;
+		font-size: 1em;
+		font-weight: normal;
+		font-style: italic;
+		display: inline-block;
+	}
+	
 	ul {
 		padding: 0;
+		display: inline;
 	}
 	
 	li {
-		margin-left: 1em;
+		margin-left: 0.5em;
 	}
 }
 
@@ -203,8 +219,6 @@ article {
 	
 	.wb-captcha {
 		label {
-	/*		display: inline-block;
-			width: 500px;*/
 			display: inline;
 			margin-bottom: 0.5em;
 		}
@@ -241,6 +255,6 @@ article {
 	.wb-entry-add-comment {
 		textarea {
 			width: 300px;
-	}
+		}
 	}
 }

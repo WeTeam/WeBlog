@@ -18,5 +18,8 @@
   ],
   "dependencies": {
     "jquery": "^2.2.0"
+  },
+  "devDependencies": {
+    "jsurl": "^2.0.0"
   }
 }

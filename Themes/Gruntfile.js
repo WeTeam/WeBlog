@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 					expand: true,
 					flatten: true,
 					cwd: ".",
-					src: ["**/jquery/dist/jquery.js"],
+					src: ["**/jquery/dist/jquery.js", "**/jsurl/url.min.js"],
 					dest: "common\\lib"
 				}]
 			}

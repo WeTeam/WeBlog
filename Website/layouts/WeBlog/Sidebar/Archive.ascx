@@ -7,15 +7,15 @@
             <ul>
         </HeaderTemplate>
         <ItemTemplate>
-            <li>
-                <a class="wb-year <%# ExpandMonthsOnLoad ? "expanded" : "" %>" href="#"><%# Item %></a>
+            <li class="wb-year-container">
+                <a class="wb-year <%# ExpandMonthsOnLoad ? "expanded" : "" %>" href="javascript:void(0)"><%# Item %></a>
                 <asp:Repeater runat="server" ID="Months" DataSource="<%# GetMonths(Item) %>" OnItemDataBound="MonthDataBound" ItemType="System.Object">
                     <HeaderTemplate>
                         <ul id="month-<%# (Container.Parent.Parent as RepeaterItem).DataItem %>" class="wb-month <% if (!ExpandMonthsOnLoad) { %> collapsed <% } %>">
                     </HeaderTemplate>
                     <ItemTemplate>
                         <li>
-                            <a class="wb-month <%# ExpandPostsOnLoad ? "expanded" : "" %>" href="#"><%# GetFriendlyMonthName((int)Item) %> (<%# GetEntryCountForYearAndMonth((int)Item)%>)</a>
+                            <a class="wb-month <%# ExpandPostsOnLoad ? "expanded" : "" %>" href="javascript:void(0)"><%# GetFriendlyMonthName((int)Item) %> (<%# GetEntryCountForYearAndMonth((int)Item)%>)</a>
                             <asp:Repeater runat="server" ID="Entries" DataSource="<%# GetEntriesForYearAndMonth((int)Item) %>" ItemType="Sitecore.Modules.WeBlog.Data.Items.EntryItem">
                                 <HeaderTemplate>
                                     <ul id="entries-<%# (Container.Parent.Parent as RepeaterItem).DataItem %>" class="wb-entries <% if (!ExpandPostsOnLoad) { %> collapsed <% } %>">

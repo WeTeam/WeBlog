@@ -88,7 +88,7 @@ namespace Sitecore.Modules.WeBlog.Components
         {
             string tag = QueryString["tag"];
             string blogUrl = Links.LinkManager.GetItemUrl(Context.Item);
-            var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
+            var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayItemCountNumeric);
             if (tag != null)
             {
                 viewMoreHref += "&tag=" + HttpUtility.UrlEncode(tag);
