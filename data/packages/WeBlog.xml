@@ -42,7 +42,6 @@ settings.
       <Entries>
         <x-item>/bin/CookComputing.XmlRpcV2.dll</x-item>
         <x-item>/bin/AntiXSSLibrary.dll</x-item>
-        <x-item>/bin/RssToolkit.dll</x-item>
         <x-item>/bin/MSCaptcha.dll</x-item>
         <x-item>/bin/Recaptcha.dll</x-item>
         <x-item>/bin/Sitecore.Modules.WeBlog.dll</x-item>
@@ -152,7 +151,6 @@ settings.
     <xfiles>
       <Entries>
         <x-item>/App_Config/Include/WeBlog.config</x-item>
-        <x-item>/App_Config/Include/CustomItem.config</x-item>
         <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.config</x-item>
         <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
