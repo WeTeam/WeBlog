@@ -23,13 +23,6 @@ If deploying in a staged environment to a content delivery
 server, enable the App_Config\Include\WeBlog.delivery.config
 file.
 
-Item Buckets
-============
-If you'd prefer to use item buckets instead of the News 
-Mover module, enable the 
-App_Config\Include\WeBlog.ItemBuckets.config file and 
-update the WeBlog templates with appropriate bucket
-settings.
 </Readme>
       <Publisher>Sitecore Shared Source</Publisher>
       <PostStep />
