@@ -29,7 +29,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual void LoadComments(CommentItem addedComment = null)
         {
             // Comments enabled and exist?
-            if (CurrentEntry.DisableComments.Checked || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
+            var showCommentsList = CurrentBlog.EnableComments.Checked && !CurrentEntry.DisableComments.Checked;
+            if (!showCommentsList || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
             {
                 if (CommentList != null)
                 {

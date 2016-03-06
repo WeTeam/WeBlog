@@ -38,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual void LoadEntry()
         {
             // Comments enabled?
-            if (CurrentEntry.DisableComments.Checked)
+            if (!CurrentBlog.EnableComments.Checked || CurrentEntry.DisableComments.Checked)
             {
                 if (CommentsPanel != null)
                     CommentsPanel.Visible = false;
