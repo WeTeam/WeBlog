@@ -17,7 +17,7 @@
     </div>
     <footer id="bottom">
         <%-- Feel free to remove the following line from your implementation --%>
-        <span>
+        <span class="powered-by">
             Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a>
         </span>
         <%= ThemeItem.Credits %>

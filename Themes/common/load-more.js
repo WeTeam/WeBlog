@@ -1,34 +1,31 @@
 jQuery(function(){
 	jQuery('.wb-view-more', '.wb-view-more-wrapper').click(function () {
-            var viewMore = $(this);
+            var viewMore = jQuery(this);
             var loading = viewMore.next(".wb-loading-animation");
-            var entries = $("#wb-entry-list ul");
+			var entryWrapper = jQuery(".wb-entry-list");
+            var entries = jQuery("section", entryWrapper);
             viewMore.hide();
             loading.show();
 
-            //jQuery.url.setUrl(document.location);
             var params = {
-                startIndex: entries.children().length,
+                startIndex: entries.length,
                 blogAjax: 1
             };
 			
-			var currentUrl = new Url(document.location);
+			var currentUrl = new Url(document.location.href);
 			
             if (currentUrl.query.tag) {
                 params.tag = currentUrl.query.tag;
             }
-
-            //var url = $.url.setUrl(viewMore.attr("href")).attr("path");
 			
 			var href = new Url(viewMore.attr("href"));
 			var url = href.path
 			
-			//var url = viewMore.attr("href");
-            $.get(url, params, function (data) {
-                var posts = jQuery(data).find('ul li');
-                entries.append(posts);
+            jQuery.get(url, params, function (data) {
+				var posts = jQuery("<div/>").html(data).find(".wb-entry-list section");
+				jQuery(".wb-view-more-wrapper").before(posts);
                 loading.hide();
-                if (posts.length > 0)
+                if (posts.length)
                     viewMore.show();
             });
 			
