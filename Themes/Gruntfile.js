@@ -25,20 +25,23 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: "build",
 					src: ["**/*.*"],
-					dest: ""
+					dest: "",
+					timestamp: true
 				},
 				{
 					expand: true,
 					cwd: ".",
 					src: ["**/*.png", "**/*.gif", "**/*.js", "!node_modules/**/*.*", "!bower_components/**/*.*", "!Gruntfile.js"],
-					dest: ""
+					dest: "",
+					timestamp: true
 				},
 				{
 					expand: true,
 					flatten: true,
 					cwd: ".",
 					src: ["**/jquery/dist/jquery.js", "**/jsurl/url.min.js"],
-					dest: "common\\lib"
+					dest: "common\\lib",
+					timestamp: true
 				}]
 			}
 		}
