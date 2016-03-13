@@ -1,4 +1,4 @@
-﻿define(["sitecore"], function (Sitecore) {
+﻿define(["sitecore", "/-/speak/v1/ExperienceEditor/Sitecore.ExperienceEditor.js"], function (Sitecore) {
     Sitecore.Commands.NewCategory = {
         canExecute: function (context) {
             var key = "CanExecuteWeBlogCommands";

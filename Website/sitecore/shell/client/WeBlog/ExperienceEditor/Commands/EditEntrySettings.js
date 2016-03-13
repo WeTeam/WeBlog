@@ -1,4 +1,4 @@
-﻿define(["sitecore"], function (Sitecore) {
+﻿define(["sitecore", "/-/speak/v1/ExperienceEditor/Sitecore.ExperienceEditor.js"], function (Sitecore) {
     Sitecore.Commands.EditEntrySettings = {
         canExecute: function (context) {
             return context.app.canExecute("ExperienceEditor.WeBlog.IsEntryItem", context.currentContext);
