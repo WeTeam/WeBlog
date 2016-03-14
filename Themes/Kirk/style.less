@@ -1,7 +1,181 @@
-@color: #0000ff;
+@import "../common/comment form.less";
 
-h1 {
+@text-color: #444444;
+@text-color-highlight: #ffffff;
+@highlight1: rgb(31, 174, 255);
+@highlight2: rgb(70, 23, 180);
+@highlight3: rgb(255, 152, 29);
+@highlight4: rgb(25, 153, 0);
+@highlight5: rgb(193, 0, 79);
+@highlight6: rgb(170, 64, 255);
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: "Segoe UI", Verdana, Helvetica, sans-serif;
+	font-weight: 200;
+	font-size: 1.05em;
+	color: @text-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 100;
+}
+
+
+a {
+	text-decoration: none;
+	color: @text-color;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+header#top {
+	padding: 1.75em 0.25em 0.25em;
+	margin-bottom: 1em;
+	background-color: @highlight1;
+	font-size: 1.8em;
+	text-align: right;
+	max-width: 1200px;
+	margin: auto;
+	
 	a {
-		color: @color;
+		color: @text-color-highlight;
+		font-weight: 100;
+	}
+}
+
+.wb-wrapper {
+	margin: auto;
+	max-width: 1200px;
+	display: table;
+}
+
+main {
+	width: 100%;
+	display: table-cell;
+	padding-right: 2em;
+}
+
+aside {
+	min-width: 300px;
+	display: table-cell;
+}
+
+.wb-panel {
+	margin-bottom: 0.25em;
+	padding: 1em;
+	color: @text-color-highlight;
+	
+	a {
+		color: @text-color-highlight;
+	}
+	
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0;
+	}
+
+	ul {
+		padding: 0;
+	}
+	
+	li {
+		list-style: none;
+	}
+}
+
+.wb-categories {
+	background-color: @highlight4;
+}
+
+.wb-archive {
+	background-color: @highlight2;
+}
+
+.wb-feeds {
+	background-color: @highlight3;
+}	
+	
+.wb-recent-comments {
+	background-color: @highlight5;
+}
+	
+.wb-interesting-entries {
+	background-color: @highlight6;
+}
+
+.wb-tag-cloud {
+	background-color: @highlight3;
+	
+	.wb-weight1 {
+		font-size: 1.2em;
+	}
+	
+	.wb-weight2 {
+		font-size: 1em;
+	}
+	
+	.wb-weight3 {
+		font-size: 0.9em;
+	}
+	
+	.wb-weight4 {
+		font-size: 0.8em;
+	}
+	
+	.wb-weight5 {
+		font-size: 0.7em;
+	}
+}
+
+.wb-twitter {
+	background-color: @highlight4;
+}
+
+.wb-month li, .wb-entries li {
+	margin-left: 1em;
+}
+
+.wb-entries {
+	li {
+		list-style: circle;
+	}
+}
+
+.thumbnail {
+	float: right;
+	margin: 0 0 1em 1em;
+}
+
+.wb-read-more {
+	float: right;
+}
+
+.wb-view-more-wrapper {
+	margin-top: 2em;
+	font-size: 1.2em;
+}
+
+footer#bottom {
+	margin-top: 2em;
+}
+
+@media all and (max-width: 900px) {
+	.wb-wrapper {
+		display: block;
+	}
+	
+	main {
+		display: block;
+		width: 100%;
+	}
+	
+	aside {
+		display: block;
+		width: 100%;
 	}
 }
