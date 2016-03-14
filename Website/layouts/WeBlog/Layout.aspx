@@ -10,6 +10,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <wb:Syndication runat="server" Cacheable="true" VaryByData="true" />
         <wb:RsdIncludes runat="server" Cacheable="true" VaryByData="true" />
+        <!-- start: deprecated. The following control is deprecated and will be removed in a future release. -->
+        <wb:ThemeIncludes runat="server" Cacheable="true" VaryByData="true" />
+        <!-- end: deprecated -->
         <sc:Sublayout runat="server" RenderingID="{1B45CBD5-C8B4-44E9-827D-90EA75DF84D1}" Path="/layouts/WeBlog/ThemeStylehseets.ascx" />
     </head>
     <body>
