@@ -8,11 +8,48 @@ using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using System.Xml;
 using System;
+using Sitecore.Resources.Media;
 
 namespace Sitecore.Modules.WeBlog.Import
 {
     public static class WpImportManager
     {
+        public static List<WpPost> Import(ID fileLocation, bool includeComments, bool includeCategories, bool includeTags)
+        {
+            Database master = Configuration.Factory.GetDatabase("master");
+            Item sampleItem = master.GetItem(fileLocation);
+            MediaItem sampleMedia = new MediaItem(sampleItem);
+
+            XmlDocument xmdDoc = new XmlDocument();
+            xmdDoc.Load(MediaManager.GetMedia(sampleMedia).GetStream().Stream);
+
+            using (var nodeReader = new XmlNodeReader(xmdDoc))
+            {
+                nodeReader.MoveToContent();
+                var xDocument = XDocument.Load(nodeReader);
+
+                var posts = (from item in xDocument.Descendants("item")
+                             select new WpPost(item, includeComments, includeCategories, includeTags)).ToList();
+                return posts;
+            }
+       
+        }
+
+        public static BlogHomeItem CreateBlogRoot(Item root, string name, string email)
+        {
+            //TDOO: Move Content Database to db helpers
+            var contentDatabase = ContentHelper.GetContentDatabase();
+
+            BranchItem newBlog = contentDatabase.Branches.GetMaster(Settings.BlogBranchID);
+            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), newBlog);
+
+            blogItem.BeginEdit();
+            blogItem.Email.Field.Value = email;
+            blogItem.EndEdit();
+
+            return blogItem;
+        }
+
         /// <summary>
         /// Imports the specified file.
         /// </summary>
@@ -70,7 +107,7 @@ namespace Sitecore.Modules.WeBlog.Import
                         var categoryItem = ManagerFactory.CategoryManagerInstance.Add(categoryName, blogItem);
                         categorieItems.Add(categoryItem.ID.ToString());
                     }
-                 
+
                     if (categorieItems.Count > 0)
                     {
                         entry.Category.Field.Value = string.Join("|", categorieItems.ToArray());
