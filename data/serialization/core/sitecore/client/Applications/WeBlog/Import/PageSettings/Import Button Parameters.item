@@ -1,0 +1,58 @@
+----item----
+version: 1
+id: {0FF50DAD-0805-4A86-9E93-A23321037AE4}
+database: core
+path: /sitecore/client/Applications/WeBlog/Import/PageSettings/Import Button Parameters
+parent: {A0F0F406-9E6F-4E4C-B045-DB223F1116EC}
+name: Import Button Parameters
+master: {00000000-0000-0000-0000-000000000000}
+template: {8A9F4991-322D-4FA3-B40B-41B1C715C34B}
+templatekey: Button Parameters
+
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+100
+----version----
+language: en
+version: 1
+revision: b52eba4f-137a-47db-90b9-56e673a6ff58
+
+----field----
+field: {99A761CF-5262-4D10-B53E-4CD9E79C232D}
+name: Text
+key: text
+content-length: 6
+
+Import
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160315T200134Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+b52eba4f-137a-47db-90b9-56e673a6ff58
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160316T173135Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

@@ -579,6 +579,7 @@
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sitecore\shell\client\Applications\WeBlog\Import.js" />
     <Content Include="Views\WeBlog\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
