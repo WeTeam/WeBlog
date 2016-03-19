@@ -33,7 +33,6 @@
                     }
                     if (e.IsDone === false) {
                         setTimeout(function (that) {
-                            console.log("22");
                             that.updateProgress(that);
                         }, 200, that);
                     } else {
