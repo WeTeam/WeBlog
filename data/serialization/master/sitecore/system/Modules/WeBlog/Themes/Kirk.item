@@ -12,15 +12,15 @@ templatekey: Theme
 ----version----
 language: en
 version: 1
-revision: a73537a8-7d1b-455a-87b1-a8f6e30998d6
+revision: 956136c7-be83-4095-ad5d-7a5389b57d94
 
 ----field----
 field: {A22948D6-52A2-402D-ABE7-21D11E5A6B36}
 name: Credit Markup
 key: credit markup
-content-length: 0
+content-length: 334
 
-
+<p class="credits">RSS Icon made by <a href="http://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -34,14 +34,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a73537a8-7d1b-455a-87b1-a8f6e30998d6
+956136c7-be83-4095-ad5d-7a5389b57d94
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 35
 
-20160314T105232:635935495525452159Z
+20160320T112245:635940697658655662Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

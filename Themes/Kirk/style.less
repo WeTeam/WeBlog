@@ -1,5 +1,3 @@
-@import "../common/comment form.less";
-
 @text-color: #444444;
 @text-color-highlight: #ffffff;
 @highlight1: rgb(31, 174, 255);
@@ -8,6 +6,7 @@
 @highlight4: rgb(25, 153, 0);
 @highlight5: rgb(193, 0, 79);
 @highlight6: rgb(170, 64, 255);
+@shaded: #dddddd;
 
 * {
 	box-sizing: border-box;
@@ -89,7 +88,7 @@ aside {
 }
 
 .wb-categories {
-	background-color: @highlight4;
+	background-color: @highlight3;
 }
 
 .wb-archive {
@@ -97,11 +96,21 @@ aside {
 }
 
 .wb-feeds {
-	background-color: @highlight3;
+	background-color: @highlight4;
+	
+	.wb-feed-text {
+		padding-left: 21px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/connection.png") left center no-repeat;
+		// Icon from http://www.flaticon.com/free-icon/rss-symbol_25234
+	}
 }	
 	
 .wb-recent-comments {
 	background-color: @highlight5;
+	
+	.wb-comment-content {
+		margin-bottom: 0.5em;
+	}
 }
 	
 .wb-interesting-entries {
@@ -112,11 +121,11 @@ aside {
 	background-color: @highlight3;
 	
 	.wb-weight1 {
-		font-size: 1.2em;
+		font-size: 1.3em;
 	}
 	
 	.wb-weight2 {
-		font-size: 1em;
+		font-size: 1.1em;
 	}
 	
 	.wb-weight3 {
@@ -151,6 +160,11 @@ aside {
 	margin: 0 0 1em 1em;
 }
 
+.wb-details {
+	font-size: 0.9em;
+	font-style: italic;
+}
+
 .wb-read-more {
 	float: right;
 }
@@ -160,8 +174,117 @@ aside {
 	font-size: 1.2em;
 }
 
+.wb-loading-animation {
+	padding-right: 30px;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/ripple.gif") right center no-repeat;	
+	// image created at http://loading.io/
+}
+
 footer#bottom {
 	margin-top: 2em;
+	padding: 1em;
+	background-color: @highlight1;
+	color: @text-color-highlight;
+	font-size: 0.8em;
+	
+	a {
+		color: @text-color-highlight;
+	}
+}
+
+.wb-entry-categories, .wb-entry-tags {
+	h3 {
+		margin: 0.5em 0 0 0;
+		font-size: 1em;
+		display: inline-block;
+	}
+	
+	ul {
+		padding: 0;
+		display: inline;
+	}
+	
+	li {
+		margin-left: 0.5em;
+		padding: 0 0.25em;
+		display: inline;
+		background-color: @shaded;
+	}
+}
+
+.wb-entry-tags {
+	padding: 0;
+	color: @text-color;
+	
+	a {
+		color: @text-color;
+	}
+}
+
+.wb-entry-add-comment {
+	color: @text-color;
+	
+	p {
+		margin: 0 0 0.5em 0;
+	}
+	
+	label {
+		display: inline-block;
+		width: 100%;
+	}
+	
+	input, textarea {
+		margin-bottom: 0.5em;
+	}
+	
+	input {
+		width: 300px;
+	}
+	
+	textarea {
+		width: 600px;
+	}
+	
+	.wb-captcha {
+		label {
+			display: inline;
+			margin-bottom: 0.5em;
+		}
+		
+		img {
+			margin-bottom: 0.5em;
+		}
+		
+		input {
+			width: 250px;
+		}
+	}
+	
+	input[type='submit'] {
+		width: 100px;
+	}
+}
+
+.wb-entry-comments {
+	color: @text-color;
+	
+	li {
+		padding: 0.5em;
+	}
+	
+	.wb-comment-alternate {
+		background-color: #eeeeee;
+	}
+	
+	.wb-comment-author {
+		color: @highlight1;
+	}
+	
+	.wb-datetime {
+		float: right;
+		color: lighten(@text-color, 30%);
+		font-style: italic;
+	}
 }
 
 @media all and (max-width: 900px) {
@@ -177,5 +300,11 @@ footer#bottom {
 	aside {
 		display: block;
 		width: 100%;
+	}
+	
+	.wb-entry-add-comment {
+		textarea {
+			width: 300px;
+		}
 	}
 }
