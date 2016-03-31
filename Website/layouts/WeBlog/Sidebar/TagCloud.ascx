@@ -5,9 +5,7 @@
     <div class="wb-entries">
         <asp:Repeater runat="server" ID="TagList" ItemType="System.Collections.Generic.KeyValuePair`2[System.String,System.Int32]">
             <ItemTemplate>
-                <a class="wb-weight<%# TagCloudCore.GetTagWeightClass(Item.Value) %>" href="<%# TagCloudCore.GetTagUrl(Item.Key) %>">
-                    <%# Item.Key %>
-                </a>
+                <a class="wb-weight<%# TagCloudCore.GetTagWeightClass(Item.Value) %>" href="<%# TagCloudCore.GetTagUrl(Item.Key) %>"><%# Item.Key %></a>
             </ItemTemplate>
         </asp:Repeater>
     </div>

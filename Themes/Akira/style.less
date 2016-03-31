@@ -19,7 +19,6 @@ body {
 }
 
 a {
-	text-decoration: none;
 	color: @text-color;
 }
 
@@ -30,6 +29,16 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6 {
 	text-transform: uppercase;
+}
+
+h1, h2, header {
+	a {
+		text-decoration: none;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
 }
 
 header#top {
@@ -78,7 +87,7 @@ footer {
 
 .thumbnail {
 	float: right;
-	margin: 3em 0 0 2em;
+	margin: 0 0 2em 2em;
 }
 
 .wb-entry-list {
@@ -88,12 +97,11 @@ footer {
 	}
 	
 	h2 {
-		margin: 0;
+		margin-bottom: 0.3em;
 	}
 }
 
 .wb-details {
-	margin-top: 0.75em;
 	color: @text-color-aux;
 	font-size: 0.85em;
 }
@@ -159,16 +167,39 @@ article {
 	// image from http://www.flaticon.com/free-icon/rss-symbol_25234
 }
 
-.wb-month li, .wb-entries li {
-	margin-left: 1em;
+.wb-recent-comments {
+	.wb-details {
+		margin-top: 0.75em;
+	}
 }
 
-.wb-entries li {
-	list-style: circle;
-}
+.wb-archive {
+	.wb-month li, .wb-entries li {
+		margin-left: 1em;
+	}
 
-.wb-year-container {
-	margin-bottom: 1em;
+	.wb-entries {
+		padding-left: 21px;
+		margin-bottom: 0.5em;
+		
+		li {
+			list-style: circle;
+		}
+	}
+
+	.wb-year-container {
+		margin-bottom: 1em;
+	}
+	
+	a.collapsed {
+		padding-left: 16px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Akira/img/archive-expand.png") left center no-repeat;
+	}
+	
+	a.expanded {
+		padding-left: 16px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Akira/img/archive-collapse.png") left center no-repeat;
+	}
 }
 
 .wb-entry-categories li, .wb-entry-tags li {
@@ -198,6 +229,10 @@ article {
 	
 	.wb-weight5 {
 		font-size: 0.7em;
+	}
+	
+	a {
+		margin-right: 0.25em;
 	}
 }
 

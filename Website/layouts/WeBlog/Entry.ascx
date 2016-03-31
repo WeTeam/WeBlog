@@ -4,9 +4,6 @@
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 
 <article>
-    <div class="thumbnail">
-        <sc:Image runat="server" ID="EntryImage" Field="Image" CssClass="wb-image" />
-    </div>
     <% if (ShowEntryTitle) { %>
         <h1>
             <% if (!string.IsNullOrEmpty(CurrentEntry["title"]) || Sitecore.Context.PageMode.IsPageEditor) { %>
@@ -16,6 +13,9 @@
             <% } %>
         </h1>
     <% } %>
+    <div class="thumbnail">
+        <sc:Image runat="server" ID="EntryImage" Field="Image" CssClass="wb-image" />
+    </div>
     <% if (ShowEntryMetadata) { %>
         <div class="wb-details">
             <% if(Sitecore.Context.PageMode.IsPageEditor) { %>

@@ -16,8 +16,12 @@ html {
 }
 
 a {
-	text-decoration: none;
 	color: @text-color;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: lighten(@text-color, 50%);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -25,6 +29,16 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: Georgia, serif;
 	width: 100%;
 	text-align: center;
+}
+
+h1, h2, header {
+	a {
+		text-decoration: none;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
 }
 
 h1 {
@@ -115,7 +129,7 @@ footer {
 
 .thumbnail {
 	float: right;
-	margin: 3em 0 1em 1em;
+	margin: 0 0 1em 1em;
 	
 	img {
 		border: solid 2px lighten(@text-color, 25%);
@@ -192,6 +206,31 @@ aside .wb-panel {
 	}
 }
 
+.wb-archive {
+	.wb-month li, .wb-entries li {
+		margin-left: 1em;
+	}
+
+	.wb-entries {
+		padding-left: 19px;
+		margin-bottom: 0.5em;
+	}
+
+	.wb-year-container {
+		margin-bottom: 1em;
+	}
+	
+	a.collapsed {
+		padding-left: 25px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Gryphon/img/archive-expand.png") left center no-repeat;
+	}
+	
+	a.expanded {
+		padding-left: 25px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Gryphon/img/archive-collapse.png") left center no-repeat;
+	}
+}
+
 .wb-feed-text {
 	padding-left: 21px;
 	background: url("/sitecore modules/Web/WeBlog/Themes/Gryphon/img/rss2.png") left center no-repeat;
@@ -239,6 +278,10 @@ aside .wb-facebook {
 	
 	.wb-weight5 {
 		font-size: 0.8em;
+	}
+	
+	a {
+		margin-right: 0.25em;
 	}
 }
 
