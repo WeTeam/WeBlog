@@ -25,12 +25,22 @@ h1, h2, h3, h4, h5, h6 {
 
 
 a {
-	text-decoration: none;
 	color: @text-color;
 }
 
 a:hover {
 	text-decoration: underline;
+	color: lighten(@text-color, 30%);
+}
+
+h1, h2, header {
+	a {
+		text-decoration: none;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
 }
 
 header#top {
@@ -74,6 +84,10 @@ aside {
 		color: @text-color-highlight;
 	}
 	
+	a:hover {
+		color: @highlight1;
+	}
+	
 	h1, h2, h3, h4, h5, h6 {
 		margin: 0;
 	}
@@ -93,6 +107,33 @@ aside {
 
 .wb-archive {
 	background-color: @highlight2;
+	
+	.wb-month li, .wb-entries li {
+		margin-left: 1em;
+	}
+
+	.wb-entries {
+		padding-left: 21px;
+		margin-bottom: 0.5em;
+		
+		li {
+			list-style: circle;
+		}
+	}
+	
+	.wb-year-container {
+		margin-bottom: 1em;
+	}
+	
+	a.collapsed {
+		padding-left: 16px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/archive-expand.png") left center no-repeat;
+	}
+	
+	a.expanded {
+		padding-left: 16px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/archive-collapse.png") left center no-repeat;
+	}
 }
 
 .wb-feeds {
@@ -139,20 +180,14 @@ aside {
 	.wb-weight5 {
 		font-size: 0.7em;
 	}
+	
+	a {
+		margin-right: 0.25em;
+	}
 }
 
 .wb-twitter {
 	background-color: @highlight4;
-}
-
-.wb-month li, .wb-entries li {
-	margin-left: 1em;
-}
-
-.wb-entries {
-	li {
-		list-style: circle;
-	}
 }
 
 .thumbnail {
@@ -163,6 +198,17 @@ aside {
 .wb-details {
 	font-size: 0.9em;
 	font-style: italic;
+}
+
+.wb-entry-list {
+	section {
+		margin-bottom: 2em;
+		clear: both;
+	}
+	
+	h2 {
+		margin-bottom: 0.25em;
+	}
 }
 
 .wb-read-more {
