@@ -20,13 +20,13 @@ content-length: 38
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
 key: __icon
-content-length: 22
+content-length: 35
 
-Office/32x32/star2.png
+Imaging/32x32/paint_brush_small.png
 ----version----
 language: en
 version: 1
-revision: 0c28e080-a783-4a99-883e-ac8d9c5da51e
+revision: 5449e32e-8f9f-45b1-9afe-6b0deed13f29
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -48,14 +48,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-0c28e080-a783-4a99-883e-ac8d9c5da51e
+5449e32e-8f9f-45b1-9afe-6b0deed13f29
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 35
 
-20160101T104028:635872416282170804Z
+20160401T120743:635951092633659846Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
