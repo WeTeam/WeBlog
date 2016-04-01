@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Sitecore.Modules.WeBlog.Globalization;
 
 namespace Sitecore.Modules.WeBlog.Layouts
 {
-    public partial class Captcha : System.Web.UI.UserControl
+    public partial class Captcha : UserControl
     {
         protected void uxCaptchaValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
@@ -22,6 +23,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
                     Page.Response.Redirect(Page.Request.Url.ToString(), true);
                 }
             }
+        }
+
+        protected virtual void Page_Load(object sender, EventArgs e)
+        {
+            lblCaptcha.Text = Translator.Render("CAPTCHA");
         }
 
         protected void uxCaptchaCode_RefreshButtonClick(object sender, ImageClickEventArgs arg)
