@@ -28,7 +28,7 @@ namespace Sitecore.Modules.WeBlog.Components
             {
                 try
                 {
-                    return (InterestingEntriesAlgorithm)Enum.Parse(typeof(InterestingEntriesAlgorithm), mode);
+                    return (InterestingEntriesAlgorithm)Enum.Parse(typeof(InterestingEntriesAlgorithm), mode, true);
                 }
                 catch (ArgumentException ex)
                 {

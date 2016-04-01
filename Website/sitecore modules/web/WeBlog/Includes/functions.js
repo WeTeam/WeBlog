@@ -30,6 +30,10 @@
                 params.tag = $.url.param("tag");
             }
 
+            if ($.url.param("sort") != null) {
+                params.sort = $.url.param("sort");
+            }
+
             var url = $.url.setUrl(viewMore.attr("href")).attr("path");
             $.get(url, params, function (data) {
                 var posts = jQuery(data).find('ul li');
