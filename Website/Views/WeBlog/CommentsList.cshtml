@@ -9,11 +9,12 @@
         @{int i = 0;}
         @foreach (var comment in @Model.Comments)
         {
-            <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")">
+            <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")" id="comment-@comment.ID.ToShortID()">
+                <a href="#comment-@comment.ID.ToShortID()">#</a>
                 @if (Model.EnableGravatar)
                 {
                     var gravatarUrl = Model.GetGravatarUrl(comment.Email.Raw);
-                    <img src="@gravatarUrl" alt="@comment.Name.Text's gravatar" width="@Model.GravatarSizeNumeric" height="@Model.GravatarSizeNumeric" />
+                    <img src="@gravatarUrl" alt="@comment.Name.Text's gravatar" width="@Model.GravatarSizeNumeric" height="@Model.GravatarSizeNumeric"/>
                 }
 
                 <a href="@comment.Website.Raw" class="wb-comment-name">
