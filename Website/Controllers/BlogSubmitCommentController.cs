@@ -19,7 +19,8 @@ namespace Sitecore.Modules.WeBlog.Controllers
 
         public ActionResult Index()
         {
-            if (CurrentEntry.DisableComments.Checked)
+            var currentBlog = Managers.ManagerFactory.BlogManagerInstance.GetCurrentBlog(CurrentEntry);
+            if (!currentBlog.EnableComments.Checked || CurrentEntry.DisableComments.Checked)
             {
                 return null;
             }
