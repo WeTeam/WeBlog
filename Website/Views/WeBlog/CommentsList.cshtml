@@ -2,14 +2,16 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Model.CommentsList
 
-<div ID="CommentList" class="wb-entry-comments wb-panel">
+@if (Model.ShowCommentsList)
+{
+    <div id="CommentList" class="wb-entry-comments wb-panel">
     <h3>@Translator.Render("COMMENTS").ToHtmlString()</h3>
-
     <ul>
         @{int i = 0;}
         @foreach (var comment in @Model.Comments)
         {
-            <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")">
+                <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")" id="comment-@comment.ID.ToShortID()">
+                    <a href="#comment-@comment.ID.ToShortID()">#</a>
                 @if (Model.EnableGravatar)
                 {
                     var gravatarUrl = Model.GetGravatarUrl(comment.Email.Raw);
@@ -37,3 +39,4 @@
         }
     </ul>
 </div>
+}

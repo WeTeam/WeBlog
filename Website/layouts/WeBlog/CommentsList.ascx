@@ -10,8 +10,9 @@
                 <asp:PlaceHolder ID="itemPlaceholder" runat="server"></asp:PlaceHolder>
             </ul>
         </LayoutTemplate>
-        <ItemTemplate>
-            <li>
+        <ItemTemplate>            
+            <li id="comment-<%#Item.ID.ToShortID()%>">
+                <a href="#comment-<%#Item.ID.ToShortID()%>">#</a>
                 <% if (CurrentBlog.EnableGravatar.Checked)
                     { %>
                 <img src="<%# CommentsListCore.GetGravatarUrl(Item.Email.Text) %>" alt="<%#Item.Name.Text%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />
@@ -33,8 +34,9 @@
                 </p>
             </li>
         </ItemTemplate>
-        <AlternatingItemTemplate>
-            <li class="wb-comment-alternate">
+        <AlternatingItemTemplate>            
+            <li class="wb-comment-alternate" id="comment-<%#Item.ID.ToShortID()%>">
+                <a href="#comment-<%#Item.ID.ToShortID()%>">#</a>
                 <% if (CurrentBlog.EnableGravatar.Checked)
                     { %>
                 <img src="<%# CommentsListCore.GetGravatarUrl(Item.Email.Text) %>" alt="<%#Item.Name.Raw%>'s gravatar" width="<%= CurrentBlog.GravatarSizeNumeric %>" height="<%= CurrentBlog.GravatarSizeNumeric %>" />

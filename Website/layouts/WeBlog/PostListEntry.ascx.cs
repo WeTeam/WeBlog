@@ -30,5 +30,10 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
             return args.Summary;
         }
+
+        protected bool ShowComments(EntryItem entryItem)
+        {
+            return CurrentBlog.EnableComments.Checked && !entryItem.DisableComments.Checked;
+        }
     }
 }

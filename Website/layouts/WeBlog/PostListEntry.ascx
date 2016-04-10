@@ -4,9 +4,9 @@
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 <section>
     <header>
-        <h2>
-            <a href="<%#(((ListViewDataItem)Container).DataItem as EntryItem).Url%>"><%#(((ListViewDataItem)Container).DataItem as EntryItem).DisplayTitle %></a>
-        </h2>
+            <h2>
+                <a href="<%#(((ListViewDataItem)Container).DataItem as EntryItem).Url%>"><%#(((ListViewDataItem)Container).DataItem as EntryItem).DisplayTitle %></a>
+            </h2>
         <div class="thumbnail">
             <sc:Image runat="server" ID="EntryImage" Item="<%# (((ListViewDataItem)Container).DataItem as EntryItem) %>" Field="Thumbnail Image" CssClass="wb-image" />
         </div>
@@ -18,9 +18,9 @@
         <div class="summary">
             <%# GetSummary(((ListViewDataItem)Container).DataItem as EntryItem)%>
         </div>
-        <span class="wb-comment-count" runat="server" Visible="<%# (((ListViewDataItem)Container).DataItem as EntryItem).CommentCount > 0 || !(((ListViewDataItem)Container).DataItem as EntryItem).DisableComments.Checked %>">
-            <%#Translator.Render("COMMENTS")%> (<%#(((ListViewDataItem)Container).DataItem as EntryItem).CommentCount%>)
-        </span>
+        <span class="wb-comment-count" runat="server" Visible="<%# ShowComments(((ListViewDataItem)Container).DataItem as EntryItem) %>">
+                <%#Translator.Render("COMMENTS")%> (<%#(((ListViewDataItem)Container).DataItem as EntryItem).CommentCount%>)
+            </span>
         <asp:HyperLink ID="BlogPostLink" runat="server" CssClass="wb-read-more" NavigateUrl='<%# Eval("Url") %>'><%#Translator.Text("READ_MORE")%></asp:HyperLink>
-    </div>
+        </div>
 </section>

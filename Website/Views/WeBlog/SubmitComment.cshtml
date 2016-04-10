@@ -13,23 +13,23 @@
         { Html.RenderPartial("~/Views/WeBlog/SubmitComment/MessagePanel.cshtml"); }
 
         <p>
-            @Html.ValidationMessageFor(model => model.UserName, "*")
             @Html.LabelFor(m => m.UserName, Translator.Render("NAME"))
             @Html.TextBoxFor(m => m.UserName, new {@class = "wb-textbox", width = 220})
+            @Html.ValidationMessageFor(model => model.UserName, "*")
         </p>
         <p>
-            @Html.ValidationMessageFor(model => model.UserName, "*")
             @Html.LabelFor(m => m.Email, Translator.Render("EMAIL"))
             @Html.TextBoxFor(m => m.Email, new { @class = "wb-textbox", width = 220 })
+            @Html.ValidationMessageFor(model => model.UserName, "*")
         </p>
         <p>
             @Html.LabelFor(m => m.Website, Translator.Render("WEBSITE"))
             @Html.TextBoxFor(m => m.Website, new {@class = "wb-textbox", width = 220})
         </p>
-        <p>
-            @Html.ValidationMessageFor(model => model.UserName, "*")
+        <p>            
             @Html.LabelFor(m => m.Comment, Translator.Render("COMMENT"))
             @Html.TextAreaFor(m => m.Comment, new { cols = "60", rows = "10" })
+            @Html.ValidationMessageFor(model => model.UserName, "*")
         </p>
         <p class="wb-comment-form-wrapper">
             @Html.Sitecore().Placeholder("weblog-comment-form")

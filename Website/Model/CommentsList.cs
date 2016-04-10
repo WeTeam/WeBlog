@@ -12,6 +12,7 @@ namespace Sitecore.Modules.WeBlog.Model
         public bool EnableGravatar { get; set; }
         public int GravatarSizeNumeric { get; set; }
         public bool ShowEmailWithinComments { get; set; }
+        public bool ShowCommentsList { get; set; }
         public Func<string, string> GetGravatarUrl { get; set; }
 
         protected ICommentsListCore CommentsListCore { get; set; }
@@ -27,7 +28,8 @@ namespace Sitecore.Modules.WeBlog.Model
         public override void Initialize(Rendering rendering)
         {
             base.Initialize(rendering);
-            if (CurrentEntry.DisableComments.Checked || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
+            ShowCommentsList = CurrentBlog.EnableComments.Checked && !CurrentEntry.DisableComments.Checked;
+            if (!ShowCommentsList || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
             {
                 return;
             }
