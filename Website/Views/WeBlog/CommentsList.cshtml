@@ -4,14 +4,14 @@
 
 @if (Model.ShowCommentsList)
 {
-    <div ID="CommentList" class="wb-entry-comments wb-panel">
+    <div id="CommentList" class="wb-entry-comments wb-panel">
         <h3>@Translator.Render("COMMENTS").ToHtmlString()</h3>
-
         <ul>
             @{int i = 0;}
             @foreach (var comment in @Model.Comments)
             {
-                <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")">
+                <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")" id="comment-@comment.ID.ToShortID()">
+                    <a href="#comment-@comment.ID.ToShortID()">#</a>
                     @if (Model.EnableGravatar)
                     {
                         var gravatarUrl = Model.GetGravatarUrl(comment.Email.Raw);

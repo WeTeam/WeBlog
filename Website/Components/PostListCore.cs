@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -6,6 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
@@ -69,13 +71,27 @@ namespace Sitecore.Modules.WeBlog.Components
 
             IEnumerable<EntryItem> entries;
             string tag = QueryString["tag"];
-            if (!string.IsNullOrEmpty(tag))
+            string sort = QueryString["sort"];
+            if (!String.IsNullOrEmpty(tag))
             {
                 entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(tag);
             }
             else if (Context.Item.TemplateIsOrBasedOn(categoryTemplate))
             {
                 entries = ManagerFactory.EntryManagerInstance.GetBlogEntryByCategorie(CurrentBlog.ID, Context.Item.Name);
+            }
+            else if (!String.IsNullOrEmpty(sort))
+            {
+                var algorithm = InterestingEntriesCore.GetAlgororithmFromString(sort, InterestingEntriesAlgorithm.Custom);
+                if (algorithm != InterestingEntriesAlgorithm.Custom)
+                {
+                    var core = new InterestingEntriesCore(ManagerFactory.EntryManagerInstance, algorithm);
+                    entries = core.GetEntries(CurrentBlog, int.MaxValue);
+                }
+                else
+                {
+                    entries = new EntryItem[0];
+                }
             }
             else
             {
@@ -87,11 +103,16 @@ namespace Sitecore.Modules.WeBlog.Components
         protected virtual string BuildViewMoreHref()
         {
             string tag = QueryString["tag"];
+            string sort = QueryString["sort"];
             string blogUrl = Links.LinkManager.GetItemUrl(Context.Item);
             var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
             if (tag != null)
             {
                 viewMoreHref += "&tag=" + HttpUtility.UrlEncode(tag);
+            }
+            if (sort != null)
+            {
+                viewMoreHref += "&sort=" + HttpUtility.UrlEncode(sort);
             }
             return viewMoreHref;
         }
