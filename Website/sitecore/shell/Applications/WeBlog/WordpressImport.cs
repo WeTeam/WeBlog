@@ -7,6 +7,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Import.Providers;
 using Sitecore.Shell.Applications.Install;
 using Sitecore.Shell.Applications.Install.Dialogs;
 using Sitecore.StringExtensions;
@@ -123,24 +124,35 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 
         private void ImportBlog()
         {
+            var options = new WpImportOptions
+            {
+                IncludeComments = ImportComments.Checked,
+                IncludeCategories = ImportCategories.Checked,
+                IncludeTags = ImportTags.Checked
+            };
+            string fileLocation = String.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
             LogMessage("Reading import file");
-            string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
-            List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
+            var importManager = new WpImportManager(db, new FileBasedProvider(fileLocation), options);
 
             LogMessage("Creating blog");
-
-
             Item root = db.GetItem(litSummaryPath.Text);
-            var blogItem = WpImportManager.CreateBlogRoot(root, litSettingsName.Value, litSettingsEmail.Value);
+            if (root != null)
+            {
+                var blogItem = importManager.CreateBlogRoot(root, litSettingsName.Value, litSettingsEmail.Value);
 
-            LogMessage("Importing posts");
-            LogTotal(listWordpressPosts.Count);
+                LogMessage("Importing posts");
+                LogTotal(importManager.Posts.Count);
 
-            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db, (itemName, count) =>
-                                                                              {
-                                                                                  LogMessage("Importing entry " + itemName);
-                                                                                  LogProgress(count);
-                                                                              });
+                importManager.ImportPosts(blogItem, (itemName, count) =>
+                {
+                    LogMessage("Importing entry " + itemName);
+                    LogProgress(count);
+                });
+            }
+            else
+            {
+                LogMessage(String.Format("Parent item for blog root could not be found ({0})", litSummaryPath.Text));
+            }
         }
 
         protected void CheckStatus()

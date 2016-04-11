@@ -1,46 +1,36 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
-using System.Xml;
 using System;
-using Sitecore.Resources.Media;
+using Sitecore.Modules.WeBlog.Import.Providers;
 
 namespace Sitecore.Modules.WeBlog.Import
 {
-    public static class WpImportManager
+    public class WpImportManager
     {
-        public static List<WpPost> Import(ID fileLocation, bool includeComments, bool includeCategories, bool includeTags)
+        private readonly Database _db;
+        private readonly IWpPostProvider _wpPostProvider;
+        private readonly WpImportOptions _options;
+        private List<WpPost> _posts;
+
+        public List<WpPost> Posts
         {
-            Database master = Configuration.Factory.GetDatabase("master");
-            Item sampleItem = master.GetItem(fileLocation);
-            MediaItem sampleMedia = new MediaItem(sampleItem);
-
-            XmlDocument xmdDoc = new XmlDocument();
-            xmdDoc.Load(MediaManager.GetMedia(sampleMedia).GetStream().Stream);
-
-            using (var nodeReader = new XmlNodeReader(xmdDoc))
-            {
-                nodeReader.MoveToContent();
-                var xDocument = XDocument.Load(nodeReader);
-
-                var posts = (from item in xDocument.Descendants("item")
-                             select new WpPost(item, includeComments, includeCategories, includeTags)).ToList();
-                return posts;
-            }
-       
+            get { return _posts ?? (_posts = _wpPostProvider.GetPosts(_options)); }
         }
 
-        public static BlogHomeItem CreateBlogRoot(Item root, string name, string email)
+        public WpImportManager(Database db, IWpPostProvider wpPostProvider, WpImportOptions options)
         {
-            //TDOO: Move Content Database to db helpers
-            var contentDatabase = ContentHelper.GetContentDatabase();
+            _db = db;
+            _wpPostProvider = wpPostProvider;
+            _options = options;
+        }
 
-            BranchItem newBlog = contentDatabase.Branches.GetMaster(Settings.BlogBranchID);
+        public BlogHomeItem CreateBlogRoot(Item root, string name, string email)
+        {
+            BranchItem newBlog = _db.Branches.GetMaster(Settings.BlogBranchID);
             BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), newBlog);
 
             blogItem.BeginEdit();
@@ -50,38 +40,14 @@ namespace Sitecore.Modules.WeBlog.Import
             return blogItem;
         }
 
-        /// <summary>
-        /// Imports the specified file.
-        /// </summary>
-        /// <param name="fileLocation">The file location.</param>
-        /// <param name="includeComments">Determines if comments should be imported</param>
-        /// <param name="includeCategories">Determines if categories should be imported</param>
-        /// <param name="includeTags">Determines if tags should be imported</param>
-        public static List<WpPost> Import(string fileLocation, bool includeComments, bool includeCategories, bool includeTags)
-        {
-            var nsm = new XmlNamespaceManager(new NameTable());
-            nsm.AddNamespace("atom", "http://www.w3.org/2005/Atom");
-
-            var parseContext = new XmlParserContext(null, nsm, null, XmlSpace.Default);
-            using (var reader = XmlReader.Create(fileLocation, null, parseContext))
-            {
-                var doc = XDocument.Load(reader);
-
-                var posts = (from item in doc.Descendants("item")
-                             select new WpPost(item, includeComments, includeCategories, includeTags)).ToList();
-
-                return posts;
-            }
-        }
-
-        internal static void ImportPosts(Item blogItem, List<WpPost> listWordpressPosts, Database db, Action<string, int> logger = null)
+        internal void ImportPosts(Item blogItem, Action<string, int> logger = null)
         {
             BlogHomeItem customBlogItem = blogItem;
-            var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, db);
+            var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, _db);
 
             var processCount = 0;
 
-            foreach (WpPost post in listWordpressPosts)
+            foreach (WpPost post in Posts)
             {
                 processCount++;
 

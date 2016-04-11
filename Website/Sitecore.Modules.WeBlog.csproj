@@ -159,6 +159,10 @@
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
     <Compile Include="Buckets\DateBucketFolderPath.cs" />
+    <Compile Include="Import\Providers\IWpPostProvider.cs" />
+    <Compile Include="Import\WpImportOptions.cs" />
+    <Compile Include="Import\Providers\MediaItemBasedProvider.cs" />
+    <Compile Include="Import\Providers\FileBasedProvider.cs" />
     <Compile Include="Import\WordPressImportData.cs" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
     <Compile Include="Pipelines\ProfanityFilter\CacheProfanityList.cs" />

@@ -8,6 +8,7 @@ namespace Sitecore.Modules.WeBlog.Import
         public string BlogName { get; set; }
         public string BlogEmail { get; set; }
         public ID ParentId { get; set; }
+        public string DatabaseName { get; set; }
         public ID DataSourceId { get; set; }
         public bool ImportPosts { get; set; }
         public bool ImportCategories { get; set; }

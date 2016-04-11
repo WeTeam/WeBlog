@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Web.Http;
+using Sitecore.Configuration;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
+using Sitecore.Modules.WeBlog.Import.Providers;
 using Sitecore.Services.Core;
 using Sitecore.Services.Infrastructure.Web.Http;
 using Sitecore.StringExtensions;
@@ -11,8 +13,6 @@ namespace Sitecore.Modules.WeBlog.Controllers
     [ServicesController]
     public class WordPressImportController : ServicesApiController
     {
-        private string JobHandle { get; set; }
-
         [HttpPut]
         [Authorize]
         public string ImportItems(WordPressImportData data)
@@ -20,27 +20,46 @@ namespace Sitecore.Modules.WeBlog.Controllers
             var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog", new[] { data });
             var job = JobManager.Start(options);
             job.Status.Total = 0;
-            JobHandle = job.Handle.ToString();
-            return JobHandle;
+            return job.Handle.ToString();
         }
 
         private void ImportBlog(WordPressImportData data)
         {
-            var master = Sitecore.Configuration.Factory.GetDatabase("master");
-            LogMessage("Reading import item", JobHandle);
-            var wpPosts = WpImportManager.Import(data.DataSourceId, data.ImportComments, data.ImportCategories, data.ImportTags);
+            var db = Factory.GetDatabase(data.DatabaseName);
+            var options = BuildWpImportOptions(data);
+            var postProvider = new MediaItemBasedProvider(data.DataSourceId, db);
+            var importManager = new WpImportManager(db, postProvider, options);
+            string jobHandle = Context.Job.Handle.ToString();
+            LogMessage("Reading import item", jobHandle);
 
-            var blogParent = master.GetItem(data.ParentId);
-
-            LogMessage("Creating blog", JobHandle);
-            var blogRoot = WpImportManager.CreateBlogRoot(blogParent, data.BlogName, data.BlogEmail);
-            LogTotal(wpPosts.Count, JobHandle);
-            LogMessage("Importing posts", JobHandle);
-            WpImportManager.ImportPosts(blogRoot, wpPosts, master, (itemName, count) =>
+            var blogParent = db.GetItem(data.ParentId);
+            if (blogParent != null)
             {
-                LogMessage("Importing entry " + itemName, JobHandle);
-                LogProgress(count, JobHandle);
-            });
+                LogMessage("Creating blog", jobHandle);
+                var blogRoot = importManager.CreateBlogRoot(blogParent, data.BlogName, data.BlogEmail);
+                LogTotal(importManager.Posts.Count, jobHandle);
+                LogMessage("Importing posts", jobHandle);
+                importManager.ImportPosts(blogRoot, (itemName, count) =>
+                {
+                    LogMessage("Importing entry " + itemName, jobHandle);
+                    LogProgress(count, jobHandle);
+                });
+            }
+            else
+            {
+                LogMessage(String.Format("Parent item for blog root could not be found ({0})", data.ParentId), jobHandle);
+            }
+        }
+
+        private WpImportOptions BuildWpImportOptions(WordPressImportData data)
+        {
+            var options = new WpImportOptions
+            {
+                IncludeComments = data.ImportComments,
+                IncludeCategories = data.ImportCategories,
+                IncludeTags = data.ImportTags
+            };
+            return options;
         }
 
         [HttpGet]
