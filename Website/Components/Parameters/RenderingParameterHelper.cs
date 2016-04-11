@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.Components.Parameters
 
                 if (!string.IsNullOrEmpty(rawParameters))
                 {
-                    Parameters = Web.WebUtil.ParseUrlParameters(renderingContext.Rendering.Properties["Parameters"]);
+                    Parameters = Web.WebUtil.ParseUrlParameters(rawParameters);
                     if (applyProperties)
                     {
                         ApplyParameters(controller);

@@ -27,7 +27,6 @@ namespace Sitecore.Modules.WeBlog.Layouts
             var theme = ThemeItem;
             if (theme != null)
             {
-                //Stylesheets.DataSource = theme.Stylesheets.Select(x => x.Url);
                 Stylesheets.DataSource = theme.Stylesheets;
                 Stylesheets.DataBind();
             }
