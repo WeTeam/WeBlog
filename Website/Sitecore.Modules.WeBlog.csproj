@@ -144,6 +144,7 @@
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
     <Compile Include="Buckets\DateBucketFolderPath.cs" />
+    <Compile Include="Import\ImportSummary.cs" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
     <Compile Include="Pipelines\ProfanityFilter\CacheProfanityList.cs" />
     <Compile Include="Pipelines\ProfanityFilter\GetProfanityListFromCache.cs" />
@@ -529,6 +530,9 @@
     <Content Include="sitecore modules\web\WeBlog\Themes\techphoria.css" />
     <Content Include="sitecore modules\web\WeBlog\Themes\techphoria\images\body-2col-bg.png" />
     <Content Include="sitecore modules\web\WeBlog\Themes\techphoria\images\entry-list-separator.png" />
+    <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.SC80.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -680,6 +684,8 @@
     <!-- Replace version specific configs -->
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
     <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC72.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC72'))" />
+    <!-- Process WordPress import application for Sitecore 8+ -->
+    <Copy SourceFiles="sitecore\shell\Applications\WeBlog\WordpressImport.SC80.xml" DestinationFiles="$(SitecorePath)\sitecore\shell\Applications\WeBlog\WordpressImport.xml" Condition="$(DefineConstants.Contains('SC80'))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />

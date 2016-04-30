@@ -37,23 +37,23 @@ namespace Sitecore.Modules.WeBlog.Import
             }
         }
 
-        internal static void ImportPosts(Item blogItem, List<WpPost> listWordpressPosts, Database db, Action<string, int> logger = null)
+        internal static ImportSummary ImportPosts(Item blogItem, List<WpPost> listWordpressPosts, Database db, Action<string, int> logger = null)
         {
+            var summary = new ImportSummary();
+
             BlogHomeItem customBlogItem = blogItem;
             var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, db);
 
-            var processCount = 0;
-
             foreach (WpPost post in listWordpressPosts)
             {
-                processCount++;
+                summary.PostCount++;
 
                 if (!string.IsNullOrEmpty(post.Content))
                 {
                     var name = ItemUtil.ProposeValidItemName(post.Title);
 
                     if (logger != null)
-                        logger(name, processCount);
+                        logger(name, summary.PostCount);
 
                     EntryItem entry = ItemManager.AddFromTemplate(name, entryTemplate.ID, blogItem);
 
@@ -69,6 +69,7 @@ namespace Sitecore.Modules.WeBlog.Import
                     {
                         var categoryItem = ManagerFactory.CategoryManagerInstance.Add(categoryName, blogItem);
                         categorieItems.Add(categoryItem.ID.ToString());
+                        summary.CategoryCount++;
                     }
                  
                     if (categorieItems.Count > 0)
@@ -79,6 +80,7 @@ namespace Sitecore.Modules.WeBlog.Import
                     foreach (WpComment wpComment in post.Comments)
                     {
                         ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
+                        summary.CommentCount++;
                     }
 
                     var publicationDate = DateUtil.ToIsoDate(post.PublicationDate);
@@ -87,6 +89,8 @@ namespace Sitecore.Modules.WeBlog.Import
                     entry.EndEdit();
                 }
             }
+
+            return summary;
         }
     }
 }
