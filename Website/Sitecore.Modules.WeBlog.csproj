@@ -155,7 +155,7 @@
     <Compile Include="Caching\TranslatorCache.cs" />
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\SimpleCache.cs" />
-    <Compile Include="Controllers\WeBlogImportController.cs" />
+    <Compile Include="Controllers\WeBlogImportController.cs" Condition="$(DefineConstants.Contains('FEATURE_SPEAK'))" />
     <Compile Include="Controllers\CaptchaController.cs" />
     <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
     <Compile Include="Buckets\DateBucketFolderPath.cs" />
@@ -163,7 +163,7 @@
     <Compile Include="Import\WpImportOptions.cs" />
     <Compile Include="Import\Providers\MediaItemBasedProvider.cs" />
     <Compile Include="Import\Providers\FileBasedProvider.cs" />
-    <Compile Include="Import\WordPressImportData.cs" />
+    <Compile Include="Import\WordPressImportData.cs" Condition="$(DefineConstants.Contains('FEATURE_SPEAK'))" />
     <Compile Include="Pipelines\ExpandInitialFieldValue\ResolveTokens.cs" />
     <Compile Include="Pipelines\ProfanityFilter\CacheProfanityList.cs" />
     <Compile Include="Pipelines\ProfanityFilter\GetProfanityListFromCache.cs" />
