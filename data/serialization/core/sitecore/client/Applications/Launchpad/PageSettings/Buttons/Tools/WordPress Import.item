@@ -1,0 +1,79 @@
+----item----
+version: 1
+id: {07EF7470-C772-4600-A30A-94846CE59136}
+database: core
+path: /sitecore/client/Applications/Launchpad/PageSettings/Buttons/Tools/WordPress Import
+parent: {E8ED70BA-1401-4BCF-B3F9-5A60FE67C8F5}
+name: WordPress Import
+master: {00000000-0000-0000-0000-000000000000}
+template: {D4C7F5F9-8977-4E0C-B6CE-28AE8E0753E2}
+templatekey: LaunchPad-Button
+
+----field----
+field: {D25B56D4-23B6-4462-BE25-B6A6D7F38E13}
+name: Icon
+key: icon
+content-length: 24
+
+Office/32x32/box_out.png
+----field----
+field: {044E3FDB-22AE-4E6C-B50E-2ABDFBABD338}
+name: Link
+key: link
+content-length: 43
+
+/sitecore/client/Applications/WeBlog/Import
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+350
+----version----
+language: en
+version: 1
+revision: 5a933a2c-509d-4ced-bf6e-d96d9dadb9ea
+
+----field----
+field: {AA4A4643-5BFC-45A7-B9D9-5183A5211D99}
+name: Text
+key: text
+content-length: 16
+
+WordPress Import
+----field----
+field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
+name: __Display name
+key: __display name
+content-length: 16
+
+WordPress Import
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20141222T150115Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+5a933a2c-509d-4ced-bf6e-d96d9dadb9ea
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160318T230518Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

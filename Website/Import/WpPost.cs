@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Sitecore.Modules.WeBlog.Import.Providers;
 
 
 namespace Sitecore.Modules.WeBlog.Import
@@ -44,6 +45,11 @@ namespace Sitecore.Modules.WeBlog.Import
         public WpPost(XElement postXml, bool includeComments, bool includeCategories, bool includeTags)
         {
             GetPost(postXml, includeComments, includeCategories, includeTags);
+        }
+
+        public WpPost(XElement postXml, WpImportOptions options)
+        {
+            GetPost(postXml, options.IncludeComments, options.IncludeCategories, options.IncludeTags);
         }
         #endregion
 

@@ -1,50 +1,53 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
-using System.Xml;
 using System;
+using Sitecore.Modules.WeBlog.Import.Providers;
 
 namespace Sitecore.Modules.WeBlog.Import
 {
-    public static class WpImportManager
+    public class WpImportManager
     {
-        /// <summary>
-        /// Imports the specified file.
-        /// </summary>
-        /// <param name="fileLocation">The file location.</param>
-        /// <param name="includeComments">Determines if comments should be imported</param>
-        /// <param name="includeCategories">Determines if categories should be imported</param>
-        /// <param name="includeTags">Determines if tags should be imported</param>
-        public static List<WpPost> Import(string fileLocation, bool includeComments, bool includeCategories, bool includeTags)
+        private readonly Database _db;
+        private readonly IWpPostProvider _wpPostProvider;
+        private readonly WpImportOptions _options;
+        private List<WpPost> _posts;
+
+        public List<WpPost> Posts
         {
-            var nsm = new XmlNamespaceManager(new NameTable());
-            nsm.AddNamespace("atom", "http://www.w3.org/2005/Atom");
-
-            var parseContext = new XmlParserContext(null, nsm, null, XmlSpace.Default);
-            using (var reader = XmlReader.Create(fileLocation, null, parseContext))
-            {
-                var doc = XDocument.Load(reader);
-
-                var posts = (from item in doc.Descendants("item")
-                             select new WpPost(item, includeComments, includeCategories, includeTags)).ToList();
-
-                return posts;
-            }
+            get { return _posts ?? (_posts = _wpPostProvider.GetPosts(_options)); }
         }
 
-        internal static void ImportPosts(Item blogItem, List<WpPost> listWordpressPosts, Database db, Action<string, int> logger = null)
+        public WpImportManager(Database db, IWpPostProvider wpPostProvider, WpImportOptions options)
+        {
+            _db = db;
+            _wpPostProvider = wpPostProvider;
+            _options = options;
+        }
+
+        public BlogHomeItem CreateBlogRoot(Item root, string name, string email)
+        {
+            BranchItem newBlog = _db.Branches.GetMaster(Settings.BlogBranchID);
+            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), newBlog);
+
+            blogItem.BeginEdit();
+            blogItem.Email.Field.Value = email;
+            blogItem.EndEdit();
+
+            return blogItem;
+        }
+
+        internal void ImportPosts(Item blogItem, Action<string, int> logger = null)
         {
             BlogHomeItem customBlogItem = blogItem;
-            var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, db);
+            var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, _db);
 
             var processCount = 0;
 
-            foreach (WpPost post in listWordpressPosts)
+            foreach (WpPost post in Posts)
             {
                 processCount++;
 
@@ -70,7 +73,7 @@ namespace Sitecore.Modules.WeBlog.Import
                         var categoryItem = ManagerFactory.CategoryManagerInstance.Add(categoryName, blogItem);
                         categorieItems.Add(categoryItem.ID.ToString());
                     }
-                 
+
                     if (categorieItems.Count > 0)
                     {
                         entry.Category.Field.Value = string.Join("|", categorieItems.ToArray());
