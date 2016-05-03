@@ -72,6 +72,10 @@
 				<field tfid="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" key="__security" type="security">
 					<content>au|sitecore\user1|p*|+item:write|</content>
 				</field>
+        <!-- Having issues with buckets when pasting XML content -->
+        <field tfid="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" key="__is bucket" type="Checkbox">
+          <content>0</content>
+        </field>
 			</fields>
 		</version>
 		<version language="da" version="1">
@@ -1091,6 +1095,10 @@
 				<field tfid="{DEC8D2D5-E3CF-48B6-A653-8E69E2716641}" key="__security" type="security">
 					<content>au|sitecore\user1|p*|+item:write|</content>
 				</field>
+        <!-- Having issues with buckets when pasting XML content -->
+        <field tfid="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" key="__is bucket" type="Checkbox">
+          <content>0</content>
+        </field>
 			</fields>
 		</version>
 		<version language="da" version="1">
@@ -1864,6 +1872,10 @@
 				<field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="__updated" type="datetime">
 					<content>20120105T220922</content>
 				</field>
+        <!-- Having issues with buckets when pasting XML content -->
+        <field tfid="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" key="__is bucket" type="Checkbox">
+          <content>0</content>
+        </field>
 			</fields>
 		</version>
 		<version language="es" version="1">

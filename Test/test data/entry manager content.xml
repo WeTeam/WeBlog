@@ -66,6 +66,10 @@
         <field tfid="{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}" key="__renderings" type="layout">
           <content>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;r xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;&lt;d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"&gt;&lt;r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="phContent" uid="{D1140E82-9243-4204-88C5-09F31484942E}" /&gt;&lt;r ds="" id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" par="" ph="phBlogMain" uid="{2EA8EA8F-7D2C-4264-AEEC-A674C01BED19}" /&gt;&lt;r ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="" ph="phBlogSidebar" uid="{BD1F0138-A016-4075-829C-E318D4C66BC0}" /&gt;&lt;r ds="" id="{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}" par="" ph="phBlogSidebar" uid="{5F71EB64-2151-4988-A4EE-4BD387D6291C}" /&gt;&lt;r ds="" id="{1A04F0F4-94E3-4E6A-AD85-CEFF6F338296}" par="" ph="phBlogSidebar" uid="{BF1E4F7F-EAB4-49CC-94EC-FCA5EDE31904}" /&gt;&lt;/d&gt;&lt;/r&gt;</content>
         </field>
+        <!-- Having issues with buckets when pasting XML content -->
+        <field tfid="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" key="__is bucket" type="Checkbox">
+          <content>0</content>
+        </field>
       </fields>
     </version>
 
@@ -482,6 +486,10 @@
         </field>
         <field tfid="{F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}" key="__renderings" type="layout">
           <content>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;r xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;&lt;d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"&gt;&lt;r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="phContent" uid="{D1140E82-9243-4204-88C5-09F31484942E}" /&gt;&lt;r ds="" id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" par="" ph="phBlogMain" uid="{2EA8EA8F-7D2C-4264-AEEC-A674C01BED19}" /&gt;&lt;r ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="" ph="phBlogSidebar" uid="{BD1F0138-A016-4075-829C-E318D4C66BC0}" /&gt;&lt;r ds="" id="{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}" par="" ph="phBlogSidebar" uid="{5F71EB64-2151-4988-A4EE-4BD387D6291C}" /&gt;&lt;r ds="" id="{1A04F0F4-94E3-4E6A-AD85-CEFF6F338296}" par="" ph="phBlogSidebar" uid="{BF1E4F7F-EAB4-49CC-94EC-FCA5EDE31904}" /&gt;&lt;/d&gt;&lt;/r&gt;</content>
+        </field>
+        <!-- Having issues with buckets when pasting XML content -->
+        <field tfid="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" key="__is bucket" type="Checkbox">
+          <content>0</content>
         </field>
       </fields>
     </version>
