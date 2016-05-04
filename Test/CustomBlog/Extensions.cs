@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Web;
+using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
@@ -18,6 +19,7 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
                 using (new EventDisabler())
                 {
                     templateRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\custom blog templates.xml")), false, PasteMode.Overwrite);
+                    CacheManager.ClearAllCaches();
                 }
             }
 

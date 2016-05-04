@@ -1,185 +1,205 @@
-using System;
-using System.Collections.Specialized;
-using System.Data;
-using System.Reflection;
 using NUnit.Core;
 using NUnit.Core.Filters;
+using NUnit.Util;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Reflection;
+using System.Web.UI.WebControls;
 
 namespace Codeflood.Testing
 {
-	public partial class TestRunner : System.Web.UI.Page, EventListener
-	{
-		#region Member Variables
-		DataTable m_results = new DataTable();
-		private int m_executedCount = 0;
-		private int m_failedCount = 0;
-		private TestSuite m_testSuite = null;
-		#endregion
+    public partial class TestRunner : System.Web.UI.Page, EventListener
+    {
+        #region Member Variables
+        DataTable _results = new DataTable();
+        private int _executedCount = 0;
+        private int _failedCount = 0;
+        private TestPackage _testPackage = null;
+        #endregion
 
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			// Initialise data table to hold test results
-			m_results.Columns.Add("test");
-			m_results.Columns.Add("result");
-            m_results.Columns.Add("time");
-			m_results.Columns.Add("message");
-			m_results.Columns.Add("class");
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            // Initialise data table to hold test results
+            _results.Columns.Add("test");
+            _results.Columns.Add("result");
+            _results.Columns.Add("time");
+            _results.Columns.Add("message");
+            _results.Columns.Add("class");
 
-			// Initialise controls
-			lblResult.Text = "";
-			ltlStats.Text = "";
+            // Initialise controls
+            lblResult.Text = "";
+            ltlStats.Text = "";
 
-			// Initialise NUnit
-			CoreExtensions.Host.InitializeService();
+            // Initialise NUnit
+            CoreExtensions.Host.InitializeService();
 
-			// Find tests in current assembly
-			TestPackage package = new TestPackage(Assembly.GetExecutingAssembly().Location);
-			m_testSuite = new TestSuiteBuilder().Build(package);
+            // Find tests in current assembly
+            _testPackage = new TestPackage(Assembly.GetExecutingAssembly().Location);
 
-			if (!IsPostBack)
-			{
-				// Display category filters
-				StringCollection coll = new StringCollection();
-				GetCategories((TestSuite)m_testSuite, coll);
-				string[] cats = new string[coll.Count];
-				coll.CopyTo(cats, 0);
-				Array.Sort(cats);
-				cblCategories.DataSource = cats;
-				cblCategories.DataBind();
-			}
-		}
-
-		protected void RunClick(object sender, EventArgs args)
-		{
-			// Determine if any category filters have been selected
-			StringCollection categories = new StringCollection();
-			for (int i = 0; i < cblCategories.Items.Count; i++)
-			{
-				if (cblCategories.Items[i].Selected)
-					categories.Add(cblCategories.Items[i].Value);
-			}
-
-            if (categories.Count == 0)
+            if (!IsPostBack)
             {
-                for (int i = 0; i < cblCategories.Items.Count; i++)
+                var testSuite = new TestSuiteBuilder().Build(_testPackage);
+
+                LoadCategories(testSuite);
+                LoadTestMethodNames(testSuite);
+            }
+        }
+
+        protected void LoadTestMethodNames(ITest test)
+        {
+            var names = new List<string>();
+            FindTestMethodNames(test, names);
+
+            cblMethods.DataSource = names;
+            cblMethods.DataBind();
+        }
+
+        protected void LoadCategories(ITest test)
+        {
+            var categoryManager = new CategoryManager();
+            categoryManager.AddAllCategories(test);
+
+            cblCategories.DataSource = (from string cat in categoryManager.Categories select cat).OrderBy(x => x);
+            cblCategories.DataBind();
+        }
+
+        protected void RunClick(object sender, EventArgs args)
+        {
+            var filter = ConstructFilter();
+
+            var runner = new SimpleTestRunner();
+            runner.Load(_testPackage);
+
+            var result = runner.Run(this, filter, true, LoggingThreshold.All);
+
+            // Bind results to presentation
+            gvResults.DataSource = _results;
+            gvResults.DataBind();
+
+            // Display statistics
+            ltlStats.Text = string.Format("{0} out of {1} tests run in {2} seconds.", _executedCount, result.Test.TestCount, result.Time);
+
+            if (_failedCount > 0)
+                ltlStats.Text += string.Format("<br/>{0} {1} failed", _failedCount, _failedCount == 1 ? "test" : "tests");
+
+            var skipped = result.Test.TestCount - _executedCount;
+            if (skipped > 0)
+                ltlStats.Text += string.Format("<br/>{0} {1} skipped", skipped, skipped == 1 ? "test" : "tests");
+
+            lblResult.Text = "Suite " + (result.IsSuccess ? "Passed" : "Failed");
+            if (result.IsSuccess)
+                lblResult.CssClass = "passLabel";
+            else
+                lblResult.CssClass = "failLabel";
+        }
+
+        protected ITestFilter ConstructFilter()
+        {
+            var categories = (from ListItem item in cblCategories.Items
+                where item.Selected
+                select item.Value).ToArray();
+
+            var methodNames = (from ListItem item in cblMethods.Items
+                where item.Selected
+                select item.Value).ToArray();
+
+            if (!categories.Any() && !methodNames.Any())
+                return TestFilter.Empty;
+
+            var categoryFilter = new CategoryFilter(categories);
+            var methodFilter = new SimpleNameFilter(methodNames);
+
+            return new OrFilter(categoryFilter, methodFilter);
+        }
+
+        protected void FindTestMethodNames(ITest test, List<string> list)
+        {
+            foreach (ITest t in test.Tests)
+            {
+                if (t is NUnitTestMethod)
                 {
-                    categories.Add(cblCategories.Items[i].Value);
+                    list.Add(t.TestName.FullName);
+                }
+
+                if (t.Tests != null)
+                {
+                    FindTestMethodNames(t, list);
                 }
             }
+        }
 
-			string[] arCats = new string[categories.Count];
-			categories.CopyTo(arCats, 0);
+        #region EventListener Members
 
-			// Create a category filter
-			ITestFilter filter = new CategoryFilter(arCats);
-			TestResult result = null;
+        public void RunFinished(Exception exception)
+        {
+        }
 
-            result = m_testSuite.Run(this, filter);
+        public void RunFinished(TestResult result)
+        {
+        }
 
-			// Bind results to presentation
-			gvResults.DataSource = m_results;
-			gvResults.DataBind();
+        public void RunStarted(string name, int testCount)
+        {
+        }
 
-			// Display statistics
-			ltlStats.Text = string.Format("{0} out of {1} tests run in {2} seconds.", m_executedCount, result.Test.TestCount, result.Time);
+        public void SuiteFinished(TestResult result)
+        {
+        }
 
-			if (m_failedCount > 0)
-				ltlStats.Text += string.Format("<br/>{0} {1} failed", m_failedCount, m_failedCount == 1 ? "test" : "tests");
+        public void SuiteStarted(TestName testName)
+        {
+        }
 
-			int skipped = result.Test.TestCount - m_executedCount;
-			if (skipped > 0)
-				ltlStats.Text += string.Format("<br/>{0} {1} skipped", skipped, skipped == 1 ? "test" : "tests");
-
-			lblResult.Text = "Suite " + (result.IsSuccess ? "Passed" : "Failed");
-			if (result.IsSuccess)
-				lblResult.CssClass = "passLabel";
-			else
-				lblResult.CssClass = "failLabel";
-		}
-
-		/// <summary>
-		/// Find all available categories in the test suite
-		/// </summary>
-		/// <param name="suite">The test suite to get categories from</param>
-		/// <param name="cats">Output collection containing categories found</param>
-		private void GetCategories(TestSuite suite, StringCollection cats)
-		{
-			if (suite.Categories != null)
-			{
-				for (int i = 0; i < suite.Categories.Count; i++)
-					if (!cats.Contains((string)suite.Categories[i]))
-						cats.Add((string)suite.Categories[i]);
-			}
-
-			for (int i = 0; i < suite.Tests.Count; i++)
-				if(((ITest)suite.Tests[i]).IsSuite)
-					GetCategories((TestSuite)suite.Tests[i], cats);
-		}
-
-		#region EventListener Members
-
-		public void RunFinished(Exception exception)
-		{
-		}
-
-		public void RunFinished(TestResult result)
-		{
-		}
-
-		public void RunStarted(string name, int testCount)
-		{
-		}
-
-		public void SuiteFinished(TestResult result)
-		{
-		}
-
-		public void SuiteStarted(TestName testName)
-		{
-		}
-
-		public void TestFinished(TestResult result)
-		{
-			// Put results into data table
-			DataRow dr = m_results.NewRow();
-			dr["test"] = result.Test.TestName;
-			dr["message"] = result.Message;
-			if (result.IsFailure)
-				dr["message"] += result.StackTrace;
-			dr["class"] = "notRun";
+        public void TestFinished(TestResult result)
+        {
+            // Put results into data table
+            var dr = _results.NewRow();
+            dr["test"] = result.Test.TestName;
+            dr["class"] = "notRun";
             dr["time"] = result.Time;
 
-			if (result.IsSuccess && result.Executed)
-			{
-				dr["result"] = "Pass";
-				dr["class"] = "pass";
-			}
+            var message = result.Message;
+            if (result.IsFailure)
+                message += "\r\n" + result.StackTrace;
 
-			if (result.IsFailure && result.Executed)
-			{
-				dr["result"] = "Fail";
-				dr["class"] = "fail";
-				m_failedCount++;
-			}
+            if (!string.IsNullOrEmpty(message))
+                message = message.Replace("\r\n", "<br/>");
 
-			if (result.Executed)
-				m_executedCount++;
+            dr["message"] = message;
 
-			m_results.Rows.Add(dr);
-		}
+            if (result.IsSuccess && result.Executed)
+            {
+                dr["result"] = "Pass";
+                dr["class"] = "pass";
+            }
 
-		public void TestOutput(TestOutput testOutput)
-		{
-		}
+            if (result.IsFailure && result.Executed)
+            {
+                dr["result"] = "Fail";
+                dr["class"] = "fail";
+                _failedCount++;
+            }
 
-		public void TestStarted(TestName testName)
-		{
-		}
+            if (result.Executed)
+                _executedCount++;
 
-		public void UnhandledException(Exception exception)
-		{
-		}
+            _results.Rows.Add(dr);
+        }
 
-		#endregion
-	}
+        public void TestOutput(TestOutput testOutput)
+        {
+        }
+
+        public void TestStarted(TestName testName)
+        {
+        }
+
+        public void UnhandledException(Exception exception)
+        {
+        }
+
+        #endregion
+    }
 }

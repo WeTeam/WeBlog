@@ -1,0 +1,65 @@
+----item----
+version: 1
+id: {1EC1D952-4856-486D-8F65-ACA7F4F5191A}
+database: core
+path: /sitecore/client/Applications/WeBlog/Import/PageSettings/Upload Button Parameters
+parent: {A0F0F406-9E6F-4E4C-B045-DB223F1116EC}
+name: Upload Button Parameters
+master: {00000000-0000-0000-0000-000000000000}
+template: {8A9F4991-322D-4FA3-B40B-41B1C715C34B}
+templatekey: Button Parameters
+
+----field----
+field: {9F2E12C5-F236-441D-AE2F-1DF11A343D81}
+name: Click
+key: click
+content-length: 34
+
+javascript:app.uploadButtonClick()
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+400
+----version----
+language: en
+version: 1
+revision: fa70dfaa-db2d-4c69-a582-213d284d67f6
+
+----field----
+field: {99A761CF-5262-4D10-B53E-4CD9E79C232D}
+name: Text
+key: text
+content-length: 6
+
+Upload
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160315T200134Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+fa70dfaa-db2d-4c69-a582-213d284d67f6
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160410T153040Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

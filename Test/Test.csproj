@@ -24,6 +24,8 @@
     <ErrorReport>prompt</ErrorReport>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DebugSymbols>true</DebugSymbols>
@@ -53,15 +55,9 @@
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>..\lib\nunit\nunit.core.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.core.interfaces">
-      <HintPath>..\lib\nunit\nunit.core.interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.5.10.11092, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\nunit\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -118,7 +114,9 @@
     <Content Include="test data\MetaBlog content.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="test data\tag manager content.xml" />
+    <Content Include="test data\tag manager content.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="test data\template content.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -149,9 +147,7 @@
       <DependentUpon>Test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Test.aspx.designer.cs">
-      <DependentUpon>Test.aspx</DependentUpon>
-    </Compile>
+    <Compile Include="Test.aspx.designer.cs" />
     <Compile Include="TestUtil.cs" />
     <Compile Include="UnitTestBase.cs" />
   </ItemGroup>
@@ -207,4 +203,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="..\packages\codeflood.nunit.aspnet.testrunner.1.0.0\build\codeflood.nunit.aspnet.testrunner.targets" Condition="Exists('..\packages\codeflood.nunit.aspnet.testrunner.1.0.0\build\codeflood.nunit.aspnet.testrunner.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\codeflood.nunit.aspnet.testrunner.1.0.0\build\codeflood.nunit.aspnet.testrunner.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\codeflood.nunit.aspnet.testrunner.1.0.0\build\codeflood.nunit.aspnet.testrunner.targets'))" />
+  </Target>
 </Project>

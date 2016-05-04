@@ -144,9 +144,8 @@ file.
     <xfiles>
       <Entries>
         <x-item>/App_Config/Include/WeBlog.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
+		<x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
         <x-item>/App_Config/Include/WeBlog.ItemBuckets.config.disabled</x-item>
       </Entries>
       <Converter>

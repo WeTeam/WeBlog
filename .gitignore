@@ -17,5 +17,6 @@ TestResults
 # Local WIP files
 todo.txt
 
-# Nuget folders
-packages
+# Other folders
+packages/
+.vs/

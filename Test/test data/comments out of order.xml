@@ -16,6 +16,10 @@
       <field tfid="{D9CF14B1-FA16-4BA6-9288-E8A174D4D522}" key="" type="">
         <content>20110304T222856:634348745362931814</content>
       </field>
+      <!-- Having issues with buckets when pasting XML content -->
+      <field tfid="{D312103C-B36C-4CA5-864A-C85F9ABDA503}" key="__is bucket" type="Checkbox">
+        <content>0</content>
+      </field>
     </fields>
   </version>
   <item name="2011" key="2011" id="{ECBE512F-DD83-42ED-96FD-1B5A770C2364}" tid="{A87A00B1-E6DB-45AB-8B54-636FEC3B5523}" mid="{00000000-0000-0000-0000-000000000000}" sortorder="-2011" template="folder" parentid="{F9D27AB1-9AB7-45A2-903F-2D7804508EC8}">
