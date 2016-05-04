@@ -55,10 +55,10 @@ namespace Sitecore.Modules.WeBlog.Caching
         {
             Assert.ArgumentNotNull(key, "key");
             var dictionary = FindCache();
-            if (dictionary.ContainsKey(key))
+            if (dictionary != null && dictionary.ContainsKey(key))
             {
-                ID entryID = dictionary[key] as ID;
-                return Context.Database.GetItem(entryID);
+                ID entryId = dictionary[key] as ID;
+                return Context.Database.GetItem(entryId);
             }
             return null;
         }
@@ -100,7 +100,7 @@ namespace Sitecore.Modules.WeBlog.Caching
                 return siteDictionary;
             }
 
-            return new Cache(0);
+            return null;
         }
 
         /// <summary>

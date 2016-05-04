@@ -26,7 +26,11 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected virtual void LoadEntry()
         {
             // Load tags
+#if !FEATURE_EXPERIENCE_EDITOR
             if (!Sitecore.Context.PageMode.IsPageEditorEditing)
+#else
+            if (!Sitecore.Context.PageMode.IsExperienceEditorEditing)
+#endif
             {
                 var tags = ManagerFactory.TagManagerInstance.GetTagsByEntry(CurrentEntry);
                 var list = LoginViewTags.FindControl("TagList") as ListView;
