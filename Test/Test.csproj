@@ -182,11 +182,15 @@
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="@(Content);$(OutDir)\*.dll" Exclude="**\*.config">
+    <CreateItem Include="@(Content)" Exclude="**\*.config">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     <Copy SourceFiles="App_Config\Include\zWeBlog.Test.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" />
+    <CreateItem Include="$(OutDir)\*.dll">
+      <Output ItemName="BinFiles" TaskParameter="Include"/>
+    </CreateItem>
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin"/>
     <CallTarget Targets="ContentSearchConfig" />
   </Target>
   <Target Name="ContentSearchConfig">

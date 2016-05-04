@@ -1,0 +1,46 @@
+.wb-entry-add-comment {
+	label {
+		display: inline-block;
+		width: 100px;
+		vertical-align: top;
+	}
+	
+	input, textarea {
+		margin-bottom: 0.5em;
+	}
+	
+	input {
+		width: 300px;
+	}
+	
+	textarea {
+		width: 600px;
+	}
+	
+	.wb-captcha {
+		label {
+			display: inline;
+			margin-bottom: 0.5em;
+		}
+		
+		img {
+			margin-bottom: 0.5em;
+		}
+		
+		input {
+			width: 250px;
+		}
+	}
+	
+	input[type='submit'] {
+		width: 100px;
+	}
+}
+
+@media all and (max-width: 900px) {
+	.wb-entry-add-comment {
+		textarea {
+			width: 300px;
+		}
+	}
+}

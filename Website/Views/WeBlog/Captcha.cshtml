@@ -3,9 +3,12 @@
 @model Sitecore.Modules.WeBlog.Model.CaptchaRenderingModel
 
 <div class="wb-captcha">
-    <div class="wb-captchaLabel">@Translator.Render("CAPTCHA").ToHtmlString()</div>
-    <img src="@Model.ImageSource" />
+    <p>
+        <div class="wb-captchaLabel">@Translator.Render("CAPTCHA").ToHtmlString()</div>
+        <div class="blog-captcha-image">
+            <img src="@Model.ImageSource"/>
     <input type="hidden" name="captcha_challenge_field" value="@Model.ChallengeValue" />
-    <br />
+        </div>
     <input type="text" name="captcha_response_field" value="" class="wb-captchaInput" />
+    </p>
 </div>

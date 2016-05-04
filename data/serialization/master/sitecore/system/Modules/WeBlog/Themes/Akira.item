@@ -1,0 +1,53 @@
+----item----
+version: 1
+id: {DF2362CA-3E46-4B35-A86F-EBF830B4A6CF}
+database: master
+path: /sitecore/system/Modules/WeBlog/Themes/Akira
+parent: {2E68D26C-5138-4E08-8056-717ACFF80C5E}
+name: Akira
+master: {00000000-0000-0000-0000-000000000000}
+template: {A629B15F-427B-45D4-A171-CEC4FB8B5A22}
+templatekey: Theme
+
+----version----
+language: en
+version: 1
+revision: e1fe7d7f-09a4-4c50-9d23-ee92fbb04517
+
+----field----
+field: {A22948D6-52A2-402D-ABE7-21D11E5A6B36}
+name: Credit Markup
+key: credit markup
+content-length: 776
+
+<p class="credit">RSS icon made by <a href="http://fontawesome.io" title="Dave Gandy">Dave Gandy</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></p>
+<p class="credit">Comment icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></p>
+<p class="credit"><a href="http://dj-corny.deviantart.com/art/Portal-2-CoreBot-Eye-178854113">Atlas Eye</a> image by <a href="http://dj-corny.deviantart.com/">dj-corny</a></p>
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160129T122313Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+e1fe7d7f-09a4-4c50-9d23-ee92fbb04517
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 35
+
+20160212T110808:635908720883895206Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

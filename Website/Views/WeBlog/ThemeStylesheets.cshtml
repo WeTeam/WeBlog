@@ -1,0 +1,10 @@
+﻿@model Sitecore.Modules.WeBlog.Model.Theme
+
+@if(Model.ThemeItem != null)
+{
+
+    foreach (var stylesheet in Model.ThemeItem.Stylesheets)
+    {
+        <link rel="stylesheet" type="text/css" href="@stylesheet.Url"/>
+    }
+}

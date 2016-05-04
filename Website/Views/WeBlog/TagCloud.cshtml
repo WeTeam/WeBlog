@@ -2,7 +2,7 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model IEnumerable<Sitecore.Modules.WeBlog.Model.TagCloudRenderingModel>
 
-<div class="wb-tagCloud wb-panel">
+<div class="wb-tag-cloud wb-panel">
     <h3>@Translator.Render("TAGCLOUD").ToHtmlString()</h3>
     <div class="wb-entries">
         @foreach (var tag in Model)

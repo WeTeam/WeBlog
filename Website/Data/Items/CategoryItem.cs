@@ -1,3 +1,4 @@
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Extensions;
@@ -7,7 +8,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
     public partial class CategoryItem : CustomItem
     {
 
-        public static readonly string TemplateId = "{61FF8D49-90D7-4E59-878D-DF6E03400D3B}";
+        public static readonly ID TemplateId = new ID("{61FF8D49-90D7-4E59-878D-DF6E03400D3B}");
 
         public CategoryItem(Item innerItem)
             : base(innerItem)
