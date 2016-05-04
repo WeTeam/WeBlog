@@ -7,6 +7,7 @@ using Sitecore.Diagnostics;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Import.Providers;
 using Sitecore.Shell.Applications.Install;
 using Sitecore.Shell.Applications.Install.Dialogs;
 using Sitecore.StringExtensions;
@@ -54,7 +55,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected override void OnLoad(EventArgs e)
         {
             ImportOptionsPane.Visible = false;
-                        
+
             this.DataContext.GetFromQueryString();
 
             base.OnLoad(e);
@@ -77,15 +78,15 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             }
             if (page == "Summary")
             {
-                    litSummaryName.Text = litSettingsName.Value;
-                    litSummaryEmail.Text = litSettingsEmail.Value;
-                    litSummaryPath.Text = Treeview.GetSelectedItems().First().Paths.FullPath;
+                litSummaryName.Text = litSettingsName.Value;
+                litSummaryEmail.Text = litSettingsEmail.Value;
+                litSummaryPath.Text = Treeview.GetSelectedItems().First().Paths.FullPath;
 
-                    litSummaryWordpressXML.Text = WordpressXmlFile.Value;
-                    litSummaryCategories.Text = ImportCategories.Checked ? "Yes" : "No";
-                    litSummaryComments.Text = ImportComments.Checked ? "Yes" : "No";
-                    litSummaryPosts.Text = ImportPosts.Checked ? "Yes" : "No";
-                    litSummaryTags.Text = ImportTags.Checked ? "Yes" : "No";
+                litSummaryWordpressXML.Text = WordpressXmlFile.Value;
+                litSummaryCategories.Text = ImportCategories.Checked ? "Yes" : "No";
+                litSummaryComments.Text = ImportComments.Checked ? "Yes" : "No";
+                litSummaryPosts.Text = ImportPosts.Checked ? "Yes" : "No";
+                litSummaryTags.Text = ImportTags.Checked ? "Yes" : "No";
             }
             NextButton.Header = "Next >";
 
@@ -123,28 +124,35 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 
         private void ImportBlog()
         {
+            var options = new WpImportOptions
+            {
+                IncludeComments = ImportComments.Checked,
+                IncludeCategories = ImportCategories.Checked,
+                IncludeTags = ImportTags.Checked
+            };
+            string fileLocation = String.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
             LogMessage("Reading import file");
-            string fileLocation = string.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
-            List<WpPost> listWordpressPosts = WpImportManager.Import(fileLocation, ImportComments.Checked, ImportCategories.Checked, ImportTags.Checked);
+            var importManager = new WpImportManager(db, new FileBasedProvider(fileLocation), options);
 
             LogMessage("Creating blog");
             Item root = db.GetItem(litSummaryPath.Text);
+            if (root != null)
+            {
+                var blogItem = importManager.CreateBlogRoot(root, litSettingsName.Value, litSettingsEmail.Value);
 
-            BranchItem newBlog = db.Branches.GetMaster(Settings.BlogBranchID);
-            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(litSettingsName.Value), newBlog);
+                LogMessage("Importing posts");
+                LogTotal(importManager.Posts.Count);
 
-            blogItem.BeginEdit();
-            blogItem.Email.Field.Value = litSettingsEmail.Value;
-            blogItem.EndEdit();
-
-            LogMessage("Importing posts");
-            LogTotal(listWordpressPosts.Count);
-
-            WpImportManager.ImportPosts(blogItem, listWordpressPosts, db, (itemName, count) =>
-                                                                              {
-                                                                                  LogMessage("Importing entry " + itemName);
-                                                                                  LogProgress(count);
-                                                                              });
+                importManager.ImportPosts(blogItem, (itemName, count) =>
+                {
+                    LogMessage("Importing entry " + itemName);
+                    LogProgress(count);
+                });
+            }
+            else
+            {
+                LogMessage(String.Format("Parent item for blog root could not be found ({0})", litSummaryPath.Text));
+            }
         }
 
         protected void CheckStatus()
@@ -236,24 +244,24 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected void Upload(ClientPipelineArgs args)
         {
             if (!args.IsPostBack)
-		{
-			UploadPackageForm.Show(ApplicationContext.PackagePath, true);
-			args.WaitForPostBack();
-			return;
-		}
-		if (args.Result.StartsWith("ok:"))
-		{
-			string str = args.Result.Substring("ok:".Length);
+            {
+                UploadPackageForm.Show(ApplicationContext.PackagePath, true);
+                args.WaitForPostBack();
+                return;
+            }
+            if (args.Result.StartsWith("ok:"))
+            {
+                string str = args.Result.Substring("ok:".Length);
 
-            WordpressXmlFile.Value = str;
-		}
+                WordpressXmlFile.Value = str;
+            }
         }
 
         [HandleMessage("installer:browse", true)]
         protected void Browse(ClientPipelineArgs args)
         {
-            if (args.IsPostBack &&  args.HasResult)
-            { 
+            if (args.IsPostBack && args.HasResult)
+            {
                 if (WordpressXmlFile != null)
                 {
                     WordpressXmlFile.Value = args.Result;

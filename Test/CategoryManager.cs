@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web;
 using NUnit.Framework;
+using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
@@ -36,6 +37,9 @@ namespace Sitecore.Modules.WeBlog.Test
                 using (new EventDisabler())
                 {
                     m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\category manager content.xml")), false, PasteMode.Overwrite);
+
+                    // Had some weirdness with field values not being seen
+                    CacheManager.ClearAllCaches();
                 }
             }
             Initialize();

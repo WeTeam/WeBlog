@@ -18,13 +18,14 @@ TestResults
 # Local WIP files
 todo.txt
 
-# Package folders
-packages
-node_modules
-bower_components
-
 # Log files
 *.log
 
 # Theme output
-Themes\build
+Themes/build
+
+# Package folders
+node_modules/
+bower_components/
+packages/
+.vs/

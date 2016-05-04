@@ -1,0 +1,77 @@
+----item----
+version: 1
+id: {BA5DAD8B-207D-4ADE-99AD-2B77B563BCA4}
+database: core
+path: /sitecore/client/Applications/WeBlog/Import/PageSettings/TabControl Parameters/Select File
+parent: {D0852AF7-E3F7-4B9F-9265-79E8506B4858}
+name: Select File
+master: {00000000-0000-0000-0000-000000000000}
+template: {F62B4CD7-754C-4461-810F-2B6BD2C92A0D}
+templatekey: Tab
+
+----field----
+field: {FADD4553-BC08-4CBB-8099-5BC2C1F8A892}
+name: Is Active
+key: is active
+content-length: 1
+
+1
+----field----
+field: {DEAB3795-056F-4421-ADF0-758844461B72}
+name: Placeholder Name
+key: placeholder name
+content-length: 3
+
+Tab
+----field----
+field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
+name: __Renderings
+key: __renderings
+content-length: 400
+
+<r>
+  <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
+    <r id="{73C16115-8B56-43AF-8EA3-4D704FCDA127}" par="Id=Separator" uid="{5FF0FF7B-512B-4559-8C7D-E9F46A31389A}" />
+    <r id="{B2257CAC-47CA-4061-9352-C06D687ED32C}" par="Database=master&amp;Id=Uploader&amp;DestinationUrl=%2fsitecore%2fmedia+library%2fModules%2fWeBlog%2fImport" uid="{BD355B8A-F453-4519-B25C-6DE7DB5B63B4}" />
+  </d>
+</r>
+----version----
+language: en
+version: 1
+revision: 783e81d7-92bc-447c-ac9f-016692a0153c
+
+----field----
+field: {AEA872FB-AA91-4D1A-B877-3CA6FBBB4FD4}
+name: Header
+key: header
+content-length: 3
+
+Tab
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160315T211215Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+783e81d7-92bc-447c-ac9f-016692a0153c
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160316T193628Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
