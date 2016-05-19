@@ -158,7 +158,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 
                 var categoriesFolder = blogItem.Axes.GetChild("Categories");
                 
-                CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, new ID(CategoryItem.TemplateId), categoriesFolder);
+                CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, CategoryItem.TemplateId, categoriesFolder);
                 newCategory.BeginEdit();
                 newCategory.Title.Field.Value = categoryName;
                 newCategory.EndEdit();

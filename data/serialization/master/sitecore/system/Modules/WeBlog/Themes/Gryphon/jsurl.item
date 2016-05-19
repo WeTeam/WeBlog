@@ -1,0 +1,86 @@
+----item----
+version: 1
+id: {2657CCAB-9E66-4634-AA74-DF744AF8388B}
+database: master
+path: /sitecore/system/Modules/WeBlog/Themes/Gryphon/jsurl
+parent: {D2E889B8-6916-42BB-A12F-E88DE460BB6F}
+name: jsurl
+master: {00000000-0000-0000-0000-000000000000}
+template: {E7FE27D8-1999-492A-99BF-53E66C2FC310}
+templatekey: Script
+
+----field----
+field: {906C629F-E173-4B48-B415-32EB14474592}
+name: Url
+key: url
+content-length: 57
+
+/sitecore modules/Web/WeBlog/Themes/common/lib/url.min.js
+----field----
+field: {5EC4E81F-F566-4106-AA29-25C2E21317A3}
+name: Verification Object
+key: verification object
+content-length: 0
+
+
+----field----
+field: {A124DE7F-0A96-4117-8EF7-9550CFF6E39E}
+name: Fallback Url
+key: fallback url
+content-length: 0
+
+
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+400
+----version----
+language: en
+version: 1
+revision: 3d74a0bb-2032-445b-9677-20d3bef08729
+
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160212T124339Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+3d74a0bb-2032-445b-9677-20d3bef08729
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 35
+
+20160302T233512:635925585124646266Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

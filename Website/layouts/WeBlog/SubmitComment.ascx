@@ -15,25 +15,36 @@
     <asp:validationsummary id="ValidationSummaryComments" runat="server" headertext="The following fields are not filled in:" forecolor="Red" EnableClientScript="true" CssClass="wb-error"  />
 
     <asp:Panel runat="server" ID="MessagePanel" CssClass="wb-successtext" Visible="false">
-        <asp:Literal runat="server" ID="Message" />
+        <p>
+            <asp:Literal runat="server" ID="Message" />
+        </p>
     </asp:Panel>
-
-    <asp:Label ID="lblCommentName" runat="server" AssociatedControlID="txtCommentName"><%=Translator.Render("NAME")%></asp:Label>
-    <asp:TextBox ID="txtCommentName" runat="server" CssClass="wb-textbox"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="rfvCommentName" runat="server" Text="*" ErrorMessage="Username" ControlToValidate="txtCommentName" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
-    <br />
-    <asp:Label ID="lblCommentEmail" runat="server" AssociatedControlID="txtCommentEmail"><%=Translator.Render("EMAIL")%></asp:Label>   
-    <asp:TextBox ID="txtCommentEmail" runat="server" CssClass="wb-textbox"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="rfvCommentEmail" runat="server" ErrorMessage="Email" Text="*" ControlToValidate="txtCommentEmail" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
-    <br />
-    <asp:Label ID="lblCommentWebsite" runat="server" Text="Website" AssociatedControlID="txtCommentWebsite"><%=Translator.Render("WEBSITE")%></asp:Label>
-    <asp:TextBox ID="txtCommentWebsite" runat="server" CssClass="wb-textbox"></asp:TextBox>
-    <br />            
-    <asp:Label ID="lblCommentText" runat="server" AssociatedControlID="txtCommentText"><%=Translator.Render("COMMENT")%></asp:Label>  
-    <asp:TextBox ID="txtCommentText" runat="server" TextMode="MultiLine" Rows="10" Columns="60"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
-    <sc:PlaceHolder runat="server" key="weblog-comment-form" />
-    <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" CssClass="wb-submit" />
+    
+    <p>
+        <asp:Label ID="lblCommentName" runat="server" AssociatedControlID="txtCommentName"><%=Translator.Render("NAME")%></asp:Label>
+        <asp:TextBox ID="txtCommentName" runat="server" CssClass="wb-textbox"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvCommentName" runat="server" Text="*" ErrorMessage="Username" ControlToValidate="txtCommentName" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+    </p>
+    <p>
+        <asp:Label ID="lblCommentEmail" runat="server" AssociatedControlID="txtCommentEmail"><%=Translator.Render("EMAIL")%></asp:Label>   
+        <asp:TextBox ID="txtCommentEmail" runat="server" CssClass="wb-textbox"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvCommentEmail" runat="server" ErrorMessage="Email" Text="*" ControlToValidate="txtCommentEmail" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+    </p>
+    <p>
+        <asp:Label ID="lblCommentWebsite" runat="server" Text="Website" AssociatedControlID="txtCommentWebsite"><%=Translator.Render("WEBSITE")%></asp:Label>
+        <asp:TextBox ID="txtCommentWebsite" runat="server" CssClass="wb-textbox"></asp:TextBox>
+    </p>
+    <p>
+        <asp:Label ID="lblCommentText" runat="server" AssociatedControlID="txtCommentText"><%=Translator.Render("COMMENT")%></asp:Label>  
+        <asp:TextBox ID="txtCommentText" runat="server" TextMode="MultiLine" Rows="10" Columns="60"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+    </p>
+    <p class="wb-comment-form-wrapper">
+        <sc:PlaceHolder runat="server" key="weblog-comment-form" />
+    </p>
+    <p>
+        <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" CssClass="wb-submit" />
+    </p>
 </asp:Panel>
 
 <script type="text/javascript">

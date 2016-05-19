@@ -9,10 +9,15 @@ namespace Sitecore.Modules.WeBlog.Components.Parameters
             var renderingContext = RenderingContext.CurrentOrNull;
             if (renderingContext != null)
             {
-                Parameters = Web.WebUtil.ParseUrlParameters(renderingContext.Rendering.Properties["Parameters"]);
-                if (applyProperties)
+                var rawParameters = renderingContext.Rendering.Properties["Parameters"];
+
+                if (!string.IsNullOrEmpty(rawParameters))
                 {
-                    ApplyParameters(controller);
+                    Parameters = Web.WebUtil.ParseUrlParameters(rawParameters);
+                    if (applyProperties)
+                    {
+                        ApplyParameters(controller);
+                    }
                 }
             }
         }
