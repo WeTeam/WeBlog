@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Sitecore.IO;
+using Sitecore.Modules.WeBlog.Configuration;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter
 {
@@ -28,7 +29,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter
 
         private string ResovePathTokens(string filePath)
         {
-            return filePath.Replace("$(dataFolder)", Configuration.Settings.DataFolder);
+            return filePath.Replace("$(dataFolder)", Sitecore.Configuration.Settings.DataFolder);
         }
     }
 }

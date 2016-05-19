@@ -29,7 +29,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public BlogHomeItem GetCurrentBlog(Item item)
         {
-            var blogItem = item.GetCurrentItem(Settings.BlogTemplateIDString);
+            var blogItem = item.FindAncestorByTemplate(Settings.BlogTemplateIDString);
 
             if (blogItem != null)
                 return new BlogHomeItem(blogItem);

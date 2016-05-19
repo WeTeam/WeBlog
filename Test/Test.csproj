@@ -136,7 +136,6 @@
     <Compile Include="CustomBlog\TagManager.cs" />
     <Compile Include="EntryManager.cs" />
     <Compile Include="MetaBlogApi.cs" />
-    <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="Pipelines\GetSummary\AutoGenerateTest.cs" />
     <Compile Include="Pipelines\GetSummary\FirstContentBlockTest.cs" />
     <Compile Include="Pipelines\GetSummary\WrapTest.cs" />

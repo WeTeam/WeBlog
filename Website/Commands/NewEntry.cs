@@ -71,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                 }
                 else
                 {
-                    SheerResponse.Input("Enter the title of your new entry:", "", Configuration.Settings.ItemNameValidation, Translator.Text("'$Input' is not a valid title."), 100);
+                    SheerResponse.Input("Enter the title of your new entry:", "", Sitecore.Configuration.Settings.ItemNameValidation, Translator.Text("'$Input' is not a valid title."), 100);
                     args.WaitForPostBack(true);
                 }
             }

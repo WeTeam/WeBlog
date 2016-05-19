@@ -82,9 +82,7 @@ namespace Sitecore.Modules.WeBlog.Caching
                     }
                     else
                     {
-                        string cacheSizeStr = Configuration.Settings.GetSetting(
-                            Settings.GlobalizationCacheSize, DefaultCacheSize);
-                        long cacheSize = StringUtil.ParseSizeString(cacheSizeStr);
+                        long cacheSize = StringUtil.ParseSizeString(Settings.GlobalizationCacheSize);
                         siteDictionary = new Cache(CacheName, cacheSize);
                         Caches[CacheName] = siteDictionary;
                     }

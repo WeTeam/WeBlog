@@ -6,6 +6,7 @@ using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -23,13 +24,27 @@ namespace Sitecore.Modules.WeBlog.Managers
     public class CommentManager : ICommentManager
     {
         /// <summary>
+        /// The settings to use.
+        /// </summary>
+        protected IWeBlogSettings Settings = null;
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
+        public CommentManager([CanBeNull] IWeBlogSettings settings = null)
+        {
+            Settings = settings ?? new WeBlogSettings();
+        }
+
+        /// <summary>
         /// Adds a comment to a blog
         /// </summary>
         /// <param name="entryId">The ID of the entry to add the comment to</param>
         /// <param name="comment">The comment to add to the entry</param>
         /// <param name="language">The language to create the comment in</param>
         /// <returns>The ID of the created comment item, or ID.Null if creation failed</returns>
-        public ID AddCommentToEntry(ID entryId, Model.Comment comment, Language language = null)
+        public virtual ID AddCommentToEntry(ID entryId, Model.Comment comment, Language language = null)
         {
             var args = new CreateCommentArgs();
             args.EntryID = entryId;
@@ -45,7 +60,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return ID.Null;
         }
 
-        protected void AddComment(EntryItem entryItem, WpComment wpComment)
+        protected virtual void AddComment(EntryItem entryItem, WpComment wpComment)
         {
             // todo: Wizard to ask user which language to import into
             string itemName = ItemUtil.ProposeValidItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
@@ -67,9 +82,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="comment">The comment to add to the entry</param>
         /// <param name="language">The language to create the comment in</param>
         /// <returns>The ID of the created comment item, or ID.Null if creation failed</returns>
-        public ID SubmitComment(ID entryId, Model.Comment comment, Language language = null)
+        public virtual ID SubmitComment(ID entryId, Model.Comment comment, Language language = null)
         {
-            if (Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false))
+            if (Settings.CommentServiceEnabled)
             {
                 // Submit comment through WCF service
                 ChannelFactory<ICommentService> commentProxy = new ChannelFactory<ICommentService>("WeBlogCommentService");
@@ -90,7 +105,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="language">The language to check comments in</param>
         /// <returns>The number of comments</returns>
-        public int GetCommentsCount(Language language = null)
+        public virtual int GetCommentsCount(Language language = null)
         {
             var item = Context.Item;
             if (language != null)
@@ -104,7 +119,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entry">The entry to get the comment count for</param>
         /// <returns>The number of comments</returns>
-        public int GetCommentsCount(Item entry)
+        public virtual int GetCommentsCount(Item entry)
         {
             return GetEntryComments(entry).Length;
         }
@@ -115,7 +130,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="entryId">The ID of the entry to get the comment count for</param>
         /// <param name="language">The language to check comments in</param>
         /// <returns>The number of comments</returns>
-        public int GetCommentsCount(ID entryId, Language language = null)
+        public virtual int GetCommentsCount(ID entryId, Language language = null)
         {
             Item entry = null;
 
@@ -137,7 +152,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <param name="language">The language to get the comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount, Language language = null)
+        public virtual CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount, Language language = null)
         {
             if (blogId != (ID)null)
             {
@@ -163,7 +178,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="blogItem">The blog to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
+        public virtual CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
         {
             return GetCommentsFor(blogItem, maximumCount, true, true);
         }
@@ -173,7 +188,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="language">The language to get comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetEntryComments(Language language = null)
+        public virtual CommentItem[] GetEntryComments(Language language = null)
         {
             return GetEntryComments(int.MaxValue, language);
         }
@@ -184,7 +199,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <param name="language">The language to get comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetEntryComments(int maximumCount, Language language = null)
+        public virtual CommentItem[] GetEntryComments(int maximumCount, Language language = null)
         {
             var blogItem = Context.Item;
             if (language != null && blogItem.Language != language && blogItem.Languages.Contains(language))
@@ -197,7 +212,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entryItem">The blog entry to get the comments for</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetEntryComments(Item entryItem)
+        public virtual CommentItem[] GetEntryComments(Item entryItem)
         {
             return GetEntryComments(entryItem, int.MaxValue);
         }
@@ -208,13 +223,12 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="entryItem">The blog entry to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public CommentItem[] GetEntryComments(Item entryItem, int maximumCount)
+        public virtual CommentItem[] GetEntryComments(Item entryItem, int maximumCount)
         {
             if (entryItem != null)
             {
-                var template = GetDatabase().GetTemplate(Settings.EntryTemplateIDString);
-                if (entryItem.TemplateIsOrBasedOn(template))
-                {
+                if(entryItem.TemplateIsOrBasedOn(Settings.EntryTemplateIds))
+                { 
                     return GetCommentsFor(entryItem, maximumCount, true);
                 }
             }
@@ -229,7 +243,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <param name="language">The language to get the comments in</param>
         /// <returns>The comments which are decendants of the given item</returns>
-        public CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false)
+        public virtual CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false)
         {
             if (item != null && maximumCount > 0)
             {
@@ -280,7 +294,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the appropriate database to be reading data from
         /// </summary>
         /// <returns>The appropriate content database</returns>
-        protected Database GetDatabase()
+        protected virtual Database GetDatabase()
         {
             return Context.ContentDatabase ?? Context.Database;
         }
