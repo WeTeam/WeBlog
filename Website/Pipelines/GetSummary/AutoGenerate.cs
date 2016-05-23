@@ -51,7 +51,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
         protected override void GetSummary(GetSummaryArgs args)
         {
             if (args.Entry == null)
+            {
+                args.Summary = string.Empty;
                 return;
+            }
 
             var content = args.Entry[FieldName];
             if(StripTags)

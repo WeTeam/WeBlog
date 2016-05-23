@@ -18,7 +18,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// </summary>
         /// <param name="item">The item to test the template of</param>
         /// <param name="template">The template which the item's template should be or inherit from</param>
-        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        /// <returns>True if the item's template is based on the given template, otherwise false</returns>
         [Obsolete("Use TemplateIsOrBasedOn(Item, ID) instead.")] // deprecated 3.0
         public static bool TemplateIsOrBasedOn(this Item item, TemplateItem template)
         {
@@ -33,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// </summary>
         /// <param name="item">The item to test the template of</param>
         /// <param name="templateId">The ID of the template which the item's template should be or inherit from</param>
-        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        /// <returns>True if the item's template is based on the given template, otherwise false</returns>
         public static bool TemplateIsOrBasedOn(this Item item, ID templateId)
         {
             return TemplateIsOrBasedOn(item, new[] { templateId });
@@ -44,8 +44,8 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// Determine if an item is based on a given template or if the item's template is based on the given template
         /// </summary>
         /// <param name="item">The item to test the template of</param>
-        /// <param name="templateId">The ID of the template which the item's template should be or inherit from</param>
-        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        /// <param name="templateIds">The IDs of the templates which the item's template should be or inherit from</param>
+        /// <returns>True if the item's template is based on the given templates, otherwise false</returns>
         public static bool TemplateIsOrBasedOn(this Item item, IEnumerable<ID> templateIds)
         {
             if (item == null || templateIds == null || !templateIds.Any())
@@ -67,7 +67,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// </summary>
         /// <param name="item">The item to test the template of</param>
         /// <param name="template">The template which the item's template should be or inherit from</param>
-        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        /// <returns>True if the item's template is based on the given template, otherwise false</returns>
         [Obsolete("Use TemplateManager.DescendsFromOrEquals instead.")] // deprecated 3.0
         public static bool TemplateIsOrBasedOn(TemplateItem itemTemplate, TemplateItem baseTemplate)
         {
@@ -79,7 +79,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// </summary>
         /// <param name="item">The item to test the template of</param>
         /// <param name="template">The ID of the template which the item's template should be or inherit from</param>
-        /// <returns>True if the item's template is based on the given template, otherwsie false</returns>
+        /// <returns>True if the item's template is based on the given template, otherise false</returns>
         [Obsolete("Use TemplateIsOrBasedOn(Item, ID) instead.")] // deprecated 3.0
         public static bool TemplateIsOrBasedOn(TemplateItem itemTemplate, ID baseTemplate)
         {

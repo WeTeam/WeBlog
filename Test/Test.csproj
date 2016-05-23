@@ -136,11 +136,6 @@
     <Compile Include="CustomBlog\TagManager.cs" />
     <Compile Include="EntryManager.cs" />
     <Compile Include="MetaBlogApi.cs" />
-    <Compile Include="Pipelines\GetSummary\AutoGenerateTest.cs" />
-    <Compile Include="Pipelines\GetSummary\FirstContentBlockTest.cs" />
-    <Compile Include="Pipelines\GetSummary\WrapTest.cs" />
-    <Compile Include="Pipelines\ProfanityFilter\ValidateInputTest.cs" />
-    <Compile Include="Pipelines\ProfanityFilter\FilterWordsTest.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
@@ -187,9 +182,9 @@
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
     <Copy SourceFiles="App_Config\Include\zWeBlog.Test.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" />
     <CreateItem Include="$(OutDir)\*.dll">
-      <Output ItemName="BinFiles" TaskParameter="Include"/>
+      <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
-    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin"/>
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
     <CallTarget Targets="ContentSearchConfig" />
   </Target>
   <Target Name="ContentSearchConfig">

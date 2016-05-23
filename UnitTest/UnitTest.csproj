@@ -73,7 +73,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryManagerFixture.cs" />
-    <Compile Include="ItemExtensionsFixture.cs" />
+    <Compile Include="Extensions\ItemExtensionsFixture.cs" />
+    <Compile Include="Pipelines\GetSummary\AutoGenerateFixture.cs" />
+    <Compile Include="Pipelines\GetSummary\FirstContentBlockFixture.cs" />
+    <Compile Include="Pipelines\GetSummary\WrapFixture.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\FilterWordsFixture.cs" />
+    <Compile Include="Pipelines\ProfanityFilter\ValidateInputFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

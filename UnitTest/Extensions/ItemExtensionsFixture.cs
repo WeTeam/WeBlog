@@ -8,7 +8,7 @@ using Sitecore.FakeDb.Links;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
 
-namespace Sitecore.Modules.WeBlog.UnitTest
+namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 {
     [TestFixture]
     public class ItemExtensionsFixture
