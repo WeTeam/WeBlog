@@ -124,7 +124,6 @@
     <Content Include="Test.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomBlog\BlogManager.cs" />
     <Compile Include="CategoryManager.cs" />
     <Compile Include="CommentManager.cs" />
     <Compile Include="Constants.cs" />
