@@ -63,7 +63,9 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Nexus.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -74,6 +76,7 @@
   <ItemGroup>
     <Compile Include="EntryManagerFixture.cs" />
     <Compile Include="Extensions\ItemExtensionsFixture.cs" />
+    <Compile Include="Managers\BlogManagerFixture.cs" />
     <Compile Include="Pipelines\GetSummary\AutoGenerateFixture.cs" />
     <Compile Include="Pipelines\GetSummary\FirstContentBlockFixture.cs" />
     <Compile Include="Pipelines\GetSummary\WrapFixture.cs" />
