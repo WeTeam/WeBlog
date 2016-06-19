@@ -50,10 +50,9 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 var children = categoryRoot.GetChildren();
                 return (from childItem in children
-                    from templateId in Settings.CategoryTemplateIds
-                    where childItem.TemplateIsOrBasedOn(templateId)
+                    where childItem.TemplateIsOrBasedOn(Settings.CategoryTemplateIds)
                     && childItem.Versions.Count > 0
-                    select new CategoryItem(item)).ToArray();
+                    select new CategoryItem(childItem)).ToArray();
             }
 
             return new CategoryItem[0];
@@ -69,8 +68,8 @@ namespace Sitecore.Modules.WeBlog.Managers
             var item = Context.Database.GetItem(Id);
             if (item != null)
                 return GetCategories(item);
-            else
-                return new CategoryItem[0];
+            
+            return new CategoryItem[0];
         }
 
         /// <summary>
@@ -82,7 +81,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual CategoryItem GetCategory(Item item, string name)
         {
             var categoryRoot = GetCategoryRoot(item);
-            return categoryRoot.Axes.GetChild(name);
+            if(categoryRoot != null)
+                return categoryRoot.Axes.GetChild(name);
+
+            return null;
         }
 
         /// <summary>
@@ -93,23 +95,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual Item GetCategoryRoot(Item item)
         {
             var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
-            //var templateId = item.T GetDatabase().GetTemplate(Settings.BlogTemplateID);
 
-            //if (template != null)
-            {
-                
-
-                //Check if current item equals blogroot
-                /*while (blogItem != null && !blogItem.TemplateIsOrBasedOn(template))
-                {
-                    blogItem = blogItem.Parent;
-                }*/
-
-                if (blogItem != null)
-                {
-                    return blogItem.Axes.GetChild("Categories");
-                }
-            }
+            if (blogItem != null)
+                return blogItem.Axes.GetChild("Categories");
 
             return null;
         }
@@ -122,66 +110,54 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns></returns>
         public virtual CategoryItem Add(string categoryName, Item item)
         {
-            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
-
-            //var template = GetDatabase().GetTemplate(Settings.BlogTemplateID);
-
-            //if (template != null)
+            // Get all categories from current blog                
+            var categories = GetCategories(item);
+                
+            // If there are categories, check if it already contains the categoryName
+            if (categories.Any())
             {
-                //Check if current item equals blogroot
-                /*while (blogItem != null && !blogItem.TemplateIsOrBasedOn(template))
-                {
-                    blogItem = blogItem.Parent;
-                }*/
-
-                if (blogItem == null)
-                    return null;
-
-                // Get all categories from current blog                
-                CategoryItem[] categories = GetCategories(blogItem);
-                
-                // If there are categories, check if it already contains the categoryName
-                if (categories.Count() > 0)
-                {
-                    var resultList = categories.Where(x => x.Title.Raw.ToLower() == categoryName.ToLower());
-                    var result = resultList.Count() == 0 ? null : resultList.First();
-                    
-                    // If category is found return ID
-                    if (result != null)
-                    {
-                        return result;
-                    }
-                }
-
-                // Category doesn't exist so create it
-                if (blogItem == null) return null;
-                
-                var categoriesFolder = blogItem.Axes.GetChild("Categories");
-                
-                CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, CategoryItem.TemplateId, categoriesFolder);
-                newCategory.BeginEdit();
-                newCategory.Title.Field.Value = categoryName;
-                newCategory.EndEdit();
-                
-                return newCategory;
+                var existingCategory = categories.Where(x => x.Title.Raw.CompareTo(categoryName) == 0);
+                if (existingCategory.Any())
+                    return existingCategory.First();
             }
-            return null;
+
+            // Category doesn't exist so create it
+            var categoryRoot = GetCategoryRoot(item);
+            if (categoryRoot == null)
+                return null;
+
+            CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, Settings.CategoryTemplateIds.First(), categoryRoot);
+            newCategory.BeginEdit();
+            newCategory.Title.Field.Value = categoryName;
+            newCategory.EndEdit();
+                
+            return newCategory;
         }
 
         /// <summary>
-        /// Gets the categories for the blog entry given by ID
+        /// Gets the categories for the blog entry given by ID.
         /// </summary>
-        /// <param name="entryId">The ID of the blog entry to get teh categories from</param>
-        /// <returns>The categories of the blog</returns>
+        /// <param name="entryId">The ID of the blog entry to get the categories from.</param>
+        /// <returns>The categories of the blog entry.</returns>
         public virtual CategoryItem[] GetCategoriesByEntryID(ID entryId)
+        {
+            var item = GetDatabase().GetItem(entryId);
+            return GetCategoriesForEntry(item);
+        }
+
+        /// <summary>
+        /// Gets the categories for the blog entry
+        /// </summary>
+        /// <param name="entry">The blog entry to get the categories for.</param>
+        /// <returns>The categories of the blog entry.</returns>
+        public virtual CategoryItem[] GetCategoriesForEntry(Item entry)
         {
             var categoryList = new List<CategoryItem>();
 
-            var item = GetDatabase().GetItem(entryId);
+            if (entry == null)
+                return categoryList.ToArray();
 
-            if (item == null) return categoryList.ToArray();
-
-            var currentEntry = new EntryItem(item);
+            var currentEntry = new EntryItem(entry);
 
             categoryList.AddRange(currentEntry.Category.ListItems.Select(cat => new CategoryItem(cat)));
 

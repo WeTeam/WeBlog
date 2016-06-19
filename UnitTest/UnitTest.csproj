@@ -77,6 +77,7 @@
     <Compile Include="EntryManagerFixture.cs" />
     <Compile Include="Extensions\ItemExtensionsFixture.cs" />
     <Compile Include="Managers\BlogManagerFixture.cs" />
+    <Compile Include="Managers\CategoryManagerFixture.cs" />
     <Compile Include="Pipelines\GetSummary\AutoGenerateFixture.cs" />
     <Compile Include="Pipelines\GetSummary\FirstContentBlockFixture.cs" />
     <Compile Include="Pipelines\GetSummary\WrapFixture.cs" />
