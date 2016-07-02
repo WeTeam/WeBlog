@@ -39,11 +39,11 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 using (new EventDisabler())
                 {
-                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
+                    TestContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\MetaBlog content.xml")), true, PasteMode.Overwrite);
                 }
 
                 // Retrieve created content items
-                m_testRoot = m_testContentRoot.Axes.GetChild("test content");
+                m_testRoot = TestContentRoot.Axes.GetChild("test content");
                 m_blog1 = m_testRoot.Axes.GetChild("blog1");
                 m_blog2 = m_testRoot.Axes.GetChild("blog2");
                 m_blog3 = m_testRoot.Axes.GetChild("blog3");

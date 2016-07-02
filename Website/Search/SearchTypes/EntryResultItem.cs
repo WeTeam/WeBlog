@@ -1,4 +1,5 @@
-﻿using Sitecore.ContentSearch;
+﻿using System;
+using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data;
 
@@ -7,14 +8,17 @@ namespace Sitecore.Modules.WeBlog.Search.SearchTypes
     public class EntryResultItem : SearchResultItem
     {
 #if SC70
-      [IndexField("Category")]
+      [IndexField("category")]
       public string Category { get; set; }
 #else
-        [IndexField("Category")]
+        [IndexField("category")]
         public ID[] Category { get; set; }
 #endif
 
-        [IndexField("Tags")]
+        [IndexField("tags")]
         public string Tags { get; set; }
+
+        [IndexField("entry_date")]
+        public DateTime EntryDate { get; set; }
     }
 }

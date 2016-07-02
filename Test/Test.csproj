@@ -107,9 +107,6 @@
     <Content Include="test data\entries in order.xml" />
     <Content Include="test data\entries out of order.xml" />
     <Content Include="test data\entries reverse order.xml" />
-    <Content Include="test data\entry manager content.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="test data\German Language.xml" />
     <Content Include="test data\MetaBlog content.xml">
       <SubType>Designer</SubType>
@@ -130,7 +127,7 @@
     <Compile Include="CustomBlog\EntryManager.cs" />
     <Compile Include="CustomBlog\Extensions.cs" />
     <Compile Include="CustomBlog\TagManager.cs" />
-    <Compile Include="EntryManager.cs" />
+    <Compile Include="EntryManagerFixture.cs" />
     <Compile Include="MetaBlogApi.cs" />
     <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">

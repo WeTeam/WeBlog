@@ -33,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 using (new EventDisabler())
                 {
-                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
+                    TestContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\tag manager content.xml")), false, PasteMode.Overwrite);
 
                     // Had some weirdness with field values not being seen
                     CacheManager.ClearAllCaches();
@@ -46,7 +46,7 @@ namespace Sitecore.Modules.WeBlog.Test
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_testContentRoot.Axes.GetChild("blog testroot");
+            m_testRoot = TestContentRoot.Axes.GetChild("blog testroot");
             m_blog1 = m_testRoot.Axes.GetChild("myblog");
 
             m_entry1 = m_blog1.Axes.GetDescendant("Entry1");

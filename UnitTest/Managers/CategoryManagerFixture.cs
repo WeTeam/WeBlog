@@ -422,10 +422,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
 
         private IWeBlogSettings MockSettings(params ID[] categoryTemplateIds)
         {
-            var blogTemplateId = ID.NewID;
-
             return Mock.Of<IWeBlogSettings>(x =>
-                x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId } &&
+                x.BlogTemplateIds == new[] { ID.NewID, ID.NewID } &&
                 x.CategoryTemplateIds == categoryTemplateIds &&
                 x.EntryTemplateIds == new[]{ ID.NewID }
             );

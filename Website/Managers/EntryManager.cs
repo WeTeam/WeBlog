@@ -13,7 +13,6 @@ using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
-using Sitecore.StringExtensions;
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Analytics.Reporting;
@@ -45,44 +44,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             Settings = settings ?? new WeBlogSettings();
         }
 #else
-        public EntryManager(, IWeBlogSettings settings = null)
+        public EntryManager(IWeBlogSettings settings = null)
         {
             Settings = settings ?? new WeBlogSettings();
         }
 #endif
-
-        /// <summary>
-        /// Gets the current context item as a blog entry
-        /// </summary>
-        /// <returns>The current blog entry</returns>
-        public virtual EntryItem GetCurrentBlogEntry()
-        {
-            var current = new EntryItem(Context.Item);
-            return current;
-        }
-
-        /// <summary>
-        /// Gets the current context item as a blog entry
-        /// </summary>
-        /// <param name="item">The item to find the current entry item for</param>
-        /// <returns>The current blog entry</returns>
-        public virtual EntryItem GetCurrentBlogEntry(Item item)
-        {
-            return (from templateId in Settings.EntryTemplateIds
-                let entryItem = item.FindAncestorByTemplate(templateId)
-                where entryItem != null
-                select new EntryItem(entryItem)).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Deletes a blog post
-        /// </summary>
-        /// <param name="postID">The ID of the post to delete</param>
-        /// <returns>True if the post was deleted, otherwise False</returns>
-        public virtual bool DeleteEntry(string postID)
-        {
-            return DeleteEntry(postID, Sitecore.Context.Database);
-        }
 
         /// <summary>
         /// Deletes a blog post
@@ -117,46 +83,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
 
         /// <summary>
-        /// Gets blog entries for the current blog
-        /// </summary>
-        /// <returns>The entries for the current blog</returns>
-        public virtual EntryItem[] GetBlogEntries()
-        {
-            return GetBlogEntries(Context.Item, int.MaxValue, null, null, (DateTime?)null);
-        }
-
-        /// <summary>
-        /// Gets blog entries for the current blog up to the maximum number given
-        /// </summary>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <returns>The entries for the current blog</returns>
-        public virtual EntryItem[] GetBlogEntries(int maxNumber)
-        {
-            return GetBlogEntries(Context.Item, maxNumber, null, null, (DateTime?)null);
-        }
-
-        /// <summary>
-        /// Gets blog entries for the current blog containing the given tag
-        /// </summary>
-        /// <param name="tag">A tag the entry must contain</param>
-        /// <returns>The entries for the current blog containing the given tag</returns>
-        public virtual EntryItem[] GetBlogEntries(string tag)
-        {
-            return GetBlogEntries(Context.Item, int.MaxValue, tag, null, (DateTime?)null);
-        }
-
-        /// <summary>
-        /// Gets blog entries for the current blog containing the given tag up to the maximum number given
-        /// </summary>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <param name="tag">A tag the entry must contain</param>
-        /// <returns>The entries for the current blog containing the given tag</returns>
-        public virtual EntryItem[] GetBlogEntries(int maxNumber, string tag)
-        {
-            return GetBlogEntries(Context.Item, maxNumber, tag, null, (DateTime?)null);
-        }
-
-        /// <summary>
         /// Gets blog entries for the given blog
         /// </summary>
         /// <param name="blogItem">The blog item to retrieve the entries for</param>
@@ -164,17 +90,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual EntryItem[] GetBlogEntries(Item blogItem)
         {
             return GetBlogEntries(blogItem, int.MaxValue, null, null, (DateTime?)null);
-        }
-
-        /// <summary>
-        /// Gets blog entries for the given blog up to the maximum number given
-        /// </summary>
-        /// <param name="blogID">The ID of the blog to get the entries for</param>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <returns>The entries for the given blog</returns>
-        public virtual EntryItem[] GetBlogEntries(ID blogID, int maxNumber)
-        {
-            return GetBlogEntries(blogID, Context.Database, maxNumber);
         }
 
         /// <summary>
@@ -197,18 +112,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets blog entries for the given blog up to the maximum number given
         /// </summary>
         /// <param name="blogID">The ID of the blog to get the entries for</param>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <param name="tag">A tag the entry must contain</param>
-        /// <returns>The entries for the given blog</returns>
-        public virtual EntryItem[] GetBlogEntries(ID blogID, int maxNumber, string tag)
-        {
-            return GetBlogEntries(blogID, Context.Database, maxNumber, tag);
-        }
-
-        /// <summary>
-        /// Gets blog entries for the given blog up to the maximum number given
-        /// </summary>
-        /// <param name="blogID">The ID of the blog to get the entries for</param>
         /// <param name="database">The database to get the blog from</param>
         /// <param name="maxNumber">The maximum number of entries to retrieve</param>
         /// <param name="tag">A tag the entry must contain</param>
@@ -220,38 +123,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return GetBlogEntries(blog, maxNumber, tag, null, (DateTime?)null);
             else
                 return new EntryItem[0];
-        }
-
-        /// <summary>
-        /// Gets blog entries for the given blog up to the maximum number given
-        /// </summary>
-        /// <param name="blog">The blog item to get the entries for</param>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <param name="tag">A tag the entry must contain</param>
-        /// <param name="category">A category the entry must contain</param>
-        /// <returns></returns>
-        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?) instead")] // deprecated in 2.4
-        public virtual EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null)
-        {
-            if (datePrefix.Length != 6)
-                return new EntryItem[0];
-
-            // First four digits should be year
-            var yearStr = datePrefix.Substring(0, 4);
-            var year = 0;
-            if (!int.TryParse(yearStr, out year))
-                return new EntryItem[0];
-
-            // Next two digits should be month
-            var monthStr = datePrefix.Substring(4, 2);
-            var month = 0;
-            if (!int.TryParse(monthStr, out month))
-                return new EntryItem[0];
-
-            if (month >= 13)
-                return new EntryItem[0];
-
-            return GetBlogEntries(blog, Int32.MaxValue, null, null, new DateTime(year, month, 1));
         }
 
         /// <summary>
@@ -329,10 +200,10 @@ namespace Sitecore.Modules.WeBlog.Managers
                     }
 
                     if (minimumDate != null)
-                        builder = builder.And(i => i.CreatedDate >= minimumDate);
+                        builder = builder.And(i => i.EntryDate >= minimumDate);
 
                     if (maximumDate != null)
-                        builder = builder.And(i => i.CreatedDate < maximumDate);
+                        builder = builder.And(i => i.EntryDate < maximumDate);
 
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
 
@@ -340,23 +211,12 @@ namespace Sitecore.Modules.WeBlog.Managers
                     {
                         var itemResults = indexresults.Select(indexresult => indexresult.GetItem()).ToList();
                         result = itemResults.Where(item => item != null).Select(i => new EntryItem(i)).ToList();
-                        result = result.OrderByDescending(post => post.EntryDate.DateTime).Take(maxNumber).ToList();
+                        result = result.OrderByDescending(post => post.EntryDate.DateTime).ThenBy(post => post.Created).Take(maxNumber).ToList();
                     }
                 }
             }
 
             return result.ToArray();
-        }
-
-        /// <summary>
-        /// Gets the blog entries for a particular month and year.
-        /// </summary>
-        /// <param name="month">The month to get the entries for</param>
-        /// <param name="year">The year to get the entries for</param>
-        /// <returns>The entries for the month and year from the current blog</returns>
-        public virtual EntryItem[] GetBlogEntriesByMonthAndYear(int month, int year)
-        {
-            return GetBlogEntriesByMonthAndYear(ManagerFactory.BlogManagerInstance.GetCurrentBlog(), month, year);
         }
 
         /// <summary>
@@ -373,48 +233,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var minDate = new DateTime(year, month, 1);
             var maxDate = minDate.AddMonths(1);
 
-            return GetBlogEntries(blog, Int32.MaxValue, null, null, minDate, maxDate);
-        }
-
-        /// <summary>
-        /// Gets the blog entry by categorie.
-        /// </summary>
-        /// <param name="blogId">The blog ID.</param>
-        /// <param name="categorieName">Name of the categorie.</param>
-        /// <returns>The entries of the blog tagged with the category</returns>
-        public virtual EntryItem[] GetBlogEntryByCategorie(ID blogId, string categorieName)
-        {
-            var categories = ManagerFactory.CategoryManagerInstance.GetCategories(blogId.ToString());
-            if (categories != null)
-            {
-                var category = (from cat in categories
-                                where string.Compare(cat.Name, categorieName, true) == 0
-                                select cat).FirstOrDefault();
-
-                if (category != null)
-                {
-                    return GetBlogEntryByCategorie(blogId, category.ID);
-                }
-            }
-
-            return new EntryItem[0];
-        }
-
-        /// <summary>
-        /// Gets the blog entry by categorie.
-        /// </summary>
-        /// <param name="BlogID">The blog ID.</param>
-        /// <param name="CategorieName">Name of the categorie.</param>
-        /// <returns></returns>
-        public virtual EntryItem[] GetBlogEntryByCategorie(ID blogId, ID categoryId)
-        {
-            var blogItem = Sitecore.Context.Database.GetItem(blogId);
-            var categoryItem = Sitecore.Context.Database.GetItem(categoryId);
-
-            if (blogItem != null && categoryItem != null)
-                return GetBlogEntries(blogItem, int.MaxValue, string.Empty, categoryItem.Name, (DateTime?)null);
-            else
-                return new EntryItem[0];
+            return GetBlogEntries(blog, int.MaxValue, null, null, minDate, maxDate);
         }
 
         /// <summary>
@@ -487,7 +306,204 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns></returns>
         public virtual EntryItem GetBlogEntryByComment(CommentItem commentItem)
         {
+            if (commentItem == null)
+                return null;
+
             return commentItem.InnerItem.FindAncestorByAnyTemplate(Settings.EntryTemplateIds);
+        }
+
+        #region Deprecated
+
+        /// <summary>
+        /// Gets the current context item as a blog entry
+        /// </summary>
+        /// <returns>The current blog entry</returns>
+        [Obsolete("Use EntryItem class instead.")] // deprecated 3.0
+        public virtual EntryItem GetCurrentBlogEntry()
+        {
+            var current = new EntryItem(Context.Item);
+            return current;
+        }
+        
+        /// <summary>
+        /// Gets the current context item as a blog entry
+        /// </summary>
+        /// <param name="item">The item to find the current entry item for</param>
+        /// <returns>The current blog entry</returns>
+        [Obsolete("Use EntryItem class instead.")] // deprecated 3.0
+        public virtual EntryItem GetCurrentBlogEntry(Item item)
+        {
+            return (from templateId in Settings.EntryTemplateIds
+                let entryItem = item.FindAncestorByTemplate(templateId)
+                where entryItem != null
+                select new EntryItem(entryItem)).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Deletes a blog post
+        /// </summary>
+        /// <param name="postID">The ID of the post to delete</param>
+        /// <returns>True if the post was deleted, otherwise False</returns>
+        [Obsolete("Use DeleteEntry(string, Database) instead.")] // deprecated 3.0
+        public virtual bool DeleteEntry(string postID)
+        {
+            return DeleteEntry(postID, Sitecore.Context.Database);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the current blog
+        /// </summary>
+        /// <returns>The entries for the current blog</returns>
+        [Obsolete("Use GetBlogEntries(Item) instead")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntries()
+        {
+            return GetBlogEntries(Context.Item, int.MaxValue, null, null, (DateTime?)null);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the current blog up to the maximum number given
+        /// </summary>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <returns>The entries for the current blog</returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntries(int maxNumber)
+        {
+            return GetBlogEntries(Context.Item, maxNumber, null, null, (DateTime?)null);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the current blog containing the given tag
+        /// </summary>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <returns>The entries for the current blog containing the given tag</returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntries(string tag)
+        {
+            return GetBlogEntries(Context.Item, int.MaxValue, tag, null, (DateTime?)null);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the current blog containing the given tag up to the maximum number given
+        /// </summary>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <returns>The entries for the current blog containing the given tag</returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntries(int maxNumber, string tag)
+        {
+            return GetBlogEntries(Context.Item, maxNumber, tag, null, (DateTime?)null);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blogID">The ID of the blog to get the entries for</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <returns>The entries for the given blog</returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntries(ID blogID, int maxNumber)
+        {
+            return GetBlogEntries(blogID, Context.Database, maxNumber);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blogID">The ID of the blog to get the entries for</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <returns>The entries for the given blog</returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntries(ID blogID, int maxNumber, string tag)
+        {
+            return GetBlogEntries(blogID, Context.Database, maxNumber, tag);
+        }
+
+        /// <summary>
+        /// Gets blog entries for the given blog up to the maximum number given
+        /// </summary>
+        /// <param name="blog">The blog item to get the entries for</param>
+        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
+        /// <param name="tag">A tag the entry must contain</param>
+        /// <param name="category">A category the entry must contain</param>
+        /// <returns></returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?) instead")] // deprecated in 2.4
+        public virtual EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, string datePrefix = null)
+        {
+            if (datePrefix.Length != 6)
+                return new EntryItem[0];
+
+            // First four digits should be year
+            var yearStr = datePrefix.Substring(0, 4);
+            var year = 0;
+            if (!int.TryParse(yearStr, out year))
+                return new EntryItem[0];
+
+            // Next two digits should be month
+            var monthStr = datePrefix.Substring(4, 2);
+            var month = 0;
+            if (!int.TryParse(monthStr, out month))
+                return new EntryItem[0];
+
+            if (month >= 13)
+                return new EntryItem[0];
+
+            return GetBlogEntries(blog, Int32.MaxValue, null, null, new DateTime(year, month, 1));
+        }
+
+        /// <summary>
+        /// Gets the blog entries for a particular month and year.
+        /// </summary>
+        /// <param name="month">The month to get the entries for</param>
+        /// <param name="year">The year to get the entries for</param>
+        /// <returns>The entries for the month and year from the current blog</returns>
+        [Obsolete("Use GetBlogEntriesByMonthAndYear(Item, int, int) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntriesByMonthAndYear(int month, int year)
+        {
+            return GetBlogEntriesByMonthAndYear(ManagerFactory.BlogManagerInstance.GetCurrentBlog(), month, year);
+        }
+
+        /// <summary>
+        /// Gets the blog entry by categorie.
+        /// </summary>
+        /// <param name="blogId">The blog ID.</param>
+        /// <param name="categorieName">Name of the categorie.</param>
+        /// <returns>The entries of the blog tagged with the category</returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntryByCategorie(ID blogId, string categorieName)
+        {
+            var categories = ManagerFactory.CategoryManagerInstance.GetCategories(blogId.ToString());
+            if (categories != null)
+            {
+                var category = (from cat in categories
+                                where string.Compare(cat.Name, categorieName, true) == 0
+                                select cat).FirstOrDefault();
+
+                if (category != null)
+                {
+                    return GetBlogEntryByCategorie(blogId, category.ID);
+                }
+            }
+
+            return new EntryItem[0];
+        }
+
+        /// <summary>
+        /// Gets the blog entry by categorie.
+        /// </summary>
+        /// <param name="BlogID">The blog ID.</param>
+        /// <param name="CategorieName">Name of the categorie.</param>
+        /// <returns></returns>
+        [Obsolete("Use GetBlogEntries(Item, int, string, string, DateTime?, DateTime?) instead.")] // deprecated 3.0
+        public virtual EntryItem[] GetBlogEntryByCategorie(ID blogId, ID categoryId)
+        {
+            var blogItem = Sitecore.Context.Database.GetItem(blogId);
+            var categoryItem = Sitecore.Context.Database.GetItem(categoryId);
+
+            if (blogItem != null && categoryItem != null)
+                return GetBlogEntries(blogItem, int.MaxValue, string.Empty, categoryItem.Name, (DateTime?)null);
+            else
+                return new EntryItem[0];
         }
 
         /// <summary>
@@ -495,6 +511,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="array">The array.</param>
         /// <returns></returns>
+        [Obsolete("No longer used.")] // deprecated 3.0
         public virtual EntryItem[] MakeSortedEntriesList(IList array)
         {
             var entryList = (from Item item in array
@@ -506,5 +523,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             return entryList.ToArray();
         }
+
+        #endregion
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 
@@ -21,12 +22,12 @@ namespace Sitecore.Modules.WeBlog.Components
             {
                 StartedDate = currentBlog.InnerItem.Statistics.Created;
             }
-            LoadEntries();
+            LoadEntries(currentBlog);
         }
 
-        protected void LoadEntries()
+        protected void LoadEntries(Item blogItem)
         {
-            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries();
+            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blogItem);
             MonthsByYear = new Dictionary<int, int[]>();
 
             foreach (var entry in entries)

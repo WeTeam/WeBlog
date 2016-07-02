@@ -79,15 +79,15 @@ namespace Sitecore.Modules.WeBlog.Components
             IEnumerable<EntryItem> entries;
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
-            if (!String.IsNullOrEmpty(tag))
+            if (!string.IsNullOrEmpty(tag))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(tag);
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, tag, null, null, null);
             }
             else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntryByCategorie(CurrentBlog.ID, Context.Item.Name);
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, null, Context.Item.Name);
             }
-            else if (!String.IsNullOrEmpty(sort))
+            else if (!string.IsNullOrEmpty(sort))
             {
                 var algorithm = InterestingEntriesCore.GetAlgororithmFromString(sort, InterestingEntriesAlgorithm.Custom);
                 if (algorithm != InterestingEntriesAlgorithm.Custom)
@@ -102,7 +102,7 @@ namespace Sitecore.Modules.WeBlog.Components
             }
             else
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries();
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog);
             }
             return entries;
         }

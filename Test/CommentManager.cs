@@ -56,7 +56,7 @@ namespace Sitecore.Modules.WeBlog.Test
             {
                 using (new EventDisabler())
                 {
-                    m_testContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
+                    TestContentRoot.Paste(File.ReadAllText(HttpContext.Current.Server.MapPath(@"~\test data\comment manager content.xml")), false, PasteMode.Overwrite);
                 }
             }
 
@@ -66,7 +66,7 @@ namespace Sitecore.Modules.WeBlog.Test
         protected void Initialize()
         {
             // Retrieve created content items
-            m_testRoot = m_testContentRoot.Axes.GetChild("blog test root");
+            m_testRoot = TestContentRoot.Axes.GetChild("blog test root");
             m_blog1 = m_testRoot.Axes.GetChild("blog1");
             m_blog2 = m_testRoot.Axes.GetChild("blog2");
 

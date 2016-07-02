@@ -9,7 +9,7 @@ namespace Sitecore.Modules.WeBlog.Test.CustomBlog
         [TestFixtureSetUp]
         public void ChangeBlog()
         {
-            Sitecore.Context.Database.SetupCustomBlogs(m_testContentRoot);
+            Sitecore.Context.Database.SetupCustomBlogs(TestContentRoot);
             //re-init to retrieve member items
             Initialize();
         }

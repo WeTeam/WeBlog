@@ -7,7 +7,7 @@ namespace Sitecore.Modules.WeBlog.Test
 {
     public class UnitTestBase
     {
-        protected Item m_testContentRoot = null;
+        protected Item TestContentRoot = null;
 
         [TestFixtureSetUp]
         public void SwitchToMaster()
@@ -18,7 +18,7 @@ namespace Sitecore.Modules.WeBlog.Test
 
             using (new SecurityDisabler())
             {
-                m_testContentRoot = Sitecore.Context.Database.GetItem(Sitecore.Constants.ContentPath).Add(ID.NewID.ToShortID().ToString(), template);
+                TestContentRoot = Sitecore.Context.Database.GetItem(Sitecore.Constants.ContentPath).Add(ID.NewID.ToShortID().ToString(), template);
             }
         }
 
@@ -27,8 +27,8 @@ namespace Sitecore.Modules.WeBlog.Test
         {
           using (new SecurityDisabler())
           {
-              if (m_testContentRoot != null)
-                  m_testContentRoot.Delete();
+              if (TestContentRoot != null)
+                  TestContentRoot.Delete();
           }
         }
     }
