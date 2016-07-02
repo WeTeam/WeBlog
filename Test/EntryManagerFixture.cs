@@ -418,64 +418,8 @@ namespace Sitecore.Modules.WeBlog.Test
         }
 
         [Test]
-        public void GetBlogEntryByComment_NullItem()
-        {
-            // todo: move to unit test
-            var blog = CreateNewBlog();
-            var entryFirst = CreateNewEntry(blog, "first");
-            var comment = CreateNewComment(entryFirst);
-
-            var manager = new EntryManager();
-            var foundEntry = manager.GetBlogEntryByComment(null);
-
-            Assert.That(foundEntry, Is.Null);
-        }
-
-        [Test]
-        public void GetBlogEntryByComment_UnderEntry()
-        {
-            var blog = CreateNewBlog();
-            var entryFirst = CreateNewEntry(blog, "first");
-            var comment = CreateNewComment(entryFirst);
-
-            var manager = new EntryManager();
-            var foundEntry = manager.GetBlogEntryByComment(comment);
-
-            Assert.That(foundEntry.ID, Is.EqualTo(entryFirst.ID));
-        }
-
-        [Test]
-        public void GetBlogEntryByComment_OnEntry()
-        {
-            // todo: move to unit test
-            var blog = CreateNewBlog();
-            var entryFirst = CreateNewEntry(blog, "first");
-            var comment = CreateNewComment(entryFirst);
-
-            var manager = new EntryManager();
-            var foundEntry = manager.GetBlogEntryByComment(entryFirst.InnerItem);
-
-            Assert.That(foundEntry.ID, Is.EqualTo(entryFirst.ID));
-        }
-
-        [Test]
-        public void GetBlogEntryByComment_OutsideEntry()
-        {
-            // todo: move to unit test
-            var blog = CreateNewBlog();
-            var entryFirst = CreateNewEntry(blog, "first");
-            var comment = CreateNewComment(entryFirst);
-
-            var manager = new EntryManager();
-            var foundEntry = manager.GetBlogEntryByComment(blog.InnerItem);
-
-            Assert.That(foundEntry, Is.Null);
-        }
-
-        [Test]
         public void GetPopularEntriesByComment_ValidItem()
         {
-            // todo: move to unit test
             var blog = CreateNewBlog();
 
             var entryLuna = CreateNewEntry(blog, "Luna");
@@ -504,7 +448,6 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem_Limited()
         {
-            // todo: move to unit test
             var blog = CreateNewBlog();
 
             var entryLuna = CreateNewEntry(blog, "Luna");
@@ -533,7 +476,6 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_InvalidItem()
         {
-            // todo: move to unit test
             var blog = CreateNewBlog();
 
             var entryLuna = CreateNewEntry(blog, "Luna");
@@ -562,7 +504,6 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_NullItem()
         {
-            // todo: move to unit test
             var blog = CreateNewBlog();
             var entryLuna = CreateNewEntry(blog, "Luna");
             CreateNewComment(entryLuna);

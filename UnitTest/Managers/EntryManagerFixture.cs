@@ -1,19 +1,17 @@
 ﻿using System.Linq;
 using Moq;
 using NUnit.Framework;
-using Sitecore.ContentSearch;
 using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Security.Accounts;
 
 namespace Sitecore.Modules.WeBlog.UnitTest
 {
     [TestFixture]
     public class EntryManagerFixture
     {
-        /*[Test]
+        [Test]
         public void GetCurrentBlogEntry_Null()
         {
             var settings = MockSettings(ID.NewID);
@@ -87,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 var entryItem = manager.GetCurrentBlogEntry(item);
                 Assert.That(entryItem, Is.Null);
             }
-        }*/
+        }
 
         [Test]
         public void DeleteEntry_NullID()
@@ -181,12 +179,96 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
         // GetBlogEntries tests use Content Search, so test those methods with integration tests
 
+        [Test]
+        public void GetBlogEntryByComment_NullItem()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new EntryManager(null, settings);
+            var foundEntry = manager.GetBlogEntryByComment(null);
+
+            Assert.That(foundEntry, Is.Null);
+        }
+
+        [Test]
+        public void GetBlogEntryByComment_OnEntry()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new EntryManager(null, settings);
+
+            using (var db = new Db
+            {
+                new DbItem("entry", ID.NewID, settings.EntryTemplateIds.First())
+                {
+                    new DbItem("2013", ID.NewID, ID.NewID)
+                    {
+                        new DbItem("comment", ID.NewID, settings.CommentTemplateIds.First())
+                    }
+                }
+            })
+            {
+                var item = db.GetItem("/sitecore/content/entry");
+                var result = manager.GetBlogEntryByComment(item);
+
+                Assert.That(result.ID, Is.EqualTo(item.ID));
+            }
+        }
+
+        [Test]
+        public void GetBlogEntryByComment_UnderEntry()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new EntryManager(null, settings);
+
+            using (var db = new Db
+            {
+                new DbItem("entry", ID.NewID, settings.EntryTemplateIds.First())
+                {
+                    new DbItem("2013", ID.NewID, ID.NewID)
+                    {
+                        new DbItem("comment", ID.NewID, settings.CommentTemplateIds.First())
+                    }
+                }
+            })
+            {
+                var commentItem = db.GetItem("/sitecore/content/entry/2013/comment");
+                var entryItem = db.GetItem("/sitecore/content/entry");
+                var result = manager.GetBlogEntryByComment(commentItem);
+
+                Assert.That(result.ID, Is.EqualTo(entryItem.ID));
+            }
+        }
+
+        [Test]
+        public void GetBlogEntryByComment_OutsideEntry()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new EntryManager(null, settings);
+
+            using (var db = new Db
+            {
+                new DbItem("entry", ID.NewID, settings.EntryTemplateIds.First())
+                {
+                    new DbItem("2013", ID.NewID, ID.NewID)
+                    {
+                        new DbItem("comment", ID.NewID, settings.CommentTemplateIds.First())
+                    }
+                }
+            })
+            {
+                var item = db.GetItem("/sitecore/content");
+                var result = manager.GetBlogEntryByComment(item);
+
+                Assert.That(result, Is.Null);
+            }
+        }
+
         private IWeBlogSettings MockSettings(params ID[] entryTemplateIds)
         {            
             return Mock.Of<IWeBlogSettings>(x =>
                 x.BlogTemplateIds == new[] { ID.NewID, ID.NewID } &&
                 x.CategoryTemplateIds == new[] { ID.NewID, ID.NewID } &&
-                x.EntryTemplateIds == entryTemplateIds
+                x.EntryTemplateIds == entryTemplateIds &&
+                x.CommentTemplateIds == new[] { ID.NewID }
             );
         }
     }
