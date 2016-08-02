@@ -2,8 +2,8 @@
 version: 1
 id: {3C88C99B-C25E-47FB-8909-228BBDD5C390}
 database: master
-path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/TagCloud/Display
-parent: {AF63598B-697A-4693-B7DA-E5B8EDA12C8D}
+path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Tag Cloud/Display
+parent: {0C85B40F-73AE-4652-9F3E-B756B8CB0C1A}
 name: Display
 master: {00000000-0000-0000-0000-000000000000}
 template: {E269FBB5-3750-427A-9149-7AA950B49301}

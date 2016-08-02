@@ -1,10 +1,11 @@
-using System.Collections.Generic;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
     public interface ITagCloudCore
     {
-        Dictionary<string, int> Tags { get; set; }
+        Tag[] Tags { get; set; }
+        string[] GetSortNames(string sortingOptions);
         string GetTagWeightClass(int tagWeight);
         string GetTagUrl(string tag);
     }

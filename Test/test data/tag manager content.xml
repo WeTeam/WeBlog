@@ -128,7 +128,7 @@
             <version language="en" version="1">
                 <fields>
                     <field tfid="{840045E6-AA3F-417C-B53C-0B9841D33B2B}" key="tags" type="Single-Line Text">
-                        <content>taga,tagc</content>
+                      <content>tagA,tagC</content>
                     </field>
                     <field tfid="{BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}" key="__updated by" type="text">
                         <content>sitecore\admin</content>

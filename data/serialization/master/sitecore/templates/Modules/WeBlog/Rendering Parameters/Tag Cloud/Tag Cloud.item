@@ -1,47 +1,48 @@
 ----item----
 version: 1
-id: {AED0AFE1-9729-427C-947C-3C479911A144}
+id: {835BA9FB-E821-406C-8B0E-3675701850FC}
 database: master
-path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/TagCloud/__Standard Values
-parent: {AF63598B-697A-4693-B7DA-E5B8EDA12C8D}
-name: __Standard Values
+path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Tag Cloud/Tag Cloud
+parent: {0C85B40F-73AE-4652-9F3E-B756B8CB0C1A}
+name: Tag Cloud
 master: {00000000-0000-0000-0000-000000000000}
-template: {AF63598B-697A-4693-B7DA-E5B8EDA12C8D}
-templatekey: TagCloud
+template: {E269FBB5-3750-427A-9149-7AA950B49301}
+templatekey: Template section
+created: 20160801T220717:636056860372430000
 
 ----version----
 language: en
 version: 1
-revision: b912d37e-2a5b-4054-a6f9-7fc093efd274
+revision: cf01d4d5-9843-4b7b-9ea0-29fdcca87210
 
-----field----
-field: {C47CB727-D3BF-4B85-A50D-C539E64C463D}
-name: MaximumCount
-key: maximumcount
-content-length: 2
-
-20
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created
 content-length: 16
 
-20151207T220054Z
+20160221T194203Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\admin
 ----field----
 field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
 name: __Revision
 key: __revision
 content-length: 36
 
-b912d37e-2a5b-4054-a6f9-7fc093efd274
+cf01d4d5-9843-4b7b-9ea0-29fdcca87210
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151207T220222Z
+20160221T194403Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

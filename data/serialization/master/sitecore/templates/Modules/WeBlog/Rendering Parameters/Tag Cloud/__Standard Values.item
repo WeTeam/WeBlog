@@ -1,0 +1,66 @@
+----item----
+version: 1
+id: {37253682-ABB8-4F5D-AE4B-8EE5E3200A72}
+database: master
+path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Tag Cloud/__Standard Values
+parent: {0C85B40F-73AE-4652-9F3E-B756B8CB0C1A}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {0C85B40F-73AE-4652-9F3E-B756B8CB0C1A}
+templatekey: Tag Cloud
+created: 20160801T220717:636056860374330000
+
+----field----
+field: {3094D236-5985-4C4F-AE6A-E30740885532}
+name: Caching
+key: caching
+content-length: 15
+
+0|0|0|0|0|0|0|0
+----version----
+language: en
+version: 1
+revision: eaabb28e-bf85-45c2-9e19-f898c7490cae
+
+----field----
+field: {C47CB727-D3BF-4B85-A50D-C539E64C463D}
+name: MaximumCount
+key: maximumcount
+content-length: 2
+
+20
+----field----
+field: {DFBDD603-109F-419C-9806-9C023170F31E}
+name: SortingOptions
+key: sortingoptions
+content-length: 116
+
+{FCAA5EB2-EFAE-4F64-BEC6-1A11E091F25A}|{36B3EBDC-43D2-454B-AEF0-2FBDE5A1D769}|{2226A6A2-FF35-423A-91F6-CE545B491E65}
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20160221T194407Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+eaabb28e-bf85-45c2-9e19-f898c7490cae
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20160802T193212Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin

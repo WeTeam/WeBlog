@@ -1,9 +1,10 @@
-﻿namespace Sitecore.Modules.WeBlog.Model
+using System.Collections.Generic;
+
+namespace Sitecore.Modules.WeBlog.Model
 {
     public class TagCloudRenderingModel
     {
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Weight { get; set; }
+        public string[] SortNames { get; set; }
+        public IEnumerable<TagRenderingModel> Tags { get; set; }
     }
 }

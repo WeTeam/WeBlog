@@ -4,13 +4,10 @@ using System.Web;
 using NUnit.Framework;
 using Sitecore.Caching;
 using Sitecore.ContentSearch;
-using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
-using Assert = NUnit.Framework.Assert;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Test
@@ -62,12 +59,25 @@ namespace Sitecore.Modules.WeBlog.Test
         public void GetAllTags_Blog1()
         {
             var tags = new Mod.TagManager().GetAllTags(new BlogHomeItem(m_blog1));
-            Assert.IsTrue(tags.ContainsKey("taga"), "taga not found");
-            Assert.IsTrue(tags.ContainsKey("tagb"), "tagb not found");
-            Assert.IsTrue(tags.ContainsKey("tagc"), "tagc not found");
-            Assert.AreEqual(1, tags["tagb"]);
-            Assert.AreEqual(2, tags["tagc"]);
-            Assert.AreEqual(3, tags["taga"]);
+            var tagA = tags.SingleOrDefault(tag => tag.Name == "taga");
+            var tagB = tags.SingleOrDefault(tag => tag.Name == "tagb");
+            var tagC = tags.SingleOrDefault(tag => tag.Name == "tagc");
+
+            //present
+            Assert.IsNotNull(tagA, "taga not found");
+            Assert.IsNotNull(tagB, "tagb not found");
+            Assert.IsNotNull(tagC, "tagc not found");
+
+            //counts
+            Assert.AreEqual(3, tagA.Count, "taga count is wrong");
+            Assert.AreEqual(1, tagB.Count, "tagb count is wrong");
+            Assert.AreEqual(2, tagC.Count, "tagc count is wrong");
+
+            //order
+            Assert.AreEqual(tagA, tags[0], "taga index is wrong");
+            Assert.AreEqual(tagC, tags[1], "tagc index is wrong");
+            Assert.AreEqual(tagB, tags[2], "tagb index is wrong");
+
         }
 
         [Test]
@@ -75,87 +85,14 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             var tags = new Mod.TagManager().GetAllTags(new BlogHomeItem(m_entry1));
             //entry is part of blog w/ 3 tags
-            Assert.AreEqual(3, tags.Count);
+            Assert.AreEqual(3, tags.Length);
         }
 
         [Test]
         public void GetAllTags_Null()
         {
             var tags = new Mod.TagManager().GetAllTags(null);
-            Assert.AreEqual(0, tags.Count);
-        }
-
-        [Test]
-        public void GetTagsByBlog_Blog1()
-        {
-            var tags = new Mod.TagManager().GetTagsByBlog(m_blog1.ID);
-            Assert.Contains("taga", tags);
-            Assert.Contains("tagb", tags);
-            Assert.Contains("tagc", tags);
-        }
-
-        [Test]
-        public void GetTagsByBlog_Null()
-        {
-            var tags = new Mod.TagManager().GetTagsByBlog((ID)null);
             Assert.AreEqual(0, tags.Length);
-        }
-
-        [Test]
-        public void GetTagsByBlog_EntryID()
-        {
-            var tags = new Mod.TagManager().GetTagsByBlog(m_entry1.ID);
-            //entry is part of blog w/ 3 tags
-            Assert.AreEqual(3, tags.Length);
-        }
-
-        [Test]
-        public void GetTagsByBlog_InvalidId()
-        {
-            var tags = new Mod.TagManager().GetTagsByBlog(ID.NewID);
-            Assert.AreEqual(0, tags.Length);
-        }
-
-        [Test]
-        public void SortByWeight_Normal()
-        {
-            var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "a", "a", "b", "c", "c", "c", "c", "a", "b" });
-            Assert.AreEqual(3, weightedTags.Count);
-            Assert.AreEqual("a", weightedTags.ElementAt(0).Key);
-            Assert.AreEqual(3, weightedTags["a"]);
-            Assert.AreEqual("b", weightedTags.ElementAt(1).Key);
-            Assert.AreEqual(2, weightedTags["b"]);
-            Assert.AreEqual("c", weightedTags.ElementAt(2).Key);
-            Assert.AreEqual(4, weightedTags["c"]);
-        }
-
-        [Test]
-        public void SortByWeight_SameWeight()
-        {
-            var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "a", "b", "c", "A", "B", "C", "D", "d" });
-            Assert.AreEqual(4, weightedTags.Count);
-            Assert.AreEqual("a", weightedTags.ElementAt(0).Key);
-            Assert.AreEqual(2, weightedTags["a"]);
-            Assert.AreEqual("b", weightedTags.ElementAt(1).Key);
-            Assert.AreEqual(2, weightedTags["b"]);
-            Assert.AreEqual("c", weightedTags.ElementAt(2).Key);
-            Assert.AreEqual(2, weightedTags["c"]);
-            Assert.AreEqual("D", weightedTags.ElementAt(3).Key);
-            Assert.AreEqual(2, weightedTags["d"]);
-        }
-
-        [Test]
-        public void SortByWeight_Empty()
-        {
-            var weightedTags = new Mod.TagManager().SortByWeight(new string[0]);
-            Assert.AreEqual(0, weightedTags.Count);
-        }
-
-        [Test]
-        public void SortByWeight_CaseInsensitive()
-        {
-            var weightedTags = new Mod.TagManager().SortByWeight(new string[] { "mytag", "MyTag", "MYTAG", "myTaG" });
-            Assert.AreEqual(1, weightedTags.Count);
         }
     }
 }
