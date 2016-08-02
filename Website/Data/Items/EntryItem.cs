@@ -111,7 +111,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// </summary>
         public int CommentCount
         {
-            get { return ManagerFactory.CommentManagerInstance.GetCommentsCount(ID); }
+            get { return ManagerFactory.CommentManagerInstance.GetCommentsCount(this); }
         }
 
         /// <summary>

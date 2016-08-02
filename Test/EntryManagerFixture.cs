@@ -5,11 +5,7 @@ using NUnit.Framework;
 using Sitecore.Data.Items;
 using Moq;
 using Sitecore.Data;
-using Sitecore.ContentSearch;
-using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Security.Accounts;
 
 #if FEATURE_XDB
 using Sitecore.Analytics.Reporting;
@@ -24,11 +20,6 @@ namespace Sitecore.Modules.WeBlog.Test
     [Category("EntryManagerFixture")]
     public class EntryManagerFixture : UnitTestBase
     {
-        private readonly BranchId BlogBranchId = new BranchId(ID.Parse("{8F890A99-5AD0-48B9-B930-B44BEC524840}")); // MVC blog branch
-        private readonly TemplateID EntryTemplateId = new TemplateID(ID.Parse("{BE9675B1-4951-4E11-B935-A698227B6A97}")); // MVC entry
-        private readonly TemplateID CategoryTemplateId = new TemplateID(ID.Parse("{6C455315-01BF-4E2E-9BA3-31B5695E9C77}")); // MVC category
-        private readonly TemplateID CommentTemplateId = new TemplateID(ID.Parse("{70949D4E-35D8-4581-A7A2-52928AA119D5}")); // Comment
-
         [Test]
         public void GetBlogEntries_NullItem()
         {
@@ -40,7 +31,7 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_NoEntries()
         {
-            var blog = CreateNewBlog();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
 
             var manager = new EntryManager();
             var entries = manager.GetBlogEntries(blog);
@@ -50,11 +41,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_WithEntries()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog);
@@ -66,17 +57,17 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_WithEntriesMultipleBlogs()
         {
-            var blog1 = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog1, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog1, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog1, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            var blog1 = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog1, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog1, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog1, "Phobos", entryDate: new DateTime(2012, 3, 3));
 
-            var blog2 = CreateNewBlog();
-            CreateNewEntry(blog2, "Adrastea");
-            CreateNewEntry(blog2, "Aitne");
-            CreateNewEntry(blog2, "Amalthea");
-            CreateNewEntry(blog2, "Ananke");
-            UpdateIndex();
+            var blog2 = TestUtil.CreateNewBlog(TestContentRoot);
+            TestUtil.CreateNewEntry(blog2, "Adrastea");
+            TestUtil.CreateNewEntry(blog2, "Aitne");
+            TestUtil.CreateNewEntry(blog2, "Amalthea");
+            TestUtil.CreateNewEntry(blog2, "Ananke");
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(entryDeimos);
@@ -88,17 +79,17 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_LimitedMultipleBlogs()
         {
-            var blog1 = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog1, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog1, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog1, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            var blog1 = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog1, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog1, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog1, "Phobos", entryDate: new DateTime(2012, 3, 3));
 
-            var blog2 = CreateNewBlog();
-            var entryAdrastea = CreateNewEntry(blog2, "Adrastea", entryDate: new DateTime(2012, 3, 1));
-            var entryAitne = CreateNewEntry(blog2, "Aitne", entryDate: new DateTime(2012, 3, 2));
-            var entryAmalthea = CreateNewEntry(blog2, "Amalthea", entryDate: new DateTime(2012, 3, 3));
-            var entryAnanke = CreateNewEntry(blog2, "Ananke", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog2 = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryAdrastea = TestUtil.CreateNewEntry(blog2, "Adrastea", entryDate: new DateTime(2012, 3, 1));
+            var entryAitne = TestUtil.CreateNewEntry(blog2, "Aitne", entryDate: new DateTime(2012, 3, 2));
+            var entryAmalthea = TestUtil.CreateNewEntry(blog2, "Amalthea", entryDate: new DateTime(2012, 3, 3));
+            var entryAnanke = TestUtil.CreateNewEntry(blog2, "Ananke", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(entryAmalthea, 3, null, null, null, null);
@@ -116,12 +107,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_LimitEntries()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 2, null, null, null, null);
@@ -133,12 +124,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_LimitEntriesZero()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 0, null, null, null, null);
@@ -149,12 +140,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_LimitEntriesNegativeLimit()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, -7, null, null, null, null);
@@ -165,11 +156,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByTag()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", tags: "prowl, cliffjumper", entryDate: new DateTime(2012, 3, 2));
-            CreateNewEntry(blog, "Phobos", tags: "wheeljack, cliffjumper", entryDate: new DateTime(2012, 3, 3));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", tags: "prowl, cliffjumper", entryDate: new DateTime(2012, 3, 2));
+            TestUtil.CreateNewEntry(blog, "Phobos", tags: "wheeljack, cliffjumper", entryDate: new DateTime(2012, 3, 3));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 10, "prowl", null, null, null);
@@ -181,11 +172,11 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByTagWithSpace()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", tags: "prowl, orion pax, cliffjumper", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", tags: "wheeljack, hot rod, orion pax", entryDate: new DateTime(2012, 3, 3));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", tags: "prowl, orion pax, cliffjumper", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", tags: "wheeljack, hot rod, orion pax", entryDate: new DateTime(2012, 3, 3));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 10, "orion pax", null, null, null);
@@ -197,12 +188,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByTagLimited()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", tags: "prowl, orion pax, cliffjumper", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", tags: "wheeljack, hot rod, orion pax", entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", tags: "wheeljack, hot rod, orion pax, prowl", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", tags: "prowl, orion pax, cliffjumper", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", tags: "wheeljack, hot rod, orion pax", entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", tags: "wheeljack, hot rod, orion pax, prowl", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 2, "wheeljack", null, null, null);
@@ -214,12 +205,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByInvalidTag()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", tags: "prowl, orion pax, cliffjumper", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", tags: "wheeljack, hot rod, orion pax", entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", tags: "wheeljack, hot rod, orion pax, prowl", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", tags: "wheeljack, prowl", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", tags: "prowl, orion pax, cliffjumper", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", tags: "wheeljack, hot rod, orion pax", entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", tags: "wheeljack, hot rod, orion pax, prowl", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 10, "blurr", null, null, null);            
@@ -230,14 +221,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByCategory()
         {
-            var blog = CreateNewBlog();
-            var categoryAlpha = CreateNewCategory(blog, "Alpha");
-            var categoryBeta = CreateNewCategory(blog, "Beta");
-            var entryLuna = CreateNewEntry(blog, "Luna", categories: new [] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var categoryAlpha = TestUtil.CreateNewCategory(blog, "Alpha");
+            var categoryBeta = TestUtil.CreateNewCategory(blog, "Beta");
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", categories: new [] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 10, null, categoryAlpha.ID.ToString(), null, null);
@@ -249,14 +240,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByInvalidCategory()
         {
-            var blog = CreateNewBlog();
-            var categoryAlpha = CreateNewCategory(blog, "Alpha");
-            var categoryBeta = CreateNewCategory(blog, "Beta");
-            var entryLuna = CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var categoryAlpha = TestUtil.CreateNewCategory(blog, "Alpha");
+            var categoryBeta = TestUtil.CreateNewCategory(blog, "Beta");
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 10, null, ID.NewID.ToString(), null, null);
@@ -267,14 +258,14 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_ByCategoryLimited()
         {
-            var blog = CreateNewBlog();
-            var categoryAlpha = CreateNewCategory(blog, "Alpha");
-            var categoryBeta = CreateNewCategory(blog, "Beta");
-            var entryLuna = CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var categoryAlpha = TestUtil.CreateNewCategory(blog, "Alpha");
+            var categoryBeta = TestUtil.CreateNewCategory(blog, "Beta");
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 1, null, categoryAlpha.ID.ToString(), null, null);
@@ -286,12 +277,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_InDateRange()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2014, 10, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2014, 11, 1));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2014, 12, 1));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2015, 1, 1));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2014, 10, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2014, 11, 1));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2014, 12, 1));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2015, 1, 1));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 10, null, null, new DateTime(2014, 11, 1), new DateTime(2014, 12, 20));
@@ -304,12 +295,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntries_InDateRangeLimited()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2014, 10, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2014, 11, 1));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2014, 12, 1));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2015, 1, 1));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2014, 10, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2014, 11, 1));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2014, 12, 1));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2015, 1, 1));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntries(blog, 2, null, null, new DateTime(2014, 11, 1), new DateTime(2015, 1, 20));
@@ -321,12 +312,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_BeforeEntries()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 4, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 5, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 4, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 5, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntriesByMonthAndYear(blog, 1, 2012);
@@ -337,12 +328,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_WithinEntries()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 4, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 5, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 4, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 5, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntriesByMonthAndYear(blog, 3, 2012);
@@ -354,12 +345,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_LastMonth()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 12, 30));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 12, 31));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2013, 1, 1));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2013, 1, 1));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 12, 30));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 12, 31));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2013, 1, 1));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2013, 1, 1));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntriesByMonthAndYear(blog, 12, 2012);
@@ -371,12 +362,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_FirstMonth()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 12, 30));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 12, 31));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2013, 1, 1));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2013, 1, 1));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 12, 30));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 12, 31));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2013, 1, 1));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2013, 1, 1));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntriesByMonthAndYear(blog, 1, 2013);
@@ -388,12 +379,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_AfterEntries()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 4, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 5, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 4, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 5, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntriesByMonthAndYear(blog, 6, 2012);
@@ -404,12 +395,12 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetBlogEntriesByMonthAndYear_InvalidDate()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var results = manager.GetBlogEntriesByMonthAndYear(blog, 17, 20992);
@@ -420,23 +411,23 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem()
         {
-            var blog = CreateNewBlog();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
 
-            var entryLuna = CreateNewEntry(blog, "Luna");
-            CreateNewComment(entryLuna);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna");
+            TestUtil.CreateNewComment(entryLuna);
 
-            var entryDeimos = CreateNewEntry(blog, "Deimos");
-            CreateNewComment(entryDeimos);
-            CreateNewComment(entryDeimos);
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos");
+            TestUtil.CreateNewComment(entryDeimos);
+            TestUtil.CreateNewComment(entryDeimos);
 
-            var entryPhobos = CreateNewEntry(blog, "Phobos");
-            CreateNewComment(entryPhobos);
-            CreateNewComment(entryPhobos);
-            CreateNewComment(entryPhobos);
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos");
+            TestUtil.CreateNewComment(entryPhobos);
+            TestUtil.CreateNewComment(entryPhobos);
+            TestUtil.CreateNewComment(entryPhobos);
 
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea");
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea");
 
-            UpdateIndex();
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var entries = manager.GetPopularEntriesByComment(blog, 10);
@@ -448,23 +439,23 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_ValidItem_Limited()
         {
-            var blog = CreateNewBlog();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
 
-            var entryLuna = CreateNewEntry(blog, "Luna");
-            CreateNewComment(entryLuna);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna");
+            TestUtil.CreateNewComment(entryLuna);
 
-            var entryDeimos = CreateNewEntry(blog, "Deimos");
-            CreateNewComment(entryDeimos);
-            CreateNewComment(entryDeimos);
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos");
+            TestUtil.CreateNewComment(entryDeimos);
+            TestUtil.CreateNewComment(entryDeimos);
 
-            var entryPhobos = CreateNewEntry(blog, "Phobos");
-            CreateNewComment(entryPhobos);
-            CreateNewComment(entryPhobos);
-            CreateNewComment(entryPhobos);
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos");
+            TestUtil.CreateNewComment(entryPhobos);
+            TestUtil.CreateNewComment(entryPhobos);
+            TestUtil.CreateNewComment(entryPhobos);
 
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea");
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea");
 
-            UpdateIndex();
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var entries = manager.GetPopularEntriesByComment(blog, 2);
@@ -476,23 +467,23 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_InvalidItem()
         {
-            var blog = CreateNewBlog();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
 
-            var entryLuna = CreateNewEntry(blog, "Luna");
-            CreateNewComment(entryLuna);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna");
+            TestUtil.CreateNewComment(entryLuna);
 
-            var entryDeimos = CreateNewEntry(blog, "Deimos");
-            CreateNewComment(entryDeimos);
-            CreateNewComment(entryDeimos);
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos");
+            TestUtil.CreateNewComment(entryDeimos);
+            TestUtil.CreateNewComment(entryDeimos);
 
-            var entryPhobos = CreateNewEntry(blog, "Phobos");
-            CreateNewComment(entryDeimos);
-            CreateNewComment(entryDeimos);
-            CreateNewComment(entryDeimos);
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos");
+            TestUtil.CreateNewComment(entryDeimos);
+            TestUtil.CreateNewComment(entryDeimos);
+            TestUtil.CreateNewComment(entryDeimos);
 
-            var entryAdrastea = CreateNewEntry(blog, "Adrastea");
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea");
 
-            UpdateIndex();
+            TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
             var entries = manager.GetPopularEntriesByComment(entryDeimos, 10);
@@ -504,9 +495,9 @@ namespace Sitecore.Modules.WeBlog.Test
         [Test]
         public void GetPopularEntriesByComment_NullItem()
         {
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna");
-            CreateNewComment(entryLuna);
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna");
+            TestUtil.CreateNewComment(entryLuna);
 
             var manager = new EntryManager();
             var entries = manager.GetPopularEntriesByComment(blog, 10);
@@ -519,11 +510,11 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             VerifyAnalyticsSetup();
 
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna");
-            var entryDeimos = CreateNewEntry(blog, "Deimos");
-            var entryPhobos = CreateNewEntry(blog, "Phobos");
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna");
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos");
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos");
+            TestUtil.UpdateIndex();
 
             var manager = CreateEntryManagerForAnalyticsTest(entryLuna.ID, entryPhobos.ID, entryDeimos.ID);
 
@@ -538,11 +529,11 @@ namespace Sitecore.Modules.WeBlog.Test
         {
             VerifyAnalyticsSetup();
 
-            var blog = CreateNewBlog();
-            var entryLuna = CreateNewEntry(blog, "Luna");
-            var entryDeimos = CreateNewEntry(blog, "Deimos");
-            var entryPhobos = CreateNewEntry(blog, "Phobos");
-            UpdateIndex();
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna");
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos");
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos");
+            TestUtil.UpdateIndex();
 
             var manager = CreateEntryManagerForAnalyticsTest(entryLuna.ID, entryPhobos.ID, entryDeimos.ID);
 
@@ -575,74 +566,6 @@ namespace Sitecore.Modules.WeBlog.Test
         }
 
         // TODO: Write tests for methods accepting language
-
-        private BlogHomeItem CreateNewBlog()
-        {
-            using (new UserSwitcher("sitecore\\admin", true))
-            {
-                var name = "blog " + ID.NewID.ToShortID();
-                return TestContentRoot.Add(name, BlogBranchId);
-            }
-        }
-
-        private EntryItem CreateNewEntry(BlogHomeItem blogItem, string name, string tags = null, ID[] categories = null, DateTime? entryDate = null)
-        {
-            using (new UserSwitcher("sitecore\\admin", true))
-            {
-                var entry = blogItem.InnerItem.Add(name, EntryTemplateId);
-
-                if (tags != null)
-                {
-                    using (new EditContext(entry))
-                    {
-                        entry["Tags"] = tags;
-                    }
-                }
-
-                if (categories != null)
-                {
-                    using (new EditContext(entry))
-                    {
-                        entry["Category"] = string.Join<ID>("|", categories);
-                    }
-                }
-
-                if (entryDate != null)
-                {
-                    using (new EditContext(entry))
-                    {
-                        entry["Entry Date"] = DateUtil.ToIsoDate(entryDate.Value);
-                    }
-                }
-
-                return entry;
-            }
-        }
-
-        private CategoryItem CreateNewCategory(BlogHomeItem blogItem, string name)
-        {
-            using (new UserSwitcher("sitecore\\admin", true))
-            {
-                var categoryRoot = blogItem.InnerItem.Children["Categories"];
-                return categoryRoot.Add(name, CategoryTemplateId);
-            }
-        }
-
-        private CommentItem CreateNewComment(EntryItem entryItem)
-        {
-            using (new UserSwitcher("sitecore\\admin", true))
-            {
-                var name = "comment " + ID.NewID.ToShortID();
-                return entryItem.InnerItem.Add(name, CommentTemplateId);
-            }
-        }
-
-        private void UpdateIndex()
-        {
-            var settings = new WeBlogSettings();
-            var index = ContentSearchManager.GetIndex(settings.SearchIndexName);
-            index.Rebuild();
-        }
 
         private void VerifyAnalyticsSetup()
         {

@@ -21,7 +21,7 @@ namespace Sitecore.Modules.WeBlog.Model
 
         public CommentsList(ICommentsListCore commentsListCore)
         {
-            CommentsListCore = commentsListCore ?? new CommentsListCore(CurrentBlog);
+            CommentsListCore = commentsListCore ?? new CommentsListCore(CurrentBlog, CurrentEntry);
             Comments = new CommentItem[0];
         }
 
@@ -29,7 +29,7 @@ namespace Sitecore.Modules.WeBlog.Model
         {
             base.Initialize(rendering);
             ShowCommentsList = CurrentBlog.EnableComments.Checked && !CurrentEntry.DisableComments.Checked;
-            if (!ShowCommentsList || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
+            if (!ShowCommentsList || ManagerFactory.CommentManagerInstance.GetCommentsCount(CurrentEntry) == 0)
             {
                 return;
             }
