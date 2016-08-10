@@ -17,6 +17,10 @@ jQuery(function(){
             if (currentUrl.query.tag) {
                 params.tag = currentUrl.query.tag;
             }
+            
+            if (currentUrl.query.sort) {
+                params.sort = currentUrl.query.sort;
+            }            
 			
 			var href = new Url(viewMore.attr("href"));
 			var url = href.path
