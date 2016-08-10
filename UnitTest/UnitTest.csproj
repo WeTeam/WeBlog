@@ -94,6 +94,7 @@
     <Compile Include="Extensions\ItemExtensionsFixture.cs" />
     <Compile Include="Managers\BlogManagerFixture.cs" />
     <Compile Include="Managers\CategoryManagerFixture.cs" />
+    <Compile Include="Managers\TagManagerFixture.cs" />
     <Compile Include="Pipelines\CreateComment\CreateCommentItemFixture.cs" />
     <Compile Include="Pipelines\CreateComment\DuplicateSubmissionGuardFixture.cs" />
     <Compile Include="Pipelines\CreateComment\TestableCreateCommentItemProcessor.cs" />

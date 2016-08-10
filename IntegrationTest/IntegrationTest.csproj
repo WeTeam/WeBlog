@@ -111,9 +111,6 @@
     <Content Include="test data\MetaBlog content.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="test data\tag manager content.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="test data\template content.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -126,10 +123,8 @@
     <None Include="CustomBlog\CommentManager.cs" />
     <Compile Include="CustomBlog\EntryManager.cs" />
     <Compile Include="CustomBlog\Extensions.cs" />
-    <Compile Include="CustomBlog\TagManager.cs" />
     <Compile Include="EntryManagerFixture.cs" />
     <Compile Include="MetaBlogApi.cs" />
-    <Compile Include="TagManager.cs" />
     <Compile Include="Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

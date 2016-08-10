@@ -33,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
-        public CommentManager([CanBeNull] IWeBlogSettings settings = null, [CanBeNull] ICorePipeline corePipeline = null)
+        public CommentManager([CanBeNull] IWeBlogSettings settings = null)
         {
             Settings = settings ?? new WeBlogSettings();
         }

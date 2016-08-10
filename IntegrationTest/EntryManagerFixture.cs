@@ -576,7 +576,7 @@ namespace Sitecore.Modules.WeBlog.Test
         {
 #if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(popularEntryIdsInOrder);
-            return new EntryManager(reportProvider);
+            return new EntryManager(reportProvider, null);
 #else
             // Register DMS page views for popular items
 
