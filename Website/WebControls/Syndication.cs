@@ -30,7 +30,7 @@ namespace Sitecore.Modules.WeBlog.WebControls
                 {
                     output.AddAttribute(a.Key, a.Value);
                 }
-                output.AddAttribute(HtmlTextWriterAttribute.Title, feed.Title.Text);
+                output.AddAttribute(HtmlTextWriterAttribute.Title, feed.Title.Raw);
                 output.AddAttribute(HtmlTextWriterAttribute.Href, feed.Url);
                 output.RenderBeginTag(HtmlTextWriterTag.Link);
                 output.RenderEndTag();
