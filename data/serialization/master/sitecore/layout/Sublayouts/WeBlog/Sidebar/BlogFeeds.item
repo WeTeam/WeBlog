@@ -8,6 +8,7 @@ name: BlogFeeds
 master: {00000000-0000-0000-0000-000000000000}
 template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
 templatekey: Sublayout
+created: 20160713T143118:636040170781200000
 
 ----field----
 field: {E28F0784-53EC-4B5C-803E-638FDB1EC15D}
@@ -68,8 +69,15 @@ content-length: 144
 ----version----
 language: en
 version: 1
-revision: 5ba4cd36-e7cc-4bb1-874e-107437fcf1a1
+revision: d7b50eb7-deef-4f0c-8f0e-89714c756e3b
 
+----field----
+field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
+name: __Display name
+key: __display name
+content-length: 20
+
+BlogFeeds - WebForms
 ----field----
 field: {C8F93AFE-BFD4-4E8F-9C61-152559854661}
 name: __Valid from
@@ -104,14 +112,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-5ba4cd36-e7cc-4bb1-874e-107437fcf1a1
+d7b50eb7-deef-4f0c-8f0e-89714c756e3b
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20130804T123814:635112166948866521
+20160811T180037Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
