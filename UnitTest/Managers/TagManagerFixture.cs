@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
+using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
@@ -14,7 +15,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetTagsByBlog_NullItem()
         {
             var manager = new TagManager();
-            var tags = manager.GetTagsByBlog(null);
+            var tags = manager.GetTagsByBlog((Item)null);
 
             Assert.That(tags, Is.Empty);
         }
