@@ -8,6 +8,7 @@ name: InterestingEntries
 master: {00000000-0000-0000-0000-000000000000}
 template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
 templatekey: View rendering
+created: 20160713T143117:636040170778700000
 
 ----field----
 field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
@@ -34,14 +35,21 @@ content-length: 38
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
-content-length: 152
+content-length: 58
 
-<image mediaid="{DD877AF0-2B30-4164-903E-5B846294ED97}" mediapath="/Modules/WeBlog/Recent Comments" src="~/media/Modules/WeBlog/Recent Comments.ashx" />
+<image mediaid="{F325FCDB-86F3-489C-9CD2-6BAA6742ACAE}" />
 ----version----
 language: en
 version: 1
-revision: 2f7b88e8-2813-4b0d-8a1c-3d678babc270
+revision: 571f0be1-7a59-4cb5-9f39-577371e35811
 
+----field----
+field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
+name: __Display name
+key: __display name
+content-length: 24
+
+InterestingEntries - MVC
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -55,14 +63,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-2f7b88e8-2813-4b0d-8a1c-3d678babc270
+571f0be1-7a59-4cb5-9f39-577371e35811
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160111T204805Z
+20160811T180829Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
