@@ -123,7 +123,7 @@
 
       <WizardFormPage ID="LastPage" Header="Import WordPress Content" Text="Import complete." Icon="Business/32x32/address_book.png">
         <WizardFormPadding>
-          <div class="scStretch scFlexColumnContainerWithoutFlexie">
+          <div class="scStretch scFlexColumnContainerWithoutFlexie" style="height:90%;">
             <Border ID="SuccessMessage">
               <Literal class="sc-text-largevalue" Text="Import completed successfully."/>
             </Border>
@@ -135,7 +135,7 @@
             <Literal class="scFieldLabel" Text="Summary:"/>
             <div class="scFlexContentWithoutFlexie scWizardLastPageResultText">
               <div class="scStretchAbsolute">
-                <Memo ID="ImportSummary" class="scStretch" ReadOnly="true" Visible="true"/>
+                <Memo ID="ImportSummary" class="scStretch" ReadOnly="true" Visible="true" Width="100%" Height="100%"/>
               </div>
             </div>
           </div>
