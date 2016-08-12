@@ -22,7 +22,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
             {
                 var include = new Tag(HtmlTextWriterTag.Link.ToString())
                 {
-                    Title = feed.Title.Text,
+                    Title = feed.Title.Raw,
                     Href = feed.Url
                 };
                 foreach (var a in SyndicationLink.Attributes)
