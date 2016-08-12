@@ -12,14 +12,18 @@
         </LayoutTemplate>
         <ItemTemplate>
             <li>
-                <span class="wb-comment-author"><%# Item.Name.Text %></span> <%= Translator.Render("ON") %>
-                <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# RecentCommentsCore.GetEntryUrlForComment(Item) %>'>
-                     <%# RecentCommentsCore.GetEntryTitleForComment(Item) %>
-                </asp:HyperLink>
-                <%= Translator.Render("AT") %> <span class="wb-datetime">
-                    <%#Translator.Format("COMMENT_DATE", Item.Created)%>
-                </span>
-                <span class="wb-comment-content"><%# Item.Comment.HtmlEncode().MaxLength(150) %></span>
+                <div class="wb-details">
+                    <span class="wb-comment-author"><%# Item.Name.Text %></span> <%= Translator.Render("ON") %>
+                    <asp:HyperLink ID="hyperlinkComment" runat="server" NavigateUrl='<%# RecentCommentsCore.GetEntryUrlForComment(Item) %>'>
+                         <%# RecentCommentsCore.GetEntryTitleForComment(Item) %>
+                    </asp:HyperLink>
+                    <%= Translator.Render("AT") %> <span class="wb-datetime">
+                        <%#Translator.Format("COMMENT_DATE", Item.Created)%>
+                    </span>
+                </div>
+                <div class="wb-comment-content">
+                    <%# Item.Comment.HtmlEncode().MaxLength(150) %>
+                </div>
             </li>
         </ItemTemplate>
     </asp:ListView>

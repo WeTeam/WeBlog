@@ -22,7 +22,7 @@ namespace Sitecore.Modules.WeBlog
             {
                 foreach (var settingName in GetTokensArgs(text, Constants.Tokens.WeBlogSetting))
                 {
-                    string settingsValue = Configuration.Settings.GetSetting(settingName);
+                    string settingsValue = Sitecore.Configuration.Settings.GetSetting(settingName);
 
                     if (!string.IsNullOrEmpty(settingsValue))
                     {

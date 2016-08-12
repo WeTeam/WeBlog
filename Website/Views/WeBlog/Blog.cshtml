@@ -1,21 +1,25 @@
-﻿@model Sitecore.Modules.WeBlog.Model.Blog
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@model Sitecore.Modules.WeBlog.Model.Blog
 
 <div class="wb">
-    <div class="wb-header">
+    <header id="top">
         <a href="@Model.Hyperlink">
             @Html.Sitecore().Field("Title", @Model.BlogItem)
         </a>
-    </div>
-
+    </header>
     <div class="wb-wrapper">
-        <div class="wb-leftcolumn">
+        <main>
             @Html.Sitecore().Placeholder("weblog-main")
-        </div>
-
-        <div class="wb-rightcolumn">
+        </main>
+        <aside>
             @Html.Sitecore().Placeholder("weblog-sidebar")
-        </div>
-        @*Feel free to remove the following line from your implementation*@
-        <div class="wb-footer">Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a></div>
+        </aside>
     </div>
+    <footer id="bottom">
+        @*Feel free to remove the following line from your implementation*@
+        <span class="powered-by">
+            Powered by <a href="http://github.com/WeTeam/WeBlog">WeBlog</a>
+        </span>
+        @Model.Theme.Credits.ToHtmlString()
+    </footer>
 </div>

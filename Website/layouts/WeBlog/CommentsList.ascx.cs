@@ -11,7 +11,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         public BlogCommentsList(ICommentsListCore commentsListCore = null)
         {
-            CommentsListCore = commentsListCore ?? new CommentsListCore(CurrentBlog);
+            CommentsListCore = commentsListCore ?? new CommentsListCore(CurrentBlog, CurrentEntry);
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
         {
             // Comments enabled and exist?
             var showCommentsList = CurrentBlog.EnableComments.Checked && !CurrentEntry.DisableComments.Checked;
-            if (!showCommentsList || ManagerFactory.CommentManagerInstance.GetCommentsCount() == 0)
+            if (!showCommentsList || ManagerFactory.CommentManagerInstance.GetCommentsCount(CurrentEntry) == 0)
             {
                 if (CommentList != null)
                 {

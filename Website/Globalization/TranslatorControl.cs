@@ -27,7 +27,11 @@ namespace Sitecore.Modules.WeBlog.Globalization
                 }
             }
 
+#if !FEATURE_EXPERIENCE_EDITOR
             if (args != null && !Sitecore.Context.PageMode.IsPageEditor)
+#else
+            if (args != null && !Sitecore.Context.PageMode.IsExperienceEditor)
+#endif
             {
                 output.Write(Translator.Format(Key, args.ToArray()));
             }

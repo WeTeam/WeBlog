@@ -1,12 +1,12 @@
 # Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
 bin
 obj
+build
 
 # Other VS files and folders
 *.suo
 *.user
 *.userprefs
-.vs/
 
 # Local deployment files
 deploy.targets
@@ -17,6 +17,14 @@ TestResults
 # Local WIP files
 todo.txt
 
-# Other folders
+# Log files
+*.log
+
+# Theme output
+Themes/build
+
+# Package folders
+node_modules/
+bower_components/
 packages/
 .vs/

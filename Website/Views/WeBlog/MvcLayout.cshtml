@@ -1,23 +1,22 @@
 ﻿@using Sitecore.Modules.WeBlog.Extensions
 @model Sitecore.Mvc.Presentation.RenderingModel
 
+<!doctype html>
 <html>
-<head>
-    <title>@Model.Item.GetItemTitle()</title>
-    <link href="/sitecore modules/web/WeBlog/Includes/Common.css" rel="stylesheet" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        if (typeof jQuery == 'undefined') {
-            document.write(unescape("%3Cscript src='/sitecore modules/web/WeBlog/Includes/jquery-1.10.1.min.js' type='text/javascript'%3E%3C/script%3E"));
-        }
-    </script>
-    <script src="/sitecore modules/web/WeBlog/Includes/jquery.url.js" type="text/javascript"></script>
-    <script src="/sitecore modules/web/WeBlog/Includes/functions.js" type="text/javascript"></script>
-    @Html.Sitecore().Rendering("{CFBDF43B-D3D4-4F5F-BDE8-BFDA3EDA3778}", new { Cacheable = true, CacheKey = "BlogSyndication", Cache_VaryByData = true })
-    @Html.Sitecore().Rendering("{9AF6BA6B-221F-4549-93C5-B66DB5DF6429}", new { Cacheable = true, CacheKey = "RsdIncludes", Cache_VaryByData = true })
-    @Html.Sitecore().Rendering("{7BDD6111-5B6C-4904-8FA2-E6A334FE675E}", new { Cacheable = true, CacheKey = "ThemeIncludes", Cache_VaryByData = true })
-</head>
-<body>
-    @Html.Sitecore().Placeholder("weblog-content")
-</body>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>@Model.Item.GetItemTitle()</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        @Html.Sitecore().Rendering("{CFBDF43B-D3D4-4F5F-BDE8-BFDA3EDA3778}", new {Cacheable = true, CacheKey = "BlogSyndication", Cache_VaryByData = true})
+        @Html.Sitecore().Rendering("{9AF6BA6B-221F-4549-93C5-B66DB5DF6429}", new {Cacheable = true, CacheKey = "RsdIncludes", Cache_VaryByData = true})
+        <!-- start: deprecated. The following view is deprecated and will be removed in a future release. -->
+        @Html.Sitecore().Rendering("{7BDD6111-5B6C-4904-8FA2-E6A334FE675E}", new { Cacheable = true, CacheKey = "ThemeIncludes", Cache_VaryByData = true })
+        <!-- end: deprecated -->
+        @Html.Sitecore().Rendering("{1870D7B4-6FF0-49F2-A2EF-99C86C0EF21A}", new { Cacheable = true, CacheKey = "ThemeStylesheets", Cache_VaryByData = true })
+    </head>
+    <body>
+        @Html.Sitecore().Placeholder("weblog-content")
+        @Html.Sitecore().Rendering("{E6CB561E-D532-4BD2-82F4-82507B4766C7}", new { Cacheable = true, CacheKey = "ThemeScripts", Cache_VaryByData = true })
+    </body>
 </html>

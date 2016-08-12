@@ -25,7 +25,15 @@ namespace Sitecore.Modules.WeBlog.Model
         public override void Initialize(Rendering rendering)
         {
             base.Initialize(rendering);
-            Title = CurrentEntry.Title.Text + " | " + CurrentBlog.Title.Text;
+
+            Title = CurrentEntry.DisplayName;
+
+            if (string.IsNullOrEmpty(Title))
+                Title = CurrentEntry.Title.Text;
+            
+            // todo: Move this to a pipeline
+            Title += " | " + CurrentBlog.Title.Text;
+
             var maxEntryImage = CurrentBlog.MaximumEntryImageSizeDimension;
             if (maxEntryImage != Size.Empty)
             {

@@ -13,15 +13,6 @@ namespace Sitecore.Modules.WeBlog.Layouts {
     public partial class BlogEntry {
         
         /// <summary>
-        /// EntryImage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Sitecore.Web.UI.WebControls.Image EntryImage;
-        
-        /// <summary>
         /// txtTitle control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace Sitecore.Modules.WeBlog.Layouts {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Sitecore.Web.UI.WebControls.Text txtTitle;
+        
+        /// <summary>
+        /// EntryImage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Sitecore.Web.UI.WebControls.Image EntryImage;
         
         /// <summary>
         /// txtIntroduction control.

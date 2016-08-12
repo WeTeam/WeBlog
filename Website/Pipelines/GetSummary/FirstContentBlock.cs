@@ -30,6 +30,11 @@ namespace Sitecore.Modules.WeBlog.Pipelines.GetSummary
 
         protected override void GetSummary(GetSummaryArgs args)
         {
+            args.Summary = "";
+
+            if (args.Entry == null)
+                return;
+
             var doc = new HtmlDocument();
             doc.LoadHtml(args.Entry[FieldName]);
 

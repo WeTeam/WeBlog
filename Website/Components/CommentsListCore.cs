@@ -9,14 +9,17 @@ namespace Sitecore.Modules.WeBlog.Components
     {
         protected BlogHomeItem CurrentBlog { get; set; }
 
-        public CommentsListCore(BlogHomeItem currentBlogHomeItem)
+        protected EntryItem CurrentEntry { get; set; }
+
+        public CommentsListCore(BlogHomeItem currentBlogHomeItem, EntryItem currentEntry)
         {
             CurrentBlog = currentBlogHomeItem;
+            CurrentEntry = currentEntry;
         }
 
         public virtual CommentItem[] LoadComments(CommentItem addedComment = null)
         {
-            CommentItem[] comments = ManagerFactory.CommentManagerInstance.GetEntryComments();
+            var comments = ManagerFactory.CommentManagerInstance.GetEntryComments(CurrentEntry);
             //if a comment has been added but is not coming back yet (i.e. being indexed), fake it
             if (addedComment != null && comments.Count(comment => comment.ID == addedComment.ID) == 0)
             {

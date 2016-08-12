@@ -12,27 +12,51 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
 	public class CreateCommentItem : ICreateCommentProcessor
 	{
-		public void Process(CreateCommentArgs args)
+        /// <summary>
+        /// Gets or sets the <see cref="IBlogManager"/> used to access the structure of the blog and other settings.
+        /// </summary>
+	    protected IBlogManager BlogManager { get; set; }
+
+        /// <summary>
+        /// Create a new instance.
+        /// </summary>
+	    public CreateCommentItem()
+	        : this(null)
+	    {
+	    }
+
+        /// <summary>
+        /// Create a new instance.
+        /// </summary>
+        /// <param name="blogManager">The <see cref="IBlogManager"/> used to access the structure of the blog and other settings.</param>
+	    public CreateCommentItem(IBlogManager blogManager)
+        {
+            BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
+        }
+
+        public void Process(CreateCommentArgs args)
 		{
+            Assert.ArgumentNotNull(args, "args cannot be null");
 			Assert.IsNotNull(args.Database, "Database cannot be null");
 			Assert.IsNotNull(args.Comment, "Comment cannot be null");
 			Assert.IsNotNull(args.EntryID, "Entry ID cannot be null");
+            Assert.IsNotNull(args.Language, "Language cannot be null");
 
 			var entryItem = args.Database.GetItem(args.EntryID, args.Language);
 			if (entryItem != null)
 			{
-				var blogItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entryItem);
+				var blogItem = BlogManager.GetCurrentBlog(entryItem);
 				if (blogItem != null)
 				{
 					var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
-					var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", DateTime.Now.ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
+					var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", GetDateTime().ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
                     if (itemName.Length > 100)
                     {
                         itemName = itemName.Substring(0, 100);
                     }
 
 					// verify the comment item name is unique for this entry
-          var query = "fast:{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
+                    var query = "fast:{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
 
 					var num = 1;
 					var nondupItemName = itemName;
@@ -79,5 +103,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 Logger.Error(string.Format(message, args.EntryID, args.Comment.AuthorName, args.Comment.AuthorEmail, args.Comment.Text), typeof(CreateCommentItem));
 			}
 		}
+
+	    protected virtual DateTime GetDateTime()
+	    {
+	        return DateTime.Now;
+	    }
 	}
 }

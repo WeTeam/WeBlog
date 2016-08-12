@@ -30,3 +30,20 @@ In addition to building the project and deploying the files, you must also resto
 1. Click the `Update {core, master} databasees` button.
 1. Log into the Sitecore desktop.
 1. Perform a full publish.
+
+## Building the Themes ##
+
+The WeBlog themes use Grunt as a toolchain and are not included in the Visual Studio projects.
+
+1. Ensure you have Node, NPM, Grunt and Bower installed. Grunt and Bower should be installed globally.
+
+		npm install -g grunt
+		npm install -g bower
+
+1. Execute `npm install` in the `Themes` directory to restore the node packages.
+1. Execute `bower install` in the `Themes` directory to restore the bower packages.
+1. Execute `grunt` in the `Themes` directory to build the themes and deploy to the default (Sitecore 8.0) Sitecore instance
+	1. Paths for Sitecore instaces are read from the `deploy.targets` file.
+	1. To deploy the themes to a different target instance, pass the `--scversion` parameter to `grunt`:
+	
+			grunt --scversion=sc7.0

@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
@@ -14,6 +15,8 @@ namespace Sitecore.Modules.WeBlog.Components
     public class PostListCore : IPostListCore
     {
         protected IEnumerable<EntryItem> entries;
+
+        protected IWeBlogSettings Settings = null;
 
         protected BlogHomeItem CurrentBlog { get; set; }
 
@@ -51,9 +54,15 @@ namespace Sitecore.Modules.WeBlog.Components
             get { return BuildViewMoreHref(); }
         }
 
-        public PostListCore(BlogHomeItem currentBlog)
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="currentBlog">The blog being listed.</param>
+        /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
+        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null)
         {
             CurrentBlog = currentBlog;
+            Settings = settings ?? new WeBlogSettings();
         }
 
         public virtual void Initialize(NameValueCollection queryString)
@@ -67,20 +76,18 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected virtual IEnumerable<EntryItem> GetEntries()
         {
-            var categoryTemplate = GetCategoryTemplate();
-
             IEnumerable<EntryItem> entries;
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
-            if (!String.IsNullOrEmpty(tag))
+            if (!string.IsNullOrEmpty(tag))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(tag);
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, tag, null, null, null);
             }
-            else if (Context.Item.TemplateIsOrBasedOn(categoryTemplate))
+            else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntryByCategorie(CurrentBlog.ID, Context.Item.Name);
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, null, Context.Item.Name);
             }
-            else if (!String.IsNullOrEmpty(sort))
+            else if (!string.IsNullOrEmpty(sort))
             {
                 var algorithm = InterestingEntriesCore.GetAlgororithmFromString(sort, InterestingEntriesAlgorithm.Custom);
                 if (algorithm != InterestingEntriesAlgorithm.Custom)
@@ -95,7 +102,7 @@ namespace Sitecore.Modules.WeBlog.Components
             }
             else
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries();
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog);
             }
             return entries;
         }
@@ -105,7 +112,7 @@ namespace Sitecore.Modules.WeBlog.Components
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
             string blogUrl = Links.LinkManager.GetItemUrl(Context.Item);
-            var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayCommentSidebarCountNumeric);
+            var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayItemCountNumeric);
             if (tag != null)
             {
                 viewMoreHref += "&tag=" + HttpUtility.UrlEncode(tag);
@@ -117,9 +124,10 @@ namespace Sitecore.Modules.WeBlog.Components
             return viewMoreHref;
         }
 
+        [Obsolete("Use the templates defined in settings.")]
         protected virtual TemplateItem GetCategoryTemplate()
         {
-            var categoryTemplateId = Settings.CategoryTemplateID;
+            var categoryTemplateId = Settings.CategoryTemplateIds.First();
             var categoryTemplate = new TemplateItem(Context.Database.GetItem(categoryTemplateId));
             return categoryTemplate;
         }

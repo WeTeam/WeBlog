@@ -1,0 +1,356 @@
+@text-color: #444444;
+@text-color-highlight: #ffffff;
+@highlight1: rgb(31, 174, 255);
+@highlight2: rgb(70, 23, 180);
+@highlight3: rgb(255, 152, 29);
+@highlight4: rgb(25, 153, 0);
+@highlight5: rgb(193, 0, 79);
+@highlight6: rgb(170, 64, 255);
+@shaded: #dddddd;
+
+header, footer, main, aside, div {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: "Segoe UI", Verdana, Helvetica, sans-serif;
+	font-weight: 200;
+	font-size: 1.05em;
+	color: @text-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 100;
+}
+
+
+a {
+	color: @text-color;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: lighten(@text-color, 30%);
+}
+
+h1, h2, header {
+	a {
+		text-decoration: none;
+	}
+	
+	a:hover {
+		text-decoration: underline;
+	}
+}
+
+header#top {
+	padding: 1.75em 0.25em 0.25em;
+	margin-bottom: 1em;
+	background-color: @highlight1;
+	font-size: 1.8em;
+	text-align: right;
+	max-width: 1200px;
+	margin: auto;
+	
+	a {
+		color: @text-color-highlight;
+		font-weight: 100;
+	}
+}
+
+.wb-wrapper {
+	margin: auto;
+	max-width: 1200px;
+	display: table;
+}
+
+main {
+	width: 100%;
+	display: table-cell;
+	padding-right: 2em;
+}
+
+aside {
+	min-width: 300px;
+	display: table-cell;
+}
+
+.wb-panel {
+	margin-bottom: 0.25em;
+	padding: 1em;
+	color: @text-color-highlight;
+	
+	a {
+		color: @text-color-highlight;
+	}
+	
+	a:hover {
+		color: @highlight1;
+	}
+	
+	h1, h2, h3, h4, h5, h6 {
+		margin: 0;
+	}
+
+	ul {
+		padding: 0;
+	}
+	
+	li {
+		list-style: none;
+	}
+}
+
+.wb-categories {
+	background-color: @highlight3;
+}
+
+.wb-archive {
+	background-color: @highlight2;
+	
+	.wb-month li, .wb-entries li {
+		margin-left: 1em;
+	}
+
+	.wb-entries {
+		padding-left: 21px;
+		margin-bottom: 0.5em;
+		
+		li {
+			list-style: circle;
+		}
+	}
+	
+	.wb-year-container {
+		margin-bottom: 1em;
+	}
+	
+	a.collapsed {
+		padding-left: 16px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/archive-expand.png") left center no-repeat;
+	}
+	
+	a.expanded {
+		padding-left: 16px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/archive-collapse.png") left center no-repeat;
+	}
+}
+
+.wb-feeds {
+	background-color: @highlight4;
+	
+	.wb-feed-text {
+		padding-left: 21px;
+		background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/connection.png") left center no-repeat;
+		// Icon from http://www.flaticon.com/free-icon/rss-symbol_25234
+	}
+}	
+	
+.wb-recent-comments {
+	background-color: @highlight5;
+	
+	.wb-comment-content {
+		margin-bottom: 0.5em;
+	}
+}
+	
+.wb-interesting-entries {
+	background-color: @highlight6;
+}
+
+.wb-tag-cloud {
+	background-color: @highlight3;
+	
+	.wb-weight1 {
+		font-size: 1.3em;
+	}
+	
+	.wb-weight2 {
+		font-size: 1.1em;
+	}
+	
+	.wb-weight3 {
+		font-size: 0.9em;
+	}
+	
+	.wb-weight4 {
+		font-size: 0.8em;
+	}
+	
+	.wb-weight5 {
+		font-size: 0.7em;
+	}
+	
+	a {
+		margin-right: 0.25em;
+	}
+}
+
+.wb-twitter {
+	background-color: @highlight4;
+}
+
+.thumbnail {
+	float: right;
+	margin: 0 0 1em 1em;
+}
+
+.wb-details {
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.wb-entry-list {
+	section {
+		margin-bottom: 2em;
+		clear: both;
+	}
+	
+	h2 {
+		margin-bottom: 0.25em;
+	}
+}
+
+.wb-read-more {
+	float: right;
+}
+
+.wb-view-more-wrapper {
+	margin-top: 2em;
+	font-size: 1.2em;
+}
+
+.wb-loading-animation {
+	padding-right: 30px;
+	background: url("/sitecore modules/Web/WeBlog/Themes/Kirk/img/ripple.gif") right center no-repeat;	
+	// image created at http://loading.io/
+}
+
+footer#bottom {
+	margin-top: 2em;
+	padding: 1em;
+	background-color: @highlight1;
+	color: @text-color-highlight;
+	font-size: 0.8em;
+	
+	a {
+		color: @text-color-highlight;
+	}
+}
+
+.wb-entry-categories, .wb-entry-tags {
+	h3 {
+		margin: 0.5em 0 0 0;
+		font-size: 1em;
+		display: inline-block;
+	}
+	
+	ul {
+		padding: 0;
+		display: inline;
+	}
+	
+	li {
+		margin-left: 0.5em;
+		padding: 0 0.25em;
+		display: inline;
+		background-color: @shaded;
+	}
+}
+
+.wb-entry-tags {
+	padding: 0;
+	color: @text-color;
+	
+	a {
+		color: @text-color;
+	}
+}
+
+.wb-entry-add-comment {
+	color: @text-color;
+	
+	p {
+		margin: 0 0 0.5em 0;
+	}
+	
+	label {
+		display: inline-block;
+		width: 100%;
+	}
+	
+	input, textarea {
+		margin-bottom: 0.5em;
+	}
+	
+	input {
+		width: 300px;
+	}
+	
+	textarea {
+		width: 600px;
+	}
+	
+	.wb-captcha {
+		label {
+			display: inline;
+			margin-bottom: 0.5em;
+		}
+		
+		img {
+			margin-bottom: 0.5em;
+		}
+		
+		input {
+			width: 250px;
+		}
+	}
+	
+	input[type='submit'] {
+		width: 100px;
+	}
+}
+
+.wb-entry-comments {
+	color: @text-color;
+	
+	li {
+		padding: 0.5em;
+	}
+	
+	.wb-comment-alternate {
+		background-color: #eeeeee;
+	}
+	
+	.wb-comment-author {
+		color: @highlight1;
+	}
+	
+	.wb-datetime {
+		float: right;
+		color: lighten(@text-color, 30%);
+		font-style: italic;
+	}
+}
+
+@media all and (max-width: 900px) {
+	.wb-wrapper {
+		display: block;
+	}
+	
+	main {
+		display: block;
+		width: 100%;
+	}
+	
+	aside {
+		display: block;
+		width: 100%;
+	}
+	
+	.wb-entry-add-comment {
+		textarea {
+			width: 300px;
+		}
+	}
+}

@@ -59,7 +59,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                 }
                 else
                 {
-                    SheerResponse.Input("Enter the name of your new category:", "", Configuration.Settings.ItemNameValidation, Translator.Text("'$Input' is not a valid name."), 100);
+                    SheerResponse.Input("Enter the name of your new category:", "", Sitecore.Configuration.Settings.ItemNameValidation, Translator.Text("'$Input' is not a valid name."), 100);
                     args.WaitForPostBack(true);
                 }
             }

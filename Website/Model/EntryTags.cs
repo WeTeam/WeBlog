@@ -24,7 +24,11 @@ namespace Sitecore.Modules.WeBlog.Model
         {
             base.Initialize(rendering);
 
+#if !FEATURE_EXPERIENCE_EDITOR
             if (Context.PageMode.IsPageEditorEditing)
+#else
+            if (Context.PageMode.IsExperienceEditorEditing)
+#endif
             {
                 return;
             }
