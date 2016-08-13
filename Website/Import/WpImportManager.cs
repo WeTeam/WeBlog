@@ -53,7 +53,9 @@ namespace Sitecore.Modules.WeBlog.Import
 
                 if (!string.IsNullOrEmpty(post.Content))
                 {
-                    var name = ItemUtil.ProposeValidItemName(post.Title);
+                    var title = post.Title;
+                    title = String.IsNullOrEmpty(title) ? $"Post {Posts.IndexOf(post)}" : title;
+                    var name = ItemUtil.ProposeValidItemName(title);
 
                     if (logger != null)
                         logger(name, summary.PostCount);
