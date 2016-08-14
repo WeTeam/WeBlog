@@ -3,11 +3,10 @@ bin
 obj
 build
 
-# Other VS user files
+# Other VS files and folders
 *.suo
 *.user
 *.userprefs
-.vs
 
 # Local deployment files
 deploy.targets
