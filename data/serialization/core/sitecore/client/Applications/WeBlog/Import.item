@@ -8,6 +8,7 @@ name: Import
 master: {BE42F637-4596-4FA6-AC95-5FF431320454}
 template: {B11AFCCD-C286-4384-B694-4465D6C605DE}
 templatekey: Speak-DashboardPage
+created: 20160813T160701:636067012212670000
 
 ----field----
 field: {5E642935-A6FC-48E9-B039-FE1136CED488}
@@ -27,15 +28,15 @@ content-length: 0
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
-content-length: 2216
+content-length: 1994
 
 <r>
   <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{4F72A793-BDBC-4262-9523-6AADD8FEA487}">
     <r id="{DAFAFFB8-74AF-4141-A96A-70B16834CEC6}" par="PageCodeScriptFileName=%2fsitecore%2fshell%2fclient%2fApplications%2fWeBlog%2fImport.js" ph="Page.Code" uid="{237256AA-9D30-463E-9ED1-90CFF092FCF6}" />
-    <r id="{314BF4B6-1875-4688-93BD-E2442FA2EA80}" par="Id=DataSource" ph="Page.Body" uid="{C8E12C52-A3A7-4208-940E-8457AF620A4E}" />
+    <r id="{1710A808-2190-4E80-B6EE-1A41909FA608}" par="Id=DataSource" ph="Page.Body" uid="{C8E12C52-A3A7-4208-940E-8457AF620A4E}" />
     <r id="{BE007891-2D9C-4E67-943C-752DBA0C041F}" par="ShowFooter=0" ph="Page.Body" uid="{F373AD1A-6282-4295-96D7-3E29D6EE88B3}" />
     <r id="{5AE97C0C-EE88-4564-A363-4FA11C01C90A}" ph="GlobalHeader" uid="{532C7DCD-29E7-4C34-9910-FC283D61A026}" />
-    <r id="{7A69C522-7E99-4630-A25A-5D571505862A}" par="ImageUrl=%252525252525252525252fsitecore%252525252525252525252fshell%252525252525252525252fclient%252525252525252525252fSpeak%252525252525252525252fAssets%252525252525252525252fimg%252525252525252525252fspeak-logo.png&amp;Id=GlobalLogo" ph="GlobalHeader.StartButton" uid="{A340B9F2-9FD0-4767-9B0B-62D7C8B0E5C7}" />
+    <r id="{7A69C522-7E99-4630-A25A-5D571505862A}" par="Id=GlobalLogo" ph="GlobalHeader.StartButton" uid="{A340B9F2-9FD0-4767-9B0B-62D7C8B0E5C7}" />
     <r id="{EC86834B-890C-405C-BB36-CA25044909E1}" ph="GlobalFooter" uid="{C01DD5BD-DFC2-425B-A301-43AE8363B443}" />
     <r id="{93CEEFCD-2DE1-40AF-AE9A-EBBFBCCC522F}" ph="ApplicationHeader" uid="{1E240370-226C-40E4-9C54-7FE8630DF74A}" />
     <r ds="{43436BDA-E260-4FF0-85D5-DC6E09FABE12}" id="{7717EB6C-9F90-4C58-826D-5E87722A0318}" par="Id=HeaderTitle" ph="ApplicationHeader.Title" uid="{1DC97590-77EC-4F75-A687-D86F7D22CAAA}" />
@@ -48,7 +49,7 @@ content-length: 2216
 ----version----
 language: en
 version: 1
-revision: 4dc20891-89d3-49b3-aeba-040d025a46cb
+revision: 40514dce-774c-4937-a714-ebb95152f9ce
 
 ----field----
 field: {7205A57F-93B4-413A-AA9A-6B16BBC59565}
@@ -70,14 +71,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-4dc20891-89d3-49b3-aeba-040d025a46cb
+40514dce-774c-4937-a714-ebb95152f9ce
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160318T213223Z
+20160814T084505Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

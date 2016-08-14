@@ -610,6 +610,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\WeBlog\Import.js" />
+    <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.js" />
     <Content Include="Views\WeBlog\Blog.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -698,6 +699,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\ThemeStylesheets.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

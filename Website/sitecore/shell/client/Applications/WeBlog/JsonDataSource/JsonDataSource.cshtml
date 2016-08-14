@@ -1,0 +1,13 @@
+﻿@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation
+@using Sitecore.Web.UI.Controls.Common.UserControls
+@model RenderingModel
+@{
+    var userControl = Html.Sitecore().Controls().GetUserControl(Model.Rendering);
+    userControl.Requires.Script("client", "JsonDataSource.js");
+    userControl.Attributes["type"] = "text/x-sitecore-jsondatasource";
+    userControl.DataBind = "Json: json";
+    var htmlAttributes = userControl.HtmlAttributes;
+}
+<script @htmlAttributes>
+</script>
