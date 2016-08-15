@@ -32,8 +32,8 @@ namespace Sitecore.Modules.WeBlog.Model
             {
                 return;
             }
-            var tags = ManagerFactory.TagManagerInstance.GetTagsByEntry(rendering.Item);
-            TagLinks = tags.ToDictionary(t => t.Key, t => EntryTagsCore.GetTagUrl(t.Key));
+            Tag[] tags = ManagerFactory.TagManagerInstance.GetTagsForEntry(rendering.Item);
+            TagLinks = tags.ToDictionary(t => t.Name, t => EntryTagsCore.GetTagUrl(t.Name));
         }
     }
 }

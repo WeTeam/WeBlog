@@ -11,6 +11,8 @@ namespace Sitecore.Modules.WeBlog.Layouts
 
         public int MaximumCount { get; set; }
 
+        public string SortingOptions { get; set; }
+
         public BlogTagCloud(ITagCloudCore tagCloudCore = null)
         {
             TagCloudCore = tagCloudCore ?? new TagCloudCore(ManagerFactory.BlogManagerInstance);
@@ -19,6 +21,12 @@ namespace Sitecore.Modules.WeBlog.Layouts
         protected void Page_Load(object sender, EventArgs e)
         {
             LoadTags();
+            if (TagSortList != null)
+            {
+                TagSortList.DataSource = TagCloudCore.GetSortNames(SortingOptions);
+                TagSortList.DataBind();
+            }
+
         }
 
         /// <summary>

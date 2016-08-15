@@ -4,18 +4,20 @@ using System.Web;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Web;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
     public class TagCloudCore : ITagCloudCore
     {
+        public string SortingOptions { get; set; }
         private int _max;
-        private Dictionary<string, int> _tags;
+        private Tag[] _tags;
 
         public BlogHomeItem CurrentBlog { get; set; }
 
-        public Dictionary<string, int> Tags
+        public Tag[] Tags
         {
             get
             {
@@ -28,8 +30,30 @@ namespace Sitecore.Modules.WeBlog.Components
             set { _tags = value; }
         }
 
-        public TagCloudCore(IBlogManager blogManagerInstance)
+        private string[] m_SortingNames = null;
+
+        public string[] GetSortNames(string sortingOptions)
         {
+                if (m_SortingNames != null)
+                {
+                    return m_SortingNames;
+                }
+                if (string.IsNullOrEmpty(sortingOptions))
+                {
+                    return new string[0];
+                }
+                var database = CurrentBlog.Database;
+                m_SortingNames = sortingOptions.Split('|')
+                    .Select(id => database.GetItem(id))
+                    .Where(item => item != null)
+                    .Select(item => item.Name.ToLowerInvariant())
+                    .ToArray();
+                return m_SortingNames;
+        }
+
+
+        public TagCloudCore(IBlogManager blogManagerInstance)
+        {            
             CurrentBlog = blogManagerInstance.GetCurrentBlog();
         }
 
@@ -38,10 +62,10 @@ namespace Sitecore.Modules.WeBlog.Components
         /// </summary>
         protected virtual void LoadTags()
         {
-            Tags = ManagerFactory.TagManagerInstance.GetAllTags(CurrentBlog);
+            Tags = ManagerFactory.TagManagerInstance.GetTagsForBlog(CurrentBlog);
             if (Tags.Any())
             {
-                _max = (from tag in Tags select tag.Value).Max();
+                _max = (from tag in Tags select tag.Count).Max();
             }
         }
 

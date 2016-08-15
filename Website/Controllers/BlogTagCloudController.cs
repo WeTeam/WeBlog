@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using Sitecore.Modules.WeBlog.Components;
+using Sitecore.Modules.WeBlog.Components.Parameters;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 
@@ -15,28 +16,34 @@ namespace Sitecore.Modules.WeBlog.Controllers
 
         public int MaximumCount { get; set; }
 
+        public string SortingOptions { get; set; }
+
         public BlogTagCloudController(ITagCloudCore tagCloudCore)
         {
             TagCloudCore = tagCloudCore ?? new TagCloudCore(ManagerFactory.BlogManagerInstance);
+            new RenderingParameterHelper<Controller>(this, true);
         }
 
         public ActionResult Index()
         {
             if (TagCloudCore.Tags.Any() && MaximumCount > 0)
             {
-                var model = GetModel();
+                var model = new TagCloudRenderingModel
+                {
+                    SortNames = TagCloudCore.GetSortNames(SortingOptions),
+                    Tags = GetTagRenderingModels()
+                };
                 return View("~/Views/WeBlog/TagCloud.cshtml", model);
             }
             return null;
         }
 
-        protected virtual IEnumerable<TagCloudRenderingModel> GetModel()
+        protected virtual IEnumerable<TagRenderingModel> GetTagRenderingModels()
         {
-            return TagCloudCore.Tags.Take(MaximumCount).Select(tag => new TagCloudRenderingModel
+            return TagCloudCore.Tags.Take(MaximumCount).Select(tag => new TagRenderingModel(tag)
             {
-                Name = tag.Key,
-                Url = TagCloudCore.GetTagUrl(tag.Key),
-                Weight = TagCloudCore.GetTagWeightClass(tag.Value)
+                Url = TagCloudCore.GetTagUrl(tag.Name),
+                Weight = TagCloudCore.GetTagWeightClass(tag.Count)
             });
         }
     }

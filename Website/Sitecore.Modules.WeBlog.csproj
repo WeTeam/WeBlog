@@ -180,6 +180,8 @@
     </Compile>
     <Compile Include="Model\Theme.cs" />
     <Compile Include="Import\ImportSummary.cs" />
+    <Compile Include="Model\Tag.cs" />
+    <Compile Include="Model\TagCloudRenderingModel.cs" />
     <Compile Include="Import\Providers\IWpPostProvider.cs" />
     <Compile Include="Import\WpImportOptions.cs" />
     <Compile Include="Import\Providers\MediaItemBasedProvider.cs" />
@@ -251,7 +253,7 @@
     <Compile Include="Model\PostListEntry.cs" />
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
     <Compile Include="Model\SubmitCommentRenderingModel.cs" />
-    <Compile Include="Model\TagCloudRenderingModel.cs" />
+    <Compile Include="Model\TagRenderingModel.cs" />
     <Compile Include="Pipelines\CreateComment\ProfanityFilter.cs" />
     <Compile Include="Pipelines\IProfanityFilterProcessor.cs" />
     <Compile Include="Pipelines\ProfanityFilterArgs.cs" />

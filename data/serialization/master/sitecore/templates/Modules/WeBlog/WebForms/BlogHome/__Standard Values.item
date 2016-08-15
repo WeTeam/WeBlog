@@ -8,6 +8,7 @@ name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {46663E05-A6B8-422A-8E13-36CD2B041278}
 templatekey: BlogHome
+created: 20160814T121451:636067736914800000
 
 ----field----
 field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
@@ -69,13 +70,13 @@ content-length: 38
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
-content-length: 1390
+content-length: 1371
 
-<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"><r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="weblog-content" uid="{519F319A-BB46-4A00-8319-B10CD5FF6031}" /><r ds="" id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" par="PostTemplate" ph="weblog-main" uid="{7B572A4F-D434-4EE0-8298-2784298B7EE1}" /><r cac="1" ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{9AB0519F-753B-43E5-9DB2-9D23D4334960}" vbp="1" /><r cac="1" ds="" id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{57F227FA-295A-4A67-BE15-1FC30303BF6A}" vbp="1" /><r cac="1" ds="" id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{DAC7C38C-B5FA-4855-ABBC-AEB4EF82D4DB}" vbp="1" /><r cac="1" ds="" id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{5DA6458D-B784-4922-946E-FAED0F7647F0}" vbp="1" /><r ds="" id="{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}" par="" ph="weblog-sidebar" uid="{2C93122A-AC9A-40F6-BA99-76D8977E4C40}" /></d><d id="{CF7D07C2-F835-4313-B01D-7AADCA72D24B}" l="{90397DEF-ABEB-424A-AF56-2FD32DEC3432}"><r ds="" id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" par="PostTemplate" ph="weblog-content" uid="{E7C0A81B-427F-4B72-8FCC-2FBB2A551CEA}" /></d></r>
+<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"><r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="weblog-content" uid="{519F319A-BB46-4A00-8319-B10CD5FF6031}" /><r ds="" id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" par="PostTemplate" ph="weblog-main" uid="{7B572A4F-D434-4EE0-8298-2784298B7EE1}" /><r cac="1" ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{9AB0519F-753B-43E5-9DB2-9D23D4334960}" vbp="1" /><r cac="1" ds="" id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{57F227FA-295A-4A67-BE15-1FC30303BF6A}" vbp="1" /><r cac="1" ds="" id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{DAC7C38C-B5FA-4855-ABBC-AEB4EF82D4DB}" vbp="1" /><r cac="1" ds="" id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" ph="weblog-sidebar" uid="{5DA6458D-B784-4922-946E-FAED0F7647F0}" vbp="1" /><r ds="" id="{1330FDB3-9277-4BE6-945F-CB4CB113B5C3}" par="" ph="weblog-sidebar" uid="{2C93122A-AC9A-40F6-BA99-76D8977E4C40}" /></d><d id="{CF7D07C2-F835-4313-B01D-7AADCA72D24B}" l="{90397DEF-ABEB-424A-AF56-2FD32DEC3432}"><r ds="" id="{12CD7ACC-C69E-4146-A80D-A4B638D63AF9}" par="PostTemplate" ph="weblog-content" uid="{E7C0A81B-427F-4B72-8FCC-2FBB2A551CEA}" /></d></r>
 ----version----
 language: en
 version: 1
-revision: 25591338-5a03-4bcc-a035-1cb49e9f121e
+revision: 245feb76-56b7-4c47-9bca-739a59bcf4c0
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -125,14 +126,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-25591338-5a03-4bcc-a035-1cb49e9f121e
+245feb76-56b7-4c47-9bca-739a59bcf4c0
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160411T221527Z
+20160814T145211Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

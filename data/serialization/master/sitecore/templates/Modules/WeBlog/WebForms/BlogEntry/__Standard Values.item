@@ -8,18 +8,19 @@ name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}
 templatekey: BlogEntry
+created: 20160814T121451:636067736914670000
 
 ----field----
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
-content-length: 1912
+content-length: 1893
 
-<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"><r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="weblog-content" uid="{D1140E82-9243-4204-88C5-09F31484942E}" /><r ds="" id="{80DFF945-FF0C-460F-A669-1F66EEE4FAA4}" par="ShowEntryTitle=1&amp;ShowEntryImage=1&amp;ShowEntryMetadata=1&amp;ShowEntryIntroduction" ph="weblog-main" uid="{2EA8EA8F-7D2C-4264-AEEC-A674C01BED19}" /><r ds="" id="{D5DE2CA5-8550-4F46-9545-3C4376BF7E0F}" mvt="" par="" ph="weblog-below-entry-title" uid="{C44F79BC-8EEA-4807-930E-0F707FF0CF41}" /><r ds="" id="{DE1B6D0B-6988-4B31-B469-EAD66F2F6ED3}" par="" ph="weblog-below-entry" uid="{711F84E7-A3EC-4263-90A3-DAB060CCE2F6}" /><r ds="" id="{2C63DA92-46FA-4244-9684-EAC101BED6C7}" par="" ph="weblog-below-entry" uid="{5F6462C4-F39F-4135-A80B-270C7E5DE90E}" /><r ds="" id="{FE9601F1-7522-48E6-BB71-4791C617F4B2}" par="" ph="weblog-below-entry" uid="{5D63C372-6711-4864-A4FB-AB4000E37460}" /><r ds="" id="{8D7408D6-0E04-4BDF-BECE-EEEB08EB9B4A}" par="" ph="weblog-below-entry" uid="{709D2B5A-E08D-40F4-BA33-C382B075D5BA}" /><r ds="" id="{53F12198-7C37-4611-8F28-386FE944B4D2}" mvt="" par="" ph="weblog-comment-form" uid="{BA21B9CD-22E8-43D2-B2B6-480C15AAEC5B}" /><r cac="1" ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{BD1F0138-A016-4075-829C-E318D4C66BC0}" vbp="1" /><r cac="1" ds="" id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{F162F0AA-4647-4732-A5C2-A33749A001A3}" vbp="1" /><r cac="1" ds="" id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{2D97DF06-5EC9-44C0-9B9E-D183BF9936EF}" vbp="1" /><r cac="1" ds="" id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{E009BD95-D398-4329-8176-EB7C6CD1648E}" vbp="1" /></d></r>
+<r  xmlns:xsd="http://www.w3.org/2001/XMLSchema"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}" l="{AD8B138E-A58A-4A24-8A5A-22722F1907E9}"><r ds="" id="{C8102E55-9833-46E8-9EB4-19EBAC3BC6C4}" par="" ph="weblog-content" uid="{D1140E82-9243-4204-88C5-09F31484942E}" /><r ds="" id="{80DFF945-FF0C-460F-A669-1F66EEE4FAA4}" par="ShowEntryTitle=1&amp;ShowEntryImage=1&amp;ShowEntryMetadata=1&amp;ShowEntryIntroduction" ph="weblog-main" uid="{2EA8EA8F-7D2C-4264-AEEC-A674C01BED19}" /><r ds="" id="{D5DE2CA5-8550-4F46-9545-3C4376BF7E0F}" mvt="" par="" ph="weblog-below-entry-title" uid="{C44F79BC-8EEA-4807-930E-0F707FF0CF41}" /><r ds="" id="{DE1B6D0B-6988-4B31-B469-EAD66F2F6ED3}" par="" ph="weblog-below-entry" uid="{711F84E7-A3EC-4263-90A3-DAB060CCE2F6}" /><r ds="" id="{2C63DA92-46FA-4244-9684-EAC101BED6C7}" par="" ph="weblog-below-entry" uid="{5F6462C4-F39F-4135-A80B-270C7E5DE90E}" /><r ds="" id="{FE9601F1-7522-48E6-BB71-4791C617F4B2}" par="" ph="weblog-below-entry" uid="{5D63C372-6711-4864-A4FB-AB4000E37460}" /><r ds="" id="{8D7408D6-0E04-4BDF-BECE-EEEB08EB9B4A}" par="" ph="weblog-below-entry" uid="{709D2B5A-E08D-40F4-BA33-C382B075D5BA}" /><r ds="" id="{53F12198-7C37-4611-8F28-386FE944B4D2}" mvt="" par="" ph="weblog-comment-form" uid="{BA21B9CD-22E8-43D2-B2B6-480C15AAEC5B}" /><r cac="1" ds="" id="{9773C9D7-989D-4807-A834-10A10336BF27}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{BD1F0138-A016-4075-829C-E318D4C66BC0}" vbp="1" /><r cac="1" ds="" id="{5518AD7A-B52A-4356-BE36-145ACEA6A5FC}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{F162F0AA-4647-4732-A5C2-A33749A001A3}" vbp="1" /><r cac="1" ds="" id="{F0ABC248-30B4-4F0A-8ADA-1A03D298DFD7}" par="VaryByBlog=1" ph="weblog-sidebar" uid="{2D97DF06-5EC9-44C0-9B9E-D183BF9936EF}" vbp="1" /><r cac="1" ds="" id="{C987F2EB-6416-4E15-9EDA-B9F016918832}" ph="weblog-sidebar" uid="{E009BD95-D398-4329-8176-EB7C6CD1648E}" vbp="1" /></d></r>
 ----version----
 language: en
 version: 1
-revision: 551b27e5-9b5a-444d-80e3-1aceec0e40bc
+revision: ba5a2fe7-1b00-4224-86de-083b397571f4
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -34,14 +35,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-551b27e5-9b5a-444d-80e3-1aceec0e40bc
+ba5a2fe7-1b00-4224-86de-083b397571f4
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160110T122119Z
+20160814T145223Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
