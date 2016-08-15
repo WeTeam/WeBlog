@@ -1,4 +1,4 @@
-﻿define(["sitecore"], function (Sitecore) {
+define(["sitecore", "/-/speak/v1/ExperienceEditor/ExperienceEditor.js"], function (Sitecore, ExperienceEditor) {
     Sitecore.Commands.NewEntry = {
         canExecute: function (context) {
             var key = "CanExecuteWeBlogCommands";
@@ -8,12 +8,13 @@
             return Sitecore[key];
         },
         execute: function (context) {
-            Sitecore.ExperienceEditor.Dialogs.prompt("Enter the title of your new entry:", "", function (name) {
+            ExperienceEditor.Dialogs.prompt("Enter the title of your new entry:", "", function (name) {
                 if (name == null) {
                     return;
                 }
                 context.currentContext.argument = name;
-                Sitecore.ExperienceEditor.PipelinesUtil.generateRequestProcessor("ExperienceEditor.WeBlog.NewEntry", function (response) {
+                ExperienceEditor.PipelinesUtil.generateRequestProcessor("ExperienceEditor.WeBlog.NewEntry", function (response) {
+                    response.context.app.refreshOnItem(response.context.currentContext);
                 }).execute(context);
             });
         }
