@@ -8,18 +8,19 @@ name: PostList
 master: {00000000-0000-0000-0000-000000000000}
 template: {FED6A14F-0D05-4E18-B160-17C0588A2005}
 templatekey: Model
+created: 20160815T074436:636068438765730000
 
 ----field----
 field: {EE9E23D2-181D-4172-A929-0E0B8D10313C}
 name: Model Type
 key: model type
-content-length: 38
+content-length: 42
 
-Sitecore.Modules.WeBlog.Model.PostList
+Sitecore.Modules.WeBlog.Mvc.Model.PostList
 ----version----
 language: en
 version: 1
-revision: 67b22d5c-529c-476d-87bc-334db7653cee
+revision: 1fcfed77-b3c9-4073-8314-6b88cf6e83e0
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +49,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-67b22d5c-529c-476d-87bc-334db7653cee
+1fcfed77-b3c9-4073-8314-6b88cf6e83e0
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T215609Z
+20160815T080604Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

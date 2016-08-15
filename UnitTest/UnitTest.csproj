@@ -117,7 +117,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Website\Sitecore.Modules.WeBlog.csproj">
+    <ProjectReference Include="..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
       <Project>{26fe5f3a-f140-40c4-85a0-c1866da26f16}</Project>
       <Name>Sitecore.Modules.WeBlog</Name>
     </ProjectReference>

@@ -8,18 +8,19 @@ name: ShareEntry-AddThis
 master: {00000000-0000-0000-0000-000000000000}
 template: {FED6A14F-0D05-4E18-B160-17C0588A2005}
 templatekey: Model
+created: 20160815T074436:636068438765870000
 
 ----field----
 field: {EE9E23D2-181D-4172-A929-0E0B8D10313C}
 name: Model Type
 key: model type
-content-length: 47
+content-length: 51
 
-Sitecore.Modules.WeBlog.Model.ShareEntryAddThis
+Sitecore.Modules.WeBlog.Mvc.Model.ShareEntryAddThis
 ----version----
 language: en
 version: 1
-revision: 97389da6-5fd9-4400-8284-971dd955b76d
+revision: 8ee76ca2-e1ff-4b10-bd50-6492770b267b
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +49,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-97389da6-5fd9-4400-8284-971dd955b76d
+8ee76ca2-e1ff-4b10-bd50-6492770b267b
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T215624Z
+20160815T080607Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

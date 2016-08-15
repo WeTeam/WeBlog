@@ -1,0 +1,176 @@
+﻿body
+{
+    font-family: 'Lucida Grande', Verdana, Arial, sans-serif;  
+    background: #000000;
+}
+h1, h2, h3
+{
+    font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;  
+}
+a
+{
+    color: #336699;  
+}
+/*************************************************************************************
+Main layout
+*************************************************************************************/
+.wb
+{
+    width: 900px;
+}
+.wb-header 
+{
+    height: 38px;
+    padding-top: 10px;
+}
+    .wb-header a 
+    {
+        text-decoration: none;
+        color: #ffffff;
+    }
+.wb-wrapper
+{
+    background-color: #ffffff;
+    background-image: url(./techphoria/images/body-2col-bg.png);
+    background-repeat: repeat-y;
+ }
+.wb-leftcolumn
+{
+    padding: 15px;
+    width: 650px;    
+}
+/*************************************************************************************
+Blog entry
+*************************************************************************************/
+.wb-entry-list,
+.wb-entry
+{
+    font-size: 0.8em;
+    line-height: 175%;
+}
+li.wb-entry-list-entry
+{
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    background-image: url(./techphoria/images/entry-list-separator.png);
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+.wb-entry-list h2,
+.wb-entry h2
+{
+    font-size: 19px;
+}
+.wb-entry-list h2 a,
+.wb-entry h2 a
+{
+    color: #333333;
+    text-decoration: none;   
+}
+.wb-entry-list h2 a:hover,
+.wb-entry h2 a:hover
+{
+    color: #336699;
+    text-decoration: none;   
+}
+
+.wb-entry p
+{
+    clear: left;
+}
+
+.wb-entry .wb-entry-share h3
+{
+    display: none;
+}
+.wb-entry-list .wb-read-more a
+{
+    color: #336699;
+}
+.wb-entry-categories h3, .wb-entry-categories h3 ul
+{
+    float: left;
+    margin: 0 5px 10px 0;
+}
+
+.wb-entry-categories ul li
+{
+    margin-right: 5px;
+}
+
+/*************************************************************************************
+Comment List
+*************************************************************************************/
+.wb-entry-comments ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+    .wb-entry-comments ul li
+    {
+        padding: 4px;
+        background-color: #F2DB94;
+    }
+        .wb-entry-comments ul li.wb-comment-alternate
+        {
+            background-color: #D9A362;
+        }
+        
+/*************************************************************************************
+Blog Sidebar
+*************************************************************************************/
+.wb-rightcolumn
+{
+    width: 215px;
+    margin-left: 0px;
+    padding-left: 5px;  
+}
+.wb-rightcolumn ul
+{
+    list-style: none;    
+    margin: 0px 0px 15px 0px;
+    padding: 0px;
+}
+    .wb-rightcolumn ul li
+    {
+        padding: 2px 0px 2px 0px;
+    }
+        .wb-rightcolumn .wb-panel ul li a
+        {
+            font-size: 11px;
+        }
+        .wb-rightcolumn .wb-panel ul li a.wb-current
+        {
+            font-weight: bold;
+        }
+        .wb-rightcolumn .wb-panel ul li a.wb-year
+        {
+            color: #000000;
+            font-style: italic;
+        }
+        .wb-rightcolumn ul li ul
+        {
+            margin: 0;
+        }
+            .wb-rightcolumn ul ul li
+            {
+                padding-left: 4px;
+                padding-right: 2px;
+                border: none;
+            }
+            .wb-rightcolumn ul ul ul li
+            {
+                padding-bottom: 5px;
+            }
+.wb-rightcolumn h3
+{   
+    margin: 10px 0px 0px 0px;
+    border-bottom: 3px solid #2A160B;
+}
+
+.wb-rightcolumn .wb-feeds a.wb-feed-image img
+{
+    padding: 2px;
+    vertical-align: middle;
+}

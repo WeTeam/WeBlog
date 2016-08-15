@@ -1,0 +1,95 @@
+﻿body
+{
+    font: Verdana,Helvetica,Arial,Geneva,Helvetica,sans-serif;   
+    background: #73141B;
+}
+/*************************************************************************************
+Main layout
+*************************************************************************************/
+.wb-header 
+{
+    font-size: 48px;
+    text-transform: lowercase;
+    font-variant: small-caps;
+}
+    .wb-header a 
+    {
+        color: #F2DB94
+    }
+.wb-wrapper 
+{
+    border-left: 1px solid #2A160B;
+    border-right: 1px solid #2A160B;
+    border-top: 5px solid #2A160B;
+    background: #D9A362;
+ }
+/*************************************************************************************
+Blog entry
+*************************************************************************************/
+.wb-entry-list,
+.wb-entry
+{
+    font-size: 0.9em;
+}
+    .wb-entry-list h2,
+    .wb-entry h2 
+    {
+        font-size: 18px;
+        color: #000000;
+    }
+    .wb-entry-list a.wb-read-more
+    {
+        color: #384001;
+    }
+
+/*************************************************************************************
+Comment List
+*************************************************************************************/
+.wb-entry-comments ul
+{
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+    .wb-entry-comments ul li
+    {
+        padding: 4px;
+        background-color: #F2DB94;
+    }
+        .wb-entry-comments ul li.wb-comment-alternate
+        {
+            background-color: #D9A362;
+        }
+/*************************************************************************************
+Blog Sidebar
+*************************************************************************************/
+.wb-rightcolumn ul
+{
+    list-style: none;    
+    margin: 0px 0px 15px 0px;
+    padding: 0px;
+}
+    .wb-rightcolumn ul li
+    {
+        border-bottom: 1px solid #2A160B;
+        padding: 2px 0px 2px 0px;
+    }
+        .wb-rightcolumn ul.wb-panel li a
+        {
+            color: #222601;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .wb-rightcolumn ul li ul
+        {
+            margin: 0;
+        }
+            .wb-rightcolumn ul li ul li
+            {
+                border: none;
+            }
+.wb-rightcolumn h3
+{   
+    margin: 10px 0px 0px 0px;
+    border-bottom: 3px solid #2A160B;
+}

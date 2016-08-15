@@ -137,7 +137,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Website\Sitecore.Modules.WeBlog.csproj">
+    <ProjectReference Include="..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
       <Project>{26FE5F3A-F140-40C4-85A0-C1866DA26F16}</Project>
       <Name>Sitecore.Modules.WeBlog</Name>
     </ProjectReference>

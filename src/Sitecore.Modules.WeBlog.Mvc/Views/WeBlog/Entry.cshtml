@@ -1,0 +1,47 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@using Sitecore.Modules.WeBlog.Mvc
+@model Sitecore.Modules.WeBlog.Mvc.Model.Entry
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<article>
+    @if (Model.ShowEntryTitle)
+    {
+        <h1>
+            @if (Sitecore.Context.PageMode.IsPageEditor)
+            {
+                @Html.Sitecore().Field("Title")
+            }
+            else
+            {
+                @Model.Title
+            }
+        </h1>
+    }
+    <div class="thumbnail">
+        @Html.Sitecore().Field("Image", new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
+    </div>
+    @if (Model.ShowEntryMetadata)
+    {
+        <div class="wb-details">
+            @if (Sitecore.Context.PageMode.IsPageEditor)
+            {
+                @Translator.Format("ENTRY_DETAILS", Model.CurrentEntry.Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), Model.CurrentEntry.Author.Rendered).ToHtmlString()
+            }
+            else
+            {
+                @Translator.Format("ENTRY_DETAILS", Model.CurrentEntry.Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), Model.CurrentEntry.AuthorName).ToHtmlString()
+            }
+        </div>
+    }
+    @Html.Sitecore().Placeholder("weblog-below-entry-title")
+    @if (Model.ShowEntryIntroduction)
+    {
+        @Html.Sitecore().Field("Introduction", shouldWrap: Model.CurrentEntry.DoesFieldRequireWrapping("Introduction"))
+    }
+    @Html.Sitecore().Field("Content", shouldWrap: Model.CurrentEntry.DoesFieldRequireWrapping("Content"))
+    @Html.Sitecore().Placeholder("weblog-below-entry")
+</article>

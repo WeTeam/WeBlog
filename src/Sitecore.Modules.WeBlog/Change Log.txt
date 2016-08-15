@@ -1,0 +1,31 @@
+﻿WeBlog Change Log
+=================
+
+Release 2.2
+-----------
+20120530 AD: Updates to WordPress import wizard for reporting progress
+20120527 AD: Fixed issues with WordPress import wizard with some WordPress XML format
+20120522 AD: Updates to "edit settings" commands for page editor
+20120522 AD: Fixed issue in CreateCategory command
+20120430 AD: Fixed issues with media file naming with uploaded media from Live Writer
+20120429 AD: Updated database crawler to include publish field to take into account publishing retrictions and sort order on list page
+20120417 NW: Added ability to set blog templates to use in blog settings
+20120409 AD: Added pipeline to handle getting the summary for an entry
+20120401 NW: Added new rendering type, Blog Sublyout, that allows varying HTML caching by bog. This enables caching of sidebar components whose content varies by current blog.
+20120401 NW: New sublayout parameter or blog archive, close months by default
+20120401 NW: Performance updates for blog archive
+20120323 AD: Ensure entries created through Live Writer publish correctly including any ancestor folders on the entry or associated media
+20120322 AD: Fixed XSS vulnerability in CommentsList.ascx
+20120312 AD: Fixed issue with WCF service under Sitecore 6.2
+20120312 AD: Fixed issue with LinkManager LinkOptions not being followed
+20120307 NW: Fixed issue with comment submission due to entry and comment list sub layout caching
+20120304 NW: Fixes for comment workflow and translation API
+
+Release 2.1
+-----------
+20120109 AD: Added "Delete Comment" action to Spam state of Comment workflow. Makes bulk deletion of spam from the workbox easier.
+20120109 AD: Updated MetaWeblog API service to accept publish date on posts
+20120109 AD: Added tests for the MetaWeblog API service
+20120104 AD: Implemented the ManagerFactory class and updated the manager classes to support it's use. Do not use manager classes directly. Instead use the ManagerFactory to obtain the instance you're after. This allows users to override the managers classes.
+20120102 AD: Added Akismet support
+20120102 AD: Updated comment creation process to use a pipeline. This will make it easier for users to alter the creation process through configuration
