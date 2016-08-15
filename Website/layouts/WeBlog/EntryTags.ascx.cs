@@ -32,7 +32,7 @@ namespace Sitecore.Modules.WeBlog.Layouts
             if (!Sitecore.Context.PageMode.IsExperienceEditorEditing)
 #endif
             {
-                var tags = ManagerFactory.TagManagerInstance.GetTagsByEntry(CurrentEntry);
+                var tags = ManagerFactory.TagManagerInstance.GetTagsForEntry(CurrentEntry);
                 var list = LoginViewTags.FindControl("TagList") as ListView;
 
                 if (list != null)

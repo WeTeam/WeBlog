@@ -8,6 +8,7 @@ name: Archive
 master: {00000000-0000-0000-0000-000000000000}
 template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
 templatekey: View rendering
+created: 20160713T143117:636040170778230000
 
 ----field----
 field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
@@ -29,7 +30,7 @@ name: Parameters Template
 key: parameters template
 content-length: 38
 
-{43ABB60C-C4D4-40B9-95CE-04473C492FE2}
+{09DF97A9-2D05-4C9E-8A7F-55794FD98122}
 ----field----
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
@@ -40,8 +41,15 @@ content-length: 136
 ----version----
 language: en
 version: 1
-revision: 571d8672-0301-4698-9d6f-a4577f4ca932
+revision: e0d19060-16f9-44db-92bd-bbc24c598f50
 
+----field----
+field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
+name: __Display name
+key: __display name
+content-length: 13
+
+Archive - MVC
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -55,14 +63,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-571d8672-0301-4698-9d6f-a4577f4ca932
+e0d19060-16f9-44db-92bd-bbc24c598f50
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T221405Z
+20160811T180149Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

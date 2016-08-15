@@ -62,7 +62,7 @@ namespace Sitecore.Modules.WeBlog.Components
         /// </summary>
         protected virtual void LoadTags()
         {
-            Tags = ManagerFactory.TagManagerInstance.GetAllTags();
+            Tags = ManagerFactory.TagManagerInstance.GetTagsForBlog(CurrentBlog);
             if (Tags.Any())
             {
                 _max = (from tag in Tags select tag.Count).Max();

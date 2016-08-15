@@ -26,7 +26,7 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         /// <param name="username">UserName</param>
         /// <param name="password">Password</param>
-        private static void Authenticate(string username, string password)
+        protected virtual void Authenticate(string username, string password)
         {
             var allowed = AuthenticationManager.Login(username, password);
 
@@ -36,7 +36,12 @@ namespace Sitecore.Modules.WeBlog
             }
         }
 
-        private static void CheckUserRights(string blogid, string username)
+        /// <summary>
+        /// Ensure the user has adequate rights to the blog.
+        /// </summary>
+        /// <param name="blogid">The ID of the blog to check the rights of.</param>
+        /// <param name="username">The username of the user to check the rights for.</param>
+        protected virtual void CheckUserRights(string blogid, string username)
         {
             var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, ContentHelper.GetContentDatabase());
             if (blog != null && !blog.Security.CanWrite(Sitecore.Context.User))

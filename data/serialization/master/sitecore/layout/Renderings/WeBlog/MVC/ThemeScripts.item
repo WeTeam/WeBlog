@@ -8,6 +8,7 @@ name: ThemeScripts
 master: {00000000-0000-0000-0000-000000000000}
 template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
 templatekey: View rendering
+created: 20160713T143117:636040170778000000
 
 ----field----
 field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
@@ -33,8 +34,15 @@ content-length: 38
 ----version----
 language: en
 version: 1
-revision: a9fb9152-9065-4a06-9cb4-618d1d1090dd
+revision: a4e4cc40-c352-4093-acb2-a6e6b893365a
 
+----field----
+field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
+name: __Display name
+key: __display name
+content-length: 18
+
+ThemeScripts - MVC
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -48,14 +56,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a9fb9152-9065-4a06-9cb4-618d1d1090dd
+a4e4cc40-c352-4093-acb2-a6e6b893365a
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 35
+content-length: 16
 
-20160106T114846:635876777266973120Z
+20160811T180517Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.Components
         {
             CurrentBlog = blogManager.GetCurrentBlog();
             var totalToShow = CurrentBlog.DisplayCommentSidebarCountNumeric;
-            Comments = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog.ID, totalToShow);
+            Comments = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog, totalToShow);
         }
 
         /// <summary>

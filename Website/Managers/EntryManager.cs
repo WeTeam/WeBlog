@@ -38,13 +38,23 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         protected ReportDataProviderBase ReportDataProvider = null;
 
-        public EntryManager(ReportDataProviderBase reportDataProvider = null, IWeBlogSettings settings = null)
+        public EntryManager()
+            : this(null, null)
+        {
+        }
+
+        public EntryManager(ReportDataProviderBase reportDataProvider, IWeBlogSettings settings)
         {
             ReportDataProvider = reportDataProvider;
             Settings = settings ?? new WeBlogSettings();
         }
 #else
-        public EntryManager(IWeBlogSettings settings = null)
+        public EntryManager()
+            : this(null)
+        {
+        }
+
+        public EntryManager(IWeBlogSettings settings)
         {
             Settings = settings ?? new WeBlogSettings();
         }

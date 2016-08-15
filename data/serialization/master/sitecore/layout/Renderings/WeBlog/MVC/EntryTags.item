@@ -8,6 +8,7 @@ name: EntryTags
 master: {00000000-0000-0000-0000-000000000000}
 template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
 templatekey: View rendering
+created: 20160713T143117:636040170777070000
 
 ----field----
 field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
@@ -26,8 +27,15 @@ content-length: 40
 ----version----
 language: en
 version: 1
-revision: ea907c2a-19e1-4785-889d-625c7400eb96
+revision: 6d3b3416-01ec-4e75-a5bc-f92fe09ad3d7
 
+----field----
+field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
+name: __Display name
+key: __display name
+content-length: 15
+
+EntryTags - MVC
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -41,14 +49,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-ea907c2a-19e1-4785-889d-625c7400eb96
+6d3b3416-01ec-4e75-a5bc-f92fe09ad3d7
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T221500Z
+20160811T180517Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

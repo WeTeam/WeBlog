@@ -40,23 +40,25 @@ namespace Sitecore.Modules.WeBlog.Import
             return blogItem;
         }
 
-        internal void ImportPosts(Item blogItem, Action<string, int> logger = null)
+        internal ImportSummary ImportPosts(Item blogItem, Action<string, int> logger = null)
         {
+            var summary = new ImportSummary();
+
             BlogHomeItem customBlogItem = blogItem;
             var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, _db);
 
-            var processCount = 0;
-
             foreach (WpPost post in Posts)
             {
-                processCount++;
+                summary.PostCount++;
 
                 if (!string.IsNullOrEmpty(post.Content))
                 {
-                    var name = ItemUtil.ProposeValidItemName(post.Title);
+                    var title = post.Title;
+                    title = String.IsNullOrEmpty(title) ? $"Post {Posts.IndexOf(post)}" : title;
+                    var name = ItemUtil.ProposeValidItemName(title);
 
                     if (logger != null)
-                        logger(name, processCount);
+                        logger(name, summary.PostCount);
 
                     EntryItem entry = ItemManager.AddFromTemplate(name, entryTemplate.ID, blogItem);
 
@@ -72,6 +74,7 @@ namespace Sitecore.Modules.WeBlog.Import
                     {
                         var categoryItem = ManagerFactory.CategoryManagerInstance.Add(categoryName, blogItem);
                         categorieItems.Add(categoryItem.ID.ToString());
+                        summary.CategoryCount++;
                     }
 
                     if (categorieItems.Count > 0)
@@ -82,6 +85,7 @@ namespace Sitecore.Modules.WeBlog.Import
                     foreach (WpComment wpComment in post.Comments)
                     {
                         ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
+                        summary.CommentCount++;
                     }
 
                     var publicationDate = DateUtil.ToIsoDate(post.PublicationDate);
@@ -90,6 +94,8 @@ namespace Sitecore.Modules.WeBlog.Import
                     entry.EndEdit();
                 }
             }
+
+            return summary;
         }
     }
 }
