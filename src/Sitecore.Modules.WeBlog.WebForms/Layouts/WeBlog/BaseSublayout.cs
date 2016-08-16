@@ -6,7 +6,7 @@ using Sitecore.Sharedsource.Web.UI.Sublayouts;
 using Sitecore.Sites;
 using Sitecore.Web.UI.WebControls;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public class BaseSublayout : SublayoutBase
     {

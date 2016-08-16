@@ -4,7 +4,7 @@ using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class BlogEntryTags : BaseEntrySublayout
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Sitecore.Sharedsource.Web.UI.Sublayouts;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 {
     public partial class BlogTwitter : SublayoutBase
     {

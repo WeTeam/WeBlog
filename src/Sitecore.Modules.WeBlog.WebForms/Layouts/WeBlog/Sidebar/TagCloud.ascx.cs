@@ -3,7 +3,7 @@ using System.Linq;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 {
     public partial class BlogTagCloud : BaseSublayout
     {

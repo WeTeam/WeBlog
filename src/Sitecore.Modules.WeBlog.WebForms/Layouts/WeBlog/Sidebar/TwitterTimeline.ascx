@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TwitterTimeline.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar.BlogTwitter" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TwitterTimeline.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar.BlogTwitter" %>
 
 <div class="wb-twitter wb-panel">
     <a class="twitter-timeline"

@@ -6,7 +6,7 @@ using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Converters;
 using Sitecore.Modules.WeBlog.Data.Items;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 {
     public partial class BlogArchive : BaseSublayout
     {

@@ -3,7 +3,7 @@ using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class Blog : BaseSublayout
     {

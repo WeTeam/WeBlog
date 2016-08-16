@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Entry.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.BlogEntry" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Entry.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogEntry" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>

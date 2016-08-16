@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class BlogEntry : BaseEntrySublayout
     {

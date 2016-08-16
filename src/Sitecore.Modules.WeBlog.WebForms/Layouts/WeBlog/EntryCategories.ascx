@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EntryCategories.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.BlogEntryCategories" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="EntryCategories.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogEntryCategories" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Extensions" %>
 
 <asp:Panel ID="PanelEntryCategories" runat="server" CssClass="wb-entry-categories">

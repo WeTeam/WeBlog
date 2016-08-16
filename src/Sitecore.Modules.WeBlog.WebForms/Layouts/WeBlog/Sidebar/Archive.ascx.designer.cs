@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar {
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar {
     
     
     public partial class BlogArchive {

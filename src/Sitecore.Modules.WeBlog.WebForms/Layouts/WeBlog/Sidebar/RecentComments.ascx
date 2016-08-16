@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RecentComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar.BlogRecentComments" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="RecentComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar.BlogRecentComments" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Extensions" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 

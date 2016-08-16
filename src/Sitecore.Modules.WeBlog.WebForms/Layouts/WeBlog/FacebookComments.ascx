@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="FacebookComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.BlogFacebookComments" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="FacebookComments.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogFacebookComments" %>
 
 <div id="fb-root"></div>
 <script>

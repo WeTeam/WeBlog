@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="BlogFeeds.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar.BlogFeeds" %>
+﻿<%@ Control Language="C#" AutoEventWireup="True" CodeBehind="BlogFeeds.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar.BlogFeeds" %>
 
 <asp:Panel ID="PanelFeeds" runat="server" CssClass="wb-feeds wb-panel">
     <h3><%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("SYNDICATION")%></h3>

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Layout.aspx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.BlogLayout" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Layout.aspx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogLayout" %>
 <%@ Register TagPrefix="wb" Namespace="Sitecore.Modules.WeBlog.WebForms.WebControls" Assembly="Sitecore.Modules.WeBlog.WebForms" %>
 
 <!doctype html>

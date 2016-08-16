@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PostList.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.BlogPostList" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PostList.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogPostList" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 
 <div class="wb-entry-list">

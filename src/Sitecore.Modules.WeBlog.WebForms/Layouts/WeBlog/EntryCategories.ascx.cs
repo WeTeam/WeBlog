@@ -1,7 +1,7 @@
 ﻿using System;
 using Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class BlogEntryCategories : BaseEntrySublayout
     {

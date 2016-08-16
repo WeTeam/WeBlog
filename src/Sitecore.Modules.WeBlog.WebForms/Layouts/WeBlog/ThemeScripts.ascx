@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ThemeScripts.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.ThemeScripts" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ThemeScripts.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.ThemeScripts" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 
 <% if (ThemeItem != null)

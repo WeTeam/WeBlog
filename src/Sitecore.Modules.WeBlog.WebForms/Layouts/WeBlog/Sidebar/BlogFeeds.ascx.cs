@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 {
     public partial class BlogFeeds : BaseSublayout
     {

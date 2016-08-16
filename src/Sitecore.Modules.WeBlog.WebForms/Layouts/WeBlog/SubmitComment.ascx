@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SubmitComment.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.BlogSubmitComment" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="SubmitComment.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogSubmitComment" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 
 <asp:PlaceHolder ID="CommentScroll" runat="server" Visible="false" EnableViewState="false">

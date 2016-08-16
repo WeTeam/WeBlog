@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using Sitecore.Links;
 using Sitecore.Sharedsource.Web.UI.Sublayouts;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 {
     public partial class BlogFacebookLike : SublayoutBase
     {
@@ -23,7 +24,7 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar
             base.OnLoad(e);
 
             if(string.IsNullOrEmpty(UrlToLike))
-                UrlToLike = Links.LinkManager.GetItemUrl(DataSourceItem, new Links.UrlOptions { AlwaysIncludeServerUrl = true });
+                UrlToLike = LinkManager.GetItemUrl(DataSourceItem, new UrlOptions { AlwaysIncludeServerUrl = true });
         }
     }
 }

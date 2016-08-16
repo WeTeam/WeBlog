@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Captcha.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Captcha" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Captcha.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.Captcha" %>
 <%@ Register TagPrefix="ms" Namespace="MSCaptcha" Assembly="MSCaptcha" %>
 <div class="wb-captcha">
     <p>

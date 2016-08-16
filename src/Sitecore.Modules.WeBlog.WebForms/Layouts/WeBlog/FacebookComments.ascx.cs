@@ -1,7 +1,8 @@
 ﻿using System;
+using Sitecore.Links;
 using Sitecore.Sharedsource.Web.UI.Sublayouts;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class BlogFacebookComments : SublayoutBase
     {
@@ -15,7 +16,7 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
             base.OnLoad(e);
 
             if (string.IsNullOrEmpty(UrlToCommentOn))
-                UrlToCommentOn = Links.LinkManager.GetItemUrl(DataSourceItem, new Links.UrlOptions { AlwaysIncludeServerUrl = true });
+                UrlToCommentOn = LinkManager.GetItemUrl(DataSourceItem, new UrlOptions { AlwaysIncludeServerUrl = true });
         }
     }
 }

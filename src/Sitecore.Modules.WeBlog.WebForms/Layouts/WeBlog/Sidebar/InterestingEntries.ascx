@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="InterestingEntries.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar.BlogInterestingEntries" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="InterestingEntries.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar.BlogInterestingEntries" %>
 
 <div class="wb-interesting-entries wb-panel">
     <h3><%= Sitecore.Modules.WeBlog.Globalization.Translator.Render("POPULAR_POSTS") %></h3>

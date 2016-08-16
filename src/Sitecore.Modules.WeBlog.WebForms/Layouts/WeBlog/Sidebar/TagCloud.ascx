@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TagCloud.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog.Sidebar.BlogTagCloud" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="TagCloud.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar.BlogTagCloud" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Model" %>
 
 <asp:Panel ID="PanelTagCloud" runat="server" CssClass="wb-tag-cloud wb-panel">

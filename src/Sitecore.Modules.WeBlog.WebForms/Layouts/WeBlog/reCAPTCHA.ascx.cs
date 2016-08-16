@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Sitecore.Modules.WeBlog.WebForms.Layouts.WeBlog
+namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class ReCaptcha : System.Web.UI.UserControl
     {
