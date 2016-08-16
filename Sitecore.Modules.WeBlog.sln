@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "IntegrationTest\IntegrationTest.csproj", "{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTest", "test\IntegrationTest\IntegrationTest.csproj", "{DD0793C1-00C7-48A1-BCEA-28FB08BC9CD8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.WeBlog", "src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj", "{26FE5F3A-F140-40C4-85A0-C1866DA26F16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{9289295B-542B-4A8A-A951-40DC9F5BC2D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "test\UnitTest\UnitTest.csproj", "{9289295B-542B-4A8A-A951-40DC9F5BC2D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.WeBlog.Mvc", "src\Sitecore.Modules.WeBlog.Mvc\Sitecore.Modules.WeBlog.Mvc.csproj", "{CB784291-5299-42FB-98CD-413979DD25A7}"
 EndProject

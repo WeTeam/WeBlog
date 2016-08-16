@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     });
 
     function resolveSitecorePath(version) {
-        var file = grunt.file.read("../deploy.targets").toLowerCase();
+        var file = grunt.file.read("../../deploy.targets").toLowerCase();
         var doc = new dom().parseFromString(file);
 
         var select = xpath.useNamespaces({

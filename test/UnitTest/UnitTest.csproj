@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="..\build configurations.targets" />
-  <Import Project="..\deploy.targets" Condition="Exists('..\deploy.targets')" />
+  <Import Project="..\..\build configurations.targets" />
+  <Import Project="..\..\deploy.targets" Condition="Exists('..\..\deploy.targets')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -28,30 +28,30 @@
     <DebugType>pdbonly</DebugType>
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
-  <Import Project="..\sc version properties.targets" />
+  <Import Project="..\..\sc version properties.targets" />
   <ItemGroup>
     <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\CookComputing.XmlRpcV2.dll</HintPath>
+      <HintPath>..\..\lib\CookComputing.XmlRpcV2.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.2.0\lib\Mono.Cecil.dll</HintPath>
+      <HintPath>..\..\packages\NUnit3TestAdapter.3.2.0\lib\Mono.Cecil.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <HintPath>..\..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="nunit.engine, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.2.0\lib\nunit.engine.dll</HintPath>
+      <HintPath>..\..\packages\NUnit3TestAdapter.3.2.0\lib\nunit.engine.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.engine.api, Version=3.0.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.2.0\lib\nunit.engine.api.dll</HintPath>
+      <HintPath>..\..\packages\NUnit3TestAdapter.3.2.0\lib\nunit.engine.api.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
+      <HintPath>..\..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Lucene.Net">
@@ -59,7 +59,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NUnit3.TestAdapter, Version=3.2.0.0, Culture=neutral, PublicKeyToken=4cb40d35494691ac, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit3TestAdapter.3.2.0\lib\NUnit3.TestAdapter.dll</HintPath>
+      <HintPath>..\..\packages\NUnit3TestAdapter.3.2.0\lib\NUnit3.TestAdapter.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Analytics">
@@ -70,7 +70,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.FakeDb, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Sitecore.FakeDb.1.1.1\lib\net45\Sitecore.FakeDb.dll</HintPath>
+      <HintPath>..\..\packages\Sitecore.FakeDb.1.1.1\lib\net45\Sitecore.FakeDb.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
@@ -117,7 +117,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
+    <ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
       <Project>{26fe5f3a-f140-40c4-85a0-c1866da26f16}</Project>
       <Name>Sitecore.Modules.WeBlog</Name>
     </ProjectReference>
