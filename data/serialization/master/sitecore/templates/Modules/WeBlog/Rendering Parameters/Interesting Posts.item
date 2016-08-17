@@ -8,6 +8,7 @@ name: Interesting Posts
 master: {00000000-0000-0000-0000-000000000000}
 template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
 templatekey: Template
+created: 20160815T092151:636068497111800000
 
 ----field----
 field: {12C33F3F-86C5-43A5-AEB4-5598CEC45116}
@@ -22,7 +23,7 @@ name: __Standard values
 key: __standard values
 content-length: 38
 
-{E6B2DB05-8C84-46E1-9803-705A8B27644B}
+{DA2888B7-A131-4096-A550-90948D07F065}
 ----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
@@ -33,7 +34,7 @@ applications/16x16/gear.png
 ----version----
 language: en
 version: 1
-revision: 8031bcc1-54e1-4448-b2a1-49f9722f6a9c
+revision: 65b5b3a0-ccb0-4515-8007-1c166db6c2ef
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -62,14 +63,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-8031bcc1-54e1-4448-b2a1-49f9722f6a9c
+65b5b3a0-ccb0-4515-8007-1c166db6c2ef
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20130804T123921:635112167618966061
+20160815T121503Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
