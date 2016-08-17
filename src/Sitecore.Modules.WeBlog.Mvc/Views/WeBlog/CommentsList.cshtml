@@ -1,0 +1,42 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Mvc.Model.CommentsList
+
+@if (Model.ShowCommentsList)
+{
+    <div id="CommentList" class="wb-entry-comments wb-panel">
+    <h3>@Translator.Render("COMMENTS").ToHtmlString()</h3>
+    <ul>
+        @{int i = 0;}
+        @foreach (var comment in @Model.Comments)
+        {
+                <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")" id="comment-@comment.ID.ToShortID()">
+                    <a href="#comment-@comment.ID.ToShortID()">#</a>
+                @if (Model.EnableGravatar)
+                {
+                    var gravatarUrl = Model.GetGravatarUrl(comment.Email.Raw);
+                    <img src="@gravatarUrl" alt="@comment.Name.Text's gravatar" width="@Model.GravatarSizeNumeric" height="@Model.GravatarSizeNumeric" />
+                }
+
+                <a href="@comment.Website.Raw" class="wb-comment-author">
+                    @Translator.Format("COMMENT_NAME", comment.Name.Text).ToHtmlString()
+                </a>
+
+                @if (@Model.ShowEmailWithinComments)
+                {
+                    <span class="wb-comment-email">
+                        @Translator.Format("COMMENT_EMAIL", comment.Email.Text).ToHtmlString()
+                    </span>
+                }
+
+                <div class="wb-datetime">
+                    @Translator.Format("COMMENT_DATE", comment.Created).ToHtmlString()
+                </div>
+                <p>
+                    @comment.Comment.HtmlEncode()
+                </p>
+            </li>
+        }
+    </ul>
+</div>
+}

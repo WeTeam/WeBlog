@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\..\build configurations.targets" />
+  <Import Project="..\..\deploy.targets" Condition="Exists('..\..\deploy.targets')" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion />
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AB784291-5269-43FB-99CD-423979DD25A7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.Modules.WeBlog.WebForms</RootNamespace>
+    <AssemblyName>Sitecore.Modules.WeBlog.WebForms</AssemblyName>
+    <TargetFrameworkProfile />
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisLogFile>bin\Sitecore.Modules.WeBlog.WebForms.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <Import Project="..\..\sc version properties.targets" />
+  <ItemGroup>
+    <Reference Include="AntiXssLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="CookComputing.XmlRpcV2">
+      <HintPath>..\..\lib\CookComputing.XmlRpcV2.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>$(SitecorePath)\bin\HtmlAgilityPack.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Lucene.Net">
+      <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
+      <HintPath>..\..\lib\MSCaptcha\v1.0\MSCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5'))">
+      <HintPath>..\..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
+      <HintPath>..\..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Recaptcha">
+      <HintPath>..\..\lib\Recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Analytics">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Client">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.Linq">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceEditor" Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+      <HintPath>$(SitecorePath)\bin\Sitecore.ExperienceEditor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.ExperienceEditor.Speak" Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
+      <HintPath>$(SitecorePath)\bin\Sitecore.ExperienceEditor.Speak.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Kernel">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\Sitecore.Mvc.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.NVelocity">
+      <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Buckets">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\Sitecore.Services.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Infrastructure">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Services.Infrastructure.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Services.Infrastructure.Sitecore">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SitecorePath)\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\Parameters\SublayoutParameterHelper.cs" />
+    <Compile Include="Layouts\SublayoutBase.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\BaseEntrySublayout.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\BaseSublayout.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Blog.ascx.cs">
+      <DependentUpon>Blog.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Blog.ascx.designer.cs">
+      <DependentUpon>Blog.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Captcha.ascx.cs">
+      <DependentUpon>Captcha.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Captcha.ascx.designer.cs">
+      <DependentUpon>Captcha.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\CommentsList.ascx.cs">
+      <DependentUpon>CommentsList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\CommentsList.ascx.designer.cs">
+      <DependentUpon>CommentsList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Entry.ascx.cs">
+      <DependentUpon>Entry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Entry.ascx.designer.cs">
+      <DependentUpon>Entry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\EntryCategories.ascx.cs">
+      <DependentUpon>EntryCategories.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\EntryCategories.ascx.designer.cs">
+      <DependentUpon>EntryCategories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\EntryTags.ascx.cs">
+      <DependentUpon>EntryTags.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\EntryTags.ascx.designer.cs">
+      <DependentUpon>EntryTags.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\FacebookComments.ascx.cs">
+      <DependentUpon>FacebookComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\FacebookComments.ascx.designer.cs">
+      <DependentUpon>FacebookComments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Layout.aspx.cs">
+      <DependentUpon>Layout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Layout.aspx.designer.cs">
+      <DependentUpon>Layout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\PostList.ascx.cs">
+      <DependentUpon>PostList.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\PostList.ascx.designer.cs">
+      <DependentUpon>PostList.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\PostListEntry.ascx.cs">
+      <DependentUpon>PostListEntry.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\PostListEntry.ascx.designer.cs">
+      <DependentUpon>PostListEntry.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\reCAPTCHA.ascx.cs">
+      <DependentUpon>reCAPTCHA.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\reCAPTCHA.ascx.designer.cs">
+      <DependentUpon>reCAPTCHA.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ShareEntry-AddThis.ascx.cs">
+      <DependentUpon>ShareEntry-AddThis.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ShareEntry-AddThis.ascx.designer.cs">
+      <DependentUpon>ShareEntry-AddThis.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ShareEntry-ShareThis.ascx.cs">
+      <DependentUpon>ShareEntry-ShareThis.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ShareEntry-ShareThis.ascx.designer.cs">
+      <DependentUpon>ShareEntry-ShareThis.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Archive.ascx.cs">
+      <DependentUpon>Archive.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Archive.ascx.designer.cs">
+      <DependentUpon>Archive.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx.cs">
+      <DependentUpon>BlogFeeds.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx.designer.cs">
+      <DependentUpon>BlogFeeds.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Categories.ascx.cs">
+      <DependentUpon>Categories.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Categories.ascx.designer.cs">
+      <DependentUpon>Categories.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\FacebookLike.ascx.cs">
+      <DependentUpon>FacebookLike.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\FacebookLike.ascx.designer.cs">
+      <DependentUpon>FacebookLike.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\InterestingEntries.ascx.cs">
+      <DependentUpon>InterestingEntries.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\InterestingEntries.ascx.designer.cs">
+      <DependentUpon>InterestingEntries.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\RecentComments.ascx.cs">
+      <DependentUpon>RecentComments.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\RecentComments.ascx.designer.cs">
+      <DependentUpon>RecentComments.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\TagCloud.ascx.cs">
+      <DependentUpon>TagCloud.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\TagCloud.ascx.designer.cs">
+      <DependentUpon>TagCloud.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\TwitterTimeline.ascx.cs">
+      <DependentUpon>TwitterTimeline.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\TwitterTimeline.ascx.designer.cs">
+      <DependentUpon>TwitterTimeline.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\SubmitComment.ascx.cs">
+      <DependentUpon>SubmitComment.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\SubmitComment.ascx.designer.cs">
+      <DependentUpon>SubmitComment.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ThemeScripts.ascx.cs">
+      <DependentUpon>ThemeScripts.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ThemeScripts.ascx.designer.cs">
+      <DependentUpon>ThemeScripts.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ThemeStylehseets.ascx.cs">
+      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\ThemeStylehseets.ascx.designer.cs">
+      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebControls\RsdIncludes.cs" />
+    <Compile Include="WebControls\Syndication.cs" />
+    <Compile Include="WebControls\ThemeIncludes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Layouts\WeBlog\Blog.ascx" />
+    <Content Include="Layouts\WeBlog\Captcha.ascx" />
+    <Content Include="Layouts\WeBlog\CommentsList.ascx" />
+    <Content Include="Layouts\WeBlog\Entry.ascx" />
+    <Content Include="Layouts\WeBlog\EntryCategories.ascx" />
+    <Content Include="Layouts\WeBlog\EntryTags.ascx" />
+    <Content Include="Layouts\WeBlog\FacebookComments.ascx" />
+    <Content Include="Layouts\WeBlog\Layout.aspx" />
+    <Content Include="Layouts\WeBlog\LayoutAjax.aspx" />
+    <Content Include="Layouts\WeBlog\PostList.ascx" />
+    <Content Include="Layouts\WeBlog\PostListEntry.ascx" />
+    <Content Include="Layouts\WeBlog\reCAPTCHA.ascx" />
+    <Content Include="Layouts\WeBlog\ShareEntry-AddThis.ascx" />
+    <Content Include="Layouts\WeBlog\ShareEntry-ShareThis.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\Archive.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\Categories.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\FacebookLike.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\InterestingEntries.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\RecentComments.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\TagCloud.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\TwitterTimeline.ascx" />
+    <Content Include="Layouts\WeBlog\SubmitComment.ascx" />
+    <Content Include="Layouts\WeBlog\ThemeScripts.ascx" />
+    <Content Include="Layouts\WeBlog\ThemeStylehseets.ascx" />
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
+      <Project>{26fe5f3a-f140-40c4-85a0-c1866da26f16}</Project>
+      <Name>Sitecore.Modules.WeBlog</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.WebForms.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.-->
+  <Target Name="BeforeBuild">
+    <Message Text="Configuration: $(Configuration)" />
+    <Message Text="Platform: $(Platform)" />
+    <Message Text="SitecorePath: $(SitecorePath)" />
+    <Message Text="SitecoreCDPath: $(SitecoreCDPath)" />
+    <Message Text="Constants: $(DefineConstants)" />
+  </Target>
+  <Target Name="AfterBuild">
+    <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
+  </Target>
+  <Target Name="DeployToWeb">
+    <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
+      <Output ItemName="DeployFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <CreateItem Include="$(OutDir)\*.dll">
+      <Output ItemName="BinFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
+    <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
+  </Target>
+</Project>

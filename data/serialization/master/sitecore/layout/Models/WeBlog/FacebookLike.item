@@ -8,18 +8,19 @@ name: FacebookLike
 master: {00000000-0000-0000-0000-000000000000}
 template: {FED6A14F-0D05-4E18-B160-17C0588A2005}
 templatekey: Model
+created: 20160815T074436:636068438765470000
 
 ----field----
 field: {EE9E23D2-181D-4172-A929-0E0B8D10313C}
 name: Model Type
 key: model type
-content-length: 42
+content-length: 46
 
-Sitecore.Modules.WeBlog.Model.FacebookLike
+Sitecore.Modules.WeBlog.Mvc.Model.FacebookLike
 ----version----
 language: en
 version: 1
-revision: f1b33276-1479-4bd1-b52f-f45511ffd689
+revision: c83e399a-d9c3-4d95-8cff-dc0e9b8d5dea
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +49,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-f1b33276-1479-4bd1-b52f-f45511ffd689
+c83e399a-d9c3-4d95-8cff-dc0e9b8d5dea
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T215600Z
+20160815T080554Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

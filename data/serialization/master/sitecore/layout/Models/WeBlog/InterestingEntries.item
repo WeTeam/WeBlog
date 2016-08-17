@@ -8,18 +8,19 @@ name: InterestingEntries
 master: {00000000-0000-0000-0000-000000000000}
 template: {FED6A14F-0D05-4E18-B160-17C0588A2005}
 templatekey: Model
+created: 20160815T074436:636068438765670000
 
 ----field----
 field: {EE9E23D2-181D-4172-A929-0E0B8D10313C}
 name: Model Type
 key: model type
-content-length: 48
+content-length: 52
 
-Sitecore.Modules.WeBlog.Model.InterestingEntries
+Sitecore.Modules.WeBlog.Mvc.Model.InterestingEntries
 ----version----
 language: en
 version: 1
-revision: 67d780e7-cd08-4d3c-9356-6e1e43786176
+revision: d78e3053-c9ad-4347-80c1-a4c7c999fb95
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +49,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-67d780e7-cd08-4d3c-9356-6e1e43786176
+d78e3053-c9ad-4347-80c1-a4c7c999fb95
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T215606Z
+20160815T080600Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
