@@ -15,9 +15,19 @@
             });
 
             this.Uploader.on("change:totalFiles", this.addedFile, this);
+            this.TemplateMappingItem.on("change:selectedItemId", this.templateMappingItemSelected, this);
             this.on("upload-info-deleted", this.removedFile, this);
             this.on("upload-fileUploaded", this.uploadedFile, this);
         },
+
+        templateMappingItemSelected: function (that) {
+            if (this.TemplateMappingItem.viewModel.selectedItemId() !== "{0B1FD353-3175-43A0-9A81-13B18D99408E}") {
+                this.TemplatesMappingButton.viewModel.show();
+            } else {
+                this.TemplatesMappingButton.viewModel.hide();
+            }
+        },
+
         updateProgress: function (that) {
             that.ImportStatusProvider.viewModel.getData({
                 url: wordPressImportEndpoint + "CheckStatus?jobHandle=" + this.ProgressBar.viewModel.name(),
@@ -64,11 +74,14 @@
                 that.TabManager.hideAllTabs(that);
                 that.TabControl1.viewModel.showTab("{C5C44663-88A4-4311-A1B1-751FEDE2C1AB}");
             },
+            showTemplatesMapping: function (that) {
+                that.TabManager.hideAllTabs(that);
+                that.TabControl1.viewModel.showTab("{D53FDEBA-4B4B-4CC7-A244-932C1D0A84CF}");
+            },
             hideAllTabs: function (that) {
                 $.each(that.TabControl1.viewModel.tabs(), function (e, d) {
                     that.TabControl1.viewModel.hideTab(d);
-                }
-                );
+                });
             }
         },
         addedFile: function () {
@@ -81,6 +94,12 @@
                 DatabaseName: this.Location.viewModel.selectedNode().itemUri.databaseUri.databaseName
             });
             this.txtbxBlogName.set("text", this.getData(this).BlogName);
+            this.TabManager.showTemplatesMapping(this);
+        },
+        acceptTemplatesMappingButtonClick: function () {
+            this.updateDatasource(this, {
+                TemplateMappingItemId: this.TemplateMappingItem.viewModel.selectedItemId(),
+            });
             this.TabManager.showImport(this);
         },
         importButtonClick: function () {
@@ -92,18 +111,18 @@
                 ImportComments: this.cbxComments.viewModel.isChecked(),
                 ImportTags: this.cbxTags.viewModel.isChecked()
             }),
-            $.ajax({
-                url: wordPressImportEndpoint + "ImportItems",
-                type: "PUT",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                context: this,
-                success: function (e) {
-                    this.ProgressBar.set("name", e);
-                    this.updateProgress(this);
-                },
-                data: JSON.stringify(this.getData(this))
-            });
+                $.ajax({
+                    url: wordPressImportEndpoint + "ImportItems",
+                    type: "PUT",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    context: this,
+                    success: function (e) {
+                        this.ProgressBar.set("name", e);
+                        this.updateProgress(this);
+                    },
+                    data: JSON.stringify(this.getData(this))
+                });
             this.ImportOptionsPanel.viewModel.hide();
             this.ImportProgressPanel.viewModel.show();
         },

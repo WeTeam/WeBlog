@@ -163,15 +163,17 @@
     <Compile Include="Caching\TranslatorCache.cs" />
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\SimpleCache.cs" />
+    <Compile Include="Templates.cs" />
     <Compile Include="Configuration\IWeBlogSettings.cs" />
     <Compile Include="Configuration\WeBlogSettings.cs" />
     <Compile Include="Buckets\CategoryBucketFolderPath.cs" />
     <Compile Include="Buckets\DateBucketFolderPath.cs" />
-	<Compile Include="Controllers\WeBlogImportController.cs" Condition="$(DefineConstants.Contains('FEATURE_SERVICES_CLIENT'))" />
+    <Compile Include="Controllers\WeBlogImportController.cs" Condition="$(DefineConstants.Contains('FEATURE_SERVICES_CLIENT'))" />
     <Compile Include="Data\Items\FileItem.cs" />
     <Compile Include="Data\Items\ScriptItem.cs" />
     <Compile Include="Data\Items\StylesheetItem.cs" />
     <Compile Include="Import\ImportSummary.cs" />
+    <Compile Include="Model\TemplatesMapping.cs" />
     <Compile Include="Model\Tag.cs" />
     <Compile Include="Import\Providers\IWpPostProvider.cs" />
     <Compile Include="Import\WpImportOptions.cs" />

@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Web.Http;
 using Sitecore.Configuration;
+using Sitecore.Data;
+using Sitecore.Data.Managers;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Import.Providers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Services.Core;
 using Sitecore.Services.Infrastructure.Web.Http;
 using Sitecore.StringExtensions;
@@ -32,14 +35,19 @@ namespace Sitecore.Modules.WeBlog.Controllers
             string jobHandle = Context.Job.Handle.ToString();
             LogMessage("Reading import item", jobHandle);
 
+            var templateMappingItem = db.GetItem(data.TemplateMappingItemId);
+            var templatesMapping = new TemplatesMapping(templateMappingItem);
+            
             var blogParent = db.GetItem(data.ParentId);
             if (blogParent != null)
             {
                 LogMessage("Creating blog", jobHandle);
                 var blogRoot = importManager.CreateBlogRoot(blogParent, data.BlogName, data.BlogEmail);
+                blogRoot.InnerItem.ChangeTemplate(blogRoot.Database.GetItem(templatesMapping.BlogRootTemplate));
+
                 LogTotal(importManager.Posts.Count, jobHandle);
                 LogMessage("Importing posts", jobHandle);
-                importManager.ImportPosts(blogRoot, (itemName, count) =>
+                importManager.ImportPosts(blogRoot, templatesMapping, (itemName, count) =>
                 {
                     LogMessage("Importing entry " + itemName, jobHandle);
                     LogProgress(count, jobHandle);

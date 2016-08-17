@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
+<control xmlns:def="Definition" 
+         xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense"
+         xmlns:asp="http://www.sitecore.net/microsoft/webcontrols">
   <WordpressImport>
     <WizardForm CodeBeside="Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog.WordpressImport, Sitecore.Modules.WeBlog">
-      
+
       <WizardFormFirstPage ID="FirstPage" Icon="Business/32x32/address_book.png">
         <Border Class="scWizardWelcomeTitle"><Literal ID="Welcome" Text="Welcome to the WordPress import Wizard."/></Border>
         <Literal Text="This wizard helps you:"/>
@@ -61,6 +63,19 @@
         </WizardFormPadding>
       </WizardFormPage>
 
+      <WizardFormPage ID="TemplatesMappingPage" Header="Import WordPress Content" Text="Specify templates for the blog" Icon="Business/32x32/address_book.png">
+        <WizardFormPadding>
+          <GridPanel class="scFormTable" Columns="2">
+            <DataContext ID="TemplatesMappingDataContext" DataViewName="Master" Root="{0B1FD353-3175-43A0-9A81-13B18D99408E}" />
+            <GridPanel Width="100%">
+              <Literal class="sc-text-bold" Text="Template mapping:"/>
+              <TreePicker ID="TemplatesMapping" DataContext="TemplatesMappingDataContext" SelectOnly="true" AllowNone="false" Width="100%" Value="{EF9064D1-E0B7-443E-81CE-01BC0066B678}" />
+            </GridPanel>
+
+          </GridPanel>
+        </WizardFormPadding>
+      </WizardFormPage>
+
       <WizardFormPage ID="Summary" Header="Import WordPress Content" Text="Verify the import settings" Icon="Business/32x32/address_book.png">
         <WizardFormPadding>
           <Groupbox Header="Blog settings">
@@ -96,21 +111,21 @@
           </Groupbox>
         </WizardFormPadding>
       </WizardFormPage>
-      
+
       <WizardFormPage ID="ImportJob" Header="Import WordPress Content" Text="Processing content from XML" ActionText="Importing content..." Icon="Business/32x32/address_book.png">
         <GridPanel Width="100%">
           <Border Height="64"/>
-          
+
           <ThemedImage Src="Business/48x48/address_book.png" Width="48" Height="48" GridPanel.Align="center"/>
 
           <Space Height="16"/>
-          
+
           <Border Align="center">
             <ThemedImage Src="Images/progress.gif" Width="94" Height="17"/>
           </Border>
-          
+
           <Space Height="16"/>
-          
+
           <Border ID="PublishingText" Align="center" GridPanel.Align="center" GridPanel.Style="font-weight:bold">
             <Literal Text="Processing..."/>
           </Border>
