@@ -30,10 +30,9 @@ namespace Sitecore.Modules.WeBlog.Import
             _options = options;
         }
 
-        public BlogHomeItem CreateBlogRoot(Item root, string name, string email)
-        {
-            BranchItem newBlog = _db.Branches.GetMaster(Settings.BlogBranchID);
-            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), newBlog);
+        public BlogHomeItem CreateBlogRoot(Item root, string name, string email, ID blogRootTemplate)
+        {            
+            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), new TemplateID(blogRootTemplate));
 
             blogItem.BeginEdit();
             blogItem.Email.Field.Value = email;

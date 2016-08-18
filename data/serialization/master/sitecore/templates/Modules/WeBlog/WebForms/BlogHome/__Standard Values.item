@@ -37,7 +37,7 @@ name: Defined Category Template
 key: defined category template
 content-length: 38
 
-{46663E05-A6B8-422A-8E13-36CD2B041278}
+{61FF8D49-90D7-4E59-878D-DF6E03400D3B}
 ----field----
 field: {BC8DC567-A580-45C0-8B52-C4F10A10A1E7}
 name: Defined Entry Template
@@ -76,7 +76,7 @@ content-length: 1371
 ----version----
 language: en
 version: 1
-revision: 245feb76-56b7-4c47-9bca-739a59bcf4c0
+revision: 3b4b9628-e2c0-4d48-bfc4-aa0727b94167
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -126,14 +126,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-245feb76-56b7-4c47-9bca-739a59bcf4c0
+3b4b9628-e2c0-4d48-bfc4-aa0727b94167
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160814T145211Z
+20160817T223716Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

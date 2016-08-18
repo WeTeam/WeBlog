@@ -42,8 +42,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
             if (blogParent != null)
             {
                 LogMessage("Creating blog", jobHandle);
-                var blogRoot = importManager.CreateBlogRoot(blogParent, data.BlogName, data.BlogEmail);
-                blogRoot.InnerItem.ChangeTemplate(blogRoot.Database.GetItem(templatesMapping.BlogRootTemplate));
+                var blogRoot = importManager.CreateBlogRoot(blogParent, data.BlogName, data.BlogEmail, templatesMapping.BlogRootTemplate);
 
                 LogTotal(importManager.Posts.Count, jobHandle);
                 LogMessage("Importing posts", jobHandle);

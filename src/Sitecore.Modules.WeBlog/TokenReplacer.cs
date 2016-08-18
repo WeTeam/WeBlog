@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog
@@ -12,21 +13,22 @@ namespace Sitecore.Modules.WeBlog
         public static string Replace(string input, Item contextItem)
         {
             input = ResolveContextTokens(input, contextItem);
-            input = ResolveSettingsTokens(input);
+            input = ResolveSettingsTokens(input, contextItem);
             return input;
         }
 
-        public static string ResolveSettingsTokens(string text)
+        public static string ResolveSettingsTokens(string text, Item contextItem)
         {
             if (text.Contains(Constants.Tokens.WeBlogSetting))
-            {
+            {                
                 foreach (var settingName in GetTokensArgs(text, Constants.Tokens.WeBlogSetting))
                 {
-                    string settingsValue = Sitecore.Configuration.Settings.GetSetting(settingName);
-
+                    var blogHomeItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(contextItem);
+                    var blogSettings = blogHomeItem.BlogSettings;
+                    string settingsValue = blogSettings.GetType().GetProperty(settingName).GetValue(blogSettings, null).ToString();
                     if (!string.IsNullOrEmpty(settingsValue))
                     {
-                        text = text.Replace(string.Format("{0}({1})", Constants.Tokens.WeBlogSetting, settingName), settingsValue);
+                        text = text.Replace($"{Constants.Tokens.WeBlogSetting}({settingName})", settingsValue);
                     }
                 }
             }

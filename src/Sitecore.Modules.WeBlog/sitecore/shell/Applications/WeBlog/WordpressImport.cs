@@ -154,11 +154,9 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             Item root = db.GetItem(litSummaryPath.Text);
             if (root != null)
             {
-                var blogItem = importManager.CreateBlogRoot(root, BlogName.Value, BlogEmail.Value);
-                var templateMappingItem = blogItem.Database.GetItem(new ID(TemplatesMapping.Value));
-
+                var templateMappingItem = root.Database.GetItem(new ID(TemplatesMapping.Value));
                 var templatesMapping = new TemplatesMapping(templateMappingItem);
-                blogItem.InnerItem.ChangeTemplate(blogItem.Database.GetItem(templatesMapping.BlogRootTemplate));
+                var blogItem = importManager.CreateBlogRoot(root, BlogName.Value, BlogEmail.Value, templatesMapping.BlogRootTemplate);
 
                 LogMessage("Importing posts");
                 LogTotal(importManager.Posts.Count);

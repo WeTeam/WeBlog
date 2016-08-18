@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<control xmlns:def="Definition" 
-         xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense"
-         xmlns:asp="http://www.sitecore.net/microsoft/webcontrols">
+<control xmlns:def="Definition" xmlns="http://schemas.sitecore.net/Visual-Studio-Intellisense">
   <WordpressImport>
     <WizardForm CodeBeside="Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog.WordpressImport, Sitecore.Modules.WeBlog">
 
@@ -63,11 +61,10 @@
               <Literal class="sc-text-bold" Text="Template mapping:"/>
               <TreePicker ID="TemplatesMapping" DataContext="TemplatesMappingDataContext" SelectOnly="true" AllowNone="false" Width="100%" Value="{EF9064D1-E0B7-443E-81CE-01BC0066B678}" />
             </GridPanel>
-  
           </GridPanel>
         </WizardFormPadding>
-      </WizardFormPage>      
-      
+      </WizardFormPage>
+
       <WizardFormPage ID="Summary" Header="Import WordPress Content" Text="Verify the import settings">
         <WizardFormPadding>
           <Groupbox Header="Blog settings">

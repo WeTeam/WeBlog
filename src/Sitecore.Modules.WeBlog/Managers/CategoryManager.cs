@@ -45,14 +45,14 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual CategoryItem[] GetCategories(Item item)
         {
             var categoryRoot = GetCategoryRoot(item);
-            
+
             if (categoryRoot != null && categoryRoot.HasChildren)
             {
                 var children = categoryRoot.GetChildren();
                 return (from childItem in children
-                    where childItem.TemplateIsOrBasedOn(Settings.CategoryTemplateIds)
-                    && childItem.Versions.Count > 0
-                    select new CategoryItem(childItem)).ToArray();
+                        where childItem.TemplateIsOrBasedOn(Settings.CategoryTemplateIds)
+                        && childItem.Versions.Count > 0
+                        select new CategoryItem(childItem)).ToArray();
             }
 
             return new CategoryItem[0];
@@ -68,7 +68,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var item = Context.Database.GetItem(Id);
             if (item != null)
                 return GetCategories(item);
-            
+
             return new CategoryItem[0];
         }
 
@@ -81,7 +81,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual CategoryItem GetCategory(Item item, string name)
         {
             var categoryRoot = GetCategoryRoot(item);
-            if(categoryRoot != null)
+            if (categoryRoot != null)
                 return categoryRoot.Axes.GetChild(name);
 
             return null;
@@ -112,7 +112,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             // Get all categories from current blog                
             var categories = GetCategories(item);
-                
+
             // If there are categories, check if it already contains the categoryName
             if (categories.Any())
             {
@@ -124,14 +124,22 @@ namespace Sitecore.Modules.WeBlog.Managers
             // Category doesn't exist so create it
             var categoryRoot = GetCategoryRoot(item);
             if (categoryRoot == null)
-                return null;
+            {
+                categoryRoot = CreateCategoryRoot(item);
+            }
 
             CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, Settings.CategoryTemplateIds.First(), categoryRoot);
             newCategory.BeginEdit();
             newCategory.Title.Field.Value = categoryName;
             newCategory.EndEdit();
-                
+
             return newCategory;
+        }
+
+        protected virtual Item CreateCategoryRoot(Item item)
+        {
+            var blogHomeItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
+            return blogHomeItem.InnerItem.Add("Categories", new TemplateID(TemplateIDs.TemplateFolder));
         }
 
         /// <summary>
