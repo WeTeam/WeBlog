@@ -39,9 +39,9 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
                 EntryList.DataBind();
             }
 
-            if (ancViewMore != null)
+            if (PanelViewMore != null)
             {
-                ancViewMore.Visible = PostListCore.ShowViewMoreLink;
+                PanelViewMore.Visible = PostListCore.ShowViewMoreLink;
                 if (PostListCore.ShowViewMoreLink)
                 {
                     ancViewMore.HRef = PostListCore.ViewMoreHref;

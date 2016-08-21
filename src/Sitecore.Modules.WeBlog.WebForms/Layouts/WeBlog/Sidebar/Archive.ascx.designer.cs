@@ -13,6 +13,15 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar {
     public partial class BlogArchive {
         
         /// <summary>
+        /// PanelArchive control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PanelArchive;
+        
+        /// <summary>
         /// Years control.
         /// </summary>
         /// <remarks>

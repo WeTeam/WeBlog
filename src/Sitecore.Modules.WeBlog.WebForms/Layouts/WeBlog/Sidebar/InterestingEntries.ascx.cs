@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
@@ -28,7 +29,7 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
         {
             base.OnInit(e);
 
-            var algororithm = Modules.WeBlog.Components.InterestingEntriesCore.GetAlgororithmFromString(Mode);
+            var algororithm = WeBlog.Components.InterestingEntriesCore.GetAlgororithmFromString(Mode);
             if (algororithm != InterestingEntriesAlgorithm.Custom || InterestingEntriesCore == null)
             {
                 InterestingEntriesCore = new InterestingEntriesCore(ManagerFactory.EntryManagerInstance, algororithm);
@@ -37,13 +38,17 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            PopulateList();
-        }
-
-        protected virtual void PopulateList()
-        {
-            ItemList.DataSource = InterestingEntriesCore.GetEntries(CurrentBlog, MaximumCount);
-            ItemList.DataBind();
+            var dataSource = InterestingEntriesCore.GetEntries(CurrentBlog, MaximumCount);
+            if (dataSource.Any())
+            {
+                ItemList.DataSource = dataSource;
+                ItemList.DataBind();
+                PanelInteresingEntries.Visible = true;
+            }
+            else
+            {
+                PanelInteresingEntries.Visible = false;
+            }
         }
     }
 }

@@ -13,8 +13,8 @@
             <%#Translator.Render("NO_POSTS_FOUND")%>
         </EmptyDataTemplate>
     </asp:ListView>
-    <div class="wb-view-more-wrapper">
+    <asp:Panel ID="PanelViewMore" runat="server" CssClass="wb-view-more-wrapper">
         <a runat="server" id="ancViewMore" class="wb-view-more" href="#"><%=Translator.Render("VIEW_MORE")%></a>
         <span class="wb-loading-animation" style="display: none;">Loading...</span>
-    </div>
+    </asp:Panel>
 </div>

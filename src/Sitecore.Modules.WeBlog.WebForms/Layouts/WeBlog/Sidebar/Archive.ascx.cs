@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Web.UI.WebControls;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Converters;
@@ -39,9 +40,17 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 
         protected virtual void Page_Load(object sender, EventArgs e)
         {
-            ExpandMonthsOnLoad = true;
-            Years.DataSource = ArchiveCore.MonthsByYear.Keys;
-            Years.DataBind();
+            var monthsByYearKeys = ArchiveCore.MonthsByYear.Keys;
+            if (monthsByYearKeys.Any())
+            {                
+                Years.DataSource = monthsByYearKeys;
+                Years.DataBind();
+                PanelArchive.Visible = true;
+            }
+            else
+            {
+                PanelArchive.Visible = false;
+            }
         }
 
         protected virtual int[] GetMonths(int year)
