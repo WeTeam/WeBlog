@@ -8,18 +8,19 @@ name: Entry
 master: {00000000-0000-0000-0000-000000000000}
 template: {FED6A14F-0D05-4E18-B160-17C0588A2005}
 templatekey: Model
+created: 20160815T074436:636068438765100000
 
 ----field----
 field: {EE9E23D2-181D-4172-A929-0E0B8D10313C}
 name: Model Type
 key: model type
-content-length: 35
+content-length: 39
 
-Sitecore.Modules.WeBlog.Model.Entry
+Sitecore.Modules.WeBlog.Mvc.Model.Entry
 ----version----
 language: en
 version: 1
-revision: 8c051ed0-95ed-4b8d-bc3e-dff83a1e824d
+revision: 49b53183-8a27-4135-b8c2-5cb36eaf9253
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +49,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-8c051ed0-95ed-4b8d-bc3e-dff83a1e824d
+49b53183-8a27-4135-b8c2-5cb36eaf9253
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151109T215552Z
+20160815T080542Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

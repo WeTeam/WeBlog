@@ -8,6 +8,7 @@ name: Cache by Blog
 master: {00000000-0000-0000-0000-000000000000}
 template: {AB86861A-6030-46C5-B394-E8F99E8B87DB}
 templatekey: Template
+created: 20160815T092150:636068497109670000
 
 ----field----
 field: {12C33F3F-86C5-43A5-AEB4-5598CEC45116}
@@ -22,7 +23,7 @@ name: __Standard values
 key: __standard values
 content-length: 38
 
-{7B944D87-ECCD-4984-A9A0-45EA9A3ACC53}
+{89F2DC8E-08B9-4C54-89A2-C8A71E40B181}
 ----field----
 field: {06D5295C-ED2F-4A54-9BF2-26228D113318}
 name: __Icon
@@ -33,7 +34,7 @@ Applications/16x16/gear.png
 ----version----
 language: en
 version: 1
-revision: a5e6757b-8fd8-43a3-9ba4-f8b557530dba
+revision: bfa06b2e-e338-45b0-85bb-2d244256e119
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -55,14 +56,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-a5e6757b-8fd8-43a3-9ba4-f8b557530dba
+bfa06b2e-e338-45b0-85bb-2d244256e119
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 34
+content-length: 16
 
-20150809T222446:635747558866014081
+20160815T121406Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
