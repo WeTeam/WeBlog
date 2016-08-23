@@ -20,6 +20,33 @@ namespace Sitecore.Modules.WeBlog
     AutoDocumentation = true)]
     public class MetaBlogApi : XmlRpcService
     {
+        /// <summary>
+        /// Gets the <see cref="IBlogManager"/> instance used to access blog structures.
+        /// </summary>
+        protected IBlogManager BlogManager { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="ICategoryManager"/> instance used to access categories.
+        /// </summary>
+        protected ICategoryManager CategoryManager { get; set; }
+
+        /// <summary>
+        /// Gets the <see cref="IEntryManager"/> instance used to access blog entries.
+        /// </summary>
+        protected IEntryManager EntryManager { get; set; }
+
+        public MetaBlogApi()
+            : this(null, null, null)
+        {
+        }
+
+        public MetaBlogApi(IBlogManager blogManager, ICategoryManager categoryManager, IEntryManager entryManager)
+        {
+            BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
+            CategoryManager = categoryManager ?? ManagerFactory.CategoryManagerInstance;
+            EntryManager = entryManager;
+        }
+
         #region Helpers
         /// <summary>
         /// Authenticate user
@@ -145,7 +172,7 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var blogList = ManagerFactory.BlogManagerInstance.GetUserBlogs(username);
+            var blogList = BlogManager.GetUserBlogs(username);
 
             //Create structure for blog list
             XmlRpcStruct[] blogs = new XmlRpcStruct[blogList.Length];
@@ -199,10 +226,10 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var blog = ContentHelper.GetContentDatabase().GetItem(blogid);
+            var blog = GetBlog(blogid);
             if (blog != null)
             {
-                var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
+                var categoryList = CategoryManager.GetCategories(blog);
 
                 XmlRpcStruct[] categories = new XmlRpcStruct[categoryList.Length];
 
@@ -239,10 +266,10 @@ namespace Sitecore.Modules.WeBlog
             int ii = 0;
             Authenticate(username, password);
 
-            var blog = ContentHelper.GetContentDatabase().GetItem(blogid);
+            var blog = GetBlog(blogid);
             if (blog != null)
             {
-                var entryList = ManagerFactory.EntryManagerInstance.GetBlogEntries(blog, numberOfPosts, null, null, (DateTime?)null);
+                var entryList = EntryManager.GetBlogEntries(blog, numberOfPosts, null, null, (DateTime?)null);
 
                 XmlRpcStruct[] posts = new XmlRpcStruct[entryList.Length];
 
@@ -568,6 +595,26 @@ namespace Sitecore.Modules.WeBlog
             }
 
             // return "Your ping request has been received successfully.";
+        }
+
+        /// <summary>
+        /// Gets the database where content is authored
+        /// </summary>
+        /// <returns>The contenet database</returns>
+        protected virtual Database GetContentDatabase()
+        {
+            return ContentHelper.GetContentDatabase();
+        }
+
+        /// <summary>
+        /// Gets the blog given by the provided ID
+        /// </summary>
+        /// <param name="blogId">The ID of the blog to get</param>
+        /// <returns>The blog item</returns>
+        protected virtual BlogHomeItem GetBlog(string blogId)
+        {
+            var db = GetContentDatabase();
+            return db.GetItem(blogId);
         }
     }
 }
