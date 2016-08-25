@@ -70,7 +70,7 @@ namespace Sitecore.Modules.WeBlog
         /// <param name="username">The username of the user to check the rights for.</param>
         protected virtual void CheckUserRights(string blogid, string username)
         {
-            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, ContentHelper.GetContentDatabase());
+            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, GetContentDatabase());
             if (blog != null && !blog.Security.CanWrite(Sitecore.Context.User))
                 throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");            
         }
@@ -81,9 +81,9 @@ namespace Sitecore.Modules.WeBlog
         /// <param name="postid">The postid.</param>
         /// <param name="rpcstruct">The rpcstruct.</param>
         /// <returns></returns>
-        private static string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
+        private string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
         {
-            var postItem = ContentHelper.GetContentDatabase().GetItem(postid);
+            var postItem = GetContentDatabase().GetItem(postid);
             Item blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(postItem).SafeGet(x => x.InnerItem);
             var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
 
@@ -124,9 +124,9 @@ namespace Sitecore.Modules.WeBlog
         /// <param name="BlogID">The blog ID.</param>
         /// <param name="rpcstruct">The rpcstruct.</param>
         /// <returns></returns>
-        private static string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
+        private string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
         {
-            var blog = ContentHelper.GetContentDatabase().GetItem(BlogID);
+            var blog = GetContentDatabase().GetItem(BlogID);
             if (blog != null)
             {
                 var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
@@ -359,7 +359,7 @@ namespace Sitecore.Modules.WeBlog
             CheckUserRights(blogid, username);
             
             var entryTitle = rpcstruct["title"].ToString();
-            var currentBlog = ContentHelper.GetContentDatabase().GetItem(blogid);
+            var currentBlog = GetContentDatabase().GetItem(blogid);
 
             if (currentBlog != null)
             {
@@ -401,7 +401,7 @@ namespace Sitecore.Modules.WeBlog
             Authenticate(username, password);
             CheckUserRights(postid, username);
 
-            var item = ContentHelper.GetContentDatabase().GetItem(new ID(postid));
+            var item = GetContentDatabase().GetItem(new ID(postid));
 
             if (item != null)
             {
@@ -466,7 +466,7 @@ namespace Sitecore.Modules.WeBlog
             CheckUserRights(postid, username);
 
             var rpcstruct = new XmlRpcStruct();
-            var entryItem = ContentHelper.GetContentDatabase().GetItem(postid);
+            var entryItem = GetContentDatabase().GetItem(postid);
             if (entryItem != null)
             {
                 var entry = new EntryItem(entryItem);
@@ -501,7 +501,7 @@ namespace Sitecore.Modules.WeBlog
 
             try
             {
-                return ManagerFactory.EntryManagerInstance.DeleteEntry(postid, ContentHelper.GetContentDatabase());
+                return ManagerFactory.EntryManagerInstance.DeleteEntry(postid, GetContentDatabase());
             }
             catch (Exception)
             {
@@ -530,7 +530,7 @@ namespace Sitecore.Modules.WeBlog
             var media = (byte[])rpcstruct["bits"];
             var blogName = string.Empty;
 
-            var currentBlog = ContentHelper.GetContentDatabase().GetItem(blogid);
+            var currentBlog = GetContentDatabase().GetItem(blogid);
             blogName = currentBlog.Name;
 
             // Get filename
@@ -541,7 +541,7 @@ namespace Sitecore.Modules.WeBlog
             var memStream = new MemoryStream(media);
             var md = new MediaCreatorOptions();
             md.Destination = string.Join("/", new string[]{Constants.Paths.WeBlogMedia, blogName, imageName});
-            md.Database = ContentHelper.GetContentDatabase();
+            md.Database = GetContentDatabase();
             md.AlternateText = imageName;
 
             // Create mediaitem

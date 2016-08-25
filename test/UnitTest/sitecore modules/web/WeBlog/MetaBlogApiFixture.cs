@@ -371,6 +371,27 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void getTemplate_NoRights()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    Access = { CanWrite = false }
+                }
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/Blog");
+                var api = CreateAuthenticatingApi();
+
+                Assert.That(() =>
+                {
+                    api.getTemplate("app", blog.ID.ToString(), "user", "password", "none");
+                }, Throws.InstanceOf<InvalidCredentialException>());
+            }
+        }
+
+        [Test]
         public void newPost_Unauthenticated()
         {
             var api = CreateNonAuthenticatingApi();
@@ -380,12 +401,72 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void newPost_NoRights()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    Access = { CanWrite = false }
+                }
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/Blog");
+                var api = CreateAuthenticatingApi();
+
+                var post = new XmlRpcStruct
+                {
+                    { "title", "Deimos" }
+                };
+
+                Assert.That(() =>
+                {
+                    api.newPost(blog.ID.ToString(), "user", "password", post, false);
+                }, Throws.InstanceOf<InvalidCredentialException>());
+            }
+        }
+
+        [Test]
         public void editPost_Unauthenticated()
         {
             var api = CreateNonAuthenticatingApi();
             Assert.That(() => {
                 api.editPost(ID.NewID.ToString(), "user", "password", null, false);
             }, Throws.InstanceOf<InvalidCredentialException>());
+        }
+
+        [Test]
+        public void editPost_NoRights()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    new DbItem("entry1")
+                    {
+                        Access = { CanWrite = false }
+                    }
+                }
+            })
+            {
+                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
+                    new EntryItem[] { entry1 }
+                    );
+
+                var api = CreateAuthenticatingApi(null, null, entryManager);
+
+                var post = new XmlRpcStruct
+                {
+                    { "title", "Deimos" }
+                };
+
+                Assert.That(() =>
+                {
+                    api.editPost(entry1.ID.ToString(), "user", "password", post, false);
+                }, Throws.InstanceOf<InvalidCredentialException>());
+            }
         }
 
         [Test]
@@ -399,12 +480,70 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void getPost_NoRights()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    new DbItem("entry1")
+                    {
+                        Access = { CanWrite = false }
+                    }
+                }
+            })
+            {
+                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
+                    new EntryItem[] { entry1 }
+                    );
+
+                var api = CreateAuthenticatingApi(null, null, entryManager);
+
+                Assert.That(() =>
+                {
+                    api.getPost(entry1.ID.ToString(), "user", "password");
+                }, Throws.InstanceOf<InvalidCredentialException>());
+            }
+        }
+
+        [Test]
         public void deletePost_Unauthenticated()
         {
             var api = CreateNonAuthenticatingApi();
             Assert.That(() => {
                 api.deletePost("app", ID.NewID.ToString(), "user", "password", false);
             }, Throws.InstanceOf<InvalidCredentialException>());
+        }
+
+        [Test]
+        public void deletePost_NoRights()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    new DbItem("entry1")
+                    {
+                        Access = { CanWrite = false }
+                    }
+                }
+            })
+            {
+                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
+                    new EntryItem[] { entry1 }
+                    );
+
+                var api = CreateAuthenticatingApi(null, null, entryManager);
+
+                Assert.That(() =>
+                {
+                    api.deletePost("app", entry1.ID.ToString(), "user", "password", true);
+                }, Throws.InstanceOf<InvalidCredentialException>());
+            }
         }
 
         [Test]
