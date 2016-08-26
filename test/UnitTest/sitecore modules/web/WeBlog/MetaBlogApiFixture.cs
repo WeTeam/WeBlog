@@ -7,7 +7,6 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.FakeDb.Sites;
-using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sites;
@@ -265,8 +264,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         [Test]
         public void getRecentPosts_NoneAvailable()
         {
-            var date = DateTime.UtcNow.Date;
-
             using (var db = new Db
             {
                 new DbItem("Blog")
@@ -333,7 +330,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 }
 
                 var expected = new[]
-                {new XmlRpcStruct
+                {
+                    new XmlRpcStruct
                     {
                         {"title", "Lorem"},
                         {"link", "/en/sitecore/content/Blog/entry1.aspx"},
@@ -392,6 +390,23 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void getTemplate_HasRights()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/Blog");
+                var api = CreateAuthenticatingApi();
+
+                var output = api.getTemplate("app", blog.ID.ToString(), "user", "password", "none");
+                Assert.That(output, Does.Contain("<html>").IgnoreCase);
+                Assert.That(output, Does.Contain("$BlogTitle$").IgnoreCase);
+            }
+        }
+
+        [Test]
         public void newPost_Unauthenticated()
         {
             var api = CreateNonAuthenticatingApi();
@@ -423,6 +438,102 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 {
                     api.newPost(blog.ID.ToString(), "user", "password", post, false);
                 }, Throws.InstanceOf<InvalidCredentialException>());
+            }
+        }
+
+        [Test]
+        public void newPost_NoTitle()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/Blog");
+                var api = CreateAuthenticatingApi();
+
+                var post = new XmlRpcStruct
+                {
+                    { "description", "Deimos" },
+                    { "categories", "luna" },
+                    { "dateCreated", "2013-02-07" }
+                };
+
+                Assert.That(() =>
+                {
+                    api.newPost(blog.ID.ToString(), "user", "password", post, false);
+                }, Throws.InstanceOf<ArgumentException>());
+            }
+        }
+
+        [Test]
+        public void newPost_InvalidBlogId()
+        {
+            using (var db = new Db())
+            {
+                var api = CreateAuthenticatingApi();
+                api.GetContentDatabaseFunction = () => db.Database;
+
+                var post = new XmlRpcStruct
+                {
+                    {"title", "Lorem"},
+                    {"description", "Deimos"},
+                    {"categories", "luna"},
+                    {"dateCreated", "2013-02-07"}
+                };
+
+                var newPostId = api.newPost(ID.NewID.ToString(), "user", "password", post, false);
+                Assert.That(newPostId, Is.Empty);
+            }
+        }
+
+        [Test]
+        public void newPost_ValidStruct()
+        {
+            var entryTemplateId = ID.NewID;
+
+            using (var db = new Db
+            {
+                new DbTemplate(entryTemplateId)
+                {
+                    new DbField("Title"),
+                    new DbField("Content"),
+                    new DbField("Category")
+                },
+                new DbTemplate(Settings.BlogTemplateID)
+                {
+                    new DbField("Defined Entry Template"),
+                    new DbField("Defined Category Template"),
+                    new DbField("Defined Comment Template")
+                },
+                new DbItem("blog", ID.NewID, Settings.BlogTemplateID)
+                {
+                    new DbField("Defined Entry Template")
+                    {
+                        Value = entryTemplateId.ToString()
+                    }
+                }
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/blog");
+                var api = CreateAuthenticatingApi();
+                api.GetContentDatabaseFunction = () => db.Database;
+
+                var post = new XmlRpcStruct
+                {
+                    {"title", "Lorem"},
+                    {"description", "Deimos"},
+                    {"categories", "luna"},
+                    {"dateCreated", "2013-02-07"}
+                };
+
+                var newPostId = api.newPost(blog.ID.ToString(), "user", "password", post, false);
+                Assert.That(newPostId, Is.Not.Empty);
+
+                var parsedId = ID.Parse(newPostId);
+                Assert.That(parsedId, Is.Not.Null);
+                Assert.That(parsedId, Is.Not.EqualTo(ID.Null));
+                Assert.That(parsedId, Is.Not.EqualTo(ID.Undefined));
             }
         }
 
@@ -470,6 +581,61 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void editPost_NonExistingPost()
+        {
+            var api = CreateAuthenticatingApi();
+
+            var post = new XmlRpcStruct
+            {
+                { "title", "Deimos" }
+            };
+
+            using (new Db())
+            {
+                var result = api.editPost(ID.NewID.ToString(), "user", "password", post, false);
+                Assert.That(result, Is.False);
+            }
+        }
+
+        [Test]
+        public void editPost_ValidPost()
+        {
+            var entryTemplateId = ID.NewID;
+
+            using (var db = new Db
+            {
+                new DbTemplate(entryTemplateId)
+                {
+                    new DbField("Title"),
+                    new DbField("Content"),
+                    new DbField("Category")
+                },
+                new DbItem("Blog")
+                {
+                    new DbItem("entry1", ID.NewID, entryTemplateId)
+                }
+            })
+            {
+                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
+                    new EntryItem[] { entry1 }
+                    );
+
+                var api = CreateAuthenticatingApi(null, null, entryManager);
+
+                var post = new XmlRpcStruct
+                {
+                    {"title", "Lorem"},
+                    {"description", "Deimos"}
+                };
+
+                var result = api.editPost(entry1.ID.ToString(), "user", "password", post, false);
+                Assert.That(result, Is.True);
+            }
+        }
+
+        [Test]
         public void getPost_Unauthenticated()
         {
 
@@ -505,6 +671,69 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 {
                     api.getPost(entry1.ID.ToString(), "user", "password");
                 }, Throws.InstanceOf<InvalidCredentialException>());
+            }
+        }
+
+        [Test]
+        public void getPost_NonExistingPost()
+        {
+            var api = CreateAuthenticatingApi(null, null, null);
+
+            using (new Db())
+            {
+                var post = api.getPost(ID.NewID.ToString(), "user", "password");
+                Assert.That(post, Is.Empty);
+            }
+        }
+
+        [Test]
+        public void getPost_ExistingPost()
+        {
+            var date = DateTime.UtcNow.Date;
+
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    new DbItem("entry1")
+                    {
+                        new DbField("title")
+                        {
+                            Value = "Luna"
+                        },
+                        new DbField("content")
+                        {
+                            Value = "This world doesn't need no opera"
+                        },
+                        new DbField("Entry Date")
+                        {
+                            Value = DateUtil.ToIsoDate(date)
+                        }
+                    }
+                }
+            })
+            {
+                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
+                    new EntryItem[] { entry1 }
+                    );
+
+                var api = CreateAuthenticatingApi(null, null, entryManager);
+
+                var post = api.getPost(entry1.ID.ToString(), "user", "password");
+
+                var expected = new XmlRpcStruct
+                {
+                    {"title", "Luna"},
+                    {"link", "/en/sitecore/content/Blog/entry1.aspx"},
+                    {"description", "This world doesn't need no opera"},
+                    {"pubDate", date},
+                    {"guid", entry1.ID.ToString()},
+                    {"author", Context.User.Name}
+                };
+
+                Assert.That(post, Is.EqualTo(expected));
             }
         }
 

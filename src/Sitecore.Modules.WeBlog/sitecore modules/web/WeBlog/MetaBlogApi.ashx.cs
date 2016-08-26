@@ -357,16 +357,16 @@ namespace Sitecore.Modules.WeBlog
         {
             Authenticate(username, password);
             CheckUserRights(blogid, username);
-            
-            var entryTitle = rpcstruct["title"].ToString();
+
+            var entryTitleRaw = rpcstruct["title"];
+            if (entryTitleRaw == null)
+                throw new ArgumentException("'title' must be provided");
+
+            var entryTitle = entryTitleRaw.ToString();
             var currentBlog = GetContentDatabase().GetItem(blogid);
 
             if (currentBlog != null)
             {
-                // test
-                var access = Sitecore.Security.AccessControl.AuthorizationManager.GetAccess(currentBlog, Sitecore.Context.User, Sitecore.Security.AccessControl.AccessRight.ItemCreate);
-                // end test
-
                 BlogHomeItem blogItem = currentBlog;
                 var template = new TemplateID(blogItem.BlogSettings.EntryTemplateID);
                 var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
@@ -409,11 +409,11 @@ namespace Sitecore.Modules.WeBlog
 
                 if (publish)
                     ContentHelper.PublishItemAndRequiredAncestors(item.ID);
-            }
-            else
-                return false;
 
-            return true;
+                return true;
+            }
+            
+            return false;
         }
         #endregion
 
@@ -462,7 +462,6 @@ namespace Sitecore.Modules.WeBlog
         public XmlRpcStruct getPost(string postid, string username, string password)
         {
             Authenticate(username, password);
-
             CheckUserRights(postid, username);
 
             var rpcstruct = new XmlRpcStruct();
@@ -473,8 +472,8 @@ namespace Sitecore.Modules.WeBlog
 
                 rpcstruct.Add("title", entry.Title.Raw);
                 rpcstruct.Add("link", entry.AbsoluteUrl);
-                rpcstruct.Add("description", entry.Introduction.Raw);
-                rpcstruct.Add("pubDate", entry.InnerItem.Statistics.Created.ToString());
+                rpcstruct.Add("description", entry.Content.Raw);
+                rpcstruct.Add("pubDate", entry.EntryDate.DateTime);
                 rpcstruct.Add("guid", entry.ID.ToString());
                 rpcstruct.Add("author", entry.InnerItem.Statistics.CreatedBy);
             }
