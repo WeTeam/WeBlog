@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using Sitecore.Analytics.Data.DataAccess;
 #endif
 
-namespace Sitecore.Modules.WeBlog.Test
+namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 {
     [TestFixture]
     [Category("EntryManagerFixture")]

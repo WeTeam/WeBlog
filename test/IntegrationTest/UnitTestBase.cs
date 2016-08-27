@@ -3,7 +3,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.SecurityModel;
 
-namespace Sitecore.Modules.WeBlog.Test
+namespace Sitecore.Modules.WeBlog.IntegrationTest
 {
     public class UnitTestBase
     {

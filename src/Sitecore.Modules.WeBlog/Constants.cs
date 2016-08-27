@@ -47,7 +47,7 @@ namespace Sitecore.Modules.WeBlog
 
         public static class Paths
         {
-            public const string WeBlogMedia = "/sitecore/media library/Modules/Blog";
+            public const string WeBlogMedia = "/sitecore/media library/Modules/WeBlog";
             public const string PublishingTargets = "/sitecore/system/publishing targets";
         }
 

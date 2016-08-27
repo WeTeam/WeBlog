@@ -500,7 +500,7 @@ namespace Sitecore.Modules.WeBlog
 
             try
             {
-                return ManagerFactory.EntryManagerInstance.DeleteEntry(postid, GetContentDatabase());
+                return EntryManager.DeleteEntry(postid, GetContentDatabase());
             }
             catch (Exception)
             {
@@ -524,6 +524,9 @@ namespace Sitecore.Modules.WeBlog
             // Check user validation
             Authenticate(username, password);
 
+            // Check access rights
+
+
             var name = rpcstruct["name"].ToString();
             var type = rpcstruct["type"].ToString();
             var media = (byte[])rpcstruct["bits"];
@@ -546,12 +549,12 @@ namespace Sitecore.Modules.WeBlog
             // Create mediaitem
             var mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
 
-            // Publish mediaitem to web database
-            ContentHelper.PublishItemAndRequiredAncestors(mediaItem.ID);
-
             // Close stream
             memStream.Close();
             memStream.Dispose();
+
+            // Publish mediaitem to web database
+            ContentHelper.PublishItemAndRequiredAncestors(mediaItem.ID);
 
             // Get the mediaitem url and return it
             var rstruct = new XmlRpcStruct();

@@ -4,7 +4,7 @@ using NUnit.Framework;
 using Sitecore.Data.Items;
 using Mod = Sitecore.Modules.WeBlog.Managers;
 
-namespace Sitecore.Modules.WeBlog.Test
+namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 {
     [TestFixture]
     [Category("CommentManagerFixture")]

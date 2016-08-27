@@ -7,7 +7,7 @@ using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
 
-namespace Sitecore.Modules.WeBlog.Test.CustomBlog
+namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers.CustomBlog
 {
     public static class Extensions
     {

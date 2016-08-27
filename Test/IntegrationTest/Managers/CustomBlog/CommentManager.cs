@@ -1,17 +1,17 @@
 ﻿using NUnit.Framework;
 
-namespace Sitecore.Modules.WeBlog.Test.CustomBlog
+namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers.CustomBlog
 {
     [TestFixture]
-    [Category("CustomBlog.EntryManager")]
-    public class EntryManager : Sitecore.Modules.WeBlog.Test.EntryManagerFixture
+    [Category("CustomBlog.CommentManager")]
+    public class CommentManager : Sitecore.Modules.WeBlog.Test.CommentManager
     {
         [TestFixtureSetUp]
         public void ChangeBlog()
         {
-            /*Sitecore.Context.Database.SetupCustomBlogs(m_testRoot);
+            Sitecore.Context.Database.SetupCustomBlogs(TestContentRoot);
             //re-init to retrieve member items
-            Initialize();*/
+            Initialize();
         }
 
         [TestFixtureTearDown]

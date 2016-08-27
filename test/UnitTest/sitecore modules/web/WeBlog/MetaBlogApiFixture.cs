@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Security.Authentication;
 using CookComputing.XmlRpc;
 using Moq;
@@ -6,9 +7,11 @@ using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
+using Sitecore.FakeDb.Resources.Media;
 using Sitecore.FakeDb.Sites;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Resources.Media;
 using Sitecore.Sites;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
@@ -538,6 +541,51 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void newPost_FuturePublishDate()
+        {
+            var entryTemplateId = ID.NewID;
+            var date = DateTime.UtcNow.Date.AddMonths(1);
+
+            using (var db = new Db
+            {
+                new DbTemplate(entryTemplateId)
+                {
+                    new DbField("Title"),
+                    new DbField("Content")
+                },
+                new DbTemplate(Settings.BlogTemplateID)
+                {
+                    new DbField("Defined Entry Template"),
+                    new DbField("Defined Category Template"),
+                    new DbField("Defined Comment Template")
+                },
+                new DbItem("blog", ID.NewID, Settings.BlogTemplateID)
+                {
+                    new DbField("Defined Entry Template")
+                    {
+                        Value = entryTemplateId.ToString()
+                    }
+                }
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/blog");
+                var api = CreateAuthenticatingApi();
+                api.GetContentDatabaseFunction = () => db.Database;
+
+                var post = new XmlRpcStruct
+                {
+                    {"title", "Lorem"},
+                    {"description", "Deimos"},
+                    {"dateCreated", date}
+                };
+
+                var newPostId = api.newPost(blog.ID.ToString(), "user", "password", post, false);
+                var postItem = db.GetItem(newPostId);
+                Assert.That(postItem.Publishing.PublishDate.ToLocalTime(), Is.EqualTo(date));
+            }
+        }
+
+        [Test]
         public void editPost_Unauthenticated()
         {
             var api = CreateNonAuthenticatingApi();
@@ -581,7 +629,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
-        public void editPost_NonExistingPost()
+        public void editPost_InvalidPost()
         {
             var api = CreateAuthenticatingApi();
 
@@ -613,6 +661,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 new DbItem("Blog")
                 {
                     new DbItem("entry1", ID.NewID, entryTemplateId)
+                    {
+                        new DbField("Title")
+                        {
+                            Value = "Some old title"
+                        }
+                    }
                 }
             })
             {
@@ -632,6 +686,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var result = api.editPost(entry1.ID.ToString(), "user", "password", post, false);
                 Assert.That(result, Is.True);
+
+                entry1.Reload();
+                Assert.That(entry1["title"], Is.EqualTo("Lorem"));
             }
         }
 
@@ -675,7 +732,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
-        public void getPost_NonExistingPost()
+        public void getPost_InvalidPost()
         {
             var api = CreateAuthenticatingApi(null, null, null);
 
@@ -776,12 +833,141 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         }
 
         [Test]
+        public void deletePost_ValidPost()
+        {
+            using (var db = new Db
+            {
+                new DbItem("Blog")
+                {
+                    new DbItem("entry1")
+                }
+            })
+            {
+                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.DeleteEntry(entry1.ID.ToString(), It.IsAny<Database>())
+                    );
+
+                var api = CreateAuthenticatingApi(null, null, entryManager);
+                api.GetContentDatabaseFunction = () => db.Database;
+
+                var result = api.deletePost("app", entry1.ID.ToString(), "user", "password", true);
+                Assert.That(result, Is.True);
+            }
+        }
+
+        [Test]
+        public void deletePost_InvalidPost()
+        {
+            using (var db = new Db())
+            {
+                var api = CreateAuthenticatingApi();
+
+                var result = api.deletePost("app", ID.NewID.ToString(), "user", "password", true);
+                Assert.That(result, Is.False);
+            }
+        }
+
+        [Test]
         public void newMediaObject_Unauthenticated()
         {
             var api = CreateNonAuthenticatingApi();
             Assert.That(() => {
                 api.newMediaObject(ID.NewID.ToString(), "user", "password", null);
             }, Throws.InstanceOf<InvalidCredentialException>());
+        }
+
+        [Test]
+        public void newMediaObject_NoRights()
+        {
+            using (var db = new Db
+            {
+                new DbTemplate(),
+                new DbItem("Blog")
+                {
+                    Access = { CanWrite = false }
+                },
+                new DbItem("Modules")
+                {
+                    ParentID = ItemIDs.MediaLibraryRoot,
+                    Access = { CanWrite = false },
+                    Children = { new DbItem("image") }
+                }
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/Blog");
+                var image = db.GetItem("/sitecore/media library/Modules/image");
+                var api = CreateAuthenticatingApi();
+                api.GetContentDatabaseFunction = () => db.Database;
+
+                var mediaProvider = Mock.Of<MediaProvider>(x => 
+                    x.Creator == Mock.Of<MediaCreator>(y =>
+                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
+                        ) &&
+                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake"
+                );
+
+                var payload = new XmlRpcStruct
+                {
+                    { "name", "the media" },
+                    { "type", "image/gif" },
+                    { "bits", GetSampleImageData() }
+                };
+
+                Assert.That(() =>
+                {
+                    using (new MediaProviderSwitcher(mediaProvider))
+                    {
+                        api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
+                    }
+                }, Throws.InstanceOf<InvalidCredentialException>());
+            }
+        }
+
+        [Test]
+        public void newMediaObject_Valid()
+        {
+            using (var db = new Db
+            {
+                new DbTemplate(),
+                new DbItem("Blog"),
+                new DbItem("Modules")
+                {
+                    ParentID = ItemIDs.MediaLibraryRoot,
+                    Access = { CanWrite = false },
+                    Children = { new DbItem("image") }
+                }
+            })
+            {
+                var blog = db.GetItem("/sitecore/content/Blog");
+                var image = db.GetItem("/sitecore/media library/Modules/image");
+                var api = CreateAuthenticatingApi();
+                api.GetContentDatabaseFunction = () => db.Database;
+
+                var mediaCreator = new Mock<MediaCreator>();
+                mediaCreator.Setup(x => x.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>())).Returns(image).Verifiable();
+
+                var mediaProvider = new Mock<MediaProvider>();
+                mediaProvider.Setup(x => x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()))
+                    .Returns("fake-url");
+
+                mediaProvider.SetupGet(x => x.Creator).Returns(mediaCreator.Object);
+
+                var payload = new XmlRpcStruct
+                {
+                    { "name", "the media" },
+                    { "type", "image/gif" },
+                    { "bits", GetSampleImageData() }
+                };
+
+                using (new MediaProviderSwitcher(mediaProvider.Object))
+                {
+                    var urlStruct = api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
+                    Assert.That(urlStruct["url"], Is.EqualTo("fake-url"));
+                }
+                
+                mediaCreator.Verify();
+            }
         }
 
         private TestableMetaBlogApi CreateNonAuthenticatingApi()
@@ -801,6 +987,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 AuthenticateFunction = (u, p) => { }
             };
+        }
+
+        private byte[] GetSampleImageData()
+        {
+            var base64 =
+                "R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
+            return System.Convert.FromBase64String(base64);
         }
     }
 }
