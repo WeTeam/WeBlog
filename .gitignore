@@ -22,7 +22,7 @@ license.xml
 *.log
 
 # Theme output
-Themes/build
+src/Themes/build
 
 # Package folders
 node_modules/

@@ -8,6 +8,7 @@ name: Blog entries
 master: {00000000-0000-0000-0000-000000000000}
 template: {B960CBE4-381F-4A2B-9F44-A43C7A991A0B}
 templatekey: RSS Feed
+created: 20160816T182635:636069687956830000
 
 ----field----
 field: {D9409DA1-2614-4CFF-AD9B-6ED1A1688B33}
@@ -33,15 +34,15 @@ content-length: 329
 ----version----
 language: en
 version: 1
-revision: 7edabe76-307c-4bd0-8fb9-322dc4033db2
+revision: c57955a1-5916-4dc0-9f3e-4fad7ba7c92d
 
 ----field----
 field: {72C481B9-F789-4457-838F-2329EB8469C2}
 name: Source
 key: source
-content-length: 68
+content-length: 61
 
-query:.././/*[@@templateid='$weblogsetting(WeBlog.EntryTemplateID)']
+query:.././/*[@@templateid='$weblogsetting(EntryTemplateID)']
 ----field----
 field: {16CC56DD-27F5-4839-B790-DBBD9ACA882C}
 name: Title
@@ -76,14 +77,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-7edabe76-307c-4bd0-8fb9-322dc4033db2
+c57955a1-5916-4dc0-9f3e-4fad7ba7c92d
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20151130T233605Z
+20160816T211129Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

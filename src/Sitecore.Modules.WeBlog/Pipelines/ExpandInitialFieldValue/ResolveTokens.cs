@@ -8,7 +8,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.ExpandInitialFieldValue
         {
             if (args.SourceField.Value.Contains(Constants.Tokens.WeBlogSetting))
             {
-                args.Result = TokenReplacer.ResolveSettingsTokens(args.Result);
+                args.Result = TokenReplacer.ResolveSettingsTokens(args.Result, args.TargetItem);
             }
         }
     }

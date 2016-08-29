@@ -14,5 +14,6 @@ namespace Sitecore.Modules.WeBlog.Import
         public bool ImportCategories { get; set; }
         public bool ImportComments { get; set; }
         public bool ImportTags { get; set; }
+        public ID TemplateMappingItemId { get; set; }
     }
 }

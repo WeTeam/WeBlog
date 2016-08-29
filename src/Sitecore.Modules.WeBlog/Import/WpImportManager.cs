@@ -5,7 +5,9 @@ using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using System;
+using Sitecore.Data.Templates;
 using Sitecore.Modules.WeBlog.Import.Providers;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Import
 {
@@ -28,10 +30,9 @@ namespace Sitecore.Modules.WeBlog.Import
             _options = options;
         }
 
-        public BlogHomeItem CreateBlogRoot(Item root, string name, string email)
-        {
-            BranchItem newBlog = _db.Branches.GetMaster(Settings.BlogBranchID);
-            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), newBlog);
+        public BlogHomeItem CreateBlogRoot(Item root, string name, string email, ID blogRootTemplate)
+        {            
+            BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), new TemplateID(blogRootTemplate));
 
             blogItem.BeginEdit();
             blogItem.Email.Field.Value = email;
@@ -40,12 +41,11 @@ namespace Sitecore.Modules.WeBlog.Import
             return blogItem;
         }
 
-        internal ImportSummary ImportPosts(Item blogItem, Action<string, int> logger = null)
+        internal ImportSummary ImportPosts(Item blogItem, TemplatesMapping mapping, Action<string, int> logger = null)
         {
             var summary = new ImportSummary();
 
-            BlogHomeItem customBlogItem = blogItem;
-            var entryTemplate = TemplateManager.GetTemplate(customBlogItem.BlogSettings.EntryTemplateID, _db);
+            var entryTemplate = TemplateManager.GetTemplate(mapping.BlogEntryTemplate, _db);
 
             foreach (WpPost post in Posts)
             {
@@ -73,6 +73,7 @@ namespace Sitecore.Modules.WeBlog.Import
                     foreach (string categoryName in post.Categories)
                     {
                         var categoryItem = ManagerFactory.CategoryManagerInstance.Add(categoryName, blogItem);
+                        categoryItem.InnerItem.ChangeTemplate(categoryItem.Database.GetItem(mapping.BlogCategoryTemplate));
                         categorieItems.Add(categoryItem.ID.ToString());
                         summary.CategoryCount++;
                     }
@@ -84,7 +85,10 @@ namespace Sitecore.Modules.WeBlog.Import
 
                     foreach (WpComment wpComment in post.Comments)
                     {
-                        ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
+                        var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
+                        var comment = entry.Database.GetItem(commentId);
+                        comment?.ChangeTemplate(comment.Database.GetItem(mapping.BlogCommentTemplate));
+
                         summary.CommentCount++;
                     }
 

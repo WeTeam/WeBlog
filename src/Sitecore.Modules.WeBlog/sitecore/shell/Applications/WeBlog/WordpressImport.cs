@@ -8,6 +8,7 @@ using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Import.Providers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Shell.Applications.Install;
 using Sitecore.Shell.Applications.Install.Dialogs;
 using Sitecore.Shell.Framework;
@@ -42,6 +43,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected Memo ImportSummary;
         protected Border SuccessMessage;
         protected Border ErrorMessage;
+        protected TreePicker TemplatesMapping;
 
         protected Database db = ContentHelper.GetContentDatabase();
         #endregion
@@ -89,9 +91,9 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             }
             if (page == "Summary")
             {
-                    litSummaryName.Text = BlogName.Value;
-                    litSummaryEmail.Text = BlogEmail.Value;
-                    litSummaryPath.Text = Treeview.GetSelectedItems().First().Paths.FullPath;
+                litSummaryName.Text = BlogName.Value;
+                litSummaryEmail.Text = BlogEmail.Value;
+                litSummaryPath.Text = Treeview.GetSelectedItems().First().Paths.FullPath;
 
                 litSummaryWordpressXML.Text = WordpressXmlFile.Value;
                 litSummaryCategories.Text = ImportCategories.Checked ? "Yes" : "No";
@@ -152,12 +154,14 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             Item root = db.GetItem(litSummaryPath.Text);
             if (root != null)
             {
-                var blogItem = importManager.CreateBlogRoot(root, BlogName.Value, BlogEmail.Value);
+                var templateMappingItem = root.Database.GetItem(new ID(TemplatesMapping.Value));
+                var templatesMapping = new TemplatesMapping(templateMappingItem);
+                var blogItem = importManager.CreateBlogRoot(root, BlogName.Value, BlogEmail.Value, templatesMapping.BlogRootTemplate);
 
                 LogMessage("Importing posts");
                 LogTotal(importManager.Posts.Count);
 
-                return importManager.ImportPosts(blogItem, (itemName, count) =>
+                return importManager.ImportPosts(blogItem, templatesMapping, (itemName, count) =>
                 {
                     LogMessage("Importing entry " + itemName);
                     LogProgress(count);
@@ -298,7 +302,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 args.WaitForPostBack();
             }
             else if (args.HasResult)
-            { 
+            {
                 if (WordpressXmlFile != null)
                 {
                     WordpressXmlFile.Value = args.Result;
