@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Links;
@@ -289,19 +290,15 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                List<RssFeedItem> feeds = null;
+                List<RssFeedItem> feeds = new List<RssFeedItem>();
                 if (this.EnableRss.Checked)
-                {
+                {                    
                     var rssTemplateId = Settings.RssFeedTemplateIDString;
-                    var feedItems = this.InnerItem.Axes.SelectItems(string.Format("./*[@@templateid='{0}']", rssTemplateId));
+                    var feedItems = this.InnerItem.Axes.SelectItems($"./*[@@templateid='{rssTemplateId}']");
                      
                     if (feedItems != null)
                     {
-                        feeds = new List<RssFeedItem>();
-                        foreach (Item item in feedItems)
-                        {
-                            feeds.Add(new RssFeedItem(item));
-                        }
+                        feeds.AddRange(feedItems.Select(item => new RssFeedItem(item)));
                     }
                 }
                 return feeds;
