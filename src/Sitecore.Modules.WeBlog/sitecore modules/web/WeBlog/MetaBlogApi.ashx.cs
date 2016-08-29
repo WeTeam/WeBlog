@@ -6,6 +6,7 @@ using CookComputing.XmlRpc;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.Extensions.StringExtensions;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
@@ -44,119 +45,8 @@ namespace Sitecore.Modules.WeBlog
         {
             BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
             CategoryManager = categoryManager ?? ManagerFactory.CategoryManagerInstance;
-            EntryManager = entryManager;
+            EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
         }
-
-        #region Helpers
-        /// <summary>
-        /// Authenticate user
-        /// </summary>
-        /// <param name="username">UserName</param>
-        /// <param name="password">Password</param>
-        protected virtual void Authenticate(string username, string password)
-        {
-            var allowed = AuthenticationManager.Login(username, password);
-
-            if (!allowed)
-            {
-                throw new System.Security.Authentication.InvalidCredentialException("Invalid credentials. Access denied");
-            }
-        }
-
-        /// <summary>
-        /// Ensure the user has adequate rights to the blog.
-        /// </summary>
-        /// <param name="blogid">The ID of the blog to check the rights of.</param>
-        /// <param name="username">The username of the user to check the rights for.</param>
-        protected virtual void CheckUserRights(string blogid, string username)
-        {
-            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, GetContentDatabase());
-            if (blog != null && !blog.Security.CanWrite(Sitecore.Context.User))
-                throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");            
-        }
-
-        /// <summary>
-        /// Gets the categories as string.
-        /// </summary>
-        /// <param name="postid">The postid.</param>
-        /// <param name="rpcstruct">The rpcstruct.</param>
-        /// <returns></returns>
-        private string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
-        {
-            var postItem = GetContentDatabase().GetItem(postid);
-            Item blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(postItem).SafeGet(x => x.InnerItem);
-            var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
-
-            if (categoryList.Length != 0)
-            {
-                string selectedCategories = string.Empty;
-
-                try
-                {
-                    string[] categories = (string[])rpcstruct["categories"];
-
-                    foreach (string category in categories)
-                    {
-                        foreach (CategoryItem cat in categoryList)
-                        {
-                            if (category == cat.Title.Raw)
-                            {
-                                selectedCategories += cat.ID.ToString();
-                            }
-                        }
-                    }
-
-                    string result = selectedCategories.Replace("}{", "}|{");
-
-                    return result;
-                }
-                catch
-                {
-                    return string.Empty;
-                }
-            }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the categories as string.
-        /// </summary>
-        /// <param name="BlogID">The blog ID.</param>
-        /// <param name="rpcstruct">The rpcstruct.</param>
-        /// <returns></returns>
-        private string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
-        {
-            var blog = GetContentDatabase().GetItem(BlogID);
-            if (blog != null)
-            {
-                var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
-
-                var selectedCategories = string.Empty;
-
-                if (rpcstruct["categories"] != null && ((object[])rpcstruct["categories"]).Count() != 0)
-                {
-                    var categories = (string[])rpcstruct["categories"];
-
-                    foreach (string category in categories)
-                    {
-                        foreach (CategoryItem cat in categoryList)
-                        {
-                            if (category == cat.Title.Raw)
-                            {
-                                selectedCategories += cat.ID.ToString();
-                            }
-                        }
-                    }
-
-                    var result = selectedCategories.Replace("}{", "}|{");
-
-                    return result;
-                }
-            }
-
-            return string.Empty;
-        }
-        #endregion
 
         #region blogger.getUsersBlogs
         /// <summary>
@@ -437,7 +327,7 @@ namespace Sitecore.Modules.WeBlog
                     entry.Content.Field.Value = rpcstruct["description"].ToString();
 
                 if (rpcstruct["categories"] != null)
-                    entry.Category.Field.Value = GetCategoriesAsString(item.ID.ToString(), rpcstruct);
+                    entry.Category.Field.Value = GetCategoriesAsString(item, rpcstruct);
 
                 if (rpcstruct["dateCreated"] != null)
                 {
@@ -524,11 +414,7 @@ namespace Sitecore.Modules.WeBlog
             // Check user validation
             Authenticate(username, password);
 
-            // Check access rights
-
-
             var name = rpcstruct["name"].ToString();
-            var type = rpcstruct["type"].ToString();
             var media = (byte[])rpcstruct["bits"];
             var blogName = string.Empty;
 
@@ -545,6 +431,9 @@ namespace Sitecore.Modules.WeBlog
             md.Destination = string.Join("/", new string[]{Constants.Paths.WeBlogMedia, blogName, imageName});
             md.Database = GetContentDatabase();
             md.AlternateText = imageName;
+
+            // Check access rights
+            CheckUserCreateRights(md.Destination);
 
             // Create mediaitem
             var mediaItem = MediaManager.Creator.CreateFromStream(memStream, fileName, md);
@@ -617,6 +506,162 @@ namespace Sitecore.Modules.WeBlog
         {
             var db = GetContentDatabase();
             return db.GetItem(blogId);
+        }
+
+        /// <summary>
+        /// Authenticate user
+        /// </summary>
+        /// <param name="username">UserName</param>
+        /// <param name="password">Password</param>
+        protected virtual void Authenticate(string username, string password)
+        {
+            var allowed = AuthenticationManager.Login(username, password);
+
+            if (!allowed)
+            {
+                throw new System.Security.Authentication.InvalidCredentialException("Invalid credentials. Access denied");
+            }
+        }
+
+        /// <summary>
+        /// Ensure the user has adequate rights to the blog.
+        /// </summary>
+        /// <param name="blogid">The ID of the blog to check the rights of.</param>
+        protected virtual void CheckUserRights(string blogid)
+        {
+            var blog = ItemManager.GetItem(blogid, Sitecore.Context.Language, Sitecore.Data.Version.Latest, GetContentDatabase());
+            if (blog != null && !blog.Security.CanWrite(Sitecore.Context.User))
+                throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");
+        }
+
+        /// <summary>
+        /// Ensure the context user has create rights to the item given by path.
+        /// </summary>
+        /// <param name="path">The path of the item to check the rights on.</param>
+        /// <remarks>If the item in the path doesn't exist, the ancestors will be checked until an item is found to exist.</remarks>
+        protected virtual void CheckUserCreateRights(string path)
+        {
+            var item = ItemManager.GetItem(path, Sitecore.Context.Language, Sitecore.Data.Version.Latest, GetContentDatabase());
+
+            if (item == null)
+            {
+                // Item didn't exist, try parent
+                var lastPathSeparatorIndex = path.LastIndexOf("/");
+                if (lastPathSeparatorIndex >= 0)
+                {
+                    var parentPath = path.Left(lastPathSeparatorIndex);
+                    CheckUserCreateRights(parentPath);
+                }
+            }
+
+            if (item != null && !item.Security.CanCreate(Sitecore.Context.User))
+                throw new System.Security.Authentication.InvalidCredentialException("You do not have sufficient user rights");
+        }
+
+        /// <summary>
+        /// Gets the categories as string.
+        /// </summary>
+        /// <param name="postid">The postid.</param>
+        /// <param name="rpcstruct">The rpcstruct.</param>
+        /// <returns></returns>
+        protected virtual string GetCategoriesAsString(Item postItem, XmlRpcStruct rpcstruct)
+        {
+            var blog = BlogManager.GetCurrentBlog(postItem).SafeGet(x => x.InnerItem);
+            var categoryList = CategoryManager.GetCategories(blog);
+
+            if (categoryList.Length != 0)
+            {
+                string selectedCategories = string.Empty;
+
+                try
+                {
+                    string[] categories = (string[])rpcstruct["categories"];
+
+                    foreach (string category in categories)
+                    {
+                        foreach (CategoryItem cat in categoryList)
+                        {
+                            if (category == cat.Title.Raw)
+                            {
+                                selectedCategories += cat.ID.ToString();
+                            }
+                        }
+                    }
+
+                    string result = selectedCategories.Replace("}{", "}|{");
+
+                    return result;
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the categories as string.
+        /// </summary>
+        /// <param name="BlogID">The blog ID.</param>
+        /// <param name="rpcstruct">The rpcstruct.</param>
+        /// <returns></returns>
+        [Obsolete("Use GetCategoriesAsString(Item, XmlRpcStruct) instead")] // deprecated in 3.0
+        private string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
+        {
+            var blog = GetContentDatabase().GetItem(BlogID);
+            if (blog != null)
+            {
+                var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
+
+                var selectedCategories = string.Empty;
+
+                if (rpcstruct["categories"] != null && ((object[])rpcstruct["categories"]).Count() != 0)
+                {
+                    var categories = (string[])rpcstruct["categories"];
+
+                    foreach (string category in categories)
+                    {
+                        foreach (CategoryItem cat in categoryList)
+                        {
+                            if (category == cat.Title.Raw)
+                            {
+                                selectedCategories += cat.ID.ToString();
+                            }
+                        }
+                    }
+
+                    var result = selectedCategories.Replace("}{", "}|{");
+
+                    return result;
+                }
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the categories as string.
+        /// </summary>
+        /// <param name="postid">The postid.</param>
+        /// <param name="rpcstruct">The rpcstruct.</param>
+        /// <returns></returns>
+        [Obsolete("Use GetCategoriesAsString(Item, XmlRpcStruct) instead")] // deprecated in 3.0
+        private string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
+        {
+            var postItem = GetContentDatabase().GetItem(postid);
+            return GetCategoriesAsString(postItem, rpcstruct);
+        }
+
+        /// <summary>
+        /// Ensure the user has adequate rights to the blog.
+        /// </summary>
+        /// <param name="blogid">The ID of the blog to check the rights of.</param>
+        /// <param name="username">The username of the user to check the rights for.</param>
+        [Obsolete("Use CheckUserRights(string) instead with Context User set.")] // deprecated in 3.0
+        protected virtual void CheckUserRights(string blogid, string username)
+        {
+            CheckUserRights(blogid);
         }
     }
 }

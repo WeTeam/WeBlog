@@ -890,7 +890,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 new DbItem("Modules")
                 {
                     ParentID = ItemIDs.MediaLibraryRoot,
-                    Access = { CanWrite = false },
+                    Access = { CanCreate = false },
                     Children = { new DbItem("image") }
                 }
             })
