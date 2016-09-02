@@ -12,7 +12,8 @@
 
 <asp:Panel ID="CommentsPanel" runat="server"  CssClass="wb-entry-add-comment wb-panel">
     <h3><%=Translator.Render("ADD_COMMENT")%></h3>
-    <asp:validationsummary id="ValidationSummaryComments" runat="server" headertext="The following fields are not filled in:" forecolor="Red" EnableClientScript="true" CssClass="wb-error"  />
+    <asp:validationsummary id="ValidationSummaryComments" runat="server" headertext="The following fields are not filled in:" forecolor="Red" 
+        EnableClientScript="true" CssClass="wb-error" ValidationGroup="weblog-comment" />
 
     <asp:Panel runat="server" ID="MessagePanel" CssClass="wb-successtext" Visible="false">
         <p>
@@ -23,27 +24,30 @@
     <p>
         <asp:Label ID="lblCommentName" runat="server" AssociatedControlID="txtCommentName"><%=Translator.Render("NAME")%></asp:Label>
         <asp:TextBox ID="txtCommentName" runat="server" CssClass="wb-textbox"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="rfvCommentName" runat="server" Text="*" ErrorMessage="Username" ControlToValidate="txtCommentName" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+        <asp:RequiredFieldValidator ID="rfvCommentName" runat="server" Text="*" ErrorMessage="Username" ControlToValidate="txtCommentName" 
+            SetFocusOnError="true" EnableClientScript="true" ValidationGroup="weblog-comment"/>
     </p>
     <p>
-        <asp:Label ID="lblCommentEmail" runat="server" AssociatedControlID="txtCommentEmail"><%=Translator.Render("EMAIL")%></asp:Label>   
-        <asp:TextBox ID="txtCommentEmail" runat="server" CssClass="wb-textbox"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="rfvCommentEmail" runat="server" ErrorMessage="Email" Text="*" ControlToValidate="txtCommentEmail" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+        <asp:Label ID="lblCommentEmail" runat="server" AssociatedControlID="txtCommentEmail"><%=Translator.Render("EMAIL")%></asp:Label>
+        <asp:TextBox ID="txtCommentEmail" runat="server" CssClass="wb-textbox"/>
+        <asp:RequiredFieldValidator ID="rfvCommentEmail" runat="server" ErrorMessage="Email" Text="*" ControlToValidate="txtCommentEmail"
+            SetFocusOnError="true" EnableClientScript="true" ValidationGroup="weblog-comment"/>
     </p>
     <p>
         <asp:Label ID="lblCommentWebsite" runat="server" Text="Website" AssociatedControlID="txtCommentWebsite"><%=Translator.Render("WEBSITE")%></asp:Label>
-        <asp:TextBox ID="txtCommentWebsite" runat="server" CssClass="wb-textbox"></asp:TextBox>
+        <asp:TextBox ID="txtCommentWebsite" runat="server" CssClass="wb-textbox" />
     </p>
     <p>
-        <asp:Label ID="lblCommentText" runat="server" AssociatedControlID="txtCommentText"><%=Translator.Render("COMMENT")%></asp:Label>  
-        <asp:TextBox ID="txtCommentText" runat="server" TextMode="MultiLine" Rows="10" Columns="60"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText" SetFocusOnError="true" EnableClientScript="true"></asp:RequiredFieldValidator>
+        <asp:Label ID="lblCommentText" runat="server" AssociatedControlID="txtCommentText"><%=Translator.Render("COMMENT")%></asp:Label>
+        <asp:TextBox ID="txtCommentText" runat="server" TextMode="MultiLine" Rows="10" Columns="60" />
+        <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText"
+            SetFocusOnError="true" EnableClientScript="true" ValidationGroup="weblog-comment"/>
     </p>
     <p class="wb-comment-form-wrapper">
         <sc:PlaceHolder runat="server" key="weblog-comment-form" />
     </p>
     <p>
-        <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" CssClass="wb-submit" />
+        <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" CssClass="wb-submit" ValidationGroup="weblog-comment" />
     </p>
 </asp:Panel>
 
