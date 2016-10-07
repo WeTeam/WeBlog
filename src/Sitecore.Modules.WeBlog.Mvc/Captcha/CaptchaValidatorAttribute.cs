@@ -37,9 +37,12 @@ namespace Sitecore.Modules.WeBlog.Mvc.Captcha
         {
             if (filterContext.HttpContext.Session != null)
             {
-                return filterContext.HttpContext.Session["Captcha"].ToString();
+                var captchaText = filterContext.HttpContext.Session["Captcha"];
+                if (captchaText != null)
+                    return captchaText.ToString();
             }
-            return String.Empty;
+
+            return string.Empty;
         }
     }
 }
