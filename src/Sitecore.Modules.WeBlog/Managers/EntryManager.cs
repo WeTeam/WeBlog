@@ -254,24 +254,26 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public virtual EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            var blogEntries = GetBlogEntries(blogItem);
-            var entryIds = (from entry in blogEntries select entry.ID).ToArray();
-
-            if (entryIds.Any())
+            if (AnalyticsEnabled())
             {
-                var views = new Dictionary<ID, long>();
+                var blogEntries = GetBlogEntries(blogItem);
+                var entryIds = (from entry in blogEntries select entry.ID).ToArray();
 
-                foreach (var id in entryIds)
+                if (entryIds.Any())
                 {
-#if FEATURE_XDB
-                    var query = new ItemVisitsQuery(this.ReportDataProvider)
+                    var views = new Dictionary<ID, long>();
+
+                    foreach (var id in entryIds)
                     {
-                        ItemId = id
-                    };
+#if FEATURE_XDB
+                        var query = new ItemVisitsQuery(this.ReportDataProvider)
+                        {
+                            ItemId = id
+                        };
 
-                    query.Execute();
+                        query.Execute();
 
-                    var itemViews = query.Visits;
+                        var itemViews = query.Visits;
 #elif FEATURE_DMS
                     var queryId = id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
                     var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
@@ -279,16 +281,22 @@ namespace Sitecore.Modules.WeBlog.Managers
                     var itemViews = DataAdapterManager.ReportingSql.ReadOne(sql, reader => DataAdapterManager.ReportingSql.GetLong(0, reader));
 #endif
 
-                    if (itemViews > 0)
-                        views.Add(id, itemViews);
+                        if (itemViews > 0)
+                            views.Add(id, itemViews);
+                    }
+
+                    var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
+
+                    return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
                 }
-
-                var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
-
-                return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
             }
-            else
-                return new EntryItem[0];
+            return new EntryItem[0];
+        }
+
+        protected static bool AnalyticsEnabled()
+        {
+            return Sitecore.Configuration.Settings.GetBoolSetting("Analytics.Enabled", false) ||
+                   Sitecore.Configuration.Settings.GetBoolSetting("Xdb.Enabled", false);
         }
 
         /// <summary>
