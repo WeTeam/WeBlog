@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
@@ -58,6 +59,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected override void OnLoad(EventArgs e)
         {
             ImportOptionsPane.Visible = false;
+            Velocity.Init();
 
             this.DataContext.GetFromQueryString();
 
@@ -129,6 +131,10 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         {
             // Start job for index rebuild
             var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog");
+
+            // Init NVelocity before starting the job, in case something in the job uses it (creates items with a workflow that uses the Extended Email Action)
+            Velocity.Init();
+
             var job = JobManager.Start(options);
             job.Status.Total = 0;
             JobHandle = job.Handle.ToString();

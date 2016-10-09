@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Web.Http;
+using NVelocity.App;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
@@ -21,6 +22,10 @@ namespace Sitecore.Modules.WeBlog.Controllers
         public string ImportItems(WordPressImportData data)
         {
             var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog", new[] { data });
+
+            // Init NVelocity before starting the job, in case something in the job uses it (creates items with a workflow that uses the Extended Email Action)
+            Velocity.Init();
+
             var job = JobManager.Start(options);
             job.Status.Total = 0;
             return job.Handle.ToString();
