@@ -14,6 +14,14 @@
                 }
                 context.currentContext.argument = name;
                 Sitecore.ExperienceEditor.PipelinesUtil.generateRequestProcessor("ExperienceEditor.WeBlog.NewEntry", function (response) {
+                    var itemId = !response.responseValue.value ? null : response.responseValue.value.itemId;
+                    if (itemId == null || itemId.length <= 0) {
+                        response.context.aborted = true;
+                        return;
+                    }
+
+                    response.context.currentContext.itemId = itemId;
+                    response.context.app.refreshOnItem(response.context.currentContext);
                 }).execute(context);
             });
         }

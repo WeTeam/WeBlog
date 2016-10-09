@@ -22,7 +22,10 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
 
                 return new PipelineProcessorResponseValue
                 {
-                    Value = newItem.ID.Guid
+                    Value = new
+                    {
+                        itemId = newItem.ID.Guid
+                    }
                 };
             }
             return new PipelineProcessorResponseValue
