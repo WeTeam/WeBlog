@@ -1,8 +1,9 @@
-﻿@using Sitecore.Modules.WeBlog.Globalization
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.ShareEntryShareThis
 
 <div class="wb-entry-share wb-panel">
-    <h3>@Translator.Render("SHARE")</h3>
+    <h3>@Translator.Render("SHARE").ToHtmlString()</h3>
     <div class="wb-entries">
         <span class='st_facebook_hcount' displayText='Facebook'></span><span class='st_twitter_hcount' displayText='Tweet'></span><span class='st_sharethis_hcount' displayText='ShareThis'></span>
     </div>

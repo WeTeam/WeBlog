@@ -2,43 +2,40 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.SubmitCommentRenderingModel
 
+@{ Html.RenderPartial("~/Views/WeBlog/SubmitComment/CommentScroll.cshtml"); }
 <div class="wb-entry-add-comment wb-panel">
-	@if (Sitecore.Context.PageMode.IsExperienceEditorEditing || Sitecore.Context.PageMode.IsPreview) {
-		<strong>Submit Comment form disabled for editing/previewing</strong>
-	} else {
-		{ Html.RenderPartial("~/Views/WeBlog/SubmitComment/CommentScroll.cshtml"); }
-		<h3>@Translator.Render("ADD_COMMENT").ToHtmlString()</h3>
+    <h3>@Translator.Render("ADD_COMMENT").ToHtmlString()</h3>
 
-		using (Html.BeginForm()) {
-			@Html.ValidationSummary(true, Translator.Text("REQUIRED_FIELDS"), new { @class = "wb-error" })
+    @using (Html.BeginForm())
+    {
+        @Html.ValidationSummary(true, Translator.Text("REQUIRED_FIELDS"), new { @class = "wb-error" })
 
-			{ Html.RenderPartial("~/Views/WeBlog/SubmitComment/MessagePanel.cshtml"); }
+        { Html.RenderPartial("~/Views/WeBlog/SubmitComment/MessagePanel.cshtml"); }
 
-			<p>
-				@Html.LabelFor(m => m.UserName, Translator.Render("NAME"))
-				@Html.TextBoxFor(m => m.UserName, new { @class = "wb-textbox", width = 220 })
-				@Html.ValidationMessageFor(model => model.UserName, "*")
-			</p>
-			<p>
-				@Html.LabelFor(m => m.Email, Translator.Render("EMAIL"))
-				@Html.TextBoxFor(m => m.Email, new { @class = "wb-textbox", width = 220 })
-				@Html.ValidationMessageFor(model => model.UserName, "*")
-			</p>
-			<p>
-				@Html.LabelFor(m => m.Website, Translator.Render("WEBSITE"))
-				@Html.TextBoxFor(m => m.Website, new { @class = "wb-textbox", width = 220 })
-			</p>
-			<p>
-				@Html.LabelFor(m => m.Comment, Translator.Render("COMMENT"))
-				@Html.TextAreaFor(m => m.Comment, new { cols = "60", rows = "10" })
-				@Html.ValidationMessageFor(model => model.UserName, "*")
-			</p>
-			<p class="wb-comment-form-wrapper">
-				@Html.Sitecore().Placeholder("weblog-comment-form")
-			</p>
-			<p>
-				<input type="submit" value="@Translator.Text("POST")" />
-			</p>
-		}
-	}
+        <div>
+            <label>@Translator.Render("NAME").ToHtmlString()</label>
+            @Html.TextBoxFor(m => m.UserName, new { @class = "wb-textbox", width = 220 })
+            @Html.ValidationMessageFor(model => model.UserName, "*")
+        </div>
+        <div>
+            <label>@Translator.Render("EMAIL").ToHtmlString()</label>
+            @Html.TextBoxFor(m => m.Email, new { @class = "wb-textbox", width = 220 })
+            @Html.ValidationMessageFor(model => model.UserName, "*")
+        </div>
+        <div>
+            <label>@Translator.Render("WEBSITE").ToHtmlString()</label>
+            @Html.TextBoxFor(m => m.Website, new { @class = "wb-textbox", width = 220 })
+        </div>
+        <div>
+            <label>@Translator.Render("COMMENT").ToHtmlString()</label>
+            @Html.TextAreaFor(m => m.Comment, new { cols = "60", rows = "10" })
+            @Html.ValidationMessageFor(model => model.UserName, "*")
+        </div>
+        <div class="wb-comment-form-wrapper">
+            @Html.Sitecore().Placeholder("weblog-comment-form")
+        </div>
+        <div>
+            <input type="submit" value="@Translator.Text("POST").ToHtmlString()" />
+        </div>
+    }
 </div>
