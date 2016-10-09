@@ -54,14 +54,6 @@
       <HintPath>$(SitecorePath)\bin\HtmlAgilityPack.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Lucene.Net">
-      <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
       <HintPath>..\..\lib\MSCaptcha\v1.0\MSCaptcha.dll</HintPath>
     </Reference>
@@ -70,9 +62,6 @@
     </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
       <HintPath>..\..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
-    </Reference>
-    <Reference Include="Recaptcha">
-      <HintPath>..\..\lib\Recaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
@@ -104,11 +93,6 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Sitecore.NVelocity">
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
@@ -126,10 +110,6 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Services.Infrastructure.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Services.Infrastructure.Sitecore">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Services.Infrastructure.Sitecore.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -141,13 +121,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Http, Version=5.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\System.Web.Http.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=4.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\System.Web.Mvc.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
