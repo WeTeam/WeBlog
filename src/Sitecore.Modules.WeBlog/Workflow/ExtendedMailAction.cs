@@ -53,7 +53,14 @@ namespace Sitecore.Modules.WeBlog.Workflow
 
         public ExtendedMailAction()
         {
-            Velocity.Init();
+            try
+            {
+                Velocity.Init();
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.Message, ex, this);
+            }
         }
 
         /// <summary>
@@ -61,6 +68,10 @@ namespace Sitecore.Modules.WeBlog.Workflow
         /// </summary>
         public virtual void Process(WorkflowPipelineArgs args)
         {
+            if (velocityContext==null)
+            {
+                return;
+            }
             CreateContext(args);
             Item item = args.ProcessorItem.InnerItem;
             string to = ProcessFieldValue("To", item);
