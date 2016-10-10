@@ -12,6 +12,7 @@ using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
@@ -153,15 +154,15 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             var customBlogItem = (from templateId in Settings.BlogTemplateIds
-                where blog.TemplateIsOrBasedOn(templateId)
-                select (BlogHomeItem)blog).FirstOrDefault();
+                                  where blog.TemplateIsOrBasedOn(templateId)
+                                  select (BlogHomeItem)blog).FirstOrDefault();
 
             if (customBlogItem == null)
             {
                 customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                 let item = blog.FindAncestorByTemplate(templateId)
-                                 where item != null
-                                 select (BlogHomeItem)item).FirstOrDefault();
+                                  let item = blog.FindAncestorByTemplate(templateId)
+                                  where item != null
+                                  select (BlogHomeItem)item).FirstOrDefault();
             }
 
             if (customBlogItem == null)
@@ -290,6 +291,10 @@ namespace Sitecore.Modules.WeBlog.Managers
                     return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
                 }
             }
+            else
+            {
+                Logger.Warn("Sitecore.Analytics must be enabled to get popular entries by view.", this);
+            }
             return new EntryItem[0];
         }
 
@@ -342,7 +347,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var current = new EntryItem(Context.Item);
             return current;
         }
-        
+
         /// <summary>
         /// Gets the current context item as a blog entry
         /// </summary>
@@ -352,9 +357,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual EntryItem GetCurrentBlogEntry(Item item)
         {
             return (from templateId in Settings.EntryTemplateIds
-                let entryItem = item.FindAncestorByTemplate(templateId)
-                where entryItem != null
-                select new EntryItem(entryItem)).FirstOrDefault();
+                    let entryItem = item.FindAncestorByTemplate(templateId)
+                    where entryItem != null
+                    select new EntryItem(entryItem)).FirstOrDefault();
         }
 
         /// <summary>
@@ -533,9 +538,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual EntryItem[] MakeSortedEntriesList(IList array)
         {
             var entryList = (from Item item in array
-                where item.TemplateIsOrBasedOn(Settings.EntryTemplateIds)
-                && item.Versions.Count > 0
-                select new EntryItem(item)).ToList();
+                             where item.TemplateIsOrBasedOn(Settings.EntryTemplateIds)
+                             && item.Versions.Count > 0
+                             select new EntryItem(item)).ToList();
 
             entryList.Sort(new PostDateComparerDesc());
 

@@ -213,7 +213,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
-            var results = manager.GetBlogEntries(blog, 10, "blurr", null, null, null);            
+            var results = manager.GetBlogEntries(blog, 10, "blurr", null, null, null);
 
             Assert.That(results, Is.Empty);
         }
@@ -224,7 +224,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             var blog = TestUtil.CreateNewBlog(TestContentRoot);
             var categoryAlpha = TestUtil.CreateNewCategory(blog, "Alpha");
             var categoryBeta = TestUtil.CreateNewCategory(blog, "Beta");
-            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", categories: new [] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
             var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
             var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
             var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
@@ -540,7 +540,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             var entries = manager.GetPopularEntriesByView(blog, 1);
             var entryIds = from entry in entries select entry.ID;
 
-            Assert.That(entryIds, Is.EqualTo(new[] { entryLuna.ID } ));
+            Assert.That(entryIds, Is.EqualTo(new[] { entryLuna.ID }));
         }
 
         [Test]
@@ -569,7 +569,10 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
         private void VerifyAnalyticsSetup()
         {
-            Assert.True(Sitecore.Configuration.Settings.Analytics.Enabled, "Sitecore.Analytics must be enabled to test");
+            bool enabled = Sitecore.Configuration.Settings.GetBoolSetting("Analytics.Enabled", false)
+                || Sitecore.Configuration.Settings.GetBoolSetting("Xdb.Enabled", false);
+
+            Assert.True(enabled, "Sitecore.Analytics must be enabled to test");
         }
 
         private EntryManager CreateEntryManagerForAnalyticsTest(params ID[] popularEntryIdsInOrder)
@@ -612,7 +615,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 {
                     new DataColumn("Visits", typeof(long))
                 });
-            
+
                 dataTable.Rows.Add(visitCount);
                 visitCount--;
 
