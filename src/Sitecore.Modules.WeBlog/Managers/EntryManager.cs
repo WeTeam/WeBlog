@@ -12,6 +12,7 @@ using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
@@ -153,15 +154,15 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             var customBlogItem = (from templateId in Settings.BlogTemplateIds
-                where blog.TemplateIsOrBasedOn(templateId)
-                select (BlogHomeItem)blog).FirstOrDefault();
+                                  where blog.TemplateIsOrBasedOn(templateId)
+                                  select (BlogHomeItem)blog).FirstOrDefault();
 
             if (customBlogItem == null)
             {
                 customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                 let item = blog.FindAncestorByTemplate(templateId)
-                                 where item != null
-                                 select (BlogHomeItem)item).FirstOrDefault();
+                                  let item = blog.FindAncestorByTemplate(templateId)
+                                  where item != null
+                                  select (BlogHomeItem)item).FirstOrDefault();
             }
 
             if (customBlogItem == null)
@@ -254,24 +255,26 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>An array of EntryItem classes</returns>
         public virtual EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            var blogEntries = GetBlogEntries(blogItem);
-            var entryIds = (from entry in blogEntries select entry.ID).ToArray();
-
-            if (entryIds.Any())
+            if (AnalyticsEnabled())
             {
-                var views = new Dictionary<ID, long>();
+                var blogEntries = GetBlogEntries(blogItem);
+                var entryIds = (from entry in blogEntries select entry.ID).ToArray();
 
-                foreach (var id in entryIds)
+                if (entryIds.Any())
                 {
-#if FEATURE_XDB
-                    var query = new ItemVisitsQuery(this.ReportDataProvider)
+                    var views = new Dictionary<ID, long>();
+
+                    foreach (var id in entryIds)
                     {
-                        ItemId = id
-                    };
+#if FEATURE_XDB
+                        var query = new ItemVisitsQuery(this.ReportDataProvider)
+                        {
+                            ItemId = id
+                        };
 
-                    query.Execute();
+                        query.Execute();
 
-                    var itemViews = query.Visits;
+                        var itemViews = query.Visits;
 #elif FEATURE_DMS
                     var queryId = id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
                     var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
@@ -279,16 +282,26 @@ namespace Sitecore.Modules.WeBlog.Managers
                     var itemViews = DataAdapterManager.ReportingSql.ReadOne(sql, reader => DataAdapterManager.ReportingSql.GetLong(0, reader));
 #endif
 
-                    if (itemViews > 0)
-                        views.Add(id, itemViews);
+                        if (itemViews > 0)
+                            views.Add(id, itemViews);
+                    }
+
+                    var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
+
+                    return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
                 }
-
-                var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
-
-                return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
             }
             else
-                return new EntryItem[0];
+            {
+                Logger.Warn("Sitecore.Analytics must be enabled to get popular entries by view.", this);
+            }
+            return new EntryItem[0];
+        }
+
+        protected static bool AnalyticsEnabled()
+        {
+            return Sitecore.Configuration.Settings.GetBoolSetting("Analytics.Enabled", false) ||
+                   Sitecore.Configuration.Settings.GetBoolSetting("Xdb.Enabled", false);
         }
 
         /// <summary>
@@ -334,7 +347,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var current = new EntryItem(Context.Item);
             return current;
         }
-        
+
         /// <summary>
         /// Gets the current context item as a blog entry
         /// </summary>
@@ -344,9 +357,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual EntryItem GetCurrentBlogEntry(Item item)
         {
             return (from templateId in Settings.EntryTemplateIds
-                let entryItem = item.FindAncestorByTemplate(templateId)
-                where entryItem != null
-                select new EntryItem(entryItem)).FirstOrDefault();
+                    let entryItem = item.FindAncestorByTemplate(templateId)
+                    where entryItem != null
+                    select new EntryItem(entryItem)).FirstOrDefault();
         }
 
         /// <summary>
@@ -525,9 +538,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         public virtual EntryItem[] MakeSortedEntriesList(IList array)
         {
             var entryList = (from Item item in array
-                where item.TemplateIsOrBasedOn(Settings.EntryTemplateIds)
-                && item.Versions.Count > 0
-                select new EntryItem(item)).ToList();
+                             where item.TemplateIsOrBasedOn(Settings.EntryTemplateIds)
+                             && item.Versions.Count > 0
+                             select new EntryItem(item)).ToList();
 
             entryList.Sort(new PostDateComparerDesc());
 
