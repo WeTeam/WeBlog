@@ -10,7 +10,11 @@
             Sitecore.ExperienceEditor.PipelinesUtil.generateRequestProcessor("ExperienceEditor.WeBlog.GenerateFieldEditorUrl", function (response) {
                 var dialogUrl = response.responseValue.value;
                 var dialogFeatures = "dialogHeight: 680px;dialogWidth: 520px;";
-                Sitecore.ExperienceEditor.Dialogs.showModalDialog(dialogUrl, '', dialogFeatures, null);
+                Sitecore.ExperienceEditor.Dialogs.showModalDialog(dialogUrl, '', dialogFeatures, null, function (e) {
+                    if (e) {
+                        response.context.app.refreshOnItem(response.context.currentContext);
+                    }
+                });
             }).execute(context);
 
         }
