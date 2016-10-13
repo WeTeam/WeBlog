@@ -13,6 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.WeBlog.Mvc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.Modules.WeBlog.WebForms", "src\Sitecore.Modules.WeBlog.WebForms\Sitecore.Modules.WeBlog.WebForms.csproj", "{AB784291-5269-43FB-99CD-423979DD25A7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Properties", "Solution Properties", "{27B85B65-72B4-48DC-A6DC-E7D0C9225826}"
+	ProjectSection(SolutionItems) = preProject
+		src\SolutionInfo.cs = src\SolutionInfo.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug sc7.0|Any CPU = Debug sc7.0|Any CPU

@@ -134,6 +134,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
     <Compile Include="Caching\IWeBlogCache.cs" />
     <Compile Include="Caching\ProfanityFilterCache.cs" />
