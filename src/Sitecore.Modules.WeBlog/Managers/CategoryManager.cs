@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -6,6 +7,7 @@ using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -110,6 +112,12 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns></returns>
         public virtual CategoryItem Add(string categoryName, Item item)
         {
+            if (item == null)
+            {
+                Logger.Warn("Could not create a new category item because paremater 'item' was null", this);
+                return null;
+            }
+
             // Get all categories from current blog                
             var categories = GetCategories(item);
 
@@ -118,14 +126,17 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 var existingCategory = categories.Where(x => x.Title.Raw.CompareTo(categoryName) == 0);
                 if (existingCategory.Any())
+                {
                     return existingCategory.First();
+                }
             }
 
             // Category doesn't exist so create it
-            var categoryRoot = GetCategoryRoot(item);
+            var categoryRoot = GetCategoryRoot(item) ?? CreateCategoryRoot(item);
             if (categoryRoot == null)
             {
-                categoryRoot = CreateCategoryRoot(item);
+                Logger.Warn("New category item cannot be created. Could not find the category root item.", this);
+                return null;
             }
 
             CategoryItem newCategory = ItemManager.AddFromTemplate(categoryName, Settings.CategoryTemplateIds.First(), categoryRoot);
@@ -139,7 +150,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected virtual Item CreateCategoryRoot(Item item)
         {
             var blogHomeItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
-            return blogHomeItem.InnerItem.Add("Categories", new TemplateID(TemplateIDs.TemplateFolder));
+            return blogHomeItem?.InnerItem.Add("Categories", new TemplateID(TemplateIDs.TemplateFolder));
         }
 
         /// <summary>
