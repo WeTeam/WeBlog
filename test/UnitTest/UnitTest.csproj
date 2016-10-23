@@ -66,12 +66,18 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Sitecore.Buckets">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.ContentSearch">
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.ContentSearch.LuceneProvider">
+      <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.FakeDb, Version=1.1.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sitecore.FakeDb.1.1.1\lib\net45\Sitecore.FakeDb.dll</HintPath>
@@ -102,6 +108,7 @@
     <Compile Include="..\..\src\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Extensions\MockExtensions.cs" />
     <Compile Include="Managers\EntryManagerFixture.cs" />
     <Compile Include="Extensions\ItemExtensionsFixture.cs" />
     <Compile Include="Managers\BlogManagerFixture.cs" />
