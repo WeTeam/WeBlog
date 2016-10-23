@@ -1,7 +1,7 @@
 jQuery(function(){
 	jQuery("a.wb-year").click(function(){
 		var target = jQuery(this);
-		target.parent().find(".wb-month").toggleClass("collapsed");
+		target.parent().find("ul.wb-month").toggleClass("collapsed");
 		target.toggleClass("collapsed");
 		target.toggleClass("expanded");
 	});
