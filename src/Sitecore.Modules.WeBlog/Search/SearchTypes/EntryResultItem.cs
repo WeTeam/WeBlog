@@ -12,13 +12,13 @@ namespace Sitecore.Modules.WeBlog.Search.SearchTypes
       public string Category { get; set; }
 #else
         [IndexField("category")]
-        public ID[] Category { get; set; }
+        public virtual ID[] Category { get; set; }
 #endif
 
         [IndexField("tags")]
-        public string Tags { get; set; }
+        public virtual string Tags { get; set; }
 
         [IndexField("entry_date")]
-        public DateTime EntryDate { get; set; }
+        public virtual DateTime EntryDate { get; set; }
     }
 }
