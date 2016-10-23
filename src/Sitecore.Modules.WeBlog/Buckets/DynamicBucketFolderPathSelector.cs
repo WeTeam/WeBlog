@@ -48,8 +48,7 @@ namespace Sitecore.Modules.WeBlog.Buckets
                     }
                 }
             }
-
-            return string.Empty;
+            return new BucketFolderPathResolver().GetFolderPath(database, name, templateId, newItemId, parentItemId, creationDateOfNewItem);
         }
     }
 }
