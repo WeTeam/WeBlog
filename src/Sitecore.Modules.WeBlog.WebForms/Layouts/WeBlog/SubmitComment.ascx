@@ -43,9 +43,9 @@
         <asp:RequiredFieldValidator ID="rfvCommentText" runat="server" ErrorMessage="Comment" Text="*" ControlToValidate="txtCommentText"
             SetFocusOnError="true" EnableClientScript="true" ValidationGroup="weblog-comment"/>
     </p>
-    <p class="wb-comment-form-wrapper">
+    <div class="wb-comment-form-wrapper">
         <sc:PlaceHolder runat="server" key="weblog-comment-form" />
-    </p>
+    </div>
     <p>
         <asp:Button ID="buttonSaveComment" runat="server" Text="Post" onclick="buttonSaveComment_Click" CssClass="wb-submit" ValidationGroup="weblog-comment" />
     </p>
