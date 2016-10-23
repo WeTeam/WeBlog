@@ -8,7 +8,6 @@ name: Archive
 master: {00000000-0000-0000-0000-000000000000}
 template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
 templatekey: View rendering
-created: 20160713T143117:636040170778230000
 
 ----field----
 field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
@@ -32,6 +31,27 @@ content-length: 38
 
 {09DF97A9-2D05-4C9E-8A7F-55794FD98122}
 ----field----
+field: {3D08DB46-2267-41B0-BC52-BE69FD618633}
+name: Cacheable
+key: cacheable
+content-length: 1
+
+1
+----field----
+field: {F3E7E552-D7C8-469B-A150-69E4E14AB35C}
+name: ClearOnIndexUpdate
+key: clearonindexupdate
+content-length: 1
+
+1
+----field----
+field: {3AD2506A-DC39-4B1E-959F-9D524ADDBF50}
+name: VaryByParm
+key: varybyparm
+content-length: 1
+
+1
+----field----
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
@@ -41,7 +61,7 @@ content-length: 136
 ----version----
 language: en
 version: 1
-revision: e0d19060-16f9-44db-92bd-bbc24c598f50
+revision: 93c66d7f-ce23-4b7d-9675-3a8b5ee8c45f
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
@@ -63,14 +83,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e0d19060-16f9-44db-92bd-bbc24c598f50
+93c66d7f-ce23-4b7d-9675-3a8b5ee8c45f
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160811T180149Z
+20161023T112333Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

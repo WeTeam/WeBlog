@@ -8,7 +8,6 @@ name: TagCloud
 master: {00000000-0000-0000-0000-000000000000}
 template: {0A98E368-CDB9-4E1E-927C-8E0C24A003FB}
 templatekey: Sublayout
-created: 20160713T143118:636040170781730000
 
 ----field----
 field: {E28F0784-53EC-4B5C-803E-638FDB1EC15D}
@@ -39,6 +38,13 @@ content-length: 1
 
 1
 ----field----
+field: {F3E7E552-D7C8-469B-A150-69E4E14AB35C}
+name: ClearOnIndexUpdate
+key: clearonindexupdate
+content-length: 1
+
+1
+----field----
 field: {8B6D532B-6128-4486-A044-CA06D90948BA}
 name: VaryByData
 key: varybydata
@@ -62,7 +68,7 @@ content-length: 138
 ----version----
 language: en
 version: 1
-revision: e2b02e5a-419f-4c6d-a953-8ed266229972
+revision: dc9ec2ca-5bd7-4136-ac28-b02119774ab9
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
@@ -105,14 +111,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e2b02e5a-419f-4c6d-a953-8ed266229972
+dc9ec2ca-5bd7-4136-ac28-b02119774ab9
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160811T181118Z
+20161018T223150Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

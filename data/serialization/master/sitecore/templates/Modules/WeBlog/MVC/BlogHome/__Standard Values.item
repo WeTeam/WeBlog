@@ -8,7 +8,6 @@ name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {0AB5AAD6-6C0F-4F1E-AF20-37571248F7C4}
 templatekey: BlogHome
-created: 20160814T144654:636067828148030000
 
 ----field----
 field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
@@ -46,6 +45,13 @@ content-length: 38
 
 {BE9675B1-4951-4E11-B935-A698227B6A97}
 ----field----
+field: {A0CB3965-8884-4C7A-8815-B6B2E5CED162}
+name: __Editors
+key: __editors
+content-length: 38
+
+{59F53BBB-D1F5-4E38-8EBA-0D73109BB59B}
+----field----
 field: {1172F251-DAD4-4EFB-A329-0C63500E4F1E}
 name: __Masters
 key: __masters
@@ -62,7 +68,7 @@ content-length: 1371
 ----version----
 language: en
 version: 1
-revision: 83d81947-1c4c-46ea-97cc-a261f69b73c5
+revision: 49694249-21f5-4f8c-a61d-a1ac420064ea
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -112,14 +118,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-83d81947-1c4c-46ea-97cc-a261f69b73c5
+49694249-21f5-4f8c-a61d-a1ac420064ea
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160814T144715Z
+20161023T114419Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

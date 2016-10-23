@@ -8,7 +8,6 @@ name: RecentComments
 master: {00000000-0000-0000-0000-000000000000}
 template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
 templatekey: Controller rendering
-created: 20160713T143117:636040170778830000
 
 ----field----
 field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
@@ -25,6 +24,27 @@ content-length: 0
 
 
 ----field----
+field: {3D08DB46-2267-41B0-BC52-BE69FD618633}
+name: Cacheable
+key: cacheable
+content-length: 1
+
+1
+----field----
+field: {F3E7E552-D7C8-469B-A150-69E4E14AB35C}
+name: ClearOnIndexUpdate
+key: clearonindexupdate
+content-length: 1
+
+1
+----field----
+field: {3AD2506A-DC39-4B1E-959F-9D524ADDBF50}
+name: VaryByParm
+key: varybyparm
+content-length: 1
+
+1
+----field----
 field: {C7C26117-DBB1-42B2-AB5E-F7223845CCA3}
 name: __Thumbnail
 key: __thumbnail
@@ -34,7 +54,7 @@ content-length: 152
 ----version----
 language: en
 version: 1
-revision: 480fb8cc-f87d-485a-8100-27dbb3b2bd6c
+revision: 81d2666b-0925-4eee-be6f-b9f59dd32af2
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
@@ -56,14 +76,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-480fb8cc-f87d-485a-8100-27dbb3b2bd6c
+81d2666b-0925-4eee-be6f-b9f59dd32af2
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160811T180224Z
+20161023T112513Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

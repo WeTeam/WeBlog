@@ -8,8 +8,14 @@ name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {5FA92FF4-4AC2-48E2-92EB-E1E4914677B0}
 templatekey: BlogEntry
-created: 20160814T121451:636067736914670000
 
+----field----
+field: {C7815F60-96E1-40CB-BB06-B5F833F73B61}
+name: __Persistent Bucket Filter
+key: __persistent bucket filter
+content-length: 31
+
++custom:_templatename|blogentry
 ----field----
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
@@ -20,7 +26,7 @@ content-length: 1893
 ----version----
 language: en
 version: 1
-revision: ba5a2fe7-1b00-4224-86de-083b397571f4
+revision: e67573dc-7be3-4fe1-b311-d4df28519f94
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -35,14 +41,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-ba5a2fe7-1b00-4224-86de-083b397571f4
+e67573dc-7be3-4fe1-b311-d4df28519f94
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160814T145223Z
+20161023T114018Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
