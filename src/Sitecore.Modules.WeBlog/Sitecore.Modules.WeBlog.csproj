@@ -60,7 +60,7 @@
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5'))">
       <HintPath>..\..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0'))">
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.2'))">
       <HintPath>..\..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics">
@@ -260,7 +260,7 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0'))" />
     <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
-    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0'))" />
+    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.2'))" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
     <Compile Include="Pipelines\CreateComment\AkismetSpamCheck.cs" />
     <Compile Include="Pipelines\CreateComment\CreateCommentItem.cs" />
