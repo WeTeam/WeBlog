@@ -7,7 +7,9 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Tokenattributes;
 using Moq;
 using NUnit.Framework;
+#if FEATURE_XDB
 using Sitecore.Analytics.Reporting;
+#endif
 using Sitecore.Buckets.Util;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.LuceneProvider.Analyzers;
@@ -31,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetCurrentBlogEntry_Null()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
             var entry = manager.GetCurrentBlogEntry(null);
             Assert.That(entry, Is.Null);
         }
@@ -40,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetCurrentBlogEntry_ItemFromTemplate()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -62,7 +64,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             var entryTemplateId = ID.NewID;
 
             var settings = MockSettings(baseBaseTemplateId);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -89,7 +91,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetCurrentBlogEntry_ItemNotCorrectTemplate()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -107,7 +109,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void DeleteEntry_NullID()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db())
             {
@@ -122,7 +124,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void DeleteEntry_NullDatabase()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -137,7 +139,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void DeleteEntry_InvalidID()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -155,7 +157,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void DeleteEntry_ValidID()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -173,7 +175,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void DeleteEntry_UnauthorizedUser()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -199,8 +201,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_NullItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -237,8 +238,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_NoEntries()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -270,8 +270,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_WithEntries()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -313,8 +312,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_WithEntriesMultipleBlogs()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -364,8 +362,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_LimitedMultipleBlogs()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -416,8 +413,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_LimitEntries()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -458,8 +454,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_LimitEntriesZero()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -497,8 +492,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_LimitEntriesNegativeLimit()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -536,8 +530,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByTag()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -578,8 +571,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByTagWithSpace()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -620,8 +612,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByTagLimited()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -664,8 +655,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByInvalidTag()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -705,8 +695,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByCategory()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             ID alphaId = ID.NewID;
             ID betaId = ID.NewID;
@@ -761,8 +750,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByInvalidCategory()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             ID alphaId = ID.NewID;
             ID betaId = ID.NewID;
@@ -813,8 +801,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_ByCategoryLimited()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             ID alphaId = ID.NewID;
             ID betaId = ID.NewID;
@@ -867,8 +854,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_InDateRange()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -910,8 +896,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntries_InDateRangeLimited()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -953,8 +938,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntriesByMonthAndYear_BeforeEntries()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -993,8 +977,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntriesByMonthAndYear_WithinEntries()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1036,8 +1019,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntriesByMonthAndYear_LastMonth()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1079,8 +1061,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntriesByMonthAndYear_FirstMonth()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1122,8 +1103,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntriesByMonthAndYear_AfterEntries()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1162,8 +1142,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntriesByMonthAndYear_InvalidDate()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1202,8 +1181,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByComment_ValidItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1266,8 +1244,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByComment_ValidItem_Limited()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1329,8 +1306,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByComment_InvalidItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1391,8 +1367,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByComment_NullItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1437,8 +1412,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByView_ValidItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1483,8 +1457,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByView_ValidItem_Limited()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1527,8 +1500,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByView_InvalidItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1570,8 +1542,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByView_NullItem()
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1709,7 +1680,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntryByComment_NullItem()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
             var foundEntry = manager.GetBlogEntryByComment(null);
 
             Assert.That(foundEntry, Is.Null);
@@ -1719,7 +1690,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntryByComment_OnEntry()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -1743,7 +1714,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntryByComment_UnderEntry()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -1768,7 +1739,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetBlogEntryByComment_OutsideEntry()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new EntryManager(null, settings);
+            var manager = CreateManager(settings);
 
             using (var db = new Db
             {
@@ -1796,8 +1767,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         public void GetPopularEntriesByView_DifferentAnalyticsState(string settingName, string settingValue, int expected)
         {
             var settings = MockSettings(ID.NewID);
-            var dataProvider = MockDataProvider();
-            var manager = new EntryManager(dataProvider.Object, settings);
+            var manager = new TestableEntryManager(settings, 1);
 
             using (var db = new Db
             {
@@ -1844,7 +1814,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             }
         }
 
-        private Mock<ReportDataProviderBase> MockDataProvider()
+        /*private Mock<ReportDataProviderBase> MockDataProvider()
         {
             var dataProvider = new Mock<ReportDataProviderBase>();
             DataTable dt = new DataTable();
@@ -1856,7 +1826,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             dataProvider.Setup(b => b.GetData(It.IsAny<string>(), It.IsAny<ReportDataQuery>(), It.IsAny<CachingPolicy>()))
                 .Returns(new ReportDataResponse(() => dt));
             return dataProvider;
-        }
+        }*/
 
         private IWeBlogSettings MockSettings(params ID[] entryTemplateIds)
         {
@@ -1867,6 +1837,35 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 x.CommentTemplateIds == new[] { ID.NewID } &&
                 x.SearchIndexName == "WeBlog"
             );
+        }
+
+        private EntryManager CreateManager(IWeBlogSettings settings)
+        {
+#if FEATURE_XDB
+            return new EntryManager(null, settings);
+#else
+            return new EntryManager(settings);
+#endif
+        }
+    }
+
+    internal class TestableEntryManager : EntryManager
+    {
+        private long _viewCount = 0;
+
+        public TestableEntryManager(IWeBlogSettings settings, long viewCount)
+#if FEATURE_XDB
+            : base(null, settings)
+#else
+            : base(settings)
+#endif
+        {
+            _viewCount = viewCount;
+        }
+
+        protected override long GetItemViews(ID itemId)
+        {
+            return _viewCount;
         }
     }
 }

@@ -48,7 +48,11 @@ namespace Sitecore.Modules.WeBlog.Buckets
                     }
                 }
             }
+#if SC70
+            return new GuidFolderPath().GetFolderPath(newItemId, parentItemId, creationDateOfNewItem);
+#else
             return new BucketFolderPathResolver().GetFolderPath(database, name, templateId, newItemId, parentItemId, creationDateOfNewItem);
+#endif
         }
     }
 }

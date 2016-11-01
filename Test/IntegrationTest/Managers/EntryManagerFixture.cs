@@ -591,7 +591,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             {
                 for(var j = 0; j < hitCount; j++)
                 {
-                    visitor.CurrentVisit.CreatePage().ItemId = popularEntryIdsInOrder[i].ID.ToGuid();
+                    visitor.CurrentVisit.CreatePage().ItemId = popularEntryIdsInOrder[i].ToGuid();
                 }
                 hitCount++;
             }

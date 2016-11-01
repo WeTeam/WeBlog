@@ -9,9 +9,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 {
     public static class MockExtensions
     {
-        public static void IndexItems<T>(this Mock<ISearchIndex> index, IEnumerable<T> items)
+        public static void IndexItems<T>(this Mock<ISearchIndex> index, IEnumerable<T> items) where T : SearchResultItem
         {
-            var queryable = index.Object.CreateSearchContext()?.GetQueryable<T>();
+            var queryable = index.Object.CreateSearchContext().GetQueryable<T>();
             if (queryable != null && queryable.Any())
             {
                 items = items.ToList();

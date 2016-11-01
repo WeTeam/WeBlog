@@ -14,6 +14,7 @@ using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
+using Sitecore.StringExtensions;
 #if FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Analytics.Reporting;
@@ -201,12 +202,12 @@ namespace Sitecore.Modules.WeBlog.Managers
                         // If the category is unknown, don't return any results.
                         if (categoryItem == null)
                             return new EntryItem[0];
-#if SC70
+/*#if SC70
                         var normalizedID = Sitecore.ContentSearch.Utilities.IdHelper.NormalizeGuid(categoryItem.ID);
                         builder = builder.And(i => i.Category.Contains(normalizedID));
-#else
+#else*/
                         builder = builder.And(i => i.Category.Contains(categoryItem.ID));
-#endif
+//#endif
 
                     }
 
@@ -266,21 +267,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                     foreach (var id in entryIds)
                     {
-#if FEATURE_XDB
-                        var query = new ItemVisitsQuery(this.ReportDataProvider)
-                        {
-                            ItemId = id
-                        };
-
-                        query.Execute();
-
-                        var itemViews = query.Visits;
-#elif FEATURE_DMS
-                    var queryId = id.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-                    var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
-
-                    var itemViews = DataAdapterManager.ReportingSql.ReadOne(sql, reader => DataAdapterManager.ReportingSql.GetLong(0, reader));
-#endif
+                        var itemViews = GetItemViews(id);
 
                         if (itemViews > 0)
                             views.Add(id, itemViews);
@@ -333,6 +320,30 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return null;
 
             return commentItem.InnerItem.FindAncestorByAnyTemplate(Settings.EntryTemplateIds);
+        }
+
+        /// <summary>
+        /// Gets the number of views for the item given by ID.
+        /// </summary>
+        /// <param name="itemId">The ID of the item to get the views for.</param>
+        /// <returns>The number of views for the item.</returns>
+        protected virtual long GetItemViews(ID itemId)
+        {
+#if FEATURE_XDB
+                        var query = new ItemVisitsQuery(this.ReportDataProvider)
+                        {
+                            ItemId = itemId
+                        };
+
+                        query.Execute();
+
+                        return query.Visits;
+#elif FEATURE_DMS
+            var queryId = itemId.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
+            var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
+
+            return DataAdapterManager.ReportingSql.ReadOne(sql, reader => DataAdapterManager.ReportingSql.GetLong(0, reader));
+#endif
         }
 
         #region Deprecated

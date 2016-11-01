@@ -312,6 +312,22 @@ file.
       <Name>Devices</Name>
     </xitems>
     <files>
+      <Root>/layouts/WeBlog</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
+        </FileToEntryConverter>
+      </Converter>
       <Include>
         <FileNameFilter>
           <Pattern />
@@ -332,7 +348,9 @@ file.
       </Include>
       <Exclude />
       <Name>Layout files</Name>
-      <Root>/layouts/WeBlog</Root>
+    </files>
+    <files>
+      <Root>/sitecore modules/Web/WeBlog</Root>
       <Converter>
         <FileToEntryConverter>
           <Root>/</Root>
@@ -348,8 +366,6 @@ file.
           </Transforms>
         </FileToEntryConverter>
       </Converter>
-    </files>
-    <files>
       <Include>
         <FileNameFilter>
           <Pattern />
@@ -370,7 +386,9 @@ file.
       </Include>
       <Exclude />
       <Name>Sitecore modules files</Name>
-      <Root>/sitecore modules/Web/WeBlog</Root>
+    </files>
+    <files>
+      <Root>/sitecore/shell/Applications/WeBlog</Root>
       <Converter>
         <FileToEntryConverter>
           <Root>/</Root>
@@ -386,8 +404,6 @@ file.
           </Transforms>
         </FileToEntryConverter>
       </Converter>
-    </files>
-    <files>
       <Include>
         <FileNameFilter>
           <Pattern />
@@ -408,22 +424,6 @@ file.
       </Include>
       <Exclude />
       <Name>Applicaiton files</Name>
-      <Root>/sitecore/shell/Applications/WeBlog</Root>
-      <Converter>
-        <FileToEntryConverter>
-          <Root>/</Root>
-          <Transforms>
-            <InstallerConfigurationTransform>
-              <Options>
-                <BehaviourOptions>
-                  <ItemMode>Undefined</ItemMode>
-                  <ItemMergeMode>Undefined</ItemMergeMode>
-                </BehaviourOptions>
-              </Options>
-            </InstallerConfigurationTransform>
-          </Transforms>
-        </FileToEntryConverter>
-      </Converter>
     </files>
     <items>
       <Database>master</Database>
@@ -821,6 +821,13 @@ file.
       <Name>Model Definitions</Name>
     </items>
     <files>
+      <Root>/Views/WeBlog</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
       <Include>
         <FileNameFilter>
           <Pattern />
@@ -841,13 +848,6 @@ file.
       </Include>
       <Exclude />
       <Name>Views</Name>
-      <Root>/Views/WeBlog</Root>
-      <Converter>
-        <FileToEntryConverter>
-          <Root>/</Root>
-          <Transforms />
-        </FileToEntryConverter>
-      </Converter>
     </files>
     <items>
       <Database>master</Database>
@@ -898,6 +898,13 @@ file.
       <Name>Settings</Name>
     </items>
     <files>
+      <Root>/sitecore/shell/client/Applications/WeBlog</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
       <Include>
         <FileNameFilter>
           <Pattern />
@@ -918,13 +925,6 @@ file.
       </Include>
       <Exclude />
       <Name>Speak App - Files</Name>
-      <Root>/sitecore/shell/client/Applications/WeBlog</Root>
-      <Converter>
-        <FileToEntryConverter>
-          <Root>/</Root>
-          <Transforms />
-        </FileToEntryConverter>
-      </Converter>
     </files>
     <items>
       <Database>master</Database>
@@ -1022,6 +1022,35 @@ file.
       <Exclude />
       <Name>Sublayout Definitions</Name>
     </items>
+    <files>
+      <Root>/sitecore/shell/client/WeBlog</Root>
+      <Converter>
+        <FileToEntryConverter>
+          <Root>/</Root>
+          <Transforms />
+        </FileToEntryConverter>
+      </Converter>
+      <Include>
+        <FileNameFilter>
+          <Pattern />
+          <AcceptDirectories>False</AcceptDirectories>
+        </FileNameFilter>
+        <FileDateFilter>
+          <FilterType>CreatedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+        <FileDateFilter>
+          <FilterType>ModifiedFilter</FilterType>
+          <ActionDateTo />
+          <ActionDateFrom />
+          <NotOlderThan />
+        </FileDateFilter>
+      </Include>
+      <Exclude />
+      <Name>Speak files</Name>
+    </files>
   </Sources>
   <Converter>
     <TrivialConverter>

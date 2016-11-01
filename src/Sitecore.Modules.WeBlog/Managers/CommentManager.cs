@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using Sitecore.ContentSearch;
+#if !SC70
 using Sitecore.ContentSearch.Abstractions;
+#endif
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
@@ -207,7 +209,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             return new CommentItem[0];
         }
 
-        #region Deprecated
+#region Deprecated
         /// <summary>
         /// Gets the number of comments for the current entry.
         /// </summary>
@@ -309,6 +311,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             return Context.ContentDatabase ?? Context.Database;
         }
 
-        #endregion
+#endregion
     }
 }

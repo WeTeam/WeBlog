@@ -7,13 +7,13 @@ namespace Sitecore.Modules.WeBlog.Search.SearchTypes
 {
     public class EntryResultItem : SearchResultItem
     {
-#if SC70
+/*#if SC70
       [IndexField("category")]
       public string Category { get; set; }
-#else
+#else*/
         [IndexField("category")]
         public virtual ID[] Category { get; set; }
-#endif
+//#endif
 
         [IndexField("tags")]
         public virtual string Tags { get; set; }
