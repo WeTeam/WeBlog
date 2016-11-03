@@ -17,6 +17,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         {
             var blogHome = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
             EntryTagsCore = entryTagsCore ?? new EntryTagsCore(blogHome);
+            TagLinks = new Dictionary<string, string>();
         }
 
         public Dictionary<string, string> TagLinks { get; set; }

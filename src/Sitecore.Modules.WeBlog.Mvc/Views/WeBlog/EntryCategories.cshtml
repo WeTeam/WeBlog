@@ -2,16 +2,19 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.EntryCategories
 
-<div class="wb-entry-categories">
-    <h3>@Translator.Render("POSTED_IN").ToHtmlString()</h3>
-    <ul>
-        @foreach (var categoryItem in @Model.CategoryItems)
-        {
-            <li>
-                <a href="@categoryItem.GetUrl()">
-                    @Html.Sitecore().Field("Title", categoryItem)
-                </a>
-            </li>
-        }
-    </ul>
-</div>
+@if (Model.CategoryItems.Length > 0 || Sitecore.Context.PageMode.IsPageEditorEditing)
+{
+    <div class="wb-entry-categories">
+        <h3>@Translator.Render("POSTED_IN").ToHtmlString()</h3>
+        <ul>
+            @foreach (var categoryItem in @Model.CategoryItems)
+            {
+                <li>
+                    <a href="@categoryItem.GetUrl()">
+                        @Html.Sitecore().Field("Title", categoryItem)
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+}
