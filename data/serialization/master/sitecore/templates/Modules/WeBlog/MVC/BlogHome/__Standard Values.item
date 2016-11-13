@@ -62,16 +62,16 @@ content-length: 38
 field: {AC51462C-8A8D-493B-9492-34D1F26F20F1}
 name: __Default Bucket Query
 key: __default bucket query
-content-length: 0
+content-length: 63
 
-
+custom:_templatename|blogentry;custom:_templatename|blogcomment
 ----field----
 field: {C7815F60-96E1-40CB-BB06-B5F833F73B61}
 name: __Persistent Bucket Filter
 key: __persistent bucket filter
-content-length: 31
+content-length: 0
 
-+custom:_templatename|blogentry
+
 ----field----
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
@@ -82,7 +82,7 @@ content-length: 1485
 ----version----
 language: en
 version: 1
-revision: f919584d-9011-4421-b373-e8a19eace3a6
+revision: 6aba22dc-3fec-44d4-b5ea-37d34d80c31b
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -91,6 +91,13 @@ key: title
 content-length: 5
 
 $name
+----field----
+field: {DF7CAB47-015F-430F-8BAE-452A4D2D7A17}
+name: Theme
+key: theme
+content-length: 38
+
+{DF2362CA-3E46-4B35-A86F-EBF830B4A6CF}
 ----field----
 field: {BAD8E75C-BD7C-475A-A7B8-8B3600BAA26C}
 name: DisplayItemCount
@@ -139,14 +146,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-f919584d-9011-4421-b373-e8a19eace3a6
+6aba22dc-3fec-44d4-b5ea-37d34d80c31b
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20161108T215950Z
+20161113T224335Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

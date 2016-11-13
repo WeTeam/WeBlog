@@ -148,9 +148,7 @@
     <Content Include="App_Config\Include\WeBlog.Mvc.config">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Views\web.config">
-      <SubType>Designer</SubType>
-    </None>
+    <Content Include="Views\WeBlog\web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\Archive.cshtml" />
