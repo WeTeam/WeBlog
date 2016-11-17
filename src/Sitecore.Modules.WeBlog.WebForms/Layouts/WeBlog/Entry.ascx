@@ -6,7 +6,7 @@
 <article>
     <% if (ShowEntryTitle) { %>
         <h1>
-            <% if (!string.IsNullOrEmpty(CurrentEntry["title"]) || Sitecore.Context.PageMode.IsPageEditor) { %>
+            <% if (!string.IsNullOrEmpty(CurrentEntry["title"]) || IsPageEditing) { %>
                 <sc:Text ID="txtTitle" Field="Title" runat="server" />
             <% } else { %>
                 <%= CurrentEntry.Name %>
@@ -18,7 +18,7 @@
     </div>
     <% if (ShowEntryMetadata) { %>
         <div class="wb-details">
-            <% if(Sitecore.Context.PageMode.IsPageEditor) { %>
+            <% if(IsPageEditing) { %>
                 <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.Author.Rendered) %>
             <% } else { %>
                 <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.AuthorName) %>

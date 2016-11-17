@@ -2,12 +2,12 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.EntryTags
 
-@if (Model.TagLinks.Count > 0 || Sitecore.Context.PageMode.IsPageEditorEditing)
+@if (Model.TagLinks.Count > 0 || Model.IsPageEditing)
 {
     <div class="wb-entry-tags wb-panel">
         <h3>@Translator.Render("TAGS").ToHtmlString() </h3>
         <ul>
-            @if (Sitecore.Context.PageMode.IsPageEditorEditing)
+            @if (Model.IsPageEditing)
             {
                 @Html.Sitecore().Field("Tags")
             }

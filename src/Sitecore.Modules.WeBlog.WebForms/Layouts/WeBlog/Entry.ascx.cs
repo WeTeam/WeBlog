@@ -22,6 +22,19 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
         [TypeConverter(typeof(Converters.ExtendedBooleanConverter))]
         public bool ShowEntryIntroduction { get; set; }
 
+        public bool IsPageEditing
+        {
+            get
+            {
+                return
+#if !FEATURE_EXPERIENCE_EDITOR
+                    Sitecore.Context.PageMode.IsPageEditorEditing;
+#else
+                    Sitecore.Context.PageMode.IsExperienceEditorEditing;
+#endif
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Page.Title = CurrentEntry.Title.Text + " | " + CurrentBlog.Title.Text;

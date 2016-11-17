@@ -8,6 +8,19 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
     {
         public CategoryItem[] CategoryItems { get; set; }
 
+        public bool IsPageEditing
+        {
+            get
+            {
+                return
+#if !FEATURE_EXPERIENCE_EDITOR
+                    Context.PageMode.IsPageEditorEditing;
+#else
+                    Context.PageMode.IsExperienceEditorEditing;
+#endif
+            }
+        }
+
         public override void Initialize(Rendering rendering)
         {
             base.Initialize(rendering);

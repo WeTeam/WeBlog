@@ -2,7 +2,7 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.EntryCategories
 
-@if (Model.CategoryItems.Length > 0 || Sitecore.Context.PageMode.IsPageEditorEditing)
+@if (Model.CategoryItems.Length > 0 || Model.IsPageEditing)
 {
     <div class="wb-entry-categories">
         <h3>@Translator.Render("POSTED_IN").ToHtmlString()</h3>

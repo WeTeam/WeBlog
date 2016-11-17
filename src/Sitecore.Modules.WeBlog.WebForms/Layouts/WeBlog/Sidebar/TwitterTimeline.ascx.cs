@@ -15,6 +15,19 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
         public string Width { get; set; }
         public string Height { get; set; }
 
+        public bool IsPageEditing
+        {
+            get
+            {
+                return
+#if !FEATURE_EXPERIENCE_EDITOR
+                    Sitecore.Context.PageMode.IsPageEditor;
+#else
+                    Sitecore.Context.PageMode.IsExperienceEditor;
+#endif
+            }
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);

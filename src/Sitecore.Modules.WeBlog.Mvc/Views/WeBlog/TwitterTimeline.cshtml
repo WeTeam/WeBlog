@@ -11,7 +11,7 @@
        data-link-color="@Model.LinkColour"
        height="@Model.Height"
        width="@Model.Width">
-        @if (String.IsNullOrEmpty(Model.WidgetId) && Sitecore.Context.PageMode.IsPageEditor)
+        @if (String.IsNullOrEmpty(Model.WidgetId) && Model.IsPageEditing)
         {
             @:<b>WidgetId</b> parameter is missing.
         }

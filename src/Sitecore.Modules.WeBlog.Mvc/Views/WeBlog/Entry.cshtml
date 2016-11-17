@@ -11,7 +11,7 @@
     @if (Model.ShowEntryTitle)
     {
         <h1>
-            @if (Sitecore.Context.PageMode.IsPageEditor)
+            @if (Model.IsPageEditing)
             {
                 @Html.Sitecore().Field("Title")
             }
@@ -27,7 +27,7 @@
     @if (Model.ShowEntryMetadata)
     {
         <div class="wb-details">
-            @if (Sitecore.Context.PageMode.IsPageEditor)
+            @if (Model.IsPageEditing)
             {
                 @Translator.Format("ENTRY_DETAILS", Model.CurrentEntry.Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), Model.CurrentEntry.Author.Rendered).ToHtmlString()
             }

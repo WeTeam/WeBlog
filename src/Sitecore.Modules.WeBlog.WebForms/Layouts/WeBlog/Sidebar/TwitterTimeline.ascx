@@ -11,7 +11,7 @@
         data-link-color="<%= LinkColour%>"
         height="<%= Height%>"
         width="<%= Width%>">
-        <% if (String.IsNullOrEmpty(WidgetId) && Sitecore.Context.PageMode.IsPageEditor)
+        <% if (String.IsNullOrEmpty(WidgetId) && IsPageEditing)
             { %>
         <b>WidgetId</b> parameter is missing.
         <% } %>

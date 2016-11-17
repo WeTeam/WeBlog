@@ -14,6 +14,19 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         public string Width { get; set; }
         public string Height { get; set; }
 
+        public bool IsPageEditing
+        {
+            get
+            {
+                return
+#if !FEATURE_EXPERIENCE_EDITOR
+                    Context.PageMode.IsPageEditor;
+#else
+                    Context.PageMode.IsExperienceEditor;
+#endif
+            }
+        }
+
         public override void Initialize(Rendering rendering)
         {
             base.Initialize(rendering);
