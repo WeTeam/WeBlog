@@ -8,7 +8,15 @@ name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {161BB1EF-1C4B-486A-8A1B-3234D441EC74}
 templatekey: BlogHome
+created: 20161123T103212:636154939327830000
 
+----field----
+field: {0647CDEC-8D6F-4902-88AB-0334258EE812}
+name: Maximum Thumbnail Image Size
+key: maximum thumbnail image size
+content-length: 7
+
+150x150
 ----field----
 field: {D312103C-B36C-4CA5-864A-C85F9ABDA503}
 name: __Is Bucket
@@ -16,10 +24,17 @@ key: __is bucket
 content-length: 1
 
 1
+----field----
+field: {AC51462C-8A8D-493B-9492-34D1F26F20F1}
+name: __Default Bucket Query
+key: __default bucket query
+content-length: 81
+
+custom:_templatename|blogentry;custom:_templatename|blogcomment;sort:created date
 ----version----
 language: en
 version: 1
-revision: 3c336c49-cfc1-41b3-af51-cb7354f1e5d2
+revision: 74ff588d-26bf-4fcc-9431-4abc861b29fd
 
 ----field----
 field: {DF7CAB47-015F-430F-8BAE-452A4D2D7A17}
@@ -55,14 +70,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-3c336c49-cfc1-41b3-af51-cb7354f1e5d2
+74ff588d-26bf-4fcc-9431-4abc861b29fd
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 35
+content-length: 16
 
-20160320T121048:635940726481810235Z
+20161123T105626Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

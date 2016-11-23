@@ -8,6 +8,7 @@ name: __Standard Values
 master: {00000000-0000-0000-0000-000000000000}
 template: {0AB5AAD6-6C0F-4F1E-AF20-37571248F7C4}
 templatekey: BlogHome
+created: 20161123T103215:636154939357030000
 
 ----field----
 field: {77BA5A31-EB0E-47A4-A7B9-14D195C0B461}
@@ -59,13 +60,6 @@ content-length: 38
 
 {BE9675B1-4951-4E11-B935-A698227B6A97}
 ----field----
-field: {AC51462C-8A8D-493B-9492-34D1F26F20F1}
-name: __Default Bucket Query
-key: __default bucket query
-content-length: 63
-
-custom:_templatename|blogentry;custom:_templatename|blogcomment
-----field----
 field: {C7815F60-96E1-40CB-BB06-B5F833F73B61}
 name: __Persistent Bucket Filter
 key: __persistent bucket filter
@@ -82,7 +76,7 @@ content-length: 1485
 ----version----
 language: en
 version: 1
-revision: 6aba22dc-3fec-44d4-b5ea-37d34d80c31b
+revision: d4fd32b5-983f-4f89-b61b-fcd587549bc6
 
 ----field----
 field: {758CA141-3F6A-4806-A511-2953F5B54F3E}
@@ -146,14 +140,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-6aba22dc-3fec-44d4-b5ea-37d34d80c31b
+d4fd32b5-983f-4f89-b61b-fcd587549bc6
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20161113T224335Z
+20161123T105308Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
