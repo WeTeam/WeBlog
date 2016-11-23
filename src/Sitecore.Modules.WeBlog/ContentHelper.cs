@@ -124,7 +124,7 @@ namespace Sitecore.Modules.WeBlog
 		public static Database GetContentDatabase()
 		{
 			var site = Sitecore.Configuration.Factory.GetSite(Sitecore.Constants.ShellSiteName);
-			return site.ContentDatabase;
+			return site != null ? site.ContentDatabase : Context.Database;
 		}
 
 		public static string EscapePath(string path)

@@ -9,6 +9,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
+using Sitecore.Sites;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
 {

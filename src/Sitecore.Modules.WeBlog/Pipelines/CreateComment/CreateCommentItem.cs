@@ -46,51 +46,65 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 			if (entryItem != null)
 			{
 				var blogItem = BlogManager.GetCurrentBlog(entryItem);
-				if (blogItem != null)
-				{
-					var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
-					var itemName = ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}", GetDateTime().ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
-                    if (itemName.Length > 100)
-                    {
-                        itemName = itemName.Substring(0, 100);
-                    }
+			    if (blogItem != null)
+			    {
+			        var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
+			        var itemName =
+			            ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}",
+			                GetDateTime().ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));
+			        if (itemName.Length > 100)
+			        {
+			            itemName = itemName.Substring(0, 100);
+			        }
 
-					// verify the comment item name is unique for this entry
-                    var query = "fast:{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
+			        // verify the comment item name is unique for this entry
+			        var query = "fast:{0}//{1}".FormatWith(ContentHelper.EscapePath(entryItem.Paths.FullPath), itemName);
 
-					var num = 1;
-					var nondupItemName = itemName;
-					while (entryItem.Database.SelectSingleItem(query) != null)
-					{
-						nondupItemName = itemName + " " + num;
-						num++;
-						query = "fast:{0}//{1}".FormatWith(entryItem.Paths.FullPath, nondupItemName);
-					}
+			        var num = 1;
+			        var nondupItemName = itemName;
+			        while (entryItem.Database.SelectSingleItem(query) != null)
+			        {
+			            nondupItemName = itemName + " " + num;
+			            num++;
+			            query = "fast:{0}//{1}".FormatWith(entryItem.Paths.FullPath, nondupItemName);
+			        }
 
-					//need to emulate creation within shell site to ensure workflow is applied to comment
-					using (new SiteContextSwitcher(SiteContextFactory.GetSiteContext(Sitecore.Constants.ShellSiteName)))
-					{
-						using (new SecurityDisabler())
-						{
-							var newItem = entryItem.Add(nondupItemName, template);
+			        // need to create the comment within the shell site to ensure workflow is applied to comment
+			        var shellSite = SiteContextFactory.GetSiteContext(Sitecore.Constants.ShellSiteName);
+			        SiteContextSwitcher siteSwitcher = null;
 
-							var newComment = new CommentItem(newItem);
-							newComment.BeginEdit();
-							newComment.Name.Field.Value = args.Comment.AuthorName;
-							newComment.Email.Field.Value = args.Comment.AuthorEmail;
-							newComment.Comment.Field.Value = args.Comment.Text;
+			        try
+			        {
+			            if (shellSite != null)
+			            {
+			                siteSwitcher = new SiteContextSwitcher(shellSite);
+			            }
 
-							foreach (var entry in args.Comment.Fields)
-							{
-								newComment.InnerItem[entry.Key] = entry.Value;
-							}
+			            using (new SecurityDisabler())
+			            {
+			                var newItem = entryItem.Add(nondupItemName, template);
 
-							newComment.EndEdit();
+			                var newComment = new CommentItem(newItem);
+			                newComment.BeginEdit();
+			                newComment.Name.Field.Value = args.Comment.AuthorName;
+			                newComment.Email.Field.Value = args.Comment.AuthorEmail;
+			                newComment.Comment.Field.Value = args.Comment.Text;
 
-							args.CommentItem = newComment;
-						}
-					}
-				}
+			                foreach (var entry in args.Comment.Fields)
+			                {
+			                    newComment.InnerItem[entry.Key] = entry.Value;
+			                }
+
+			                newComment.EndEdit();
+
+			                args.CommentItem = newComment;
+			            }
+			        }
+			        finally
+			        {
+			            siteSwitcher?.Dispose();
+			        }
+			    }
 				else
 				{
 					var message = "Failed to find blog for entry {0}\r\nIgnoring comment: name='{1}', email='{2}', commentText='{3}'";
