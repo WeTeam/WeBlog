@@ -8,6 +8,7 @@ name: Theme Stylesheet
 master: {00000000-0000-0000-0000-000000000000}
 template: {E12AA8E5-D615-4014-916C-7E482CC4E83E}
 templatekey: Stylesheet
+created: 20161129T212958:636160517983830000
 
 ----field----
 field: {906C629F-E173-4B48-B415-32EB14474592}
@@ -16,10 +17,17 @@ key: url
 content-length: 53
 
 /sitecore modules/Web/WeBlog/Themes/Gryphon/style.css
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+150
 ----version----
 language: en
 version: 1
-revision: e1628e95-1d62-4210-bca4-484bbe7a31a3
+revision: 680d2300-42b1-49f3-a880-90c60933a44d
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +56,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-e1628e95-1d62-4210-bca4-484bbe7a31a3
+680d2300-42b1-49f3-a880-90c60933a44d
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 35
+content-length: 16
 
-20160310T111758:635932054781630778Z
+20161130T183944Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
