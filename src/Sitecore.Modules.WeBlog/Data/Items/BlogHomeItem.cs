@@ -12,10 +12,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class BlogHomeItem : CustomItem
     {
-
-        public static readonly string TemplateId = "{46663E05-A6B8-422A-8E13-36CD2B041278}";
-
-
         public BlogHomeItem(Item innerItem)
             : base(innerItem)
         {
@@ -50,12 +46,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         }
 
 
-        public CustomTextField TitleCategories
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["titleCategories"]); }
-        }
-
-
         public CustomLookupField DefinedEntryTemplate
         {
             get { return new CustomLookupField(InnerItem, InnerItem.Fields["Defined Entry Template"]); }
@@ -71,12 +61,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         public CustomCheckboxField EnableComments
         {
             get { return new CustomCheckboxField(InnerItem, InnerItem.Fields["Enable Comments"]); }
-        }
-
-
-        public CustomTextField TitleRecentComments
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["titleRecentComments"]); }
         }
 
 
@@ -98,12 +82,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         }
 
 
-        public CustomTextField TitleAdministration
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["titleAdministration"]); }
-        }
-
-
         public CustomTextField DisplayItemCount
         {
             get { return new CustomTextField(InnerItem, InnerItem.Fields["DisplayItemCount"]); }
@@ -113,12 +91,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         public CustomCheckboxField EnableLiveWriter
         {
             get { return new CustomCheckboxField(InnerItem, InnerItem.Fields["EnableLiveWriter"]); }
-        }
-
-
-        public CustomTextField TitleTagcloud
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["titleTagcloud"]); }
         }
 
 
@@ -134,27 +106,9 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         }
 
 
-        public CustomTextField TitleComments
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["titleComments"]); }
-        }
-
-
         public CustomTextField GravatarSize
         {
             get { return new CustomTextField(InnerItem, InnerItem.Fields["Gravatar Size"]); }
-        }
-
-
-        public CustomTextField MaximumGeneratedIntroductionCharacters
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["Maximum Generated Introduction Characters"]); }
-        }
-
-
-        public CustomTextField TitleAddYourComment
-        {
-            get { return new CustomTextField(InnerItem, InnerItem.Fields["titleAddYourComment"]); }
         }
 
 
@@ -203,16 +157,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             {
                 var count = 0;
                 Int32.TryParse(DisplayCommentSidebarCount.Raw, out count);
-                return count;
-            }
-        }
-
-        public int MaximumGeneratedIntroductionCharactersNumeric
-        {
-            get
-            {
-                var count = 0;
-                Int32.TryParse(MaximumGeneratedIntroductionCharacters.Raw, out count);
                 return count;
             }
         }
