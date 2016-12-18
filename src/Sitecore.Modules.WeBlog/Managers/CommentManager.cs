@@ -171,7 +171,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     List<CommentItem> result = new List<CommentItem>();
                     if (!string.IsNullOrEmpty(indexName))
                     {
-                        using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext())
+                        using (var context = ContentSearchManager.GetIndex(indexName + "-" + item.Database.Name).CreateSearchContext())
                         {
                             var indexresults = context.GetQueryable<CommentResultItem>().Where(x =>
                               x.Paths.Contains(item.ID) &&

@@ -158,6 +158,8 @@ file.
         <x-item>/App_Config/Include/WeBlog.Mvc.config</x-item>
         <x-item>/App_Config/Include/WeBlog.WebForms.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ExperienceEditor.config</x-item>
+        <x-item>/App_Config/Include/WeBlog.ContentSearch.Master.config</x-item>
+        <x-item>/App_Config/Include/WeBlog.ContentSearch.Web.config</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>

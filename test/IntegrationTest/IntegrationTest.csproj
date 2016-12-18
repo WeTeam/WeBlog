@@ -120,9 +120,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\zWeBlog.Test.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="App_Config\Include\zWeBlog.Test.ContentSearch.config" />
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +142,6 @@
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="App_Config\Include\zWeBlog.Test.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" />
     <CreateItem Include="$(OutDir)\*.dll">
       <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
@@ -153,8 +149,6 @@
     <CallTarget Targets="ContentSearchConfig" />
   </Target>
   <Target Name="ContentSearchConfig">
-    <!-- This patch file patches the older search config -->
-    <Delete Files="$(SitecorePath)\App_Config\Include\zWeBlog.Test.config" />
     <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" />
   </Target>
   <ProjectExtensions>

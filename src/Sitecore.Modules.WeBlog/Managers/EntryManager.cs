@@ -178,7 +178,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (!string.IsNullOrEmpty(indexName))
             {
 
-                using (var context = ContentSearchManager.GetIndex(indexName).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
+                using (var context = ContentSearchManager.GetIndex(indexName + "-" + blog.Database.Name).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
 

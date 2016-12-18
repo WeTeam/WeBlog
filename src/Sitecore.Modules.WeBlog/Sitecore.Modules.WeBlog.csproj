@@ -341,11 +341,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="sitecore modules\web\WeBlog\MetaBlogApi.ashx" />
     <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
   </ItemGroup>
@@ -369,6 +364,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Master.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
