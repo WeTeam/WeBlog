@@ -8,6 +8,7 @@ name: Theme Stylesheet
 master: {00000000-0000-0000-0000-000000000000}
 template: {E12AA8E5-D615-4014-916C-7E482CC4E83E}
 templatekey: Stylesheet
+created: 20161129T212959:636160517992930000
 
 ----field----
 field: {906C629F-E173-4B48-B415-32EB14474592}
@@ -16,10 +17,17 @@ key: url
 content-length: 50
 
 /sitecore modules/Web/WeBlog/Themes/Kirk/style.css
+----field----
+field: {BA3F86A2-4A1C-4D78-B63D-91C2779C1B5E}
+name: __Sortorder
+key: __sortorder
+content-length: 3
+
+150
 ----version----
 language: en
 version: 1
-revision: 92edcbd5-c1a6-4bdb-9e60-3615082ab34e
+revision: a3cc5e44-1892-42b1-a650-2255a4a08ba0
 
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
@@ -48,14 +56,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-92edcbd5-c1a6-4bdb-9e60-3615082ab34e
+a3cc5e44-1892-42b1-a650-2255a4a08ba0
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
-content-length: 35
+content-length: 16
 
-20160314T105023:635935494238541193Z
+20161130T184033Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

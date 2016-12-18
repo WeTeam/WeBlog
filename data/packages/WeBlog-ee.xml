@@ -15,7 +15,9 @@
 
 Create a Blog
 =============
-* Create a new blog using the Modules/WeBlog/Blog branch
+* Create a new blog using one of the following branches:
+    - 'Modules/WeBlog/Blog WebForms' for WebForms
+    - 'Modules/WeBlog/Blog MVC' for MVC
 
 Content Delivery Servers
 ========================
