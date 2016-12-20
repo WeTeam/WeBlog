@@ -13,20 +13,23 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
         public override PipelineProcessorResponseValue ProcessRequest()
         {
             var itemTitle = RequestContext.Argument;
-            var currentItem = RequestContext.Item;
-            var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
-            if (currentBlog != null)
+            if (ItemUtil.IsItemNameValid(itemTitle))
             {
-                var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
-                Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
-
-                return new PipelineProcessorResponseValue
+                var currentItem = RequestContext.Item;
+                var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
+                if (currentBlog != null)
                 {
-                    Value = new
+                    var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
+                    Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
+
+                    return new PipelineProcessorResponseValue
                     {
-                        itemId = newItem.ID.Guid
-                    }
-                };
+                        Value = new
+                        {
+                            itemId = newItem.ID.Guid
+                        }
+                    };
+                }
             }
             return new PipelineProcessorResponseValue
             {

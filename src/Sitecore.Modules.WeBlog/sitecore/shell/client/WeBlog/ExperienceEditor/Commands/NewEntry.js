@@ -8,8 +8,21 @@
             return Sitecore[key];
         },
         execute: function (context) {
-            Sitecore.ExperienceEditor.Dialogs.prompt("Enter the title of your new entry:", "", function (name) {
+            var url = "/sitecore/shell/default.aspx?xmlcontrol=Prompt";
+            var dialogArguments = {
+                defaultValue: "Entry",
+                header: "Create new entry",
+                maxLength: "100",
+                maxLengthValidatationText: "The length of the value is too long. Please specify a value of less than 100 characters.",
+                message: "Enter the title of your new entry:",
+                validation: "^[\\w\\*\\$][\\w\\s\\-\\$]*(\\(\\d{1,}\\)){0,1}$",
+                validationText: "'$Input' is not a valid name."
+            }
+            var features = "dialogWidth:400px;dialogHeight:190px;help:no;scroll:no;resizable:no;maximizable:no;status:no;center:yes;autoIncreaseHeight:yes";
+
+            Sitecore.ExperienceEditor.Dialogs.showModalDialog(url, dialogArguments, features, null, function (name) {
                 if (name == null) {
+                    response.context.aborted = true;
                     return;
                 }
                 context.currentContext.argument = name;
