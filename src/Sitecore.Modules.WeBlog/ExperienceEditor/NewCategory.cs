@@ -1,4 +1,5 @@
 ﻿using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.ExperienceEditor.Speak.Server.Contexts;
@@ -12,18 +13,21 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
         public override PipelineProcessorResponseValue ProcessRequest()
         {
             var itemTitle = RequestContext.Argument;
-            var currentItem = RequestContext.Item;
-            var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
-            if (currentBlog != null)
+            if (ItemUtil.IsItemNameValid(itemTitle))
             {
-                var template = new TemplateID(currentBlog.BlogSettings.CategoryTemplateID);
-                var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
-                var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
-
-                return new PipelineProcessorResponseValue
+                var currentItem = RequestContext.Item;
+                var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
+                if (currentBlog != null)
                 {
-                    Value = newItem.ID.Guid
-                };
+                    var template = new TemplateID(currentBlog.BlogSettings.CategoryTemplateID);
+                    var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
+                    var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
+
+                    return new PipelineProcessorResponseValue
+                    {
+                        Value = newItem.ID.Guid
+                    };
+                }
             }
             return new PipelineProcessorResponseValue
             {
