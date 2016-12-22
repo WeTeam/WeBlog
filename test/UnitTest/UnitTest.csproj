@@ -96,6 +96,7 @@
     <Compile Include="..\..\src\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="ContentHelper.cs" />
     <Compile Include="Extensions\MockExtensions.cs" />
     <Compile Include="Managers\EntryManagerFixture.cs" />
     <Compile Include="Extensions\ItemExtensionsFixture.cs" />
