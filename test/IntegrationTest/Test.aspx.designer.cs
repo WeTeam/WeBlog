@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Codeflood.Testing {
+namespace Sitecore.Modules.WeBlog.IntegrationTest.Testing {
     
     
     public partial class TestRunner {

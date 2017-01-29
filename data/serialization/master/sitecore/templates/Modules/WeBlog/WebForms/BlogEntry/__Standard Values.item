@@ -30,13 +30,6 @@ version: 1
 revision: a6f8fce6-2773-4ab8-8e17-6c6f3bcfee3e
 
 ----field----
-field: {04BF00DB-F5FB-41F7-8AB7-22408372A981}
-name: __Final Renderings
-key: __final renderings
-content-length: 208
-
-<r xmlns:p="p" xmlns:s="s" p:p="1"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"><r uid="{2682DE20-3A0B-4994-A15F-009E32CCA7F6}" s:id="{7174B8A3-4C4B-4F5A-B428-05EFB7FA6077}" s:ph="weblog-sidebar" /></d></r>
-----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
 key: __created

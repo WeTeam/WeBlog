@@ -82,7 +82,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest
         public static void UpdateIndex()
         {
             var settings = new WeBlogSettings();
-            var index = ContentSearchManager.GetIndex(settings.SearchIndexName);
+            var index = ContentSearchManager.GetIndex(settings.SearchIndexName + "-master");
             index.Rebuild();
         }
     }

@@ -29,6 +29,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest
     [TestFixture]
     public class EntryManagerFixture
     {
+        private const string IndexName = "WeBlog-master";
+
         [Test]
         public void GetCurrentBlogEntry_Null()
         {
@@ -229,7 +231,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -261,7 +263,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -303,7 +305,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -353,7 +355,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -404,7 +406,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -445,7 +447,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -483,7 +485,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -521,7 +523,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -562,7 +564,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -603,7 +605,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -646,7 +648,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -686,7 +688,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -741,7 +743,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -792,7 +794,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -845,7 +847,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -887,7 +889,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -929,7 +931,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -968,7 +970,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1010,7 +1012,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1052,7 +1054,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1094,7 +1096,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1133,7 +1135,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1172,7 +1174,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1235,7 +1237,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1297,7 +1299,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1358,7 +1360,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1403,7 +1405,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1448,7 +1450,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1491,7 +1493,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1533,7 +1535,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
@@ -1573,12 +1575,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
             }
         }
 
-        private Mock<ISearchIndex> MockIndex(string indexName = "WeBlog")
+        private Mock<ISearchIndex> MockIndex(string indexName = "WeBlog-master")
         {
             var index = new Mock<ISearchIndex>();
             ContentSearchManager.SearchConfiguration.Indexes.Add(indexName, index.Object);
@@ -1785,7 +1787,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     var blogItem = db.GetItem("/sitecore/content/blog");
                     var entry1 = db.GetItem("/sitecore/content/blog/2013/entry1");
                     var index = new Mock<ISearchIndex>();
-                    ContentSearchManager.SearchConfiguration.Indexes.Add("WeBlog", index.Object);
+                    ContentSearchManager.SearchConfiguration.Indexes.Add(IndexName, index.Object);
 
                     var srItem = new Mock<EntryResultItem>();
                     srItem.Setup(x => x.GetItem()).Returns(entry1);
@@ -1808,25 +1810,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 finally
                 {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove("WeBlog");
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
                 }
 
             }
         }
-
-        /*private Mock<ReportDataProviderBase> MockDataProvider()
-        {
-            var dataProvider = new Mock<ReportDataProviderBase>();
-            DataTable dt = new DataTable();
-            dt.Clear();
-            dt.Columns.Add("Visits", typeof(long));
-            DataRow row = dt.NewRow();
-            row["Visits"] = 1;
-            dt.Rows.Add(row);
-            dataProvider.Setup(b => b.GetData(It.IsAny<string>(), It.IsAny<ReportDataQuery>(), It.IsAny<CachingPolicy>()))
-                .Returns(new ReportDataResponse(() => dt));
-            return dataProvider;
-        }*/
 
         private IWeBlogSettings MockSettings(params ID[] entryTemplateIds)
         {

@@ -29,13 +29,6 @@ content-length: 5
 
 $name
 ----field----
-field: {04BF00DB-F5FB-41F7-8AB7-22408372A981}
-name: __Final Renderings
-key: __final renderings
-content-length: 411
-
-<r xmlns:p="p" xmlns:s="s" p:p="1"><d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}"><r uid="{15C610DB-138E-4ACF-91E4-31AA8E231070}" p:before="r[@uid='{2C93122A-AC9A-40F6-BA99-76D8977E4C40}']" s:ds="" s:id="{D9D6833D-F044-4204-B7C9-3912135E32EA}" s:par="Title&amp;MaximumCount=5&amp;VaryByBlog&amp;Mode=PageViews" s:ph="weblog-sidebar" /><r uid="{2C93122A-AC9A-40F6-BA99-76D8977E4C40}" p:before="*[1=2]" /></d></r>
-----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
 key: __owner

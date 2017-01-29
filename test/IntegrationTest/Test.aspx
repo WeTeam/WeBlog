@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Test.aspx.cs" Inherits="Codeflood.Testing.TestRunner" Buffer="false" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Test.aspx.cs" Inherits="Sitecore.Modules.WeBlog.IntegrationTest.Testing.TestRunner" Buffer="false" %>
 
 <!doctype html>
 

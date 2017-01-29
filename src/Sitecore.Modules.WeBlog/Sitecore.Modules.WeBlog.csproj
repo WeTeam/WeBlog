@@ -258,7 +258,7 @@
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0'))" />
+    <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0')) or $(Configuration.Contains('sc7.2'))" />
     <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
     <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.2'))" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
@@ -301,6 +301,12 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Master.SC70.xslt" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.xslt" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Web.SC70.xslt" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Web.SC72.xslt" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Master.SC72.xslt" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC72.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
     <Content Include="Change Log.txt" />
@@ -344,11 +350,6 @@
     <Content Include="sitecore modules\web\WeBlog\MetaBlogApi.ashx" />
     <Content Include="sitecore modules\web\WeBlog\rsd.ashx" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC70.config">
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_EXPERIENCE_EDITOR'))">
     <Content Include="App_Config\Include\WeBlog.ExperienceEditor.config" />
   </ItemGroup>
@@ -358,9 +359,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.SC72.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.cshtml" />
@@ -404,6 +402,8 @@
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
+    <CallTarget Targets="TransformContentSearchConfigs72" Condition="$(Configuration.Contains('sc7.2'))" />
+    <CallTarget Targets="TransformContentSearchConfigs70" Condition="$(Configuration.Contains('sc7.0'))" />
   </Target>
   <Target Name="DeployToWeb">
     <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
@@ -416,9 +416,6 @@
     </CreateItem>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
-    <!-- Replace version specific configs -->
-    <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC70.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC70'))" />
-    <Copy SourceFiles="App_Config\Include\WeBlog.ContentSearch.SC72.config" DestinationFiles="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" Condition="$(DefineConstants.Contains('SC72'))" />
     <!-- Process WordPress import application for Sitecore 8+ -->
     <Copy SourceFiles="sitecore\shell\Applications\WeBlog\WordpressImport.SC80.xml" DestinationFiles="$(SitecorePath)\sitecore\shell\Applications\WeBlog\WordpressImport.xml" Condition="$(DefineConstants.Contains('SC80'))" />
   </Target>
@@ -426,5 +423,15 @@
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
+  </Target>
+  <Target Name="TransformContentSearchConfigs72">
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.SC72.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Master.SC72.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Master.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Master.config" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Web.SC72.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Web.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Web.config" />
+  </Target>
+  <Target Name="TransformContentSearchConfigs70">
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.SC70.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Master.SC70.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Master.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Master.config" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Web.SC70.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Web.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Web.config" />
   </Target>
 </Project>
