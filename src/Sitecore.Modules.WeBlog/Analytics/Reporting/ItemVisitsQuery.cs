@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Sitecore.Analytics.Reporting;
+using Sitecore.Configuration;
 using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Analytics.Reporting
@@ -29,7 +30,7 @@ namespace Sitecore.Modules.WeBlog.Analytics.Reporting
         }
 #else
         {
-          _reportProvider = reportProvider ?? new ReportDataProvider();
+            _reportProvider = reportProvider ?? (ReportDataProviderBase)Factory.CreateObject("reporting/dataProvider", true);
         }
 #endif
 
