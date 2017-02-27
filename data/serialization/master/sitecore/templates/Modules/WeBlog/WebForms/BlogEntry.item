@@ -37,18 +37,6 @@ key: __sortorder
 content-length: 3
 
 150
-----field----
-field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
-name: __Renderings
-key: __renderings
-content-length: 425
-
-<?xml version="1.0" encoding="utf-16"?>
-<r xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <d id="{73966209-F1B6-43CA-853A-F1DB1C9A654B}" l="{A57C19C2-8EE3-4DEC-AA39-0B8D522D59EB}">
-    <r id="{86F838F5-7E87-45BB-876F-C021324AC8B0}" par="TitleField=Title&amp;BodyField=Introduction&amp;DateField=__Created" uid="{B0FBDE01-8FDC-4FE4-8755-1D4AA6BCF78A}" />
-  </d>
-</r>
 ----version----
 language: en
 version: 1

@@ -10,13 +10,6 @@ template: {F62B4CD7-754C-4461-810F-2B6BD2C92A0D}
 templatekey: Tab
 
 ----field----
-field: {C8503EF2-0FD2-43C2-BE3E-C08CBA915CC9}
-name: IsHidden
-key: ishidden
-content-length: 0
-
-
-----field----
 field: {DEAB3795-056F-4421-ADF0-758844461B72}
 name: Placeholder Name
 key: placeholder name

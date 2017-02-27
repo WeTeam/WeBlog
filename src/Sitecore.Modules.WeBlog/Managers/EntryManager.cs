@@ -223,7 +223,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     {
                         var itemResults = indexresults.Select(indexresult => indexresult.GetItem()).ToList();
                         result = itemResults.Where(item => item != null).Select(i => new EntryItem(i)).ToList();
-                        result = result.OrderByDescending(post => post.EntryDate.DateTime).ThenBy(post => post.Created).Take(maxNumber).ToList();
+                        result = result.OrderByDescending(post => post.EntryDate.DateTime).ThenByDescending(post => ((Item)post).Statistics.Created).Take(maxNumber).ToList();
                     }
                 }
             }
