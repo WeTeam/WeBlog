@@ -143,6 +143,8 @@
     <Compile Include="Caching\TranslatorCache.cs" />
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\SimpleCache.cs" />
+    <Compile Include="Components\IAuthorsCore.cs" />
+    <Compile Include="Components\AuthorsCore.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="Configuration\IWeBlogSettings.cs" />
     <Compile Include="Configuration\WeBlogSettings.cs" />

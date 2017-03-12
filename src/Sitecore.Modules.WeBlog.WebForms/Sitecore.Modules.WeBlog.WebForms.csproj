@@ -196,6 +196,13 @@
     <Compile Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx.designer.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Authors.ascx.cs">
+      <DependentUpon>Authors.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Authors.ascx.designer.cs">
+      <DependentUpon>Authors.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Layouts\WeBlog\Sidebar\Categories.ascx.cs">
       <DependentUpon>Categories.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -281,6 +288,7 @@
     <Content Include="Layouts\WeBlog\ShareEntry-ShareThis.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\Archive.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\Authors.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\Categories.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\FacebookLike.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\InterestingEntries.ascx" />
