@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Http;
 using NVelocity.App;
 using Sitecore.Configuration;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.Globalization;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Import.Providers;
@@ -42,8 +45,12 @@ namespace Sitecore.Modules.WeBlog.Controllers
 
             var templateMappingItem = db.GetItem(data.TemplateMappingItemId);
             var templatesMapping = new TemplatesMapping(templateMappingItem);
-            
-            var blogParent = db.GetItem(data.ParentId);
+
+            var defaultLanguageId = new ID("{AF584191-45C9-4201-8740-5409F4CF8BDD}");
+            var languageId = data.LanguageItemId ?? defaultLanguageId;
+            var languageItem = db.GetItem(languageId);
+
+            Item blogParent = db.GetItem(data.ParentId, LanguageManager.GetLanguage(languageItem.Name));
             if (blogParent != null)
             {
                 LogMessage("Creating blog", jobHandle);

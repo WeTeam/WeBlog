@@ -11,6 +11,10 @@
 
             <Literal Text="Author email:" GridPanel.NoWrap="true"/>
             <Edit ID="BlogEmail" Width="100%" GridPanel.Width="100%"/>
+
+              <Literal Text="Language:" GridPanel.NoWrap="true"/>
+              <TreePicker ID="LanguageSelector" DataContext="LanguageSelectorDataContext" SelectOnly="true" AllowNone="false" Width="100%"  Value="{AF584191-45C9-4201-8740-5409F4CF8BDD}" />
+              <DataContext ID="LanguageSelectorDataContext" DataViewName="Master" Root="{64C4F646-A3FA-4205-B98E-4DE2C609B60F}" />
           </GridPanel>
         </WizardFormPadding>
       </WizardFormPage>

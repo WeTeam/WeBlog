@@ -31,7 +31,7 @@ namespace Sitecore.Modules.WeBlog.Import
         }
 
         public BlogHomeItem CreateBlogRoot(Item root, string name, string email, ID blogRootTemplate)
-        {            
+        {
             BlogHomeItem blogItem = root.Add(ItemUtil.ProposeValidItemName(name), new TemplateID(blogRootTemplate));
 
             blogItem.BeginEdit();
@@ -85,8 +85,8 @@ namespace Sitecore.Modules.WeBlog.Import
 
                     foreach (WpComment wpComment in post.Comments)
                     {
-                        var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment);
-                        var comment = entry.Database.GetItem(commentId);
+                        var commentId = ManagerFactory.CommentManagerInstance.AddCommentToEntry(entry.ID, wpComment, blogItem.Language);
+                        var comment = entry.Database.GetItem(commentId, blogItem.Language);
                         comment?.ChangeTemplate(comment.Database.GetItem(mapping.BlogCommentTemplate));
 
                         summary.CommentCount++;
