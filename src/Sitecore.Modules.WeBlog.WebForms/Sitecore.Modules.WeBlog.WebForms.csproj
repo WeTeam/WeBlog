@@ -126,6 +126,13 @@
     <Compile Include="Layouts\WeBlog\EntryCategories.ascx.designer.cs">
       <DependentUpon>EntryCategories.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Layouts\WeBlog\EntryNavigation.ascx.cs">
+      <DependentUpon>EntryNavigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\EntryNavigation.ascx.designer.cs">
+      <DependentUpon>EntryNavigation.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Layouts\WeBlog\EntryTags.ascx.cs">
       <DependentUpon>EntryTags.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -270,6 +277,7 @@
     <Content Include="Layouts\WeBlog\CommentsList.ascx" />
     <Content Include="Layouts\WeBlog\Entry.ascx" />
     <Content Include="Layouts\WeBlog\EntryCategories.ascx" />
+    <Content Include="Layouts\WeBlog\EntryNavigation.ascx" />
     <Content Include="Layouts\WeBlog\EntryTags.ascx" />
     <Content Include="Layouts\WeBlog\FacebookComments.ascx" />
     <Content Include="Layouts\WeBlog\Layout.aspx" />

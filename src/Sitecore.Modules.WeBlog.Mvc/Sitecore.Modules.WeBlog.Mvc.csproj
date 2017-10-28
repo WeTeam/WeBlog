@@ -123,6 +123,7 @@
     <Compile Include="Model\Feeds.cs" />
     <Compile Include="Model\InterestingEntries.cs" />
     <Compile Include="Model\PostList.cs" />
+    <Compile Include="Model\EntryNavigation.cs" />
     <Compile Include="Model\PostListEntry.cs" />
     <Compile Include="Model\RecentCommentsRenderingModel.cs" />
     <Compile Include="Model\ShareEntryAddThis.cs" />
@@ -232,6 +233,7 @@
     <Content Include="Views\WeBlog\TwitterTimeline.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Views\WeBlog\EntryNavigation.cshtml" />
     <None Include="Views\WeBlog\SubmitComment\web.config">
       <SubType>Designer</SubType>
     </None>

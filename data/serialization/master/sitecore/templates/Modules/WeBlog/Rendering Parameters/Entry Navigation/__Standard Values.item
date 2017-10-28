@@ -1,0 +1,59 @@
+----item----
+version: 1
+id: {4B516895-5785-444E-970F-4432CBFD7CA1}
+database: master
+path: /sitecore/templates/Modules/WeBlog/Rendering Parameters/Entry Navigation/__Standard Values
+parent: {D4EF9E80-B8F1-4126-A68F-8F943C5CE190}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {D4EF9E80-B8F1-4126-A68F-8F943C5CE190}
+templatekey: Entry Navigation
+created: 20171028T223701Z
+
+----field----
+field: {3094D236-5985-4C4F-AE6A-E30740885532}
+name: Caching
+key: caching
+content-length: 15
+
+0|0|0|0|0|0|0|0
+----version----
+language: en
+version: 1
+revision: 39a92487-6f73-4928-9db6-9dc1bce9ec68
+
+----field----
+field: {2EE9FF80-2D3A-4E80-A220-6E3313AEC416}
+name: ShowTitle
+key: showtitle
+content-length: 1
+
+1
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20171028T223701Z
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+39a92487-6f73-4928-9db6-9dc1bce9ec68
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20171028T232605Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\admin
