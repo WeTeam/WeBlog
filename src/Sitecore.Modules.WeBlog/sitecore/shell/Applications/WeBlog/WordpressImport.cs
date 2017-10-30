@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NVelocity.App;
 using Sitecore.Data;
@@ -74,6 +75,11 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             if (page == "Settings")
             {
                 return ValidateSettings();
+            }
+
+            if (page == "Import")
+            {
+                return ValidateFile();
             }
 
             return base.ActivePageChanging(page, ref newpage);
@@ -263,9 +269,27 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 Context.ClientPage.ClientResponse.Alert("Both name and email are required");
                 return false;
             }
+
             if (string.IsNullOrEmpty(LanguageSelector.Value) || LanguageSelector.Value.Equals("{64C4F646-A3FA-4205-B98E-4DE2C609B60F}"))
             {
                 Context.ClientPage.ClientResponse.Alert("Please select language");
+                return false;
+            }
+            
+            return true;
+        }
+
+        protected virtual bool ValidateFile()
+        {
+            if (String.IsNullOrEmpty(WordpressXmlFile.Value))
+            {
+                Context.ClientPage.ClientResponse.Alert("Please select file to import");
+                return false;
+            }
+            var filePath = Path.Combine(Sitecore.Configuration.Settings.PackagePath, WordpressXmlFile.Value);
+            if (!File.Exists(filePath))
+            {
+                Context.ClientPage.ClientResponse.Alert("File could not be found.");
                 return false;
             }
             return true;

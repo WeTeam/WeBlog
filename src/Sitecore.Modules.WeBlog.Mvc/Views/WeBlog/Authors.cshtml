@@ -1,0 +1,18 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Mvc.Model.Authors
+
+@if (Model.AuthorsList.Any())
+{
+    <div class="wb-authors wb-panel">
+        <h3>@Translator.Render("AUTHORS").ToHtmlString()</h3>
+        <ul>
+            @foreach (var author in Model.AuthorsList)
+            {
+                <li>
+                    <a href="@Model.AuthorsCore.GetAuthorUrl(author)">@author</a>
+                </li>
+            }
+        </ul>
+    </div>
+}
