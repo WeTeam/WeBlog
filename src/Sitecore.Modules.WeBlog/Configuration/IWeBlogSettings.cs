@@ -158,5 +158,10 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// Indicates whether to use the comment service or not.
         /// </summary>
         bool CommentServiceEnabled { get;  }
+
+        /// <summary>
+        /// Maximum number of proposed tags returned in WeBlog Tags field
+        /// </summary>
+        int TagFieldMaxItemCount { get; }
     }
 }

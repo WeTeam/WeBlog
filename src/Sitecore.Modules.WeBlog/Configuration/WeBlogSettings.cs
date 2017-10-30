@@ -287,5 +287,10 @@ namespace Sitecore.Modules.WeBlog.Configuration
         {
             get { return Sitecore.Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false); }
         }
+
+        public int TagFieldMaxItemCount
+        {
+            get { return System.Convert.ToInt32(Sitecore.Configuration.Settings.GetSetting("WeBlog.TagsField.MaxItemsCount", "20")); }
+        }
     }
 }
