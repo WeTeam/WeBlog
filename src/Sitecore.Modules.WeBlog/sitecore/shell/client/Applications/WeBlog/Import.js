@@ -16,6 +16,7 @@
 
             this.Uploader.on("change:totalFiles", this.addedFile, this);
             this.TemplateMappingItem.on("change:selectedItemId", this.templateMappingItemSelected, this);
+            this.LanguageSelector.on("change:selectedItemId", this.languageItemSelected, this);
             this.on("upload-info-deleted", this.removedFile, this);
             this.on("upload-fileUploaded", this.uploadedFile, this);
         },
@@ -25,6 +26,16 @@
                 this.TemplatesMappingButton.viewModel.show();
             } else {
                 this.TemplatesMappingButton.viewModel.hide();
+            }
+        },
+
+        languageItemSelected: function () {
+            var selectedItemId = this.LanguageSelector.viewModel.selectedItemId();
+            this.updateDatasource(this, { LanguageItemId: selectedItemId });
+            if (selectedItemId === "{64C4F646-A3FA-4205-B98E-4DE2C609B60F}") {
+                this.btnImport.viewModel.hide();
+            } else {
+                this.btnImport.viewModel.show();
             }
         },
 
