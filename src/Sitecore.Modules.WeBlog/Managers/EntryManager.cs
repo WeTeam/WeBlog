@@ -269,7 +269,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     {
                         var itemViews = GetItemViews(id);
 
-                        if (itemViews > 0)
+                        if (itemViews > 0 && !views.ContainsKey(id))
                             views.Add(id, itemViews);
                     }
 

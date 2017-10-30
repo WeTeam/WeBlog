@@ -145,6 +145,8 @@
     <Compile Include="Caching\SimpleCache.cs" />
     <Compile Include="Components\IAuthorsCore.cs" />
     <Compile Include="Components\AuthorsCore.cs" />
+    <Compile Include="Fields\TagField.cs" />
+    <Compile Include="Pipelines\RenderContentEditor\InjectTagFieldAssets.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="Configuration\IWeBlogSettings.cs" />
     <Compile Include="Configuration\WeBlogSettings.cs" />
@@ -323,6 +325,11 @@
     <Content Include="sitecore modules\web\WeBlog\Includes\jquery.tagger.uncompressed.js" />
     <Content Include="sitecore modules\web\WeBlog\Includes\jquery.url.js" />
     <Content Include="sitecore modules\web\WeBlog\Includes\RichText.js" />
+    <Content Include="sitecore modules\web\WeBlog\TagField\chosen-sprite.png" />
+    <Content Include="sitecore modules\web\WeBlog\TagField\chosen.jquery.js" />
+    <Content Include="sitecore modules\web\WeBlog\TagField\chosen.min.css" />
+    <Content Include="sitecore modules\web\WeBlog\TagField\tagfield.css" />
+    <Content Include="sitecore modules\web\WeBlog\TagField\tagField.js" />
     <Content Include="sitecore modules\web\WeBlog\Themes\Blue.css" />
     <Content Include="sitecore modules\web\WeBlog\Themes\Green.css" />
     <Content Include="sitecore modules\web\WeBlog\Themes\Red.css" />
