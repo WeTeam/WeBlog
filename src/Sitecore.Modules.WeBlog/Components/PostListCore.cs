@@ -4,9 +4,10 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
 using Sitecore.Data.Items;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
 
@@ -14,13 +15,15 @@ namespace Sitecore.Modules.WeBlog.Components
 {
     public class PostListCore : IPostListCore
     {
-        protected IEnumerable<EntryItem> entries;
+        protected IEnumerable<EntryItem> _entries;
 
         protected IWeBlogSettings Settings = null;
 
         protected BlogHomeItem CurrentBlog { get; set; }
 
         protected NameValueCollection QueryString { get; set; }
+
+        public IAuthorsCore AuthorsCore { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of entries to show
@@ -34,35 +37,33 @@ namespace Sitecore.Modules.WeBlog.Components
 
         public bool ShowViewMoreLink
         {
-            get { return (StartIndex + TotalToShow) < entries.Count(); }
+            get { return (StartIndex + TotalToShow) < _entries.Count(); }
         }
 
         public IEnumerable<EntryItem> Entries
         {
             get
             {
-                if (entries == null)
+                if (_entries == null)
                 {
-                    entries = GetEntries();
+                    _entries = GetEntries();
                 }
-                return TotalToShow == 0 ? entries.Skip(StartIndex) : entries.Skip(StartIndex).Take(TotalToShow);
+                return TotalToShow == 0 ? _entries.Skip(StartIndex) : _entries.Skip(StartIndex).Take(TotalToShow);
             }
         }
 
-        public string ViewMoreHref
-        {
-            get { return BuildViewMoreHref(); }
-        }
+        public string ViewMoreHref => BuildViewMoreHref();
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="currentBlog">The blog being listed.</param>
         /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
-        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null)
+        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null)
         {
             CurrentBlog = currentBlog;
             Settings = settings ?? new WeBlogSettings();
+            AuthorsCore = authorsCore ?? new AuthorsCore(CurrentBlog);
         }
 
         public virtual void Initialize(NameValueCollection queryString)
@@ -79,9 +80,16 @@ namespace Sitecore.Modules.WeBlog.Components
             IEnumerable<EntryItem> entries;
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
+            var author = QueryString["author"];
             if (!string.IsNullOrEmpty(tag))
             {
                 entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, tag, null, null, null);
+            }
+            else if (author != null)
+            {
+                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog)
+                    .GroupBy(item => AuthorsCore.GetUserFullName(item))
+                    .FirstOrDefault(items => AuthorsCore.GetAuthorIdentity(items.Key) == author);
             }
             else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
             {
@@ -104,14 +112,15 @@ namespace Sitecore.Modules.WeBlog.Components
             {
                 entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog);
             }
-            return entries;
+            return entries ?? new EntryItem[0];
         }
 
         protected virtual string BuildViewMoreHref()
         {
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
-            string blogUrl = Links.LinkManager.GetItemUrl(Context.Item);
+            var author = QueryString["author"];
+            string blogUrl = LinkManager.GetItemUrl(Context.Item);
             var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayItemCountNumeric);
             if (tag != null)
             {
@@ -120,6 +129,11 @@ namespace Sitecore.Modules.WeBlog.Components
             if (sort != null)
             {
                 viewMoreHref += "&sort=" + HttpUtility.UrlEncode(sort);
+            }
+
+            if (author != null)
+            {
+                viewMoreHref += "&author=" + HttpUtility.UrlEncode(author);
             }
             return viewMoreHref;
         }

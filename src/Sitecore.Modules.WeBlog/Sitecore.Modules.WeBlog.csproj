@@ -143,6 +143,8 @@
     <Compile Include="Caching\TranslatorCache.cs" />
     <Compile Include="Caching\CacheManager.cs" />
     <Compile Include="Caching\SimpleCache.cs" />
+    <Compile Include="Components\IAuthorsCore.cs" />
+    <Compile Include="Components\AuthorsCore.cs" />
     <Compile Include="Fields\TagField.cs" />
     <Compile Include="Pipelines\RenderContentEditor\InjectTagFieldAssets.cs" />
     <Compile Include="Templates.cs" />
