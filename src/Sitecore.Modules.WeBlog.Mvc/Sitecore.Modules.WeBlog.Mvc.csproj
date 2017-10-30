@@ -122,6 +122,7 @@
     <Compile Include="Model\FacebookLike.cs" />
     <Compile Include="Model\Feeds.cs" />
     <Compile Include="Model\InterestingEntries.cs" />
+    <Compile Include="Model\Authors.cs" />
     <Compile Include="Model\PostList.cs" />
     <Compile Include="Model\EntryNavigation.cs" />
     <Compile Include="Model\PostListEntry.cs" />
@@ -234,6 +235,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\WeBlog\EntryNavigation.cshtml" />
+    <Content Include="Views\WeBlog\Authors.cshtml" />
     <None Include="Views\WeBlog\SubmitComment\web.config">
       <SubType>Designer</SubType>
     </None>

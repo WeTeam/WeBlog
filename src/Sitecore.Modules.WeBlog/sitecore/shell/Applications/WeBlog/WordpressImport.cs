@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Data.Managers;
 using Sitecore.Diagnostics;
+using Sitecore.Globalization;
 using Sitecore.Jobs;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -45,6 +48,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected Border SuccessMessage;
         protected Border ErrorMessage;
         protected TreePicker TemplatesMapping;
+        protected TreePicker LanguageSelector;
 
         protected Database db = ContentHelper.GetContentDatabase();
         #endregion
@@ -71,6 +75,11 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             if (page == "Settings")
             {
                 return ValidateSettings();
+            }
+
+            if (page == "Import")
+            {
+                return ValidateFile();
             }
 
             return base.ActivePageChanging(page, ref newpage);
@@ -152,12 +161,13 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 IncludeTags = ImportTags.Checked
             };
 
-            string fileLocation = String.Format("{0}\\{1}", ApplicationContext.PackagePath, WordpressXmlFile.Value);
+            string fileLocation = $"{ApplicationContext.PackagePath}\\{WordpressXmlFile.Value}";
             LogMessage("Reading import file");
             var importManager = new WpImportManager(db, new FileBasedProvider(fileLocation), options);
 
             LogMessage("Creating blog");
-            Item root = db.GetItem(litSummaryPath.Text);
+
+            var root = GetRootItem();
             if (root != null)
             {
                 var templateMappingItem = root.Database.GetItem(new ID(TemplatesMapping.Value));
@@ -179,6 +189,14 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             }
 
             return null;
+        }
+
+        protected virtual Item GetRootItem()
+        {
+            var defaultLanguageId = new ID("{AF584191-45C9-4201-8740-5409F4CF8BDD}");
+            var languageId = LanguageSelector.Value.IsNullOrEmpty() ? defaultLanguageId : new ID(LanguageSelector.Value);
+            var languageItem = db.GetItem(languageId);
+            return db.GetItem(litSummaryPath.Text, LanguageManager.GetLanguage(languageItem.Name));
         }
 
         protected void CheckStatus()
@@ -252,6 +270,28 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 return false;
             }
 
+            if (string.IsNullOrEmpty(LanguageSelector.Value) || LanguageSelector.Value.Equals("{64C4F646-A3FA-4205-B98E-4DE2C609B60F}"))
+            {
+                Context.ClientPage.ClientResponse.Alert("Please select language");
+                return false;
+            }
+            
+            return true;
+        }
+
+        protected virtual bool ValidateFile()
+        {
+            if (String.IsNullOrEmpty(WordpressXmlFile.Value))
+            {
+                Context.ClientPage.ClientResponse.Alert("Please select file to import");
+                return false;
+            }
+            var filePath = Path.Combine(Sitecore.Configuration.Settings.PackagePath, WordpressXmlFile.Value);
+            if (!File.Exists(filePath))
+            {
+                Context.ClientPage.ClientResponse.Alert("File could not be found.");
+                return false;
+            }
             return true;
         }
 

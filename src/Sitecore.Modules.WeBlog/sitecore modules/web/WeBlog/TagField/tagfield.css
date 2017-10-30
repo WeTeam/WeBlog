@@ -1,0 +1,25 @@
+﻿.hidden {
+    display: none !important;
+}
+
+.chosen-container-multi {
+    width: 100% !important;
+}
+
+.chosen-container-multi .chosen-drop .result-selected {
+    display: none !important;
+}
+
+.search-field input {
+    width: 100% !important;
+}
+
+.chosen-container .chosen-results li.active-result.highlighted {
+    background-color: #D0EBF6;
+    background-image: -webkit-gradient(linear, 50% 0, 50% 100%, color-stop(20%, #D0EBF6), color-stop(90%, #D0EBF6));
+    background-image: -webkit-linear-gradient(#D0EBF6 20%, #D0EBF6 90%);
+    background-image: -moz-linear-gradient(#D0EBF6 20%, #D0EBF6 90%);
+    background-image: -o-linear-gradient(#D0EBF6 20%, #D0EBF6 90%);
+    background-image: linear-gradient(#D0EBF6 20%, #D0EBF6 90%);
+    color: #474747
+}

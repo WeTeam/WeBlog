@@ -8,6 +8,7 @@ name: Import Blog
 master: {00000000-0000-0000-0000-000000000000}
 template: {F62B4CD7-754C-4461-810F-2B6BD2C92A0D}
 templatekey: Tab
+created: 20171026T174315Z
 
 ----field----
 field: {DEAB3795-056F-4421-ADF0-758844461B72}
@@ -27,41 +28,44 @@ content-length: 3
 field: {F1A1FE9E-A60C-4DDB-A3A0-BB5B29FE732E}
 name: __Renderings
 key: __renderings
-content-length: 4406
+content-length: 4995
 
 <r>
   <d id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
     <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=Label&amp;Text=Blog+Name" ph="ImportOptionsPanel.Content" uid="{612DE37D-9924-4DCB-9F55-AE347FF213E6}" />
     <r id="{57F86E9A-1844-45CE-BF8A-62900AE17A92}" par="IsEnabled=1&amp;Id=txtbxBlogName&amp;IsVisible=1" ph="ImportOptionsPanel.Content" uid="{004CF43B-5996-48CD-9D6D-4BE977A20FC2}" />
-    <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=Label1&amp;Text=Email" ph="ImportOptionsPanel.Content" uid="{612DE37D-9924-4DCB-9F55-AE347FF213E6}" />
-    <r id="{57F86E9A-1844-45CE-BF8A-62900AE17A92}" par="IsEnabled=1&amp;Id=txtbxBlogEmail&amp;IsVisible=1" ph="ImportOptionsPanel.Content" uid="{004CF43B-5996-48CD-9D6D-4BE977A20FC2}" />
+    <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=Label1&amp;Text=Email" ph="ImportOptionsPanel.Content" uid="{D57C2843-F006-4C14-885E-53C217949B7D}" />
+    <r id="{57F86E9A-1844-45CE-BF8A-62900AE17A92}" par="IsEnabled=1&amp;Id=txtbxBlogEmail&amp;IsVisible=1" ph="ImportOptionsPanel.Content" uid="{2EA7BCD2-FC0C-4DB3-A90E-D60BB0D50BD9}" />
+    <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=Label3&amp;Text=Language+(defaul%3a+en)" ph="ImportOptionsPanel.Content" uid="{E6B6AE25-7ADB-41F9-B327-C4C91A615FD9}" />
+    <r id="{08B6767B-8E8A-41C8-8880-EFEBB4EAE0E3}" par="Id=LanguageSelector&amp;RootItem=%7b64C4F646-A3FA-4205-B98E-4DE2C609B60F%7d&amp;IsCheckboxEnabled=0" ph="ImportOptionsPanel.Content" uid="{BA5A2902-F5AB-4D37-9200-6ED1413EC5CE}" />
+    <r id="{73C16115-8B56-43AF-8EA3-4D704FCDA127}" par="Id=Separator1" ph="ImportOptionsPanel.Content" uid="{CCBF4300-60CE-4307-99A8-F34B3C0994DE}" />
     <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxPosts&amp;IsChecked=True&amp;Text=Include+posts" ph="RowPanel0.Content" uid="{51376963-A3A2-4FA1-AE57-CCF290588A24}" />
-    <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxCategories&amp;IsChecked=True&amp;Text=Include+Catgories" ph="RowPanel1.Content" uid="{51376963-A3A2-4FA1-AE57-CCF290588A24}" />
-    <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxComments&amp;IsChecked=True&amp;Text=Include+Comments" ph="RowPanel2.Content" uid="{51376963-A3A2-4FA1-AE57-CCF290588A24}" />
-    <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxTags&amp;IsChecked=True&amp;Text=Include+Tags" ph="RowPanel4.Content" uid="{51376963-A3A2-4FA1-AE57-CCF290588A24}" />
-    <r id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}" par="Id=ImportOptionsPanel&amp;ContentAlignment=Left&amp;UsePadding=1" uid="{12BAEC22-067D-4B02-AD44-26FF66C8C13A}" />
+    <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxCategories&amp;IsChecked=True&amp;Text=Include+Catgories" ph="RowPanel1.Content" uid="{CDE4935A-72D1-412E-8D3C-CEBC46230393}" />
+    <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxComments&amp;IsChecked=True&amp;Text=Include+Comments" ph="RowPanel2.Content" uid="{DEF7C9DB-7269-490A-893F-8BBDCDC4C9A4}" />
+    <r id="{3824DAB6-745A-468A-9D75-044591E72FB5}" par="Id=cbxTags&amp;IsChecked=True&amp;Text=Include+Tags" ph="RowPanel4.Content" uid="{63FC51E9-FAE2-476F-B861-0505677831B7}" />
+    <r id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}" par="Id=ImportOptionsPanel&amp;ContentAlignment=Left&amp;UsePadding=1" ph="" uid="{12BAEC22-067D-4B02-AD44-26FF66C8C13A}" />
     <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel0" ph="ImportOptionsPanel.Content" uid="{53D2FEF5-0E28-4482-B8A3-A845CA04F432}" />
-    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel1" ph="ImportOptionsPanel.Content" uid="{53D2FEF5-0E28-4482-B8A3-A845CA04F432}" />
-    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel2" ph="ImportOptionsPanel.Content" uid="{53D2FEF5-0E28-4482-B8A3-A845CA04F432}" />
-    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel4" ph="ImportOptionsPanel.Content" uid="{53D2FEF5-0E28-4482-B8A3-A845CA04F432}" />
+    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel1" ph="ImportOptionsPanel.Content" uid="{5030B5F2-E29A-4000-987A-7FF683D9FEF4}" />
+    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel2" ph="ImportOptionsPanel.Content" uid="{C631467D-BAFB-4463-8819-8E081635F0C1}" />
+    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel4" ph="ImportOptionsPanel.Content" uid="{94D2327A-4162-460F-AA19-32AB0E0D5DCF}" />
     <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=Label2&amp;Text=Import+Progress" ph="RowPanel3.Content" uid="{4DF1D33B-7184-4118-AF07-341388EA2AB0}" />
-    <r id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}" par="Id=ImportProgressPanel&amp;IsVisible=0&amp;ContentAlignment=Left&amp;UsePadding=1" uid="{445E5C95-3ED0-4E7C-ACDD-C0B780B6BD46}" />
+    <r id="{F6C9F461-FCAF-47DC-AA01-C8C64C2EFFB8}" par="Id=ImportProgressPanel&amp;IsVisible=0&amp;ContentAlignment=Left&amp;UsePadding=1" ph="" uid="{445E5C95-3ED0-4E7C-ACDD-C0B780B6BD46}" />
     <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=ProgressMessage&amp;Text=Processing" ph="RowPanel6.Content" uid="{97AEB70A-FE1C-45A0-9826-8474B2C8F33D}" />
-    <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=StatusMessage&amp;Text=..." ph="RowPanel7.Content" uid="{97AEB70A-FE1C-45A0-9826-8474B2C8F33D}" />
+    <r id="{98316BB6-F3F5-4E6F-81F0-79F173D151D8}" par="Id=StatusMessage&amp;Text=..." ph="RowPanel7.Content" uid="{D18034FA-2ADC-4C5C-B04B-A85F40E0DFBE}" />
     <r id="{AF6438A4-8295-4925-90B3-2BF97D3515AF}" par="UpdateInterval=2000&amp;Value=0&amp;Id=ProgressBar&amp;MaxValue=100" ph="RowPanel5.Content" uid="{73510B69-711D-42B5-AAA7-D92A310FCD93}" />
     <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel3" ph="ImportProgressPanel.Content" uid="{9253F0E9-1A94-4BE6-B9A9-B3C973244C3E}" />
-    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel5" ph="ImportProgressPanel.Content" uid="{53D2FEF5-0E28-4482-B8A3-A845CA04F432}" />
+    <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel5" ph="ImportProgressPanel.Content" uid="{F171C9D8-1563-498B-9892-EF62EFEA453E}" />
     <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel6" ph="ImportProgressPanel.Content" uid="{AD298F02-20C9-4C23-B010-370F3B258063}" />
     <r id="{C4393722-39FA-4869-9582-3A8EB8983A0D}" par="Id=RowPanel7" ph="ImportProgressPanel.Content" uid="{3AB9B902-06A0-4FD6-8982-DFA522CA4EF9}" />
     <r id="{73C16115-8B56-43AF-8EA3-4D704FCDA127}" par="Id=Separator" ph="ImportOptionsPanel.Content" uid="{5B133D7D-8D04-4114-921D-9DFCCC7EE007}" />
     <r ds="{0FF50DAD-0805-4A86-9E93-A23321037AE4}" id="{913AB005-2527-4C2D-9827-FB3A8DFB135C}" par="Id=btnImport&amp;ButtonType=Inverse&amp;Dimension=Normal" ph="ImportOptionsPanel.Content" uid="{39BC0237-DBAE-451C-A72D-A0D4BCA546CE}" />
-    <r id="{A91523CD-6E56-4F08-8B21-C39018E0134A}" par="Id=ImportStatusProvider&amp;DataURL=%2fsitecore%2fapi%2fssc%2fSitecore-Modules-WeBlog-Controllers%2fWordPressImport%2f1%2fCheckStatus" uid="{1FE63AF2-E2E5-4FC9-9116-EC65269DA4FE}" />
+    <r id="{A91523CD-6E56-4F08-8B21-C39018E0134A}" par="Id=ImportStatusProvider&amp;DataURL=%2fsitecore%2fapi%2fssc%2fSitecore-Modules-WeBlog-Controllers%2fWordPressImport%2f1%2fCheckStatus" ph="" uid="{1FE63AF2-E2E5-4FC9-9116-EC65269DA4FE}" />
   </d>
 </r>
 ----version----
 language: en
 version: 1
-revision: 8286ad04-d905-477d-84fa-b9981f445135
+revision: 6f41abb9-54b6-459c-968b-9c0c518a931e
 
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
@@ -76,14 +80,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-8286ad04-d905-477d-84fa-b9981f445135
+6f41abb9-54b6-459c-968b-9c0c518a931e
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160410T154653Z
+20171027T154755Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
