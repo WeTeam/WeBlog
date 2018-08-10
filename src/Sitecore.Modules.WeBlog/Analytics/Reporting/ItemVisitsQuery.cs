@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sitecore.Analytics.Reporting;
 using Sitecore.Configuration;
 using Sitecore.Data;
+
+#if SC90
+using Sitecore.Xdb.Reporting;
+#else
+using Sitecore.Analytics.Reporting;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Analytics.Reporting
 {

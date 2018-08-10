@@ -2,8 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Sitecore.Analytics.Reporting;
 using Sitecore.Data;
+
+#if SC90
+using Sitecore.Xdb.Reporting;
+#else
+using Sitecore.Analytics.Reporting;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Analytics.Reporting
 {

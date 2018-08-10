@@ -64,6 +64,10 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.Xdb.Reporting" Condition="$(Configuration.Contains('sc9.0'))">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.Kernel">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
