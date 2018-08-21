@@ -157,6 +157,10 @@
   </Target>
   <Target Name="ContentSearchConfig">
     <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" />
+    <CallTarget Targets="TransformContentSearchConfigs90" Condition="$(Configuration.Contains('sc9.0'))" />
+  </Target>
+  <Target Name="TransformContentSearchConfigs90">
+    <XslTransformation XslInputPath="App_Config\Include\zWeBlog.Test.ContentSearch.SC90.xslt" XmlInputPaths="App_Config\Include\zWeBlog.Test.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\zWeBlog.Test.ContentSearch.config" />
   </Target>
   <ProjectExtensions>
     <VisualStudio>
