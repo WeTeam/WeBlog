@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System;
 using System.Linq;
 using NUnit.Framework;
@@ -7,9 +8,10 @@ using Moq;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Managers;
 
-#if FEATURE_XDB
+#if SC90
+using Sitecore.Xdb.Reporting;
+#elif FEATURE_XDB
 using Sitecore.Analytics.Reporting;
-using System.Collections.Generic;
 #elif FEATURE_DMS
 using Sitecore.Analytics.Data.DataAccess;
 #endif

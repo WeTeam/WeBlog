@@ -60,11 +60,15 @@
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5'))">
       <HintPath>..\..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.2'))">
+    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2')) or $(Configuration.Contains('sc9.0'))">
       <HintPath>..\..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Xdb.Reporting" Condition="$(Configuration.Contains('sc9.0'))">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Client">
@@ -266,7 +270,7 @@
     <Compile Include="Model\Comment.cs" />
     <Compile Include="Pipelines\CaptchaProcessor.cs" Condition="$(Configuration.Contains('sc7.0')) or $(Configuration.Contains('sc7.2'))" />
     <Compile Include="Pipelines\CaptchaProcessor-7.5.cs" Condition="$(Configuration.Contains('sc7.5'))" />
-    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.2'))" />
+    <Compile Include="Pipelines\CaptchaProcessor-8.0.cs" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2')) or $(Configuration.Contains('sc9.0'))" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
     <Compile Include="Pipelines\CreateComment\AkismetSpamCheck.cs" />
     <Compile Include="Pipelines\CreateComment\CreateCommentItem.cs" />
@@ -281,7 +285,7 @@
     <Compile Include="Pipelines\GetSummary\Wrap.cs" />
     <Compile Include="Pipelines\ICreateCommentProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" />
+    <Compile Include="Search\IndexUpdateHtmlCacheClearer.cs" Condition="$(Configuration.Contains('sc7.0')) or $(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5')) or $(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))" />
     <Compile Include="Search\InterestingEntries\IInterstingEntriesAlgorithm.cs" />
     <Compile Include="Search\InterestingEntries\InterestingEntriesAlgorithm.cs" />
     <Compile Include="Services\ICommentService.cs" />
@@ -415,6 +419,7 @@
     <CallTarget Targets="ContentDeliveryConfig" />
     <CallTarget Targets="TransformContentSearchConfigs72" Condition="$(Configuration.Contains('sc7.2'))" />
     <CallTarget Targets="TransformContentSearchConfigs70" Condition="$(Configuration.Contains('sc7.0'))" />
+	<CallTarget Targets="TransformContentSearchConfigs90" Condition="$(Configuration.Contains('sc9.0'))" />
   </Target>
   <Target Name="DeployToWeb">
     <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
@@ -431,7 +436,10 @@
     <Copy SourceFiles="sitecore\shell\Applications\WeBlog\WordpressImport.SC80.xml" DestinationFiles="$(SitecorePath)\sitecore\shell\Applications\WeBlog\WordpressImport.xml" Condition="$(DefineConstants.Contains('SC80'))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />
+    <PropertyGroup>
+      <WeBlog-config-delivery-params Condition="$(Configuration.Contains('sc7.0')) or $(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5')) or $(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))">false()</WeBlog-config-delivery-params>
+    </PropertyGroup>
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" Parameters="&lt;Parameter Name='custom-cache-clear' Value='$(WeBlog-config-delivery-params)'/&gt;" />
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
@@ -444,5 +452,8 @@
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.SC70.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" />
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Master.SC70.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Master.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Master.config" />
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Web.SC70.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Web.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Web.config" />
+  </Target>
+  <Target Name="TransformContentSearchConfigs90">
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.SC90.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" />
   </Target>
 </Project>

@@ -15,7 +15,10 @@ using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.StringExtensions;
-#if FEATURE_XDB
+#if SC90
+using Sitecore.Modules.WeBlog.Analytics.Reporting;
+using Sitecore.Xdb.Reporting;
+#elif FEATURE_XDB
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Analytics.Reporting;
 #elif FEATURE_DMS
