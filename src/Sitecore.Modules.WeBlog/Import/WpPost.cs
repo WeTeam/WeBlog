@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Import.Providers;
 
 
@@ -59,14 +60,25 @@ namespace Sitecore.Modules.WeBlog.Import
             XNamespace nsContent = ContentNamespace;
             XNamespace wpContent = WordpressNamespace;
 
-            if(postXml.Element("title") != null)
+            if (postXml.Element("title") != null)
                 Title = postXml.Element("title").Value;
+            Logger.Info($"Processing post: {Title}");
 
             if (postXml.Element(nsContent + "encoded") != null)
                 Content = postXml.Element(nsContent + "encoded").Value;
 
             if (postXml.Element("pubDate") != null)
-                PublicationDate = DateTime.Parse(postXml.Element("pubDate").Value);
+            {
+                try
+                {
+                    PublicationDate = DateTime.Parse(postXml.Element("pubDate")?.Value);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Date has incorrect value: '{postXml.Element("pubDate")?.Value}'",e,this);
+                    return;
+                }
+            }
 
             Categories = new List<string>();
             Tags = new List<string>();
