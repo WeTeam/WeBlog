@@ -337,6 +337,40 @@ footer#bottom {
 	color: red;
 }
 
+.wb-entry-navigation-label {
+	margin: 0 0 0.25em 0;
+	font-size: 0.9em;
+	color: lighten(@text-color, 15%);
+}
+
+.wb-entry-navigation-previous,
+.wb-entry-navigation-next {
+	font-variant: small-caps;
+	text-decoration: none;
+	
+	.wb-entry-navigation-title {
+		margin: 0;
+		font-variant: normal;
+		text-decoration: underline;
+
+		a {
+			background-color: @shaded;
+			padding: 0 0.25em;
+		}
+	}
+}
+
+.wb-entry-navigation-previous {
+	width: 49.5%;
+	display: inline-block;
+}
+
+.wb-entry-navigation-next {
+	width: 49.5%;
+	text-align: right;
+	display: inline-block;
+}
+
 @media all and (max-width: 900px) {
 	.wb-wrapper {
 		display: block;

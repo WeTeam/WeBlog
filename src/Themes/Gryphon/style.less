@@ -334,6 +334,45 @@ article {
 	}
 }
 
+.wb-entry-navigation-buttons {
+	text-align: center;
+}
+
+.wb-entry-navigation-label {
+	margin: 0;
+	font-size: 0.8em;
+	color: lighten(@text-color, 30%);
+}
+
+.wb-entry-navigation-previous,
+.wb-entry-navigation-next {
+	margin: 0 0.5em;
+	font-variant: small-caps;
+	text-decoration: none;
+	
+	.wb-entry-navigation-title {
+		margin: 0;
+		font-variant: normal;
+		text-decoration: underline;
+
+		a:before {
+			content: "{ ";
+		}
+
+		a:after {
+			content: " }";
+		}
+	}
+}
+
+.wb-entry-navigation-previous {
+	display: inline-block;
+}
+
+.wb-entry-navigation-next {
+	display: inline-block;
+}
+
 @media all and (max-width: 900px) {
 	.wb-wrapper {
 		display: block;

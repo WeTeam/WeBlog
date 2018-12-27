@@ -6,16 +6,29 @@
     <% } %>
     
     <div class="wb-entry-navigation-buttons">
-        <% if (PreviousEntry!=null) { %>
-            <a href="<%=PreviousEntry.Url%>" class="wb-entry-navigation-previous" title="<%=PreviousEntry.Title.Rendered%>">
-                <%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("NAVIGATION_PREVIOUS")%>
-            </a>
-        <% } %>
-
-        <% if (NextEntry!=null) { %>
-            <a href="<%=NextEntry.Url%>" class="wb-entry-navigation-next" title="<%=NextEntry.Title.Rendered%>">
-                <%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("NAVIGATION_NEXT")%>
-            </a>
-        <% } %>
+        <div class="wb-entry-navigation-previous">
+            <% if (PreviousEntry!=null) { %>
+                <p class="wb-entry-navigation-label">
+                    <%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("NAVIGATION_PREVIOUS")%>
+                </p>
+                <p class="wb-entry-navigation-title">
+                    <a href="<%=PreviousEntry.Url%>" title="<%=PreviousEntry.Title.Rendered%>">
+                        <%=PreviousEntry.Title.Rendered%>
+                    </a>
+                </p>
+            <% } %>
+        </div>
+        <div class="wb-entry-navigation-next">
+            <% if (NextEntry!=null) { %>
+                <p class="wb-entry-navigation-label">
+                    <%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("NAVIGATION_NEXT")%>
+                </p>
+                <p class="wb-entry-navigation-title">
+                    <a href="<%=NextEntry.Url%>" title="<%=NextEntry.Title.Rendered%>">
+                        <%=NextEntry.Title.Rendered%>
+                    </a>
+                </p>
+            <% } %>
+        </div>
     </div>
 </asp:Panel>

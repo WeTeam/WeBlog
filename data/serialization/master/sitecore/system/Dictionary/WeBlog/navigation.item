@@ -20,7 +20,7 @@ NAVIGATION
 ----version----
 language: en
 version: 1
-revision: 0f3380f0-c74c-43aa-885b-74ffddabcd15
+revision: edad2168-08ac-4c9c-9194-def9cfbedeea
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
@@ -28,7 +28,7 @@ name: Phrase
 key: phrase
 content-length: 11
 
-Naviagtion:
+Navigation:
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -56,14 +56,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-0f3380f0-c74c-43aa-885b-74ffddabcd15
+edad2168-08ac-4c9c-9194-def9cfbedeea
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20171028T220435Z
+20181029T110150Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by

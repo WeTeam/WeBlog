@@ -20,15 +20,15 @@ NAVIGATION_NEXT
 ----version----
 language: en
 version: 1
-revision: 45e6cf50-c423-41c1-b2e1-989b273b5e13
+revision: 080acc4d-52a2-4c89-82a8-f59519bbf83e
 
 ----field----
 field: {2BA3454A-9A9C-4CDF-A9F8-107FD484EB6E}
 name: Phrase
 key: phrase
-content-length: 6
+content-length: 4
 
-Next →
+Next
 ----field----
 field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
 name: __Owner
@@ -56,14 +56,14 @@ name: __Revision
 key: __revision
 content-length: 36
 
-45e6cf50-c423-41c1-b2e1-989b273b5e13
+080acc4d-52a2-4c89-82a8-f59519bbf83e
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20171028T222859Z
+20181029T110435Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
