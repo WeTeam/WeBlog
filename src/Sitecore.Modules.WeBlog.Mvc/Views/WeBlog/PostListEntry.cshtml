@@ -1,4 +1,5 @@
 ﻿@using Sitecore.Modules.WeBlog
+@using Sitecore.Modules.WeBlog.Configuration
 @using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.PostListEntry
@@ -12,7 +13,7 @@
             @Html.Sitecore().Field("Thumbnail Image", Model.EntryItem, new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
         </div>
         <div class="wb-details">
-            @Translator.Format("ENTRY_DETAILS", Model.EntryItem.Created.ToString(Settings.DateFormat), Model.EntryItem.AuthorName).ToHtmlString()
+            @Translator.Format("ENTRY_DETAILS", Model.EntryItem.Created.ToString(WeBlogSettings.Instance.DateFormat), Model.EntryItem.AuthorName).ToHtmlString()
         </div>
     </header>
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Sitecore.Configuration;
 using Sitecore.Data;
 
-#if SC90
+#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
 #else
 using Sitecore.Analytics.Reporting;

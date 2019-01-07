@@ -49,10 +49,8 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 var blog = BlogManager.GetCurrentBlog(entryItem);
                 if (blog != null)
                 {
-                    var commentTemplate = blog.BlogSettings.CommentTemplateID;
-
                     var query = "{0}//*[@@templateid='{1}' and @__created > '{2}' and @__created < '{3}']".FormatWith(
-                      ContentHelper.EscapePath(entryItem.Paths.FullPath), commentTemplate, DateUtil.ToIsoDate(dateStart), DateUtil.ToIsoDate(dateEnd));
+                        ContentHelper.EscapePath(entryItem.Paths.FullPath), blog.BlogSettings.CommentTemplateID, DateUtil.ToIsoDate(dateStart), DateUtil.ToIsoDate(dateEnd));
 
                     var comments = args.Database.SelectItems(query);
 

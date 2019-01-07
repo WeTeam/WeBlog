@@ -1,26 +1,34 @@
-﻿using Sitecore.Data;
+﻿using System.Linq;
+using Sitecore.Data;
+using Sitecore.Modules.WeBlog.Configuration;
 
 namespace Sitecore.Modules.WeBlog
 {
     public class BlogSettings
     {
-        protected ID _categoryTemplateID = ID.Null;
-        protected ID _entryTemplateID = ID.Null;
-        protected ID _commentTemplateID = ID.Null;
+        protected ID _categoryTemplateId = ID.Null;
+        protected ID _entryTemplateId = ID.Null;
+        protected ID _commentTemplateId = ID.Null;
+
+        protected IWeBlogSettings Settings { get; }
+
+        public BlogSettings(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
 
         public ID CategoryTemplateID
         {
             get
             {
-                if (_categoryTemplateID == ID.Null)
-                {
-                    return Settings.CategoryTemplateID;
-                }
-                return _categoryTemplateID;
+                if (_categoryTemplateId == ID.Null)
+                    return Settings.CategoryTemplateIds.First();
+
+                return _categoryTemplateId;
             }
             set
             {
-                _categoryTemplateID = value;
+                _categoryTemplateId = value;
             }
         }
 
@@ -28,15 +36,14 @@ namespace Sitecore.Modules.WeBlog
         {
             get
             {
-                if (_entryTemplateID == ID.Null)
-                {
-                    return Settings.EntryTemplateID;
-                }
-                return _entryTemplateID;
+                if (_entryTemplateId == ID.Null)
+                    return Settings.EntryTemplateIds.First();
+                
+                return _entryTemplateId;
             }
             set
             {
-                _entryTemplateID = value;
+                _entryTemplateId = value;
             }
         }
 
@@ -44,15 +51,15 @@ namespace Sitecore.Modules.WeBlog
         {
             get
             {
-                if (_commentTemplateID == ID.Null)
-                {
-                    return Settings.CommentTemplateID;
-                }
-                return _commentTemplateID;
+                if (_commentTemplateId == ID.Null)
+                    return Settings.CommentTemplateIds.First();
+                
+                return _commentTemplateId;
             }
+
             set
             {
-                _commentTemplateID = value;
+                _commentTemplateId = value;
             }
         }
     }

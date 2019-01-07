@@ -22,6 +22,18 @@ namespace Sitecore.Modules.WeBlog.Fields
         private string _itemid;
         private string _source;
 
+        private IWeBlogSettings _settings;
+
+        public TagField()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public TagField(IWeBlogSettings settings)
+        {
+            _settings = settings;
+        }
+
         public string ItemId
         {
             get { return _itemid; }
@@ -113,7 +125,7 @@ namespace Sitecore.Modules.WeBlog.Fields
         {
             var sources = ManagerFactory.TagManagerInstance.GetTagsForBlog(currentBlog).ToList();
             sources.Sort((tag, tag1) => tag1.Count - tag.Count);
-            var sourceItems = sources.Take(new WeBlogSettings().TagFieldMaxItemCount);
+            var sourceItems = sources.Take(_settings.TagFieldMaxItemCount);
             return sourceItems;
         }
 

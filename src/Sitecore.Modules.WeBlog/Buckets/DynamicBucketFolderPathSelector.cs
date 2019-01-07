@@ -8,13 +8,6 @@ namespace Sitecore.Modules.WeBlog.Buckets
 {
     public class DynamicBucketFolderPathSelector : IDynamicBucketFolderPath
     {
-        [Obsolete]
-        public string GetFolderPath(ID newItemId, ID parentItemId, DateTime creationDateOfNewItem)
-        {
-            return GetFolderPath(Sitecore.Context.ContentDatabase, string.Empty, null, newItemId, parentItemId,
-                          creationDateOfNewItem);
-        }
-
         public string GetFolderPath(Database database, string name, ID templateId, ID newItemId, ID parentItemId,
                                     DateTime creationDateOfNewItem)
         {
@@ -37,22 +30,13 @@ namespace Sitecore.Modules.WeBlog.Buckets
                     var handler = Sitecore.Configuration.Factory.CreateObject<IDynamicBucketFolderPath>(configNode);
                     if (handler != null)
                     {
-#if SC70
-// We only target specific Sitecore versions when there's an API contention
-                        return (handler as IDynamicBucketFolderPath).GetFolderPath(newItemId, parentItemId,
-                                                                                   creationDateOfNewItem);
-#else
                         return (handler as IDynamicBucketFolderPath).GetFolderPath(database, name, templateId, newItemId,
                                                                                    parentItemId, creationDateOfNewItem);
-#endif
                     }
                 }
             }
-#if SC70
-            return new GuidFolderPath().GetFolderPath(newItemId, parentItemId, creationDateOfNewItem);
-#else
+
             return new BucketFolderPathResolver().GetFolderPath(database, name, templateId, newItemId, parentItemId, creationDateOfNewItem);
-#endif
         }
     }
 }

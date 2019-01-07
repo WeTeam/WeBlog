@@ -8,7 +8,7 @@ using Moq;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Managers;
 
-#if SC90
+#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
 #elif FEATURE_XDB
 using Sitecore.Analytics.Reporting;

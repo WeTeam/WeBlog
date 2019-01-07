@@ -7,6 +7,26 @@ namespace Sitecore.Modules.WeBlog.Configuration
 {
     public class WeBlogSettings : IWeBlogSettings
     {
+        private static WeBlogSettings _instance = null;
+
+        /// <summary>
+        /// Gets an instance of the default settings.
+        /// </summary>
+        public static WeBlogSettings Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new WeBlogSettings();
+
+                return _instance;
+            }
+        }
+
+        private WeBlogSettings()
+        {
+        }
+
         /// <summary>
         /// Gets the name of the search index.
         /// </summary>

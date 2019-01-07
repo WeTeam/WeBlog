@@ -1,12 +1,25 @@
 ﻿using System;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Globalization;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
     public partial class Captcha : UserControl
     {
+        protected IWeBlogSettings Settings { get; }
+
+        public Captcha()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public Captcha(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
+
         protected void uxCaptchaValidator_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (uxCaptchaCode != null)

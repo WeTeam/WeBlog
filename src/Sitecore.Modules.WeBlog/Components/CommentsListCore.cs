@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 
@@ -11,10 +12,13 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected EntryItem CurrentEntry { get; set; }
 
-        public CommentsListCore(BlogHomeItem currentBlogHomeItem, EntryItem currentEntry)
+        protected IWeBlogSettings Settings { get; }
+
+        public CommentsListCore(BlogHomeItem currentBlogHomeItem, EntryItem currentEntry, IWeBlogSettings settings = null)
         {
             CurrentBlog = currentBlogHomeItem;
             CurrentEntry = currentEntry;
+            Settings = settings ?? WeBlogSettings.Instance;
         }
 
         public virtual CommentItem[] LoadComments(CommentItem addedComment = null)

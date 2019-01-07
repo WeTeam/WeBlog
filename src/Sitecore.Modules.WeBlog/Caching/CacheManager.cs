@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 
 namespace Sitecore.Modules.WeBlog.Caching
@@ -17,7 +18,7 @@ namespace Sitecore.Modules.WeBlog.Caching
                 if (profanityList == null)
                 {
                     profanityList = new ProfanityFilterCache(cacheName,
-                        StringUtil.ParseSizeString(Settings.ProfanityFilterCacheSize));
+                        StringUtil.ParseSizeString(WeBlogSettings.Instance.ProfanityFilterCacheSize));
                     SetCache(cacheName, profanityList);
                 }
                 return profanityList;

@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.Globalization;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
@@ -172,16 +173,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NoDuplicateComment()
         {
+            var commentTemplate = CreateCommentTemplate();
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                },
+                commentTemplate,
                 new DbItem("blog")
                 {
                     new DbItem("entry")
@@ -192,7 +189,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
 
                 var processor = new DuplicateSubmissionGuard(blogManager);
@@ -219,21 +216,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void CommentExists()
         {
+            var commentTemplate = CreateCommentTemplate();
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                },
+                commentTemplate,
                 new DbItem("blog")
                 {
                     new DbItem("entry")
                     {
-                        new DbItem("comment", ID.NewID, Settings.CommentTemplateID)
+                        new DbItem("comment", ID.NewID, commentTemplate.ID)
                         {
                             new DbField("Name")
                             {
@@ -256,7 +249,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
 
                 var processor = new DuplicateSubmissionGuard(blogManager);
@@ -283,21 +276,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void DifferentText()
         {
+            var commentTemplate = CreateCommentTemplate();
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                },
+                commentTemplate,
                 new DbItem("blog")
                 {
                     new DbItem("entry")
                     {
-                        new DbItem("comment", ID.NewID, Settings.CommentTemplateID)
+                        new DbItem("comment", ID.NewID, commentTemplate.ID)
                         {
                             new DbField("Name")
                             {
@@ -320,7 +309,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
 
                 var processor = new DuplicateSubmissionGuard(blogManager);
@@ -342,6 +331,25 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
 
                 Assert.That(args.Aborted, Is.False);
             }
+        }
+
+        private DbTemplate CreateCommentTemplate()
+        {
+            return new DbTemplate(ID.NewID)
+            {
+                new DbField("Name"),
+                new DbField("Email"),
+                new DbField("Comment"),
+                new DbField("Website"),
+                new DbField("IP Address"),
+            };
+        }
+
+        private IWeBlogSettings CreateSettings(ID commentTemplateId)
+        {
+            return Mock.Of<IWeBlogSettings>(x =>
+                x.CommentTemplateIds == new[] { commentTemplateId }
+            );
         }
     }
 }
