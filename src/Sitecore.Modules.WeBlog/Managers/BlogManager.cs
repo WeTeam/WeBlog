@@ -22,10 +22,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
         public BlogManager(IWeBlogSettings settings = null)
         {
-            Settings = settings ?? new WeBlogSettings();
+            Settings = settings ?? WeBlogSettings.Instance;
         }
 
         /// <summary>

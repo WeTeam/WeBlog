@@ -62,7 +62,7 @@ namespace Sitecore.Modules.WeBlog.Components
         public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null)
         {
             CurrentBlog = currentBlog;
-            Settings = settings ?? new WeBlogSettings();
+            Settings = settings ?? WeBlogSettings.Instance;
             AuthorsCore = authorsCore ?? new AuthorsCore(CurrentBlog);
         }
 
@@ -136,14 +136,6 @@ namespace Sitecore.Modules.WeBlog.Components
                 viewMoreHref += "&author=" + HttpUtility.UrlEncode(author);
             }
             return viewMoreHref;
-        }
-
-        [Obsolete("Use the templates defined in settings.")]
-        protected virtual TemplateItem GetCategoryTemplate()
-        {
-            var categoryTemplateId = Settings.CategoryTemplateIds.First();
-            var categoryTemplate = new TemplateItem(Context.Database.GetItem(categoryTemplateId));
-            return categoryTemplate;
         }
 
         protected int GetFromQueryString(string key, int defaultValue = 0)

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Links;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Text;
 using Sitecore.Web;
@@ -14,6 +16,21 @@ namespace Sitecore.Modules.WeBlog.Commands
 {
     public class NewBlog : Command
     {
+        /// <summary>
+        /// The settings to use.
+        /// </summary>
+        protected IWeBlogSettings Settings { get; }
+
+        public NewBlog()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public NewBlog(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
+
         public override void Execute(CommandContext context)
         {
             if (context.Items.Length == 1)
@@ -47,13 +64,20 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                string currentTID = args.Parameters["tid"];
+                var rawCurrentTemplateId = args.Parameters["tid"];
+                var inputParsed = ID.TryParse(rawCurrentTemplateId, out var currentTemplateId);
 
-                if (currentTID == Settings.BlogTemplateIDString)
+                if (!inputParsed)
+                {
+                    Context.ClientPage.ClientResponse.Alert("Failed to parsed current template ID");
+                    return;
+                }
+
+                if (Settings.BlogTemplateIds.Contains(currentTemplateId))
                 {
                     Context.ClientPage.ClientResponse.Alert("Cannot create a blog within a blog");
                 }
-                else if (currentTID == Sitecore.Configuration.Settings.GetSetting("Blog.EntryTemplateID"))
+                else if (Settings.EntryTemplateIds.Contains(currentTemplateId))
                 {
                     Context.ClientPage.ClientResponse.Alert("Cannot create a blog within a blogentry");
                 }

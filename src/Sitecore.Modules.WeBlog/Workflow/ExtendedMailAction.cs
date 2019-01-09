@@ -32,6 +32,7 @@ using NVelocity;
 using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
@@ -140,11 +141,11 @@ namespace Sitecore.Modules.WeBlog.Workflow
             velocityContext.Put("time", DateTime.Now);
 
             EntryItem entryItem = null;
-            if (args.DataItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
+            if (args.DataItem.TemplateIsOrBasedOn(WeBlogSettings.Instance.EntryTemplateIds))
             {
                 entryItem = new EntryItem(args.DataItem);
             }
-            else if (args.DataItem.TemplateIsOrBasedOn(Settings.CommentTemplateID))
+            else if (args.DataItem.TemplateIsOrBasedOn(WeBlogSettings.Instance.CommentTemplateIds))
             {
                 CommentItem commentItem = new CommentItem(args.DataItem);
                 entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(commentItem);

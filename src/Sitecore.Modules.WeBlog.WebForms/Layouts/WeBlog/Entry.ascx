@@ -1,5 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Entry.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.BlogEntry" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Configuration" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 
@@ -19,9 +20,9 @@
     <% if (ShowEntryMetadata) { %>
         <div class="wb-details">
             <% if(IsPageEditing) { %>
-                <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.Author.Rendered) %>
+                <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(WeBlogSettings.Instance.DateFormat), CurrentEntry.Author.Rendered) %>
             <% } else { %>
-                <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(Settings.DateFormat), CurrentEntry.AuthorName) %>
+                <%=Translator.Format("ENTRY_DETAILS", CurrentEntry.Created.ToString(WeBlogSettings.Instance.DateFormat), CurrentEntry.AuthorName) %>
             <%} %>
         </div>
     <% } %>

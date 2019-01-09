@@ -1,8 +1,10 @@
 ﻿using System.Collections.Specialized;
+using System.Linq;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Globalization;
@@ -14,6 +16,21 @@ namespace Sitecore.Modules.WeBlog.Commands
 {
     public class NewEntry : Command
     {
+        /// <summary>
+        /// The settings to use.
+        /// </summary>
+        protected IWeBlogSettings Settings = null;
+
+        public NewEntry()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public NewEntry(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
+
         public override void Execute(CommandContext context)
         {
             if (context.Items.Length == 1)
@@ -65,7 +82,8 @@ namespace Sitecore.Modules.WeBlog.Commands
                     return;
                 }
 
-                if (!currentItem.TemplateIsOrBasedOn(Settings.BlogTemplateID) && !currentItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
+                var itemIsValid = CanCreateEntry(currentItem);
+                if (itemIsValid)
                 {
                     Context.ClientPage.ClientResponse.Alert("Please create or select a blog first");
                 }
@@ -75,6 +93,28 @@ namespace Sitecore.Modules.WeBlog.Commands
                     args.WaitForPostBack(true);
                 }
             }
+        }
+
+        /// <summary>
+        /// Determines whether an entry can be created under the <paramref name="targetItem"/>.
+        /// </summary>
+        /// <param name="targetItem">The item to check.</param>
+        /// <returns>True if the entry should be created, otherwise False.</returns>
+        protected virtual bool CanCreateEntry(Item targetItem)
+        {
+            foreach(var templateId in Settings.BlogTemplateIds)
+            {
+                if (targetItem.TemplateIsOrBasedOn(templateId))
+                    return true;
+            }
+
+            foreach (var templateId in Settings.EntryTemplateIds)
+            {
+                if (targetItem.TemplateIsOrBasedOn(templateId))
+                    return true;
+            }
+
+            return false;
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Specialized;
+using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Managers;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Managers;
@@ -11,6 +13,18 @@ namespace Sitecore.Modules.WeBlog.Commands
 {
     public class NewCategory : Command
     {
+        protected IWeBlogSettings Settings { get; }
+
+        public NewCategory()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public NewCategory(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
+
         public override void Execute(CommandContext context)
         {
             if (context.Items.Length == 1)
@@ -53,7 +67,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             }
             else
             {
-                if (!currentItem.TemplateIsOrBasedOn(Settings.BlogTemplateID) && !currentItem.TemplateIsOrBasedOn(Settings.EntryTemplateID))
+                if (!currentItem.TemplateIsOrBasedOn(Settings.BlogTemplateIds.Concat(Settings.EntryTemplateIds)))
                 {
                     Context.ClientPage.ClientResponse.Alert("Please create or select a blog first");
                 }

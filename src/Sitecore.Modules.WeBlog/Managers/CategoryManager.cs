@@ -27,7 +27,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="settings">The settings to use. If null, the default settings are used.</param>
         public CategoryManager(IWeBlogSettings settings = null)
         {
-            Settings = settings ?? new WeBlogSettings();
+            Settings = settings ?? WeBlogSettings.Instance;
         }
 
         /// <summary>

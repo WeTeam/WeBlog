@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Shell.Framework.Commands;
@@ -17,12 +18,24 @@ namespace Sitecore.Modules.WeBlog.Commands
         /// </summary>
         private const string URI = "uri";
 
+        protected IWeBlogSettings Settings { get; }
+
+        public EditEntrySettings()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public EditEntrySettings(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
+
         public override CommandState QueryState(CommandContext context)
         {
             Assert.ArgumentNotNull(context, "context");
             if (context.Items.Length >= 1)
             {
-                if (!context.Items[0].TemplateIsOrBasedOn(Settings.EntryTemplateID))
+                if (!context.Items[0].TemplateIsOrBasedOn(Settings.EntryTemplateIds))
                     return CommandState.Disabled;
             }
 
@@ -36,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
                 args.Parameters.Add("uri", context.Items[0].Uri.ToString());
-                if (context.Items[0].TemplateIsOrBasedOn(Settings.EntryTemplateID))
+                if (context.Items[0].TemplateIsOrBasedOn(Settings.EntryTemplateIds))
                 {
                     Context.ClientPage.Start(this, "StartFieldEditor", args);
                 }

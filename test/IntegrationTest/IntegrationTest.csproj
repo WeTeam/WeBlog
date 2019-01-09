@@ -64,7 +64,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Xdb.Reporting" Condition="$(Configuration.Contains('sc9.0'))">
+    <Reference Include="Sitecore.Xdb.Reporting" Condition="$(DefineConstants.Contains('FEATURE_XCONNECT'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
       <Private>False</Private>
     </Reference>

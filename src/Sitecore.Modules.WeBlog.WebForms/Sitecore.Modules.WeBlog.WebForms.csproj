@@ -43,9 +43,6 @@
   </PropertyGroup>
   <Import Project="..\..\sc version properties.targets" />
   <ItemGroup>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
-      <HintPath>..\..\lib\MSCaptcha\v1.0\MSCaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5'))">
       <HintPath>..\..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
     </Reference>

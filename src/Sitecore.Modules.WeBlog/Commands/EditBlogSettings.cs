@@ -6,6 +6,7 @@ using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Shell.Framework.Commands;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.Modules.WeBlog.Configuration;
 
 namespace Sitecore.Modules.WeBlog.Commands
 {
@@ -17,12 +18,24 @@ namespace Sitecore.Modules.WeBlog.Commands
         /// </summary>
         private const string URI = "uri";
 
+        protected IWeBlogSettings Settings { get; }
+
+        public EditBlogSettings()
+            : this(WeBlogSettings.Instance)
+        {
+        }
+
+        public EditBlogSettings(IWeBlogSettings settings)
+        {
+            Settings = settings;
+        }
+
         public override CommandState QueryState(CommandContext context)
         {
             Assert.ArgumentNotNull(context, "context");
             if (context.Items.Length >= 1)
             {
-                if (!context.Items[0].TemplateIsOrBasedOn(Settings.BlogTemplateID))
+                if (!context.Items[0].TemplateIsOrBasedOn(Settings.BlogTemplateIds))
                     return CommandState.Disabled;
             }
 
@@ -36,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             {
                 ClientPipelineArgs args = new ClientPipelineArgs(context.Parameters);
                 args.Parameters.Add("uri", context.Items[0].Uri.ToString());
-                if (context.Items[0].TemplateIsOrBasedOn(Settings.BlogTemplateID))
+                if (context.Items[0].TemplateIsOrBasedOn(Settings.BlogTemplateIds))
                 {
                     Context.ClientPage.Start(this, "StartFieldEditor", args);
                 }
@@ -64,7 +77,7 @@ namespace Sitecore.Modules.WeBlog.Commands
             Sitecore.Diagnostics.Assert.IsNotNull(uri, URI);
             Sitecore.Data.Items.Item item = Sitecore.Data.Database.GetItem(uri);
 
-            while (!item.TemplateIsOrBasedOn(Settings.BlogTemplateID))
+            while (!item.TemplateIsOrBasedOn(Settings.BlogTemplateIds))
             {
                 item = item.Parent;
             }

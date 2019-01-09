@@ -1,21 +1,23 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Fields;
+using Sitecore.Modules.WeBlog.Configuration;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class BlogHomeItem : CustomItem
     {
-        public BlogHomeItem(Item innerItem)
+        protected IWeBlogSettings Settings { get; }
+
+        public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
             : base(innerItem)
         {
-
+            Settings = settings ?? WeBlogSettings.Instance;
         }
 
         public static implicit operator BlogHomeItem(Item innerItem)
@@ -234,18 +236,15 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                List<RssFeedItem> feeds = new List<RssFeedItem>();
-                if (this.EnableRss.Checked)
-                {                    
-                    var rssTemplateId = Settings.RssFeedTemplateIDString;
-                    var feedItems = this.InnerItem.Axes.SelectItems($"./*[@@templateid='{rssTemplateId}']");
-                     
-                    if (feedItems != null)
+                if (EnableRss.Checked)
+                {
+                    var children = InnerItem.GetChildren();
+                    foreach(Item child in children)
                     {
-                        feeds.AddRange(feedItems.Select(item => new RssFeedItem(item)));
+                        if (child.TemplateIsOrBasedOn(Settings.RssFeedTemplateIds))
+                            yield return new RssFeedItem(child);
                     }
                 }
-                return feeds;
             }
         }
 
@@ -265,12 +264,12 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                if (!InnerItem.TemplateIsOrBasedOn(Settings.BlogTemplateID))
+                if (!InnerItem.TemplateIsOrBasedOn(Settings.BlogTemplateIds))
                 {
-                    return new BlogSettings();
+                    return new BlogSettings(Settings);
                 }
 
-                return new BlogSettings
+                return new BlogSettings(Settings)
                 {
                     CategoryTemplateID = DefinedCategoryTemplate.Field.TargetID,
                     EntryTemplateID = DefinedEntryTemplate.Field.TargetID,

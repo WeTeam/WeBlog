@@ -346,55 +346,5 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 }));
             }
         }
-        
-        [Test]
-        public void SortByWeight_Normal()
-        {
-            var weightedTags = new TagManager().SortByWeight(new string[] { "a", "a", "b", "c", "c", "c", "c", "a", "b" });
-            var expectedTags = new Dictionary<string, int>
-            {
-                {"a", 3},
-                {"b", 2},
-                {"c", 4}
-            };
-
-            Assert.That(weightedTags, Is.EqualTo(expectedTags));
-        }
-
-        [Test]
-        public void SortByWeight_SameWeight()
-        {
-            var weightedTags = new TagManager().SortByWeight(new string[] { "a", "b", "c", "A", "B", "C", "D", "d" });
-            var expectedTags = new Dictionary<string, int>
-            {
-                {"a", 2},
-                {"b", 2},
-                {"c", 2},
-                {"D", 2}
-            };
-
-            Assert.That(weightedTags, Is.EqualTo(expectedTags));
-        }
-
-        [Test]
-        public void SortByWeight_Empty()
-        {
-            var weightedTags = new TagManager().SortByWeight(new string[0]);
-            Assert.That(weightedTags, Is.Empty);
-        }
-
-        [Test]
-        public void SortByWeight_Null()
-        {
-            var weightedTags = new TagManager().SortByWeight(null);
-            Assert.That(weightedTags, Is.Empty);
-        }
-
-        [Test]
-        public void SortByWeight_CaseInsensitive()
-        {
-            var weightedTags = new TagManager().SortByWeight(new[] { "mytag", "MyTag", "MYTAG", "myTaG" });
-            Assert.That(weightedTags.Count, Is.EqualTo(1));
-        }
     }
 }

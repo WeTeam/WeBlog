@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Authentication;
 using CookComputing.XmlRpc;
@@ -7,12 +8,18 @@ using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
-using Sitecore.FakeDb.Resources.Media;
 using Sitecore.FakeDb.Sites;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Resources.Media;
 using Sitecore.Sites;
+
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+#else
+using Sitecore.FakeDb.Resources.Media;
+#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 {
@@ -494,6 +501,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         public void newPost_ValidStruct()
         {
             var entryTemplateId = ID.NewID;
+            var blogRootTemplate = CreateBlogRootTemplate();
+
+            var settings = Mock.Of<IWeBlogSettings>(x =>
+                x.BlogTemplateIds == new[] { blogRootTemplate.ID }
+            );
 
             using (var db = new Db
             {
@@ -503,13 +515,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new DbField("Content"),
                     new DbField("Category")
                 },
-                new DbTemplate(Settings.BlogTemplateID)
-                {
-                    new DbField("Defined Entry Template"),
-                    new DbField("Defined Category Template"),
-                    new DbField("Defined Comment Template")
-                },
-                new DbItem("blog", ID.NewID, Settings.BlogTemplateID)
+                blogRootTemplate,
+                new DbItem("blog", ID.NewID, blogRootTemplate.ID)
                 {
                     new DbField("Defined Entry Template")
                     {
@@ -519,7 +526,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             })
             {
                 var blog = db.GetItem("/sitecore/content/blog");
-                var api = CreateAuthenticatingApi();
+                var api = CreateAuthenticatingApi(settings: settings);
                 api.GetContentDatabaseFunction = () => db.Database;
 
                 var post = new XmlRpcStruct
@@ -545,6 +552,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         {
             var entryTemplateId = ID.NewID;
             var date = DateTime.UtcNow.Date.AddMonths(1);
+            var blogRootTemplate = CreateBlogRootTemplate();
+            var settings = Mock.Of<IWeBlogSettings>(x => 
+                x.BlogTemplateIds == new[] { blogRootTemplate.ID }
+            );
 
             using (var db = new Db
             {
@@ -553,13 +564,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new DbField("Title"),
                     new DbField("Content")
                 },
-                new DbTemplate(Settings.BlogTemplateID)
-                {
-                    new DbField("Defined Entry Template"),
-                    new DbField("Defined Category Template"),
-                    new DbField("Defined Comment Template")
-                },
-                new DbItem("blog", ID.NewID, Settings.BlogTemplateID)
+                blogRootTemplate,
+                new DbItem("blog", ID.NewID, blogRootTemplate.ID)
                 {
                     new DbField("Defined Entry Template")
                     {
@@ -569,7 +575,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             })
             {
                 var blog = db.GetItem("/sitecore/content/blog");
-                var api = CreateAuthenticatingApi();
+                var api = CreateAuthenticatingApi(settings: settings);
                 api.GetContentDatabaseFunction = () => db.Database;
 
                 var post = new XmlRpcStruct
@@ -581,7 +587,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var newPostId = api.newPost(blog.ID.ToString(), "user", "password", post, false);
                 var postItem = db.GetItem(newPostId);
-                Assert.That(postItem.Publishing.PublishDate.ToLocalTime(), Is.EqualTo(date));
+
+#if FEATURE_UTC_DATE
+                var postDate = postItem.Publishing.PublishDate.ToLocalTime();
+#else
+                var postDate = postItem.Publishing.PublishDate;
+#endif
+
+                Assert.That(postDate, Is.EqualTo(date));
             }
         }
 
@@ -897,15 +910,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
                 var image = db.GetItem("/sitecore/media library/Modules/image");
-                var api = CreateAuthenticatingApi();
-                api.GetContentDatabaseFunction = () => db.Database;
-
-                var mediaProvider = Mock.Of<MediaProvider>(x => 
-                    x.Creator == Mock.Of<MediaCreator>(y =>
-                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
-                        ) &&
-                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake"
-                );
 
                 var payload = new XmlRpcStruct
                 {
@@ -914,9 +918,31 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     { "bits", GetSampleImageData() }
                 };
 
+#if FEATURE_ABSTRACTIONS
+                var mediaManager = Mock.Of<BaseMediaManager>(x =>
+                    x.Creator == Mock.Of<MediaCreator>(y =>
+                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
+                    )
+                );
+
+                var api = CreateAuthenticatingApi(mediaManager: mediaManager);
+#else
+                var mediaProvider = Mock.Of<MediaProvider>(x =>
+                    x.Creator == Mock.Of<MediaCreator>(y =>
+                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
+                    ) &&
+                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake"
+                );
+
+                var api = CreateAuthenticatingApi();
+#endif
+                api.GetContentDatabaseFunction = () => db.Database;
+
                 Assert.That(() =>
                 {
+#if !FEATURE_ABSTRACTIONS
                     using (new MediaProviderSwitcher(mediaProvider))
+#endif
                     {
                         api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
                     }
@@ -941,17 +967,28 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
                 var image = db.GetItem("/sitecore/media library/Modules/image");
-                var api = CreateAuthenticatingApi();
-                api.GetContentDatabaseFunction = () => db.Database;
 
                 var mediaCreator = new Mock<MediaCreator>();
                 mediaCreator.Setup(x => x.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>())).Returns(image).Verifiable();
 
+#if FEATURE_ABSTRACTIONS
+                var mediaManager = Mock.Of<BaseMediaManager>(x => 
+                    x.Creator == mediaCreator.Object &&
+                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake-url"
+                );
+
+                var api = CreateAuthenticatingApi(mediaManager: mediaManager);
+#else
                 var mediaProvider = new Mock<MediaProvider>();
                 mediaProvider.Setup(x => x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()))
                     .Returns("fake-url");
 
                 mediaProvider.SetupGet(x => x.Creator).Returns(mediaCreator.Object);
+
+                var api = CreateAuthenticatingApi();
+#endif
+
+                api.GetContentDatabaseFunction = () => db.Database;
 
                 var payload = new XmlRpcStruct
                 {
@@ -960,12 +997,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     { "bits", GetSampleImageData() }
                 };
 
+#if !FEATURE_ABSTRACTIONS
                 using (new MediaProviderSwitcher(mediaProvider.Object))
+#endif
                 {
                     var urlStruct = api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
                     Assert.That(urlStruct["url"], Is.EqualTo("fake-url"));
                 }
-                
+
                 mediaCreator.Verify();
             }
         }
@@ -981,9 +1020,25 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             };
         }
 
-        private TestableMetaBlogApi CreateAuthenticatingApi(IBlogManager blogManager = null, ICategoryManager categoryManager = null, IEntryManager entryManager = null)
+        private TestableMetaBlogApi CreateAuthenticatingApi(
+            IBlogManager blogManager = null,
+            ICategoryManager categoryManager = null,
+            IEntryManager entryManager = null,
+            IWeBlogSettings settings = null
+#if FEATURE_ABSTRACTIONS
+            ,BaseMediaManager mediaManager = null
+#endif
+            )
         {
-            return new TestableMetaBlogApi(blogManager, categoryManager, entryManager)
+            return new TestableMetaBlogApi(
+                blogManager,
+                categoryManager,
+                entryManager,
+                settings
+#if FEATURE_ABSTRACTIONS
+                ,mediaManager
+#endif
+                )
             {
                 AuthenticateFunction = (u, p) => { }
             };
@@ -994,6 +1049,16 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             var base64 =
                 "R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
             return System.Convert.FromBase64String(base64);
+        }
+
+        private DbTemplate CreateBlogRootTemplate()
+        {
+            return new DbTemplate(ID.NewID)
+            {
+                new DbField("Defined Entry Template"),
+                new DbField("Defined Category Template"),
+                new DbField("Defined Comment Template")
+            };
         }
     }
 }

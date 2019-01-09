@@ -1,17 +1,21 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Web;
 using CookComputing.XmlRpc;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Extensions.StringExtensions;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Resources.Media;
 using Sitecore.Security.Authentication;
+
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+#endif
 
 namespace Sitecore.Modules.WeBlog
 {
@@ -36,19 +40,43 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         protected IEntryManager EntryManager { get; set; }
 
+        /// <summary>
+        /// The settings to use.
+        /// </summary>
+        protected IWeBlogSettings Settings { get; set; }
+
+#if FEATURE_ABSTRACTIONS
+        /// <summary>
+        /// The <see cref="BaseMediaManager"/> to use for media operations.
+        /// </summary>
+        protected BaseMediaManager MediaManager { get; set; }
+#endif
+
         public MetaBlogApi()
-            : this(null, null, null)
+            : this(null, null, null, null
+#if FEATURE_ABSTRACTIONS
+                , null
+#endif
+                )
         {
         }
 
-        public MetaBlogApi(IBlogManager blogManager, ICategoryManager categoryManager, IEntryManager entryManager)
+        public MetaBlogApi(IBlogManager blogManager, ICategoryManager categoryManager, IEntryManager entryManager, IWeBlogSettings settings
+#if FEATURE_ABSTRACTIONS
+            , BaseMediaManager mediaManager
+#endif
+        )
         {
             BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
             CategoryManager = categoryManager ?? ManagerFactory.CategoryManagerInstance;
             EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
+            Settings = settings ?? WeBlogSettings.Instance;
+#if FEATURE_ABSTRACTIONS
+            MediaManager = mediaManager ?? MediaManager;
+#endif
         }
 
-        #region blogger.getUsersBlogs
+#region blogger.getUsersBlogs
         /// <summary>
         /// Returns user's blogs
         /// </summary>
@@ -78,9 +106,9 @@ namespace Sitecore.Modules.WeBlog
 
             return blogs;
         }
-        #endregion
+#endregion
 
-        #region metaWeblog.setTemplate (not implemented)
+#region metaWeblog.setTemplate (not implemented)
         ///// <summary>
         ///// Set blog post template
         ///// </summary>
@@ -100,9 +128,9 @@ namespace Sitecore.Modules.WeBlog
         //    */
         //    throw new System.NotImplementedException("SetTemplate is not implemented");
         //}
-        #endregion
+#endregion
 
-        #region metaWeblog.getCategories
+#region metaWeblog.getCategories
         /// <summary>
         /// Return list of blog category list
         /// </summary>
@@ -139,9 +167,9 @@ namespace Sitecore.Modules.WeBlog
             return new XmlRpcStruct[0];
 
         }
-        #endregion
+#endregion
 
-        #region metaWeblog.getRecentPosts
+#region metaWeblog.getRecentPosts
         /// <summary>
         /// Returns recent blog posts
         /// </summary>
@@ -183,9 +211,9 @@ namespace Sitecore.Modules.WeBlog
 
             return new XmlRpcStruct[0];
         }
-        #endregion
+#endregion
 
-        #region metaWeblog.getTemplate (not implemented)
+#region metaWeblog.getTemplate (not implemented)
         /// <summary>
         /// Return post template
         /// </summary>
@@ -200,7 +228,7 @@ namespace Sitecore.Modules.WeBlog
         {
             Authenticate(username, password);
 
-            CheckUserRights(blogid, username);
+            CheckUserRights(blogid);
 
             // TODO: add implementation with datasource
             string template = @"<HTML>
@@ -230,9 +258,9 @@ namespace Sitecore.Modules.WeBlog
                         </HTML>";
             return template;
         }
-        #endregion
+#endregion
 
-        #region metaWeblog.newPost
+#region metaWeblog.newPost
         /// <summary>
         /// Create new Post
         /// </summary>
@@ -246,7 +274,7 @@ namespace Sitecore.Modules.WeBlog
         public string newPost(string blogid, string username, string password, XmlRpcStruct rpcstruct, bool publish)
         {
             Authenticate(username, password);
-            CheckUserRights(blogid, username);
+            CheckUserRights(blogid);
 
             var entryTitleRaw = rpcstruct["title"];
             if (entryTitleRaw == null)
@@ -257,7 +285,7 @@ namespace Sitecore.Modules.WeBlog
 
             if (currentBlog != null)
             {
-                BlogHomeItem blogItem = currentBlog;
+                var blogItem = new BlogHomeItem(currentBlog, Settings);
                 var template = new TemplateID(blogItem.BlogSettings.EntryTemplateID);
                 var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
 
@@ -273,9 +301,9 @@ namespace Sitecore.Modules.WeBlog
         }
 
 
-        #endregion
+#endregion
 
-        #region metaWeblog.editPost
+#region metaWeblog.editPost
         /// <summary>
         /// Edit existing Post
         /// </summary>
@@ -289,7 +317,7 @@ namespace Sitecore.Modules.WeBlog
         public bool editPost(string postid, string username, string password, XmlRpcStruct rpcstruct, bool publish)
         {
             Authenticate(username, password);
-            CheckUserRights(postid, username);
+            CheckUserRights(postid);
 
             var item = GetContentDatabase().GetItem(new ID(postid));
 
@@ -305,7 +333,7 @@ namespace Sitecore.Modules.WeBlog
             
             return false;
         }
-        #endregion
+#endregion
 
         /// <summary>
         /// Sets the item data from an XML RPC struct
@@ -340,7 +368,7 @@ namespace Sitecore.Modules.WeBlog
             }
         }
 
-        #region metaWeblog.getPost
+#region metaWeblog.getPost
         /// <summary>
         /// Return existing post
         /// </summary>
@@ -352,7 +380,7 @@ namespace Sitecore.Modules.WeBlog
         public XmlRpcStruct getPost(string postid, string username, string password)
         {
             Authenticate(username, password);
-            CheckUserRights(postid, username);
+            CheckUserRights(postid);
 
             var rpcstruct = new XmlRpcStruct();
             var entryItem = GetContentDatabase().GetItem(postid);
@@ -370,9 +398,9 @@ namespace Sitecore.Modules.WeBlog
 
             return rpcstruct;
         }
-        #endregion
+#endregion
 
-        #region blogger.deletePost
+#region blogger.deletePost
         /// <summary>
         /// Delete existing post
         /// </summary>
@@ -386,7 +414,7 @@ namespace Sitecore.Modules.WeBlog
         public bool deletePost(string appKey, string postid, string userName, string password, bool publish)
         {
             Authenticate(userName, password);
-            CheckUserRights(postid, userName);
+            CheckUserRights(postid);
 
             try
             {
@@ -397,9 +425,9 @@ namespace Sitecore.Modules.WeBlog
                 return false;
             }
         }
-        #endregion
+#endregion
 
-        #region metaWeblog.newMediaObject
+#region metaWeblog.newMediaObject
         /// <summary>
         /// Create new media object associated with post
         /// </summary>
@@ -458,7 +486,7 @@ namespace Sitecore.Modules.WeBlog
             return rstruct;
 
         }
-        #endregion
+#endregion
 
         [XmlRpcMethod("pingback.ping")]
         public void pingback(string sourceUri, string targetUri)
@@ -598,70 +626,6 @@ namespace Sitecore.Modules.WeBlog
                 }
             }
             return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the categories as string.
-        /// </summary>
-        /// <param name="BlogID">The blog ID.</param>
-        /// <param name="rpcstruct">The rpcstruct.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetCategoriesAsString(Item, XmlRpcStruct) instead")] // deprecated in 3.0
-        private string GetCategoriesAsString(ID BlogID, XmlRpcStruct rpcstruct)
-        {
-            var blog = GetContentDatabase().GetItem(BlogID);
-            if (blog != null)
-            {
-                var categoryList = ManagerFactory.CategoryManagerInstance.GetCategories(blog);
-
-                var selectedCategories = string.Empty;
-
-                if (rpcstruct["categories"] != null && ((object[])rpcstruct["categories"]).Count() != 0)
-                {
-                    var categories = (string[])rpcstruct["categories"];
-
-                    foreach (string category in categories)
-                    {
-                        foreach (CategoryItem cat in categoryList)
-                        {
-                            if (category == cat.Title.Raw)
-                            {
-                                selectedCategories += cat.ID.ToString();
-                            }
-                        }
-                    }
-
-                    var result = selectedCategories.Replace("}{", "}|{");
-
-                    return result;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Gets the categories as string.
-        /// </summary>
-        /// <param name="postid">The postid.</param>
-        /// <param name="rpcstruct">The rpcstruct.</param>
-        /// <returns></returns>
-        [Obsolete("Use GetCategoriesAsString(Item, XmlRpcStruct) instead")] // deprecated in 3.0
-        private string GetCategoriesAsString(string postid, XmlRpcStruct rpcstruct)
-        {
-            var postItem = GetContentDatabase().GetItem(postid);
-            return GetCategoriesAsString(postItem, rpcstruct);
-        }
-
-        /// <summary>
-        /// Ensure the user has adequate rights to the blog.
-        /// </summary>
-        /// <param name="blogid">The ID of the blog to check the rights of.</param>
-        /// <param name="username">The username of the user to check the rights for.</param>
-        [Obsolete("Use CheckUserRights(string) instead with Context User set.")] // deprecated in 3.0
-        protected virtual void CheckUserRights(string blogid, string username)
-        {
-            CheckUserRights(blogid);
         }
     }
 }

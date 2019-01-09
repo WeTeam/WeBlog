@@ -7,7 +7,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Tokenattributes;
 using Moq;
 using NUnit.Framework;
-#if SC90
+#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
 #elif FEATURE_XDB
 using Sitecore.Analytics.Reporting;
@@ -32,82 +32,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest
     public class EntryManagerFixture
     {
         private const string IndexName = "WeBlog-master";
-
-        [Test]
-        public void GetCurrentBlogEntry_Null()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = CreateManager(settings);
-            var entry = manager.GetCurrentBlogEntry(null);
-            Assert.That(entry, Is.Null);
-        }
-
-        [Test]
-        public void GetCurrentBlogEntry_ItemFromTemplate()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = CreateManager(settings);
-
-            using (var db = new Db
-            {
-                new DbItem("entry", ID.NewID, settings.EntryTemplateIds.First())
-            })
-            {
-                var item = db.GetItem("/sitecore/content/entry");
-
-                var entryItem = manager.GetCurrentBlogEntry(item);
-                Assert.That(entryItem.ID, Is.EqualTo(item.ID));
-            }
-        }
-
-        [Test]
-        public void GetCurrentBlogEntry_ItemDerivedTemplate()
-        {
-            var baseBaseTemplateId = ID.NewID;
-            var baseTemplateId = ID.NewID;
-            var entryTemplateId = ID.NewID;
-
-            var settings = MockSettings(baseBaseTemplateId);
-            var manager = CreateManager(settings);
-
-            using (var db = new Db
-            {
-                new DbTemplate(baseBaseTemplateId),
-                new DbTemplate(baseTemplateId)
-                {
-                    BaseIDs = new [] { baseBaseTemplateId }
-                },
-                new DbTemplate(entryTemplateId)
-                {
-                    BaseIDs = new [] { baseTemplateId }
-                },
-                new DbItem("entry", ID.NewID, entryTemplateId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/entry");
-
-                var entryItem = manager.GetCurrentBlogEntry(item);
-                Assert.That(entryItem.ID, Is.EqualTo(item.ID));
-            }
-        }
-
-        [Test]
-        public void GetCurrentBlogEntry_ItemNotCorrectTemplate()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = CreateManager(settings);
-
-            using (var db = new Db
-            {
-                new DbItem("entry", ID.NewID, ID.NewID)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/entry");
-
-                var entryItem = manager.GetCurrentBlogEntry(item);
-                Assert.That(entryItem, Is.Null);
-            }
-        }
 
         [Test]
         public void DeleteEntry_NullID()
@@ -1613,7 +1537,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         {
             var srItem = new Mock<EntryResultItem>();
             srItem.Setup(x => x.GetItem()).Returns(entryItem);
-            srItem.Setup(x => x.TemplateId).Returns((new BlogHomeItem(blogItem)).BlogSettings.EntryTemplateID);
+            srItem.Setup(x => x.TemplateId).Returns(new BlogHomeItem(blogItem).BlogSettings.EntryTemplateID);
             srItem.Setup(x => x.Paths).Returns(GetPaths(entryItem));
             srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
             srItem.Setup(x => x.DatabaseName).Returns(blogItem.Database.Name);
@@ -1627,7 +1551,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         {
             var srItem = new Mock<CommentResultItem>();
             srItem.Setup(x => x.GetItem()).Returns(commentItem);
-            srItem.Setup(x => x.TemplateId).Returns((new BlogHomeItem(blogItem)).BlogSettings.CommentTemplateID);
+            srItem.Setup(x => x.TemplateId).Returns(new BlogHomeItem(blogItem).BlogSettings.CommentTemplateID);
             srItem.Setup(x => x.Paths).Returns(GetPaths(commentItem));
             srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
             srItem.Setup(x => x.DatabaseName).Returns(blogItem.Database.Name);

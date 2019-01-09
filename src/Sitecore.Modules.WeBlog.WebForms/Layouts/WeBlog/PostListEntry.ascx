@@ -2,6 +2,7 @@
 <%@ Register TagPrefix="sc" Namespace="Sitecore.Web.UI.WebControls" Assembly="Sitecore.Kernel" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Data.Items" %>
 <%@ Import Namespace="Sitecore.Modules.WeBlog.Globalization" %>
+<%@ Import Namespace="Sitecore.Modules.WeBlog.Configuration" %>
 <section>
     <header>
             <h2>
@@ -11,7 +12,7 @@
             <sc:Image runat="server" ID="EntryImage" Item="<%# (((ListViewDataItem)Container).DataItem as EntryItem) %>" Field="Thumbnail Image" CssClass="wb-image" />
         </div>
         <div class="wb-details">
-            <%#Translator.Format("ENTRY_DETAILS", (((ListViewDataItem)Container).DataItem as EntryItem).Created.ToString(Sitecore.Modules.WeBlog.Settings.DateFormat), (((ListViewDataItem)Container).DataItem as EntryItem).AuthorName)%>
+            <%#Translator.Format("ENTRY_DETAILS", (((ListViewDataItem)Container).DataItem as EntryItem).Created.ToString(WeBlogSettings.Instance.DateFormat), (((ListViewDataItem)Container).DataItem as EntryItem).AuthorName)%>
         </div>
     </header>
     <div class="description">
