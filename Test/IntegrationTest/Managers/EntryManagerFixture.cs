@@ -10,10 +10,8 @@ using Sitecore.Modules.WeBlog.Managers;
 
 #if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
-#elif FEATURE_XDB
+#else
 using Sitecore.Analytics.Reporting;
-#elif FEATURE_DMS
-using Sitecore.Analytics.Data.DataAccess;
 #endif
 
 namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
@@ -579,32 +577,10 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
         private EntryManager CreateEntryManagerForAnalyticsTest(params ID[] popularEntryIdsInOrder)
         {
-#if FEATURE_XDB
             var reportProvider = CreateMockReportDataProvider(popularEntryIdsInOrder);
             return new EntryManager(reportProvider, null);
-#else
-            // Register DMS page views for popular items
-
-            var visitor = new Visitor(Guid.NewGuid());
-            visitor.CreateVisit(Guid.NewGuid());
-
-            var hitCount = 1;
-            for(var i = popularEntryIdsInOrder.Length - 1; i >= 0; i--)
-            {
-                for(var j = 0; j < hitCount; j++)
-                {
-                    visitor.CurrentVisit.CreatePage().ItemId = popularEntryIdsInOrder[i].ToGuid();
-                }
-                hitCount++;
-            }
-
-            visitor.Submit();
-
-            return new EntryManager();
-#endif
         }
 
-#if FEATURE_XDB
         private ReportDataProviderBase CreateMockReportDataProvider(IEnumerable<ID> ids)
         {
             var reportingProviderMock = new Mock<ReportDataProviderBase>();
@@ -628,7 +604,5 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             return reportingProviderMock.Object;
         }
-#endif
-
     }
 }

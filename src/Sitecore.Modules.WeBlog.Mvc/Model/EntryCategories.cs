@@ -12,12 +12,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         {
             get
             {
-                return
-#if !FEATURE_EXPERIENCE_EDITOR
-                    Context.PageMode.IsPageEditorEditing;
-#else
-                    Context.PageMode.IsExperienceEditorEditing;
-#endif
+                return Context.PageMode.IsExperienceEditorEditing;
             }
         }
 

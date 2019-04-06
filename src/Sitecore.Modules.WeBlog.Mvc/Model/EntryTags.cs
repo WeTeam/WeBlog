@@ -26,12 +26,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         {
             get
             {
-                return
-#if !FEATURE_EXPERIENCE_EDITOR
-                    Context.PageMode.IsPageEditorEditing;
-#else
-                    Context.PageMode.IsExperienceEditorEditing;
-#endif
+                return Context.PageMode.IsExperienceEditorEditing;
             }
         }
 
@@ -39,14 +34,9 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         {
             base.Initialize(rendering);
 
-#if !FEATURE_EXPERIENCE_EDITOR
-            if (Context.PageMode.IsPageEditorEditing)
-#else
             if (Context.PageMode.IsExperienceEditorEditing)
-#endif
-            {
                 return;
-            }
+            
             Tag[] tags = ManagerFactory.TagManagerInstance.GetTagsForEntry(rendering.Item);
             TagLinks = tags.ToDictionary(t => t.Name, t => EntryTagsCore.GetTagUrl(t.Name));
         }

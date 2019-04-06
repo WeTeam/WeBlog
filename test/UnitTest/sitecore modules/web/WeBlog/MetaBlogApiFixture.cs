@@ -588,11 +588,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var newPostId = api.newPost(blog.ID.ToString(), "user", "password", post, false);
                 var postItem = db.GetItem(newPostId);
 
-#if FEATURE_UTC_DATE
                 var postDate = postItem.Publishing.PublishDate.ToLocalTime();
-#else
-                var postDate = postItem.Publishing.PublishDate;
-#endif
 
                 Assert.That(postDate, Is.EqualTo(date));
             }

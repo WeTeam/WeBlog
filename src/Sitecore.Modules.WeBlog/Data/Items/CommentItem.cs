@@ -62,11 +62,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-#if FEATURE_UTC_DATE
                 return DateUtil.ToServerTime(InnerItem.Statistics.Created);
-#else
-              return InnerItem.Statistics.Created;
-#endif
             }
         }
 

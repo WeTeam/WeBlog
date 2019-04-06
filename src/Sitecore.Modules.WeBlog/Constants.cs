@@ -51,12 +51,11 @@ namespace Sitecore.Modules.WeBlog
             public const string PublishingTargets = "/sitecore/system/publishing targets";
         }
 
-#if FEATURE_XDB
         public static class ReportingQueries
         {
             public static readonly ID ItemVisits = new ID("{9BECF823-2838-467C-87A7-3664524F5AFE}");
         }
-#endif
+
         public class Tokens
         {
             public static string WeBlogSetting = "$weblogsetting";
