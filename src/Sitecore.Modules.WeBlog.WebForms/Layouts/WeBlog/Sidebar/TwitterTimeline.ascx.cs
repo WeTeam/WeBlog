@@ -19,12 +19,7 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
         {
             get
             {
-                return
-#if !FEATURE_EXPERIENCE_EDITOR
-                    Sitecore.Context.PageMode.IsPageEditor;
-#else
-                    Sitecore.Context.PageMode.IsExperienceEditor;
-#endif
+                return Sitecore.Context.PageMode.IsExperienceEditor;
             }
         }
 
