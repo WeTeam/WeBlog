@@ -258,7 +258,7 @@
     <Compile Include="Managers\ManagerFactory.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Model\Comment.cs" />
-    <Compile Include="Pipelines\CaptchaProcessor" />
+    <Compile Include="Pipelines\CaptchaProcessor.cs" />
     <Compile Include="Pipelines\CreateCommentArgs.cs" />
     <Compile Include="Pipelines\CreateComment\AkismetSpamCheck.cs" />
     <Compile Include="Pipelines\CreateComment\CreateCommentItem.cs" />
@@ -377,7 +377,7 @@
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
-    <CallTarget Targets="TransformContentSearchConfigs90" Condition="$(Configuration.Contains('sc9.0'))" />
+    <CallTarget Targets="TransformContentSearchConfigs90" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />
   </Target>
   <Target Name="DeployToWeb">
     <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">

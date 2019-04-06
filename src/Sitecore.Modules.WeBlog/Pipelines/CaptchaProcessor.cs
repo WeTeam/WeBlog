@@ -7,10 +7,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines
   {
     public override void Process(PreprocessRequestArgs args)
     {
-      if (args.Context.Request.RawUrl.Contains("CaptchaImage.axd"))
+      if (HttpContext.Current.Request.RawUrl.Contains("CaptchaImage.axd"))
       {
         var handler = (new MSCaptcha.captchaImageHandler()) as IHttpHandler;
-        handler.ProcessRequest(args.Context);
+        handler.ProcessRequest(HttpContext.Current);
       }
     }
   }
