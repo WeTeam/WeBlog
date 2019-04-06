@@ -1,4 +1,6 @@
 ﻿using System.Web;
+using Microsoft.Security.Application;
+using Sitecore.Modules.WeBlog.Data.Fields;
 
 namespace Sitecore.Modules.WeBlog.Extensions
 {
@@ -56,6 +58,16 @@ namespace Sitecore.Modules.WeBlog.Extensions
         public static HtmlString ToHtmlString(this string input)
         {
             return new HtmlString(input);
+        }
+
+        /// <summary>
+        /// Encodes the provided text in a web safe escaped format.
+        /// </summary>
+        /// <param name="text">The text to encode.</param>
+        /// <returns>The escaped value.</returns>
+        public static string HtmlEncode(this string text)
+        {
+            return Encoder.HtmlEncode(text);
         }
     }
 }

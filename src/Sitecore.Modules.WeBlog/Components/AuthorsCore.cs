@@ -3,6 +3,8 @@ using System.Linq;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Security.Accounts;
 
 namespace Sitecore.Modules.WeBlog.Components
@@ -33,21 +35,25 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected virtual void LoadUsers()
         {
-            var groupedEntries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog).GroupBy(GetUserFullName).ToList();
+            var groupedEntries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries).GroupBy(GetUserFullName).ToList();
             groupedEntries.Sort((g1, g2) => g2.Count() - g1.Count());
             Users = groupedEntries.Select(items => items.Key);
         }
 
-        public virtual string GetUserFullName(EntryItem arg)
+        public virtual string GetUserFullName(Entry entry)
         {
-            var author = arg.Author;
-            if (author.Raw.Contains("\\"))
+            return GetUserFullName(entry.Author);
+        }
+
+        public virtual string GetUserFullName(string author)
+        {
+            if (author.Contains("\\"))
             {
-                if (!User.Exists(author.Raw)) return author.Rendered;
+                if (!User.Exists(author)) return author;
 
-                var user = User.FromName(author.Raw, false);
+                var user = User.FromName(author, false);
 
-                if (user == null) return author.Rendered;
+                if (user == null) return author;
 
                 var name = user.LocalName;
 
@@ -57,7 +63,7 @@ namespace Sitecore.Modules.WeBlog.Components
                 }
                 return name;
             }
-            return author.Raw;
+            return author;
         }
 
         public virtual string GetAuthorUrl(string author)

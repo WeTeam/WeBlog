@@ -1,9 +1,5 @@
 ﻿using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Model;
-using System;
-using System.Collections.Generic;
-using Sitecore.Data;
-using Sitecore.Data.Items;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -21,6 +17,13 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entry">The entry to get the tags for</param>
         /// <returns></returns>
-        Tag[] GetTagsForEntry(EntryItem entry);
+        Tag[] GetTagsForEntry(EntryItem entryItem);
+
+        /// <summary>
+        /// Gets the tags for a blog entry and sorts by weight
+        /// </summary>
+        /// <param name="entry">The entry to get the tags for</param>
+        /// <returns></returns>
+        Tag[] GetTagsForEntry(Entry entry);
     }
 }

@@ -7,6 +7,9 @@ namespace Sitecore.Modules.WeBlog.Search.SearchTypes
 {
     public class EntryResultItem : SearchResultItem
     {
+        [IndexField("title")]
+        public virtual string Title { get; set; }
+
         [IndexField("category")]
         public virtual ID[] Category { get; set; }
 

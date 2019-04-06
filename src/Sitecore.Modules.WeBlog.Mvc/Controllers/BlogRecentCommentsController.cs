@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Components;
-using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Mvc.Model;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Controllers
@@ -16,7 +15,13 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
 
         public BlogRecentCommentsController(IRecentCommentsCore recentCommentsCore)
         {
-            RecentCommentsCore = recentCommentsCore ?? new RecentCommentsCore(ManagerFactory.BlogManagerInstance);
+            if (recentCommentsCore != null)
+                RecentCommentsCore = recentCommentsCore;
+            else
+            {
+                RecentCommentsCore = new RecentCommentsCore();
+                RecentCommentsCore.Initialise();
+            }
         }
 
         public ActionResult Index()
@@ -31,11 +36,11 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
 
         protected virtual IEnumerable<RecentCommentsRenderingModel> GetModel()
         {
-            return RecentCommentsCore.Comments.Select(commentItem => new RecentCommentsRenderingModel
+            return RecentCommentsCore.Comments.Select(entryComment => new RecentCommentsRenderingModel
             {
-                CommentItem = commentItem,
-                EntryTitle = RecentCommentsCore.GetEntryTitleForComment(commentItem),
-                EntryUrl = RecentCommentsCore.GetEntryUrlForComment(commentItem)
+                Comment = entryComment.Comment,
+                EntryTitle = entryComment.Entry.Title.Text,
+                EntryUrl = LinkManager.GetItemUrl(entryComment.Entry)
             });
         }
     }

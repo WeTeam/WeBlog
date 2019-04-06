@@ -7,9 +7,9 @@ namespace Sitecore.Modules.WeBlog.Model
     public class Entry
     {
         /// <summary>
-        /// The ID of the entry.
+        /// The Uri of the entry.
         /// </summary>
-        public ID ItemId { get; set; }
+        public ItemUri Uri { get; set; }
 
         /// <summary>
         /// The title of the entry.

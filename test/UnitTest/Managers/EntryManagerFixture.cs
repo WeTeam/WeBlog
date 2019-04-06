@@ -25,6 +25,8 @@ using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.UnitTest.Extensions;
+using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.UnitTest.Comparers;
 
 namespace Sitecore.Modules.WeBlog.UnitTest
 {
@@ -126,7 +128,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         // GetBlogEntries tests use Content Search, so test those methods with integration tests
 
         [Test]
-        public void GetBlogEntries_NullItem()
+        public void GetBlogEntries_NullRootItem_ReturnsEmptyCollection()
         {
             var settings = MockSettings(ID.NewID);
             var manager = new TestableEntryManager(settings, 1);
@@ -150,7 +152,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     MockIndex().IndexItems(new[] { MockEntryItem(entry1, blogItem).Object });
 
                     // Act
-                    var entries = manager.GetBlogEntries((Item)null);
+                    var entries = manager.GetBlogEntries(null, EntryCriteria.AllEntries);
 
                     // Assert
                     Assert.That(entries, Is.Empty);
@@ -182,7 +184,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     // Act
                     blogItem.DeleteChildren();
-                    var entries = manager.GetBlogEntries(blogItem);
+                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
 
                     // Assert
                     Assert.That(entries, Is.Empty);
@@ -223,11 +225,152 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem);
+                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry2.ID, entry3.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri, entry3.Uri}));
+                }
+                finally
+                {
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
+                }
+            }
+        }
+
+        [Test]
+        public void GetBlogEntries_EntryItemFound_EntryContainsFields()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new TestableEntryManager(settings, 1);
+
+            using (var db = new Db
+            {
+                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
+                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    {
+                        new DbItem("Duis ligula massa", ID.NewID, settings.EntryTemplateIds.First())
+                        {
+                            new DbField("tags")
+                            {
+                                Value = "lorem, ipsum, dolor"
+                            }
+                        }
+                    }
+                }
+            })
+            {
+                try
+                {
+                    // Assign
+                    var blogItem = db.GetItem("/sitecore/content/blog");
+                    var entry = db.GetItem("/sitecore/content/blog/2016/Duis ligula massa");
+
+                    IndexEntries(blogItem, settings);
+
+                    // Act
+                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+
+                    // Assert
+                    Assert.That(entries.Count, Is.EqualTo(1));
+
+                    var returnedEntry = entries[0];
+                    Assert.That(returnedEntry.Title, Is.EqualTo("Duis ligula massa"));
+                    Assert.That(returnedEntry.Tags, Is.EquivalentTo(new[]{ "lorem", "ipsum", "dolor" }));
+                    Assert.That(returnedEntry.EntryDate, Is.EqualTo(entry.Created));
+                    Assert.That(returnedEntry.Uri, Is.EqualTo(entry.Uri));
+                }
+                finally
+                {
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
+                }
+            }
+        }
+
+        [Test]
+        public void GetBlogEntries_EntryWithExplicitTitle_TitleIsCorrect()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new TestableEntryManager(settings, 1);
+
+            using (var db = new Db
+            {
+                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
+                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    {
+                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First())
+                        {
+                            new DbField("title")
+                            {
+                                Value = "Duis ligula massa"
+                            }
+                        }
+                    }
+                }
+            })
+            {
+                try
+                {
+                    // Assign
+                    var blogItem = db.GetItem("/sitecore/content/blog");
+                    var entry = db.GetItem("/sitecore/content/blog/2016/entry1");
+
+                    IndexEntries(blogItem, settings);
+
+                    // Act
+                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+
+                    // Assert
+                    Assert.That(entries.Count, Is.EqualTo(1));
+
+                    var returnedEntry = entries[0];
+                    Assert.That(returnedEntry.Title, Is.EqualTo("Duis ligula massa"));
+                }
+                finally
+                {
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
+                }
+            }
+        }
+
+        [Test]
+        public void GetBlogEntries_EntryEntryDate_DateIsCorrect()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new TestableEntryManager(settings, 1);
+
+            using (var db = new Db
+            {
+                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
+                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    {
+                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First())
+                        {
+                            new DbField("entry date")
+                            {
+                                Value = "20140317T130029"
+                            }
+                        }
+                    }
+                }
+            })
+            {
+                try
+                {
+                    // Assign
+                    var blogItem = db.GetItem("/sitecore/content/blog");
+                    var entry = db.GetItem("/sitecore/content/blog/2016/entry1");
+
+                    IndexEntries(blogItem, settings);
+
+                    // Act
+                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+
+                    // Assert
+                    Assert.That(entries.Count, Is.EqualTo(1));
+
+                    var returnedEntry = entries[0];
+                    Assert.That(returnedEntry.EntryDate, Is.EqualTo(new DateTime(2014, 3, 17, 13, 0, 29)));
                 }
                 finally
                 {
@@ -273,11 +416,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(entry2);
+                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry2.ID, entry3.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri, entry3.Uri }));
                 }
                 finally
                 {
@@ -323,12 +466,18 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 3
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(entry2, 3, null, null, null, null);
+                    var entries = manager.GetBlogEntries(entry2, criteria);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry2.ID, entry3.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri, entry3.Uri }));
                 }
                 finally
                 {
@@ -364,12 +513,18 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 2
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 2, null, null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry2.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri }));
                 }
                 finally
                 {
@@ -403,8 +558,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 0,
+                        PageSize = 10
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 0, null, null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
                     Assert.That(entries, Is.Empty);
@@ -441,8 +602,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = -7
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, -7, null, null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
                     Assert.That(entries, Is.Empty);
@@ -481,12 +648,19 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        Tag = "prowl"
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 10, "prowl", null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry2.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri }));
                 }
                 finally
                 {
@@ -522,12 +696,19 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        Tag = "orion pax"
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 10, "orion pax", null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry2.ID, entry3.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry2.Uri, entry3.Uri }));
                 }
                 finally
                 {
@@ -564,13 +745,20 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 2,
+                        Tag = "wheeljack"
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 2, "wheeljack", null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry3.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry3.Uri}));
                 }
                 finally
                 {
@@ -605,8 +793,15 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 2,
+                        Tag = "blurr"
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 10, "blurr", null, null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
 
                     // Assert
@@ -659,13 +854,20 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        Category = alphaId.ToString()
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 10, null, alphaId.ToString(), null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry2.ID, entry3.ID, entry4.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry2.Uri, entry3.Uri, entry4.Uri}));
                 }
                 finally
                 {
@@ -711,8 +913,15 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        Category = ID.NewID.ToString()
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 10, null, ID.NewID.ToString(), null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
 
                     // Assert
@@ -763,13 +972,20 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 1,
+                        Category = alphaId.ToString()
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 1, null, alphaId.ToString(), null, null);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry2.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry2.Uri }));
                 }
                 finally
                 {
@@ -806,12 +1022,112 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        MinimumDate = new DateTime(2014, 11, 1),
+                        MaximumDate = new DateTime(2014, 12, 20)
+                    };
+
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, 10, null, null, new DateTime(2014, 11, 1), new DateTime(2014, 12, 20));
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry3.ID, entry2.ID }));
+                    var ids = from result in entries select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry3.Uri, entry2.Uri }));
+                }
+                finally
+                {
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
+                }
+            }
+        }
+
+        [Test]
+        public void GetBlogEntries_SearchDateBeforeEntries_ReturnsEmpty()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new TestableEntryManager(settings, 1);
+
+            using (var db = new Db
+            {
+                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
+                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    {
+                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 10, 1)) } },
+                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 11, 1)) } },
+                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 12, 1)) } },
+                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2015, 1, 1)) } }
+                    }
+                }
+            })
+            {
+                try
+                {
+                    // Assign
+                    var blogItem = db.GetItem("/sitecore/content/blog");
+
+                    IndexEntries(blogItem, settings);
+
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        MaximumDate = new DateTime(2014, 09, 30)
+                    };
+
+                    // Act
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
+
+                    // Assert
+                    Assert.That(entries, Is.Empty);
+                }
+                finally
+                {
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
+                }
+            }
+        }
+
+        [Test]
+        public void GetBlogEntries_SearchDateAfterEntries_ReturnsEmpty()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new TestableEntryManager(settings, 1);
+
+            using (var db = new Db
+            {
+                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
+                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    {
+                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 10, 1)) } },
+                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 11, 1)) } },
+                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 12, 1)) } },
+                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2015, 1, 1)) } }
+                    }
+                }
+            })
+            {
+                try
+                {
+                    // Assign
+                    var blogItem = db.GetItem("/sitecore/content/blog");
+
+                    IndexEntries(blogItem, settings);
+
+                    var criteria = new EntryCriteria
+                    {
+                        PageNumber = 1,
+                        PageSize = 10,
+                        MinimumDate = new DateTime(2015, 01, 2)
+                    };
+
+                    // Act
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
+
+                    // Assert
+                    Assert.That(entries, Is.Empty);
                 }
                 finally
                 {
@@ -848,656 +1164,20 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     IndexEntries(blogItem, settings);
 
-                    // Act
-                    var entries = manager.GetBlogEntries(blogItem, 2, null, null, new DateTime(2014, 11, 1), new DateTime(2015, 1, 20));
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry4.ID, entry3.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetBlogEntriesByMonthAndYear_BeforeEntries()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    var criteria = new EntryCriteria
                     {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 1)) } },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 2)) } },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 4, 3)) } },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 5, 4)) } }
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-
-                    IndexEntries(blogItem, settings);
+                        PageNumber = 1,
+                        PageSize = 2,
+                        MinimumDate = new DateTime(2014, 11, 1),
+                        MaximumDate = new DateTime(2015, 1, 20)
+                    };
 
                     // Act
-                    var entries = manager.GetBlogEntriesByMonthAndYear(blogItem, 1, 2012);
+                    var entries = manager.GetBlogEntries(blogItem, criteria);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetBlogEntriesByMonthAndYear_WithinEntries()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 1)) } },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 2)) } },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 4, 3)) } },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 5, 4)) } }
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
-                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
-
-                    IndexEntries(blogItem, settings);
-
-                    // Act
-                    var entries = manager.GetBlogEntriesByMonthAndYear(blogItem, 3, 2012);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry2.ID, entry1.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetBlogEntriesByMonthAndYear_LastMonth()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 12, 30)) } },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 12, 31)) } },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 1, 1)) } },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2013, 1, 1)) } }
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
-                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
-
-                    IndexEntries(blogItem, settings);
-
-                    // Act
-                    var entries = manager.GetBlogEntriesByMonthAndYear(blogItem, 12, 2012);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry2.ID, entry1.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetBlogEntriesByMonthAndYear_FirstMonth()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 12, 30)) } },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 12, 31)) } },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2013, 1, 1)) } },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2013, 1, 1)) } }
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry3 = db.GetItem("/sitecore/content/blog/2016/entry3");
-                    var entry4 = db.GetItem("/sitecore/content/blog/2016/entry4");
-
-                    IndexEntries(blogItem, settings);
-
-                    // Act
-                    var entries = manager.GetBlogEntriesByMonthAndYear(blogItem, 1, 2013);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry3.ID, entry4.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetBlogEntriesByMonthAndYear_AfterEntries()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 1)) } },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 2)) } },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 4, 3)) } },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 5, 4)) } }
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-
-                    IndexEntries(blogItem, settings);
-
-                    // Act
-                    var entries = manager.GetBlogEntriesByMonthAndYear(blogItem, 6, 2012);
-
-                    // Assert
-                    Assert.That(entries, Is.Empty);
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetBlogEntriesByMonthAndYear_InvalidDate()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 1)) } },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 2)) } },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 3)) } },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2012, 3, 4)) } }
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-
-                    IndexEntries(blogItem, settings);
-
-                    // Act
-                    var entries = manager.GetBlogEntriesByMonthAndYear(blogItem, 17, 209992);
-
-                    // Assert
-                    Assert.That(entries, Is.Empty);
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByComment_ValidItem()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    {"Defined Category Template",settings.CategoryTemplateIds.First().ToString()},
-                    {"Defined Entry Template",settings.EntryTemplateIds.First().ToString()},
-                    {"Defined Comment Template",settings.CommentTemplateIds.First().ToString()},
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment2", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment2", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment3", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    db.Configuration.Settings["WeBlog.BlogTemplateID"] = settings.BlogTemplateIds.First().ToString();
-
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
-                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
-                    var entry3 = db.GetItem("/sitecore/content/blog/2016/entry3");
-
-                    var mockIndex = MockIndex();
-
-                    IndexEntries(blogItem, settings, mockIndex);
-                    IndexComments(blogItem, settings, mockIndex);
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByComment(blogItem, 10);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry3.ID, entry2.ID, entry1.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByComment_ValidItem_Limited()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    {"Defined Category Template",settings.CategoryTemplateIds.First().ToString()},
-                    {"Defined Entry Template",settings.EntryTemplateIds.First().ToString()},
-                    {"Defined Comment Template",settings.CommentTemplateIds.First().ToString()},
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment2", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment2", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment3", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    db.Configuration.Settings["WeBlog.BlogTemplateID"] = settings.BlogTemplateIds.First().ToString();
-
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
-                    var entry3 = db.GetItem("/sitecore/content/blog/2016/entry3");
-
-                    var mockIndex = MockIndex();
-
-                    IndexEntries(blogItem, settings, mockIndex);
-                    IndexComments(blogItem, settings, mockIndex);
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByComment(blogItem, 2);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry3.ID, entry2.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByComment_InvalidItem()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    {"Defined Category Template",settings.CategoryTemplateIds.First().ToString()},
-                    {"Defined Entry Template",settings.EntryTemplateIds.First().ToString()},
-                    {"Defined Comment Template",settings.CommentTemplateIds.First().ToString()},
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment2", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                        {
-                            new DbItem("Comment1", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment2", ID.NewID,settings.CommentTemplateIds.First()),
-                            new DbItem("Comment3", ID.NewID,settings.CommentTemplateIds.First())
-                        },
-                        new DbItem("entry4", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    db.Configuration.Settings["WeBlog.BlogTemplateID"] = settings.BlogTemplateIds.First().ToString();
-
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
-
-                    var mockIndex = MockIndex();
-
-                    IndexEntries(blogItem, settings, mockIndex);
-                    IndexComments(blogItem, settings, mockIndex);
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByComment(entry2, 10);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry2.ID }));
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByComment_NullItem()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    {"Defined Category Template",settings.CategoryTemplateIds.First().ToString()},
-                    {"Defined Entry Template",settings.EntryTemplateIds.First().ToString()},
-                    {"Defined Comment Template",settings.CommentTemplateIds.First().ToString()},
-                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    db.Configuration.Settings["WeBlog.BlogTemplateID"] = settings.BlogTemplateIds.First().ToString();
-
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-
-                    var mockIndex = MockIndex();
-
-                    IndexEntries(blogItem, settings, mockIndex);
-                    IndexComments(blogItem, settings, mockIndex);
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByComment(blogItem, 10);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.Empty);
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByView_ValidItem()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, ID.NewID)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
-                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
-                    var entry3 = db.GetItem("/sitecore/content/blog/2016/entry3");
-
-                    IndexEntries(blogItem, settings);
-
-                    db.Configuration.Settings["Xdb.Enabled"] = true.ToString();
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByView(blogItem, int.MaxValue);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID, entry2.ID, entry3.ID }));
-
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByView_ValidItem_Limited()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, ID.NewID)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
-
-                    IndexEntries(blogItem, settings);
-
-                    db.Configuration.Settings["Xdb.Enabled"] = true.ToString();
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByView(blogItem, 1);
-
-                    // Assert
-                    var ids = from result in entries select result.ID;
-                    Assert.That(ids, Is.EqualTo(new[] { entry1.ID }));
-
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByView_InvalidItem()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, ID.NewID)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                },
-                new DbItem("folder")
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-                    var folder = db.GetItem("/sitecore/content/folder");
-
-                    IndexEntries(blogItem, settings);
-
-                    db.Configuration.Settings["Xdb.Enabled"] = true.ToString();
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByView(folder, int.MaxValue);
-
-                    // Assert
-                    Assert.That(entries, Is.Empty);
-                }
-                finally
-                {
-                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
-                }
-            }
-        }
-
-        [Test]
-        public void GetPopularEntriesByView_NullItem()
-        {
-            var settings = MockSettings(ID.NewID);
-            var manager = new TestableEntryManager(settings, 1);
-
-            using (var db = new Db
-            {
-                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
-                    new DbItem("2016", ID.NewID, ID.NewID)
-                    {
-                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()),
-                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First())
-                    }
-                }
-            })
-            {
-                try
-                {
-                    // Assign
-                    var blogItem = db.GetItem("/sitecore/content/blog");
-
-                    IndexEntries(blogItem, settings);
-
-                    db.Configuration.Settings["Xdb.Enabled"] = true.ToString();
-
-                    // Act
-                    var entries = manager.GetPopularEntriesByView(null, int.MaxValue);
-
-                    // Assert
-                    Assert.That(entries, Is.Empty);
+                    var uris = from result in entries select result.Uri;
+                    Assert.That(uris, Is.EqualTo(new[] { entry4.Uri, entry3.Uri }));
                 }
                 finally
                 {
@@ -1537,13 +1217,19 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         {
             var srItem = new Mock<EntryResultItem>();
             srItem.Setup(x => x.GetItem()).Returns(entryItem);
+            srItem.Setup(x => x.Uri).Returns(entryItem.Uri);
             srItem.Setup(x => x.TemplateId).Returns(new BlogHomeItem(blogItem).BlogSettings.EntryTemplateID);
             srItem.Setup(x => x.Paths).Returns(GetPaths(entryItem));
             srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
             srItem.Setup(x => x.DatabaseName).Returns(blogItem.Database.Name);
+            srItem.Setup(x => x.Name).Returns(entryItem.Name);
             srItem.Setup(x => x.Tags).Returns(GetTags(entryItem));
             srItem.Setup(x => x.Category).Returns(GetCategories(entryItem));
             srItem.Setup(x => x.EntryDate).Returns(GetEntryData(entryItem));
+
+            if(!string.IsNullOrEmpty(entryItem["title"]))
+                srItem.Setup(x => x.Title).Returns(entryItem["title"]);
+
             return srItem;
         }
 
@@ -1605,17 +1291,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         }
 
         [Test]
-        public void GetBlogEntryByComment_NullItem()
+        public void GetBlogEntryItemByCommentUri_NullUri_ReturnsNull()
         {
             var settings = MockSettings(ID.NewID);
             var manager = CreateManager(settings);
-            var foundEntry = manager.GetBlogEntryByComment(null);
+            var foundEntry = manager.GetBlogEntryItemByCommentUri(null);
 
             Assert.That(foundEntry, Is.Null);
         }
 
         [Test]
-        public void GetBlogEntryByComment_OnEntry()
+        public void GetBlogEntryItemByCommentUri_WithValidEntryUri_ReturnsEntry()
         {
             var settings = MockSettings(ID.NewID);
             var manager = CreateManager(settings);
@@ -1632,14 +1318,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             })
             {
                 var item = db.GetItem("/sitecore/content/entry");
-                var result = manager.GetBlogEntryByComment(item);
+                var result = manager.GetBlogEntryItemByCommentUri(item.Uri);
 
                 Assert.That(result.ID, Is.EqualTo(item.ID));
             }
         }
 
         [Test]
-        public void GetBlogEntryByComment_UnderEntry()
+        public void GetBlogEntryItemByCommentUri_UnderEntry_ReturnsEntry()
         {
             var settings = MockSettings(ID.NewID);
             var manager = CreateManager(settings);
@@ -1657,14 +1343,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             {
                 var commentItem = db.GetItem("/sitecore/content/entry/2013/comment");
                 var entryItem = db.GetItem("/sitecore/content/entry");
-                var result = manager.GetBlogEntryByComment(commentItem);
+                var result = manager.GetBlogEntryItemByCommentUri(commentItem.Uri);
 
                 Assert.That(result.ID, Is.EqualTo(entryItem.ID));
             }
         }
 
         [Test]
-        public void GetBlogEntryByComment_OutsideEntry()
+        public void GetBlogEntryItemByCommentUri_OutsideEntry_ReturnsNull()
         {
             var settings = MockSettings(ID.NewID);
             var manager = CreateManager(settings);
@@ -1681,7 +1367,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             })
             {
                 var item = db.GetItem("/sitecore/content");
-                var result = manager.GetBlogEntryByComment(item);
+                var result = manager.GetBlogEntryItemByCommentUri(item.Uri);
 
                 Assert.That(result, Is.Null);
             }
@@ -1717,6 +1403,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     var srItem = new Mock<EntryResultItem>();
                     srItem.Setup(x => x.GetItem()).Returns(entry1);
+                    srItem.Setup(x => x.Uri).Returns(entry1.Uri);
                     srItem.Setup(x => x.TemplateId).Returns((new BlogHomeItem(blogItem)).BlogSettings.EntryTemplateID);
                     srItem.Setup(x => x.Paths).Returns(new[] { blogItem.ID });
                     srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
@@ -1731,7 +1418,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     var entryItems = manager.GetPopularEntriesByView(blogItem, 10);
 
                     // Assert
-                    Assert.That(entryItems.Length, Is.EqualTo(expected));
+                    Assert.That(entryItems.Count, Is.EqualTo(expected));
 
                 }
                 finally
@@ -1756,7 +1443,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         private EntryManager CreateManager(IWeBlogSettings settings)
         {
 #if FEATURE_XDB
-            return new EntryManager(null, settings);
+            return new EntryManager(null, null, settings);
 #else
             return new EntryManager(settings);
 #endif
@@ -1769,7 +1456,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
         public TestableEntryManager(IWeBlogSettings settings, long viewCount)
 #if FEATURE_XDB
-            : base(null, settings)
+            : base(null, null, settings, null)
 #else
             : base(settings)
 #endif

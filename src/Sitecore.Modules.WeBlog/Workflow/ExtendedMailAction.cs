@@ -148,7 +148,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             else if (args.DataItem.TemplateIsOrBasedOn(WeBlogSettings.Instance.CommentTemplateIds))
             {
                 CommentItem commentItem = new CommentItem(args.DataItem);
-                entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(commentItem);
+                entryItem = ManagerFactory.EntryManagerInstance.GetBlogEntryItemByCommentUri(commentItem.InnerItem.Uri);
                 velocityContext.Put("comment", commentItem);
             }
 

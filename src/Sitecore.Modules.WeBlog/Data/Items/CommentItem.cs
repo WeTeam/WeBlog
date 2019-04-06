@@ -3,6 +3,7 @@ using Joel.Net;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -85,6 +86,9 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// <returns>An Akismet comment</returns>
         public static implicit operator AkismetComment(CommentItem comment)
         {
+            if (comment == null)
+                return null;
+
             var url = string.Empty;
             var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
             if (blog != null)
@@ -94,16 +98,31 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 
             var akismetComment = new AkismetComment();
             akismetComment.Blog = url;
-            akismetComment.UserIp = comment.IpAddress.Text;
+            akismetComment.UserIp = comment.IpAddress.Raw;
             akismetComment.UserAgent = ""; // TODO
-            akismetComment.CommentContent = comment.Comment.Text;
+            akismetComment.CommentContent = comment.Comment.Raw;
             akismetComment.CommentType = "comment";
             akismetComment.CommentAuthor = comment.AuthorName;
-            akismetComment.CommentAuthorEmail = comment.Email.Text;
-            akismetComment.CommentAuthorUrl = comment.Website.Text;
+            akismetComment.CommentAuthorEmail = comment.Email.Raw;
+            akismetComment.CommentAuthorUrl = comment.Website.Raw;
 
             return akismetComment;
         }
 
+        public static implicit operator CommentContent(CommentItem comment)
+        {
+            if (comment == null)
+                return null;
+
+            return new CommentContent
+            {
+                Uri = comment.InnerItem.Uri,
+                AuthorName = comment.AuthorName,
+                AuthorWebsite = comment.Website.Raw,
+                AuthorEmail = comment.Email.Raw,
+                Text = comment.Comment.Raw,
+                Created = comment.Created
+            };
+        }
     }
 }

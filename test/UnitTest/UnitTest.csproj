@@ -106,7 +106,10 @@
     <Compile Include="..\..\src\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Caching\EntrySearchCacheFixture.cs" />
+    <Compile Include="Comparers\ItemIdentityComparer.cs" />
     <Compile Include="ContentHelper.cs" />
+    <Compile Include="Data\Items\CommentItemFixture.cs" />
     <Compile Include="Extensions\MockExtensions.cs" />
     <Compile Include="Managers\EntryManagerFixture.cs" />
     <Compile Include="Extensions\ItemExtensionsFixture.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="Pipelines\ProfanityFilter\FilterWordsFixture.cs" />
     <Compile Include="Pipelines\ProfanityFilter\ValidateInputFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\EntryCriteriaFixture.cs" />
     <Compile Include="sitecore modules\web\WeBlog\MetaBlogApiFixture.cs" />
     <Compile Include="sitecore modules\web\WeBlog\TestableMetaBlogApi.cs" />
   </ItemGroup>

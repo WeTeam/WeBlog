@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Moq;
 using NUnit.Framework;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Managers
 {
@@ -26,22 +27,21 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             using (var db = new Db
             {
                 new DbItem("blog1")
-                {
-                    new DbItem("entry1"),
-                    new DbItem("entry2")
-                }
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entry1 = db.GetItem("/sitecore/content/blog1/entry1");
-                var entry2 = db.GetItem("/sitecore/content/blog1/entry2");
 
-                var entryManager = Mock.Of<EntryManager>(x =>
-                    x.GetBlogEntries(blogItem) == new EntryItem[] { entry1, entry2 }
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
+                    {
+                        new Entry(),
+                        new Entry()
+                    }
                 );
 
-                var manager = new TagManager(entryManager);
-                var tags = manager.GetTagsForBlog(blogItem);
+                var sut = new TagManager(entryManager);
+
+                var tags = sut.GetTagsForBlog(blogItem);
 
                 Assert.That(tags, Is.Empty);
             }
@@ -51,50 +51,27 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetTagsForBlog_SomeEntriesNoTags()
         {
             // limit datestamp to date only so comparison doesn't fail with milliseconds.
-            var dateStamp = System.DateTime.UtcNow.Date;
+            var dateStamp = DateTime.UtcNow.Date;
 
             using (var db = new Db
             {
                 new DbItem("blog1")
-                {
-                    new DbItem("entry1")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "lorem, ipsum"
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    },
-                    new DbItem("entry2")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "   "
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    },
-                    new DbItem("entry3")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "dolor "
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    }
-                }
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entry1 = db.GetItem("/sitecore/content/blog1/entry1");
-                var entry2 = db.GetItem("/sitecore/content/blog1/entry2");
-                var entry3 = db.GetItem("/sitecore/content/blog1/entry3");
-
-                var entryManager = Mock.Of<EntryManager>(x =>
-                    x.GetBlogEntries(blogItem) == new EntryItem[] { entry1, entry2, entry3 }
+                
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
+                    {
+                        new Entry { Tags = new []{ "lorem", "ipsum" }, EntryDate = dateStamp},
+                        new Entry { Tags = new string[0], EntryDate = dateStamp},
+                        new Entry { Tags = new []{ "dolor" }, EntryDate = dateStamp}
+                    }
                 );
 
-                var manager = new TagManager(entryManager);
-                var tags = manager.GetTagsForBlog(blogItem);
+                var sut = new TagManager(entryManager);
+
+                var tags = sut.GetTagsForBlog(blogItem);
 
                 Assert.That(tags, Is.EqualTo(new[]
                 {
@@ -109,41 +86,24 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetTagsForBlog_SingleTagsOnEntries()
         {
             // limit datestamp to date only so comparison doesn't fail with milliseconds.
-            var dateStamp = System.DateTime.UtcNow.Date;
+            var dateStamp = DateTime.UtcNow.Date;
 
             using (var db = new Db
             {
                 new DbItem("blog1")
-                {
-                    new DbItem("entry1")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "lorem"
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    },
-                    new DbItem("entry2")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "ipsum"
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    }
-                }
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entry1 = db.GetItem("/sitecore/content/blog1/entry1");
-                var entry2 = db.GetItem("/sitecore/content/blog1/entry2");
-
-                var entryManager = Mock.Of<EntryManager>(x =>
-                    x.GetBlogEntries(blogItem) == new EntryItem[] { entry1, entry2 }
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
+                    {
+                        new Entry { Tags = new []{ "lorem" }, EntryDate = dateStamp},
+                        new Entry { Tags = new []{ "ipsum" }, EntryDate = dateStamp}
+                    }
                 );
 
-                var manager = new TagManager(entryManager);
-                var tags = manager.GetTagsForBlog(blogItem);
+                var sut = new TagManager(entryManager);
+                var tags = sut.GetTagsForBlog(blogItem);
 
                 Assert.That(tags, Is.EqualTo(new[]
                 {
@@ -157,41 +117,24 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetTagsForBlog_MultipleTagsOnEntries()
         {
             // limit datestamp to date only so comparison doesn't fail with milliseconds.
-            var dateStamp = System.DateTime.UtcNow.Date;
+            var dateStamp = DateTime.UtcNow.Date;
 
             using (var db = new Db
             {
                 new DbItem("blog1")
-                {
-                    new DbItem("entry1")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "lorem, ipsum,       dolor     "
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    },
-                    new DbItem("entry2")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "sit  ,  amed,   pluto "
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    }
-                }
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entry1 = db.GetItem("/sitecore/content/blog1/entry1");
-                var entry2 = db.GetItem("/sitecore/content/blog1/entry2");
-
-                var entryManager = Mock.Of<EntryManager>(x =>
-                    x.GetBlogEntries(blogItem) == new EntryItem[] { entry1, entry2 }
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
+                    {
+                        new Entry { Tags = new []{ "lorem", "ipsum", "dolor" }, EntryDate = dateStamp},
+                        new Entry { Tags = new []{ "sit", "amed", "pluto" }, EntryDate = dateStamp}
+                    }
                 );
 
-                var manager = new TagManager(entryManager);
-                var tags = manager.GetTagsForBlog(blogItem);
+                var sut = new TagManager(entryManager);
+                var tags = sut.GetTagsForBlog(blogItem);
 
                 Assert.That(tags, Is.EqualTo(new[]
                 {
@@ -209,50 +152,25 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetTagsForBlog_MultipleUse()
         {
             // limit datestamp to date only so comparison doesn't fail with milliseconds.
-            var dateStamp = System.DateTime.UtcNow.Date;
+            var dateStamp = DateTime.UtcNow.Date;
 
             using (var db = new Db
             {
                 new DbItem("blog1")
-                {
-                    new DbItem("entry1")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "lorem, ipsum"
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    },
-                    new DbItem("entry2")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "lorem, dolor"
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    },
-                    new DbItem("entry3")
-                    {
-                        new DbField("Tags")
-                        {
-                            Value = "lorem, dolor"
-                        },
-                        new DbField("Entry Date") { Value = DateUtil.ToIsoDate(dateStamp) }
-                    }
-                }
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entry1 = db.GetItem("/sitecore/content/blog1/entry1");
-                var entry2 = db.GetItem("/sitecore/content/blog1/entry2");
-                var entry3 = db.GetItem("/sitecore/content/blog1/entry3");
-
-                var entryManager = Mock.Of<EntryManager>(x =>
-                    x.GetBlogEntries(blogItem) == new EntryItem[] { entry1, entry2, entry3 }
+                var entryManager = Mock.Of<IEntryManager>(x =>
+                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
+                    {
+                        new Entry { Tags = new []{ "lorem", "ipsum" }, EntryDate = dateStamp},
+                        new Entry { Tags = new []{ "lorem", "dolor" }, EntryDate = dateStamp},
+                        new Entry { Tags = new []{ "lorem", "dolor" }, EntryDate = dateStamp}
+                    }
                 );
 
-                var manager = new TagManager(entryManager);
-                var tags = manager.GetTagsForBlog(blogItem);
+                var sut = new TagManager(entryManager);
+                var tags = sut.GetTagsForBlog(blogItem);
 
                 Assert.That(tags, Is.EqualTo(new[]
                 {
@@ -265,10 +183,18 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         }
 
         [Test]
-        public void GetTagsForEntry_Null()
+        public void GetTagsForEntry_NullEntryItem()
         {
             var manager = new TagManager();
-            var tags = manager.GetTagsForEntry(null);
+            var tags = manager.GetTagsForEntry((EntryItem)null);
+            Assert.That(tags, Is.Empty);
+        }
+
+        [Test]
+        public void GetTagsForEntry_NullEntry()
+        {
+            var manager = new TagManager();
+            var tags = manager.GetTagsForEntry((Entry)null);
             Assert.That(tags, Is.Empty);
         }
 
@@ -291,7 +217,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetTagsForEntry_SingleTag()
         {
             // limit datestamp to date only so comparison doesn't fail with milliseconds.
-            var dateStamp = System.DateTime.UtcNow.Date;
+            var dateStamp = DateTime.UtcNow.Date;
 
             using (var db = new Db
             {

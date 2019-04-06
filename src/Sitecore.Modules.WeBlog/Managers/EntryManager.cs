@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.ContentSearch;
@@ -13,8 +11,10 @@ using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
-using Sitecore.StringExtensions;
+using Sitecore.Modules.WeBlog.Caching;
 #if FEATURE_XCONNECT
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Xdb.Reporting;
@@ -30,7 +30,7 @@ using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
 namespace Sitecore.Modules.WeBlog.Managers
 {
     /// <summary>
-    /// Provides utilities for working with blog entries
+    /// Provides utilities for working with blog entries.
     /// </summary>
     public class EntryManager : IEntryManager
     {
@@ -39,19 +39,35 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         protected IWeBlogSettings Settings = null;
 
+        /// <summary>
+        /// The cache used to store blog entries in.
+        /// </summary>
+        protected IEntrySearchCache EntryCache = null;
+
+        /// <summary>
+        /// The comment manager to use.
+        /// </summary>
+        protected ICommentManager CommentManager = null;
+
 #if FEATURE_XDB
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         protected ReportDataProviderBase ReportDataProvider = null;
 
         public EntryManager()
-            : this(null, null)
+            : this(null, new EntrySearchCache())
         {
         }
 
-        public EntryManager(ReportDataProviderBase reportDataProvider, IWeBlogSettings settings = null)
+        public EntryManager(
+            ReportDataProviderBase reportDataProvider,
+            IEntrySearchCache cache,
+            IWeBlogSettings settings = null,
+            ICommentManager commentManager = null)
         {
             ReportDataProvider = reportDataProvider;
             Settings = settings ?? WeBlogSettings.Instance;
+            EntryCache = cache;
+            CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
         }
 #else
         public EntryManager()
@@ -59,25 +75,26 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
         }
 
-        public EntryManager(IWeBlogSettings settings)
+        public EntryManager(IWeBlogSettings settings = null, BaseCacheManager cacheManager = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
+            SetEntriesCache(cacheManager);
         }
 #endif
 
         /// <summary>
-        /// Deletes a blog post
+        /// Deletes a blog post.
         /// </summary>
-        /// <param name="postID">The ID of the post to delete</param>
-        /// <param name="db">The database to delete the entry from</param>
-        /// <returns>True if the post was deleted, otherwise False</returns>
-        public virtual bool DeleteEntry(string postID, Database db)
+        /// <param name="postId">The ID of the post to delete.</param>
+        /// <param name="db">The database to delete the entry from.</param>
+        /// <returns>True if the post was deleted, otherwise False.</returns>
+        public virtual bool DeleteEntry(string postId, Database db)
         {
             Assert.IsNotNull(db, "Database cannot be null");
 
-            if (!string.IsNullOrEmpty(postID))
+            if (!string.IsNullOrEmpty(postId))
             {
-                var blogPost = db.GetItem(postID);
+                var blogPost = db.GetItem(postId);
 
                 if (blogPost != null)
                 {
@@ -85,8 +102,9 @@ namespace Sitecore.Modules.WeBlog.Managers
                     {
                         blogPost.Delete();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
+                        Log.Error("Failed to delete blog post " + postId, ex, this);
                         return false;
                     }
 
@@ -98,90 +116,42 @@ namespace Sitecore.Modules.WeBlog.Managers
         }
 
         /// <summary>
-        /// Gets blog entries for the given blog
+        /// Gets blog entries for the given blog which meet the criteria.
         /// </summary>
-        /// <param name="blogItem">The blog item to retrieve the entries for</param>
-        /// <returns>The entries for the current blog</returns>
-        public virtual EntryItem[] GetBlogEntries(Item blogItem)
+        /// <param name="blogRootItem">The root item of the blog to retrieve the entries for.</param>
+        /// <param name="criteria">The criteria the entries should meet.</param>
+        /// <returns>The entries matching the criteria.</returns>
+        public virtual IList<Entry> GetBlogEntries(Item blogRootItem, EntryCriteria criteria)
         {
-            return GetBlogEntries(blogItem, int.MaxValue, null, null, (DateTime?)null);
-        }
+            if (blogRootItem == null || criteria == null || criteria.PageNumber <= 0 || criteria.PageSize <= 0)
+                return new Entry[0];
 
-        /// <summary>
-        /// Gets blog entries for the given blog up to the maximum number given
-        /// </summary>
-        /// <param name="blogID">The ID of the blog to get the entries for</param>
-        /// <param name="database">The database to get the blog from</param>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <returns>The entries for the given blog</returns>
-        public virtual EntryItem[] GetBlogEntries(ID blogID, Database database, int maxNumber)
-        {
-            var blog = database.GetItem(blogID);
-            if (blog != null)
-                return GetBlogEntries(blog, maxNumber, null, null, (DateTime?)null);
-            else
-                return new EntryItem[0];
-        }
+            var cachedEntries = EntryCache?.Get(criteria);
 
-        /// <summary>
-        /// Gets blog entries for the given blog up to the maximum number given
-        /// </summary>
-        /// <param name="blogID">The ID of the blog to get the entries for</param>
-        /// <param name="database">The database to get the blog from</param>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <param name="tag">A tag the entry must contain</param>
-        /// <returns>The entries for the given blog</returns>
-        public virtual EntryItem[] GetBlogEntries(ID blogID, Database database, int maxNumber, string tag)
-        {
-            var blog = database.GetItem(blogID);
-            if (blog != null)
-                return GetBlogEntries(blog, maxNumber, tag, null, (DateTime?)null);
-            else
-                return new EntryItem[0];
-        }
-
-        /// <summary>
-        /// Gets blog entries for the given blog up to the maximum number given
-        /// </summary>
-        /// <param name="blog">The blog item to get the entries for</param>
-        /// <param name="maxNumber">The maximum number of entries to retrieve</param>
-        /// <param name="tag">A tag the entry must contain</param>
-        /// <param name="category">A category the entry must contain</param>
-        /// <param name="minimumDate">The minimum date for entries</param>
-        /// <param name="maximumDate">The maximum date for the entries</param>
-        /// <returns></returns>
-        public virtual EntryItem[] GetBlogEntries(Item blog, int maxNumber, string tag, string category, DateTime? minimumDate = null, DateTime? maximumDate = null)
-        {
-            if (blog == null || maxNumber <= 0)
-            {
-                return new EntryItem[0];
-            }
+            if (cachedEntries != null)
+                return cachedEntries;
 
             var customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  where blog.TemplateIsOrBasedOn(templateId)
-                                  select (BlogHomeItem)blog).FirstOrDefault();
+                                  where blogRootItem.TemplateIsOrBasedOn(templateId)
+                                  select (BlogHomeItem)blogRootItem).FirstOrDefault();
 
             if (customBlogItem == null)
             {
                 customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  let item = blog.FindAncestorByTemplate(templateId)
+                                  let item = blogRootItem.FindAncestorByTemplate(templateId)
                                   where item != null
                                   select (BlogHomeItem)item).FirstOrDefault();
             }
 
             if (customBlogItem == null)
-            {
-                return new EntryItem[0];
-            }
+                return new Entry[0];
 
-
-            List<EntryItem> result = new List<EntryItem>();
             var indexName = Settings.SearchIndexName;
 
             if (!string.IsNullOrEmpty(indexName))
             {
 
-                using (var context = ContentSearchManager.GetIndex(indexName + "-" + blog.Database.Name).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
+                using (var context = ContentSearchManager.GetIndex(indexName + "-" + blogRootItem.Database.Name).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
                 {
                     var builder = PredicateBuilder.True<EntryResultItem>();
 
@@ -191,132 +161,114 @@ namespace Sitecore.Modules.WeBlog.Managers
                     builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
 
                     // Tag
-                    if (!string.IsNullOrEmpty(tag))
+                    if (!string.IsNullOrEmpty(criteria.Tag))
                     {
-                        builder = builder.And(i => i.Tags.Contains(tag));
+                        builder = builder.And(i => i.Tags.Contains(criteria.Tag));
                     }
 
                     // Categories
-                    if (!string.IsNullOrEmpty(category))
+                    if (!string.IsNullOrEmpty(criteria.Category))
                     {
-                        var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, category);
+                        var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, criteria.Category);
 
                         // If the category is unknown, don't return any results.
                         if (categoryItem == null)
-                            return new EntryItem[0];
+                            return new Entry[0];
 
                         builder = builder.And(i => i.Category.Contains(categoryItem.ID));
                     }
 
-                    if (minimumDate != null)
-                        builder = builder.And(i => i.EntryDate >= minimumDate);
+                    if (criteria.MinimumDate != null)
+                        builder = builder.And(i => i.EntryDate >= criteria.MinimumDate);
 
-                    if (maximumDate != null)
-                        builder = builder.And(i => i.EntryDate < maximumDate);
+                    if (criteria.MaximumDate != null)
+                        builder = builder.And(i => i.EntryDate < criteria.MaximumDate);
 
                     var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
 
                     if (indexresults.Any())
                     {
-                        var itemResults = indexresults.Select(indexresult => indexresult.GetItem()).ToList();
-                        result = itemResults.Where(item => item != null).Select(i => new EntryItem(i)).ToList();
-                        result = result.OrderByDescending(post => post.EntryDate.DateTime).ThenByDescending(post => ((Item)post).Statistics.Created).Take(maxNumber).ToList();
+                        var itemResults = indexresults.OrderByDescending(item => item.EntryDate)
+                            .ThenByDescending(item => item.CreatedDate)
+                            .Skip(criteria.PageSize * (criteria.PageNumber - 1))
+                            .Take(criteria.PageSize);
+
+                        var entries = itemResults.Select(x => CreateEntry(x)).ToList();
+                        EntryCache?.Set(criteria, entries);
+
+                        return entries;
                     }
                 }
             }
 
-            return result.ToArray();
+            return new Entry[0];
+        }
+
+        protected virtual Entry CreateEntry(EntryResultItem resultItem)
+        {
+            // todo: create tag parser
+
+            return new Entry
+            {
+                Uri = resultItem.Uri,
+                Title = string.IsNullOrWhiteSpace(resultItem.Title) ? resultItem.Name : resultItem.Title,
+                Tags = resultItem.Tags != null ? resultItem.Tags.Split(',').Select(x => x.Trim()) : Enumerable.Empty<string>(),
+                EntryDate = resultItem.EntryDate
+            };
         }
 
         /// <summary>
-        /// Gets the blog entries for a particular month and year.
+        /// Gets the most popular entries for the blog by the number of page views.
         /// </summary>
-        /// <param name="month">The month to get the entries for</param>
-        /// <param name="year">The year to get the entries for</param>
-        /// <returns>The entries for the month and year from the current blog</returns>
-        public virtual EntryItem[] GetBlogEntriesByMonthAndYear(Item blog, int month, int year)
+        /// <param name="blogItem">The blog to find the most popular pages for.</param>
+        /// <param name="maxCount">The maximum number of entries to return.</param>
+        /// <returns>The <see cref="ItemUri"/> for the entry items.</returns>
+        public virtual IList<ItemUri> GetPopularEntriesByView(Item blogItem, int maxCount)
         {
-            if (month >= 13)
-                return new EntryItem[0];
+            var analyticsEnabled = IsAnalyticsEnabled();
+            if (analyticsEnabled)
+            {
+                var blogEntries = GetBlogEntries(blogItem, EntryCriteria.AllEntries);
 
-            var minDate = new DateTime(year, month, 1);
-            var maxDate = minDate.AddMonths(1);
+                return blogEntries.OrderByDescending(x => GetItemViews(x.Uri.ItemID)).Select(x => x.Uri).Take(maxCount).ToList();
+            }
+            
+            Logger.Warn("Sitecore.Analytics must be enabled to get popular entries by view.", this);
 
-            return GetBlogEntries(blog, int.MaxValue, null, null, minDate, maxDate);
+            return new ItemUri[0];
         }
 
         /// <summary>
-        /// Gets the most popular entries for the blog by the number of page views
+        /// Gets the most popular entries for the blog by the number of comments on the entry.
         /// </summary>
-        /// <param name="blogItem">The blog to find the most popular pages for</param>
-        /// <param name="maxCount">The maximum number of entries to return</param>
-        /// <returns>An array of EntryItem classes</returns>
-        public virtual EntryItem[] GetPopularEntriesByView(Item blogItem, int maxCount)
+        /// <param name="blogItem">The blog to find the most popular pages for.</param>
+        /// <param name="maxCount">The maximum number of entries to return.</param>
+        /// <returns>The <see cref="ItemUri"/> for the entry items.</returns>
+        public virtual IList<ItemUri> GetPopularEntriesByComment(Item blogItem, int maxCount)
         {
-            if (AnalyticsEnabled())
-            {
-                var blogEntries = GetBlogEntries(blogItem);
-                var entryIds = (from entry in blogEntries select entry.ID).ToArray();
-
-                if (entryIds.Any())
-                {
-                    var views = new Dictionary<ID, long>();
-
-                    foreach (var id in entryIds)
-                    {
-                        var itemViews = GetItemViews(id);
-
-                        if (itemViews > 0 && !views.ContainsKey(id))
-                            views.Add(id, itemViews);
-                    }
-
-                    var ids = views.OrderByDescending(x => x.Value).Take(maxCount).Select(x => x.Key).ToArray();
-
-                    return (from id in ids select blogEntries.First(i => i.ID == id)).ToArray();
-                }
-            }
-            else
-            {
-                Logger.Warn("Sitecore.Analytics must be enabled to get popular entries by view.", this);
-            }
-            return new EntryItem[0];
+            var uris = CommentManager.GetMostCommentedEntries(blogItem, maxCount);
+            return uris;
         }
 
-        protected static bool AnalyticsEnabled()
+        /// <summary>
+        /// Gets the entry item for the given comment.
+        /// </summary>
+        /// <param name="commentUri">The <see cref="ItemUri"/> of the comment item.</param>
+        /// <returns>The <see cref="EntryItem"/> that owns the comment.</returns>
+        public virtual EntryItem GetBlogEntryItemByCommentUri(ItemUri commentUri)
+        {
+            if (commentUri == null)
+                return null;
+
+            var commentItem = Database.GetItem(commentUri);
+
+            return commentItem?.FindAncestorByAnyTemplate(Settings.EntryTemplateIds);
+        }
+
+        protected static bool IsAnalyticsEnabled()
         {
             return Sitecore.Configuration.Settings.GetBoolSetting("Analytics.Enabled", false) ||
                    Sitecore.Configuration.Settings.GetBoolSetting("Xdb.Enabled", false);
-        }
-
-        /// <summary>
-        /// Gets the most popular entries for the blog by the number of comments on the entry
-        /// </summary>
-        /// <param name="blogItem">The blog to find the most popular pages for</param>
-        /// <param name="maxCount">The maximum number of entries to return</param>
-        /// <returns>An array of EntryItem classes</returns>
-        public virtual EntryItem[] GetPopularEntriesByComment(Item blogItem, int maxCount)
-        {
-            var comments = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(blogItem, int.MaxValue);
-            var grouped = from comment in comments
-                          group comment by GetBlogEntryByComment(comment).ID into g
-                          orderby g.Count() descending
-                          select g.Key;
-
-            var ids = grouped.Take(maxCount).ToArray();
-            return (from id in ids select new EntryItem(blogItem.Database.GetItem(id))).ToArray();
-        }
-
-        /// <summary>
-        /// Gets the entry item for the current comment.
-        /// </summary>
-        /// <param name="commentItem">The comment item.</param>
-        /// <returns></returns>
-        public virtual EntryItem GetBlogEntryByComment(CommentItem commentItem)
-        {
-            if (commentItem == null)
-                return null;
-
-            return commentItem.InnerItem.FindAncestorByAnyTemplate(Settings.EntryTemplateIds);
         }
 
         /// <summary>

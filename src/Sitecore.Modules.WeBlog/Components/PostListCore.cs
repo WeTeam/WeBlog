@@ -1,14 +1,14 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
-using Sitecore.Data.Items;
+using Sitecore.Data;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Components
@@ -22,6 +22,8 @@ namespace Sitecore.Modules.WeBlog.Components
         protected BlogHomeItem CurrentBlog { get; set; }
 
         protected NameValueCollection QueryString { get; set; }
+
+        protected IEntryManager EntryManager { get; set; }
 
         public IAuthorsCore AuthorsCore { get; set; }
 
@@ -59,11 +61,12 @@ namespace Sitecore.Modules.WeBlog.Components
         /// </summary>
         /// <param name="currentBlog">The blog being listed.</param>
         /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
-        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null)
+        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null, IEntryManager entryManager = null)
         {
             CurrentBlog = currentBlog;
             Settings = settings ?? WeBlogSettings.Instance;
             AuthorsCore = authorsCore ?? new AuthorsCore(CurrentBlog);
+            EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
         }
 
         public virtual void Initialize(NameValueCollection queryString)
@@ -77,42 +80,63 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected virtual IEnumerable<EntryItem> GetEntries()
         {
-            IEnumerable<EntryItem> entries;
+            IEnumerable<Entry> entries;
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
             var author = QueryString["author"];
+
+            var criteria = new EntryCriteria
+            {
+                PageSize = TotalToShow,
+                PageNumber = StartIndex + 1
+            };
+
             if (!string.IsNullOrEmpty(tag))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, tag, null, null, null);
+                criteria.Tag = tag;
+                entries = EntryManager.GetBlogEntries(CurrentBlog, criteria);
             }
             else if (author != null)
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog)
-                    .GroupBy(item => AuthorsCore.GetUserFullName(item))
+                // todo: need to implement entry criteria for author
+                entries = EntryManager.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries)
+                    .GroupBy(item => AuthorsCore.GetUserFullName(item.Author))
                     .FirstOrDefault(items => AuthorsCore.GetAuthorIdentity(items.Key) == author);
             }
             else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, null, Context.Item.Name);
+                criteria.Category = Context.Item.Name;
+                entries = EntryManager.GetBlogEntries(CurrentBlog, criteria);
             }
             else if (!string.IsNullOrEmpty(sort))
             {
                 var algorithm = InterestingEntriesCore.GetAlgororithmFromString(sort, InterestingEntriesAlgorithm.Custom);
                 if (algorithm != InterestingEntriesAlgorithm.Custom)
                 {
-                    var core = new InterestingEntriesCore(ManagerFactory.EntryManagerInstance, algorithm);
-                    entries = core.GetEntries(CurrentBlog, int.MaxValue);
+                    var core = new InterestingEntriesCore(EntryManager, algorithm);
+                    var maxCount = TotalToShow + (TotalToShow * StartIndex) + 1;
+                    return core.GetEntries(CurrentBlog, maxCount);
                 }
                 else
                 {
-                    entries = new EntryItem[0];
+                    entries = new Entry[0];
                 }
             }
             else
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog);
+                entries = EntryManager.GetBlogEntries(CurrentBlog, criteria);
             }
-            return entries ?? new EntryItem[0];
+
+            var entryItems = new List<EntryItem>();
+
+            foreach (var entry in entries)
+            {
+                var item = Database.GetItem(entry.Uri);
+                if(item != null)
+                    entryItems.Add(new EntryItem(item));
+            }
+
+            return entryItems;
         }
 
         protected virtual string BuildViewMoreHref()

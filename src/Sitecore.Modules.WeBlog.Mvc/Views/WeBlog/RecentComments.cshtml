@@ -9,16 +9,16 @@
         {
             <li>
                 <div class="wb-details">
-                    <span class="wb-comment-author">@comment.CommentItem.Name.Text.ToHtmlString()</span>
+                    <span class="wb-comment-author">@comment.Comment.AuthorName.ToHtmlString()</span>
                     @Translator.Render("ON").ToHtmlString()
                     <a href="@comment.EntryUrl">@comment.EntryTitle.ToHtmlString()</a>
                     @Translator.Render("AT").ToHtmlString()
                     <span class="wb-datetime">
-                        @Translator.Format("COMMENT_DATE", comment.CommentItem.Created).ToHtmlString()
+                        @Translator.Format("COMMENT_DATE", comment.Comment.Created).ToHtmlString()
                     </span>
                 </div>
                 <div class="wb-comment-content">
-                    @comment.CommentItem.Comment.HtmlEncode().MaxLength(150).ToHtmlString()
+                    @comment.Comment.Text.HtmlEncode().MaxLength(150).ToHtmlString()
                 </div>
             </li>
         }

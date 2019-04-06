@@ -11,7 +11,13 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts.Sidebar
 
         public BlogRecentComments(IRecentCommentsCore recentCommentsCore = null)
         {
-            RecentCommentsCore = recentCommentsCore ?? new RecentCommentsCore(ManagerFactory.BlogManagerInstance);
+            RecentCommentsCore = recentCommentsCore;
+
+            if (RecentCommentsCore == null)
+            {
+                RecentCommentsCore = new RecentCommentsCore(ManagerFactory.BlogManagerInstance);
+                RecentCommentsCore.Initialise();
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
