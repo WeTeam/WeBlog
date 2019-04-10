@@ -7,11 +7,6 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Analysis.Tokenattributes;
 using Moq;
 using NUnit.Framework;
-#if FEATURE_XCONNECT
-using Sitecore.Xdb.Reporting;
-#elif FEATURE_XDB
-using Sitecore.Analytics.Reporting;
-#endif
 using Sitecore.Buckets.Util;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.LuceneProvider.Analyzers;
@@ -27,6 +22,12 @@ using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.UnitTest.Extensions;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.UnitTest.Comparers;
+
+#if FEATURE_XCONNECT
+using Sitecore.Xdb.Reporting;
+#else
+using Sitecore.Analytics.Reporting;
+#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest
 {
@@ -1442,11 +1443,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
         private EntryManager CreateManager(IWeBlogSettings settings)
         {
-#if FEATURE_XDB
             return new EntryManager(null, null, settings);
-#else
-            return new EntryManager(settings);
-#endif
         }
     }
 
@@ -1455,11 +1452,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         private long _viewCount = 0;
 
         public TestableEntryManager(IWeBlogSettings settings, long viewCount)
-#if FEATURE_XDB
-            : base(null, null, settings, null)
-#else
-            : base(settings)
-#endif
+            : base(null, null, settings)
         {
             _viewCount = viewCount;
         }

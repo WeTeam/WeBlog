@@ -15,16 +15,12 @@ using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Caching;
+using Sitecore.Modules.WeBlog.Analytics.Reporting;
+
 #if FEATURE_XCONNECT
-using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Xdb.Reporting;
-#elif FEATURE_XDB
-using Sitecore.Modules.WeBlog.Analytics.Reporting;
-using Sitecore.Analytics.Reporting;
-#elif FEATURE_DMS
-using Sitecore.Analytics.Data.DataAccess.DataAdapters;
 #else
-using Sitecore.Analytics.Reports.Data.DataAccess.DataAdapters;
+using Sitecore.Analytics.Reporting;
 #endif
 
 namespace Sitecore.Modules.WeBlog.Managers
@@ -49,7 +45,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         protected ICommentManager CommentManager = null;
 
-#if FEATURE_XDB
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         protected ReportDataProviderBase ReportDataProvider = null;
 
@@ -69,18 +64,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             EntryCache = cache;
             CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
         }
-#else
-        public EntryManager()
-            : this(null)
-        {
-        }
-
-        public EntryManager(IWeBlogSettings settings = null, BaseCacheManager cacheManager = null)
-        {
-            Settings = settings ?? WeBlogSettings.Instance;
-            SetEntriesCache(cacheManager);
-        }
-#endif
 
         /// <summary>
         /// Deletes a blog post.
@@ -278,21 +261,14 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The number of views for the item.</returns>
         protected virtual long GetItemViews(ID itemId)
         {
-#if FEATURE_XDB
-                        var query = new ItemVisitsQuery(this.ReportDataProvider)
-                        {
-                            ItemId = itemId
-                        };
+            var query = new ItemVisitsQuery(this.ReportDataProvider)
+            {
+                ItemId = itemId
+            };
 
-                        query.Execute();
+            query.Execute();
 
-                        return query.Visits;
-#elif FEATURE_DMS
-            var queryId = itemId.ToString().Replace("{", string.Empty).Replace("}", string.Empty);
-            var sql = "SELECT COUNT(ItemId) as Visits FROM {{0}}Pages{{1}} WHERE {{0}}ItemId{{1}} = '{0}'".FormatWith(queryId);
-
-            return DataAdapterManager.ReportingSql.ReadOne(sql, reader => DataAdapterManager.ReportingSql.GetLong(0, reader));
-#endif
+            return query.Visits;
         }
     }
 }
