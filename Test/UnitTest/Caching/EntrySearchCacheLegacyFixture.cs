@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Moq;
 using NUnit.Framework;
-using Sitecore.Abstractions;
-using Sitecore.Caching;
-using Sitecore.Caching.Generics;
-using Sitecore.Modules.WeBlog.Caching;
-using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
 
@@ -16,16 +10,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
     public class EntrySearchCacheFixture
     {
         [Test]
-        public void Ctor_NullCacheManager_DoesNotThrow()
-        {
-            Action sutAction = () => new EntrySearchCache(null, Mock.Of<IWeBlogSettings>());
-            Assert.DoesNotThrow(new TestDelegate(sutAction));
-        }
-
-        [Test]
         public void Ctor_NullSettings_DoesNotThrow()
         {
-            Action sutAction = () => new EntrySearchCache(Mock.Of<BaseCacheManager>(), null);
+            Action sutAction = () => new EntrySearchCache(null);
             Assert.DoesNotThrow(new TestDelegate(sutAction));
         }
 
@@ -62,16 +49,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
         public void GetSet_ForCriteriaWhichHasBeenSet_ReturnsListPreviouslySet()
         {
             // arrange
-            var innerCache = new Cache<EntryCriteria>("test cache", 500)
-            {
-                Enabled = true
-            };
-
-            var cacheManager = Mock.Of<BaseCacheManager>(x => 
-                x.GetNamedInstance<EntryCriteria>(It.IsAny<string>(), It.IsAny<long>(), true) == innerCache
-            );
-
-            var sut = new EntrySearchCache(cacheManager);
+            var sut = new EntrySearchCache();
             var criteria = new EntryCriteria
             {
                 PageNumber = 1,
@@ -122,16 +100,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
         public void ClearCache_EntriesPreviouslySet_EntriesNoLongerSet()
         {
             // arrange
-            var innerCache = new Cache<EntryCriteria>("test cache", 500)
-            {
-                Enabled = true
-            };
-
-            var cacheManager = Mock.Of<BaseCacheManager>(x =>
-                x.GetNamedInstance<EntryCriteria>(It.IsAny<string>(), It.IsAny<long>(), true) == innerCache
-            );
-
-            var sut = new EntrySearchCache(cacheManager);
+            var sut = new EntrySearchCache();
             var criteria = new EntryCriteria
             {
                 PageNumber = 1,

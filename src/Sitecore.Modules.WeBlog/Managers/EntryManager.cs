@@ -49,7 +49,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected ReportDataProviderBase ReportDataProvider = null;
 
         public EntryManager()
-            : this(null, new EntrySearchCache())
+            : this(null, null)
         {
         }
 
@@ -61,7 +61,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             ReportDataProvider = reportDataProvider;
             Settings = settings ?? WeBlogSettings.Instance;
-            EntryCache = cache;
+            EntryCache = cache ?? CacheManager.GetCache<IEntrySearchCache>(EntrySearchCache.CacheName);
             CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
         }
 

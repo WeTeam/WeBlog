@@ -11,7 +11,7 @@ namespace Sitecore.Modules.WeBlog.Caching
     /// <summary>
     /// A cache for entries.
     /// </summary>
-    public class EntrySearchCache : IEntrySearchCache
+    public class EntrySearchCache : IEntrySearchCache, IWeBlogCache
     {
         /// <summary>
         /// The name of the cache used for caching entries.
@@ -56,6 +56,14 @@ namespace Sitecore.Modules.WeBlog.Caching
             Assert.ArgumentNotNull(entries, nameof(entries));
 
             _cache.Add(criteria, entries);
+        }
+
+        /// <summary>
+        /// Clear all entries from the cache.
+        /// </summary>
+        public void ClearCache()
+        {
+            _cache.Clear();
         }
 
         /// <summary>

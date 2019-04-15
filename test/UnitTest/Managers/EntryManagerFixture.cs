@@ -21,7 +21,6 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.UnitTest.Extensions;
 using Sitecore.Modules.WeBlog.Search;
-using Sitecore.Modules.WeBlog.UnitTest.Comparers;
 
 #if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
@@ -278,7 +277,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     var returnedEntry = entries[0];
                     Assert.That(returnedEntry.Title, Is.EqualTo("Duis ligula massa"));
                     Assert.That(returnedEntry.Tags, Is.EquivalentTo(new[]{ "lorem", "ipsum", "dolor" }));
-                    Assert.That(returnedEntry.EntryDate, Is.EqualTo(entry.Created));
                     Assert.That(returnedEntry.Uri, Is.EqualTo(entry.Uri));
                 }
                 finally

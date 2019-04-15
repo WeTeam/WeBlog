@@ -106,7 +106,6 @@
     <Compile Include="..\..\src\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Caching\EntrySearchCacheFixture.cs" />
     <Compile Include="Comparers\ItemIdentityComparer.cs" />
     <Compile Include="ContentHelper.cs" />
     <Compile Include="Data\Items\CommentItemFixture.cs" />
@@ -129,6 +128,12 @@
     <Compile Include="sitecore modules\web\WeBlog\MetaBlogApiFixture.cs" />
     <Compile Include="sitecore modules\web\WeBlog\TestableMetaBlogApi.cs" />
   </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))">
+    <Compile Include="Caching\EntrySearchCacheFixture.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true">
+    <Compile Include="Caching\EntrySearchCacheLegacyFixture.cs" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -141,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config.FakeDBLegacy.xslt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -163,5 +171,15 @@
     <Message Text="SitecorePath: $(SitecorePath)" />
     <Message Text="SitecoreCDPath: $(SitecoreCDPath)" />
     <Message Text="Constants: $(DefineConstants)" />
+  </Target>
+  <Target Name="AfterBuild">
+    <CallTarget Targets="ConfigureFakeDBLegacy" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
+  </Target>
+  <Target Name="ConfigureFakeDBLegacy">
+    <PropertyGroup>
+      <ConfigFile>$(OutDir)\$(AssemblyName).dll.config</ConfigFile>
+    </PropertyGroup>
+    <XslTransformation XmlInputPaths="$(ConfigFile)" XslInputPath="App.config.FakeDBLegacy.xslt" OutputPaths="$(ConfigFile).updated" />
+    <Move SourceFiles="$(ConfigFile).updated" DestinationFiles="$(ConfigFile)"/>
   </Target>
 </Project>
