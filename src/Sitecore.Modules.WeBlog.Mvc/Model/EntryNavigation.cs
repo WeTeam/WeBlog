@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Mvc.Presentation;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Model
@@ -17,7 +18,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
 
         public EntryNavigation(IEntryNavigationCore entryNavigationCore)
         {
-            EntryNavigationCore = entryNavigationCore ?? new EntryNavigationCore(GetDefaultPostListCore());
+            EntryNavigationCore = entryNavigationCore ?? new EntryNavigationCore(ManagerFactory.BlogManagerInstance, ManagerFactory.EntryManagerInstance);
             NextEntry = EntryNavigationCore.GetNextEntry(CurrentEntry);
             PreviousEntry = EntryNavigationCore.GetPreviousEntry(CurrentEntry);
         }

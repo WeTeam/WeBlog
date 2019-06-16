@@ -24,8 +24,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         public void GetBlogEntries_NullItem()
         {
             var manager = new EntryManager();
-            var entries = manager.GetBlogEntries(null, EntryCriteria.AllEntries);
-            Assert.That(entries, Is.Empty);
+            var entries = manager.GetBlogEntries(null, EntryCriteria.AllEntries, ListOrder.Descending);
+            Assert.That(entries.Results, Is.Empty);
         }
 
         [Test]
@@ -34,8 +34,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             var blog = TestUtil.CreateNewBlog(TestContentRoot);
 
             var manager = new EntryManager();
-            var entries = manager.GetBlogEntries(blog, EntryCriteria.AllEntries);
-            Assert.That(entries, Is.Empty);
+            var entries = manager.GetBlogEntries(blog, EntryCriteria.AllEntries, ListOrder.Descending);
+            Assert.That(entries.Results, Is.Empty);
         }
 
         [Test]
@@ -48,10 +48,26 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
-            var results = manager.GetBlogEntries(blog, EntryCriteria.AllEntries);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, EntryCriteria.AllEntries, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryPhobos.ID, entryDeimos.ID, entryLuna.ID }));
+        }
+
+        [Test]
+        public void GetBlogEntries_WithEntriesAscending()
+        {
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
+            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", entryDate: new DateTime(2012, 3, 2));
+            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", entryDate: new DateTime(2012, 3, 3));
+            TestUtil.UpdateIndex();
+
+            var manager = new EntryManager();
+            var results = manager.GetBlogEntries(blog, EntryCriteria.AllEntries, ListOrder.Ascending);
+            var ids = from result in results.Results select result.Uri.ItemID;
+
+            Assert.That(ids, Is.EqualTo(new[] { entryLuna.ID, entryDeimos.ID, entryPhobos.ID  }));
         }
 
         [Test]
@@ -70,8 +86,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
-            var results = manager.GetBlogEntries(entryDeimos, EntryCriteria.AllEntries);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(entryDeimos, EntryCriteria.AllEntries, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryPhobos.ID, entryDeimos.ID, entryLuna.ID }));
         }
@@ -98,10 +114,35 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 PageSize = 3
             };
 
-            var results = manager.GetBlogEntries(entryAmalthea, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(entryAmalthea, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryAnanke.ID, entryAmalthea.ID, entryAitne.ID }));
+            Assert.That(results.HasMoreResults, Is.True);
+        }
+
+        [Test]
+        public void GetBlogEntries_LimitedAscending()
+        {
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", entryDate: new DateTime(2012, 3, 1));
+            var entryAitne = TestUtil.CreateNewEntry(blog, "Aitne", entryDate: new DateTime(2012, 3, 2));
+            var entryAmalthea = TestUtil.CreateNewEntry(blog, "Amalthea", entryDate: new DateTime(2012, 3, 3));
+            var entryAnanke = TestUtil.CreateNewEntry(blog, "Ananke", entryDate: new DateTime(2012, 3, 4));
+            TestUtil.UpdateIndex();
+
+            var manager = new EntryManager();
+            var criteria = new EntryCriteria
+            {
+                PageNumber = 1,
+                PageSize = 3
+            };
+
+            var results = manager.GetBlogEntries(entryAmalthea, criteria, ListOrder.Ascending);
+            var ids = from result in results.Results select result.Uri.ItemID;
+
+            Assert.That(ids, Is.EqualTo(new[] { entryAdrastea.ID, entryAitne.ID, entryAmalthea.ID }));
+            Assert.That(results.HasMoreResults, Is.True);
         }
 
         [Test]
@@ -127,10 +168,11 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 PageSize = 2
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryAdrastea.ID, entryPhobos.ID }));
+            Assert.That(results.HasMoreResults, Is.True);
         }
 
         [Test]
@@ -149,9 +191,9 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 PageNumber = 1,
                 PageSize = 0
             };
-            var results = manager.GetBlogEntries(blog, criteria);
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
 
-            Assert.That(results, Is.Empty);
+            Assert.That(results.Results, Is.Empty);
         }
 
         [Test]
@@ -170,9 +212,9 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 PageNumber = 1,
                 PageSize = -7
             };
-            var results = manager.GetBlogEntries(blog, criteria);
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
 
-            Assert.That(results, Is.Empty);
+            Assert.That(results.Results, Is.Empty);
         }
 
         [Test]
@@ -192,8 +234,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Tag = "prowl"
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryDeimos.ID, entryLuna.ID }));
         }
@@ -215,8 +257,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Tag = "orion pax"
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryPhobos.ID, entryDeimos.ID }));
         }
@@ -239,8 +281,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Tag = "wheeljack"
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryAdrastea.ID, entryPhobos.ID }));
         }
@@ -263,9 +305,9 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Tag = "blurr"
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
 
-            Assert.That(results, Is.Empty);
+            Assert.That(results.Results, Is.Empty);
         }
 
         [Test]
@@ -288,8 +330,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Category= categoryAlpha.ID.ToString()
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryAdrastea.ID, entryPhobos.ID, entryDeimos.ID }));
         }
@@ -300,10 +342,10 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             var blog = TestUtil.CreateNewBlog(TestContentRoot);
             var categoryAlpha = TestUtil.CreateNewCategory(blog, "Alpha");
             var categoryBeta = TestUtil.CreateNewCategory(blog, "Beta");
-            var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
-            var entryDeimos = TestUtil.CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
-            var entryPhobos = TestUtil.CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
-            var entryAdrastea = TestUtil.CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
+            TestUtil.CreateNewEntry(blog, "Luna", categories: new[] { categoryBeta.ID }, entryDate: new DateTime(2012, 3, 1));
+            TestUtil.CreateNewEntry(blog, "Deimos", categories: new[] { categoryAlpha.ID, categoryBeta.ID }, entryDate: new DateTime(2012, 3, 2));
+            TestUtil.CreateNewEntry(blog, "Phobos", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 3));
+            TestUtil.CreateNewEntry(blog, "Adrastea", categories: new[] { categoryBeta.ID, categoryAlpha.ID }, entryDate: new DateTime(2012, 3, 4));
             TestUtil.UpdateIndex();
 
             var manager = new EntryManager();
@@ -314,9 +356,9 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Category = ID.NewID.ToString()
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
 
-            Assert.That(results, Is.Empty);
+            Assert.That(results.Results, Is.Empty);
         }
 
         [Test]
@@ -339,8 +381,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 Category = categoryAlpha.ID.ToString()
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryAdrastea.ID }));
         }
@@ -364,8 +406,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 MaximumDate = new DateTime(2014, 12, 20)
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryPhobos.ID, entryDeimos.ID }));
 
@@ -390,8 +432,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
                 MaximumDate = new DateTime(2015, 1, 20)
             };
 
-            var results = manager.GetBlogEntries(blog, criteria);
-            var ids = from result in results select result.Uri.ItemID;
+            var results = manager.GetBlogEntries(blog, criteria, ListOrder.Descending);
+            var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryAdrastea.ID, entryPhobos.ID }));
         }

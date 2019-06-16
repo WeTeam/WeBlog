@@ -1,6 +1,7 @@
 ﻿using System;
 using Moq;
 using NUnit.Framework;
+using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
@@ -31,13 +32,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
-                    {
-                        new Entry(),
-                        new Entry()
-                    }
-                );
+                var entryManager = MockEntryManager(blogItem, new Entry(), new Entry());
 
                 var sut = new TagManager(entryManager);
 
@@ -60,13 +55,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
                 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
-                    {
-                        new Entry { Tags = new []{ "lorem", "ipsum" }, EntryDate = dateStamp},
-                        new Entry { Tags = new string[0], EntryDate = dateStamp},
-                        new Entry { Tags = new []{ "dolor" }, EntryDate = dateStamp}
-                    }
+                var entryManager = MockEntryManager(
+                    blogItem,
+                    new Entry { Tags = new[] { "lorem", "ipsum" }, EntryDate = dateStamp },
+                    new Entry { Tags = new string[0], EntryDate = dateStamp },
+                    new Entry { Tags = new[] { "dolor" }, EntryDate = dateStamp }
                 );
 
                 var sut = new TagManager(entryManager);
@@ -94,12 +87,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
-                    {
-                        new Entry { Tags = new []{ "lorem" }, EntryDate = dateStamp},
-                        new Entry { Tags = new []{ "ipsum" }, EntryDate = dateStamp}
-                    }
+
+                var entryManager = MockEntryManager(
+                    blogItem,
+                    new Entry { Tags = new[] { "lorem" }, EntryDate = dateStamp },
+                    new Entry { Tags = new[] { "ipsum" }, EntryDate = dateStamp }
                 );
 
                 var sut = new TagManager(entryManager);
@@ -125,12 +117,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
-                    {
-                        new Entry { Tags = new []{ "lorem", "ipsum", "dolor" }, EntryDate = dateStamp},
-                        new Entry { Tags = new []{ "sit", "amed", "pluto" }, EntryDate = dateStamp}
-                    }
+
+                var entryManager = MockEntryManager(
+                    blogItem,
+                    new Entry { Tags = new[] { "lorem", "ipsum", "dolor" }, EntryDate = dateStamp },
+                    new Entry { Tags = new[] { "sit", "amed", "pluto" }, EntryDate = dateStamp }
                 );
 
                 var sut = new TagManager(entryManager);
@@ -160,13 +151,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var blogItem = db.GetItem("/sitecore/content/blog1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(blogItem, EntryCriteria.AllEntries) == new[]
-                    {
-                        new Entry { Tags = new []{ "lorem", "ipsum" }, EntryDate = dateStamp},
-                        new Entry { Tags = new []{ "lorem", "dolor" }, EntryDate = dateStamp},
-                        new Entry { Tags = new []{ "lorem", "dolor" }, EntryDate = dateStamp}
-                    }
+
+                var entryManager = MockEntryManager(
+                    blogItem,
+                    new Entry { Tags = new[] { "lorem", "ipsum" }, EntryDate = dateStamp },
+                    new Entry { Tags = new[] { "lorem", "dolor" }, EntryDate = dateStamp },
+                    new Entry { Tags = new[] { "lorem", "dolor" }, EntryDate = dateStamp }
                 );
 
                 var sut = new TagManager(entryManager);
@@ -271,6 +261,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                     new Tag("ipsum", dateStamp, 1)
                 }));
             }
+        }
+
+        private IEntryManager MockEntryManager(Item blogItem, params Entry[] entries)
+        {
+            return Mock.Of<IEntryManager>(x =>
+                x.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending) == new SearchResults<Entry>(entries, false)
+            );
         }
     }
 }

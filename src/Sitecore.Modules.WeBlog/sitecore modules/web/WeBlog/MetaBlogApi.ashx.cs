@@ -198,7 +198,7 @@ namespace Sitecore.Modules.WeBlog
                     PageSize = numberOfPosts
                 };
 
-                var entryList = EntryManager.GetBlogEntries(blog, criteria).ToArray();
+                var entryList = EntryManager.GetBlogEntries(blog, criteria, ListOrder.Descending).Results.ToArray();
 
                 var posts = new List<XmlRpcStruct>();
 

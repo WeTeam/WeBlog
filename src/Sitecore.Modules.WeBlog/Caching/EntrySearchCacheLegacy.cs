@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Sitecore.Caching.Generics;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog;
 using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Model;
@@ -8,7 +9,7 @@ using Sitecore.Modules.WeBlog.Search;
 
 public class EntrySearchCache : IEntrySearchCache, IWeBlogCache
 {
-    private Cache<EntryCriteria, EntryList> _cache = null;
+    private Cache<EntrySearchCacheKey, EntryList> _cache = null;
 
     /// <summary>
     /// The name of the cache used for caching entries.
@@ -22,7 +23,7 @@ public class EntrySearchCache : IEntrySearchCache, IWeBlogCache
     public EntrySearchCache(IWeBlogSettings settings = null)
     {
         var cacheSize = (settings ?? WeBlogSettings.Instance).EntriesCacheSize;
-        _cache = new Cache<EntryCriteria, EntryList>(CacheName, cacheSize)
+        _cache = new Cache<EntrySearchCacheKey, EntryList>(CacheName, cacheSize)
         {
             Enabled = true
         };
@@ -32,12 +33,14 @@ public class EntrySearchCache : IEntrySearchCache, IWeBlogCache
     /// Gets the list of entries for the specified <see cref="EntryCriteria"/>.
     /// </summary>
     /// <param name="criteria">The criteria used to search for the entries.</param>
+    /// <param name="resultOrder">The ordering of the results.</param>
     /// <returns>The list of entries for the criteria, or null if the criteria has not been cached.</returns>
-    public List<Entry> Get(EntryCriteria criteria)
+    public SearchResults<Entry> Get(EntryCriteria criteria, ListOrder resultOrder)
     {
         Assert.ArgumentNotNull(criteria, nameof(criteria));
 
-        var cacheEntry = _cache.GetEntry(criteria, true);
+        var key = new EntrySearchCacheKey(criteria, resultOrder);
+        var cacheEntry = _cache.GetEntry(key, true);
         return cacheEntry?.Data.Entries;
     }
 
@@ -45,13 +48,15 @@ public class EntrySearchCache : IEntrySearchCache, IWeBlogCache
     /// Sets the list of entries for the specified <see cref="EntryCriteria"/>.
     /// </summary>
     /// <param name="criteria">The criteria used to search for the entries.</param>
+    /// <param name="resultOrder">The ordering of the results.</param>
     /// <param name="entries">The entries for the search criteria.</param>
-    public void Set(EntryCriteria criteria, List<Entry> entries)
+    public void Set(EntryCriteria criteria, ListOrder resultOrder, SearchResults<Entry> entries)
     {
         Assert.ArgumentNotNull(criteria, nameof(criteria));
         Assert.ArgumentNotNull(entries, nameof(entries));
 
-        _cache.Add(criteria, new EntryList() { Entries = entries });
+        var key = new EntrySearchCacheKey(criteria, resultOrder);
+        _cache.Add(key, new EntryList() { Entries = entries });
     }
 
     /// <summary>

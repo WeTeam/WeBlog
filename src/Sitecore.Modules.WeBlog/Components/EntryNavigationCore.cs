@@ -1,40 +1,55 @@
-using System.Collections.Generic;
-using System.Linq;
+using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
     public class EntryNavigationCore : IEntryNavigationCore
     {
-        protected IPostListCore PostListCore { get; set; }
+        protected IEntryManager EntryManager { get; }
 
-        protected List<EntryItem> EntryItems { get; set; }
+        protected IBlogManager BlogManager { get; }
 
-        public EntryNavigationCore(IPostListCore postListCore)
+        public EntryNavigationCore(IBlogManager blogManager, IEntryManager entryManager)
         {
-            PostListCore = postListCore;
-            EntryItems = PostListCore.Entries.Reverse().ToList();
+            BlogManager = blogManager;
+            EntryManager = entryManager;
         }
 
         public EntryItem GetPreviousEntry(EntryItem entry)
         {
-            var currentEntry = EntryItems.FirstOrDefault(item => item.ID.Equals(entry.ID));
-            var currentEntryIndex = EntryItems.IndexOf(currentEntry);
-            if (currentEntryIndex > 0)
+            var criteria = new EntryCriteria
             {
-                return EntryItems[currentEntryIndex - 1];
-            }
+                MaximumDate = entry.EntryDate.DateTime,
+                PageNumber = 1,
+                PageSize = 2
+            };
+
+            var blogHomeItem = BlogManager.GetCurrentBlog(entry);
+            var entries = EntryManager.GetBlogEntries(blogHomeItem, criteria, ListOrder.Descending);
+
+            if(entries.Results.Count > 1)
+                return Database.GetItem(entries.Results[0].Uri);
+
             return null;
         }
 
         public EntryItem GetNextEntry(EntryItem entry)
         {
-            var currentEntry = EntryItems.FirstOrDefault(item => item.ID.Equals(entry.ID));
-            var currentEntryIndex = EntryItems.IndexOf(currentEntry);
-            if (currentEntryIndex < EntryItems.Count - 1)
+            var criteria = new EntryCriteria
             {
-                return EntryItems[currentEntryIndex + 1];
-            }
+                MinimumDate = entry.EntryDate.DateTime,
+                PageNumber = 1,
+                PageSize = 2
+            };
+
+            var blogHomeItem = BlogManager.GetCurrentBlog(entry);
+            var entries = EntryManager.GetBlogEntries(blogHomeItem, criteria, ListOrder.Ascending);
+
+            if (entries.Results.Count > 1)
+                return Database.GetItem(entries.Results[1].Uri);
+
             return null;
         }
     }

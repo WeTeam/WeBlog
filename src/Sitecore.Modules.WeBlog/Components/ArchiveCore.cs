@@ -30,10 +30,10 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected void LoadEntries(Item blogItem)
         {
-            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
             MonthsByYear = new Dictionary<int, int[]>();
 
-            foreach (var entry in entries)
+            foreach (var entry in entries.Results)
             {
                 var item = Database.GetItem(entry.Uri);
                 if(item == null)
@@ -56,7 +56,7 @@ namespace Sitecore.Modules.WeBlog.Components
                 }
             }
 
-            foreach (var blogEntryYear in GetYears(entries))
+            foreach (var blogEntryYear in GetYears(entries.Results))
             {
                 MonthsByYear.Add(blogEntryYear, GetMonths(blogEntryYear).ToArray());
             }

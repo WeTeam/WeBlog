@@ -1,5 +1,6 @@
 ﻿using Sitecore.Caching;
 using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Reflection;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.Caching
     {
         private long _size = 0;
 
-        private List<Entry> _entries = null;
+        private SearchResults<Entry> _entries = null;
 
         /// <summary>
         /// Indicates whether the object can be cached.
@@ -32,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// <summary>
         /// Gets or sets the entries to store in the list.
         /// </summary>
-        public List<Entry> Entries
+        public SearchResults<Entry> Entries
         {
             get
             {
@@ -53,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Caching
         public EntryList()
         {
             Cacheable = true;
-            Entries = new List<Entry>();
+            Entries = SearchResults<Entry>.Empty;
         }
 
         /// <summary>
@@ -70,11 +71,11 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// </summary>
         /// <param name="entries">The entries to calculate the size of.</param>
         /// <returns>The size of the entries.</returns>
-        private long CalculateSize(List<Entry> entries)
+        private long CalculateSize(SearchResults<Entry> entries)
         {
-            var size = 0L;
+            var size = 1L; // HasMoreResults
 
-            foreach(var entry in entries)
+            foreach(var entry in entries.Results)
             {
                 size +=
                     TypeUtil.SizeOfString(entry.Title) + // Title

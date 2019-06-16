@@ -15,7 +15,7 @@ namespace Sitecore.Modules.WeBlog.Components
 {
     public class PostListCore : IPostListCore
     {
-        protected IEnumerable<EntryItem> _entries;
+        protected IList<EntryItem> _entries;
 
         protected IWeBlogSettings Settings = null;
 
@@ -39,7 +39,8 @@ namespace Sitecore.Modules.WeBlog.Components
 
         public bool ShowViewMoreLink
         {
-            get { return (StartIndex + TotalToShow) < _entries.Count(); }
+            get;
+            protected set;
         }
 
         public IEnumerable<EntryItem> Entries
@@ -47,10 +48,9 @@ namespace Sitecore.Modules.WeBlog.Components
             get
             {
                 if (_entries == null)
-                {
                     _entries = GetEntries();
-                }
-                return TotalToShow == 0 ? _entries.Skip(StartIndex) : _entries.Skip(StartIndex).Take(TotalToShow);
+                
+                return _entries;
             }
         }
 
@@ -78,9 +78,9 @@ namespace Sitecore.Modules.WeBlog.Components
             TotalToShow = requestedToShow > 0 ? requestedToShow : CurrentBlog.DisplayItemCountNumeric;
         }
 
-        protected virtual IEnumerable<EntryItem> GetEntries()
+        protected virtual IList<EntryItem> GetEntries()
         {
-            IEnumerable<Entry> entries;
+            SearchResults<Entry> results = null;
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
             var author = QueryString["author"];
@@ -88,25 +88,28 @@ namespace Sitecore.Modules.WeBlog.Components
             var criteria = new EntryCriteria
             {
                 PageSize = TotalToShow,
-                PageNumber = StartIndex + 1
+                PageNumber = (StartIndex / TotalToShow) + 1
             };
 
             if (!string.IsNullOrEmpty(tag))
             {
                 criteria.Tag = tag;
-                entries = EntryManager.GetBlogEntries(CurrentBlog, criteria);
+                results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);
             }
             else if (author != null)
             {
                 // todo: need to implement entry criteria for author
-                entries = EntryManager.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries)
-                    .GroupBy(item => AuthorsCore.GetUserFullName(item.Author))
-                    .FirstOrDefault(items => AuthorsCore.GetAuthorIdentity(items.Key) == author);
+                results = EntryManager.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries, ListOrder.Descending);
+
+                var authorEntries = results.Results.GroupBy(item => AuthorsCore.GetUserFullName(item.Author))
+                    .FirstOrDefault(items => AuthorsCore.GetAuthorIdentity(items.Key) == author).ToList();
+
+                results = new SearchResults<Entry>(authorEntries, false);
             }
             else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
             {
                 criteria.Category = Context.Item.Name;
-                entries = EntryManager.GetBlogEntries(CurrentBlog, criteria);
+                results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);
             }
             else if (!string.IsNullOrEmpty(sort))
             {
@@ -119,22 +122,24 @@ namespace Sitecore.Modules.WeBlog.Components
                 }
                 else
                 {
-                    entries = new Entry[0];
+                    results = SearchResults<Entry>.Empty;
                 }
             }
             else
             {
-                entries = EntryManager.GetBlogEntries(CurrentBlog, criteria);
+                results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);
             }
 
             var entryItems = new List<EntryItem>();
 
-            foreach (var entry in entries)
+            foreach (var entry in results.Results)
             {
                 var item = Database.GetItem(entry.Uri);
                 if(item != null)
                     entryItems.Add(new EntryItem(item));
             }
+
+            ShowViewMoreLink = results.HasMoreResults;
 
             return entryItems;
         }

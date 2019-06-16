@@ -21,7 +21,7 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// <summary>
         /// The cache to store the entries in.
         /// </summary>
-        private readonly ICache<EntryCriteria> _cache = null;
+        private readonly ICache<EntrySearchCacheKey> _cache = null;
 
         /// <summary>
         /// Create a new instance.
@@ -37,25 +37,29 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// Gets the list of entries for the specified <see cref="EntryCriteria"/>.
         /// </summary>
         /// <param name="criteria">The criteria used to search for the entries.</param>
+        /// <param name="resultOrder">The ordering of the results.</param>
         /// <returns>The list of entries for the criteria, or null if the criteria has not been cached.</returns>
-        public List<Entry> Get(EntryCriteria criteria)
+        public List<Entry> Get(EntryCriteria criteria, ListOrder resultOrder)
         {
             Assert.ArgumentNotNull(criteria, nameof(criteria));
 
-            return (List<Entry>)_cache.GetValue(criteria);
+            var key = new EntrySearchCacheKey(criteria, resultOrder);
+            return (SearchResults<Entry>)_cache.GetValue(key);
         }
 
         /// <summary>
         /// Sets the list of entries for the specified <see cref="EntryCriteria"/>.
         /// </summary>
         /// <param name="criteria">The criteria used to search for the entries.</param>
+        /// <param name="resultOrder">The ordering of the results.</param>
         /// <param name="entries">The entries for the search criteria.</param>
-        public void Set(EntryCriteria criteria, List<Entry> entries)
+        public void Set(EntryCriteria criteria, ListOrder resultOrder, SearchResults<Entry> entries)
         {
             Assert.ArgumentNotNull(criteria, nameof(criteria));
             Assert.ArgumentNotNull(entries, nameof(entries));
 
-            _cache.Add(criteria, entries);
+            var key = new EntrySearchCacheKey(criteria, resultOrder);
+            _cache.Add(criteria, key);
         }
 
         /// <summary>
@@ -77,9 +81,9 @@ namespace Sitecore.Modules.WeBlog.Caching
             var cacheSize = (settings ?? WeBlogSettings.Instance).EntriesCacheSize;
 
             if (cacheManager != null)
-                return cacheManager.GetNamedInstance<EntryCriteria>(CacheName, cacheSize, true);
+                return cacheManager.GetNamedInstance<EntrySearchCacheKey>(CacheName, cacheSize, true);
             
-            return Sitecore.Caching.CacheManager.GetNamedInstance<EntryCriteria>(CacheName, cacheSize, true);
+            return Sitecore.Caching.CacheManager.GetNamedInstance<EntrySearchCacheKey>(CacheName, cacheSize, true);
         }
     }
 }

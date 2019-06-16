@@ -283,9 +283,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) == new Entry[0]
-                );
+                var entryManager = MockEntryManager();
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
                 api.GetBlogFunction = id => blog;
@@ -336,9 +334,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     Uri = entryItem2.Uri
                 };
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) == new[] { entry1, entry2 }
-                );
+                var entryManager = MockEntryManager(entry1, entry2);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
                 api.GetBlogFunction = id => blog;
@@ -631,10 +627,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
                 var entry1 = new Entry {Uri = entryItem1.Uri};
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) ==
-                    new[] { entry1 }
-                    );
+
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -695,10 +689,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
                 var entry1 = new Entry {Uri = entryItem1.Uri};
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) ==
-                    new[] { entry1 }
-                    );
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -743,10 +734,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
                 var entry1 = new Entry {Uri = entryItem1.Uri};
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) ==
-                    new[] { entry1 }
-                    );
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -799,10 +787,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
                 var entry1 = new Entry {Uri = entryItem1.Uri};
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) ==
-                    new [] { entry1 }
-                    );
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -848,10 +833,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
                 var entry1 = new Entry {Uri = entryItem1.Uri};
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>()) ==
-                    new[] { entry1 }
-                    );
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -1076,6 +1058,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 new DbField("Defined Category Template"),
                 new DbField("Defined Comment Template")
             };
+        }
+
+        private IEntryManager MockEntryManager(params Entry[] entries)
+        {
+            return Mock.Of<IEntryManager>(x =>
+                x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>(), ListOrder.Descending) == new SearchResults<Entry>(entries, false)
+            );
         }
     }
 }

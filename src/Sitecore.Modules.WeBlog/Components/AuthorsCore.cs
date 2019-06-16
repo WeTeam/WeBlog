@@ -35,7 +35,7 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected virtual void LoadUsers()
         {
-            var groupedEntries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries).GroupBy(GetUserFullName).ToList();
+            var groupedEntries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries, ListOrder.Descending).Results.GroupBy(GetUserFullName).ToList();
             groupedEntries.Sort((g1, g2) => g2.Count() - g1.Count());
             Users = groupedEntries.Select(items => items.Key);
         }

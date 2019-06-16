@@ -22,8 +22,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blogRootItem">The root item of the blog to retrieve the entries for.</param>
         /// <param name="criteria">The criteria the entries should meet.</param>
+        /// <param name="resultOrder">The ordering of the results.</param>
         /// <returns>The entries matching the criteria.</returns>
-        IList<Entry> GetBlogEntries(Item blogRootItem, EntryCriteria criteria);
+        SearchResults<Entry> GetBlogEntries(Item blogRootItem, EntryCriteria criteria, ListOrder resultOrder);
 
         /// <summary>
         /// Gets the most popular entries for the blog by the number of page views.

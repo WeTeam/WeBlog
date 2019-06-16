@@ -103,13 +103,14 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="blogRootItem">The root item of the blog to retrieve the entries for.</param>
         /// <param name="criteria">The criteria the entries should meet.</param>
+        /// <param name="resultOrder">The ordering of the results.</param>
         /// <returns>The entries matching the criteria.</returns>
-        public virtual IList<Entry> GetBlogEntries(Item blogRootItem, EntryCriteria criteria)
+        public virtual SearchResults<Entry> GetBlogEntries(Item blogRootItem, EntryCriteria criteria, ListOrder resultOrder)
         {
             if (blogRootItem == null || criteria == null || criteria.PageNumber <= 0 || criteria.PageSize <= 0)
-                return new Entry[0];
+                return SearchResults<Entry>.Empty;
 
-            var cachedEntries = EntryCache?.Get(criteria);
+            var cachedEntries = EntryCache?.Get(criteria, resultOrder);
 
             if (cachedEntries != null)
                 return cachedEntries;
@@ -127,64 +128,67 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
 
             if (customBlogItem == null)
-                return new Entry[0];
+                return SearchResults<Entry>.Empty;
 
-            var indexName = Settings.SearchIndexName;
-
-            if (!string.IsNullOrEmpty(indexName))
+            using (var context = CreateSearchContext(blogRootItem))
             {
+                var builder = PredicateBuilder.True<EntryResultItem>();
 
-                using (var context = ContentSearchManager.GetIndex(indexName + "-" + blogRootItem.Database.Name).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck))
+                builder = builder.And(i => i.TemplateId == customBlogItem.BlogSettings.EntryTemplateID);
+                builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
+                builder = builder.And(i => i.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture));
+                builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
+
+                // Tag
+                if (!string.IsNullOrEmpty(criteria.Tag))
                 {
-                    var builder = PredicateBuilder.True<EntryResultItem>();
-
-                    builder = builder.And(i => i.TemplateId == customBlogItem.BlogSettings.EntryTemplateID);
-                    builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
-                    builder = builder.And(i => i.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture));
-                    builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
-
-                    // Tag
-                    if (!string.IsNullOrEmpty(criteria.Tag))
-                    {
-                        builder = builder.And(i => i.Tags.Contains(criteria.Tag));
-                    }
-
-                    // Categories
-                    if (!string.IsNullOrEmpty(criteria.Category))
-                    {
-                        var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, criteria.Category);
-
-                        // If the category is unknown, don't return any results.
-                        if (categoryItem == null)
-                            return new Entry[0];
-
-                        builder = builder.And(i => i.Category.Contains(categoryItem.ID));
-                    }
-
-                    if (criteria.MinimumDate != null)
-                        builder = builder.And(i => i.EntryDate >= criteria.MinimumDate);
-
-                    if (criteria.MaximumDate != null)
-                        builder = builder.And(i => i.EntryDate < criteria.MaximumDate);
-
-                    var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
-
-                    if (indexresults.Any())
-                    {
-                        var itemResults = indexresults.OrderByDescending(item => item.EntryDate)
-                            .ThenByDescending(item => item.CreatedDate)
-                            .Skip(criteria.PageSize * (criteria.PageNumber - 1))
-                            .Take(criteria.PageSize);
-
-                        var entries = itemResults.Select(x => CreateEntry(x)).ToList();
-                        EntryCache?.Set(criteria, entries);
-
-                        return entries;
-                    }
+                    builder = builder.And(i => i.Tags.Contains(criteria.Tag));
                 }
-            }
 
-            return new Entry[0];
+                // Categories
+                if (!string.IsNullOrEmpty(criteria.Category))
+                {
+                    var categoryItem = ManagerFactory.CategoryManagerInstance.GetCategory(customBlogItem, criteria.Category);
+
+                    // If the category is unknown, don't return any results.
+                    if (categoryItem == null)
+                        return SearchResults<Entry>.Empty;
+
+                    builder = builder.And(i => i.Category.Contains(categoryItem.ID));
+                }
+
+                if (criteria.MinimumDate != null)
+                    builder = builder.And(i => i.EntryDate >= criteria.MinimumDate);
+
+                if (criteria.MaximumDate != null)
+                    builder = builder.And(i => i.EntryDate < criteria.MaximumDate);
+
+                var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
+
+                if (resultOrder == ListOrder.Descending)
+                {
+                    indexresults = indexresults.OrderByDescending(item => item.EntryDate)
+                        .ThenByDescending(item => item.CreatedDate);
+                }
+                else
+                {
+                    indexresults = indexresults.OrderBy(item => item.EntryDate)
+                        .ThenBy(item => item.CreatedDate);
+                }
+
+                indexresults = indexresults.Skip(criteria.PageSize * (criteria.PageNumber - 1))
+                    .Take(criteria.PageSize < int.MaxValue ? criteria.PageSize + 1 : criteria.PageSize);
+
+                var entries = indexresults.Select(x => CreateEntry(x)).ToList();
+                var hasMore = entries.Count > criteria.PageSize;
+
+                var entriesPage = entries.Take(criteria.PageSize).ToList();
+                var results = new SearchResults<Entry>(entriesPage, hasMore);
+
+                EntryCache?.Set(criteria, resultOrder, results);
+
+                return results;
+            }
         }
 
         protected virtual Entry CreateEntry(EntryResultItem resultItem)
@@ -211,11 +215,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             var analyticsEnabled = IsAnalyticsEnabled();
             if (analyticsEnabled)
             {
-                var blogEntries = GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                var blogEntries = GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
 
-                return blogEntries.OrderByDescending(x => GetItemViews(x.Uri.ItemID)).Select(x => x.Uri).Take(maxCount).ToList();
+                return blogEntries.Results.OrderByDescending(x => GetItemViews(x.Uri.ItemID)).Select(x => x.Uri).Take(maxCount).ToList();
             }
-            
+
             Logger.Warn("Sitecore.Analytics must be enabled to get popular entries by view.", this);
 
             return new ItemUri[0];
@@ -269,6 +273,18 @@ namespace Sitecore.Modules.WeBlog.Managers
             query.Execute();
 
             return query.Visits;
+        }
+
+        protected IProviderSearchContext CreateSearchContext(Item blogRootItem)
+        {
+            var indexName = Settings.SearchIndexName;
+
+            if (!string.IsNullOrEmpty(indexName))
+            {
+                return ContentSearchManager.GetIndex(indexName + "-" + blogRootItem.Database.Name).CreateSearchContext(SearchSecurityOptions.DisableSecurityCheck);
+            }
+
+            return null;
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (blog != null)
             {
                 // TODO: Index tags as separate terms and use faceting rather than iterating every entry.
-                var entries = EntryManager.GetBlogEntries(blog.InnerItem, EntryCriteria.AllEntries);
+                var entries = EntryManager.GetBlogEntries(blog.InnerItem, EntryCriteria.AllEntries, ListOrder.Descending).Results;
                 return ExtractAndSortTags(entries);
             }
 

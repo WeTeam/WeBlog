@@ -152,10 +152,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     MockIndex().IndexItems(new[] { MockEntryItem(entry1, blogItem).Object });
 
                     // Act
-                    var entries = manager.GetBlogEntries(null, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(null, EntryCriteria.AllEntries, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -184,10 +185,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
                     // Act
                     blogItem.DeleteChildren();
-                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -197,7 +199,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         }
 
         [Test]
-        public void GetBlogEntries_WithEntries()
+        public void GetBlogEntries_WithEntriesDescending_ReturnsEntriesInDescendingOrder()
         {
             var settings = MockSettings(ID.NewID);
             var manager = new TestableEntryManager(settings, 1);
@@ -225,11 +227,53 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
 
                     // Assert
-                    var ids = from result in entries select result.Uri;
+                    var ids = from result in results.Results select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri, entry3.Uri}));
+                }
+                finally
+                {
+                    ContentSearchManager.SearchConfiguration.Indexes.Remove(IndexName);
+                }
+            }
+        }
+
+        [Test]
+        public void GetBlogEntries_WithEntriesAscending_ReturnsEntriesInAscendingOrder()
+        {
+            var settings = MockSettings(ID.NewID);
+            var manager = new TestableEntryManager(settings, 1);
+
+            using (var db = new Db
+            {
+                new DbItem("blog", ID.NewID, settings.BlogTemplateIds.First()) {
+                    new DbItem("2016", ID.NewID, BucketConfigurationSettings.BucketTemplateId)
+                    {
+                        new DbItem("entry1", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 10, 3)) } },
+                        new DbItem("entry2", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 10, 2)) } },
+                        new DbItem("entry3", ID.NewID, settings.EntryTemplateIds.First()) { { "Entry Date", DateUtil.ToIsoDate(new DateTime(2014, 10, 1)) } }
+                    }
+                }
+            })
+            {
+                try
+                {
+                    // Assign
+                    var blogItem = db.GetItem("/sitecore/content/blog");
+                    var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
+                    var entry2 = db.GetItem("/sitecore/content/blog/2016/entry2");
+                    var entry3 = db.GetItem("/sitecore/content/blog/2016/entry3");
+
+                    IndexEntries(blogItem, settings);
+
+                    // Act
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Ascending);
+
+                    // Assert
+                    var ids = from result in results.Results select result.Uri;
+                    Assert.That(ids, Is.EqualTo(new[] { entry3.Uri, entry2.Uri, entry1.Uri }));
                 }
                 finally
                 {
@@ -269,12 +313,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries.Count, Is.EqualTo(1));
+                    Assert.That(results.Results.Count, Is.EqualTo(1));
 
-                    var returnedEntry = entries[0];
+                    var returnedEntry = results.Results[0];
                     Assert.That(returnedEntry.Title, Is.EqualTo("Duis ligula massa"));
                     Assert.That(returnedEntry.Tags, Is.EquivalentTo(new[]{ "lorem", "ipsum", "dolor" }));
                     Assert.That(returnedEntry.Uri, Is.EqualTo(entry.Uri));
@@ -317,12 +361,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries.Count, Is.EqualTo(1));
+                    Assert.That(results.Results.Count, Is.EqualTo(1));
 
-                    var returnedEntry = entries[0];
+                    var returnedEntry = results.Results[0];
                     Assert.That(returnedEntry.Title, Is.EqualTo("Duis ligula massa"));
                 }
                 finally
@@ -363,7 +407,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
+                    var entries = results.Results;
 
                     // Assert
                     Assert.That(entries.Count, Is.EqualTo(1));
@@ -415,7 +460,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     IndexEntries(blogItem, settings);
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries);
+                    var results = manager.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
+                    var entries = results.Results;
 
                     // Assert
                     var ids = from result in entries select result.Uri;
@@ -472,11 +518,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(entry2, criteria);
+                    var results = manager.GetBlogEntries(entry2, criteria, ListOrder.Descending);
+                    var entries = results.Results;
 
                     // Assert
                     var ids = from result in entries select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri, entry3.Uri }));
+                    Assert.That(results.HasMoreResults, Is.True);
                 }
                 finally
                 {
@@ -519,11 +567,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
+                    var entries = results.Results;
 
                     // Assert
                     var ids = from result in entries select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri }));
+                    Assert.That(results.HasMoreResults, Is.True);
                 }
                 finally
                 {
@@ -564,10 +614,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -608,10 +659,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -655,11 +707,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
+                    var entries = results.Results;
                     var ids = from result in entries select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry2.Uri }));
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -703,11 +757,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
+                    var entries = results.Results;
                     var ids = from result in entries select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry2.Uri, entry3.Uri }));
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -752,12 +808,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
-
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
+                    var entries = results.Results;
                     var ids = from result in entries select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry1.Uri, entry3.Uri}));
+                    Assert.That(results.HasMoreResults, Is.True);
                 }
                 finally
                 {
@@ -800,11 +857,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
-
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -861,12 +918,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
-
+                    var results  = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    var ids = from result in entries select result.Uri;
+                    var ids = from result in results.Results select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry2.Uri, entry3.Uri, entry4.Uri}));
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -920,11 +977,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
-
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -979,12 +1036,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
-
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    var ids = from result in entries select result.Uri;
+                    var ids = from result in results.Results select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry2.Uri }));
+                    Assert.That(results.HasMoreResults, Is.True);
                 }
                 finally
                 {
@@ -1030,11 +1087,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    var ids = from result in entries select result.Uri;
+                    var ids = from result in results.Results select result.Uri;
                     Assert.That(ids, Is.EqualTo(new[] { entry3.Uri, entry2.Uri }));
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -1077,10 +1135,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -1123,10 +1182,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    Assert.That(entries, Is.Empty);
+                    Assert.That(results.Results, Is.Empty);
+                    Assert.That(results.HasMoreResults, Is.False);
                 }
                 finally
                 {
@@ -1172,11 +1232,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     };
 
                     // Act
-                    var entries = manager.GetBlogEntries(blogItem, criteria);
+                    var results = manager.GetBlogEntries(blogItem, criteria, ListOrder.Descending);
 
                     // Assert
-                    var uris = from result in entries select result.Uri;
+                    var uris = from result in results.Results select result.Uri;
                     Assert.That(uris, Is.EqualTo(new[] { entry4.Uri, entry3.Uri }));
+                    Assert.That(results.HasMoreResults, Is.True);
                 }
                 finally
                 {
