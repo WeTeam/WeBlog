@@ -36,7 +36,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
             var sut = new EntrySearchCache();
 
             // act, assert
-            var ex = Assert.Throws<ArgumentNullException>(() => sut.Get(null));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Get(null, ListOrder.Descending));
             Assert.That(ex.ParamName, Is.EqualTo("criteria"));
         }
 
@@ -52,7 +52,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
             };
 
             // act
-            var result = sut.Get(criteria);
+            var result = sut.Get(criteria, ListOrder.Descending);
 
             // assert
             Assert.That(result, Is.Null);
@@ -62,13 +62,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
         public void GetSet_ForCriteriaWhichHasBeenSet_ReturnsListPreviouslySet()
         {
             // arrange
-            var innerCache = new Cache<EntryCriteria>("test cache", 500)
+            var innerCache = new Cache<EntrySearchCacheKey>("test cache", 500)
             {
                 Enabled = true
             };
 
             var cacheManager = Mock.Of<BaseCacheManager>(x => 
-                x.GetNamedInstance<EntryCriteria>(It.IsAny<string>(), It.IsAny<long>(), true) == innerCache
+                x.GetNamedInstance<EntrySearchCacheKey>(It.IsAny<string>(), It.IsAny<long>(), true) == innerCache
             );
 
             var sut = new EntrySearchCache(cacheManager);
@@ -87,12 +87,44 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
                 }
             };
 
+            var results = new SearchResults<Entry>(list, false);
+
             // act
-            sut.Set(criteria, list);
-            var result = sut.Get(criteria);
+            sut.Set(criteria, ListOrder.Descending, results);
+            var result = sut.Get(criteria, ListOrder.Descending);
 
             // assert
-            Assert.That(result, Is.EquivalentTo(list));
+            Assert.That(result.Results, Is.EquivalentTo(list));
+        }
+
+        [Test]
+        public void GetSet_ForResultOrderWhichHasBeenSet_ReturnsNull()
+        {
+            // arrange
+            var sut = new EntrySearchCache();
+            var criteria = new EntryCriteria
+            {
+                PageNumber = 1,
+                PageSize = 5
+            };
+
+            var list = new List<Entry>
+            {
+                new Entry
+                {
+                    Author = "admin",
+                    Title = "lorem"
+                }
+            };
+
+            var results = new SearchResults<Entry>(list, false);
+
+            // act
+            sut.Set(criteria, ListOrder.Descending, results);
+            var result = sut.Get(criteria, ListOrder.Ascending);
+
+            // assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -100,10 +132,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
         {
             // arrange
             var sut = new EntrySearchCache();
-            var list = new List<Entry>();
 
             // act, assert
-            var ex = Assert.Throws<ArgumentNullException>(() => sut.Set(null, list));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Set(null, ListOrder.Descending, SearchResults<Entry>.Empty));
             Assert.That(ex.ParamName, Is.EqualTo("criteria"));
         }
 
@@ -114,7 +145,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
             var sut = new EntrySearchCache();
 
             // act, assert
-            var ex = Assert.Throws<ArgumentNullException>(() => sut.Set(EntryCriteria.AllEntries, null));
+            var ex = Assert.Throws<ArgumentNullException>(() => sut.Set(EntryCriteria.AllEntries, ListOrder.Descending, null));
             Assert.That(ex.ParamName, Is.EqualTo("entries"));
         }
 
@@ -122,13 +153,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
         public void ClearCache_EntriesPreviouslySet_EntriesNoLongerSet()
         {
             // arrange
-            var innerCache = new Cache<EntryCriteria>("test cache", 500)
+            var innerCache = new Cache<EntrySearchCacheKey>("test cache", 500)
             {
                 Enabled = true
             };
 
             var cacheManager = Mock.Of<BaseCacheManager>(x =>
-                x.GetNamedInstance<EntryCriteria>(It.IsAny<string>(), It.IsAny<long>(), true) == innerCache
+                x.GetNamedInstance<EntrySearchCacheKey>(It.IsAny<string>(), It.IsAny<long>(), true) == innerCache
             );
 
             var sut = new EntrySearchCache(cacheManager);
@@ -147,13 +178,15 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
                 }
             };
 
-            sut.Set(criteria, list);
+            var results = new SearchResults<Entry>(list, false);
+
+            sut.Set(criteria, ListOrder.Descending, results);
 
             // act
             sut.ClearCache();
 
             // assert
-            var result = sut.Get(criteria);
+            var result = sut.Get(criteria, ListOrder.Descending);
             Assert.That(result, Is.Null);
         }
     }

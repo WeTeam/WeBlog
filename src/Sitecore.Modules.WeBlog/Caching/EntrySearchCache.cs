@@ -39,7 +39,7 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// <param name="criteria">The criteria used to search for the entries.</param>
         /// <param name="resultOrder">The ordering of the results.</param>
         /// <returns>The list of entries for the criteria, or null if the criteria has not been cached.</returns>
-        public List<Entry> Get(EntryCriteria criteria, ListOrder resultOrder)
+        public SearchResults<Entry> Get(EntryCriteria criteria, ListOrder resultOrder)
         {
             Assert.ArgumentNotNull(criteria, nameof(criteria));
 
@@ -59,7 +59,7 @@ namespace Sitecore.Modules.WeBlog.Caching
             Assert.ArgumentNotNull(entries, nameof(entries));
 
             var key = new EntrySearchCacheKey(criteria, resultOrder);
-            _cache.Add(criteria, key);
+            _cache.Add(key, entries);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// <param name="cacheManager">The <see cref="BaseCacheManager"/> used to retieve the internal cache.</param>
         /// <param name="settings">The settings to operate with.</param>
         /// <returns></returns>
-        private ICache<EntryCriteria> GetEntriesCache(BaseCacheManager cacheManager, IWeBlogSettings settings)
+        private ICache<EntrySearchCacheKey> GetEntriesCache(BaseCacheManager cacheManager, IWeBlogSettings settings)
         {
             var cacheSize = (settings ?? WeBlogSettings.Instance).EntriesCacheSize;
 
