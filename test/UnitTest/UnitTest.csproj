@@ -124,6 +124,7 @@
     <Compile Include="Pipelines\ProfanityFilter\FilterWordsFixture.cs" />
     <Compile Include="Pipelines\ProfanityFilter\ValidateInputFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\ComputedFields\ClosestEntryFixture.cs" />
     <Compile Include="Search\EntryCriteriaFixture.cs" />
     <Compile Include="sitecore modules\web\WeBlog\MetaBlogApiFixture.cs" />
     <Compile Include="sitecore modules\web\WeBlog\TestableMetaBlogApi.cs" />
@@ -180,6 +181,6 @@
       <ConfigFile>$(OutDir)\$(AssemblyName).dll.config</ConfigFile>
     </PropertyGroup>
     <XslTransformation XmlInputPaths="$(ConfigFile)" XslInputPath="App.config.FakeDBLegacy.xslt" OutputPaths="$(ConfigFile).updated" />
-    <Move SourceFiles="$(ConfigFile).updated" DestinationFiles="$(ConfigFile)"/>
+    <Move SourceFiles="$(ConfigFile).updated" DestinationFiles="$(ConfigFile)" />
   </Target>
 </Project>

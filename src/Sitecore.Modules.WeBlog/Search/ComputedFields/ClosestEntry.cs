@@ -27,7 +27,8 @@ namespace Sitecore.Modules.WeBlog.Search.ComputedFields
             if (indexableItem == null)
                 return null;
 
-            return EntryManager.GetBlogEntryItemByCommentUri(indexableItem.Item.Uri).InnerItem.Uri;
+            var entryItem = EntryManager.GetBlogEntryItemByCommentUri(indexableItem.Item.Uri);
+            return entryItem?.InnerItem.Uri;
         }
     }
 }
