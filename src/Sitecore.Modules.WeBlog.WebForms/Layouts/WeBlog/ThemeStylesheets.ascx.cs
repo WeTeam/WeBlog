@@ -3,7 +3,7 @@ using Sitecore.Modules.WeBlog.Data.Items;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
-    public partial class ThemeStylehseets : BaseSublayout
+    public partial class ThemeStylesheets : BaseSublayout
     {
         public ThemeItem ThemeItem
         {

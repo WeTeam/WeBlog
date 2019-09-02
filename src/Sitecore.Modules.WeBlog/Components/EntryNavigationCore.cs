@@ -1,7 +1,10 @@
 using Sitecore.Data;
+using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
+using System;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
@@ -13,42 +16,79 @@ namespace Sitecore.Modules.WeBlog.Components
 
         public EntryNavigationCore(IBlogManager blogManager, IEntryManager entryManager)
         {
+            Assert.ArgumentNotNull(blogManager, nameof(blogManager));
+            Assert.ArgumentNotNull(entryManager, nameof(entryManager));
+
             BlogManager = blogManager;
             EntryManager = entryManager;
         }
 
         public EntryItem GetPreviousEntry(EntryItem entry)
         {
-            var criteria = new EntryCriteria
+            if (entry == null)
+                return null;
+
+            // Push the date to the next day to ensure we've covered all entries for that day.
+            var entries = GetEntriesCloseToEntry(entry, ListOrder.Descending, x => x.MaximumDate = entry.EntryDate.DateTime.AddDays(1));
+
+            if (entries != null && entries.Results.Any())
             {
-                MaximumDate = entry.EntryDate.DateTime,
-                PageNumber = 1,
-                PageSize = 2
-            };
+                var previous = entries.Results.SkipWhile(x => x.Uri.ItemID != entry.ID).Skip(1).FirstOrDefault();
+                if (previous == null)
+                    return null;
 
-            var blogHomeItem = BlogManager.GetCurrentBlog(entry);
-            var entries = EntryManager.GetBlogEntries(blogHomeItem, criteria, ListOrder.Descending);
-
-            if(entries.Results.Count > 1)
-                return Database.GetItem(entries.Results[0].Uri);
+                return Database.GetItem(previous.Uri);
+            }
 
             return null;
         }
 
         public EntryItem GetNextEntry(EntryItem entry)
         {
-            var criteria = new EntryCriteria
+            if (entry == null)
+                return null;
+
+            // Push the date to the previous day to ensure we've covered all entries for that day.
+            var entries = GetEntriesCloseToEntry(entry, ListOrder.Ascending, x => x.MinimumDate = entry.EntryDate.DateTime.AddDays(-1));
+
+            if (entries != null && entries.Results.Any())
             {
-                MinimumDate = entry.EntryDate.DateTime,
-                PageNumber = 1,
-                PageSize = 2
-            };
+                var next = entries.Results.SkipWhile(x => x.Uri.ItemID != entry.ID).Skip(1).FirstOrDefault();
+                if (next == null)
+                    return null;
 
+                return Database.GetItem(next.Uri);
+            }
+
+            return null;
+        }
+
+        protected SearchResults<Model.Entry> GetEntriesCloseToEntry(EntryItem entry, ListOrder resultOrder, Action<EntryCriteria> mutator)
+        {
             var blogHomeItem = BlogManager.GetCurrentBlog(entry);
-            var entries = EntryManager.GetBlogEntries(blogHomeItem, criteria, ListOrder.Ascending);
+            if (blogHomeItem == null)
+                return null;
 
-            if (entries.Results.Count > 1)
-                return Database.GetItem(entries.Results[1].Uri);
+            var pageSizes = new[] { 5, 50, 100, int.MaxValue };
+
+            foreach (var pageSize in pageSizes)
+            {
+                var criteria = new EntryCriteria
+                {
+                    PageNumber = 1,
+                    PageSize = pageSize
+                };
+
+                mutator.Invoke(criteria);
+
+                var entries = EntryManager.GetBlogEntries(blogHomeItem, criteria, resultOrder);
+
+                for(var i = 0; i < entries.Results.Count; i++)
+                {
+                    if(entries.Results[i].Uri.ItemID == entry.ID && i < entries.Results.Count - 1)
+                        return entries;
+                }
+            }
 
             return null;
         }

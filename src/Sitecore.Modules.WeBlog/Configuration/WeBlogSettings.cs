@@ -269,7 +269,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// </summary>
         public string DateFormat
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat", "MMMM dd yyyy"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat", "dd MMMM yyyy"); }
         }
 
         /// <summary>

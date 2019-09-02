@@ -260,12 +260,12 @@
     <Compile Include="Layouts\WeBlog\ThemeScripts.ascx.designer.cs">
       <DependentUpon>ThemeScripts.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Layouts\WeBlog\ThemeStylehseets.ascx.cs">
-      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+    <Compile Include="Layouts\WeBlog\ThemeStylesheets.ascx.cs">
+      <DependentUpon>ThemeStylesheets.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Layouts\WeBlog\ThemeStylehseets.ascx.designer.cs">
-      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+    <Compile Include="Layouts\WeBlog\ThemeStylesheets.ascx.designer.cs">
+      <DependentUpon>ThemeStylesheets.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
@@ -299,7 +299,7 @@
     <Content Include="Layouts\WeBlog\Sidebar\TwitterTimeline.ascx" />
     <Content Include="Layouts\WeBlog\SubmitComment.ascx" />
     <Content Include="Layouts\WeBlog\ThemeScripts.ascx" />
-    <Content Include="Layouts\WeBlog\ThemeStylehseets.ascx" />
+    <Content Include="Layouts\WeBlog\ThemeStylesheets.ascx" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

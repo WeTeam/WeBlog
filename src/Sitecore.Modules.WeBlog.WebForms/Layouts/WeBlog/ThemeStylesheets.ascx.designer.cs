@@ -9,7 +9,7 @@
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
-    public partial class ThemeStylehseets
+    public partial class ThemeStylesheets
     {
 
         /// <summary>

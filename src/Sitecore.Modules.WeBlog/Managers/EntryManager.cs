@@ -161,19 +161,21 @@ namespace Sitecore.Modules.WeBlog.Managers
                     builder = builder.And(i => i.EntryDate >= criteria.MinimumDate);
 
                 if (criteria.MaximumDate != null)
-                    builder = builder.And(i => i.EntryDate < criteria.MaximumDate);
+                    builder = builder.And(i => i.EntryDate <= criteria.MaximumDate);
 
                 var indexresults = context.GetQueryable<EntryResultItem>().Where(builder);
 
                 if (resultOrder == ListOrder.Descending)
                 {
                     indexresults = indexresults.OrderByDescending(item => item.EntryDate)
-                        .ThenByDescending(item => item.CreatedDate);
+                        .ThenByDescending(item => item.CreatedDate)
+                        .ThenByDescending(item => item.Title);
                 }
                 else
                 {
                     indexresults = indexresults.OrderBy(item => item.EntryDate)
-                        .ThenBy(item => item.CreatedDate);
+                        .ThenBy(item => item.CreatedDate)
+                        .ThenBy(item => item.Title);
                 }
 
                 indexresults = indexresults.Skip(criteria.PageSize * (criteria.PageNumber - 1))
