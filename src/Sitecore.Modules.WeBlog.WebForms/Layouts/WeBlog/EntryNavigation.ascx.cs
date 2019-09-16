@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
@@ -16,16 +17,9 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 
         public EntryNavigation(IEntryNavigationCore entryNavigationCore)
         {
-            EntryNavigationCore = entryNavigationCore ?? new EntryNavigationCore(GetDefaultPostListCore());
+            EntryNavigationCore = entryNavigationCore ?? new EntryNavigationCore(ManagerFactory.BlogManagerInstance, ManagerFactory.EntryManagerInstance);
             NextEntry = EntryNavigationCore.GetNextEntry(CurrentEntry);
             PreviousEntry = EntryNavigationCore.GetPreviousEntry(CurrentEntry);
-        }
-
-        protected PostListCore GetDefaultPostListCore()
-        {
-            var defaultPostListCore = new PostListCore(CurrentBlog);
-            defaultPostListCore.Initialize(System.Web.HttpContext.Current.Request.QueryString);
-            return defaultPostListCore;
         }
     }
 }

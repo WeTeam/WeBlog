@@ -39,6 +39,18 @@ namespace Sitecore.Modules.WeBlog.Configuration
         }
 
         /// <summary>
+        /// Gets the size of the entries cache.
+        /// </summary>
+        public long EntriesCacheSize
+        {
+            get
+            {
+                var setting = Sitecore.Configuration.Settings.GetSetting("Caching.WeBlogEntriesCacheSize", "5MB");
+                return StringUtil.ParseSizeString(setting);
+            }
+        }
+
+        /// <summary>
         /// Gets the IDs of the entry templates.
         /// </summary>
         public IEnumerable<ID> EntryTemplateIds
@@ -257,7 +269,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// </summary>
         public string DateFormat
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat", "MMMM dd yyyy"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat", "dd MMMM yyyy"); }
         }
 
         /// <summary>

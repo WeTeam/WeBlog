@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Data;
-using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Comparers;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -35,19 +33,39 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (blog != null)
             {
-                var entries = EntryManager.GetBlogEntries(blog.InnerItem);
+                // TODO: Index tags as separate terms and use faceting rather than iterating every entry.
+                var entries = EntryManager.GetBlogEntries(blog.InnerItem, EntryCriteria.AllEntries, ListOrder.Descending).Results;
                 return ExtractAndSortTags(entries);
             }
 
             return new Tag[0];
         }
-		
+
         /// <summary>
         /// Gets the tags for a blog entry and sorts by weight
         /// </summary>
         /// <param name="entry">The entry to get the tags for</param>
         /// <returns>The sorted tags for the entry</returns>
-        public Tag[] GetTagsForEntry(EntryItem entry)
+        public Tag[] GetTagsForEntry(EntryItem entryItem)
+        {
+            if(entryItem == null)
+                return new Tag[0];
+
+            var entry = new Entry
+            {
+                Tags = entryItem.TagsSplit,
+                EntryDate = entryItem.EntryDate.DateTime
+            };
+
+            return ExtractAndSortTags(new[] { entry });
+        }
+
+        /// <summary>
+        /// Gets the tags for a blog entry and sorts by weight
+        /// </summary>
+        /// <param name="entry">The entry to get the tags for</param>
+        /// <returns>The sorted tags for the entry</returns>
+        public Tag[] GetTagsForEntry(Entry entry)
         {
             return ExtractAndSortTags(new[] { entry });
         }
@@ -57,24 +75,24 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="entries">The entries to get the tags from</param>
         /// <returns>The sorted tags</returns>
-        protected virtual Tag[] ExtractAndSortTags(IEnumerable<EntryItem> entries)
+        protected virtual Tag[] ExtractAndSortTags(IEnumerable<Entry> entries)
         {
             var tags = new Dictionary<string, Tag>(StringComparer.OrdinalIgnoreCase);
             foreach (var entry in entries)
             {
-                if(entry == null)
+                if(entry?.Tags == null)
                     continue;
 
-                var stringTags = entry.TagsSplit.Distinct();
+                var stringTags = entry.Tags.Distinct();
                 foreach (var stringTag in stringTags)
                 {
                     if (tags.ContainsKey(stringTag))
                     {
                         var tag = tags[stringTag];
                         tag.Count++;
-                        if (entry.EntryDate.DateTime > tag.LastUsed)
+                        if (entry.EntryDate > tag.LastUsed)
                         {
-                            tag.LastUsed = entry.EntryDate.DateTime;
+                            tag.LastUsed = entry.EntryDate;
                         }
                     }
                     else
@@ -83,7 +101,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                         {
                             Name = stringTag,
                             Count = 1,
-                            LastUsed = entry.EntryDate.DateTime
+                            LastUsed = entry.EntryDate
                         });
                     }
                 }

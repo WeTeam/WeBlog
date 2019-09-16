@@ -15,6 +15,11 @@ namespace Sitecore.Modules.WeBlog.Configuration
         string SearchIndexName { get; }
 
         /// <summary>
+        /// Gets the size of the entries cache.
+        /// </summary>
+        long EntriesCacheSize { get; }
+
+        /// <summary>
         /// Gets the IDs of the entry templates.
         /// </summary>
         IEnumerable<ID> EntryTemplateIds { get; }

@@ -2,9 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
@@ -27,25 +30,33 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected void LoadEntries(Item blogItem)
         {
-            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blogItem);
+            var entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(blogItem, EntryCriteria.AllEntries, ListOrder.Descending);
             MonthsByYear = new Dictionary<int, int[]>();
 
-            foreach (var entry in entries)
+            foreach (var entry in entries.Results)
             {
-                DateTime created = entry.Created;
+                var item = Database.GetItem(entry.Uri);
+                if(item == null)
+                    continue;
+                
+                var entryItem = new EntryItem(item);
+
+                var created = entry.EntryDate;
                 var key = (created.Year * 100) + created.Month;
+
+                // todo: work out how to render the archive without loading the full item for each entry (index URL? or generate URL manually?)
                 if (EntriesByMonthAndYear.ContainsKey(key))
                 {
-                    EntriesByMonthAndYear[key].Add(entry);
+                    EntriesByMonthAndYear[key].Add(entryItem);
                 }
                 else
                 {
-                    var listTemp = new List<EntryItem> { entry };
+                    var listTemp = new List<EntryItem> { entryItem };
                     EntriesByMonthAndYear.Add(key, listTemp);
                 }
             }
 
-            foreach (var blogEntryYear in GetYears(entries))
+            foreach (var blogEntryYear in GetYears(entries.Results))
             {
                 MonthsByYear.Add(blogEntryYear, GetMonths(blogEntryYear).ToArray());
             }
@@ -55,13 +66,13 @@ namespace Sitecore.Modules.WeBlog.Components
         /// Gets the years from latest blog entry's year to oldest blog entry's year
         /// </summary>
         /// <returns></returns>
-        protected virtual int[] GetYears(EntryItem[] entries)
+        protected virtual int[] GetYears(IList<Entry> entries)
         {
             var years = new List<int>();
             if (entries.Any())
             {
-                var startYear = entries.First().Created.Year;
-                var endYear = entries.Last().Created.Year;
+                var startYear = entries.First().EntryDate.Year;
+                var endYear = entries.Last().EntryDate.Year;
 
                 if (startYear != 0 && endYear != 0)
                 {

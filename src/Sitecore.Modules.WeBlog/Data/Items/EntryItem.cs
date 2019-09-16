@@ -5,6 +5,7 @@ using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Security.Accounts;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
@@ -21,6 +22,15 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         public static implicit operator Item(EntryItem customItem)
         {
             return customItem != null ? customItem.InnerItem : null;
+        }
+
+        public static EntryItem FromEntry(Entry entry)
+        {
+            if (entry == null)
+                return null;
+
+            var item = Sitecore.Data.Database.GetItem(entry.Uri);
+            return item;
         }
 
         public CustomMultiListField Category

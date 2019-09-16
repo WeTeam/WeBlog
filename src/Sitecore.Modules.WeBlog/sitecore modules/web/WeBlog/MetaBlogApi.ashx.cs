@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Web;
 using CookComputing.XmlRpc;
 using Sitecore.Data;
@@ -10,6 +12,7 @@ using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Resources.Media;
 using Sitecore.Security.Authentication;
 
@@ -87,24 +90,26 @@ namespace Sitecore.Modules.WeBlog
         [XmlRpcMethod("blogger.getUsersBlogs")]
         public XmlRpcStruct[] getUsersBlogs(string appKey, string username, string password)
         {
-            int ii = 0;
             Authenticate(username, password);
 
             var blogList = BlogManager.GetUserBlogs(username);
 
             //Create structure for blog list
-            XmlRpcStruct[] blogs = new XmlRpcStruct[blogList.Length];
-            foreach (BlogHomeItem blog in blogList)
+            var blogs = new List<XmlRpcStruct>();
+
+            foreach (var blog in blogList)
             {
-                XmlRpcStruct rpcstruct = new XmlRpcStruct();
-                rpcstruct.Add("blogid", blog.ID.ToString()); // Blog Id
-                rpcstruct.Add("blogName", blog.Title.Raw); // Blog Name
-                rpcstruct.Add("url", blog.AbsoluteUrl);
-                blogs[ii] = rpcstruct;
-                ii++;
+                var rpcstruct = new XmlRpcStruct
+                {
+                    {"blogid", blog.ID.ToString()}, // Blog Id
+                    {"blogName", blog.Title.Raw}, // Blog Name
+                    {"url", blog.AbsoluteUrl}
+                };
+
+                blogs.Add(rpcstruct);
             }
 
-            return blogs;
+            return blogs.ToArray();
         }
 #endregion
 
@@ -141,7 +146,6 @@ namespace Sitecore.Modules.WeBlog
         [XmlRpcMethod("metaWeblog.getCategories")]
         public XmlRpcStruct[] getCategories(string blogid, string username, string password)
         {
-            int ii = 0;
             Authenticate(username, password);
 
             var blog = GetBlog(blogid);
@@ -149,19 +153,21 @@ namespace Sitecore.Modules.WeBlog
             {
                 var categoryList = CategoryManager.GetCategories(blog);
 
-                XmlRpcStruct[] categories = new XmlRpcStruct[categoryList.Length];
+                var categories = new List<XmlRpcStruct>();
 
-                foreach (CategoryItem category in categoryList)
+                foreach (var category in categoryList)
                 {
-                    XmlRpcStruct rpcstruct = new XmlRpcStruct();
-                    rpcstruct.Add("categoryid", category.ID.ToString()); // Category ID
-                    rpcstruct.Add("title", category.Title.Raw); // Category Title
-                    rpcstruct.Add("description", "Description is not available"); // Category Description
-                    categories[ii] = rpcstruct;
-                    ii++;
+                    var rpcstruct = new XmlRpcStruct
+                    {
+                        {"categoryid", category.ID.ToString()}, // Category ID
+                        {"title", category.Title.Raw}, // Category Title
+                        {"description", "Description is not available"} // Category Description
+                    };
+
+                    categories.Add(rpcstruct);
                 }
 
-                return categories;
+                return categories.ToArray();
             }
 
             return new XmlRpcStruct[0];
@@ -181,32 +187,46 @@ namespace Sitecore.Modules.WeBlog
         [XmlRpcMethod("metaWeblog.getRecentPosts")]
         public XmlRpcStruct[] getRecentPosts(string blogid, string username, string password, int numberOfPosts)
         {
-            int ii = 0;
             Authenticate(username, password);
 
             var blog = GetBlog(blogid);
             if (blog != null)
             {
-                var entryList = EntryManager.GetBlogEntries(blog, numberOfPosts, null, null, (DateTime?)null);
+                var criteria = new EntryCriteria
+                {
+                    PageNumber = 1,
+                    PageSize = numberOfPosts
+                };
 
-                XmlRpcStruct[] posts = new XmlRpcStruct[entryList.Length];
+                var entryList = EntryManager.GetBlogEntries(blog, criteria, ListOrder.Descending).Results.ToArray();
+
+                var posts = new List<XmlRpcStruct>();
 
                 //Populate structure with post entities
-                foreach (EntryItem entry in entryList)
+                foreach (var entry in entryList)
                 {
-                    XmlRpcStruct rpcstruct = new XmlRpcStruct();
-                    rpcstruct.Add("title", entry.Title.Raw);
-                    rpcstruct.Add("link", entry.AbsoluteUrl);
-                    rpcstruct.Add("description", entry.Content.Text);
-                    rpcstruct.Add("pubDate", entry.EntryDate.DateTime);
-                    rpcstruct.Add("guid", entry.ID.ToString());
-                    rpcstruct.Add("postid", entry.ID.ToString());
-                    rpcstruct.Add("keywords", entry.Tags.Raw);
-                    rpcstruct.Add("author", entry.InnerItem.Statistics.CreatedBy);
-                    posts[ii] = rpcstruct;
-                    ii++;
+                    var item = Database.GetItem(entry.Uri);
+                    if(item == null)
+                        continue;
+
+                    var entryItem = new EntryItem(item);
+
+                    var rpcstruct = new XmlRpcStruct
+                    {
+                        {"title", entryItem.Title.Raw},
+                        {"link", entryItem.AbsoluteUrl},
+                        {"description", entryItem.Content.Text},
+                        {"pubDate", entryItem.EntryDate.DateTime},
+                        {"guid", entryItem.ID.ToString()},
+                        {"postid", entryItem.ID.ToString()},
+                        {"keywords", entryItem.Tags.Raw},
+                        {"author", entryItem.InnerItem.Statistics.CreatedBy}
+                    };
+
+                    posts.Add(rpcstruct);
                 }
-                return posts;
+
+                return posts.ToArray();
             }
 
             return new XmlRpcStruct[0];

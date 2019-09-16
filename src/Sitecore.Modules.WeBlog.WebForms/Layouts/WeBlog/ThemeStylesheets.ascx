@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ThemeStylehseets.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.ThemeStylehseets" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ThemeStylesheets.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.ThemeStylesheets" %>
 
 <asp:Repeater runat="server" ID="Stylesheets">
     <ItemTemplate>

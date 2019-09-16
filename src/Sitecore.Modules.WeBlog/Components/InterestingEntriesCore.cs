@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
@@ -40,16 +42,30 @@ namespace Sitecore.Modules.WeBlog.Components
 
         public virtual EntryItem[] GetEntries(Item blogItem, int maxCount)
         {
+            IList<ItemUri> uris = new List<ItemUri>();
+
             switch (Algorithm)
             {
                 case InterestingEntriesAlgorithm.Custom:
                 case InterestingEntriesAlgorithm.Comments:
-                    return EntryManagerInstance.GetPopularEntriesByComment(blogItem, maxCount);
+                    uris = EntryManagerInstance.GetPopularEntriesByComment(blogItem, maxCount);
+                    break;
 
                 case InterestingEntriesAlgorithm.PageViews:
-                    return EntryManagerInstance.GetPopularEntriesByView(blogItem, maxCount);
+                    uris = EntryManagerInstance.GetPopularEntriesByView(blogItem, maxCount);
+                    break;
             }
-            return new EntryItem[0];
+
+            var entryItems = new List<EntryItem>();
+
+            foreach (var uri in uris)
+            {
+                var item = Database.GetItem(uri);
+                if(item != null)
+                    entryItems.Add(new EntryItem(item));
+            }
+
+            return entryItems.ToArray();
         }
     }
 }

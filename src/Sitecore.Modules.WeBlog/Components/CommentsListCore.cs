@@ -3,6 +3,7 @@ using System.Linq;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
@@ -14,26 +15,27 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected IWeBlogSettings Settings { get; }
 
-        public CommentsListCore(BlogHomeItem currentBlogHomeItem, EntryItem currentEntry, IWeBlogSettings settings = null)
+        protected ICommentManager CommentManager { get; }
+
+        public CommentsListCore(BlogHomeItem currentBlogHomeItem, EntryItem currentEntry, IWeBlogSettings settings = null, ICommentManager commentManager = null)
         {
             CurrentBlog = currentBlogHomeItem;
             CurrentEntry = currentEntry;
             Settings = settings ?? WeBlogSettings.Instance;
+            CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
         }
 
-        public virtual CommentItem[] LoadComments(CommentItem addedComment = null)
+        public virtual IList<CommentContent> LoadComments(CommentItem addedComment = null)
         {
-            var comments = ManagerFactory.CommentManagerInstance.GetEntryComments(CurrentEntry);
+            var comments = CommentManager.GetEntryComments(CurrentEntry, int.MaxValue).Select(x => CommentManager.GetCommentContent(x)).ToList();
+
             //if a comment has been added but is not coming back yet (i.e. being indexed), fake it
-            if (addedComment != null && comments.Count(comment => comment.ID == addedComment.ID) == 0)
+            if (addedComment != null && comments.All(comment => comment.Uri.ItemID != addedComment.ID))
             {
-                List<CommentItem> newList = new List<CommentItem>
-                {
-                    addedComment
-                };
-                newList.AddRange(comments);
-                comments = newList.ToArray();
+                CommentContent newComment = addedComment;
+                comments.Insert(0, newComment);
             }
+
             return comments;
         }
 

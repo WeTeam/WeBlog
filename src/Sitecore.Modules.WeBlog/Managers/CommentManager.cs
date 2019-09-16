@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using Sitecore.ContentSearch;
+using Sitecore.ContentSearch.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
@@ -11,6 +12,7 @@ using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
@@ -107,7 +109,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The number of comments</returns>
         public virtual int GetCommentsCount(Item entry)
         {
-            return GetEntryComments(entry).Length;
+            return GetEntryComments(entry, int.MaxValue).Count();
         }
 
         /// <summary>
@@ -116,19 +118,9 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="blogItem">The blog to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public virtual CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount)
+        public virtual IList<CommentReference> GetBlogComments(Item blogItem, int maximumCount)
         {
-            return GetCommentsFor(blogItem, maximumCount, true, true);
-        }
-
-        /// <summary>
-        /// Gets the comments for the given blog entry
-        /// </summary>
-        /// <param name="entryItem">The blog entry to get the comments for</param>
-        /// <returns>The comments for the blog entry</returns>
-        public virtual CommentItem[] GetEntryComments(Item entryItem)
-        {
-            return GetEntryComments(entryItem, int.MaxValue);
+            return GetCommentsFor(blogItem, maximumCount, true);
         }
 
         /// <summary>
@@ -137,17 +129,59 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="entryItem">The blog entry to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        public virtual CommentItem[] GetEntryComments(Item entryItem, int maximumCount)
+        public virtual IList<CommentReference> GetEntryComments(Item entryItem, int maximumCount)
         {
             if (entryItem != null)
             {
                 if(entryItem.TemplateIsOrBasedOn(Settings.EntryTemplateIds))
                 { 
-                    return GetCommentsFor(entryItem, maximumCount, true);
+                    return GetCommentsFor(entryItem, maximumCount);
                 }
             }
 
-            return new CommentItem[0];
+            return new CommentReference[0];
+        }
+
+        /// <summary>
+        /// Get the <see cref="CommentContent"/> for a <see cref="CommentReference"/>.
+        /// </summary>
+        /// <param name="commentReference">The <see cref="CommentReference"/> which identifies the comment.</param>
+        /// <returns>The <see cref="CommentContent"/> for the <see cref="CommentReference"/>.</returns>
+        public virtual CommentContent GetCommentContent(CommentReference commentReference)
+        {
+            CommentItem commentItem = Database.GetItem(commentReference.Uri);
+
+            return commentItem;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ItemUri"/>s for the entries that have the most comments.
+        /// </summary>
+        /// <param name="item">The root blog item to search below.</param>
+        /// <param name="maximumCount">The maximum number of entry <see cref="ItemUri"/>s to return.</param>
+        /// <returns>The list of <see cref="ItemUri"/>s for the entries.</returns>
+        public IList<ItemUri> GetMostCommentedEntries(Item item, int maximumCount)
+        {
+            if (item == null || maximumCount <= 0)
+                return new ItemUri[0];
+
+            var results = SearchComments<ItemUri>(item, queryable =>
+            {
+                if (!queryable.Any())
+                    return new ItemUri[0];
+
+                var facets = queryable.FacetOn(x => x.EntryUri);
+                var facetResults = facets.GetFacets();
+
+                if (!facetResults.Categories.Any())
+                    return new ItemUri[0];
+
+                var orderedRawUris = facetResults.Categories[0].Values.OrderByDescending(x => x.AggregateCount).Take(maximumCount).ToList();
+                var parsedUris = orderedRawUris.Select(x => ItemUri.Parse(x.Name));
+                return parsedUris.ToList();
+            });
+
+            return results;
         }
 
         /// <summary>
@@ -157,53 +191,80 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <param name="language">The language to get the comments in</param>
         /// <returns>The comments which are decendants of the given item</returns>
-        public virtual CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false)
+        protected virtual IList<CommentReference> GetCommentsFor(Item item, int maximumCount, bool reverseSort = false)
         {
-            if (item != null && maximumCount > 0)
+            if (item == null || maximumCount <= 0)
+                return new CommentReference[0];
+
+            var results = SearchComments<CommentReference>(item, queryable =>
             {
-                var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
-                if (blog != null)
-                {
-                    var indexName = Settings.SearchIndexName;
-                    List<CommentItem> result = new List<CommentItem>();
-                    if (!string.IsNullOrEmpty(indexName))
-                    {
-                        using (var context = ContentSearchManager.GetIndex(indexName + "-" + item.Database.Name).CreateSearchContext())
-                        {
-                            var indexresults = context.GetQueryable<CommentResultItem>().Where(x =>
-                              x.Paths.Contains(item.ID) &&
-                              x.TemplateId == blog.BlogSettings.CommentTemplateID &&
-                              x.DatabaseName.Equals(item.Database.Name, StringComparison.InvariantCulture) &&
-                              x.Language == item.Language.Name
-                              );
-                            if (indexresults.Any())
-                            {
-                                if (sort)
-                                {
-                                    if (reverse)
-                                        indexresults = indexresults.OrderByDescending(x => x.FullCreatedDate);
-                                    else
-                                        indexresults = indexresults.OrderBy(x => x.FullCreatedDate);
-                                }
+                if (!queryable.Any())
+                    return new CommentReference[0];
+                
+                if (reverseSort)
+                    queryable = queryable.OrderByDescending(x => x.FullCreatedDate);
+                else
+                    queryable = queryable.OrderBy(x => x.FullCreatedDate);
 
-                                indexresults = indexresults.Take(maximumCount);
+                queryable = queryable.Take(maximumCount);
 
-                              // Had some odd issues with the linq layer. Array to avoid them.
-                              var indexresultsList = indexresults.ToArray();
+                return queryable.Select(x => CreateCommentReference(x)).ToList();
 
-                              var items = from resultItem in indexresultsList
-                                let i = resultItem.GetItem()
-                                where i != null
-                                select i;
+                // todo: need cache?
+            });
 
-                              result = items.Select(x => new CommentItem(x)).ToList();
-                            }
-                        }
-                    }
-                    return result.ToArray();
-                }
+            return results;
+        }
+
+        /// <summary>
+        /// Search for comments.
+        /// </summary>
+        /// <param name="item">The root item under which to search for comments.</param>
+        /// <param name="projection">The function used to project the search results.</param>
+        /// <returns>A list of the found comments.</returns>
+        protected virtual IList<T> SearchComments<T>(Item item, Func<IQueryable<CommentResultItem>, IList<T>> projection)
+        {
+            if (item == null)
+                return new T[0];
+
+            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(item);
+            if (blog == null)
+                return new T[0];
+
+            var indexName = Settings.SearchIndexName;
+
+            if (string.IsNullOrEmpty(indexName))
+                return new T[0];
+
+            var index = ContentSearchManager.GetIndex(indexName + "-" + item.Database.Name);
+            if (index == null)
+                return new T[0];
+
+            using (var context = index.CreateSearchContext())
+            {
+                var queryable = CreateQueryable(context, item, blog);
+                return projection(queryable);
             }
-            return new CommentItem[0];
+        }
+
+        protected virtual IQueryable<CommentResultItem> CreateQueryable(IProviderSearchContext context, Item rootItem, BlogHomeItem blogItem)
+        {
+            return context.GetQueryable<CommentResultItem>().Where(x =>
+                x.Paths.Contains(rootItem.ID) &&
+                x.TemplateId == blogItem.BlogSettings.CommentTemplateID &&
+                x.DatabaseName.Equals(rootItem.Database.Name, StringComparison.InvariantCulture) &&
+                x.Language == rootItem.Language.Name
+            );
+        }
+
+        protected virtual CommentReference CreateCommentReference(CommentResultItem resultItem)
+        {
+            return new CommentReference
+            {
+                Uri = resultItem.Uri,
+                EntryUri = resultItem.EntryUri,
+                Created = resultItem.CreatedDate
+            };
         }
     }
 }

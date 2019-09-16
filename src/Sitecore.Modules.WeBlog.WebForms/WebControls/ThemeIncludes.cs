@@ -1,9 +1,11 @@
-﻿using System.Web.UI;
+﻿using System;
+using System.Web.UI;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.WebForms.WebControls
 {
+    [Obsolete("Use /layouts/WeBlog/ThemeStylesheets.ascx or /layouts/WeBlog/ThemeScripts.ascx instead")]
     public class ThemeIncludes : WebControl
     {
         protected IThemeInclude ThemeLink;

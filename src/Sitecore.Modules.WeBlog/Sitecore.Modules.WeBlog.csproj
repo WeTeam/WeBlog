@@ -65,6 +65,10 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.Abstractions">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.Client">
       <HintPath>$(SitecorePath)\bin\Sitecore.Client.dll</HintPath>
       <Private>False</Private>
@@ -136,6 +140,8 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Buckets\DynamicBucketFolderPathSelector.cs" />
+    <Compile Include="Caching\EntrySearchCacheKey.cs" />
+    <Compile Include="Caching\IEntrySearchCache.cs" />
     <Compile Include="Caching\IWeBlogCache.cs" />
     <Compile Include="Caching\ProfanityFilterCache.cs" />
     <Compile Include="Caching\TranslatorCache.cs" />
@@ -146,8 +152,16 @@
     <Compile Include="Components\IAuthorsCore.cs" />
     <Compile Include="Components\AuthorsCore.cs" />
     <Compile Include="Fields\TagField.cs" />
+    <Compile Include="Model\CommentContent.cs" />
+    <Compile Include="Model\CommentReference.cs" />
     <Compile Include="Model\Entry.cs" />
+    <Compile Include="Model\EntryComment.cs" />
     <Compile Include="Pipelines\RenderContentEditor\InjectTagFieldAssets.cs" />
+    <Compile Include="Search\ComputedFields\ClosestEntry.cs" />
+    <Compile Include="Search\EntriesCacheClearer.cs" />
+    <Compile Include="Search\EntryCriteria.cs" />
+    <Compile Include="ListOrder.cs" />
+    <Compile Include="Search\SearchResults.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="Configuration\IWeBlogSettings.cs" />
     <Compile Include="Configuration\WeBlogSettings.cs" />
@@ -295,6 +309,13 @@
     <Compile Include="Workflow\DeleteItemAction.cs" />
     <Compile Include="Workflow\ExtendedMailAction.cs" />
     <Compile Include="Workflow\PublishItemAndAncestorsAction.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))">
+    <Compile Include="Caching\EntrySearchCache.cs" />
+  </ItemGroup>
+  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true">
+    <Compile Include="Caching\EntryList.cs" />
+    <Compile Include="Caching\EntrySearchCacheLegacy.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
