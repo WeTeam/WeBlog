@@ -13,7 +13,13 @@ Copyright (c) 2011 - 2017 WeTeam Community
 &lt;p&gt;THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</License>
       <Comment />
       <Attributes />
-      <Readme>Post Install Steps
+      <Readme>Configure SOLR
+===============
+If you wish to use SOLR, you must create the SOLR cores 
+weblog_master_index and weblog_web_index and update the
+core name in the config files.
+	  
+Post Install Steps
 ==================
 * Perform an incremental publish to all publishing targets
 * Rebuild the WeBlog search index

@@ -252,7 +252,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             return context.GetQueryable<CommentResultItem>().Where(x =>
                 x.Paths.Contains(rootItem.ID) &&
                 x.TemplateId == blogItem.BlogSettings.CommentTemplateID &&
-                x.DatabaseName.Equals(rootItem.Database.Name, StringComparison.InvariantCulture) &&
+                //x.DatabaseName.Equals(rootItem.Database.Name, StringComparison.InvariantCulture) &&
                 x.Language == rootItem.Language.Name
             );
         }

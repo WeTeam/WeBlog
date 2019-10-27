@@ -161,6 +161,7 @@
     <Compile Include="Search\EntriesCacheClearer.cs" />
     <Compile Include="Search\EntryCriteria.cs" />
     <Compile Include="ListOrder.cs" />
+    <Compile Include="Search\FieldReaders\CsvFieldReader.cs" />
     <Compile Include="Search\SearchResults.cs" />
     <Compile Include="Templates.cs" />
     <Compile Include="Configuration\IWeBlogSettings.cs" />
@@ -360,17 +361,32 @@
     <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.Master.config">
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Lucene.Master.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.Web.config">
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Lucene.Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.ContentSearch.config">
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Lucene.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.Master.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
@@ -398,10 +414,10 @@
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
-    <CallTarget Targets="TransformContentSearchConfigs9X" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />
+    <!--<CallTarget Targets="TransformContentSearchConfigs9X" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />-->
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
+    <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt;App_Config\Include\*ContentSearch*.config">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
@@ -413,6 +429,15 @@
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
     <!-- Process WordPress import application for Sitecore 8+ -->
     <Copy SourceFiles="sitecore\shell\Applications\WeBlog\WordpressImport.SC80.xml" DestinationFiles="$(SitecorePath)\sitecore\shell\Applications\WeBlog\WordpressImport.xml" Condition="$(DefineConstants.Contains('SC80'))" />
+    <!-- Copy content search configurations -->
+    <CreateItem Include="App_Config\Include\WeBlog.ContentSearch.Lucene*.config" Condition="$(DefineConstants.Contains('LUCENE'))">
+      <Output ItemName="ContentSearchFiles" TaskParameter="Include" />
+    </CreateItem>
+    <CreateItem Include="App_Config\Include\WeBlog.ContentSearch.Solr*.config" Condition="$(DefineConstants.Contains('SOLR'))">
+      <Output ItemName="ContentSearchFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(ContentSearchFiles)" DestinationFiles="@(ContentSearchFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(ContentSearchFiles)" DestinationFiles="@(ContentSearchFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
   </Target>
   <Target Name="ContentDeliveryConfig">
     <PropertyGroup>
@@ -422,7 +447,7 @@
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
-  <Target Name="TransformContentSearchConfigs9X">
+  <!--<Target Name="TransformContentSearchConfigs9X">
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.SC90.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" />
-  </Target>
+  </Target>-->
 </Project>

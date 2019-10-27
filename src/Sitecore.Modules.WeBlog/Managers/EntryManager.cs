@@ -132,12 +132,11 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             using (var context = CreateSearchContext(blogRootItem))
             {
-                var builder = PredicateBuilder.True<EntryResultItem>();
-
-                builder = builder.And(i => i.TemplateId == customBlogItem.BlogSettings.EntryTemplateID);
-                builder = builder.And(i => i.Paths.Contains(customBlogItem.ID));
-                builder = builder.And(i => i.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture));
-                builder = builder.And(item => item.DatabaseName.Equals(Context.Database.Name, StringComparison.InvariantCulture));
+                var builder = PredicateBuilder.Create<EntryResultItem>(searchItem =>
+                    searchItem.TemplateId == customBlogItem.BlogSettings.EntryTemplateID &&
+                    searchItem.Paths.Contains(customBlogItem.ID) &&
+                    searchItem.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture)
+                );
 
                 // Tag
                 if (!string.IsNullOrEmpty(criteria.Tag))
@@ -195,13 +194,11 @@ namespace Sitecore.Modules.WeBlog.Managers
 
         protected virtual Entry CreateEntry(EntryResultItem resultItem)
         {
-            // todo: create tag parser
-
             return new Entry
             {
                 Uri = resultItem.Uri,
                 Title = string.IsNullOrWhiteSpace(resultItem.Title) ? resultItem.Name : resultItem.Title,
-                Tags = resultItem.Tags != null ? resultItem.Tags.Split(',').Select(x => x.Trim()) : Enumerable.Empty<string>(),
+                Tags = resultItem.Tags != null ? resultItem.Tags : Enumerable.Empty<string>(),
                 EntryDate = resultItem.EntryDate
             };
         }
