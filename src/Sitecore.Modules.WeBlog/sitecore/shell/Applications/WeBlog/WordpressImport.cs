@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using NVelocity.App;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
@@ -21,11 +20,15 @@ using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Web.UI.WebControls;
 
+#if FEATURE_NVELOCITY
+using NVelocity.App;
+#endif
+
 namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
 {
     public class WordpressImport : Sitecore.Web.UI.Pages.WizardForm
     {
-        #region Fields
+#region Fields
         protected Edit BlogName;
         protected Edit BlogEmail;
         protected Edit WordpressXmlFile;
@@ -51,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected TreePicker LanguageSelector;
 
         protected Database db = ContentHelper.GetContentDatabase();
-        #endregion
+#endregion
 
         protected string JobHandle
         {
@@ -63,7 +66,10 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         protected override void OnLoad(EventArgs e)
         {
             ImportOptionsPane.Visible = false;
+
+#if FEATURE_NVELOCITY
             Velocity.Init();
+#endif
 
             this.DataContext.GetFromQueryString();
 
@@ -141,8 +147,10 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             // Start job for index rebuild
             var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog");
 
+#if FEATURE_NVELOCITY
             // Init NVelocity before starting the job, in case something in the job uses it (creates items with a workflow that uses the Extended Email Action)
             Velocity.Init();
+#endif
 
             var job = JobManager.Start(options);
             job.Status.Total = 0;
@@ -332,7 +340,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 job.Status.Total = total;
         }
 
-        #region Upload XML
+#region Upload XML
         [HandleMessage("installer:upload", true)]
         protected void Upload(ClientPipelineArgs args)
         {
@@ -357,6 +365,6 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
                 }
             }
         }
-        #endregion
+#endregion
     }
 }

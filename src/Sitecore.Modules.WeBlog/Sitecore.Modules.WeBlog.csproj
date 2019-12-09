@@ -65,7 +65,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Abstractions">
+    <Reference Include="Sitecore.Abstractions" Condition="$(Configuration.Contains('sc9.2')) or $(Configuration.Contains('sc9.1')) or $(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc8.2')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.0'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -95,7 +95,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.NVelocity">
+    <Reference Include="Sitecore.NVelocity" Condition="$(DefineConstants.Contains('FEATURE_NVELOCITY'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>

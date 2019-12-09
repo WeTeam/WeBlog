@@ -5,9 +5,13 @@
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc8.2'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc9.0'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc9.1'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc9.2'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug sc9.3'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release sc8.0'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release sc8.1'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release sc8.2'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release sc9.0'"/>
 	<PropertyGroup Condition="'$(Configuration)' == 'Release sc9.1'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc9.2'"/>
+	<PropertyGroup Condition="'$(Configuration)' == 'Release sc9.3'"/>
 </Project>
