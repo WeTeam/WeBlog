@@ -58,6 +58,7 @@ If you're using Sitecore 9.x you must configure the weblog cores in SOLR.
 1. Navigate to SOLR `bin` folder
 1. `solr create -c weblog-master`
 1. `solr create -c weblog-web`
+1. Update config files to match the names of the cores created above
 1. Deploy weblog code to ensure index configs are available
 1. Use indexing manager to populate managed schema
 1. rebuild indexes

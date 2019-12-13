@@ -153,7 +153,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     if (categoryItem == null)
                         return SearchResults<Entry>.Empty;
 
-                    builder = builder.And(i => i.Category.Contains(categoryItem.ID.ToGuid()));
+                    builder = builder.And(i => i.Category.Contains(categoryItem.ID));
                 }
 
                 if (criteria.MinimumDate != null)
