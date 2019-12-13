@@ -19,6 +19,7 @@ using Sitecore.StringExtensions;
 using Sitecore.Web.UI.HtmlControls;
 using Sitecore.Web.UI.Sheer;
 using Sitecore.Web.UI.WebControls;
+using Sitecore.Abstractions;
 
 #if FEATURE_NVELOCITY
 using NVelocity.App;
@@ -145,7 +146,13 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         private void StartImport()
         {
             // Start job for index rebuild
-            var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog");
+            var options = new
+#if SC93
+                DefaultJobOptions(
+#else
+                JobOptions(
+#endif
+                "Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog");
 
 #if FEATURE_NVELOCITY
             // Init NVelocity before starting the job, in case something in the job uses it (creates items with a workflow that uses the Extended Email Action)
@@ -303,7 +310,13 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
             return true;
         }
 
-        private Job GetJob()
+        private
+#if SC93
+            BaseJob
+#else
+            Job
+# endif
+            GetJob()
         {
             if (Context.Job != null)
             {

@@ -181,7 +181,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
 #if SC93
             BaseJob
 #else
-         Job
+            Job
 #endif
             GetJob(string jobHandle)
         {

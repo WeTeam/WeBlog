@@ -153,7 +153,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     if (categoryItem == null)
                         return SearchResults<Entry>.Empty;
 
-                    builder = builder.And(i => i.Category.Contains(categoryItem.ID));
+                    builder = builder.And(i => i.Category.Contains(categoryItem.ID.ToGuid()));
                 }
 
                 if (criteria.MinimumDate != null)
@@ -179,6 +179,10 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                 indexresults = indexresults.Skip(criteria.PageSize * (criteria.PageNumber - 1))
                     .Take(criteria.PageSize < int.MaxValue ? criteria.PageSize + 1 : criteria.PageSize);
+
+
+                var ee = context.GetQueryable<EntryResultItem>();
+                var ll = ee.ToList();
 
                 var entries = indexresults.Select(x => CreateEntry(x)).ToList();
                 var hasMore = entries.Count > criteria.PageSize;
