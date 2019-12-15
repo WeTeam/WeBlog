@@ -46,7 +46,7 @@ The WeBlog themes use Grunt as a toolchain and are not included in the Visual St
 	1. Paths for Sitecore instaces are read from the `deploy.targets` file.
 	1. To deploy the themes to a different target instance, pass the `--scversion` parameter to `grunt`:
 	
-			grunt --scversion=sc7.0
+			grunt --scversion=sc9.0
 
 ## Create SOLR Cores ##
 
@@ -59,6 +59,6 @@ If you're using Sitecore 9.x you must configure the weblog cores in SOLR.
 1. `solr create -c weblog-master`
 1. `solr create -c weblog-web`
 1. Update config files to match the names of the cores created above
-1. Deploy weblog code to ensure index configs are available
+1. Deploy weblog code (rebuild the solution in VS) to ensure index configs are available
 1. Use indexing manager to populate managed schema
 1. rebuild indexes
