@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Managers\CommentManagerFixture.cs" />
     <Compile Include="Constants.cs" />
+    <Content Include="App_Config\Include\zWeBlog.Test.ContentSearch.Solr.config" />
     <None Include="Managers\CustomBlog\CommentManager.cs" />
     <Compile Include="Managers\CustomBlog\EntryManager.cs" />
     <Compile Include="Managers\CustomBlog\Extensions.cs" />
@@ -157,6 +158,7 @@
   </Target>
   <Target Name="ContentSearchConfig">
     <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.Lucene.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" Condition="$(DefineConstants.Contains('LUCENE'))" />
+    <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.Solr.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" Condition="$(DefineConstants.Contains('SOLR'))" />
     <!--
     <CallTarget Targets="TransformContentSearchConfigs9X" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />-->
   </Target>
