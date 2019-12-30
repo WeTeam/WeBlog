@@ -16,7 +16,7 @@ Copyright (c) 2011 - 2017 WeTeam Community
       <Readme>Configure SOLR
 ===============
 If you wish to use SOLR, you must create the SOLR cores 
-weblog_master_index and weblog_web_index and update the
+weblog-master and weblog-web and update the
 core name in the config files.
 	  
 Post Install Steps

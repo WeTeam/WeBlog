@@ -176,7 +176,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 if (!facetResults.Categories.Any())
                     return new ItemUri[0];
 
-                var orderedRawUris = facetResults.Categories[0].Values.OrderByDescending(x => x.AggregateCount).Take(maximumCount).ToList();
+                var orderedRawUris = facetResults.Categories[0].Values.OrderByDescending(x => x.AggregateCount).Where(x => x.AggregateCount != 0).Take(maximumCount).ToList();
                 var parsedUris = orderedRawUris.Select(x => ItemUri.Parse(x.Name));
                 return parsedUris.ToList();
             });
@@ -243,6 +243,9 @@ namespace Sitecore.Modules.WeBlog.Managers
             using (var context = index.CreateSearchContext())
             {
                 var queryable = CreateQueryable(context, item, blog);
+
+                var a = queryable.ToList();
+
                 return projection(queryable);
             }
         }
@@ -252,7 +255,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             return context.GetQueryable<CommentResultItem>().Where(x =>
                 x.Paths.Contains(rootItem.ID) &&
                 x.TemplateId == blogItem.BlogSettings.CommentTemplateID &&
-                //x.DatabaseName.Equals(rootItem.Database.Name, StringComparison.InvariantCulture) &&
                 x.Language == rootItem.Language.Name
             );
         }
