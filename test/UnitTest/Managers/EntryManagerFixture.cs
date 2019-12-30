@@ -1326,8 +1326,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             return value.Split('|').Select(s => new ID(s)).ToArray();
         }
 
-        private string GetTags(Item item)
+        private string[] GetTags(Item item)
         {
+            return item.Fields["Tags"]?.Value.Split(',').Select(x => x.Trim()).ToArray();
+            /*
+
             // Based on tags field configuration for Content Search
             var analyzer = new LowerCaseKeywordAnalyzer();
 
@@ -1347,7 +1350,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                 }
                 tokenStream.End();
                 return stringList.FirstOrDefault();
-            }
+            }*/
         }
 
         [Test]

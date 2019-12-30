@@ -100,6 +100,7 @@
     </Compile>
     <Compile Include="Managers\CommentManagerFixture.cs" />
     <Compile Include="Constants.cs" />
+    <Content Include="App_Config\Include\zWeBlog.Test.ContentSearch.Solr.config" />
     <None Include="Managers\CustomBlog\CommentManager.cs" />
     <Compile Include="Managers\CustomBlog\EntryManager.cs" />
     <Compile Include="Managers\CustomBlog\Extensions.cs" />
@@ -123,7 +124,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\zWeBlog.Test.ContentSearch.config" />
+    <Content Include="App_Config\Include\zWeBlog.Test.ContentSearch.Lucene.config" />
     <Content Include="Test.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -135,8 +136,8 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-    <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-    <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -156,8 +157,10 @@
     <CallTarget Targets="ContentSearchConfig" />
   </Target>
   <Target Name="ContentSearchConfig">
-    <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" />
-    <CallTarget Targets="TransformContentSearchConfigs9X" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />
+    <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.Lucene.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" Condition="$(DefineConstants.Contains('LUCENE'))" />
+    <Copy SourceFiles="App_Config\Include\zWeBlog.Test.ContentSearch.Solr.config" DestinationFolder="$(SitecorePath)\App_Config\Include" SkipUnchangedFiles="true" Condition="$(DefineConstants.Contains('SOLR'))" />
+    <!--
+    <CallTarget Targets="TransformContentSearchConfigs9X" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />-->
   </Target>
   <Target Name="TransformContentSearchConfigs9X">
     <XslTransformation XslInputPath="App_Config\Include\zWeBlog.Test.ContentSearch.SC90.xslt" XmlInputPaths="App_Config\Include\zWeBlog.Test.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\zWeBlog.Test.ContentSearch.config" />

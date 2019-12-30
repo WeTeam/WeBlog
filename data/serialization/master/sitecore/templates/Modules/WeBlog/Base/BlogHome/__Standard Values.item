@@ -30,7 +30,7 @@ name: __Default Bucket Query
 key: __default bucket query
 content-length: 81
 
-custom:_templatename|blogentry;custom:_templatename|blogcomment;sort:created date
+custom:_templatename|BlogEntry;custom:_templatename|BlogComment;sort:created date
 ----version----
 language: en
 version: 1
