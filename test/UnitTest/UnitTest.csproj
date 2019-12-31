@@ -1,42 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\..\packages\NUnit3TestAdapter.3.12.0\build\net35\NUnit3TestAdapter.props" Condition="Exists('..\..\packages\NUnit3TestAdapter.3.12.0\build\net35\NUnit3TestAdapter.props')" />
-  <Import Project="..\..\packages\NUnit.3.11.0\build\NUnit.props" Condition="Exists('..\..\packages\NUnit.3.11.0\build\NUnit.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <Import Project="..\..\build configurations.targets" />
   <Import Project="..\..\deploy.targets" Condition="Exists('..\..\deploy.targets')" />
+  <Import Project="..\..\sc version properties.targets" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9289295B-542B-4A8A-A951-40DC9F5BC2D0}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>net471</TargetFramework>
+    <!--<Version>0.1.6-dev</Version>-->
+  </PropertyGroup>
+  <PropertyGroup>
     <RootNamespace>Sitecore.Modules.WeBlog.UnitTest</RootNamespace>
     <AssemblyName>Sitecore.Modules.WeBlog.UnitTest</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <OutputType>Library</OutputType>
+    <Authors>WeBlog Community</Authors>
+    <ApplicationIcon />
+    <StartupObject />
   </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-    <OutputPath>bin\Debug\</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
-    <OutputPath>bin\Release\</OutputPath>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <DefineConstants>TRACE</DefineConstants>
-  </PropertyGroup>
-  <Import Project="..\..\sc version properties.targets" />
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Castle.Core.4.3.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
     <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\CookComputing.XmlRpcV2.dll</HintPath>
@@ -45,24 +24,15 @@
       <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Moq, Version=4.10.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Moq.4.10.1\lib\net45\Moq.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Analytics">
+	<Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.FakeDb, Version=1.7.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Sitecore.FakeDb.1.7.4\lib\net45\Sitecore.FakeDb.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Xdb.Reporting" Condition="$(DefineConstants.Contains('FEATURE_XCONNECT'))">
+	<Reference Include="Sitecore.Xdb.Reporting" Condition="$(DefineConstants.Contains('FEATURE_XCONNECT'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Sitecore.Buckets">
+	<Reference Include="Sitecore.Buckets">
       <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.ContentSearch">
@@ -84,104 +54,36 @@
     <Reference Include="Sitecore.Nexus">
       <HintPath>$(SitecorePath)\bin\Sitecore.Nexus.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Moq" Version="4.10.0" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+    <PackageReference Include="Sitecore.FakeDb" Version="1.7.4" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))" />
+    <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1')) or $(Configuration.Contains('sc9.2'))" />
+    <PackageReference Include="Sitecore.FakeDb" Version="3.0.0-alpha1" Condition="$(Configuration.Contains('sc9.3'))" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\src\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
-    <Compile Include="Comparers\ItemIdentityComparer.cs" />
-    <Compile Include="Components\EntryNavigationCoreFixture.cs" />
-    <Compile Include="ContentHelper.cs" />
-    <Compile Include="Data\Items\CommentItemFixture.cs" />
-    <Compile Include="Extensions\MockExtensions.cs" />
-    <Compile Include="Managers\EntryManagerFixture.cs" />
-    <Compile Include="Extensions\ItemExtensionsFixture.cs" />
-    <Compile Include="Managers\BlogManagerFixture.cs" />
-    <Compile Include="Managers\CategoryManagerFixture.cs" />
-    <Compile Include="Managers\TagManagerFixture.cs" />
-    <Compile Include="Pipelines\CreateComment\CreateCommentItemFixture.cs" />
-    <Compile Include="Pipelines\CreateComment\DuplicateSubmissionGuardFixture.cs" />
-    <Compile Include="Pipelines\CreateComment\TestableCreateCommentItemProcessor.cs" />
-    <Compile Include="Pipelines\GetSummary\AutoGenerateFixture.cs" />
-    <Compile Include="Pipelines\GetSummary\FirstContentBlockFixture.cs" />
-    <Compile Include="Pipelines\GetSummary\WrapFixture.cs" />
-    <Compile Include="Pipelines\ProfanityFilter\FilterWordsFixture.cs" />
-    <Compile Include="Pipelines\ProfanityFilter\ValidateInputFixture.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\ComputedFields\ClosestEntryFixture.cs" />
-    <Compile Include="Search\EntryCriteriaFixture.cs" />
-    <Compile Include="sitecore modules\web\WeBlog\MetaBlogApiFixture.cs" />
-    <Compile Include="sitecore modules\web\WeBlog\TestableMetaBlogApi.cs" />
+    <ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))">
+  <ItemGroup>
+    <Compile Remove="Caching\EntrySearchCacheLegacyFixture.cs" />
+    <Compile Remove="Caching\EntrySearchCacheFixture.cs" />
+    <Compile Include="Caching\EntrySearchCacheFixture.cs" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))" />
+    <Compile Include="Caching\EntrySearchCacheLegacyFixture.cs" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
+  </ItemGroup>
+  <!--<ItemGroup >
     <Compile Include="Caching\EntrySearchCacheFixture.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true">
+  <ItemGroup >
     <Compile Include="Caching\EntrySearchCacheLegacyFixture.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
-      <Project>{26fe5f3a-f140-40c4-85a0-c1866da26f16}</Project>
-      <Name>Sitecore.Modules.WeBlog</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.config.FakeDBLegacy.xslt" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\NUnit.3.11.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit.3.11.0\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\..\packages\NUnit3TestAdapter.3.12.0\build\net35\NUnit3TestAdapter.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NUnit3TestAdapter.3.12.0\build\net35\NUnit3TestAdapter.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <Target Name="BeforeBuild">
+  </ItemGroup>-->
+  <Target BeforeTargets="Clean" Name="blah">
+    <Message Text="Deploy targets is found" Condition="Exists('..\..\deploy.targets')" />
     <Message Text="Configuration: $(Configuration)" />
     <Message Text="Platform: $(Platform)" />
     <Message Text="SitecorePath: $(SitecorePath)" />
     <Message Text="SitecoreCDPath: $(SitecoreCDPath)" />
     <Message Text="Constants: $(DefineConstants)" />
-  </Target>
-  <Target Name="AfterBuild">
-    <CallTarget Targets="ConfigureFakeDBLegacy" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
-  </Target>
-  <Target Name="ConfigureFakeDBLegacy">
-    <PropertyGroup>
-      <ConfigFile>$(OutDir)\$(AssemblyName).dll.config</ConfigFile>
-    </PropertyGroup>
-    <XslTransformation XmlInputPaths="$(ConfigFile)" XslInputPath="App.config.FakeDBLegacy.xslt" OutputPaths="$(ConfigFile).updated" />
-    <Move SourceFiles="$(ConfigFile).updated" DestinationFiles="$(ConfigFile)" />
   </Target>
 </Project>

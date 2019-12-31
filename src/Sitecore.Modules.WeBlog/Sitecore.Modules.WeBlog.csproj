@@ -308,7 +308,7 @@
     <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="ContentHelper.cs" />
     <Compile Include="Workflow\DeleteItemAction.cs" />
-    <Compile Include="Workflow\ExtendedMailAction.cs" Condition="$(Configuration.Contains('sc9.2')) or $(Configuration.Contains('sc9.1')) or $(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc8.2')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.0'))" />
+    <Compile Include="Workflow\ExtendedMailAction.cs" Condition="$(DefineConstants.Contains('FEATURE_NVELOCITY'))" />
     <Compile Include="Workflow\PublishItemAndAncestorsAction.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))">
