@@ -1,0 +1,80 @@
+----item----
+version: 1
+id: {BDED01F4-2761-4A9F-B8F6-048DDC67D75F}
+database: master
+path: /sitecore/templates/Modules/WeBlog/Scriban Mail Action/__Standard Values
+parent: {CB7C3AF0-A150-473A-9FFD-E38907B842A8}
+name: __Standard Values
+master: {00000000-0000-0000-0000-000000000000}
+template: {CB7C3AF0-A150-473A-9FFD-E38907B842A8}
+templatekey: Scriban Mail Action
+created: 20200112T044718Z
+
+----field----
+field: {A291A22B-99E2-46BB-A27B-8EC744275396}
+name: Type
+key: type
+content-length: 75
+
+Sitecore.Modules.WeBlog.Workflow.ScribanMailAction, Sitecore.Modules.WeBlog
+----version----
+language: en
+version: 1
+revision: c1661f04-b63f-4a85-8bd0-dee796ec6b91
+
+----field----
+field: {D5E2F54B-450C-4555-BCCD-E08A1A4F219F}
+name: To
+key: to
+content-length: 24
+
+{{entryUpdatedBy.Email}}
+----field----
+field: {AEE4DEEC-D191-4DE4-B7DB-EDA413D4EC1D}
+name: From
+key: from
+content-length: 39
+
+Sitecore WeBlog <no_reply@sitecore.net>
+----field----
+field: {52807595-0F8F-4B20-8D2A-CB71D28C6103}
+name: __Owner
+key: __owner
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {25BED78C-4957-4165-998A-CA1B52F67497}
+name: __Created
+key: __created
+content-length: 16
+
+20200112T044718Z
+----field----
+field: {5DD74568-4D4B-44C1-B513-0AF5F4CDA34F}
+name: __Created by
+key: __created by
+content-length: 14
+
+sitecore\Admin
+----field----
+field: {8CDC337E-A112-42FB-BBB4-4143751E123F}
+name: __Revision
+key: __revision
+content-length: 36
+
+c1661f04-b63f-4a85-8bd0-dee796ec6b91
+----field----
+field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
+name: __Updated
+key: __updated
+content-length: 16
+
+20200112T045435Z
+----field----
+field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
+name: __Updated by
+key: __updated by
+content-length: 14
+
+sitecore\Admin

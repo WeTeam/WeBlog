@@ -24,7 +24,9 @@ Perform the following before opening the solution in Visual Studio.
 In addition to building the project and deploying the files, you must also restore the WeBlog Sitecore items.
 
 1. Copy the `data\serialization` folder to the `data` folder of the Sitecore instance.
-1. If using a Sitecore version with RDB (Sitecore 7.5+), copy the folders from inside the `master-rdb-additional` folder into the `master` folder.
+1. If using Sitecore version 8.2 or higher:
+11. Copy the folders from inside the `master sc8.2+` folder into the `master` folder.
+11. Delete the following `item` file from the serialization folder: `master\sitecore\system\Workflows\WeBlog Comments\Created\Submit\Email Entry Author.item`
 1. Access the Serialization utility page `/sitecore/admin/serialization.aspx`.
 1. Select the `core` and `master` databases
 1. Click the `Update {core, master} databasees` button.
