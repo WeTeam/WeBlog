@@ -99,7 +99,6 @@ namespace Sitecore.Modules.WeBlog.Workflow
             catch (Exception ex)
             {
                 Log.Error("An error occurred whilst rendering a Scriban template in " + GetType().FullName, ex, this);
-                args.AbortPipeline();
                 return;
             }
 
@@ -116,7 +115,6 @@ namespace Sitecore.Modules.WeBlog.Workflow
             catch (Exception ex)
             {
                 Log.Error("Exception while sending workflow email", ex, this);
-                args.AbortPipeline();
             }
         }
 

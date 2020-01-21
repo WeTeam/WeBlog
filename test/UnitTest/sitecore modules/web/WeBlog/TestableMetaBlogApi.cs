@@ -24,12 +24,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             IEntryManager entryManager = null,
             IWeBlogSettings settings = null
 #if FEATURE_ABSTRACTIONS
-            ,BaseMediaManager mediaManager = null
+            ,BaseMediaManager mediaManager = null,
+            BaseLinkManager linkManager = null
 #endif
         )
             : base(blogManager, categoryManager, entryManager, settings
 #if FEATURE_ABSTRACTIONS
-                ,mediaManager
+                ,mediaManager,
+                  linkManager
 #endif
             )
         {

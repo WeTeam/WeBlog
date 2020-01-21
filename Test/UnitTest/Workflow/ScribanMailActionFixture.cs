@@ -277,25 +277,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
         }
 
         [Test]
-        public void Process_InvalidScribanInField_AbortsPipeline()
-        {
-            // arrange
-            var sutDependencies = CreateSutDependencies(new Dictionary<string, object>
-            {
-                {"token", "value" }
-            });
-
-            var sut = CreateScribanMailAction(sutDependencies);
-            var args = CreateWorkflowPipelineArgs(message: "{{token}");
-
-            // act
-            sut.Process(args);
-
-            // assert
-            Assert.That(args.Aborted, Is.True);
-        }
-
-        [Test]
         public void Process_AccessInvalidTokenProperty_LogsErrors()
         {
             // arrange
@@ -311,23 +292,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
             // assert
             logMock.Verify(x => x.Error("An error occurred whilst rendering a Scriban template in Sitecore.Modules.WeBlog.Workflow.ScribanMailAction", It.IsAny<Exception>(), sut));
         }
-
-        [Test]
-        public void Process_AccessInvalidTokenProperty_AbortsPipeline()
-        {
-            // arrange
-            var sutDependencies = CreateSutDependencies();
-
-            var sut = CreateScribanMailAction(sutDependencies);
-            var args = CreateWorkflowPipelineArgs(message: "{{token.prop}}");
-
-            // act
-            sut.Process(args);
-
-            // assert
-            Assert.That(args.Aborted, Is.True);
-        }
-
 
         private SutDependencies CreateSutDependencies(Dictionary<string, object> model = null)
         {
