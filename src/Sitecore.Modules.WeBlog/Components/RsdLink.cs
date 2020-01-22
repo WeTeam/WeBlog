@@ -25,7 +25,7 @@ namespace Sitecore.Modules.WeBlog.Components
             Blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
             Attributes = new Dictionary<HtmlTextWriterAttribute, string>
             {
-                {HtmlTextWriterAttribute.Href, "http://" + WebUtil.GetHostName() + "/sitecore modules/WeBlog/rsd.ashx?blogid=" + Blog.ID},
+                {HtmlTextWriterAttribute.Href, WebUtil.GetServerUrl() + "/sitecore modules/web/WeBlog/rsd.ashx?blogid=" + Blog.ID},
                 {HtmlTextWriterAttribute.Rel, "EditURI"},
                 {HtmlTextWriterAttribute.Type, "application/rsd+xml"},
                 {HtmlTextWriterAttribute.Title, "RSD"}

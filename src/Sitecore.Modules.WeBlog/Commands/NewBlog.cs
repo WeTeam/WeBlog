@@ -59,7 +59,7 @@ namespace Sitecore.Modules.WeBlog.Commands
                     string url = LinkManager.GetItemUrl(createdBlog);  
                     Sitecore.Context.SetActiveSite(oldSiteName);  
 
-                    SheerResponse.Eval("window.parent.location.href='http://" + WebUtil.GetHostName() + "/" + url + "'");
+                    SheerResponse.Eval("window.parent.location.href='" + WebUtil.GetServerUrl() + "/" + url + "'");
                 }
             }
             else

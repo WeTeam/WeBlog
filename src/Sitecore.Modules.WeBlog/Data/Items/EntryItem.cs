@@ -23,10 +23,12 @@ namespace Sitecore.Modules.WeBlog.Data.Items
     {
 #if FEATURE_ABSTRACTIONS
         private BaseLinkManager _linkManager = null;
-
-        [Obsolete("Use ctor(Item, BaseLinkManager instead.")]
 #endif
-        public EntryItem(Item innerItem) : base(innerItem) { }
+
+        public EntryItem(Item innerItem)
+            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
+        {
+        }
 
 #if FEATURE_ABSTRACTIONS
         public EntryItem(Item innerItem, BaseLinkManager linkManager) : base(innerItem)

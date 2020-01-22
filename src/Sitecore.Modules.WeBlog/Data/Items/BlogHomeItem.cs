@@ -11,6 +11,7 @@ using Sitecore.Modules.WeBlog.Configuration;
 #if FEATURE_ABSTRACTIONS
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
+using Sitecore.Sites;
 #endif
 
 #if SC93
@@ -25,13 +26,11 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 
 #if FEATURE_ABSTRACTIONS
         private BaseLinkManager _linkManager = null;
-
-        [Obsolete("Use ctor(Item, IWeBlogSettings, BaseLinkManager instead.")]
 #endif
+
         public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
-            : base(innerItem)
+            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
         {
-            Settings = settings ?? WeBlogSettings.Instance;
         }
 
 #if FEATURE_ABSTRACTIONS
