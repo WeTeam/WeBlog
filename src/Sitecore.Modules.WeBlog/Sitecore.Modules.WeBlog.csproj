@@ -364,10 +364,11 @@
     <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewCategory.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewEntry.js" />
-    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
-    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
+    <None Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\SC8.x\**.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.config">
@@ -454,7 +455,7 @@
     <CreateItem Include="@(Content)" Exclude="**\WordpressImport.SC80.xml;App_Config\Include\*.xslt;App_Config\Include\*ContentSearch*.config">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
-    <Message Text="DeployFiles: @(DeployFiles)"/>
+    <Message Text="DeployFiles: @(DeployFiles)" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
     <CreateItem Include="$(OutDir)\*.dll">
@@ -474,8 +475,9 @@
     <Copy SourceFiles="@(ContentSearchFiles)" DestinationFiles="@(ContentSearchFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(ContentSearchFiles)" DestinationFiles="@(ContentSearchFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
     <!-- Remove Scriban mail action pipeline config if types are not available -->
-    <Message Text="abs: $(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))"/>
+    <Message Text="abs: $(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))" />
     <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.ScribanMailAction.config" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
+    <CallTarget Targets="DeploySC8xEE" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
     <PropertyGroup>
@@ -484,5 +486,8 @@
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" Parameters="&lt;Parameter Name='custom-cache-clear' Value='$(WeBlog-config-delivery-params)'/&gt;" />
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
+  </Target>
+  <Target Name="DeploySC8xEE">
+    <Copy SourceFiles="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\SC8.x\**.js" DestinationFolder="$(SitecorePath)\sitecore\shell\client\WeBlog\ExperienceEditor\Commands" />
   </Target>
 </Project>
