@@ -29,9 +29,16 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 #endif
 
         public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
+#if FEATURE_ABSTRACTIONS
             : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
         {
         }
+#else
+            : base(innerItem)
+        {
+            Settings = settings ?? WeBlogSettings.Instance;
+        }
+#endif
 
 #if FEATURE_ABSTRACTIONS
         public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
