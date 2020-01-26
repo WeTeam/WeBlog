@@ -180,10 +180,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 indexresults = indexresults.Skip(criteria.PageSize * (criteria.PageNumber - 1))
                     .Take(criteria.PageSize < int.MaxValue ? criteria.PageSize + 1 : criteria.PageSize);
 
-
-                var ee = context.GetQueryable<EntryResultItem>();
-                var ll = ee.ToList();
-
                 var entries = indexresults.Select(x => CreateEntry(x)).ToList();
                 var hasMore = entries.Count > criteria.PageSize;
 
