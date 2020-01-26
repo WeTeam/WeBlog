@@ -26,7 +26,11 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 #endif
 
         public EntryItem(Item innerItem)
+#if FEATURE_ABSTRACTIONS
             : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
+#else
+            : base(innerItem)
+#endif
         {
         }
 
