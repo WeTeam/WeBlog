@@ -30,7 +30,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 
         public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
 #if FEATURE_ABSTRACTIONS
-            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
+            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager, settings)
         {
         }
 #else
