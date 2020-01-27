@@ -29,7 +29,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
         public string ImportItems(WordPressImportData data)
         {
             var options = new
-#if SC93
+#if FEATURE_JOB_ABSTRACTIONS
                 DefaultJobOptions(
 #else
                 JobOptions(
@@ -178,7 +178,7 @@ namespace Sitecore.Modules.WeBlog.Controllers
         }
 
         private
-#if SC93
+#if FEATURE_JOB_ABSTRACTIONS
             BaseJob
 #else
             Job
