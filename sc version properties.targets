@@ -18,7 +18,7 @@
 	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration.Contains('sc8.2'))">
 		<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-		<DefineConstants>$(DefineConstants);FEATURE_ABSTRACTIONS;FEATURE_NVELOCITY;LUCENE</DefineConstants>
+		<DefineConstants>$(DefineConstants);FEATURE_ABSTRACTIONS;FEATURE_NVELOCITY;LUCENE;SC82</DefineConstants>
 		<OutputPath>bin\sc82\</OutputPath>
 	</PropertyGroup>
 	<PropertyGroup Condition="$(Configuration.Contains('sc9.0'))">

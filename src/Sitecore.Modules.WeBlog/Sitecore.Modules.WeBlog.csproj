@@ -65,7 +65,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Analytics.Core">
+    <Reference Include="Sitecore.Analytics.Core" Condition="$(DefineConstants.Contains('SC82')) != True">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>

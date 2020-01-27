@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Abstractions;
-using Sitecore.Analytics.Core;
 using Sitecore.Modules.WeBlog.Pipelines.PopulateScribanMailActionModel;
 using Sitecore.Modules.WeBlog.Workflow;
 using Sitecore.Pipelines;
@@ -9,6 +8,13 @@ using Sitecore.Workflows.Simple;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
+using Sitecore.Collections;
+
+#if SC82
+using Sitecore.Analytics.Commons;
+#else
+using Sitecore.Analytics.Core;
+#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
 {
@@ -335,7 +341,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
             ItemFactory.SetField(actionItemMock, "message", message);
 
             var dataItemMock = ItemFactory.CreateItem();
-            var args = new WorkflowPipelineArgs(dataItemMock.Object, null, null);
+            var args = new WorkflowPipelineArgs(dataItemMock.Object, (StringDictionary)null, null);
             args.ProcessorItem = actionItemMock.Object;
 
             return args;
