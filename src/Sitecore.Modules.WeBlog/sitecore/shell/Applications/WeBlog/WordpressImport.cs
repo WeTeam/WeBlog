@@ -147,7 +147,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         {
             // Start job for index rebuild
             var options = new
-#if SC93
+#if FEATURE_JOB_ABSTRACTIONS
                 DefaultJobOptions(
 #else
                 JobOptions(
@@ -311,7 +311,7 @@ namespace Sitecore.Modules.WeBlog.sitecore.shell.Applications.WeBlog
         }
 
         private
-#if SC93
+#if FEATURE_JOB_ABSTRACTIONS
             BaseJob
 #else
             Job
