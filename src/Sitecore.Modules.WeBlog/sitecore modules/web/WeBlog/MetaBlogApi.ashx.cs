@@ -18,6 +18,7 @@ using Sitecore.Security.Authentication;
 
 #if FEATURE_ABSTRACTIONS
 using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
 #endif
 
 namespace Sitecore.Modules.WeBlog
@@ -53,12 +54,17 @@ namespace Sitecore.Modules.WeBlog
         /// The <see cref="BaseMediaManager"/> to use for media operations.
         /// </summary>
         protected BaseMediaManager MediaManager { get; set; }
+
+        /// <summary>
+        /// The <see cref="BaseLinkManager"/> to use to generate item links.
+        /// </summary>
+        protected BaseLinkManager LinkManager { get; set; }
 #endif
 
         public MetaBlogApi()
             : this(null, null, null, null
 #if FEATURE_ABSTRACTIONS
-                , null
+                , null, null
 #endif
                 )
         {
@@ -66,7 +72,7 @@ namespace Sitecore.Modules.WeBlog
 
         public MetaBlogApi(IBlogManager blogManager, ICategoryManager categoryManager, IEntryManager entryManager, IWeBlogSettings settings
 #if FEATURE_ABSTRACTIONS
-            , BaseMediaManager mediaManager
+            , BaseMediaManager mediaManager, BaseLinkManager linkManager
 #endif
         )
         {
@@ -75,7 +81,8 @@ namespace Sitecore.Modules.WeBlog
             EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
             Settings = settings ?? WeBlogSettings.Instance;
 #if FEATURE_ABSTRACTIONS
-            MediaManager = mediaManager ?? MediaManager;
+            MediaManager = mediaManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseMediaManager)) as BaseMediaManager;
+            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
 #endif
         }
 
@@ -209,7 +216,11 @@ namespace Sitecore.Modules.WeBlog
                     if(item == null)
                         continue;
 
-                    var entryItem = new EntryItem(item);
+                    var entryItem = new EntryItem(item
+#if FEATURE_ABSTRACTIONS
+                        , LinkManager
+#endif
+                    );
 
                     var rpcstruct = new XmlRpcStruct
                     {
@@ -364,7 +375,11 @@ namespace Sitecore.Modules.WeBlog
         {
             if (item != null)
             {
-                var entry = new EntryItem(item);
+                var entry = new EntryItem(item
+#if FEATURE_ABSTRACTIONS
+                    , LinkManager
+#endif
+                );
 
                 entry.BeginEdit();
 
@@ -406,7 +421,11 @@ namespace Sitecore.Modules.WeBlog
             var entryItem = GetContentDatabase().GetItem(postid);
             if (entryItem != null)
             {
-                var entry = new EntryItem(entryItem);
+                var entry = new EntryItem(entryItem
+#if FEATURE_ABSTRACTIONS
+                    , LinkManager
+#endif
+                );
 
                 rpcstruct.Add("title", entry.Title.Raw);
                 rpcstruct.Add("link", entry.AbsoluteUrl);

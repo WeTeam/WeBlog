@@ -1,5 +1,6 @@
 ﻿using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.FieldReaders;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Search.FieldReaders
 {
@@ -17,7 +18,7 @@ namespace Sitecore.Modules.WeBlog.Search.FieldReaders
                 tags[i] = tags[i].Trim();
             }
 
-            return tags;
+            return tags.ToList();
         }
     }
 }

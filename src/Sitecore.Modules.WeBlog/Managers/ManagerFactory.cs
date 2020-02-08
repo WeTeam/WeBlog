@@ -3,6 +3,11 @@ using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.StringExtensions;
 
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
+
 namespace Sitecore.Modules.WeBlog.Managers
 {
     public static class ManagerFactory
@@ -18,7 +23,19 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_blogManager == null)
-                    m_blogManager = CreateInstance<IBlogManager>(WeBlogSettings.Instance.BlogManagerClass, () => { return new BlogManager(); });
+                {
+#if FEATURE_ABSTRACTIONS
+                    var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
+#endif
+
+                    m_blogManager = CreateInstance<IBlogManager>(WeBlogSettings.Instance.BlogManagerClass, () => {
+                        return new BlogManager(
+#if FEATURE_ABSTRACTIONS
+                            linkManager
+#endif
+                        );
+                    });
+                }
 
                 return m_blogManager;
             }

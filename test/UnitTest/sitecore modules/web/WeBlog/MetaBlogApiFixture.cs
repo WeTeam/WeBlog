@@ -19,8 +19,13 @@ using Sitecore.Modules.WeBlog.Model;
 
 #if FEATURE_ABSTRACTIONS
 using Sitecore.Abstractions;
+using Sitecore.Links;
 #else
 using Sitecore.FakeDb.Resources.Media;
+#endif
+
+#if SC93
+using Sitecore.Links.UrlBuilders;
 #endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
@@ -67,9 +72,26 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog1 = db.GetItem("/sitecore/content/blog1");
 
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "link"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<UrlOptions>()) == "link"
+                );
+#endif
+
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetUserBlogs(username) == new BlogHomeItem[] { blog1 }
-                    );
+                    x.GetUserBlogs(username) == new BlogHomeItem[]
+                    {
+#if FEATURE_ABSTRACTIONS
+                        new BlogHomeItem(blog1, linkManager, null)
+#else
+                        new BlogHomeItem(blog1, null)
+#endif
+                    }
+                );
 
                 var api = CreateAuthenticatingApi(blogManager);
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
@@ -80,7 +102,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {
                         {"blogid", blog1.ID.ToString()},
                         {"blogName", "Lorem"},
-                        {"url", "/en/sitecore/content/blog1.aspx"},
+#if FEATURE_ABSTRACTIONS
+                        {"url", "link"}
+#else
+                        {"url", "/en/sitecore/content/blog1.aspx"}
+#endif
                     }
                 };
 
@@ -108,11 +134,36 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blog1 = db.GetItem("/sitecore/content/blog1");
                 var blog2 = db.GetItem("/sitecore/content/blog2");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetUserBlogs(username) == new BlogHomeItem[] { blog1, blog2 }
-                    );
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<UrlOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<UrlOptions>()) == "link2"
+                );
+#endif
 
-                var api = CreateAuthenticatingApi(blogManager);
+                var blogManager = Mock.Of<IBlogManager>(x =>
+                    x.GetUserBlogs(username) == new BlogHomeItem[]
+                    {
+#if FEATURE_ABSTRACTIONS
+                        new BlogHomeItem(blog1, linkManager, null),
+                        new BlogHomeItem(blog2, linkManager, null)
+#else
+                        new BlogHomeItem(blog1, null),
+                        new BlogHomeItem(blog2, null)
+#endif
+                    }
+                );
+
+                var api = CreateAuthenticatingApi(blogManager
+#if FEATURE_ABSTRACTIONS
+                    , linkManager: linkManager
+#endif
+                );
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
 
                 var expected = new[]
@@ -121,13 +172,21 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {
                         {"blogid", blog1.ID.ToString()},
                         {"blogName", "Lorem"},
-                        {"url", "/en/sitecore/content/blog1.aspx"},
+#if FEATURE_ABSTRACTIONS
+                        {"url", "link1"}
+#else
+                        {"url", "/en/sitecore/content/blog1.aspx"}
+#endif
                     },
                     new XmlRpcStruct
                     {
                         {"blogid", blog2.ID.ToString()},
                         {"blogName", "Ipsum"},
-                        {"url", "/en/sitecore/content/blog2.aspx"},
+#if FEATURE_ABSTRACTIONS
+                        {"url", "link2"}
+#else
+                        {"url", "/en/sitecore/content/blog2.aspx"}
+#endif
                     }
                 };
 
@@ -336,7 +395,23 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var entryManager = MockEntryManager(entry1, entry2);
 
-                var api = CreateAuthenticatingApi(null, null, entryManager);
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<UrlOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<UrlOptions>()) == "link2"
+                );
+#endif
+
+                var api = CreateAuthenticatingApi(null, null, entryManager
+#if FEATURE_ABSTRACTIONS
+                    , linkManager: linkManager
+#endif
+                );
                 api.GetBlogFunction = id => blog;
 
                 var site = new FakeSiteContext("test");
@@ -352,7 +427,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new XmlRpcStruct
                     {
                         {"title", "Lorem"},
+#if FEATURE_ABSTRACTIONS
+                        {"link", "link1"},
+#else
                         {"link", "/en/sitecore/content/Blog/entry1.aspx"},
+#endif
                         {"description", ""}, // Description is empty because the renderField pipeline is empty
                         {"pubDate", date},
                         {"guid", entryItem1.ID.ToString()},
@@ -363,7 +442,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new XmlRpcStruct
                     {
                         {"title", "Ipsum"},
+#if FEATURE_ABSTRACTIONS
+                        {"link", "link2"},
+#else
                         {"link", "/en/sitecore/content/Blog/entry2.aspx"},
+#endif
                         {"description", ""}, // Description is empty because the renderField pipeline is empty
                         {"pubDate", date.AddMinutes(1)},
                         {"guid", entryItem2.ID.ToString()},
@@ -789,14 +872,32 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var entryManager = MockEntryManager(entry1);
 
-                var api = CreateAuthenticatingApi(null, null, entryManager);
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "the-link"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<UrlOptions>()) == "the-link"
+                );
+#endif
+
+                var api = CreateAuthenticatingApi(null, null, entryManager
+#if FEATURE_ABSTRACTIONS
+                    , linkManager: linkManager
+#endif
+                );
 
                 var post = api.getPost(entryItem1.ID.ToString(), "user", "password");
 
                 var expected = new XmlRpcStruct
                 {
                     {"title", "Luna"},
+#if FEATURE_ABSTRACTIONS
+                    {"link", "the-link"},
+#else
                     {"link", "/en/sitecore/content/Blog/entry1.aspx"},
+#endif
                     {"description", "This world doesn't need no opera"},
                     {"pubDate", date},
                     {"guid", entryItem1.ID.ToString()},
@@ -1025,7 +1126,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             IEntryManager entryManager = null,
             IWeBlogSettings settings = null
 #if FEATURE_ABSTRACTIONS
-            ,BaseMediaManager mediaManager = null
+            ,BaseMediaManager mediaManager = null,
+            BaseLinkManager linkManager = null
 #endif
             )
         {
@@ -1035,7 +1137,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 entryManager,
                 settings
 #if FEATURE_ABSTRACTIONS
-                ,mediaManager
+                ,mediaManager,
+                linkManager
 #endif
                 )
             {

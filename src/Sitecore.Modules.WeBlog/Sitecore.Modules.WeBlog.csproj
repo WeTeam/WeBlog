@@ -54,18 +54,26 @@
       <HintPath>$(SitecorePath)\bin\HtmlAgilityPack.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="MSCaptcha">
       <HintPath>..\..\lib\MSCaptcha\MSCaptcha.dll</HintPath>
     </Reference>
+    <Reference Include="Scriban, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))">
+      <HintPath>..\..\packages\Scriban.2.1.1\lib\net45\Scriban.dll</HintPath>
+    </Reference>
     <Reference Include="Sitecore.Analytics">
       <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.Analytics.Core" Condition="$(DefineConstants.Contains('SC82')) != True">
+      <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Xdb.Reporting" Condition="$(DefineConstants.Contains('FEATURE_XCONNECT'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.Abstractions">
+    <Reference Include="Sitecore.Abstractions" Condition="$(Configuration.Contains('sc9.2')) or $(Configuration.Contains('sc9.1')) or $(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc8.2')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.0'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.Abstractions.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -95,7 +103,7 @@
       <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Sitecore.NVelocity">
+    <Reference Include="Sitecore.NVelocity" Condition="$(DefineConstants.Contains('FEATURE_NVELOCITY'))">
       <HintPath>$(SitecorePath)\bin\Sitecore.NVelocity.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -116,8 +124,14 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.1\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Drawing" />
@@ -308,11 +322,27 @@
     <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="ContentHelper.cs" />
     <Compile Include="Workflow\DeleteItemAction.cs" />
-    <Compile Include="Workflow\ExtendedMailAction.cs" />
+    <Compile Include="Workflow\ExtendedMailAction.cs" Condition="$(DefineConstants.Contains('FEATURE_NVELOCITY'))" />
     <Compile Include="Workflow\PublishItemAndAncestorsAction.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))">
     <Compile Include="Caching\EntrySearchCache.cs" />
+    <Compile Include="Data\Items\ScribanMailActionItem.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddActionItem.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddBlog.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddComment.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddCurrentTimestamp.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddDataItem.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddEntryModels.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddNextWorkflowState.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddSite.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddUser.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddWorkflowHistory.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddWorkflowPipelineArgs.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\AddWorkflowState.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\PopulateScribanMailActionModelArgs.cs" />
+    <Compile Include="Pipelines\PopulateScribanMailActionModel\ResolveItems.cs" />
+    <Compile Include="Workflow\ScribanMailAction.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true">
     <Compile Include="Caching\EntryList.cs" />
@@ -334,10 +364,11 @@
     <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
+    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewCategory.js" />
     <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\NewEntry.js" />
-    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditEntrySettings.js" />
-    <Content Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\EditBlogSettings.js" />
+    <!--<None Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\SC8.x\**.js" />-->
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.config">
@@ -390,6 +421,11 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.ScribanMailAction.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
@@ -414,10 +450,9 @@
   <Target Name="AfterBuild">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
     <CallTarget Targets="ContentDeliveryConfig" />
-    <!--<CallTarget Targets="TransformContentSearchConfigs9X" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1'))" />-->
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt;App_Config\Include\*ContentSearch*.config">
+    <CreateItem Include="@(Content)" Exclude="**\WordpressImport.SC80.xml;App_Config\Include\*.xslt;App_Config\Include\*ContentSearch*.config">
       <Output ItemName="DeployFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
@@ -427,7 +462,7 @@
     </CreateItem>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
-    <!-- Process WordPress import application for Sitecore 8+ -->
+    <!-- Process WordPress import application for Sitecore 8.0 -->
     <Copy SourceFiles="sitecore\shell\Applications\WeBlog\WordpressImport.SC80.xml" DestinationFiles="$(SitecorePath)\sitecore\shell\Applications\WeBlog\WordpressImport.xml" Condition="$(DefineConstants.Contains('SC80'))" />
     <!-- Copy content search configurations -->
     <CreateItem Include="App_Config\Include\WeBlog.ContentSearch.Lucene*.config" Condition="$(DefineConstants.Contains('LUCENE'))">
@@ -438,6 +473,9 @@
     </CreateItem>
     <Copy SourceFiles="@(ContentSearchFiles)" DestinationFiles="@(ContentSearchFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(ContentSearchFiles)" DestinationFiles="@(ContentSearchFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <!-- Remove Scriban mail action pipeline config if types are not available -->
+    <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.ScribanMailAction.config" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
+    <CallTarget Targets="DeploySC8xEE" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
     <PropertyGroup>
@@ -447,7 +485,11 @@
     <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
-  <!--<Target Name="TransformContentSearchConfigs9X">
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.SC90.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.config" />
-  </Target>-->
+  <Target Name="DeploySC8xEE">
+    <CreateItem Include="sitecore\shell\client\WeBlog\ExperienceEditor\Commands\SC8.x\*.js">
+      <Output ItemName="SC8xEEFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Message Text="SC8xEEFiles: @(SC8xEEFiles)" />
+    <Copy SourceFiles="@(SC8xEEFiles)" DestinationFolder="$(SitecorePath)\sitecore\shell\client\WeBlog\ExperienceEditor\Commands" />
+  </Target>
 </Project>

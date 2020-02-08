@@ -49,7 +49,7 @@ namespace Sitecore.Modules.WeBlog
                 // Service 
                 rsd.WriteStartElement("service");
                 rsd.WriteElementString("engineName", "Sitecore WeBlog Module");
-                rsd.WriteElementString("engineLink", "http://" + WebUtil.GetHostName());
+                rsd.WriteElementString("engineLink", WebUtil.GetServerUrl());
                 rsd.WriteElementString("homePageLink", currentBlog.AbsoluteUrl);
 
                 // APIs
@@ -59,17 +59,9 @@ namespace Sitecore.Modules.WeBlog
                 rsd.WriteStartElement("api");
                 rsd.WriteAttributeString("name", "MetaWeblog");
                 rsd.WriteAttributeString("preferred", "true");
-                rsd.WriteAttributeString("apiLink", "http://" + WebUtil.GetHostName() + "/sitecore modules/WeBlog/MetaBlogApi.ashx");
+                rsd.WriteAttributeString("apiLink", WebUtil.GetServerUrl() + "/sitecore modules/web/WeBlog/MetaBlogApi.ashx");
                 rsd.WriteAttributeString("blogID", currentBlog.ID.ToString());
                 rsd.WriteEndElement();
-
-                //// BlogML
-                //rsd.WriteStartElement("api");
-                //rsd.WriteAttributeString("name", "BlogML");
-                //rsd.WriteAttributeString("preferred", "false");
-                //rsd.WriteAttributeString("apiLink", Utils.AbsoluteWebRoot + "api/BlogImporter.asmx");
-                //rsd.WriteAttributeString("blogID", Utils.AbsoluteWebRoot.ToString());
-                //rsd.WriteEndElement();
 
                 // End APIs
                 rsd.WriteEndElement();

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Tokenattributes;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Buckets.Util;
 using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.LuceneProvider.Analyzers;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.ContentSearch.Security;
 using Sitecore.Data;
@@ -18,12 +10,14 @@ using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.UnitTest.Extensions;
-using Sitecore.Modules.WeBlog.Search;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 #if FEATURE_XCONNECT
-using Sitecore.Xdb.Reporting;
 #else
 using Sitecore.Analytics.Reporting;
 #endif

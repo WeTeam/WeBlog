@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Web.Http;
-using NVelocity.App;
+using Sitecore.Abstractions;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -15,6 +15,10 @@ using Sitecore.Services.Core;
 using Sitecore.Services.Infrastructure.Web.Http;
 using Sitecore.StringExtensions;
 
+#if FEATURE_NVELOCITY
+using NVelocity.App;
+#endif
+
 namespace Sitecore.Modules.WeBlog.Controllers
 {
     [ServicesController]
@@ -24,10 +28,18 @@ namespace Sitecore.Modules.WeBlog.Controllers
         [Authorize]
         public string ImportItems(WordPressImportData data)
         {
-            var options = new JobOptions("Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog", new[] { data });
+            var options = new
+#if FEATURE_JOB_ABSTRACTIONS
+                DefaultJobOptions(
+#else
+                JobOptions(
+#endif
+                "Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog", new[] { data });
 
+#if FEATURE_NVELOCITY
             // Init NVelocity before starting the job, in case something in the job uses it (creates items with a workflow that uses the Extended Email Action)
             Velocity.Init();
+#endif
 
             var job = JobManager.Start(options);
             job.Status.Total = 0;
@@ -165,7 +177,13 @@ namespace Sitecore.Modules.WeBlog.Controllers
             }
         }
 
-        private Job GetJob(string jobHandle)
+        private
+#if FEATURE_JOB_ABSTRACTIONS
+            BaseJob
+#else
+            Job
+#endif
+            GetJob(string jobHandle)
         {
             var handle = Handle.Parse(jobHandle);
             if (handle != null)

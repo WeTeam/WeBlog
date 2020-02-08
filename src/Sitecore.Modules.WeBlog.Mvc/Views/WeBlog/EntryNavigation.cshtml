@@ -13,8 +13,8 @@
             {
                 <p class="wb-entry-navigation-label">@Translator.Render("NAVIGATION_PREVIOUS").ToHtmlString()</p>
                 <p class="wb-entry-navigation-title">
-                    <a href="@Model.PreviousEntry.Url" title="@Model.PreviousEntry.Title.Rendered">
-                        @Model.PreviousEntry.Title.Rendered
+                    <a href="@Model.PreviousEntry.Url" title="@Model.PreviousEntry.Title.Raw">
+                        @Model.PreviousEntry.Title.Raw
                     </a>
                 </p>
             }
@@ -24,8 +24,8 @@
             {
                 <p class="wb-entry-navigation-label">@Translator.Render("NAVIGATION_NEXT").ToHtmlString()</p>
                 <p class="wb-entry-navigation-title">
-                    <a href="@Model.NextEntry.Url" title="@Model.NextEntry.Title.Rendered">
-                        @Model.NextEntry.Title.Rendered
+                    <a href="@Model.NextEntry.Url" title="@Model.NextEntry.Title.Raw">
+                        @Model.NextEntry.Title.Raw
                     </a>
                 </p>
             }

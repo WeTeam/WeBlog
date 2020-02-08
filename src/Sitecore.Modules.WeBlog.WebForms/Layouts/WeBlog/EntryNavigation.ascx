@@ -12,8 +12,8 @@
                     <%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("NAVIGATION_PREVIOUS")%>
                 </p>
                 <p class="wb-entry-navigation-title">
-                    <a href="<%=PreviousEntry.Url%>" title="<%=PreviousEntry.Title.Rendered%>">
-                        <%=PreviousEntry.Title.Rendered%>
+                    <a href="<%=PreviousEntry.Url%>" title="<%=PreviousEntry.Title.Raw%>">
+                        <%=PreviousEntry.Title.Raw%>
                     </a>
                 </p>
             <% } %>
@@ -24,8 +24,8 @@
                     <%=Sitecore.Modules.WeBlog.Globalization.Translator.Render("NAVIGATION_NEXT")%>
                 </p>
                 <p class="wb-entry-navigation-title">
-                    <a href="<%=NextEntry.Url%>" title="<%=NextEntry.Title.Rendered%>">
-                        <%=NextEntry.Title.Rendered%>
+                    <a href="<%=NextEntry.Url%>" title="<%=NextEntry.Title.Raw%>">
+                        <%=NextEntry.Title.Raw%>
                     </a>
                 </p>
             <% } %>

@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyCompany("WeTeam community")]
 [assembly: AssemblyProduct("WeBlog")]
-[assembly: AssemblyCopyright("Copyright ©  2011 - 2019")]
+[assembly: AssemblyCopyright("Copyright ©  2011 - 2020")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
