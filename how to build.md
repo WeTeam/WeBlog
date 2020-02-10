@@ -64,3 +64,11 @@ If you're using Sitecore 9.x you must configure the weblog cores in Solr.
 1. Use indexing manager to populate managed schema
 	* If that doesn't work, copy the `managed-schema` file from the `conf` folder of an existing Sitecore core.
 1. rebuild indexes
+
+## Packaging ##
+
+WeBlog uses Sitecore packages. A separate package is built for each minor version of Sitecore.
+
+Before creating the package, ensure the code has been built and deployed as per above instructions, and ensure the themes have been build as well. All unit and integration tests should be run.
+
+To create the package, copy the relevant `xml` file from the `data\packages` folder over to the `data\packages` folder of the Sitecore instance you'll be building from. The `WeBlog sc8.x.xml` file is for all Sitecore 8.x versions. The `WeBlog.xml` file is for all other versions.

@@ -53,7 +53,6 @@ file.
         <x-item>/bin/Sitecore.Modules.WeBlog.Mvc.dll</x-item>
         <x-item>/bin/Sitecore.Modules.WeBlog.WebForms.dll</x-item>
         <x-item>/bin/Recaptcha.dll</x-item>
-        <x-item>/bin/Scriban.dll</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>
@@ -160,14 +159,13 @@ file.
     <xfiles>
       <Entries>
         <x-item>/App_Config/Include/WeBlog.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.Master.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.Web.config</x-item>
+        <x-item>/App_Config/Include/WeBlog.ContentSearch.Lucene.config</x-item>
+		<x-item>/App_Config/Include/WeBlog.ContentSearch.Lucene.Master.config</x-item>
+		<x-item>/App_Config/Include/WeBlog.ContentSearch.Lucene.Web.config</x-item>
         <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
         <x-item>/App_Config/Include/WeBlog.Mvc.config</x-item>
         <x-item>/App_Config/Include/WeBlog.WebForms.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ExperienceEditor.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.ScribanMailAction.config</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>
@@ -1065,7 +1063,7 @@ file.
       <Exclude />
       <Name>Speak files</Name>
     </files>
-    <xitems>
+	<xitems>
       <Entries>
         <x-item>/core/sitecore/system/Field types/List Types/WeBlog Tags/{FC50DF6C-2294-4297-8BFE-BD1A7949DC05}/invariant/0</x-item>
       </Entries>
