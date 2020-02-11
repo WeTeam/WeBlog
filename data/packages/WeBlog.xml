@@ -15,13 +15,16 @@ Copyright (c) 2011 - 2020 WeTeam Community
       <Attributes />
       <Readme>Configure SOLR
 ===============
-If you wish to use SOLR, you must create the SOLR cores 
-weblog-master and weblog-web and update the
-core name in the config files.
+Create the SOLR cores weblog-master and weblog-web. If 
+you use different names for the cores, update the
+core names in the config files WeBlog.ContentSearch.Solr.Master.config 
+and WeBlog.ContentSearch.Solr.Web.config.
 	  
 Post Install Steps
 ==================
 * Perform an incremental publish to all publishing targets
+* Delete any old WeBlog Content Search config files from
+    previous versions.
 * Rebuild the WeBlog search index
 
 Create a Blog
