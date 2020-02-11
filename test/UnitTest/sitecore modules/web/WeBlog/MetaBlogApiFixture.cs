@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Authentication;
 using CookComputing.XmlRpc;
@@ -7,12 +8,25 @@ using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
-using Sitecore.FakeDb.Resources.Media;
 using Sitecore.FakeDb.Sites;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Resources.Media;
 using Sitecore.Sites;
+using Sitecore.Modules.WeBlog.Search;
+using Sitecore.Modules.WeBlog.Model;
+
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+using Sitecore.Links;
+#else
+using Sitecore.FakeDb.Resources.Media;
+#endif
+
+#if SC93
+using Sitecore.Links.UrlBuilders;
+#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 {
@@ -58,9 +72,26 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog1 = db.GetItem("/sitecore/content/blog1");
 
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "link"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<UrlOptions>()) == "link"
+                );
+#endif
+
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetUserBlogs(username) == new BlogHomeItem[] { blog1 }
-                    );
+                    x.GetUserBlogs(username) == new BlogHomeItem[]
+                    {
+#if FEATURE_ABSTRACTIONS
+                        new BlogHomeItem(blog1, linkManager, null)
+#else
+                        new BlogHomeItem(blog1, null)
+#endif
+                    }
+                );
 
                 var api = CreateAuthenticatingApi(blogManager);
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
@@ -71,7 +102,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {
                         {"blogid", blog1.ID.ToString()},
                         {"blogName", "Lorem"},
-                        {"url", "/en/sitecore/content/blog1.aspx"},
+#if FEATURE_ABSTRACTIONS
+                        {"url", "link"}
+#else
+                        {"url", "/en/sitecore/content/blog1.aspx"}
+#endif
                     }
                 };
 
@@ -99,11 +134,36 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blog1 = db.GetItem("/sitecore/content/blog1");
                 var blog2 = db.GetItem("/sitecore/content/blog2");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetUserBlogs(username) == new BlogHomeItem[] { blog1, blog2 }
-                    );
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<UrlOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<UrlOptions>()) == "link2"
+                );
+#endif
 
-                var api = CreateAuthenticatingApi(blogManager);
+                var blogManager = Mock.Of<IBlogManager>(x =>
+                    x.GetUserBlogs(username) == new BlogHomeItem[]
+                    {
+#if FEATURE_ABSTRACTIONS
+                        new BlogHomeItem(blog1, linkManager, null),
+                        new BlogHomeItem(blog2, linkManager, null)
+#else
+                        new BlogHomeItem(blog1, null),
+                        new BlogHomeItem(blog2, null)
+#endif
+                    }
+                );
+
+                var api = CreateAuthenticatingApi(blogManager
+#if FEATURE_ABSTRACTIONS
+                    , linkManager: linkManager
+#endif
+                );
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
 
                 var expected = new[]
@@ -112,13 +172,21 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {
                         {"blogid", blog1.ID.ToString()},
                         {"blogName", "Lorem"},
-                        {"url", "/en/sitecore/content/blog1.aspx"},
+#if FEATURE_ABSTRACTIONS
+                        {"url", "link1"}
+#else
+                        {"url", "/en/sitecore/content/blog1.aspx"}
+#endif
                     },
                     new XmlRpcStruct
                     {
                         {"blogid", blog2.ID.ToString()},
                         {"blogName", "Ipsum"},
-                        {"url", "/en/sitecore/content/blog2.aspx"},
+#if FEATURE_ABSTRACTIONS
+                        {"url", "link2"}
+#else
+                        {"url", "/en/sitecore/content/blog2.aspx"}
+#endif
                     }
                 };
 
@@ -274,9 +342,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) == new EntryItem[0]
-                );
+                var entryManager = MockEntryManager();
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
                 api.GetBlogFunction = id => blog;
@@ -314,14 +380,38 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             })
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
-                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
-                var entry2 = db.GetItem("/sitecore/content/Blog/entry2");
+                var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entryItem2 = db.GetItem("/sitecore/content/Blog/entry2");
 
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) == new EntryItem[] { entry1, entry2 }
+                var entry1 = new Entry
+                {
+                    Uri = entryItem1.Uri
+                };
+
+                var entry2 = new Entry
+                {
+                    Uri = entryItem2.Uri
+                };
+
+                var entryManager = MockEntryManager(entry1, entry2);
+
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
                 );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<UrlOptions>()) == "link1" &&
+                    x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<UrlOptions>()) == "link2"
+                );
+#endif
 
-                var api = CreateAuthenticatingApi(null, null, entryManager);
+                var api = CreateAuthenticatingApi(null, null, entryManager
+#if FEATURE_ABSTRACTIONS
+                    , linkManager: linkManager
+#endif
+                );
                 api.GetBlogFunction = id => blog;
 
                 var site = new FakeSiteContext("test");
@@ -337,22 +427,30 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new XmlRpcStruct
                     {
                         {"title", "Lorem"},
+#if FEATURE_ABSTRACTIONS
+                        {"link", "link1"},
+#else
                         {"link", "/en/sitecore/content/Blog/entry1.aspx"},
+#endif
                         {"description", ""}, // Description is empty because the renderField pipeline is empty
                         {"pubDate", date},
-                        {"guid", entry1.ID.ToString()},
-                        {"postid", entry1.ID.ToString()},
+                        {"guid", entryItem1.ID.ToString()},
+                        {"postid", entryItem1.ID.ToString()},
                         {"keywords", "Deimos"},
                         {"author", Context.User.Name}
                     },
                     new XmlRpcStruct
                     {
                         {"title", "Ipsum"},
+#if FEATURE_ABSTRACTIONS
+                        {"link", "link2"},
+#else
                         {"link", "/en/sitecore/content/Blog/entry2.aspx"},
+#endif
                         {"description", ""}, // Description is empty because the renderField pipeline is empty
                         {"pubDate", date.AddMinutes(1)},
-                        {"guid", entry2.ID.ToString()},
-                        {"postid", entry2.ID.ToString()},
+                        {"guid", entryItem2.ID.ToString()},
+                        {"postid", entryItem2.ID.ToString()},
                         {"keywords", "Luna"},
                         {"author", Context.User.Name}
                     }
@@ -494,6 +592,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         public void newPost_ValidStruct()
         {
             var entryTemplateId = ID.NewID;
+            var blogRootTemplate = CreateBlogRootTemplate();
+
+            var settings = Mock.Of<IWeBlogSettings>(x =>
+                x.BlogTemplateIds == new[] { blogRootTemplate.ID }
+            );
 
             using (var db = new Db
             {
@@ -503,13 +606,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new DbField("Content"),
                     new DbField("Category")
                 },
-                new DbTemplate(Settings.BlogTemplateID)
-                {
-                    new DbField("Defined Entry Template"),
-                    new DbField("Defined Category Template"),
-                    new DbField("Defined Comment Template")
-                },
-                new DbItem("blog", ID.NewID, Settings.BlogTemplateID)
+                blogRootTemplate,
+                new DbItem("blog", ID.NewID, blogRootTemplate.ID)
                 {
                     new DbField("Defined Entry Template")
                     {
@@ -519,7 +617,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             })
             {
                 var blog = db.GetItem("/sitecore/content/blog");
-                var api = CreateAuthenticatingApi();
+                var api = CreateAuthenticatingApi(settings: settings);
                 api.GetContentDatabaseFunction = () => db.Database;
 
                 var post = new XmlRpcStruct
@@ -545,6 +643,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
         {
             var entryTemplateId = ID.NewID;
             var date = DateTime.UtcNow.Date.AddMonths(1);
+            var blogRootTemplate = CreateBlogRootTemplate();
+            var settings = Mock.Of<IWeBlogSettings>(x => 
+                x.BlogTemplateIds == new[] { blogRootTemplate.ID }
+            );
 
             using (var db = new Db
             {
@@ -553,13 +655,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new DbField("Title"),
                     new DbField("Content")
                 },
-                new DbTemplate(Settings.BlogTemplateID)
-                {
-                    new DbField("Defined Entry Template"),
-                    new DbField("Defined Category Template"),
-                    new DbField("Defined Comment Template")
-                },
-                new DbItem("blog", ID.NewID, Settings.BlogTemplateID)
+                blogRootTemplate,
+                new DbItem("blog", ID.NewID, blogRootTemplate.ID)
                 {
                     new DbField("Defined Entry Template")
                     {
@@ -569,7 +666,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             })
             {
                 var blog = db.GetItem("/sitecore/content/blog");
-                var api = CreateAuthenticatingApi();
+                var api = CreateAuthenticatingApi(settings: settings);
                 api.GetContentDatabaseFunction = () => db.Database;
 
                 var post = new XmlRpcStruct
@@ -581,7 +678,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var newPostId = api.newPost(blog.ID.ToString(), "user", "password", post, false);
                 var postItem = db.GetItem(newPostId);
-                Assert.That(postItem.Publishing.PublishDate.ToLocalTime(), Is.EqualTo(date));
+
+                var postDate = postItem.Publishing.PublishDate.ToLocalTime();
+
+                Assert.That(postDate, Is.EqualTo(date));
             }
         }
 
@@ -608,11 +708,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 }
             })
             {
-                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
-                    new EntryItem[] { entry1 }
-                    );
+                var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entry1 = new Entry {Uri = entryItem1.Uri};
+
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -623,7 +722,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 Assert.That(() =>
                 {
-                    api.editPost(entry1.ID.ToString(), "user", "password", post, false);
+                    api.editPost(entryItem1.ID.ToString(), "user", "password", post, false);
                 }, Throws.InstanceOf<InvalidCredentialException>());
             }
         }
@@ -670,11 +769,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 }
             })
             {
-                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
-                    new EntryItem[] { entry1 }
-                    );
+                var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entry1 = new Entry {Uri = entryItem1.Uri};
+
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
@@ -684,11 +782,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {"description", "Deimos"}
                 };
 
-                var result = api.editPost(entry1.ID.ToString(), "user", "password", post, false);
+                var result = api.editPost(entryItem1.ID.ToString(), "user", "password", post, false);
                 Assert.That(result, Is.True);
 
-                entry1.Reload();
-                Assert.That(entry1["title"], Is.EqualTo("Lorem"));
+                entryItem1.Reload();
+                Assert.That(entryItem1["title"], Is.EqualTo("Lorem"));
             }
         }
 
@@ -716,17 +814,16 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 }
             })
             {
-                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
-                    new EntryItem[] { entry1 }
-                    );
+                var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entry1 = new Entry {Uri = entryItem1.Uri};
+
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
                 Assert.That(() =>
                 {
-                    api.getPost(entry1.ID.ToString(), "user", "password");
+                    api.getPost(entryItem1.ID.ToString(), "user", "password");
                 }, Throws.InstanceOf<InvalidCredentialException>());
             }
         }
@@ -770,23 +867,40 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 }
             })
             {
-                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
-                    new EntryItem[] { entry1 }
-                    );
+                var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entry1 = new Entry {Uri = entryItem1.Uri};
 
-                var api = CreateAuthenticatingApi(null, null, entryManager);
+                var entryManager = MockEntryManager(entry1);
 
-                var post = api.getPost(entry1.ID.ToString(), "user", "password");
+#if SC93
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "the-link"
+                );
+#elif FEATURE_ABSTRACTIONS
+                var linkManager = Mock.Of<BaseLinkManager>(x =>
+                    x.GetItemUrl(It.IsAny<Item>(), It.IsAny<UrlOptions>()) == "the-link"
+                );
+#endif
+
+                var api = CreateAuthenticatingApi(null, null, entryManager
+#if FEATURE_ABSTRACTIONS
+                    , linkManager: linkManager
+#endif
+                );
+
+                var post = api.getPost(entryItem1.ID.ToString(), "user", "password");
 
                 var expected = new XmlRpcStruct
                 {
                     {"title", "Luna"},
+#if FEATURE_ABSTRACTIONS
+                    {"link", "the-link"},
+#else
                     {"link", "/en/sitecore/content/Blog/entry1.aspx"},
+#endif
                     {"description", "This world doesn't need no opera"},
                     {"pubDate", date},
-                    {"guid", entry1.ID.ToString()},
+                    {"guid", entryItem1.ID.ToString()},
                     {"author", Context.User.Name}
                 };
 
@@ -817,17 +931,16 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 }
             })
             {
-                var entry1 = db.GetItem("/sitecore/content/Blog/entry1");
-                var entryManager = Mock.Of<IEntryManager>(x =>
-                    x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<int>(), null, null, null, null) ==
-                    new EntryItem[] { entry1 }
-                    );
+                var entryItem1 = db.GetItem("/sitecore/content/Blog/entry1");
+                var entry1 = new Entry {Uri = entryItem1.Uri};
+
+                var entryManager = MockEntryManager(entry1);
 
                 var api = CreateAuthenticatingApi(null, null, entryManager);
 
                 Assert.That(() =>
                 {
-                    api.deletePost("app", entry1.ID.ToString(), "user", "password", true);
+                    api.deletePost("app", entryItem1.ID.ToString(), "user", "password", true);
                 }, Throws.InstanceOf<InvalidCredentialException>());
             }
         }
@@ -897,15 +1010,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
                 var image = db.GetItem("/sitecore/media library/Modules/image");
-                var api = CreateAuthenticatingApi();
-                api.GetContentDatabaseFunction = () => db.Database;
-
-                var mediaProvider = Mock.Of<MediaProvider>(x => 
-                    x.Creator == Mock.Of<MediaCreator>(y =>
-                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
-                        ) &&
-                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake"
-                );
 
                 var payload = new XmlRpcStruct
                 {
@@ -914,9 +1018,31 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     { "bits", GetSampleImageData() }
                 };
 
+#if FEATURE_ABSTRACTIONS
+                var mediaManager = Mock.Of<BaseMediaManager>(x =>
+                    x.Creator == Mock.Of<MediaCreator>(y =>
+                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
+                    )
+                );
+
+                var api = CreateAuthenticatingApi(mediaManager: mediaManager);
+#else
+                var mediaProvider = Mock.Of<MediaProvider>(x =>
+                    x.Creator == Mock.Of<MediaCreator>(y =>
+                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
+                    ) &&
+                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake"
+                );
+
+                var api = CreateAuthenticatingApi();
+#endif
+                api.GetContentDatabaseFunction = () => db.Database;
+
                 Assert.That(() =>
                 {
+#if !FEATURE_ABSTRACTIONS
                     using (new MediaProviderSwitcher(mediaProvider))
+#endif
                     {
                         api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
                     }
@@ -941,17 +1067,28 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog = db.GetItem("/sitecore/content/Blog");
                 var image = db.GetItem("/sitecore/media library/Modules/image");
-                var api = CreateAuthenticatingApi();
-                api.GetContentDatabaseFunction = () => db.Database;
 
                 var mediaCreator = new Mock<MediaCreator>();
                 mediaCreator.Setup(x => x.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>())).Returns(image).Verifiable();
 
+#if FEATURE_ABSTRACTIONS
+                var mediaManager = Mock.Of<BaseMediaManager>(x => 
+                    x.Creator == mediaCreator.Object &&
+                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake-url"
+                );
+
+                var api = CreateAuthenticatingApi(mediaManager: mediaManager);
+#else
                 var mediaProvider = new Mock<MediaProvider>();
                 mediaProvider.Setup(x => x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()))
                     .Returns("fake-url");
 
                 mediaProvider.SetupGet(x => x.Creator).Returns(mediaCreator.Object);
+
+                var api = CreateAuthenticatingApi();
+#endif
+
+                api.GetContentDatabaseFunction = () => db.Database;
 
                 var payload = new XmlRpcStruct
                 {
@@ -960,12 +1097,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     { "bits", GetSampleImageData() }
                 };
 
+#if !FEATURE_ABSTRACTIONS
                 using (new MediaProviderSwitcher(mediaProvider.Object))
+#endif
                 {
                     var urlStruct = api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
                     Assert.That(urlStruct["url"], Is.EqualTo("fake-url"));
                 }
-                
+
                 mediaCreator.Verify();
             }
         }
@@ -981,9 +1120,27 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             };
         }
 
-        private TestableMetaBlogApi CreateAuthenticatingApi(IBlogManager blogManager = null, ICategoryManager categoryManager = null, IEntryManager entryManager = null)
+        private TestableMetaBlogApi CreateAuthenticatingApi(
+            IBlogManager blogManager = null,
+            ICategoryManager categoryManager = null,
+            IEntryManager entryManager = null,
+            IWeBlogSettings settings = null
+#if FEATURE_ABSTRACTIONS
+            ,BaseMediaManager mediaManager = null,
+            BaseLinkManager linkManager = null
+#endif
+            )
         {
-            return new TestableMetaBlogApi(blogManager, categoryManager, entryManager)
+            return new TestableMetaBlogApi(
+                blogManager,
+                categoryManager,
+                entryManager,
+                settings
+#if FEATURE_ABSTRACTIONS
+                ,mediaManager,
+                linkManager
+#endif
+                )
             {
                 AuthenticateFunction = (u, p) => { }
             };
@@ -994,6 +1151,23 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             var base64 =
                 "R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7";
             return System.Convert.FromBase64String(base64);
+        }
+
+        private DbTemplate CreateBlogRootTemplate()
+        {
+            return new DbTemplate(ID.NewID)
+            {
+                new DbField("Defined Entry Template"),
+                new DbField("Defined Category Template"),
+                new DbField("Defined Comment Template")
+            };
+        }
+
+        private IEntryManager MockEntryManager(params Entry[] entries)
+        {
+            return Mock.Of<IEntryManager>(x =>
+                x.GetBlogEntries(It.IsAny<Item>(), It.IsAny<EntryCriteria>(), ListOrder.Descending) == new SearchResults<Entry>(entries, false)
+            );
         }
     }
 }

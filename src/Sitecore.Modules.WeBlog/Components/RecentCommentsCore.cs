@@ -1,45 +1,44 @@
+using System.Collections.Generic;
+using System.Linq;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
     public class RecentCommentsCore : IRecentCommentsCore
     {
+        public IList<EntryComment> Comments { get; protected set; }
+
         protected BlogHomeItem CurrentBlog { get; set; }
-        public CommentItem[] Comments { get; set; }
 
-        public RecentCommentsCore(IBlogManager blogManager)
+        protected ICommentManager CommentManager { get; }
+
+        protected IEntryManager EntryManager { get; }
+
+        public RecentCommentsCore(IBlogManager blogManager = null, ICommentManager commentManager = null, IEntryManager entryManager = null)
         {
-            CurrentBlog = blogManager.GetCurrentBlog();
+            CurrentBlog = (blogManager ?? ManagerFactory.BlogManagerInstance).GetCurrentBlog();
+            CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
+            EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
+        }
+
+        public void Initialise()
+        {
             var totalToShow = CurrentBlog.DisplayCommentSidebarCountNumeric;
-            Comments = ManagerFactory.CommentManagerInstance.GetCommentsByBlog(CurrentBlog, totalToShow);
-        }
 
-        /// <summary>
-        /// Get the URL of the blog entry a comment was made against
-        /// </summary>
-        /// <param name="comment">The comment to find the blog entry URL for</param>
-        /// <returns>The URL if found, otherwise an empty string</returns>
-        public virtual string GetEntryUrlForComment(CommentItem comment)
-        {
-            if (comment != null)
-                return LinkManager.GetItemUrl(ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(comment).InnerItem);
-            else
-                return string.Empty;
-        }
+            var blogComments = CommentManager.GetBlogComments(CurrentBlog, totalToShow);
+            var commentContents = blogComments.Select(x => CommentManager.GetCommentContent(x));
 
-        /// <summary>
-        /// Get the name of the blog entry a comment was made against
-        /// </summary>
-        /// <param name="comment">The comment to find the blog entry title for</param>
-        /// <returns>The title if found, otherwise an empty string</returns>
-        public virtual string GetEntryTitleForComment(CommentItem comment)
-        {
-            if (comment != null)
-                return ManagerFactory.EntryManagerInstance.GetBlogEntryByComment(comment).Title.Text;
-            else
-                return string.Empty;
+            Comments = (from comment in commentContents
+                let entryItem = EntryManager.GetBlogEntryItemByCommentUri(comment.Uri)
+                where entryItem != null
+                select new EntryComment
+                {
+                    Comment = comment,
+                    Entry = entryItem
+                }).ToList();
         }
     }
 }

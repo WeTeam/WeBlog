@@ -10,22 +10,22 @@
         @{int i = 0;}
         @foreach (var comment in @Model.Comments)
         {
-                <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")" id="comment-@comment.ID.ToShortID()">
-                    <a href="#comment-@comment.ID.ToShortID()">#</a>
+                <li class="@((++i)%2 == 0 ? "wb-comment-alternate" : "")" id="comment-@comment.Uri.ItemID.ToShortID()">
+                    <a href="#comment-@comment.Uri.ItemID.ToShortID()">#</a>
                 @if (Model.EnableGravatar)
                 {
-                    var gravatarUrl = Model.GetGravatarUrl(comment.Email.Raw);
-                    <img src="@gravatarUrl" alt="@comment.Name.Text's gravatar" width="@Model.GravatarSizeNumeric" height="@Model.GravatarSizeNumeric" />
+                    var gravatarUrl = Model.GetGravatarUrl(comment.AuthorEmail);
+                    <img src="@gravatarUrl" alt="@comment.AuthorName's gravatar" width="@Model.GravatarSizeNumeric" height="@Model.GravatarSizeNumeric" />
                 }
 
-                <a href="@comment.Website.Raw" class="wb-comment-author">
-                    @Translator.Format("COMMENT_NAME", comment.Name.Text).ToHtmlString()
+                <a href="@Model.GetAuthorWebsite(comment)" class="wb-comment-author">
+                    @Translator.Format("COMMENT_NAME", comment.AuthorName).ToHtmlString()
                 </a>
 
                 @if (@Model.ShowEmailWithinComments)
                 {
                     <span class="wb-comment-email">
-                        @Translator.Format("COMMENT_EMAIL", comment.Email.Text).ToHtmlString()
+                        @Translator.Format("COMMENT_EMAIL", comment.AuthorEmail).ToHtmlString()
                     </span>
                 }
 
@@ -33,7 +33,7 @@
                     @Translator.Format("COMMENT_DATE", comment.Created).ToHtmlString()
                 </div>
                 <p>
-                    @comment.Comment.HtmlEncode()
+                    @comment.Text.ToHtmlString()
                 </p>
             </li>
         }

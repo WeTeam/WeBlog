@@ -17,7 +17,7 @@
                 </li>
             }
         </ul>
-        @if (Model.Entries.Any() && Model.Algororithm != InterestingEntriesAlgorithm.Custom)
+        @if (Model.Algororithm != InterestingEntriesAlgorithm.Custom)
         {
             var homeUrl = WebUtil.RemoveQueryString(LinkManager.GetItemUrl(Model.CurrentBlog.InnerItem));
             <a class="wb-view-more" href="@homeUrl?sort=@Model.Mode.ToLower()">

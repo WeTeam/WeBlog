@@ -5,22 +5,68 @@ using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Security.Accounts;
+
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
+
+#if SC93
+using Sitecore.Links.UrlBuilders;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class EntryItem : CustomItem
     {
-        public EntryItem(Item innerItem) : base(innerItem) { }
+#if FEATURE_ABSTRACTIONS
+        private BaseLinkManager _linkManager = null;
+#endif
 
+        public EntryItem(Item innerItem)
+#if FEATURE_ABSTRACTIONS
+            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
+#else
+            : base(innerItem)
+#endif
+        {
+        }
+
+#if FEATURE_ABSTRACTIONS
+        public EntryItem(Item innerItem, BaseLinkManager linkManager) : base(innerItem)
+        {
+            if (linkManager == null)
+                throw new ArgumentNullException(nameof(linkManager));
+
+            _linkManager = linkManager;
+        }
+
+        public static implicit operator EntryItem(Item innerItem)
+        {
+            var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
+            return innerItem != null ? new EntryItem(innerItem, linkManager) : null;
+        }
+#else
         public static implicit operator EntryItem(Item innerItem)
         {
             return innerItem != null ? new EntryItem(innerItem) : null;
         }
+#endif
 
         public static implicit operator Item(EntryItem customItem)
         {
             return customItem != null ? customItem.InnerItem : null;
+        }
+
+        public static EntryItem FromEntry(Entry entry)
+        {
+            if (entry == null)
+                return null;
+
+            var item = Sitecore.Data.Database.GetItem(entry.Uri);
+            return item;
         }
 
         public CustomMultiListField Category
@@ -100,9 +146,19 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
+#if SC93
+                var urlOptions = new ItemUrlBuilderOptions();
+#else
                 var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
                 urlOptions.AlwaysIncludeServerUrl = true;
+
+#if FEATURE_ABSTRACTIONS
+                return _linkManager.GetItemUrl(InnerItem, urlOptions);
+#else
                 return LinkManager.GetItemUrl(InnerItem, urlOptions);
+#endif
             }
         }
 

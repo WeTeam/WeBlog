@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
-using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -41,78 +42,29 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <param name="language">The language to get the comments in</param>
         /// <returns>The comments for the blog entry</returns>
-        CommentItem[] GetCommentsByBlog(Item blogItem, int maximumCount);
+        IList<CommentReference> GetBlogComments(Item blogItem, int maximumCount);
+
+        /// <summary>
+        /// Gets the <see cref="ItemUri"/>s for the entries that have the most comments.
+        /// </summary>
+        /// <param name="blogItem">The root blog item to search below.</param>
+        /// <param name="maximumCount">The maximum number of entry <see cref="ItemUri"/>s to return.</param>
+        /// <returns>The list of <see cref="ItemUri"/>s for the entries.</returns>
+        IList<ItemUri> GetMostCommentedEntries(Item blogItem, int maximumCount);
 
         /// <summary>
         /// Gets the comments for the given blog entry
         /// </summary>
         /// <param name="entryItem">The blog entry to get the comments for</param>
-        /// <returns>The comments for the blog entry</returns>
-        CommentItem[] GetEntryComments(Item entryItem);
-
-        /// <summary>
-        /// Gets the comments for the given blog entry
-        /// </summary>
-        /// <param name="entryItem">The blog entry to get the comments for</param>
         /// <param name="maximumCount">The maximum number of comments to retrieve</param>
         /// <returns>The comments for the blog entry</returns>
-        CommentItem[] GetEntryComments(Item entryItem, int maximumCount);
+        IList<CommentReference> GetEntryComments(Item entryItem, int maximumCount);
 
         /// <summary>
-        /// Gets the comments for the given blog entry
+        /// Get the <see cref="CommentContent"/> for a <see cref="CommentReference"/>.
         /// </summary>
-        /// <param name="item">The item to get the comments under</param>
-        /// <param name="maximumCount">The maximum number of comments to retrieve</param>
-        /// <param name="sort">Determines if the comments should be sorted</param>
-        /// <param name="reverse">Determines if the sort order should be reversed</param>
-        /// <returns>The comments which are decendants of the given item</returns>
-        CommentItem[] GetCommentsFor(Item item, int maximumCount, bool sort = false, bool reverse = false);
-
-        #region Deprecated
-        /// <summary>
-        /// Gets the number of comments for the current entry.
-        /// </summary>
-        /// <param name="language">The language to check comments in</param>
-        /// <returns>The number of comments</returns>
-        [Obsolete("Use GetCommentsCount(Item) instead.")] // deprecated 3.0
-        int GetCommentsCount(Language language = null);
-
-        /// <summary>
-        /// Gets the number of comments under the given entry.
-        /// </summary>
-        /// <param name="entryId">The ID of the entry to get the comment count for</param>
-        /// <param name="language">The language to check comments in</param>
-        /// <returns>The number of comments in the specified language</returns>
-        [Obsolete("Use GetCommentsCount(Item) instead.")] // deprecated 3.0
-        int GetCommentsCount(ID entryId, Language language = null);
-
-        /// <summary>
-        /// Gets the comments for the blog entry
-        /// </summary>
-        /// <param name="blogId">The ID of the blog to get the comments for</param>
-        /// <param name="maximumCount">The maximum number of comments to retrieve</param>
-        /// <param name="language">The language to get the comments in</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetCommentsByBlog(Item, int) instead.")] // deprecated 3.0
-        CommentItem[] GetCommentsByBlog(ID blogId, int maximumCount, Language language = null);
-
-        /// <summary>
-        /// Gets the comments for the current blog entry
-        /// </summary>
-        /// <param name="language">The language to get comments in</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetEntryComments(Item) instead.")] // deprecated 3.0
-        CommentItem[] GetEntryComments(Language language = null);
-
-        /// <summary>
-        /// Gets the comments for the current blog entry
-        /// </summary>
-        /// <param name="maximumCount">The maximum number of comments to retrieve</param>
-        /// <param name="language">The language to get the comments in</param>
-        /// <returns>The comments for the blog entry</returns>
-        [Obsolete("Use GetEntryComments(Item, int) instead.")] // deprecated 3.0
-        CommentItem[] GetEntryComments(int maximumCount, Language language = null);
-
-        #endregion
+        /// <param name="commentReference">The <see cref="CommentReference"/> which identifies the comment.</param>
+        /// <returns>The <see cref="CommentContent"/> for the <see cref="CommentReference"/>.</returns>
+        CommentContent GetCommentContent(CommentReference commentReference);
     }
 }

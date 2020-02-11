@@ -6,6 +6,8 @@ using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Security.Accounts;
 using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Abstractions;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -19,14 +21,35 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         protected IWeBlogSettings Settings = null;
 
+#if FEATURE_ABSTRACTIONS
+        /// <summary>
+        /// The <see cref="BaseLinkManager"/> used to generate links.
+        /// </summary>
+        protected BaseLinkManager LinkManager { get; set; }
+
         /// <summary>
         /// Creates a new instance.
         /// </summary>
-        /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        public BlogManager(BaseLinkManager linkManager, IWeBlogSettings settings = null)
+        {
+            if (linkManager == null)
+                throw new ArgumentNullException(nameof(linkManager));
+
+            LinkManager = linkManager;
+            Settings = settings ?? WeBlogSettings.Instance;
+        }
+#else
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
         public BlogManager(IWeBlogSettings settings = null)
         {
-            Settings = settings ?? new WeBlogSettings();
+            Settings = settings ?? WeBlogSettings.Instance;
         }
+#endif
 
         /// <summary>
         /// Gets the current blog for the context item
@@ -47,7 +70,11 @@ namespace Sitecore.Modules.WeBlog.Managers
             var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
 
             if (blogItem != null)
+#if FEATURE_ABSTRACTIONS
+                return new BlogHomeItem(blogItem, LinkManager);
+#else
                 return new BlogHomeItem(blogItem);
+#endif
             else
                 return null;
         }
@@ -90,7 +117,13 @@ namespace Sitecore.Modules.WeBlog.Managers
                    let blogItems = contentRoot.FindItemsByTemplateOrDerivedTemplate(template)
                    from item in blogItems
                    where item != null
-                   select new BlogHomeItem(item)).ToArray();
+                    select new
+#if FEATURE_ABSTRACTIONS
+                    BlogHomeItem(item, LinkManager)
+#else
+                    BlogHomeItem(item)
+#endif
+                    ).ToArray();
         }
 
         /// <summary>

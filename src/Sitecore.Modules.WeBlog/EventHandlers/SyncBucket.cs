@@ -69,13 +69,10 @@ namespace Sitecore.Modules.WeBlog.EventHandlers
                 Logger.Error("Could not instantiate DynamicBucketFolderPath of type " + type, this);
                 throw new ConfigurationException("Could not instantiate DynamicBucketFolderPath of type " + type);
             }
-            Database database = topParent.Database;
 
-#if SC70
-            string str = bucketFolderPath.GetFolderPath(itemToMove.ID, topParent.ID, childItemCreationDateTime);
-#else
+            Database database = topParent.Database;
             string str = bucketFolderPath.GetFolderPath(database, itemToMove.Name, itemToMove.TemplateID, itemToMove.ID, topParent.ID, childItemCreationDateTime);
-#endif
+
             if (BucketConfigurationSettings.BucketFolderPath == string.Empty && bucketFolderPath is DateBasedFolderPath)
                 str = "Repository";
             return String.IsNullOrEmpty(str)

@@ -5,6 +5,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.ExperienceEditor.Speak.Server.Contexts;
 using Sitecore.ExperienceEditor.Speak.Server.Requests;
 using Sitecore.ExperienceEditor.Speak.Server.Responses;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.ExperienceEditor
 {

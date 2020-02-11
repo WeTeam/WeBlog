@@ -15,6 +15,11 @@ namespace Sitecore.Modules.WeBlog.Configuration
         string SearchIndexName { get; }
 
         /// <summary>
+        /// Gets the size of the entries cache.
+        /// </summary>
+        long EntriesCacheSize { get; }
+
+        /// <summary>
         /// Gets the IDs of the entry templates.
         /// </summary>
         IEnumerable<ID> EntryTemplateIds { get; }
@@ -158,5 +163,10 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// Indicates whether to use the comment service or not.
         /// </summary>
         bool CommentServiceEnabled { get;  }
+
+        /// <summary>
+        /// Maximum number of proposed tags returned in WeBlog Tags field
+        /// </summary>
+        int TagFieldMaxItemCount { get; }
     }
 }

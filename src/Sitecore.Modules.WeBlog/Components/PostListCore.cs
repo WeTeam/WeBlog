@@ -1,26 +1,31 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
-using Sitecore.Data.Items;
+using Sitecore.Data;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
     public class PostListCore : IPostListCore
     {
-        protected IEnumerable<EntryItem> entries;
+        protected IList<EntryItem> _entries;
 
         protected IWeBlogSettings Settings = null;
 
         protected BlogHomeItem CurrentBlog { get; set; }
 
         protected NameValueCollection QueryString { get; set; }
+
+        protected IEntryManager EntryManager { get; set; }
+
+        public IAuthorsCore AuthorsCore { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of entries to show
@@ -34,35 +39,34 @@ namespace Sitecore.Modules.WeBlog.Components
 
         public bool ShowViewMoreLink
         {
-            get { return (StartIndex + TotalToShow) < entries.Count(); }
+            get;
+            protected set;
         }
 
         public IEnumerable<EntryItem> Entries
         {
             get
             {
-                if (entries == null)
-                {
-                    entries = GetEntries();
-                }
-                return TotalToShow == 0 ? entries.Skip(StartIndex) : entries.Skip(StartIndex).Take(TotalToShow);
+                if (_entries == null)
+                    _entries = GetEntries();
+                
+                return _entries;
             }
         }
 
-        public string ViewMoreHref
-        {
-            get { return BuildViewMoreHref(); }
-        }
+        public string ViewMoreHref => BuildViewMoreHref();
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="currentBlog">The blog being listed.</param>
         /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
-        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null)
+        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null, IEntryManager entryManager = null)
         {
             CurrentBlog = currentBlog;
-            Settings = settings ?? new WeBlogSettings();
+            Settings = settings ?? WeBlogSettings.Instance;
+            AuthorsCore = authorsCore ?? new AuthorsCore(CurrentBlog);
+            EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
         }
 
         public virtual void Initialize(NameValueCollection queryString)
@@ -74,44 +78,78 @@ namespace Sitecore.Modules.WeBlog.Components
             TotalToShow = requestedToShow > 0 ? requestedToShow : CurrentBlog.DisplayItemCountNumeric;
         }
 
-        protected virtual IEnumerable<EntryItem> GetEntries()
+        protected virtual IList<EntryItem> GetEntries()
         {
-            IEnumerable<EntryItem> entries;
+            SearchResults<Entry> results = null;
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
+            var author = QueryString["author"];
+
+            var criteria = new EntryCriteria
+            {
+                PageSize = TotalToShow,
+                PageNumber = (StartIndex / TotalToShow) + 1
+            };
+
             if (!string.IsNullOrEmpty(tag))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, tag, null, null, null);
+                criteria.Tag = tag;
+                results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);
+            }
+            else if (author != null)
+            {
+                // todo: need to implement entry criteria for author
+                results = EntryManager.GetBlogEntries(CurrentBlog, EntryCriteria.AllEntries, ListOrder.Descending);
+
+                var authorEntries = results.Results.GroupBy(item => AuthorsCore.GetUserFullName(item.Author))
+                    .FirstOrDefault(items => AuthorsCore.GetAuthorIdentity(items.Key) == author).ToList();
+
+                results = new SearchResults<Entry>(authorEntries, false);
             }
             else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog, int.MaxValue, null, Context.Item.Name);
+                criteria.Category = Context.Item.Name;
+                results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);
             }
             else if (!string.IsNullOrEmpty(sort))
             {
                 var algorithm = InterestingEntriesCore.GetAlgororithmFromString(sort, InterestingEntriesAlgorithm.Custom);
                 if (algorithm != InterestingEntriesAlgorithm.Custom)
                 {
-                    var core = new InterestingEntriesCore(ManagerFactory.EntryManagerInstance, algorithm);
-                    entries = core.GetEntries(CurrentBlog, int.MaxValue);
+                    var core = new InterestingEntriesCore(EntryManager, algorithm);
+                    var maxCount = TotalToShow + (TotalToShow * StartIndex) + 1;
+                    return core.GetEntries(CurrentBlog, maxCount);
                 }
                 else
                 {
-                    entries = new EntryItem[0];
+                    results = SearchResults<Entry>.Empty;
                 }
             }
             else
             {
-                entries = ManagerFactory.EntryManagerInstance.GetBlogEntries(CurrentBlog);
+                results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);
             }
-            return entries;
+
+            var entryItems = new List<EntryItem>();
+
+            foreach (var entry in results.Results)
+            {
+                var item = Database.GetItem(entry.Uri);
+                if(item != null)
+                    entryItems.Add(new EntryItem(item));
+            }
+
+            ShowViewMoreLink = results.HasMoreResults;
+
+            return entryItems;
         }
 
         protected virtual string BuildViewMoreHref()
         {
             string tag = QueryString["tag"];
             string sort = QueryString["sort"];
-            string blogUrl = Links.LinkManager.GetItemUrl(Context.Item);
+            var author = QueryString["author"];
+            string blogUrl = LinkManager.GetItemUrl(Context.Item);
             var viewMoreHref = blogUrl + "?count=" + (TotalToShow + CurrentBlog.DisplayItemCountNumeric);
             if (tag != null)
             {
@@ -121,15 +159,12 @@ namespace Sitecore.Modules.WeBlog.Components
             {
                 viewMoreHref += "&sort=" + HttpUtility.UrlEncode(sort);
             }
-            return viewMoreHref;
-        }
 
-        [Obsolete("Use the templates defined in settings.")]
-        protected virtual TemplateItem GetCategoryTemplate()
-        {
-            var categoryTemplateId = Settings.CategoryTemplateIds.First();
-            var categoryTemplate = new TemplateItem(Context.Database.GetItem(categoryTemplateId));
-            return categoryTemplate;
+            if (author != null)
+            {
+                viewMoreHref += "&author=" + HttpUtility.UrlEncode(author);
+            }
+            return viewMoreHref;
         }
 
         protected int GetFromQueryString(string key, int defaultValue = 0)

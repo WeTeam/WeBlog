@@ -1,4 +1,4 @@
-﻿define(["sitecore", "/-/speak/v1/ExperienceEditor/Sitecore.ExperienceEditor.js"], function (Sitecore) {
+﻿define(["sitecore", "/-/speak/v1/ExperienceEditor/ExperienceEditor.js"], function (Sitecore, ExperienceEditor) {
     Sitecore.Commands.NewCategory = {
         canExecute: function (context) {
             var key = "CanExecuteWeBlogCommands";
@@ -20,13 +20,13 @@
             }
             var features = "dialogWidth:400px;dialogHeight:190px;help:no;scroll:no;resizable:no;maximizable:no;status:no;center:yes;autoIncreaseHeight:yes";
 
-            Sitecore.ExperienceEditor.Dialogs.showModalDialog(url, dialogArguments, features, null, function (name) {
+            ExperienceEditor.Dialogs.showModalDialog(url, dialogArguments, features, null, function (name) {
                 if (name == null) {
                     response.context.aborted = true;
                     return;
                 }
                 context.currentContext.argument = name;
-                Sitecore.ExperienceEditor.PipelinesUtil.generateRequestProcessor("ExperienceEditor.WeBlog.NewCategory", function (response) {
+                ExperienceEditor.PipelinesUtil.generateRequestProcessor("ExperienceEditor.WeBlog.NewCategory", function (response) {
                 }).execute(context);
             });
         }

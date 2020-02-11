@@ -7,6 +7,26 @@ namespace Sitecore.Modules.WeBlog.Configuration
 {
     public class WeBlogSettings : IWeBlogSettings
     {
+        private static WeBlogSettings _instance = null;
+
+        /// <summary>
+        /// Gets an instance of the default settings.
+        /// </summary>
+        public static WeBlogSettings Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new WeBlogSettings();
+
+                return _instance;
+            }
+        }
+
+        private WeBlogSettings()
+        {
+        }
+
         /// <summary>
         /// Gets the name of the search index.
         /// </summary>
@@ -15,6 +35,18 @@ namespace Sitecore.Modules.WeBlog.Configuration
             get
             {
                 return Sitecore.Configuration.Settings.GetSetting("WeBlog.SearchIndexName", "WeBlog");
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of the entries cache.
+        /// </summary>
+        public long EntriesCacheSize
+        {
+            get
+            {
+                var setting = Sitecore.Configuration.Settings.GetSetting("Caching.WeBlogEntriesCacheSize", "5MB");
+                return StringUtil.ParseSizeString(setting);
             }
         }
 
@@ -237,7 +269,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// </summary>
         public string DateFormat
         {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat", "MMMM dd yyyy"); }
+            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.DateFormat", "dd MMMM yyyy"); }
         }
 
         /// <summary>
@@ -286,6 +318,11 @@ namespace Sitecore.Modules.WeBlog.Configuration
         public bool CommentServiceEnabled
         {
             get { return Sitecore.Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false); }
+        }
+
+        public int TagFieldMaxItemCount
+        {
+            get { return System.Convert.ToInt32(Sitecore.Configuration.Settings.GetSetting("WeBlog.TagsField.MaxItemsCount", "20")); }
         }
     }
 }

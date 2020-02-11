@@ -43,14 +43,8 @@
   </PropertyGroup>
   <Import Project="..\..\sc version properties.targets" />
   <ItemGroup>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.0'))">
-      <HintPath>..\..\lib\MSCaptcha\v1.0\MSCaptcha.dll</HintPath>
-    </Reference>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc7.2')) or $(Configuration.Contains('sc7.5'))">
-      <HintPath>..\..\lib\MSCaptcha\v2.0\MSCaptcha.dll</HintPath>
-    </Reference>
-    <Reference Include="MSCaptcha" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.2'))">
-      <HintPath>..\..\lib\MSCaptcha\v4.0\MSCaptcha.dll</HintPath>
+    <Reference Include="MSCaptcha">
+      <HintPath>..\..\lib\MSCaptcha\MSCaptcha.dll</HintPath>
     </Reference>
     <Reference Include="Recaptcha">
       <HintPath>..\..\lib\Recaptcha.dll</HintPath>
@@ -126,6 +120,13 @@
     <Compile Include="Layouts\WeBlog\EntryCategories.ascx.designer.cs">
       <DependentUpon>EntryCategories.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Layouts\WeBlog\EntryNavigation.ascx.cs">
+      <DependentUpon>EntryNavigation.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\EntryNavigation.ascx.designer.cs">
+      <DependentUpon>EntryNavigation.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Layouts\WeBlog\EntryTags.ascx.cs">
       <DependentUpon>EntryTags.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -196,6 +197,13 @@
     <Compile Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx.designer.cs">
       <DependentUpon>BlogFeeds.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Authors.ascx.cs">
+      <DependentUpon>Authors.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\WeBlog\Sidebar\Authors.ascx.designer.cs">
+      <DependentUpon>Authors.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Layouts\WeBlog\Sidebar\Categories.ascx.cs">
       <DependentUpon>Categories.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -252,12 +260,12 @@
     <Compile Include="Layouts\WeBlog\ThemeScripts.ascx.designer.cs">
       <DependentUpon>ThemeScripts.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Layouts\WeBlog\ThemeStylehseets.ascx.cs">
-      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+    <Compile Include="Layouts\WeBlog\ThemeStylesheets.ascx.cs">
+      <DependentUpon>ThemeStylesheets.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Layouts\WeBlog\ThemeStylehseets.ascx.designer.cs">
-      <DependentUpon>ThemeStylehseets.ascx</DependentUpon>
+    <Compile Include="Layouts\WeBlog\ThemeStylesheets.ascx.designer.cs">
+      <DependentUpon>ThemeStylesheets.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebControls\RsdIncludes.cs" />
@@ -270,6 +278,7 @@
     <Content Include="Layouts\WeBlog\CommentsList.ascx" />
     <Content Include="Layouts\WeBlog\Entry.ascx" />
     <Content Include="Layouts\WeBlog\EntryCategories.ascx" />
+    <Content Include="Layouts\WeBlog\EntryNavigation.ascx" />
     <Content Include="Layouts\WeBlog\EntryTags.ascx" />
     <Content Include="Layouts\WeBlog\FacebookComments.ascx" />
     <Content Include="Layouts\WeBlog\Layout.aspx" />
@@ -281,6 +290,7 @@
     <Content Include="Layouts\WeBlog\ShareEntry-ShareThis.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\Archive.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\BlogFeeds.ascx" />
+    <Content Include="Layouts\WeBlog\Sidebar\Authors.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\Categories.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\FacebookLike.ascx" />
     <Content Include="Layouts\WeBlog\Sidebar\InterestingEntries.ascx" />
@@ -289,7 +299,7 @@
     <Content Include="Layouts\WeBlog\Sidebar\TwitterTimeline.ascx" />
     <Content Include="Layouts\WeBlog\SubmitComment.ascx" />
     <Content Include="Layouts\WeBlog\ThemeScripts.ascx" />
-    <Content Include="Layouts\WeBlog\ThemeStylehseets.ascx" />
+    <Content Include="Layouts\WeBlog\ThemeStylesheets.ascx" />
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

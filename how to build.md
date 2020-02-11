@@ -24,7 +24,9 @@ Perform the following before opening the solution in Visual Studio.
 In addition to building the project and deploying the files, you must also restore the WeBlog Sitecore items.
 
 1. Copy the `data\serialization` folder to the `data` folder of the Sitecore instance.
-1. If using a Sitecore version with RDB (Sitecore 7.5+), copy the folders from inside the `master-rdb-additional` folder into the `master` folder.
+1. If using Sitecore version 8.2 or higher:
+11. Copy the folders from inside the `master sc8.2+` folder into the `master` folder.
+11. Delete the following `item` file from the serialization folder: `master\sitecore\system\Workflows\WeBlog Comments\Created\Submit\Email Entry Author.item`
 1. Access the Serialization utility page `/sitecore/admin/serialization.aspx`.
 1. Select the `core` and `master` databases
 1. Click the `Update {core, master} databasees` button.
@@ -46,4 +48,27 @@ The WeBlog themes use Grunt as a toolchain and are not included in the Visual St
 	1. Paths for Sitecore instaces are read from the `deploy.targets` file.
 	1. To deploy the themes to a different target instance, pass the `--scversion` parameter to `grunt`:
 	
-			grunt --scversion=sc7.0
+			grunt --scversion=sc9.0
+
+## Create Solr Cores ##
+
+If you're using Sitecore 9.x you must configure the weblog cores in Solr.
+
+1. Open a command prompt
+1. Navigate to the Solr `bin` folder
+1. Create the cores using the `solr create` command.
+	* `solr create -c weblog-master`
+	* `solr create -c weblog-web`
+1. Update the Content Search config files to match the names of the cores created above
+1. Deploy weblog code (rebuild the solution in VS) to ensure index configs are available
+1. Use indexing manager to populate managed schema
+	* If that doesn't work, copy the `managed-schema` file from the `conf` folder of an existing Sitecore core.
+1. rebuild indexes
+
+## Packaging ##
+
+WeBlog uses Sitecore packages. A separate package is built for each minor version of Sitecore.
+
+Before creating the package, ensure the code has been built and deployed as per above instructions, and ensure the themes have been build as well. All unit and integration tests should be run.
+
+To create the package, copy the relevant `xml` file from the `data\packages` folder over to the `data\packages` folder of the Sitecore instance you'll be building from. The `WeBlog sc8.x.xml` file is for all Sitecore 8.x versions. The `WeBlog.xml` file is for all other versions.

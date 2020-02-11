@@ -12,12 +12,6 @@ namespace Sitecore.Modules.WeBlog.Buckets
         public string FieldName { set; get; }
         public string Default { set; get; }
 
-        [Obsolete]
-        public string GetFolderPath(ID newItemId, ID parentItemId, DateTime creationDateOfNewItem)
-        {
-            return GetFolderPath(Context.ContentDatabase, null, null, newItemId, parentItemId, creationDateOfNewItem);
-        }
-
         public string GetFolderPath(Database database, string name, ID templateId, ID newItemId, ID parentItemId, DateTime creationDateOfNewItem)
         {
             var innerItem = database.GetItem(newItemId);

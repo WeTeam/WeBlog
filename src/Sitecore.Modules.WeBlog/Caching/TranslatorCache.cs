@@ -4,6 +4,7 @@ using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Caching
@@ -15,14 +16,16 @@ namespace Sitecore.Modules.WeBlog.Caching
         protected string CacheNamePrefix = "Translator";
         private const string Key = "Key";
         private static ID _cacheRootId;
+        private IWeBlogSettings _settings;
 
         protected Dictionary<string, Cache> Caches = new Dictionary<string, Cache>();
 
         public TranslatorCache() { }
 
-        public TranslatorCache(string cacheName)
+        public TranslatorCache(string cacheName, IWeBlogSettings settings = null)
         {
             CacheNamePrefix = cacheName;
+            _settings = settings ?? WeBlogSettings.Instance;
         }
 
         protected string CacheName
@@ -82,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.Caching
                     }
                     else
                     {
-                        long cacheSize = StringUtil.ParseSizeString(Settings.GlobalizationCacheSize);
+                        long cacheSize = StringUtil.ParseSizeString(_settings.GlobalizationCacheSize);
                         siteDictionary = new Cache(CacheName, cacheSize);
                         Caches[CacheName] = siteDictionary;
                     }
@@ -110,7 +113,7 @@ namespace Sitecore.Modules.WeBlog.Caching
             Item dictionaryItem = ManagerFactory.BlogManagerInstance.GetDictionaryItem();
             _cacheRootId = dictionaryItem.ID;
             IEnumerable<Item> entries = dictionaryItem.Axes.GetDescendants();
-            entries = entries.Where(entry => entry.TemplateID == Settings.DictionaryEntryTemplateID);
+            entries = entries.Where(entry => entry.TemplateID == _settings.DictionaryEntryTemplateId);
             foreach (Item entry in entries)
             {
                 string key = entry[Key].Trim();

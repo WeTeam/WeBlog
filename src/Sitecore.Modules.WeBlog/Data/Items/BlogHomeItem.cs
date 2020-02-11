@@ -1,27 +1,68 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Fields;
+using Sitecore.Modules.WeBlog.Configuration;
+
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+using Sitecore.Sites;
+#endif
+
+#if SC93
+using Sitecore.Links.UrlBuilders;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class BlogHomeItem : CustomItem
     {
-        public BlogHomeItem(Item innerItem)
+        protected IWeBlogSettings Settings { get; }
+
+#if FEATURE_ABSTRACTIONS
+        private BaseLinkManager _linkManager = null;
+#endif
+
+        public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
+#if FEATURE_ABSTRACTIONS
+            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager, settings)
+        {
+        }
+#else
             : base(innerItem)
         {
-
+            Settings = settings ?? WeBlogSettings.Instance;
         }
+#endif
+
+#if FEATURE_ABSTRACTIONS
+        public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
+            : base(innerItem)
+        {
+            if (linkManager == null)
+                throw new ArgumentNullException(nameof(linkManager));
+
+            _linkManager = linkManager;
+            Settings = settings ?? WeBlogSettings.Instance;
+        }
+
+        public static implicit operator BlogHomeItem(Item innerItem)
+        {
+            var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
+            return innerItem != null ? new BlogHomeItem(innerItem, linkManager) : null;
+        }
+#else
 
         public static implicit operator BlogHomeItem(Item innerItem)
         {
             return innerItem != null ? new BlogHomeItem(innerItem) : null;
         }
+#endif
 
         public static implicit operator Item(BlogHomeItem customItem)
         {
@@ -224,9 +265,19 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
+#if SC93
+                var urlOptions = new ItemUrlBuilderOptions();
+#else
                 var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
                 urlOptions.AlwaysIncludeServerUrl = true;
+
+#if FEATURE_ABSTRACTIONS
+                return _linkManager.GetItemUrl(InnerItem, urlOptions);
+#else
                 return LinkManager.GetItemUrl(InnerItem, urlOptions);
+#endif
             }
         }
 
@@ -234,18 +285,15 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                List<RssFeedItem> feeds = new List<RssFeedItem>();
-                if (this.EnableRss.Checked)
-                {                    
-                    var rssTemplateId = Settings.RssFeedTemplateIDString;
-                    var feedItems = this.InnerItem.Axes.SelectItems($"./*[@@templateid='{rssTemplateId}']");
-                     
-                    if (feedItems != null)
+                if (EnableRss.Checked)
+                {
+                    var children = InnerItem.GetChildren();
+                    foreach(Item child in children)
                     {
-                        feeds.AddRange(feedItems.Select(item => new RssFeedItem(item)));
+                        if (child.TemplateIsOrBasedOn(Settings.RssFeedTemplateIds))
+                            yield return new RssFeedItem(child);
                     }
                 }
-                return feeds;
             }
         }
 
@@ -265,12 +313,12 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                if (!InnerItem.TemplateIsOrBasedOn(Settings.BlogTemplateID))
+                if (!InnerItem.TemplateIsOrBasedOn(Settings.BlogTemplateIds))
                 {
-                    return new BlogSettings();
+                    return new BlogSettings(Settings);
                 }
 
-                return new BlogSettings
+                return new BlogSettings(Settings)
                 {
                     CategoryTemplateID = DefinedCategoryTemplate.Field.TargetID,
                     EntryTemplateID = DefinedEntryTemplate.Field.TargetID,

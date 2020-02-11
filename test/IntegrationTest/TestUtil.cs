@@ -81,7 +81,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest
 
         public static void UpdateIndex()
         {
-            var settings = new WeBlogSettings();
+            var settings = WeBlogSettings.Instance;
             var index = ContentSearchManager.GetIndex(settings.SearchIndexName + "-master");
             index.Rebuild();
         }

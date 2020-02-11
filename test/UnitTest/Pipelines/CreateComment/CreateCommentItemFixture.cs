@@ -4,6 +4,7 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.Globalization;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
@@ -120,7 +121,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(It.IsAny<Item>()) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(It.IsAny<Item>()) == new BlogHomeItem(blog, null)
                     );
                 var processor = new CreateCommentItem(blogManager);
 
@@ -145,16 +146,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NewComment()
         {
+            var commentTemplate = CreateCommentTemplate();
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                },
+                commentTemplate,
                 new DbItem("blog")
                 {
                     new DbItem("entry")
@@ -165,7 +162,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x => 
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
                 var processor = new CreateCommentItem(blogManager);
                 
@@ -192,16 +189,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void MultipleCommentsSameName()
         {
+            var commentTemplate = CreateCommentTemplate();
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                },
+                commentTemplate,
                 new DbItem("blog")
                 {
                     new DbItem("entry")
@@ -212,7 +205,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
                 var processor = new TestableCreateCommentItemProcessor(blogManager);
 
@@ -250,16 +243,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Description("The processor uses Sitefore query, so this test ensures no issues in that part")]
         public void DashesInPath()
         {
+            var commentTemplate = CreateCommentTemplate();
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                },
+                commentTemplate,
                 new DbItem("my-blog")
                 {
                     new DbItem("the-entry")
@@ -270,7 +259,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/my-blog/the-entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
                 var processor = new CreateCommentItem(blogManager);
 
@@ -297,18 +286,22 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void CustomFields()
         {
+            var commentTemplate = new DbTemplate(ID.NewID)
+            {
+                new DbField("Name"),
+                new DbField("Email"),
+                new DbField("Comment"),
+                new DbField("Website"),
+                new DbField("IP Address"),
+                new DbField("field1"),
+                new DbField("field2")
+            };
+
+            var settings = CreateSettings(commentTemplate.ID);
+
             using (var db = new Db
             {
-                new DbTemplate(Settings.CommentTemplateID)
-                {
-                    new DbField("Name"),
-                    new DbField("Email"),
-                    new DbField("Comment"),
-                    new DbField("Website"),
-                    new DbField("IP Address"),
-                    new DbField("field1"),
-                    new DbField("field2")
-                },
+                commentTemplate,
                 new DbItem("blog")
                 {
                     new DbItem("entry")
@@ -319,7 +312,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
                 var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
                     );
                 var processor = new CreateCommentItem(blogManager);
 
@@ -348,6 +341,25 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 Assert.That(args.CommentItem["field1"], Is.EqualTo("value1"));
                 Assert.That(args.CommentItem["field2"], Is.EqualTo("value2"));
             }
+        }
+
+        private DbTemplate CreateCommentTemplate()
+        {
+            return new DbTemplate(ID.NewID)
+            {
+                new DbField("Name"),
+                new DbField("Email"),
+                new DbField("Comment"),
+                new DbField("Website"),
+                new DbField("IP Address"),
+            };
+        }
+
+        private IWeBlogSettings CreateSettings(ID commentTemplateId)
+        {
+            return Mock.Of<IWeBlogSettings>(x =>
+                x.CommentTemplateIds == new [] { commentTemplateId }
+            );
         }
     }
 }

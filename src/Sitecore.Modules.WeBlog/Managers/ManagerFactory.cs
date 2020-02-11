@@ -1,6 +1,12 @@
 ﻿using System;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.StringExtensions;
+
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+#endif
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -17,7 +23,19 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_blogManager == null)
-                    m_blogManager = CreateInstance<IBlogManager>(Settings.BlogManagerClass, () => { return new BlogManager(); });
+                {
+#if FEATURE_ABSTRACTIONS
+                    var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
+#endif
+
+                    m_blogManager = CreateInstance<IBlogManager>(WeBlogSettings.Instance.BlogManagerClass, () => {
+                        return new BlogManager(
+#if FEATURE_ABSTRACTIONS
+                            linkManager
+#endif
+                        );
+                    });
+                }
 
                 return m_blogManager;
             }
@@ -28,7 +46,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_categoryManager == null)
-                    m_categoryManager = CreateInstance<ICategoryManager>(Settings.CategoryManagerClass, () => { return new CategoryManager(); });
+                    m_categoryManager = CreateInstance<ICategoryManager>(WeBlogSettings.Instance.CategoryManagerClass, () => { return new CategoryManager(); });
 
                 return m_categoryManager;
             }
@@ -39,7 +57,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_commentManager == null)
-                    m_commentManager = CreateInstance<ICommentManager>(Settings.CommentManagerClass, () => { return new CommentManager(); });
+                    m_commentManager = CreateInstance<ICommentManager>(WeBlogSettings.Instance.CommentManagerClass, () => { return new CommentManager(); });
 
                 return m_commentManager;
             }
@@ -50,7 +68,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_entryManager == null)
-                    m_entryManager = CreateInstance<IEntryManager>(Settings.EntryManagerClass, () => { return new EntryManager(); });
+                    m_entryManager = CreateInstance<IEntryManager>(WeBlogSettings.Instance.EntryManagerClass, () => { return new EntryManager(); });
 
                 return m_entryManager;
             }
@@ -61,7 +79,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_tagManager == null)
-                    m_tagManager = CreateInstance<ITagManager>(Settings.TagManagerClass, () => { return new TagManager(); });
+                    m_tagManager = CreateInstance<ITagManager>(WeBlogSettings.Instance.TagManagerClass, () => { return new TagManager(); });
 
                 return m_tagManager;
             }

@@ -26,12 +26,7 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
         {
             get
             {
-                return
-#if !FEATURE_EXPERIENCE_EDITOR
-                    Sitecore.Context.PageMode.IsPageEditorEditing;
-#else
-                    Sitecore.Context.PageMode.IsExperienceEditorEditing;
-#endif
+                return Sitecore.Context.PageMode.IsExperienceEditorEditing;
             }
         }
 

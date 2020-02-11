@@ -1,9 +1,7 @@
 ﻿using Sitecore.ContentSearch.SearchTypes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using Sitecore.ContentSearch;
+using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Search.SearchTypes
 {
@@ -11,5 +9,8 @@ namespace Sitecore.Modules.WeBlog.Search.SearchTypes
     {
         [IndexField("full_created_date")]
         public DateTime FullCreatedDate { get; set; }
+
+        [IndexField("closest_entry_uri")]
+        public ItemUri EntryUri { get; set; }
     }
 }

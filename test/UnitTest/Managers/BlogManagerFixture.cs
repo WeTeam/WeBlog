@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Security;
 using Moq;
 using NUnit.Framework;
@@ -12,12 +13,30 @@ using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.AccessControl;
 
+#if FEATURE_ABSTRACTIONS
+using Sitecore.Abstractions;
+#endif
+
 namespace Sitecore.Modules.WeBlog.UnitTest.Managers
 {
     [TestFixture]
     public class BlogManagerFixture
     {
         private const string _validUsername = "sitecore\\alfred";
+
+        #if FEATURE_ABSTRACTIONS
+        [Test]
+        public void Ctor_LinkManagerIsNull_ThrowsException()
+        {
+            // arrange
+            var settings = Mock.Of<IWeBlogSettings>();
+            Action sutAction = () => new BlogManager(null, settings);
+
+            // act, assert
+            var ex = Assert.Throws<ArgumentNullException>(new TestDelegate(sutAction));
+            Assert.That(ex.ParamName, Is.EqualTo("linkManager"));
+        }
+#endif
 
         [Test]
         public void GetCurrentBlog_NullItem()
@@ -26,7 +45,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
             var resultItem = manager.GetCurrentBlog(null);
 
             Assert.That(resultItem, Is.Null);
@@ -57,7 +76,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var startItem = db.GetItem(startPath);
-                var manager = new BlogManager(settings);
+                var manager = CreateBlogManager(settings: settings);
                 var resultItem = manager.GetCurrentBlog(startItem);
 
                 if(expectedPath == null)
@@ -107,7 +126,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var startItem = db.GetItem(startPath);
-                var manager = new BlogManager(settings);
+                var manager = CreateBlogManager(settings: settings);
                 var resultItem = manager.GetCurrentBlog(startItem);
 
                 Assert.That(resultItem.ID, Is.EqualTo(resultItem.ID));
@@ -122,7 +141,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             var membershipProvider = Mock.Of<MembershipProvider>(x => 
                 x.GetUser(_validUsername, true) == new FakeMembershipUser()
@@ -153,7 +172,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             var membershipProvider = Mock.Of<MembershipProvider>(x =>
                 x.GetUser(_validUsername, true) == new FakeMembershipUser()
@@ -227,7 +246,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             var membershipProvider = Mock.Of<MembershipProvider>(x =>
                 x.GetUser(_validUsername, true) == new FakeMembershipUser()
@@ -297,7 +316,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             using (var db = new Db())
             {
@@ -320,7 +339,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId, ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             using (var db = new Db
             {
@@ -362,7 +381,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId, ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             using (var db = new Db
             {
@@ -407,7 +426,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId, ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             using (var db = new Db
             {
@@ -439,7 +458,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId, ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
             var result = manager.EnableRSS(null);
 
             Assert.That(result, Is.False);
@@ -456,7 +475,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId, ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
 
             using (var db = new Db
             {
@@ -488,10 +507,24 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.BlogTemplateIds == new[] { ID.NewID, blogTemplateId, ID.NewID }
             );
 
-            var manager = new BlogManager(settings);
+            var manager = CreateBlogManager(settings: settings);
             var result = manager.ShowEmailWithinComments(null);
 
             Assert.That(result, Is.False);
+        }
+
+        private BlogManager CreateBlogManager(
+#if FEATURE_ABSTRACTIONS
+            BaseLinkManager linkManager = null,
+#endif
+            IWeBlogSettings settings = null)
+        {
+            return new BlogManager(
+#if FEATURE_ABSTRACTIONS
+                linkManager ?? Mock.Of<BaseLinkManager>(),
+#endif
+                settings ?? Mock.Of<IWeBlogSettings>()
+            );
         }
     }
 }

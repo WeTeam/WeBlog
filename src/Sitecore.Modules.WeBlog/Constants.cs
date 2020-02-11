@@ -51,15 +51,11 @@ namespace Sitecore.Modules.WeBlog
             public const string PublishingTargets = "/sitecore/system/publishing targets";
         }
 
-#if FEATURE_XDB
         public static class ReportingQueries
         {
-            [Obsolete("Use the ItemVisits query instead.")] // Deprecated in release 2.5
-            public static readonly ID EntriesByView = new ID("{75C64874-2803-40FD-A3B2-3E89637BF8EA}");
-
             public static readonly ID ItemVisits = new ID("{9BECF823-2838-467C-87A7-3664524F5AFE}");
         }
-#endif
+
         public class Tokens
         {
             public static string WeBlogSetting = "$weblogsetting";

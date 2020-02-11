@@ -1,0 +1,34 @@
+﻿@using Sitecore.Modules.WeBlog.Extensions
+@using Sitecore.Modules.WeBlog.Globalization
+@model Sitecore.Modules.WeBlog.Mvc.Model.EntryNavigation
+
+<div class="wb-entry-navigation">
+    @if (Model.ShowTitle)
+    {
+        <h3>@Translator.Render("NAVIGATION").ToHtmlString()</h3>
+    }
+    <div class="wb-entry-navigation-buttons">
+        <div class="wb-entry-navigation-previous">
+            @if (Model.PreviousEntry != null)
+            {
+                <p class="wb-entry-navigation-label">@Translator.Render("NAVIGATION_PREVIOUS").ToHtmlString()</p>
+                <p class="wb-entry-navigation-title">
+                    <a href="@Model.PreviousEntry.Url" title="@Model.PreviousEntry.Title.Raw">
+                        @Model.PreviousEntry.Title.Raw
+                    </a>
+                </p>
+            }
+        </div>
+        <div class="wb-entry-navigation-next">
+            @if (Model.NextEntry != null)
+            {
+                <p class="wb-entry-navigation-label">@Translator.Render("NAVIGATION_NEXT").ToHtmlString()</p>
+                <p class="wb-entry-navigation-title">
+                    <a href="@Model.NextEntry.Url" title="@Model.NextEntry.Title.Raw">
+                        @Model.NextEntry.Title.Raw
+                    </a>
+                </p>
+            }
+        </div>
+    </div>
+</div>

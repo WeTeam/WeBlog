@@ -1,9 +1,11 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Web;
 using Sitecore.Caching;
 using Sitecore.Data;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.SecurityModel;
 
@@ -50,7 +52,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers.CustomBlog
                 {
                   
                   {
-                    if (wipItem.TemplateID == Settings.BlogTemplateID)
+                    if (wipItem.TemplateID == WeBlogSettings.Instance.BlogTemplateIds.First())
                     {
                       wipItem.ChangeTemplate(blogTemplate);
                       using (new EditContext(wipItem))
@@ -61,17 +63,15 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers.CustomBlog
                         blogItem.DefinedCategoryTemplate.Field.Value = categoryTemplate.InnerItem.ID.ToString();
                       }
                     }
-                    else if (wipItem.TemplateID == Settings.EntryTemplateID)
+                    else if (wipItem.TemplateID == WeBlogSettings.Instance.EntryTemplateIds.First())
                     {
-                      //using (new EventDisabler())
                       wipItem.ChangeTemplate(entryTemplate);
                     }
-                    else if (wipItem.TemplateID == Settings.CommentTemplateID)
+                    else if (wipItem.TemplateID == WeBlogSettings.Instance.CommentTemplateIds.First())
                     {
-                      //using (new EventDisabler())
                       wipItem.ChangeTemplate(commentTemplate);
                     }
-                    else if (wipItem.TemplateID == Settings.CategoryTemplateID)
+                    else if (wipItem.TemplateID == WeBlogSettings.Instance.CategoryTemplateIds.First())
                     {
                       //using (new EventDisabler())
                       wipItem.ChangeTemplate(categoryTemplate);
