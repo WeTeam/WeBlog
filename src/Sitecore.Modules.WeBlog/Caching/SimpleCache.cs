@@ -6,6 +6,8 @@ namespace Sitecore.Modules.WeBlog.Caching
     {
         public SimpleCache(string name, long maxSize) : base(name, maxSize) { }
 
+        public SimpleCache(ICache innerCache) : base(innerCache) { }
+
         public string Get(string cacheKey)
         {
             return GetString(cacheKey);

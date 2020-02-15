@@ -61,7 +61,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.PopulateScribanMailActionMo
             database.Setup(x => x.GetItem(nextStateItem.Object.ID)).Returns(nextStateItem.Object);
             database.Setup(x => x.GetItem(nextStateItem.Object.ID.ToString())).Returns(nextStateItem.Object);
 
-            ItemFactory.SetField(commandItem, FieldIDs.NextState, nextStateItem.Object.ID.ToString());
+            ItemFactory.SetIndexerField(commandItem, FieldIDs.NextState, nextStateItem.Object.ID.ToString());
 
             var actionItem = ItemFactory.CreateItem(database: database.Object);
             actionItem.Setup(x => x.Parent).Returns(commandItem.Object);
