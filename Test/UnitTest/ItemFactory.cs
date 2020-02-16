@@ -1,6 +1,9 @@
 ﻿using Moq;
+using Sitecore.Collections;
 using Sitecore.Data;
+using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog.UnitTest
 {
@@ -25,14 +28,27 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             return itemMock;
         }
 
-        public static void SetField(Mock<Item> itemMock, string fieldName, string fieldValue)
+        public static void SetIndexerField(Mock<Item> itemMock, string fieldName, string fieldValue)
         {
             itemMock.Setup(x => x[fieldName]).Returns(fieldValue);
         }
 
-        public static void SetField(Mock<Item> itemMock, ID fieldId, string fieldValue)
+        public static void SetIndexerField(Mock<Item> itemMock, ID fieldId, string fieldValue)
         {
             itemMock.Setup(x => x[fieldId]).Returns(fieldValue);
+        }
+
+        public static void AddFields(Mock<Item> itemMock, IEnumerable<Field> fields)
+        {
+            var fieldCollectionMock = new Mock<FieldCollection>(itemMock.Object);
+
+            foreach (var field in fields)
+            {
+                fieldCollectionMock.Setup(x => x[field.ID]).Returns(field);
+                fieldCollectionMock.Setup(x => x[field.Name]).Returns(field);
+            }
+
+            itemMock.Setup(x => x.Fields).Returns(fieldCollectionMock.Object);
         }
     }
 }

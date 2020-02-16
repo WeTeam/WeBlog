@@ -335,10 +335,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
         private WorkflowPipelineArgs CreateWorkflowPipelineArgs(string to = "to@mail.com", string from = "from@mail.com", string subject = "subject", string message = "message")
         {
             var actionItemMock = ItemFactory.CreateItem();
-            ItemFactory.SetField(actionItemMock, "to", to);
-            ItemFactory.SetField(actionItemMock, "from", from);
-            ItemFactory.SetField(actionItemMock, "subject", subject);
-            ItemFactory.SetField(actionItemMock, "message", message);
+            ItemFactory.SetIndexerField(actionItemMock, "to", to);
+            ItemFactory.SetIndexerField(actionItemMock, "from", from);
+            ItemFactory.SetIndexerField(actionItemMock, "subject", subject);
+            ItemFactory.SetIndexerField(actionItemMock, "message", message);
 
             var dataItemMock = ItemFactory.CreateItem();
             var args = new WorkflowPipelineArgs(dataItemMock.Object, (StringDictionary)null, null);
