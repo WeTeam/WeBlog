@@ -1,7 +1,7 @@
+using Sitecore.IO;
+using Sitecore.Web;
 using System.Collections.Generic;
 using System.IO;
-using Sitecore.IO;
-using Sitecore.Modules.WeBlog.Configuration;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter
 {
@@ -19,7 +19,8 @@ namespace Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter
 
         private IEnumerable<string> GetProfanityFileContent()
         {
-            string filePath = ResovePathTokens(FilePath);
+            var filePath = MapPath(FilePath);
+
             if (FileUtil.Exists(filePath))
             {
                 return File.ReadAllLines(filePath, System.Text.Encoding.Default);
@@ -27,9 +28,13 @@ namespace Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter
             return new string[0];
         }
 
-        private string ResovePathTokens(string filePath)
+        private string MapPath(string path)
         {
-            return filePath.Replace("$(dataFolder)", Sitecore.Configuration.Settings.DataFolder);
+            var server = WebUtil.GetServer();
+            if (server != null)
+                return server.MapPath(path);
+
+            return path;
         }
     }
 }
