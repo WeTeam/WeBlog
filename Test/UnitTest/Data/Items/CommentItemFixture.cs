@@ -1,12 +1,9 @@
 ﻿using Joel.Net;
 using NUnit.Framework;
-using Sitecore.Collections;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Model;
-using Sitecore.Sites;
-using Sitecore.Web;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
 {
@@ -34,27 +31,22 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
         public void ImplicitOperatorFromItem_ItemWithCorrectFields_ReturnsCommentItem()
         {
             // arrange
-            var siteContext = CreateSiteContext();
-
-            using (new SiteContextSwitcher(siteContext))
+            using (var db = new Db
             {
-                using (var db = new Db
-                {
-                    CreateDbItem()
-                })
-                {
-                    var entry = db.GetItem("/sitecore/content/" + EntryName);
+                CreateDbItem()
+            })
+            {
+                var entry = db.GetItem("/sitecore/content/" + EntryName);
 
-                    // act
-                    CommentItem commentItem = entry;
+                // act
+                CommentItem commentItem = entry;
 
-                    // assert
-                    Assert.That(commentItem.Name.Raw, Is.EqualTo(AuthorName));
-                    Assert.That(commentItem.Email.Raw, Is.EqualTo(AuthorEmail));
-                    Assert.That(commentItem.Comment.Raw, Is.EqualTo(CommentText));
-                    Assert.That(commentItem.Website.Raw, Is.EqualTo(AuthorWebsite));
-                    Assert.That(commentItem.IpAddress.Raw, Is.EqualTo(AuthorIpAddress));
-                }
+                // assert
+                Assert.That(commentItem.Name.Raw, Is.EqualTo(AuthorName));
+                Assert.That(commentItem.Email.Raw, Is.EqualTo(AuthorEmail));
+                Assert.That(commentItem.Comment.Raw, Is.EqualTo(CommentText));
+                Assert.That(commentItem.Website.Raw, Is.EqualTo(AuthorWebsite));
+                Assert.That(commentItem.IpAddress.Raw, Is.EqualTo(AuthorIpAddress));
             }
         }
 
@@ -72,30 +64,24 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
         public void ImplicitOperatorToAkismetComment_ItemWithCorrectFields_ReturnsCommentItem()
         {
             // arrange
-            var siteContext = CreateSiteContext();
-
-            using (new SiteContextSwitcher(siteContext))
+            using (var db = new Db
             {
-                using (var db = new Db
-                {
-                    CreateDbItem()
-                })
-                {
-                    var entry = db.GetItem("/sitecore/content/" + EntryName);
-                    CommentItem commentItem = entry;
+                CreateDbItem()
+            })
+            {
+                var entry = db.GetItem("/sitecore/content/" + EntryName);
+                CommentItem commentItem = entry;
 
-                    // act
-                    AkismetComment akismetComment = commentItem;
+                // act
+                AkismetComment akismetComment = commentItem;
 
-                    // assert
-                    Assert.That(akismetComment.Blog, Is.EqualTo(siteContext.HostName));
-                    Assert.That(akismetComment.CommentAuthor, Is.EqualTo(AuthorName));
-                    Assert.That(akismetComment.CommentAuthorEmail, Is.EqualTo(AuthorEmail));
-                    Assert.That(akismetComment.CommentContent, Is.EqualTo(CommentText));
-                    Assert.That(akismetComment.CommentAuthorUrl, Is.EqualTo(AuthorWebsite));
-                    Assert.That(akismetComment.CommentType, Is.EqualTo("comment"));
-                    Assert.That(akismetComment.UserIp, Is.EqualTo(AuthorIpAddress));
-                }
+                // assert
+                Assert.That(akismetComment.CommentAuthor, Is.EqualTo(AuthorName));
+                Assert.That(akismetComment.CommentAuthorEmail, Is.EqualTo(AuthorEmail));
+                Assert.That(akismetComment.CommentContent, Is.EqualTo(CommentText));
+                Assert.That(akismetComment.CommentAuthorUrl, Is.EqualTo(AuthorWebsite));
+                Assert.That(akismetComment.CommentType, Is.EqualTo("comment"));
+                Assert.That(akismetComment.UserIp, Is.EqualTo(AuthorIpAddress));
             }
         }
 
@@ -131,16 +117,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
                 Assert.That(commentContent.AuthorEmail, Is.EqualTo(AuthorEmail));
                 Assert.That(commentContent.Text, Is.EqualTo(CommentText));
             }
-        }
-
-        private SiteContext CreateSiteContext()
-        {
-            var siteInfo = new SiteInfo(new StringDictionary
-            {
-                { "hostName", "someurl" }
-            });
-
-            return new SiteContext(siteInfo);
         }
 
         private DbItem CreateDbItem()

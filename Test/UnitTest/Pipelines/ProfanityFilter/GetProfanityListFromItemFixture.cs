@@ -1,7 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Data;
-using Sitecore.Data.Fields;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter;
 
@@ -34,11 +33,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.ProfanityFilter
             var itemMock = ItemFactory.CreateItem(database: database.Object);
             database.Setup(x => x.GetItem("item")).Returns(itemMock.Object);
 
-            var field = new Mock<Field>(ID.NewID, itemMock.Object);
-            field.Setup(x => x.Name).Returns(Constants.Fields.WordList);
-            field.Setup(x => x.Value).Returns("lorem\nipsum");
+            var field = FieldFactory.CreateField(itemMock.Object, ID.NewID, Constants.Fields.WordList, "lorem\nipsum");
 
-            ItemFactory.AddFields(itemMock, new[] { field.Object });            
+            ItemFactory.AddFields(itemMock, new[] { field });
 
             var sut = new GetProfanityListFromItem(database.Object);
             sut.ItemPath = "item";
@@ -59,11 +56,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.ProfanityFilter
             var itemMock = ItemFactory.CreateItem(database: database.Object);
             database.Setup(x => x.GetItem("item")).Returns(itemMock.Object);
 
-            var field = new Mock<Field>(ID.NewID, itemMock.Object);
-            field.Setup(x => x.Name).Returns(Constants.Fields.WordList);
-            field.Setup(x => x.Value).Returns("lorem\nipsum");
+            var field = FieldFactory.CreateField(itemMock.Object, ID.NewID, Constants.Fields.WordList, "lorem\nipsum");
 
-            ItemFactory.AddFields(itemMock, new[] { field.Object });
+            ItemFactory.AddFields(itemMock, new[] { field });
 
             var sut = new GetProfanityListFromItem(database.Object);
             sut.ItemPath = "item";

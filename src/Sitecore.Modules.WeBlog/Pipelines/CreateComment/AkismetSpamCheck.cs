@@ -1,6 +1,11 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using Joel.Net;
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
@@ -10,16 +15,28 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
     public class AkismetSpamCheck : ICreateCommentProcessor
     {
-        private IWeBlogSettings _settings;
+        private IWeBlogSettings _settings = null;
+        private BaseLinkManager _linkManager = null;
+        private IAkismet _akismetApi = null;
+        private IBlogManager _blogManager = null;
 
         public AkismetSpamCheck()
-            : this(WeBlogSettings.Instance)
+            : this(null, null, null, null)
         {
         }
 
+        [Obsolete("Use ctor(IWeBlogSettings, BaseLinkManager, IBlogManager, IAkismet) instead.")]
         public AkismetSpamCheck(IWeBlogSettings settings)
+            : this(settings, null, null, null)
         {
-            _settings = settings;
+        }
+
+        public AkismetSpamCheck(IWeBlogSettings settings, BaseLinkManager linkManager, IBlogManager blogManager, IAkismet akismetApi)
+        {
+            _settings = settings ?? WeBlogSettings.Instance;
+            _linkManager = linkManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
+            _blogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
+            _akismetApi = akismetApi;
         }
 
         public void Process(CreateCommentArgs args)
@@ -32,8 +49,18 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                 if (workflow != null)
                 {
-                    var version = Assembly.GetExecutingAssembly().GetCustomAttribute<AssemblyVersionAttribute>();
-                    var api = new Akismet(_settings.AkismetAPIKey, ManagerFactory.BlogManagerInstance.GetCurrentBlog().SafeGet(x => x.Url), "WeBlog/" + version);
+                    var api = _akismetApi;
+                    if(api == null)
+                        api = new Akismet();
+
+                    var version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
+
+                    var urlOptions = UrlOptions.DefaultOptions;
+                    urlOptions.AlwaysIncludeServerUrl = true;
+                    var url = _linkManager.GetItemUrl(_blogManager.GetCurrentBlog(), urlOptions);
+
+                    api.Init(_settings.AkismetAPIKey, url, "WeBlog/" + version);
+
                     var isSpam = api.CommentCheck(args.CommentItem);
 
                     if (isSpam)

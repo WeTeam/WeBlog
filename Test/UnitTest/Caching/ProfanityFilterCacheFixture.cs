@@ -85,7 +85,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
             sut.WordList = new[] { "lorem", "ipsum" };
 
             // assert
-            innerCache.Verify(x => x.Add("wordlist_nodb", "lorem|ipsum"));
+            innerCache.Verify(x => x.Add("wordlist_master", "lorem|ipsum"));
         }
     }
 }

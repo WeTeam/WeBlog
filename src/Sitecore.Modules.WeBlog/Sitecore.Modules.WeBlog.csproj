@@ -165,6 +165,7 @@
     <Compile Include="Components\EntryNavigationCore.cs" />
     <Compile Include="Components\IAuthorsCore.cs" />
     <Compile Include="Components\AuthorsCore.cs" />
+    <Compile Include="External Code\IAkismet.cs" />
     <Compile Include="Fields\TagField.cs" />
     <Compile Include="Model\CommentContent.cs" />
     <Compile Include="Model\CommentReference.cs" />
