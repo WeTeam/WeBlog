@@ -1,4 +1,5 @@
-﻿using Joel.Net;
+﻿#if FEATURE_ABSTRACTIONS
+using Joel.Net;
 using Moq;
 using NUnit.Framework;
 using Sitecore.Abstractions;
@@ -78,7 +79,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             sut.Process(args);
 
             // assert
-            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.0.0.0"));
+            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.0.1.0"));
         }
 
         [Test]
@@ -152,7 +153,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
 
             var akismetApiMock = new Mock<IAkismet>();
 
-            var processor = new AkismetSpamCheck(settings, linkManager, blogManager, akismetApiMock.Object);
+            var processor = new AkismetSpamCheck(settings, blogManager, akismetApiMock.Object, linkManager);
 
             var item = CreateCommentItem();
             var database = Mock.Of<Database>(x =>
@@ -198,3 +199,4 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         }
     }
 }
+#endif

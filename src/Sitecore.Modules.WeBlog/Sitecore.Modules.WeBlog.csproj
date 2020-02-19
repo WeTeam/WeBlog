@@ -353,6 +353,7 @@
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
     <Content Include="App_Config\Include\WeBlog.config.delivery.xslt" />
     <Content Include="App_Config\Include\WeBlog.config.noremote.xslt" />
+    <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.1.xslt" />
     <Content Include="sitecore modules\web\WeBlog\Comment.svc" />
     <Content Include="sitecore modules\web\WeBlog\TagField\chosen-sprite.png" />
     <Content Include="sitecore modules\web\WeBlog\TagField\chosen.jquery.js" />
@@ -477,6 +478,8 @@
     <!-- Remove Scriban mail action pipeline config if types are not available -->
     <Delete Files="$(SitecorePath)\App_Config\Include\WeBlog.ScribanMailAction.config" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
     <CallTarget Targets="DeploySC8xEE" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))" />
+    <!-- Transform content search config for specific Sitecore versions -->
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.1.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config" Condition="$(SitecorePath) != '' AND $(DefineConstants.Contains('SC91'))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
     <PropertyGroup>

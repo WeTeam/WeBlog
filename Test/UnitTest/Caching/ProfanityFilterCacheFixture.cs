@@ -6,6 +6,7 @@ using Sitecore.Modules.WeBlog.Caching;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Caching
 {
+#if FEATURE_ABSTRACTIONS
     [TestFixture]
     public class ProfanityFilterCacheFixture
     {
@@ -43,7 +44,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
         {
             // arrange
 #pragma warning disable CS0252 // Possible unintended reference comparison; left hand side needs cast
-            var innerCache = Mock.Of<ICache>(x => x.GetValue("wordlist_database") == "lorem|ipsum");
+            var innerCache = Mock.Of<ICache>(x =>
+                x.GetValue("wordlist_database") == "lorem|ipsum" &&
+                x["wordlist_database"] == "lorem|ipsum"
+            );
 #pragma warning restore CS0252 // Possible unintended reference comparison; left hand side needs cast
             var database = Mock.Of<Database>(x => x.Name == "database");
             var sut = new ProfanityFilterCache(innerCache, database);
@@ -88,4 +92,5 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
             innerCache.Verify(x => x.Add("wordlist_master", "lorem|ipsum"));
         }
     }
+#endif
 }
