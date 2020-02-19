@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sitecore.Caching;
+using Sitecore.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,19 +8,38 @@ namespace Sitecore.Modules.WeBlog.Caching
 {
     public class ProfanityFilterCache : SimpleCache, IWeBlogCache
     {
-        public ProfanityFilterCache(string name, long maxSize) : base(name, maxSize) { }
+        private Database _database = null;
+
+        public ProfanityFilterCache(string name, long maxSize) : base(name, maxSize)
+        {
+            _database = ContentHelper.GetContentDatabase();
+        }
+
+#if FEATURE_ABSTRACTIONS
+        public ProfanityFilterCache(ICache innerCache, Database database) : base(innerCache)
+        {
+            _database = database ?? ContentHelper.GetContentDatabase();
+        }
+#endif
 
         protected string CacheName
         {
-            get { return "wordlist_" + Context.Database.Name; }
+            get
+            {
+                var dbName = _database != null ? _database.Name : "nodb";
+                return "wordlist_" + dbName;
+            }
         }
 
-        public IEnumerable<string> WorList
+        [Obsolete("Use WordList property instead")]
+        public IEnumerable<string> WorList => WordList;
+
+        public IEnumerable<string> WordList
         {
             get
             {
                 var cachedList = Get(CacheName);
-                if (!String.IsNullOrEmpty(cachedList))
+                if (!string.IsNullOrEmpty(cachedList))
                 {
                     return cachedList.Split('|').ToList();
                 }
@@ -26,7 +47,7 @@ namespace Sitecore.Modules.WeBlog.Caching
             }
             set
             {
-                Set(CacheName, String.Join("|", value));
+                Set(CacheName, string.Join("|", value));
             }
         }
 

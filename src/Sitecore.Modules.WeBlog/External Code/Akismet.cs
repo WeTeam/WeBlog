@@ -28,7 +28,8 @@ namespace Joel.Net {
     }
     #endregion
 
-    public class Akismet {
+    public class Akismet : IAkismet
+    {
         const string verifyUrl = "http://rest.akismet.com/1.1/verify-key";
         const string commentCheckUrl = "http://{0}.rest.akismet.com/1.1/comment-check";
         const string submitSpamUrl = "http://{0}.rest.akismet.com/1.1/submit-spam";
@@ -45,7 +46,20 @@ namespace Joel.Net {
         /// <param name="blog">URL to your blog</param>
         /// <param name="userAgent">Name of application using API.  example: "Joel.Net's Akismet API/1.0"</param>
         /// <remarks>Accepts required fields 'apiKey', 'blog', 'userAgent'.</remarks>
-        public Akismet(string apiKey, string blog, string userAgent) {
+        public Akismet(string apiKey, string blog, string userAgent)
+        {
+            Init(apiKey, blog, userAgent);
+        }
+
+        public Akismet() { }
+
+        /// <summary>Initializes an Akismet API object.</summary>
+        /// <param name="apiKey">Your wordpress.com API key.</param>
+        /// <param name="blog">URL to your blog</param>
+        /// <param name="userAgent">Name of application using API.  example: "Joel.Net's Akismet API/1.0"</param>
+        /// <remarks>Accepts required fields 'apiKey', 'blog', 'userAgent'.</remarks>
+        public void Init(string apiKey, string blog, string userAgent)
+        {
             this.apiKey = apiKey;
             if (userAgent != null) this.userAgent = userAgent + " | Akismet/1.11";
             this.blog = blog;
@@ -53,7 +67,8 @@ namespace Joel.Net {
 
         /// <summary>Verifies your wordpress.com key.</summary>
         /// <returns>'True' is key is valid.</returns>
-        public bool VerifyKey() {
+        public bool VerifyKey()
+        {
             bool value = false;
 
             string response = HttpPost(verifyUrl, String.Format("key={0}&blog={1}", apiKey, HttpUtility.UrlEncode(blog)), CharSet);
@@ -69,7 +84,8 @@ namespace Joel.Net {
         /// <summary>Checks AkismetComment object against Akismet database.</summary>
         /// <param name="comment">AkismetComment object to check.</param>
         /// <returns>'True' if spam, 'False' if not spam.</returns>
-        public bool CommentCheck(AkismetComment comment) {
+        public bool CommentCheck(AkismetComment comment)
+        {
             bool value = false;
 
             value = Convert.ToBoolean(HttpPost(String.Format(commentCheckUrl, apiKey), CreateData(comment), CharSet));
@@ -83,7 +99,8 @@ namespace Joel.Net {
 
         /// <summary>Submits AkismetComment object into Akismet database.</summary>
         /// <param name="comment">AkismetComment object to submit.</param>
-        public void SubmitSpam(AkismetComment comment) {
+        public void SubmitSpam(AkismetComment comment)
+        {
             string value = HttpPost(String.Format(submitSpamUrl, apiKey), CreateData(comment), CharSet);
 #if DEBUG
             Console.WriteLine("SubmitSpam() = {0}.", value);
@@ -92,7 +109,8 @@ namespace Joel.Net {
 
         /// <summary>Retracts false positive from Akismet database.</summary>
         /// <param name="comment">AkismetComment object to retract.</param>
-        public void SubmitHam(AkismetComment comment) {
+        public void SubmitHam(AkismetComment comment)
+        {
             string value = HttpPost(String.Format(submitHamUrl, apiKey), CreateData(comment), CharSet);
 #if DEBUG
             Console.WriteLine("SubmitHam() = {0}.", value);
@@ -106,12 +124,13 @@ namespace Joel.Net {
         /// <summary>Takes an AkismetComment object and returns an (escaped) string of data to POST.</summary>
         /// <param name="comment">AkismetComment object to translate.</param>
         /// <returns>A System.String containing the data to POST to Akismet API.</returns>
-        private string CreateData(AkismetComment comment) {
+        private string CreateData(AkismetComment comment)
+        {
             string value = String.Format("blog={0}&user_ip={1}&user_agent={2}&referrer={3}&permalink={4}&comment_type={5}" +
                 "&comment_author={6}&comment_author_email={7}&comment_author_url={8}&comment_content={9}",
-                HttpUtility.UrlEncode(comment.Blog),
+                HttpUtility.UrlEncode(blog),
                 HttpUtility.UrlEncode(comment.UserIp),
-                HttpUtility.UrlEncode(comment.UserAgent),
+                HttpUtility.UrlEncode(userAgent),
                 HttpUtility.UrlEncode(comment.Referrer),
                 HttpUtility.UrlEncode(comment.Permalink),
                 HttpUtility.UrlEncode(comment.CommentType),
@@ -129,7 +148,8 @@ namespace Joel.Net {
         /// <param name="data">Data to post. example: key=&ltwordpress-key&gt;&blog=http://joel.net</param>
         /// <param name="charSet">Character set of your blog. example: UTF-8</param>
         /// <returns>A System.String containing the Http Response.</returns>
-        private string HttpPost(string url, string data, string charSet) {
+        private string HttpPost(string url, string data, string charSet)
+        {
             string value = "";
 
             // Initialize Connection

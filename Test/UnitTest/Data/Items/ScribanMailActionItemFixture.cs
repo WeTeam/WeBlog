@@ -83,7 +83,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
         {
             // arrange
             var itemMock = ItemFactory.CreateItem();
-            ItemFactory.SetField(itemMock, fieldName, fieldValue);
+            ItemFactory.SetIndexerField(itemMock, fieldName, fieldValue);
 
             var item = itemMock.Object;
             var sut = new ScribanMailActionItem(item);

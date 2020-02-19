@@ -1,9 +1,8 @@
-using System;
 using Joel.Net;
 using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Fields;
-using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -85,17 +84,8 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             if (comment == null)
                 return null;
 
-            var url = string.Empty;
-            var blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
-            if (blog != null)
-                url = blog.Url;
-            else
-                url = Context.Site.HostName;
-
             var akismetComment = new AkismetComment();
-            akismetComment.Blog = url;
             akismetComment.UserIp = comment.IpAddress.Raw;
-            akismetComment.UserAgent = ""; // TODO
             akismetComment.CommentContent = comment.Comment.Raw;
             akismetComment.CommentType = "comment";
             akismetComment.CommentAuthor = comment.AuthorName;
