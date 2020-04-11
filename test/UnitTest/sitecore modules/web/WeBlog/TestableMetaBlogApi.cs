@@ -1,12 +1,9 @@
 ﻿using System;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 {
@@ -22,18 +19,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             IBlogManager blogManager = null,
             ICategoryManager categoryManager = null,
             IEntryManager entryManager = null,
-            IWeBlogSettings settings = null
-#if FEATURE_ABSTRACTIONS
-            ,BaseMediaManager mediaManager = null,
+            IWeBlogSettings settings = null,
+            BaseMediaManager mediaManager = null,
             BaseLinkManager linkManager = null
-#endif
         )
-            : base(blogManager, categoryManager, entryManager, settings
-#if FEATURE_ABSTRACTIONS
-                ,mediaManager,
-                  linkManager
-#endif
-            )
+            : base(blogManager, categoryManager, entryManager, settings, mediaManager, linkManager)
         {
         }
 

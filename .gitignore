@@ -10,6 +10,7 @@ build
 
 # Local deployment files
 deploy.targets
+deploy.props
 
 # mstest test results
 TestResults

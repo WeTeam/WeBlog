@@ -1,0 +1,39 @@
+<Project>
+  <Import Project="deploy.props" Condition="Exists('deploy.props')" />
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <OutputType>Library</OutputType>
+    <Authors>WeBlog Community</Authors>
+    <Company>WeTeam Community</Company>
+    <Product>WeBlog</Product>
+    <Copyright>Copyright ©  2011 - 2020</Copyright>
+    <Version>4.1.0</Version>
+    <Configurations>Debug sc9.0;Debug sc9.1;Debug sc9.2;Debug sc9.3;Release sc9.0;Release sc9.1;Release sc9.2;Release sc9.3</Configurations>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+    <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('sc9.0'))">
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <DefineConstants>$(DefineConstants)</DefineConstants>
+    <OutputPath>bin\sc90\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('sc9.1'))">
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <DefineConstants>$(DefineConstants);SC91</DefineConstants>
+    <OutputPath>bin\sc91\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('sc9.2'))">
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <DefineConstants>$(DefineConstants);FEATURE_JOB_ABSTRACTIONS</DefineConstants>
+    <OutputPath>bin\sc92\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('sc9.3'))">
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <DefineConstants>$(DefineConstants);FEATURE_JOB_ABSTRACTIONS;SC93</DefineConstants>
+    <OutputPath>bin\sc93\</OutputPath>
+  </PropertyGroup>
+</Project>

@@ -1,7 +1,7 @@
 {
   "name": "WeBlog_Themes",
   "description": "Themes for the WeBlog Sitecore module",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "repository": "https://github.com/WeTeam/WeBlog/",
   "devDependencies": {
     "grunt": "^1.0.4",

@@ -5,10 +5,12 @@ using System.Security.Authentication;
 using CookComputing.XmlRpc;
 using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.FakeDb.Sites;
+using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
@@ -16,13 +18,6 @@ using Sitecore.Resources.Media;
 using Sitecore.Sites;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Model;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-using Sitecore.Links;
-#else
-using Sitecore.FakeDb.Resources.Media;
-#endif
 
 #if SC93
 using Sitecore.Links.UrlBuilders;
@@ -76,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "link"
                 );
-#elif FEATURE_ABSTRACTIONS
+#else
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.IsAny<Item>(), It.IsAny<UrlOptions>()) == "link"
                 );
@@ -85,11 +80,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blogManager = Mock.Of<IBlogManager>(x =>
                     x.GetUserBlogs(username) == new BlogHomeItem[]
                     {
-#if FEATURE_ABSTRACTIONS
                         new BlogHomeItem(blog1, linkManager, null)
-#else
-                        new BlogHomeItem(blog1, null)
-#endif
                     }
                 );
 
@@ -102,11 +93,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {
                         {"blogid", blog1.ID.ToString()},
                         {"blogName", "Lorem"},
-#if FEATURE_ABSTRACTIONS
                         {"url", "link"}
-#else
-                        {"url", "/en/sitecore/content/blog1.aspx"}
-#endif
                     }
                 };
 
@@ -139,7 +126,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
                 );
-#elif FEATURE_ABSTRACTIONS
+#else
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<UrlOptions>()) == "link1" &&
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<UrlOptions>()) == "link2"
@@ -149,21 +136,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blogManager = Mock.Of<IBlogManager>(x =>
                     x.GetUserBlogs(username) == new BlogHomeItem[]
                     {
-#if FEATURE_ABSTRACTIONS
                         new BlogHomeItem(blog1, linkManager, null),
                         new BlogHomeItem(blog2, linkManager, null)
-#else
-                        new BlogHomeItem(blog1, null),
-                        new BlogHomeItem(blog2, null)
-#endif
                     }
                 );
 
-                var api = CreateAuthenticatingApi(blogManager
-#if FEATURE_ABSTRACTIONS
-                    , linkManager: linkManager
-#endif
-                );
+                var api = CreateAuthenticatingApi(blogManager, linkManager: linkManager);
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
 
                 var expected = new[]
@@ -172,21 +150,13 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     {
                         {"blogid", blog1.ID.ToString()},
                         {"blogName", "Lorem"},
-#if FEATURE_ABSTRACTIONS
                         {"url", "link1"}
-#else
-                        {"url", "/en/sitecore/content/blog1.aspx"}
-#endif
                     },
                     new XmlRpcStruct
                     {
                         {"blogid", blog2.ID.ToString()},
                         {"blogName", "Ipsum"},
-#if FEATURE_ABSTRACTIONS
                         {"url", "link2"}
-#else
-                        {"url", "/en/sitecore/content/blog2.aspx"}
-#endif
                     }
                 };
 
@@ -400,18 +370,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
                 );
-#elif FEATURE_ABSTRACTIONS
+#else
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<UrlOptions>()) == "link1" &&
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<UrlOptions>()) == "link2"
                 );
 #endif
 
-                var api = CreateAuthenticatingApi(null, null, entryManager
-#if FEATURE_ABSTRACTIONS
-                    , linkManager: linkManager
-#endif
-                );
+                var api = CreateAuthenticatingApi(null, null, entryManager, linkManager: linkManager);
                 api.GetBlogFunction = id => blog;
 
                 var site = new FakeSiteContext("test");
@@ -427,11 +393,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new XmlRpcStruct
                     {
                         {"title", "Lorem"},
-#if FEATURE_ABSTRACTIONS
                         {"link", "link1"},
-#else
-                        {"link", "/en/sitecore/content/Blog/entry1.aspx"},
-#endif
                         {"description", ""}, // Description is empty because the renderField pipeline is empty
                         {"pubDate", date},
                         {"guid", entryItem1.ID.ToString()},
@@ -442,11 +404,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     new XmlRpcStruct
                     {
                         {"title", "Ipsum"},
-#if FEATURE_ABSTRACTIONS
                         {"link", "link2"},
-#else
-                        {"link", "/en/sitecore/content/Blog/entry2.aspx"},
-#endif
                         {"description", ""}, // Description is empty because the renderField pipeline is empty
                         {"pubDate", date.AddMinutes(1)},
                         {"guid", entryItem2.ID.ToString()},
@@ -876,28 +834,20 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "the-link"
                 );
-#elif FEATURE_ABSTRACTIONS
+#else
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.IsAny<Item>(), It.IsAny<UrlOptions>()) == "the-link"
                 );
 #endif
 
-                var api = CreateAuthenticatingApi(null, null, entryManager
-#if FEATURE_ABSTRACTIONS
-                    , linkManager: linkManager
-#endif
-                );
+                var api = CreateAuthenticatingApi(null, null, entryManager, linkManager: linkManager);
 
                 var post = api.getPost(entryItem1.ID.ToString(), "user", "password");
 
                 var expected = new XmlRpcStruct
                 {
                     {"title", "Luna"},
-#if FEATURE_ABSTRACTIONS
                     {"link", "the-link"},
-#else
-                    {"link", "/en/sitecore/content/Blog/entry1.aspx"},
-#endif
                     {"description", "This world doesn't need no opera"},
                     {"pubDate", date},
                     {"guid", entryItem1.ID.ToString()},
@@ -1018,7 +968,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     { "bits", GetSampleImageData() }
                 };
 
-#if FEATURE_ABSTRACTIONS
                 var mediaManager = Mock.Of<BaseMediaManager>(x =>
                     x.Creator == Mock.Of<MediaCreator>(y =>
                         y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
@@ -1026,26 +975,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 );
 
                 var api = CreateAuthenticatingApi(mediaManager: mediaManager);
-#else
-                var mediaProvider = Mock.Of<MediaProvider>(x =>
-                    x.Creator == Mock.Of<MediaCreator>(y =>
-                        y.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>()) == image
-                    ) &&
-                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake"
-                );
 
-                var api = CreateAuthenticatingApi();
-#endif
                 api.GetContentDatabaseFunction = () => db.Database;
 
                 Assert.That(() =>
                 {
-#if !FEATURE_ABSTRACTIONS
-                    using (new MediaProviderSwitcher(mediaProvider))
-#endif
-                    {
-                        api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
-                    }
+                   api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
                 }, Throws.InstanceOf<InvalidCredentialException>());
             }
         }
@@ -1071,22 +1006,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var mediaCreator = new Mock<MediaCreator>();
                 mediaCreator.Setup(x => x.CreateFromStream(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<MediaCreatorOptions>())).Returns(image).Verifiable();
 
-#if FEATURE_ABSTRACTIONS
                 var mediaManager = Mock.Of<BaseMediaManager>(x => 
                     x.Creator == mediaCreator.Object &&
                     x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake-url"
                 );
 
                 var api = CreateAuthenticatingApi(mediaManager: mediaManager);
-#else
-                var mediaProvider = new Mock<MediaProvider>();
-                mediaProvider.Setup(x => x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()))
-                    .Returns("fake-url");
-
-                mediaProvider.SetupGet(x => x.Creator).Returns(mediaCreator.Object);
-
-                var api = CreateAuthenticatingApi();
-#endif
 
                 api.GetContentDatabaseFunction = () => db.Database;
 
@@ -1097,13 +1022,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     { "bits", GetSampleImageData() }
                 };
 
-#if !FEATURE_ABSTRACTIONS
-                using (new MediaProviderSwitcher(mediaProvider.Object))
-#endif
-                {
-                    var urlStruct = api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
-                    Assert.That(urlStruct["url"], Is.EqualTo("fake-url"));
-                }
+				var urlStruct = api.newMediaObject(blog.ID.ToString(), "user", "password", payload);
+				Assert.That(urlStruct["url"], Is.EqualTo("fake-url"));
 
                 mediaCreator.Verify();
             }
@@ -1124,22 +1044,18 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             IBlogManager blogManager = null,
             ICategoryManager categoryManager = null,
             IEntryManager entryManager = null,
-            IWeBlogSettings settings = null
-#if FEATURE_ABSTRACTIONS
-            ,BaseMediaManager mediaManager = null,
+            IWeBlogSettings settings = null,
+            BaseMediaManager mediaManager = null,
             BaseLinkManager linkManager = null
-#endif
             )
         {
             return new TestableMetaBlogApi(
                 blogManager,
                 categoryManager,
                 entryManager,
-                settings
-#if FEATURE_ABSTRACTIONS
-                ,mediaManager,
+                settings,
+                mediaManager,
                 linkManager
-#endif
                 )
             {
                 AuthenticateFunction = (u, p) => { }

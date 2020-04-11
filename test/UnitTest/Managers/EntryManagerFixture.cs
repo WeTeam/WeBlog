@@ -17,11 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#if FEATURE_XCONNECT
-#else
-using Sitecore.Analytics.Reporting;
-#endif
-
 namespace Sitecore.Modules.WeBlog.UnitTest
 {
     [TestFixture]

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Security;
 using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.FakeDb.Links;
@@ -13,10 +14,6 @@ using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.AccessControl;
 
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-#endif
-
 namespace Sitecore.Modules.WeBlog.UnitTest.Managers
 {
     [TestFixture]
@@ -24,7 +21,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
     {
         private const string _validUsername = "sitecore\\alfred";
 
-        #if FEATURE_ABSTRACTIONS
         [Test]
         public void Ctor_LinkManagerIsNull_ThrowsException()
         {
@@ -36,7 +32,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             var ex = Assert.Throws<ArgumentNullException>(new TestDelegate(sutAction));
             Assert.That(ex.ParamName, Is.EqualTo("linkManager"));
         }
-#endif
 
         [Test]
         public void GetCurrentBlog_NullItem()
@@ -513,18 +508,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             Assert.That(result, Is.False);
         }
 
-        private BlogManager CreateBlogManager(
-#if FEATURE_ABSTRACTIONS
-            BaseLinkManager linkManager = null,
-#endif
-            IWeBlogSettings settings = null)
+        private BlogManager CreateBlogManager(BaseLinkManager linkManager = null, IWeBlogSettings settings = null)
         {
-            return new BlogManager(
-#if FEATURE_ABSTRACTIONS
-                linkManager ?? Mock.Of<BaseLinkManager>(),
-#endif
-                settings ?? Mock.Of<IWeBlogSettings>()
-            );
+            return new BlogManager(linkManager ?? Mock.Of<BaseLinkManager>(), settings ?? Mock.Of<IWeBlogSettings>());
         }
     }
 }

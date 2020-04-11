@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Abstractions;
+using Sitecore.Analytics.Core;
 using Sitecore.Modules.WeBlog.Pipelines.PopulateScribanMailActionModel;
 using Sitecore.Modules.WeBlog.Workflow;
 using Sitecore.Pipelines;
@@ -9,12 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using Sitecore.Collections;
-
-#if SC82
-using Sitecore.Analytics.Commons;
-#else
-using Sitecore.Analytics.Core;
-#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
 {

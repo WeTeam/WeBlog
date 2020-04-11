@@ -1,18 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Sitecore.Abstractions;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.DependencyInjection;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Configuration;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
 using Sitecore.Sites;
-#endif
 
 #if SC93
 using Sitecore.Links.UrlBuilders;
@@ -24,23 +21,13 @@ namespace Sitecore.Modules.WeBlog.Data.Items
     {
         protected IWeBlogSettings Settings { get; }
 
-#if FEATURE_ABSTRACTIONS
         private BaseLinkManager _linkManager = null;
-#endif
 
         public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
-#if FEATURE_ABSTRACTIONS
             : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager, settings)
         {
         }
-#else
-            : base(innerItem)
-        {
-            Settings = settings ?? WeBlogSettings.Instance;
-        }
-#endif
 
-#if FEATURE_ABSTRACTIONS
         public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
             : base(innerItem)
         {
@@ -56,13 +43,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
             return innerItem != null ? new BlogHomeItem(innerItem, linkManager) : null;
         }
-#else
-
-        public static implicit operator BlogHomeItem(Item innerItem)
-        {
-            return innerItem != null ? new BlogHomeItem(innerItem) : null;
-        }
-#endif
 
         public static implicit operator Item(BlogHomeItem customItem)
         {
@@ -272,12 +252,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 #endif
 
                 urlOptions.AlwaysIncludeServerUrl = true;
-
-#if FEATURE_ABSTRACTIONS
                 return _linkManager.GetItemUrl(InnerItem, urlOptions);
-#else
-                return LinkManager.GetItemUrl(InnerItem, urlOptions);
-#endif
             }
         }
 

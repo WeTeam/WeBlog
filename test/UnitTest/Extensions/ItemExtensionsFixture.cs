@@ -25,7 +25,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
                 new DbTemplate("dummy", templateId)
             })
             {
-                var result = ItemExtensions.TemplateIsOrBasedOn(null, new[] {templateId});
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(null, new[] {templateId});
                 Assert.That(result, Is.False);
             }
         }
@@ -39,7 +39,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, (IEnumerable<ID>)null);
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, (IEnumerable<ID>)null);
                 Assert.That(result, Is.False);
             }
         }
@@ -53,7 +53,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, Enumerable.Empty<ID>());
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, Enumerable.Empty<ID>());
                 Assert.That(result, Is.False);
             }
         }
@@ -67,7 +67,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { ID.NewID } );
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, new[] { ID.NewID } );
                 Assert.That(result, Is.False);
             }
         }
@@ -83,7 +83,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, new[] { templateId });
                 Assert.That(result, Is.True);
             }
         }
@@ -105,7 +105,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { baseTemplateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, new[] { baseTemplateId });
                 Assert.That(result, Is.True);
             }
         }
@@ -137,7 +137,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { baseTemplateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, new[] { baseTemplateId });
                 Assert.That(result, Is.True);
             }
         }
@@ -153,7 +153,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, templateId);
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, templateId);
                 Assert.That(result, Is.True);
             }
         }
@@ -167,7 +167,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, ID.NewID);
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(item, ID.NewID);
                 Assert.That(result, Is.False);
             }
         }
@@ -186,7 +186,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
                 new DbTemplate("dummy", templateId)
             })
             {
-                var result = ItemExtensions.FindAncestorByAnyTemplate(null, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(null, new[] { templateId });
                 Assert.That(result, Is.Null);
             }
         }
@@ -202,7 +202,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, null);
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, null);
                 Assert.That(result, Is.Null);
             }
         }
@@ -218,7 +218,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, Enumerable.Empty<ID>());
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, Enumerable.Empty<ID>());
                 Assert.That(result, Is.Null);
             }
         }
@@ -234,7 +234,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
                 Assert.That(result, Is.Not.Null);
             }
         }
@@ -253,7 +253,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/parent/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
                 Assert.That(result, Is.Not.Null);
             }
         }
@@ -278,7 +278,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/ggp/gp/parent/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
                 Assert.That(result, Is.Not.Null);
             }
         }
@@ -292,7 +292,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { ID.NewID });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { ID.NewID });
                 Assert.That(result, Is.Null);
             }
         }
@@ -326,7 +326,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(null, template);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(null, template);
 
                     Assert.That(result.Length, Is.EqualTo(0));
                 }
@@ -358,7 +358,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, null);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, null);
 
                     Assert.That(result.Length, Is.EqualTo(0));
                 }
@@ -393,7 +393,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, template);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, template);
 
                     Assert.That(result.Length, Is.EqualTo(2));
                     Assert.That(result[0].Name, Is.EqualTo("blog1"));
@@ -441,7 +441,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseTemplate);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseTemplate);
 
                     Assert.That(result.Length, Is.EqualTo(2));
                     Assert.That(result[0].Name, Is.EqualTo("blog1"));
@@ -505,7 +505,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseBaseTemplate);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseBaseTemplate);
 
                     Assert.That(result.Length, Is.EqualTo(4));
                     Assert.That(result[0].Name, Is.EqualTo("blog1"));

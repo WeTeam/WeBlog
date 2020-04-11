@@ -16,12 +16,8 @@ using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
-
-#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
-#else
-using Sitecore.Analytics.Reporting;
-#endif
+
 
 namespace Sitecore.Modules.WeBlog.Managers
 {

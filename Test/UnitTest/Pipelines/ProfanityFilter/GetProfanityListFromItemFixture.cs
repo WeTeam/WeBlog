@@ -6,7 +6,6 @@ using Sitecore.Modules.WeBlog.Pipelines.ProfanityFilter;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.ProfanityFilter
 {
-#if FEATURE_ABSTRACTIONS
     [TestFixture]
     public class GetProfanityListFromItemFixture
     {
@@ -72,5 +71,4 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.ProfanityFilter
             Assert.That(args.WordList, Is.EquivalentTo(new[] { "dolor" }));
         }
     }
-#endif
 }

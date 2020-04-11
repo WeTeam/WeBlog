@@ -15,12 +15,10 @@ namespace Sitecore.Modules.WeBlog.Caching
             _database = ContentHelper.GetContentDatabase();
         }
 
-#if FEATURE_ABSTRACTIONS
         public ProfanityFilterCache(ICache innerCache, Database database) : base(innerCache)
         {
             _database = database ?? ContentHelper.GetContentDatabase();
         }
-#endif
 
         protected string CacheName
         {

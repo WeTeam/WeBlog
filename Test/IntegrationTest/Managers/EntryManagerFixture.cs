@@ -8,11 +8,7 @@ using Moq;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
-#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
-#else
-using Sitecore.Analytics.Reporting;
-#endif
 
 namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 {

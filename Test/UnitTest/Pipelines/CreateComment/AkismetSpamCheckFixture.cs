@@ -1,5 +1,4 @@
-﻿#if FEATURE_ABSTRACTIONS
-using Joel.Net;
+﻿using Joel.Net;
 using Moq;
 using NUnit.Framework;
 using Sitecore.Abstractions;
@@ -199,4 +198,3 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         }
     }
 }
-#endif
