@@ -1,5 +1,9 @@
+using System;
 using System.Collections.Generic;
+using Sitecore.Abstractions;
 using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
+using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Extensions;
 
@@ -11,8 +15,20 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 
         public IEnumerable<ScriptItem> Scripts { get; protected set; }
 
-        public ThemeItem(Item innerItem) : base(innerItem)
+        private BaseTemplateManager _templateManager = null;
+
+        [Obsolete("Use ctor(Item, BaseTemplateManager) instead.")]
+        public ThemeItem(Item innerItem)
+            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager)
         {
+        }
+
+        public ThemeItem(Item innerItem, BaseTemplateManager templateManager)
+            : base(innerItem)
+        {
+            Assert.ArgumentNotNull(templateManager, nameof(templateManager));
+            _templateManager = templateManager;
+
             ResolveThemeAssets();
         }
 
@@ -46,10 +62,10 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 
             foreach(Item item in children)
             {
-                if (item.TemplateIsOrBasedOn(ScriptItem.TemplateId))
+                if (item.TemplateIsOrBasedOn(_templateManager, ScriptItem.TemplateId))
                     scriptList.Add(new ScriptItem(item));
 
-                if (item.TemplateIsOrBasedOn(StylesheetItem.TemplateId))
+                if (item.TemplateIsOrBasedOn(_templateManager, StylesheetItem.TemplateId))
                     stylesheetList.Add(new StylesheetItem(item));
             }
 

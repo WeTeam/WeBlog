@@ -72,7 +72,6 @@
     <Content Include="sitecore modules\web\WeBlog\TagField\chosen.min.css" />
     <Content Include="sitecore modules\web\WeBlog\TagField\tagfield.css" />
     <Content Include="sitecore modules\web\WeBlog\TagField\tagField.js" />
-    <Content Include="sitecore\shell\Applications\WeBlog\WordpressImport.xml" />
     <Content Include="sitecore\shell\client\Applications\WeBlog\Import.js" />
     <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.js" />
     <Content Include="sitecore\shell\client\Applications\WeBlog\JsonDataSource\JsonDataSource.cshtml" />

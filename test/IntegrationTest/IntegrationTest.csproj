@@ -24,7 +24,7 @@
   </Target>
   <Target Name="Deploy" AfterTargets="Build">
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
-    <CreateItem Include="$(OutDir)$(AssemblyName).dll">
+    <CreateItem Include="$(OutDir)$(AssemblyName).dll;$(OutDir)Moq.dll;$(OutDir)nunit*.dll">
       <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />

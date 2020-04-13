@@ -404,44 +404,6 @@ file.
       <Exclude />
       <Name>Sitecore modules files</Name>
     </files>
-    <files>
-      <Root>/sitecore/shell/Applications/WeBlog</Root>
-      <Converter>
-        <FileToEntryConverter>
-          <Root>/</Root>
-          <Transforms>
-            <InstallerConfigurationTransform>
-              <Options>
-                <BehaviourOptions>
-                  <ItemMode>Undefined</ItemMode>
-                  <ItemMergeMode>Undefined</ItemMergeMode>
-                </BehaviourOptions>
-              </Options>
-            </InstallerConfigurationTransform>
-          </Transforms>
-        </FileToEntryConverter>
-      </Converter>
-      <Include>
-        <FileNameFilter>
-          <Pattern />
-          <AcceptDirectories>False</AcceptDirectories>
-        </FileNameFilter>
-        <FileDateFilter>
-          <FilterType>CreatedFilter</FilterType>
-          <ActionDateTo />
-          <ActionDateFrom />
-          <NotOlderThan />
-        </FileDateFilter>
-        <FileDateFilter>
-          <FilterType>ModifiedFilter</FilterType>
-          <ActionDateTo />
-          <ActionDateFrom />
-          <NotOlderThan />
-        </FileDateFilter>
-      </Include>
-      <Exclude />
-      <Name>Applicaiton files</Name>
-    </files>
     <items>
       <Database>master</Database>
       <Root>{5F870ADF-B1D0-4A69-86CB-2BDCA7F5EE2F}</Root>
@@ -670,29 +632,6 @@ file.
       <Exclude />
       <Name>Workflow</Name>
     </items>
-    <xitems>
-      <Entries>
-        <x-item>/core/sitecore/content/Applications/Control Panel/Database/Import Wordpress Blog/{32BA24F8-5A9D-4B6D-A7F6-A6293E8145FA}/invariant/0</x-item>
-      </Entries>
-      <SkipVersions>False</SkipVersions>
-      <Converter>
-        <ItemToEntryConverter>
-          <Transforms>
-            <InstallerConfigurationTransform>
-              <Options>
-                <BehaviourOptions>
-                  <ItemMode>Undefined</ItemMode>
-                  <ItemMergeMode>Undefined</ItemMergeMode>
-                </BehaviourOptions>
-              </Options>
-            </InstallerConfigurationTransform>
-          </Transforms>
-        </ItemToEntryConverter>
-      </Converter>
-      <Include />
-      <Exclude />
-      <Name>Control Panel Items</Name>
-    </xitems>
     <items>
       <Database>core</Database>
       <Root>{B1D1C40D-40F7-4B05-9DF5-023B765CD73A}</Root>

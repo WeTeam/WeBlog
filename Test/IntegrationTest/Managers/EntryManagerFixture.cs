@@ -604,7 +604,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         private EntryManager CreateEntryManagerForAnalyticsTest(params ID[] popularEntryIdsInOrder)
         {
             var reportProvider = CreateMockReportDataProvider(popularEntryIdsInOrder);
-            return new EntryManager(reportProvider, null);
+            return new EntryManager(reportProvider, null, null, null, null);
         }
 
         private ReportDataProviderBase CreateMockReportDataProvider(IEnumerable<ID> ids)

@@ -15,7 +15,7 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 
         public BlogPostList(IPostListCore postListCore = null)
         {
-            PostListCore = postListCore ?? new PostListCore(CurrentBlog);
+            PostListCore = postListCore ?? new PostListCore(CurrentBlog, null, null, null, null);
         }
         /// <summary>
         /// Gets or sets the path to the (override) template for posts in the list.

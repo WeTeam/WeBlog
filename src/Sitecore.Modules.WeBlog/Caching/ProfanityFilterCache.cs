@@ -29,9 +29,6 @@ namespace Sitecore.Modules.WeBlog.Caching
             }
         }
 
-        [Obsolete("Use WordList property instead")]
-        public IEnumerable<string> WorList => WordList;
-
         public IEnumerable<string> WordList
         {
             get

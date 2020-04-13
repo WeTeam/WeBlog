@@ -78,7 +78,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             sut.Process(args);
 
             // assert
-            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.0.1.0"));
+            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.1.0.0"));
         }
 
         [Test]

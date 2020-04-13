@@ -1,15 +1,13 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection;
-using Joel.Net;
+﻿using Joel.Net;
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sites;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -22,12 +20,6 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
         public AkismetSpamCheck()
             : this(null, null, null, null)
-        {
-        }
-
-        [Obsolete("Use ctor(IWeBlogSettings, BaseLinkManager, IBlogManager, IAkismet) instead.")]
-        public AkismetSpamCheck(IWeBlogSettings settings)
-            : this(settings, null, null, null)
         {
         }
 
