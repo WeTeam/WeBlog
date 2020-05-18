@@ -54,6 +54,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.PopulateScribanMailActionMo
         private Item CreateWorkflowItems()
         {
             var database = new Mock<Database>();
+            database.Setup(x => x.Name).Returns("fake");
+
             var commandItem = ItemFactory.CreateItem(database: database.Object);
 
             var nextStateItem = ItemFactory.CreateItem(database: database.Object);

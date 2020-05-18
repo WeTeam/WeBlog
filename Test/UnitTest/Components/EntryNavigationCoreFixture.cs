@@ -2,10 +2,8 @@
 using NUnit.Framework;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.FakeDb;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Components;
-using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
@@ -43,94 +41,82 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
         public void GetPreviousEntry_NullEntryItem_ReturnsNull()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var sut = new EntryNavigationCore(blogManager, entryManager);
 
-                // act
-                var results = sut.GetPreviousEntry(null);
+            // act
+            var results = sut.GetPreviousEntry(null);
 
-                // assert
-                Assert.That(results, Is.Null);
-            }
+            // assert
+            Assert.That(results, Is.Null);
         }
 
         [TestCase]
         public void GetNextEntry_NullEntryItem_ReturnsNull()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var sut = new EntryNavigationCore(blogManager, entryManager);
 
-                // act
-                var results = sut.GetNextEntry(null);
+            // act
+            var results = sut.GetNextEntry(null);
 
-                // assert
-                Assert.That(results, Is.Null);
-            }
+            // assert
+            Assert.That(results, Is.Null);
         }
 
         [Test]
         public void GetPreviousEntry_NoBlog_ReturnsNull()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(false,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(false,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry1");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry1"];
+            var sut = new EntryNavigationCore(blogManager, entryManager);
 
-                // act
-                var results = sut.GetPreviousEntry(entryItem);
+            // act
+            var results = sut.GetPreviousEntry(entryItem);
 
-                // assert
-                Assert.That(results, Is.Null);
-            }
+            // assert
+            Assert.That(results, Is.Null);
         }
 
         [Test]
         public void GetNextEntry_NoBlog_ReturnsNull()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(false,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(false,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry1");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry1"];
+            var sut = new EntryNavigationCore(blogManager, entryManager);
 
-                // act
-                var results = sut.GetNextEntry(entryItem);
+            // act
+            var results = sut.GetNextEntry(entryItem);
 
-                // assert
-                Assert.That(results, Is.Null);
-            }
+            // assert
+            Assert.That(results, Is.Null);
         }
 
         // not enough entries
@@ -139,57 +125,53 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
         public void GetPreviousEntry_TwoEntries_ReturnsCorrectItem()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry3"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry3");
-                var previousEntryItem = db.GetItem("/sitecore/content/entry2");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry3"];
+            var previousEntryItem = items["entry2"];
+            var itemsByUri = items.ToDictionary(entry => entry.Value.Uri, entry => entry.Value);
+            var sut = new TestableEntryNavigationCore(blogManager, entryManager, itemsByUri);
 
-                // act
-                var results = sut.GetPreviousEntry(entryItem);
+            // act
+            var results = sut.GetPreviousEntry(entryItem);
 
-                // assert
-                Assert.That(results.ID, Is.EqualTo(previousEntryItem.ID));
-            }
+            // assert
+            Assert.That(results.ID, Is.EqualTo(previousEntryItem.ID));
         }
 
         [Test]
         public void GetNextEntry_TwoEntries_ReturnsCorrectItem()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry1");
-                var nextEntryItem = db.GetItem("/sitecore/content/entry2");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry1"];
+            var nextEntryItem = items["entry2"];
+            var itemsByUri = items.ToDictionary(entry => entry.Value.Uri, entry => entry.Value);
+            var sut = new TestableEntryNavigationCore(blogManager, entryManager, itemsByUri);
 
-                // act
-                var results = sut.GetNextEntry(entryItem);
+            // act
+            var results = sut.GetNextEntry(entryItem);
 
-                // assert
-                Assert.That(results.ID, Is.EqualTo(nextEntryItem.ID));
-            }
+            // assert
+            Assert.That(results.ID, Is.EqualTo(nextEntryItem.ID));
         }
 
         [Test]
         public void GetPreviousEntry_SeveralEntriesOnSameDay_ReturnsCorrectItem()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry4"),
                     CreateEntry("entry3")
@@ -201,25 +183,23 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry4");
-                var previousEntryItem = db.GetItem("/sitecore/content/entry3");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry4"];
+            var previousEntryItem = items["entry3"];
+            var itemsByUri = items.ToDictionary(entry => entry.Value.Uri, entry => entry.Value);
+            var sut = new TestableEntryNavigationCore(blogManager, entryManager, itemsByUri);
 
-                // act
-                var results = sut.GetPreviousEntry(entryItem);
+            // act
+            var results = sut.GetPreviousEntry(entryItem);
 
-                // assert
-                Assert.That(results.ID, Is.EqualTo(previousEntryItem.ID));
-            }
+            // assert
+            Assert.That(results.ID, Is.EqualTo(previousEntryItem.ID));
         }
 
         [Test]
         public void GetNextEntry_SeveralEntriesOnSameDay_ReturnsCorrectItem()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
@@ -230,90 +210,78 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry3");
-                var nextEntryItem = db.GetItem("/sitecore/content/entry4");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry3"];
+            var nextEntryItem = items["entry4"];
+                
+            var itemsByUri = items.ToDictionary(entry => entry.Value.Uri, entry => entry.Value);
+            var sut = new TestableEntryNavigationCore(blogManager, entryManager, itemsByUri);
 
-                // act
-                var results = sut.GetNextEntry(entryItem);
+            // act
+            var results = sut.GetNextEntry(entryItem);
 
-                // assert
-                Assert.That(results.ID, Is.EqualTo(nextEntryItem.ID));
-            }
+            // assert
+            Assert.That(results.ID, Is.EqualTo(nextEntryItem.ID));
         }
 
         [Test]
         public void GetNextEntry_NoNextEntry_ReturnsNull()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry1"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry2");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry2"];
+            var sut = new EntryNavigationCore(blogManager, entryManager);
 
-                // act
-                var results = sut.GetNextEntry(entryItem);
+            // act
+            var results = sut.GetNextEntry(entryItem);
 
-                // assert
-                Assert.That(results, Is.Null);
-            }
+            // assert
+            Assert.That(results, Is.Null);
         }
 
         [Test]
         public void GetPreviousEntry_NoPreviousEntry_ReturnsNull()
         {
             // arrange
-            (Db db, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
+            (Dictionary<string, Item> items, IBlogManager blogManager, IEntryManager entryManager) = SetupManagerMocks(true,
                 new[] {
                     CreateEntry("entry3"),
                     CreateEntry("entry2")
                 }
             );
 
-            using (db)
-            {
-                var entryItem = db.GetItem("/sitecore/content/entry2");
-                var sut = new EntryNavigationCore(blogManager, entryManager);
+            var entryItem = items["entry2"];
+            var sut = new EntryNavigationCore(blogManager, entryManager);
 
-                // act
-                var results = sut.GetPreviousEntry(entryItem);
+            // act
+            var results = sut.GetPreviousEntry(entryItem);
 
-                // assert
-                Assert.That(results, Is.Null);
-            }
+            // assert
+            Assert.That(results, Is.Null);
         }
 
         private Entry CreateEntry(string name)
         {
             return new Entry
             {
-                Uri = new ItemUri(ID.NewID, Language.Parse("en"), Sitecore.Data.Version.Latest, "master"),
+                Uri = new ItemUri(ID.NewID, Language.Parse("en"), Sitecore.Data.Version.Latest, "mock"),
                 Title = name,
                 EntryDate = new DateTime(2016, 04, 06)
             };
         }
 
-        private (Db Database, IBlogManager BlogManager, IEntryManager EntryManager) SetupManagerMocks(
+        private (Dictionary<string, Item> Items, IBlogManager BlogManager, IEntryManager EntryManager) SetupManagerMocks(
             bool returnBlogItem,
             Entry[] page1Entries,
             Entry[] page2Entries = null,
             Entry[] page3Entries = null
         )
         {
-            var db = new Db("master")
-            {
-                new DbItem("blog", ID.NewID, WeBlogSettings.Instance.BlogTemplateIds.First())
-            };
-
             var entries = page1Entries.AsEnumerable();
 
             if (page2Entries != null)
@@ -322,21 +290,19 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
             if (page3Entries != null)
                 entries = entries.Concat(page3Entries);
 
+            var items = new Dictionary<string, Item>();
+
             foreach (var entry in entries)
             {
-                db.Add(
-                    new DbItem(entry.Title, entry.Uri.ItemID)
-                    {
-                        new DbField("Entry Date")
-                        {
-                            Value = DateUtil.ToIsoDate(entry.EntryDate)
-                        }
-                    }
-                );
+                var itemMock = ItemFactory.CreateItem(entry.Uri.ItemID);
+                var dateField = FieldFactory.CreateField(itemMock.Object, ID.NewID, "Entry Date", DateUtil.ToIsoDate(entry.EntryDate));
+                ItemFactory.AddFields(itemMock, new[] { dateField });
+
+                items.Add(entry.Title, itemMock.Object);
             }
-            
-            var blogItem = db.GetItem("/sitecore/content/blog");
-            var blogHomeItem = new BlogHomeItem(blogItem, null);
+
+            var blogItem = ItemFactory.CreateItem();
+            var blogHomeItem = new BlogHomeItem(blogItem.Object, null);
 
             var blogManager = Mock.Of<IBlogManager>(x =>
                 x.GetCurrentBlog(It.IsAny<Item>()) == (returnBlogItem ? blogHomeItem : null)
@@ -346,7 +312,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
                 x.GetBlogEntries(blogHomeItem, It.IsAny<EntryCriteria>(), It.IsAny<ListOrder>()) == new SearchResults<Model.Entry>(entries.ToList(), false)
             );
 
-            return (db, blogManager, entryManager);
+            return (items, blogManager, entryManager);
         }
     }
 }

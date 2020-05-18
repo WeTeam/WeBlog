@@ -29,6 +29,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.ProfanityFilter
         {
             // arrange
             var database = new Mock<Database>();
+            database.Setup(x => x.Name).Returns("fake");
+
             var itemMock = ItemFactory.CreateItem(database: database.Object);
             database.Setup(x => x.GetItem("item")).Returns(itemMock.Object);
 
@@ -52,6 +54,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.ProfanityFilter
         {
             // arrange
             var database = new Mock<Database>();
+            database.Setup(x => x.Name).Returns("fake");
+
             var itemMock = ItemFactory.CreateItem(database: database.Object);
             database.Setup(x => x.GetItem("item")).Returns(itemMock.Object);
 

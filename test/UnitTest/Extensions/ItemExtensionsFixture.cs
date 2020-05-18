@@ -80,7 +80,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             // arrange
             var templateId = ID.NewID;
             var templateManager = TemplateFactory.CreateTemplateManager(templateId);
-            var itemMock = ItemFactory.CreateItem(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId: templateId);
 
             // act
             var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { templateId });
@@ -117,7 +117,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             var template = TemplateFactory.CreateTemplate(templateId, baseTemplateId, templates);
 
             var templateManager = TemplateFactory.CreateTemplateManager(new[] { baseTemplate, template });
-            var itemMock = ItemFactory.CreateItem(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId: templateId);
 
             // act
             var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { baseTemplateId });
@@ -142,7 +142,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             var template = TemplateFactory.CreateTemplate(templateId, baseTemplateId3, templates);
 
             var templateManager = TemplateFactory.CreateTemplateManager(new[] { baseTemplate1, baseTemplate2, baseTemplate3, template });
-            var itemMock = ItemFactory.CreateItem(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId: templateId);
 
             // act
             var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { baseTemplateId1 });
