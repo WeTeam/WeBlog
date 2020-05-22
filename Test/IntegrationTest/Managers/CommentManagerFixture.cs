@@ -13,7 +13,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         [Test]
         public void GetEntryComments_NullItem()
         {
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetEntryComments((Item)null, 10);
 
             Assert.That(comments, Is.Empty);
@@ -30,7 +30,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetEntryComments(blog, 10);
 
             Assert.That(comments, Is.Empty);
@@ -47,7 +47,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetEntryComments(entryLuna, 10);
             var ids = from comment in comments select comment.Uri.ItemID;
 
@@ -62,7 +62,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetEntryComments(entryLuna, 10);
 
             Assert.That(comments, Is.Empty);
@@ -80,7 +80,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetEntryComments(entryLuna, 2);
             var ids = from comment in comments select comment.Uri.ItemID;
 
@@ -90,7 +90,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         [Test]
         public void GetCommentsCount_NullItem()
         {
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var count = manager.GetCommentsCount((Item)null);
             Assert.That(count, Is.EqualTo(0));
         }
@@ -106,7 +106,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var count = manager.GetCommentsCount(blog);
 
             Assert.That(count, Is.EqualTo(0));
@@ -123,7 +123,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var count = manager.GetCommentsCount(entryLuna);
 
             Assert.That(count, Is.EqualTo(2));
@@ -137,7 +137,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var count = manager.GetCommentsCount(entryLuna);
 
             Assert.That(count, Is.EqualTo(0));
@@ -146,7 +146,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         [Test]
         public void GetBlogComments_NullItem_ReturnsEmptyList()
         {
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetBlogComments(null, 10);
             
             Assert.That(comments, Is.Empty);
@@ -162,7 +162,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetBlogComments(blog, 10);
 
             Assert.That(comments, Is.Empty);
@@ -184,7 +184,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetBlogComments(blog, 10);
             var ids = from comment in comments select comment.Uri.ItemID;
 
@@ -206,7 +206,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetBlogComments(blog, 3);
             var ids = from comment in comments select comment.Uri.ItemID;
 
@@ -230,7 +230,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetBlogComments(blog2, 3);
 
             Assert.That(comments, Is.Empty);
@@ -254,7 +254,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 
             TestUtil.UpdateIndex();
 
-            var manager = new Mod.CommentManager();
+            var manager = new Mod.CommentManager(null, null);
             var comments = manager.GetBlogComments(blog1, 3);
             var ids = from comment in comments select comment.Uri.ItemID;
 

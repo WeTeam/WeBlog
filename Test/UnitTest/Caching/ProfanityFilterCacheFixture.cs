@@ -6,7 +6,6 @@ using Sitecore.Modules.WeBlog.Caching;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Caching
 {
-#if FEATURE_ABSTRACTIONS
     [TestFixture]
     public class ProfanityFilterCacheFixture
     {
@@ -92,5 +91,4 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Caching
             innerCache.Verify(x => x.Add("wordlist_master", "lorem|ipsum"));
         }
     }
-#endif
 }

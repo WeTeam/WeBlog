@@ -1,18 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using Sitecore.Abstractions;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.DependencyInjection;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Configuration;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-using Sitecore.Sites;
-#endif
+using Sitecore.Diagnostics;
 
 #if SC93
 using Sitecore.Links.UrlBuilders;
@@ -24,30 +21,37 @@ namespace Sitecore.Modules.WeBlog.Data.Items
     {
         protected IWeBlogSettings Settings { get; }
 
-#if FEATURE_ABSTRACTIONS
         private BaseLinkManager _linkManager = null;
-#endif
+
+        private BaseTemplateManager _templateManager = null;
 
         public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
-#if FEATURE_ABSTRACTIONS
-            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager, settings)
+            : this(
+                  innerItem,
+                  ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager,
+                  ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager,
+                  settings)
         {
         }
-#else
-            : base(innerItem)
-        {
-            Settings = settings ?? WeBlogSettings.Instance;
-        }
-#endif
 
-#if FEATURE_ABSTRACTIONS
+        [Obsolete("Use ctor(Item, BaseLinkManager, BaseTemplateManager, IWeBlogSettings) instead.")]
         public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
+            : this(
+                  innerItem,
+                  linkManager,
+                  ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager,
+                  settings)
+        {
+        }
+
+        public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, BaseTemplateManager templateManager, IWeBlogSettings settings = null)
             : base(innerItem)
         {
-            if (linkManager == null)
-                throw new ArgumentNullException(nameof(linkManager));
+            Assert.ArgumentNotNull(linkManager, nameof(linkManager));
+            Assert.ArgumentNotNull(templateManager, nameof(templateManager));
 
             _linkManager = linkManager;
+            _templateManager = templateManager;
             Settings = settings ?? WeBlogSettings.Instance;
         }
 
@@ -56,13 +60,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
             return innerItem != null ? new BlogHomeItem(innerItem, linkManager) : null;
         }
-#else
-
-        public static implicit operator BlogHomeItem(Item innerItem)
-        {
-            return innerItem != null ? new BlogHomeItem(innerItem) : null;
-        }
-#endif
 
         public static implicit operator Item(BlogHomeItem customItem)
         {
@@ -272,12 +269,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 #endif
 
                 urlOptions.AlwaysIncludeServerUrl = true;
-
-#if FEATURE_ABSTRACTIONS
                 return _linkManager.GetItemUrl(InnerItem, urlOptions);
-#else
-                return LinkManager.GetItemUrl(InnerItem, urlOptions);
-#endif
             }
         }
 
@@ -290,7 +282,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
                     var children = InnerItem.GetChildren();
                     foreach(Item child in children)
                     {
-                        if (child.TemplateIsOrBasedOn(Settings.RssFeedTemplateIds))
+                        if (child.TemplateIsOrBasedOn(_templateManager, Settings.RssFeedTemplateIds))
                             yield return new RssFeedItem(child);
                     }
                 }
@@ -313,7 +305,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                if (!InnerItem.TemplateIsOrBasedOn(Settings.BlogTemplateIds))
+                if (!InnerItem.TemplateIsOrBasedOn(_templateManager, Settings.BlogTemplateIds))
                 {
                     return new BlogSettings(Settings);
                 }

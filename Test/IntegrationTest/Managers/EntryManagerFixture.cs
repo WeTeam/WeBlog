@@ -8,11 +8,7 @@ using Moq;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
-#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
-#else
-using Sitecore.Analytics.Reporting;
-#endif
 
 namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 {
@@ -608,7 +604,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         private EntryManager CreateEntryManagerForAnalyticsTest(params ID[] popularEntryIdsInOrder)
         {
             var reportProvider = CreateMockReportDataProvider(popularEntryIdsInOrder);
-            return new EntryManager(reportProvider, null);
+            return new EntryManager(reportProvider, null, null, null, null);
         }
 
         private ReportDataProviderBase CreateMockReportDataProvider(IEnumerable<ID> ids)

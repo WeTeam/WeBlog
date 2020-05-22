@@ -21,7 +21,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         protected IWeBlogSettings Settings = null;
 
-#if FEATURE_ABSTRACTIONS
         /// <summary>
         /// The <see cref="BaseLinkManager"/> used to generate links.
         /// </summary>
@@ -39,17 +38,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             LinkManager = linkManager;
             Settings = settings ?? WeBlogSettings.Instance;
         }
-#else
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
-        public BlogManager(IWeBlogSettings settings = null)
-        {
-            Settings = settings ?? WeBlogSettings.Instance;
-        }
-#endif
 
         /// <summary>
         /// Gets the current blog for the context item
@@ -70,11 +58,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
 
             if (blogItem != null)
-#if FEATURE_ABSTRACTIONS
                 return new BlogHomeItem(blogItem, LinkManager);
-#else
-                return new BlogHomeItem(blogItem);
-#endif
             else
                 return null;
         }
@@ -118,11 +102,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                    from item in blogItems
                    where item != null
                     select new
-#if FEATURE_ABSTRACTIONS
                     BlogHomeItem(item, LinkManager)
-#else
-                    BlogHomeItem(item)
-#endif
                     ).ToArray();
         }
 

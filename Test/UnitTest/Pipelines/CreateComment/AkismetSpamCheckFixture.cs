@@ -1,5 +1,4 @@
-﻿#if FEATURE_ABSTRACTIONS
-using Joel.Net;
+﻿using Joel.Net;
 using Moq;
 using NUnit.Framework;
 using Sitecore.Abstractions;
@@ -79,7 +78,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             sut.Process(args);
 
             // assert
-            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.0.1.0"));
+            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.1.0.0"));
         }
 
         [Test]
@@ -199,4 +198,3 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         }
     }
 }
-#endif

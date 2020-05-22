@@ -1,6 +1,8 @@
 ﻿using System;
+using Sitecore.Abstractions;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Events;
 using Sitecore.Modules.WeBlog.Caching;
@@ -12,17 +14,31 @@ namespace Sitecore.Modules.WeBlog.Globalization
 {
     public class ItemAndPublishEventHandler
     {
-        private IWeBlogSettings _settings;
+        private IWeBlogSettings _settings = null;
+
+        private BaseTemplateManager _templateManager = null;
 
         public ItemAndPublishEventHandler()
             : this(WeBlogSettings.Instance)
         {
         }
 
+        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
         public ItemAndPublishEventHandler(IWeBlogSettings settings)
+            : this(settings, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager)
         {
-            _settings = settings;
         }
+
+        public ItemAndPublishEventHandler(IWeBlogSettings settings, BaseTemplateManager templateManager)
+        {
+            Assert.ArgumentNotNull(settings, nameof(settings));
+            Assert.ArgumentNotNull(templateManager, nameof(templateManager));
+
+            _settings = settings;
+            _templateManager = templateManager;
+        }
+
+
 
         public void OnItemSaved(object sender, EventArgs args)
         {
@@ -48,12 +64,12 @@ namespace Sitecore.Modules.WeBlog.Globalization
         {
             if (item != null)
             {
-                if (item.TemplateIsOrBasedOn(_settings.DictionaryEntryTemplateId))
+                if (item.TemplateIsOrBasedOn(_templateManager, _settings.DictionaryEntryTemplateId))
                 {
                     Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
                     CacheManager.TranslatorCache.ClearCache();
                 }
-                if (item.TemplateIsOrBasedOn(_settings.ProfanityListTemplateId))
+                if (item.TemplateIsOrBasedOn(_templateManager, _settings.ProfanityListTemplateId))
                 {
                     Logger.Info("Profanity Filter item saved, clearing cache", this);
                     CacheManager.ProfanityFilterCache.ClearCache();

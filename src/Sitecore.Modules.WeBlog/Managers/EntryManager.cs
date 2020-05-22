@@ -16,12 +16,9 @@ using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Analytics.Reporting;
-
-#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
-#else
-using Sitecore.Analytics.Reporting;
-#endif
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -48,8 +45,23 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         protected ReportDataProviderBase ReportDataProvider = null;
 
+        /// <summary>
+        /// The <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; set; }
+
         public EntryManager()
-            : this(null, null)
+            : this(null, null, null, null, null)
+        {
+        }
+
+        [Obsolete("Use ctor(ReportDataProviderBase, IEntrySearchCache, IWeBlogSettings, ICommentManager, BaseTemplateManager) instead.")]
+        public EntryManager(
+            ReportDataProviderBase reportDataProvider,
+            IEntrySearchCache cache,
+            IWeBlogSettings settings = null,
+            ICommentManager commentManager = null)
+            : this(reportDataProvider, cache, settings, commentManager, null)
         {
         }
 
@@ -57,12 +69,14 @@ namespace Sitecore.Modules.WeBlog.Managers
             ReportDataProviderBase reportDataProvider,
             IEntrySearchCache cache,
             IWeBlogSettings settings = null,
-            ICommentManager commentManager = null)
+            ICommentManager commentManager = null,
+            BaseTemplateManager templateManager = null)
         {
             ReportDataProvider = reportDataProvider;
             Settings = settings ?? WeBlogSettings.Instance;
             EntryCache = cache ?? CacheManager.GetCache<IEntrySearchCache>(EntrySearchCache.CacheName);
             CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager;
         }
 
         /// <summary>
@@ -116,13 +130,13 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return cachedEntries;
 
             var customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  where blogRootItem.TemplateIsOrBasedOn(templateId)
+                                  where blogRootItem.TemplateIsOrBasedOn(TemplateManager, templateId)
                                   select (BlogHomeItem)blogRootItem).FirstOrDefault();
 
             if (customBlogItem == null)
             {
                 customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  let item = blogRootItem.FindAncestorByTemplate(templateId)
+                                  let item = blogRootItem.FindAncestorByTemplate(templateId, TemplateManager)
                                   where item != null
                                   select (BlogHomeItem)item).FirstOrDefault();
             }

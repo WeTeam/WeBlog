@@ -1,5 +1,6 @@
 ﻿using Scriban;
 using Sitecore.Abstractions;
+using Sitecore.Analytics.Core;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -8,12 +9,6 @@ using Sitecore.Workflows.Simple;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
-
-#if SC82
-using Sitecore.Analytics.Commons;
-#else
-using Sitecore.Analytics.Core;
-#endif
 
 namespace Sitecore.Modules.WeBlog.Workflow
 {
@@ -112,11 +107,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
 
             try
             {
-#if SC82
-                var smtpClient = SmtpClientFactory.Invoke();
-#else
                 using (var smtpClient = SmtpClientFactory.Invoke())
-#endif
                 {
                     smtpClient.Send(message);
                 }

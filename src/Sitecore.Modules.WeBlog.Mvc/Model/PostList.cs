@@ -20,7 +20,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
 
         public PostList(IPostListCore postListCore)
         {
-            PostListCore = postListCore ?? new PostListCore(CurrentBlog);
+            PostListCore = postListCore ?? new PostListCore(CurrentBlog, null, null, null, null);
         }
 
         public override void Initialize(Rendering rendering)

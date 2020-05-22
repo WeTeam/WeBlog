@@ -12,12 +12,15 @@ namespace Sitecore.Modules.WeBlog.UnitTest
     /// </summary>
     internal static class ItemFactory
     {
-        public static Mock<Item> CreateItem(ID templateId = null, Database database = null)
+        public static Mock<Item> CreateItem(ID itemId = null, ID templateId = null, Database database = null)
         {
             if(database == null)
-                database = Mock.Of<Database>();
+                database = Mock.Of<Database>(x => x.Name == "mock");
 
-            var itemMock = new Mock<Item>(ID.NewID, ItemData.Empty, database);
+            var id = itemId ?? ID.NewID;
+
+            var itemMock = new Mock<Item>(id, ItemData.Empty, database);
+            itemMock.Setup(x => x.Uri).Returns(new ItemUri(id, database));
 
             if (templateId != (ID)null)
                 itemMock.Setup(x => x.TemplateID).Returns(templateId);

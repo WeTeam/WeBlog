@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Web;
+using Sitecore.Abstractions;
 using Sitecore.Data;
+using Sitecore.DependencyInjection;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -24,6 +27,8 @@ namespace Sitecore.Modules.WeBlog.Components
         protected NameValueCollection QueryString { get; set; }
 
         protected IEntryManager EntryManager { get; set; }
+
+        protected BaseTemplateManager TemplateManager { get; set; }
 
         public IAuthorsCore AuthorsCore { get; set; }
 
@@ -61,12 +66,29 @@ namespace Sitecore.Modules.WeBlog.Components
         /// </summary>
         /// <param name="currentBlog">The blog being listed.</param>
         /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
+        /// <param name="authorsCore">The <see cref="IAuthorsCore"/> component to use to retrieve author information.</param>
+        /// <param name="entryManager">The <see cref="IEntryManager"/> to use to access entries.</param>
+        [Obsolete("Use ctor(BlogHomeItem, IWeBlogSettings, IAuthorsCore, IEntryManager, BaseTemplateManager) instead.")]
         public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null, IEntryManager entryManager = null)
+            : this(currentBlog, settings, authorsCore, entryManager, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="currentBlog">The blog being listed.</param>
+        /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
+        /// <param name="authorsCore">The <see cref="IAuthorsCore"/> component to use to retrieve author information.</param>
+        /// <param name="entryManager">The <see cref="IEntryManager"/> to use to access entries.</param>
+        /// <param name="templateManager">The <see cref="BaseTemplateManager"/> to use to access templates.</param>
+        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null, IEntryManager entryManager = null, BaseTemplateManager templateManager = null)
         {
             CurrentBlog = currentBlog;
             Settings = settings ?? WeBlogSettings.Instance;
             AuthorsCore = authorsCore ?? new AuthorsCore(CurrentBlog);
             EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager;
         }
 
         public virtual void Initialize(NameValueCollection queryString)
@@ -106,7 +128,7 @@ namespace Sitecore.Modules.WeBlog.Components
 
                 results = new SearchResults<Entry>(authorEntries, false);
             }
-            else if (Context.Item.TemplateIsOrBasedOn(Settings.CategoryTemplateIds))
+            else if (Context.Item.TemplateIsOrBasedOn(TemplateManager, Settings.CategoryTemplateIds))
             {
                 criteria.Category = Context.Item.Name;
                 results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);

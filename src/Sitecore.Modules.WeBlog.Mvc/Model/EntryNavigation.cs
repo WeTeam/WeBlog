@@ -25,7 +25,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
 
         protected PostListCore GetDefaultPostListCore()
         {
-            var defaultPostListCore = new PostListCore(CurrentBlog);
+            var defaultPostListCore = new PostListCore(CurrentBlog, null, null, null, null);
             var queryString = RenderingContext.Current.PageContext.RequestContext.HttpContext.Request.QueryString;
             defaultPostListCore.Initialize(queryString);
             return defaultPostListCore;

@@ -1,5 +1,6 @@
 using Sitecore.Data;
 using Sitecore.Diagnostics;
+using Sitecore.Data.Items;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
@@ -37,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.Components
                 if (previous == null)
                     return null;
 
-                return Database.GetItem(previous.Uri);
+                return GetItem(previous.Uri);
             }
 
             return null;
@@ -57,9 +58,9 @@ namespace Sitecore.Modules.WeBlog.Components
                 if (next == null)
                     return null;
 
-                return Database.GetItem(next.Uri);
+                return GetItem(next.Uri);
             }
-
+            
             return null;
         }
 
@@ -91,6 +92,11 @@ namespace Sitecore.Modules.WeBlog.Components
             }
 
             return null;
+        }
+
+        protected virtual Item GetItem(ItemUri uri)
+        {
+            return Database.GetItem(uri);
         }
     }
 }

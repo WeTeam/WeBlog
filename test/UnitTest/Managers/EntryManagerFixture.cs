@@ -17,11 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#if FEATURE_XCONNECT
-#else
-using Sitecore.Analytics.Reporting;
-#endif
-
 namespace Sitecore.Modules.WeBlog.UnitTest
 {
     [TestFixture]
@@ -1499,7 +1494,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
         private EntryManager CreateManager(IWeBlogSettings settings)
         {
-            return new EntryManager(null, null, settings);
+            return new EntryManager(null, null, settings, null, null);
         }
     }
 
@@ -1508,7 +1503,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         private long _viewCount = 0;
 
         public TestableEntryManager(IWeBlogSettings settings, long viewCount)
-            : base(null, null, settings)
+            : base(null, null, settings, null, null)
         {
             _viewCount = viewCount;
         }

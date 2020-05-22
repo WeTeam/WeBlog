@@ -1,18 +1,14 @@
 ﻿using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using System;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-#endif
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
 {
     [TestFixture]
     public class EntryItemFixture
     {
-#if FEATURE_ABSTRACTIONS
         [Test]
         public void Ctor_NullItem_ThrowsException()
         {
@@ -36,6 +32,5 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
             var ex = Assert.Throws<ArgumentNullException>(new TestDelegate(sutAction));
             Assert.That(ex.ParamName, Is.EqualTo("linkManager"));
         }
-#endif
     }
 }

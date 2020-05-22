@@ -17,6 +17,8 @@ using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -31,12 +33,29 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IWeBlogSettings Settings = null;
 
         /// <summary>
+        /// The <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; set; }
+
+        /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
+        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
         public CommentManager(IWeBlogSettings settings = null)
+            : this(settings, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
+        /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
+        public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager;
         }
 
         /// <summary>
@@ -133,7 +152,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (entryItem != null)
             {
-                if(entryItem.TemplateIsOrBasedOn(Settings.EntryTemplateIds))
+                if(entryItem.TemplateIsOrBasedOn(TemplateManager, Settings.EntryTemplateIds))
                 { 
                     return GetCommentsFor(entryItem, maximumCount);
                 }

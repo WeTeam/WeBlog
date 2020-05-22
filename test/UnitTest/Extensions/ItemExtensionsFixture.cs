@@ -2,7 +2,9 @@
 using System.Linq;
 using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Data;
+using Sitecore.Data.Templates;
 using Sitecore.FakeDb;
 using Sitecore.FakeDb.Links;
 using Sitecore.Links;
@@ -13,168 +15,141 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
     [TestFixture]
     public class ItemExtensionsFixture
     {
-        #region TemplateIsOrBasedOn
-
         [Test]
-        public void TemplateIsOrBasedOn_NullItem()
+        public void TemplateIsOrBasedOn_ItemIsNull_ReturnsFalse()
         {
+            // arrange
             var templateId = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
 
-            using (var db = new Db()
-            {
-                new DbTemplate("dummy", templateId)
-            })
-            {
-                var result = ItemExtensions.TemplateIsOrBasedOn(null, new[] {templateId});
-                Assert.That(result, Is.False);
-            }
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(null, templateManager, new[] { templateId });
+
+            // assert
+            Assert.That(result, Is.False);
         }
 
         [Test]
-        public void TemplateIsOrBasedOn_NullTemplates()
+        public void TemplateIsOrBasedOn_TemplatesIsNull_ReturnsFalse()
         {
-            using (var db = new Db()
-            {
-                new DbItem("theitem", ID.NewID)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, (IEnumerable<ID>)null);
-                Assert.That(result, Is.False);
-            }
-        }
-
-        [Test]
-        public void TemplateIsOrBasedOn_NoTemplates()
-        {
-            using (var db = new Db()
-            {
-                new DbItem("theitem", ID.NewID)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, Enumerable.Empty<ID>());
-                Assert.That(result, Is.False);
-            }
-        }
-
-        [Test]
-        public void TemplateIsOrBasedOn_InvalidTemplate()
-        {
-            using (var db = new Db()
-            {
-                new DbItem("theitem", ID.NewID)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { ID.NewID } );
-                Assert.That(result, Is.False);
-            }
-        }
-
-        [Test]
-        public void TemplateIsOrBasedOn_ValidTemplate()
-        {
+            // arrange
             var templateId = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId);
 
-            using (var db = new Db()
-            {
-                new DbItem("theitem", ID.NewID, templateId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { templateId });
-                Assert.That(result, Is.True);
-            }
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, (IEnumerable<ID>)null);
+
+            // assert
+            Assert.That(result, Is.False);
         }
 
         [Test]
-        public void TemplateIsOrBasedOn_ValidDerivedTemplate()
+        public void TemplateIsOrBasedOn_TemplatesIsEmpty_ReturnsFalse()
         {
+            // arrange
+            var templateId = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, Enumerable.Empty<ID>());
+
+            // assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void TemplateIsOrBasedOn_InvalidTemplate_ReturnsFalse()
+        {
+            // arrange
+            var templateId = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { ID.NewID });
+
+            // assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void TemplateIsOrBasedOn_TemplateMatches_ReturnsTrue()
+        {
+            // arrange
+            var templateId = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+            var itemMock = ItemFactory.CreateItem(templateId: templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { templateId });
+
+            // assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public void TemplateIsOrBasedOn_TemplateDoesNotMatch_ReturnsFalse()
+        {
+            // arrange
+            var templateId1 = ID.NewID;
+            var templateId2 = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId1, templateId2);
+            var itemMock = ItemFactory.CreateItem(templateId2);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { templateId1 });
+
+            // assert
+            Assert.That(result, Is.False);
+        }
+
+        [Test]
+        public void TemplateIsOrBasedOn_DerivedTemplateMatches_ReturnsTrue()
+        {
+            // arrange
             var baseTemplateId = ID.NewID;
             var templateId = ID.NewID;
 
-            using (var db = new Db()
-            {
-                new DbTemplate("base template", baseTemplateId),
-                new DbTemplate("dummy", templateId)
-                {
-                    BaseIDs = new [] { baseTemplateId }
-                },
-                new DbItem("theitem", ID.NewID, templateId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { baseTemplateId });
-                Assert.That(result, Is.True);
-            }
+            var templates = new TemplateCollection();
+            var baseTemplate = TemplateFactory.CreateTemplate(baseTemplateId, null, templates);
+            var template = TemplateFactory.CreateTemplate(templateId, baseTemplateId, templates);
+
+            var templateManager = TemplateFactory.CreateTemplateManager(new[] { baseTemplate, template });
+            var itemMock = ItemFactory.CreateItem(templateId: templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { baseTemplateId });
+
+            // assert
+            Assert.That(result, Is.True);
         }
 
         [Test]
-        public void TemplateIsOrBasedOn_ValidMultipleDerivedTemplate()
+        public void TemplateIsOrBasedOn_DerivedTemplateChainMatches_ReturnsTrue()
         {
-            var baseTemplateId = ID.NewID;
+            // arrange
+            var baseTemplateId1 = ID.NewID;
             var baseTemplateId2 = ID.NewID;
             var baseTemplateId3 = ID.NewID;
             var templateId = ID.NewID;
 
-            using (var db = new Db()
-            {
-                new DbTemplate("base template", baseTemplateId),
-                new DbTemplate("base template 2", baseTemplateId2)
-                {
-                    BaseIDs = new [] { baseTemplateId }
-                },
-                new DbTemplate("base template 3", baseTemplateId3)
-                {
-                    BaseIDs = new [] { baseTemplateId2 }
-                },
-                new DbTemplate("dummy", templateId)
-                {
-                    BaseIDs = new [] { baseTemplateId3 }
-                },
-                new DbItem("theitem", ID.NewID, templateId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, new[] { baseTemplateId });
-                Assert.That(result, Is.True);
-            }
+            var templates = new TemplateCollection();
+            var baseTemplate1 = TemplateFactory.CreateTemplate(baseTemplateId1, null, templates);
+            var baseTemplate2 = TemplateFactory.CreateTemplate(baseTemplateId2, baseTemplateId1, templates);
+            var baseTemplate3 = TemplateFactory.CreateTemplate(baseTemplateId3, baseTemplateId2, templates);
+            var template = TemplateFactory.CreateTemplate(templateId, baseTemplateId3, templates);
+
+            var templateManager = TemplateFactory.CreateTemplateManager(new[] { baseTemplate1, baseTemplate2, baseTemplate3, template });
+            var itemMock = ItemFactory.CreateItem(templateId: templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.TemplateIsOrBasedOn(itemMock.Object, templateManager, new[] { baseTemplateId1 });
+
+            // assert
+            Assert.That(result, Is.True);
         }
-
-        [Test]
-        public void TemplateIsOrBasedOn_ValidSingleTemplate()
-        {
-            var templateId = ID.NewID;
-
-            using (var db = new Db()
-            {
-                new DbItem("theitem", ID.NewID, templateId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, templateId);
-                Assert.That(result, Is.True);
-            }
-        }
-
-        [Test]
-        public void TemplateIsOrBasedOn_InvalidSingleTemplate()
-        {
-            using (var db = new Db()
-            {
-                new DbItem("theitem")
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.TemplateIsOrBasedOn(item, ID.NewID);
-                Assert.That(result, Is.False);
-            }
-        }
-
-        #endregion TemplateIsOrBasedOn
-
-        #region FindAncestorByAnyTemplate
 
         [Test]
         public void FindAncestorByAnyTemplate_NullItem()
@@ -186,7 +161,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
                 new DbTemplate("dummy", templateId)
             })
             {
-                var result = ItemExtensions.FindAncestorByAnyTemplate(null, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(null, new[] { templateId });
                 Assert.That(result, Is.Null);
             }
         }
@@ -202,7 +177,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, null);
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, null);
                 Assert.That(result, Is.Null);
             }
         }
@@ -218,7 +193,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, Enumerable.Empty<ID>());
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, Enumerable.Empty<ID>());
                 Assert.That(result, Is.Null);
             }
         }
@@ -234,7 +209,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
                 Assert.That(result, Is.Not.Null);
             }
         }
@@ -253,7 +228,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/parent/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
                 Assert.That(result, Is.Not.Null);
             }
         }
@@ -278,7 +253,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/ggp/gp/parent/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
                 Assert.That(result, Is.Not.Null);
             }
         }
@@ -292,14 +267,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
             })
             {
                 var item = db.GetItem("/sitecore/content/theitem");
-                var result = ItemExtensions.FindAncestorByAnyTemplate(item, new[] { ID.NewID });
+                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { ID.NewID });
                 Assert.That(result, Is.Null);
             }
         }
-
-        #endregion FindAncestorByAnyTemplate
-
-        #region FindItemsByTemplateOrDerivedTemplate
 
         [Test]
         public void FindItemsByTemplateOrDerivedTemplate_NullItem()
@@ -326,7 +297,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(null, template);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(null, template);
 
                     Assert.That(result.Length, Is.EqualTo(0));
                 }
@@ -358,7 +329,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, null);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, null);
 
                     Assert.That(result.Length, Is.EqualTo(0));
                 }
@@ -393,7 +364,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, template);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, template);
 
                     Assert.That(result.Length, Is.EqualTo(2));
                     Assert.That(result[0].Name, Is.EqualTo("blog1"));
@@ -441,7 +412,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseTemplate);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseTemplate);
 
                     Assert.That(result.Length, Is.EqualTo(2));
                     Assert.That(result[0].Name, Is.EqualTo("blog1"));
@@ -505,7 +476,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
 
                 using (new LinkDatabaseSwitcher(linkDb))
                 {
-                    var result = ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseBaseTemplate);
+                    var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindItemsByTemplateOrDerivedTemplate(root, baseBaseTemplate);
 
                     Assert.That(result.Length, Is.EqualTo(4));
                     Assert.That(result[0].Name, Is.EqualTo("blog1"));
@@ -515,7 +486,5 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
                 }
             }
         }
-
-        #endregion
     }
 }

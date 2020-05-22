@@ -54,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.PopulateScribanMailActionMo
             var commentTemplateId = ID.NewID;
 
             var (sut, dataItemMock, entryManager) = CreateResolveItems(commentTemplateId, entryTemplateId, commentTemplateId);
-            var entryItem = ItemFactory.CreateItem(entryTemplateId);
+            var entryItem = ItemFactory.CreateItem(templateId: entryTemplateId);
             dataItemMock.Setup(x => x.Parent).Returns(entryItem.Object);
 
             var commentUri = new ItemUri(dataItemMock.Object);
@@ -81,16 +81,16 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.PopulateScribanMailActionMo
             var commentTemplateId = ID.NewID;
 
             var (sut, dataItemMock, entryManager) = CreateResolveItems(commentTemplateId, entryTemplateId, commentTemplateId);
-            var entryItem = ItemFactory.CreateItem(entryTemplateId);
+            var entryItem = ItemFactory.CreateItem(templateId: entryTemplateId);
             dataItemMock.Setup(x => x.Parent).Returns(entryItem.Object);
 
             var workflowPipelineArgs = WorkflowPipelineArgsFactory.CreateWorkflowPipelineArgs(dataItemMock.Object);
             var args = new PopulateScribanMailActionModelArgs(workflowPipelineArgs);
             
-            var existingEntryItem = ItemFactory.CreateItem(entryTemplateId).Object;
+            var existingEntryItem = ItemFactory.CreateItem(templateId: entryTemplateId).Object;
             args.EntryItem = existingEntryItem;
 
-            var existingCommentItem = ItemFactory.CreateItem(commentTemplateId).Object;
+            var existingCommentItem = ItemFactory.CreateItem(templateId: commentTemplateId).Object;
             args.CommentItem = existingCommentItem;
 
             // act
@@ -108,7 +108,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.PopulateScribanMailActionMo
                 x.CommentTemplateIds == new[] { commentTemplateId }
             );
 
-            var dataItemMock = ItemFactory.CreateItem(dataItemTemplateId);
+            var dataItemMock = ItemFactory.CreateItem(templateId: dataItemTemplateId);
 
             var entryTemplateBuilder = new Template.Builder("entry", entryTemplateId, new TemplateCollection());
             var commentTemplateBuilder = new Template.Builder("comment", commentTemplateId, new TemplateCollection());
