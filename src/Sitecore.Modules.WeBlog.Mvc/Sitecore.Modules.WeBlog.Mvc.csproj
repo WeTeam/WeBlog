@@ -60,7 +60,7 @@
     <Content Include="Views\WeBlog\EntryNavigation.cshtml" />
     <Content Include="Views\WeBlog\Authors.cshtml" />
   </ItemGroup>
-  <Target Name="Deploy" AfterTargets="Build">
+  <Target Name="Deploy" AfterTargets="PostBuildEvent">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">

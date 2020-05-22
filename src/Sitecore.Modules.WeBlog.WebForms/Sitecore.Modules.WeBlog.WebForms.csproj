@@ -45,7 +45,7 @@
     <Content Include="Layouts\WeBlog\ThemeStylesheets.ascx" />
     <Content Include="App_Config\Include\WeBlog.WebForms.config" />
   </ItemGroup>
-  <Target Name="Deploy" AfterTargets="Build">
+  <Target Name="Deploy" AfterTargets="PostBuildEvent">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">
