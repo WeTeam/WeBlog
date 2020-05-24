@@ -18,6 +18,10 @@ using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Resources.Media;
 using Sitecore.Security.Authentication;
 
+#if SC93
+using Sitecore.Links.UrlBuilders;
+#endif
+
 namespace Sitecore.Modules.WeBlog
 {
     [XmlRpcService(
@@ -494,7 +498,11 @@ namespace Sitecore.Modules.WeBlog
             // Get the mediaitem url and return it
             var rstruct = new XmlRpcStruct();
 
+#if SC93
+            var options = new MediaUrlBuilderOptions()
+#else
             var options = new MediaUrlOptions()
+#endif
             {
                 AbsolutePath = false,
                 UseItemPath = false

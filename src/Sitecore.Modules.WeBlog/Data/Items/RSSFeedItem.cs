@@ -76,7 +76,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             get
             {
                 var feed = FeedManager.GetFeed(InnerItem);
-                return feed.GetUrl(UrlOptions.DefaultOptions, false);
+                return feed.Render().BaseUri.ToString();
             }
         }
     }

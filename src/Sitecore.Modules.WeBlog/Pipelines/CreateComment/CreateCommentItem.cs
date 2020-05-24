@@ -86,7 +86,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                             var newComment = new CommentItem(newItem);
                             newComment.BeginEdit();
-                            newComment.Name.Field.Value = args.Comment.AuthorName;
+                            newComment.CommentorName.Field.Value = args.Comment.AuthorName;
                             newComment.Email.Field.Value = args.Comment.AuthorEmail;
                             newComment.Comment.Field.Value = args.Comment.Text;
 

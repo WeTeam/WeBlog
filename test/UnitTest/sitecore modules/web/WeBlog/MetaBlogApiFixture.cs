@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Security.Authentication;
 using CookComputing.XmlRpc;
@@ -10,7 +9,6 @@ using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.FakeDb.Sites;
-using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
@@ -18,6 +16,7 @@ using Sitecore.Resources.Media;
 using Sitecore.Sites;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Model;
+using Sitecore.Links;
 
 #if SC93
 using Sitecore.Links.UrlBuilders;
@@ -1008,7 +1007,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var mediaManager = Mock.Of<BaseMediaManager>(x => 
                     x.Creator == mediaCreator.Object &&
+#if SC93
+                    x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlBuilderOptions>()) == "fake-url"
+#else
                     x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake-url"
+#endif
                 );
 
                 var api = CreateAuthenticatingApi(mediaManager: mediaManager);

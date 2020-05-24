@@ -26,6 +26,12 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             return customItem != null ? customItem.InnerItem : null;
         }
 
+        public CustomTextField CommentorName
+        {
+            get { return new CustomTextField(InnerItem, InnerItem.Fields["Name"]); }
+        }
+
+        [Obsolete("Use CommentorName property instead.")]
         public CustomTextField Name
         {
             get { return new CustomTextField(InnerItem, InnerItem.Fields["Name"]); }
@@ -71,7 +77,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// </summary>
         public string AuthorName
         {
-            get { return Name.Raw; }
+            get { return CommentorName.Raw; }
         }
 
         /// <summary>

@@ -12,6 +12,10 @@ using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
 using Sitecore.Workflows;
 
+#if SC93
+using Sitecore.Links.UrlBuilders;
+#endif
+
 namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
 {
     [TestFixture]
@@ -141,7 +145,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         private (AkismetSpamCheck processor, CreateCommentArgs args, Mock<IAkismet> akismetApiMock) CreateAkismetSpamCheck(IWeBlogSettings settings, IWorkflowProvider workflowProvider)
         {
             var linkManager = Mock.Of<BaseLinkManager>(x =>
+#if SC93
+                x.GetItemUrl(It.IsAny<Item>(), It.Is<ItemUrlBuilderOptions>(y => y.AlwaysIncludeServerUrl == true)) == "link"
+#else
                 x.GetItemUrl(It.IsAny<Item>(), It.Is<UrlOptions>(y => y.AlwaysIncludeServerUrl == true)) == "link"
+#endif
             );
 
             var blogItem = ItemFactory.CreateItem().Object;

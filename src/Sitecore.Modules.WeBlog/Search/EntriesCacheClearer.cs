@@ -38,11 +38,7 @@ namespace Sitecore.Modules.WeBlog.Search
         /// <param name="args">The arguments for the event.</param>
         public void OnIndexingEnd(object sender, EventArgs args)
         {
-#if SC93
             var indexName = Event.ExtractParameter<string>(args, 0);
-#else
-            var indexName = ContentSearchManager.Locator.GetInstance<IEvent>().ExtractParameter<string>(args, 0);
-#endif
 
             if (indexName.StartsWith(Settings.SearchIndexName))
             {

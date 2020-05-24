@@ -1,6 +1,7 @@
 ﻿using Sitecore.Data;
 using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -24,7 +25,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                return InnerItem[Fields.FallbackUrl];
+                return InnerItem[ScriptItemFields.FallbackUrl];
             }
         }
 
@@ -32,10 +33,17 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-                return InnerItem[Fields.VerificationObject];
+                return InnerItem[ScriptItemFields.VerificationObject];
             }
         }
 
+        public static class ScriptItemFields
+        {
+            public const string FallbackUrl = "Fallback Url";
+            public const string VerificationObject = "Verification Object";
+        }
+
+        [Obsolete("Use ScriptItemFields instead.")]
         public static class Fields
         {
             public const string FallbackUrl = "Fallback Url";

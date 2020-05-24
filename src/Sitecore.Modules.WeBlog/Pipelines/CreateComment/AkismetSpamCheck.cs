@@ -2,8 +2,8 @@
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
-using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sites;
 using System.Diagnostics;
@@ -47,10 +47,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                     var version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
-                    var urlOptions = UrlOptions.DefaultOptions;
-                    urlOptions.AlwaysIncludeServerUrl = true;
-
-                    var url = _linkManager.GetItemUrl(_blogManager.GetCurrentBlog(), urlOptions);
+                    var url = _linkManager.GetAbsoluteItemUrl(_blogManager.GetCurrentBlog());
 
                     api.Init(_settings.AkismetAPIKey, url, "WeBlog/" + version);
 

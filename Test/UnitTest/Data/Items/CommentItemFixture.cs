@@ -42,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Data.Items
                 CommentItem commentItem = entry;
 
                 // assert
-                Assert.That(commentItem.Name.Raw, Is.EqualTo(AuthorName));
+                Assert.That(commentItem.CommentorName.Raw, Is.EqualTo(AuthorName));
                 Assert.That(commentItem.Email.Raw, Is.EqualTo(AuthorEmail));
                 Assert.That(commentItem.Comment.Raw, Is.EqualTo(CommentText));
                 Assert.That(commentItem.Website.Raw, Is.EqualTo(AuthorWebsite));
