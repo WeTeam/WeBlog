@@ -21,8 +21,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
     {
         protected IWeBlogSettings Settings { get; }
 
-        private BaseLinkManager _linkManager = null;
-
         private BaseTemplateManager _templateManager = null;
 
         public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
@@ -50,7 +48,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             Assert.ArgumentNotNull(linkManager, nameof(linkManager));
             Assert.ArgumentNotNull(templateManager, nameof(templateManager));
 
-            _linkManager = linkManager;
+            //_linkManager = linkManager;
             _templateManager = templateManager;
             Settings = settings ?? WeBlogSettings.Instance;
         }
@@ -258,6 +256,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// <summary>
         /// Gets the absolute URL of the blog item including the server
         /// </summary>
+        [Obsolete("Use BaseLinkManager.GetItemUrl() with this item instead.")]
         public string AbsoluteUrl
         {
             get
@@ -269,7 +268,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 #endif
 
                 urlOptions.AlwaysIncludeServerUrl = true;
-                return _linkManager.GetItemUrl(InnerItem, urlOptions);
+                return LinkManager.GetItemUrl(InnerItem, urlOptions);
             }
         }
 

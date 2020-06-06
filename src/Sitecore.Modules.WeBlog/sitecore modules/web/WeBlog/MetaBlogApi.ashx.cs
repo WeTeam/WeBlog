@@ -101,11 +101,20 @@ namespace Sitecore.Modules.WeBlog
 
             foreach (var blog in blogList)
             {
+#if SC93
+                var urlOptions = new ItemUrlBuilderOptions();
+#else
+                var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
+                urlOptions.AlwaysIncludeServerUrl = true;
+                var url = LinkManager.GetItemUrl(blog, urlOptions);
+
                 var rpcstruct = new XmlRpcStruct
                 {
                     {"blogid", blog.ID.ToString()}, // Blog Id
                     {"blogName", blog.Title.Raw}, // Blog Name
-                    {"url", blog.AbsoluteUrl}
+                    {"url", url}
                 };
 
                 blogs.Add(rpcstruct);
