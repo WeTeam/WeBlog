@@ -6,6 +6,7 @@ using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
+    [Obsolete("Use Sitecore.Modules.WeBlog.Themes.IThemeFileResolver from services instead.")]
     public class ThemeLink : IThemeInclude
     {
         protected BlogHomeItem Blog;
@@ -44,7 +45,7 @@ namespace Sitecore.Modules.WeBlog.Components
 
         protected string GetThemeUrl()
         {
-            return CurrentTheme != null ? CurrentTheme.FileLocation.Raw.Trim() : String.Empty;
+            return CurrentTheme != null ? CurrentTheme.FileLocation.Raw.Trim() : string.Empty;
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿@model Sitecore.Modules.WeBlog.Mvc.Model.Theme
 
-@if(Model.ThemeItem != null)
+@if(Model.ThemeFiles != null)
 {
 
-    foreach (var stylesheet in Model.ThemeItem.Stylesheets)
+    foreach (var stylesheet in Model.ThemeFiles.Stylesheets)
     {
         <link rel="stylesheet" type="text/css" href="@stylesheet.Url"/>
     }

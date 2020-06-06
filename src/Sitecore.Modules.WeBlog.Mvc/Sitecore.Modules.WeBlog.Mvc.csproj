@@ -16,16 +16,16 @@
 	<ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc9.3'))">
-    <PackageReference Include="Sitecore.Mvc" Version="9.3.0"/>
+    <PackageReference Include="Sitecore.Mvc" Version="9.3.0" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc9.2'))">
-    <PackageReference Include="Sitecore.Mvc" Version="9.2.0"/>
+    <PackageReference Include="Sitecore.Mvc" Version="9.2.0" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc9.1'))">
-    <PackageReference Include="Sitecore.Mvc" Version="9.1.1"/>
+    <PackageReference Include="Sitecore.Mvc" Version="9.1.1" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc9.0'))">
-    <PackageReference Include="Sitecore.Mvc" Version="9.0.180604"/>
+    <PackageReference Include="Sitecore.Mvc" Version="9.0.180604" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.Mvc.config" />

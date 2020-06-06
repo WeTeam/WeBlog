@@ -98,6 +98,8 @@ namespace Sitecore.Modules.WeBlog.Components
             StartIndex = GetFromQueryString("startIndex");
             int requestedToShow = GetFromQueryString("count");
             TotalToShow = requestedToShow > 0 ? requestedToShow : CurrentBlog.DisplayItemCountNumeric;
+            if (TotalToShow == 0)
+                TotalToShow = 10;
         }
 
         protected virtual IList<EntryItem> GetEntries()

@@ -1,35 +1,22 @@
-using System;
-using System.Collections.Generic;
-using Sitecore.Abstractions;
 using Sitecore.Data.Items;
-using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Fields;
-using Sitecore.Modules.WeBlog.Extensions;
+using System;
+using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class ThemeItem : CustomItem
     {
+        [Obsolete("Use Sitecore.Modules.WeBlog.Themes.IThemeFileResolver from services instead.")]
         public IEnumerable<FileItem> Stylesheets { get; protected set; }
 
+        [Obsolete("Use Sitecore.Modules.WeBlog.Themes.IThemeFileResolver from services instead.")]
         public IEnumerable<ScriptItem> Scripts { get; protected set; }
 
-        private BaseTemplateManager _templateManager = null;
-
-        [Obsolete("Use ctor(Item, BaseTemplateManager) instead.")]
         public ThemeItem(Item innerItem)
-            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager)
-        {
-        }
-
-        public ThemeItem(Item innerItem, BaseTemplateManager templateManager)
             : base(innerItem)
         {
-            Assert.ArgumentNotNull(templateManager, nameof(templateManager));
-            _templateManager = templateManager;
-
-            ResolveThemeAssets();
         }
 
         public string Credits
@@ -47,30 +34,16 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             return customItem != null ? customItem.InnerItem : null;
         }
 
-        // to be removed once 2016 themes are done
+        [Obsolete("Use Sitecore.Modules.WeBlog.Themes.IThemeFileResolver from services instead.")]
         public CustomTextField FileLocation
         {
             get { return new CustomTextField(InnerItem, InnerItem.Fields["File Location"]); }
         }
-
+        
+        [Obsolete("No longer used.")]
         protected void ResolveThemeAssets()
         {
-            var scriptList = new List<ScriptItem>();
-            var stylesheetList = new List<FileItem>();
-
-            var children = InnerItem.GetChildren();
-
-            foreach(Item item in children)
-            {
-                if (item.TemplateIsOrBasedOn(_templateManager, ScriptItem.TemplateId))
-                    scriptList.Add(new ScriptItem(item));
-
-                if (item.TemplateIsOrBasedOn(_templateManager, StylesheetItem.TemplateId))
-                    stylesheetList.Add(new StylesheetItem(item));
-            }
-
-            Scripts = scriptList;
-            Stylesheets = stylesheetList;
-        }        
+            Log.Warn("ResolveThemeAssets() was called on Sitecore.Modules.WeBlog.Data.Items.ThemeItem but it's no longer used.", this);
+        }
     }
 }
