@@ -262,7 +262,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             var commentItem = Database.GetItem(commentUri);
 
-            return commentItem?.FindAncestorByAnyTemplate(Settings.EntryTemplateIds);
+            return commentItem?.FindAncestorByAnyTemplate(Settings.EntryTemplateIds, TemplateManager);
         }
 
         protected static bool IsAnalyticsEnabled()

@@ -106,7 +106,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// <param name="item">The item to search from</param>
         /// <param name="templateId">The template the target item must be based on or derived from</param>
         /// <returns>The target item if found, otherwise null</returns>
-        [Obsolete("Use FindAncestorByTemplate(Imte, ID, BaseTemplateManager) instead.")]
+        [Obsolete("Use FindAncestorByTemplate(Item, ID, BaseTemplateManager) instead.")]
         public static Item FindAncestorByTemplate(this Item item, ID templateId)
         {
             return FindAncestorByTemplate(item, templateId, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager);

@@ -1,10 +1,16 @@
 ﻿using System;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Themes;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
+    [AllowDependencyInjection]
     public partial class ThemeStylesheets : BaseSublayout
     {
+        protected IThemeFileResolver ThemeFileResolver { get; }
+
+        [Obsolete("No longer supported.")]
         public ThemeItem ThemeItem
         {
             get
@@ -21,12 +27,23 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
             }
         }
 
+        public ThemeStylesheets(IThemeFileResolver themeFileResolver)
+        {
+            ThemeFileResolver = themeFileResolver;
+        }
+
+        public ThemeStylesheets()
+        {
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            var theme = ThemeItem;
-            if (theme != null)
+            var themeFiles = ThemeFileResolver.Resolve(CurrentBlog.Theme.Item);
+
+            if (themeFiles.Stylesheets != null)
             {
-                Stylesheets.DataSource = theme.Stylesheets;
+                
+                Stylesheets.DataSource = themeFiles.Stylesheets;
                 Stylesheets.DataBind();
             }
         }

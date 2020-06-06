@@ -309,7 +309,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
             );
 
             var entryManager = Mock.Of<IEntryManager>(x =>
-                x.GetBlogEntries(blogHomeItem, It.IsAny<EntryCriteria>(), It.IsAny<ListOrder>()) == new SearchResults<Model.Entry>(entries.ToList(), false)
+                x.GetBlogEntries(blogHomeItem, It.IsAny<EntryCriteria>(), It.IsAny<ListOrder>()) == new SearchResults<Entry>(entries.ToList(), false)
             );
 
             return (items, blogManager, entryManager);
