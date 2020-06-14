@@ -99,6 +99,14 @@ namespace Sitecore.Modules.WeBlog
             //Create structure for blog list
             var blogs = new List<XmlRpcStruct>();
 
+#if SC93
+            var urlOptions = new ItemUrlBuilderOptions();
+#else
+            var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
+            urlOptions.AlwaysIncludeServerUrl = true;
+
             foreach (var blog in blogList)
             {
 #if SC93

@@ -83,7 +83,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     }
                 );
 
-                var api = CreateAuthenticatingApi(blogManager);
+                var api = CreateAuthenticatingApi(blogManager, linkManager: linkManager);
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
 
                 var expected = new[]
