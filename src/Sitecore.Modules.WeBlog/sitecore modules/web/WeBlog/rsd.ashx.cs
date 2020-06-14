@@ -1,9 +1,12 @@
 ﻿using System.Text;
 using System.Web;
 using System.Xml;
+using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
 using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Web;
 
@@ -15,14 +18,24 @@ namespace Sitecore.Modules.WeBlog
     /// </summary>
     public class RsdHandler : IHttpHandler
     {
-
-        #region IHttpHandler Members
         /// <summary>
         /// IsReusable implmentation for IHttpHandler
         /// </summary>
         public bool IsReusable
         {
             get { return false; }
+        }
+
+        protected BaseLinkManager LinkManager { get; }
+
+        public RsdHandler()
+            : this(null)
+        {
+        }
+
+        public RsdHandler(BaseLinkManager linkManager)
+        {
+            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
         }
 
         /// <summary>
@@ -50,7 +63,7 @@ namespace Sitecore.Modules.WeBlog
                 rsd.WriteStartElement("service");
                 rsd.WriteElementString("engineName", "Sitecore WeBlog Module");
                 rsd.WriteElementString("engineLink", WebUtil.GetServerUrl());
-                rsd.WriteElementString("homePageLink", currentBlog.AbsoluteUrl);
+                rsd.WriteElementString("homePageLink", LinkManager.GetItemUrl(currentBlog));
 
                 // APIs
                 rsd.WriteStartElement("apis");
@@ -76,6 +89,5 @@ namespace Sitecore.Modules.WeBlog
 
             }
         }
-        #endregion
     }
 }

@@ -258,6 +258,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// <summary>
         /// Gets the absolute URL of the blog item including the server
         /// </summary>
+        [Obsolete("No longer supported. Use BaseLinkManager.GetItemUrl() instead.")]
         public string AbsoluteUrl
         {
             get
