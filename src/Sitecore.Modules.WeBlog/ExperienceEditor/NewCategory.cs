@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -10,10 +11,20 @@ using Sitecore.ExperienceEditor.Speak.Server.Responses;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
 
+=======
+﻿using Sitecore.Abstractions;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Managers;
+
+>>>>>>> Refactor EE requests to use common base class.
 namespace Sitecore.Modules.WeBlog.ExperienceEditor
 {
-    public class NewCategory : PipelineProcessorRequest<ItemContext>
+    public class NewCategory : CreateItem
     {
+<<<<<<< HEAD
         protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         public NewCategory(IBlogSettingsResolver blogSettingsResolver)
@@ -41,17 +52,26 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
                     var template = new TemplateID(settings.CategoryTemplateID);
                     var categories = ManagerFactory.CategoryManagerInstance.GetCategoryRoot(currentItem);
                     var newItem = ItemManager.AddFromTemplate(itemTitle, template, categories);
+=======
+        protected ICategoryManager CategoryManager { get; set; }
 
-                    return new PipelineProcessorResponseValue
-                    {
-                        Value = newItem.ID.Guid
-                    };
-                }
-            }
-            return new PipelineProcessorResponseValue
-            {
-                Value = null
-            };
+        public NewCategory(IBlogManager blogManager, BaseItemManager itemManager, ICategoryManager categoryManager)
+           : base(blogManager, itemManager)
+        {
+            Assert.ArgumentNotNull(categoryManager, nameof(categoryManager));
+
+            CategoryManager = categoryManager;
+        }
+>>>>>>> Refactor EE requests to use common base class.
+
+        protected override ID GetTemplateId(BlogHomeItem blogItem)
+        {
+            return blogItem.BlogSettings.CategoryTemplateID;
+        }
+
+        protected override Item GetParentItem(BlogHomeItem blogItem)
+        {
+            return CategoryManager.GetCategoryRoot(blogItem);
         }
     }
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Data;
 using Sitecore.Data.Items;
@@ -10,10 +11,19 @@ using Sitecore.ExperienceEditor.Speak.Server.Responses;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
 
+=======
+﻿using Sitecore.Abstractions;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Managers;
+
+>>>>>>> Refactor EE requests to use common base class.
 namespace Sitecore.Modules.WeBlog.ExperienceEditor
 {
-    public class NewEntry : PipelineProcessorRequest<ItemContext>
+    public class NewEntry : CreateItem
     {
+<<<<<<< HEAD
         protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         public NewEntry(IBlogSettingsResolver blogSettingsResolver)
@@ -40,20 +50,21 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
                     var settings = BlogSettingsResolver.Resolve(currentBlog);
                     var template = new TemplateID(settings.EntryTemplateID);
                     Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
+=======
+        public NewEntry(IBlogManager blogManager, BaseItemManager itemManager)
+            : base(blogManager, itemManager)
+        {
+        }
+>>>>>>> Refactor EE requests to use common base class.
 
-                    return new PipelineProcessorResponseValue
-                    {
-                        Value = new
-                        {
-                            itemId = newItem.ID.Guid
-                        }
-                    };
-                }
-            }
-            return new PipelineProcessorResponseValue
-            {
-                Value = null
-            };
+        protected override ID GetTemplateId(BlogHomeItem blogItem)
+        {
+            return blogItem.BlogSettings.EntryTemplateID;
+        }
+
+        protected override Item GetParentItem(BlogHomeItem blogItem)
+        {
+            return blogItem;
         }
     }
 }
