@@ -39,7 +39,7 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
         public override PipelineProcessorResponseValue ProcessRequest()
         {
             var itemTitle = RequestContext.Argument;
-            if (ItemUtil.IsItemNameValid(itemTitle))
+            if (ItemUtil.IsItemNameValid(itemTitle ?? string.Empty))
             {
                 var currentItem = RequestContext.Item;
                 var currentBlog = _blogManager.GetCurrentBlog(currentItem);
