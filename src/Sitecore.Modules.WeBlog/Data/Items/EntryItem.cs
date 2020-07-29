@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Sitecore.Abstractions;
 using Sitecore.Data.Items;
-using Sitecore.DependencyInjection;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Extensions;
@@ -18,25 +17,19 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class EntryItem : CustomItem
     {
-        private BaseLinkManager _linkManager = null;
-
         public EntryItem(Item innerItem)
-            : this(innerItem, ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager)
+             : base(innerItem)
         {
         }
 
+        [Obsolete("Use ctor(Item) instead.")]
         public EntryItem(Item innerItem, BaseLinkManager linkManager) : base(innerItem)
         {
-            if (linkManager == null)
-                throw new ArgumentNullException(nameof(linkManager));
-
-            _linkManager = linkManager;
         }
 
         public static implicit operator EntryItem(Item innerItem)
         {
-            var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
-            return innerItem != null ? new EntryItem(innerItem, linkManager) : null;
+            return innerItem != null ? new EntryItem(innerItem) : null;
         }
 
         public static implicit operator Item(EntryItem customItem)
@@ -118,6 +111,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// <summary>
         /// Gets the URL of the entry
         /// </summary>
+        [Obsolete("Use BaseLinkManager.GetItemUrl() with this item instead.")]
         public string Url
         {
             get { return LinkManager.GetItemUrl(InnerItem); }
@@ -126,6 +120,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// <summary>
         /// Gets the absolute URL of the entry including the server
         /// </summary>
+        [Obsolete("Use BaseLinkManager.GetItemUrl() with this item instead.")]
         public string AbsoluteUrl
         {
             get
@@ -137,14 +132,14 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 #endif
 
                 urlOptions.AlwaysIncludeServerUrl = true;
-
-                return _linkManager.GetItemUrl(InnerItem, urlOptions);
+                return LinkManager.GetItemUrl(InnerItem, urlOptions);
             }
         }
 
         /// <summary>
         /// Gets the count of comments for this blog entry.
         /// </summary>
+        [Obsolete("Use Sitecore.Modules.WeBlog.Managers.ICommentManager from ServiceProvider instead.")]
         public int CommentCount
         {
             get { return ManagerFactory.CommentManagerInstance.GetCommentsCount(this); }

@@ -1,8 +1,9 @@
+using Sitecore.Modules.WeBlog.Data;
+using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Managers;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
-using Sitecore.Modules.WeBlog.Data.Items;
-using Sitecore.Modules.WeBlog.Managers;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
@@ -16,19 +17,14 @@ namespace Sitecore.Modules.WeBlog.Components
         {
             get
             {
-                if (Blog != null && Blog.EnableRss.Checked)
-                {
-                    var feeds = Blog.SyndicationFeeds;
-                    return feeds != null && feeds.Any();
-                }
-                return false;
+                return Feeds.Any();
             }
         }
 
-        public SyndicationLink()
+        public SyndicationLink(IFeedResolver feedResolver)
         {
             Blog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
-            Feeds = Blog.SyndicationFeeds;
+            Feeds = feedResolver.Resolve(Blog);
             Attributes = new Dictionary<HtmlTextWriterAttribute, string>
             {
                 {HtmlTextWriterAttribute.Rel, "alternate"},

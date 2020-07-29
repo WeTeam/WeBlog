@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Data.Items;
-using Sitecore.Security.Accounts;
+using Sitecore.Data.Managers;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Abstractions;
+using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.Security.Accounts;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -102,7 +103,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                    from item in blogItems
                    where item != null
                     select new
-                    BlogHomeItem(item, LinkManager)
+                    BlogHomeItem(item)
                     ).ToArray();
         }
 
@@ -160,7 +161,16 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             BlogHomeItem currentBlog = GetCurrentBlog();
             if (currentBlog != null)
-                return currentBlog.DictionaryItem;
+            {
+                var dictionaryFolder = currentBlog.CustomDictionaryFolder;
+
+                if (dictionaryFolder.Item != null)
+                {
+                    return dictionaryFolder.Item;
+                }
+
+                return ItemManager.GetItem(Settings.DictionaryPath, Context.Language, Sitecore.Data.Version.Latest, Context.Database);
+            }
             else
                 return null;
         }

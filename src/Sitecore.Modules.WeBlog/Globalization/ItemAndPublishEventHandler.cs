@@ -64,12 +64,12 @@ namespace Sitecore.Modules.WeBlog.Globalization
         {
             if (item != null)
             {
-                if (item.TemplateIsOrBasedOn(_templateManager, _settings.DictionaryEntryTemplateId))
+                if (_templateManager.TemplateIsOrBasedOn(item, _settings.DictionaryEntryTemplateId))
                 {
                     Logger.Info("Dictionary Entry saved, clearing Translator cache", this);
                     CacheManager.TranslatorCache.ClearCache();
                 }
-                if (item.TemplateIsOrBasedOn(_templateManager, _settings.ProfanityListTemplateId))
+                if (_templateManager.TemplateIsOrBasedOn(item, _settings.ProfanityListTemplateId))
                 {
                     Logger.Info("Profanity Filter item saved, clearing cache", this);
                     CacheManager.ProfanityFilterCache.ClearCache();

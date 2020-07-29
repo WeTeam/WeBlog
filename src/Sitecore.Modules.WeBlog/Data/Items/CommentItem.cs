@@ -8,6 +8,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public partial class CommentItem : CustomItem
     {
+        [Obsolete("Comment is defined per blog. Use Sitecore.Modules.WeBlog.BlogSettings.CommentTemplateID instead.")]
         public static readonly string TemplateId = "{70949D4E-35D8-4581-A7A2-52928AA119D5}";
 
         public CommentItem(Item innerItem)

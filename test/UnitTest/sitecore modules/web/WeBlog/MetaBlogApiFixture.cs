@@ -83,7 +83,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                     }
                 );
 
-                var api = CreateAuthenticatingApi(blogManager);
+                var api = CreateAuthenticatingApi(blogManager, linkManager: linkManager);
                 var blogsStruct = api.getUsersBlogs("app", username, "password");
 
                 var expected = new[]
@@ -552,7 +552,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             var blogRootTemplate = CreateBlogRootTemplate();
 
             var settings = Mock.Of<IWeBlogSettings>(x =>
-                x.BlogTemplateIds == new[] { blogRootTemplate.ID }
+                x.BlogTemplateIds == new[] { blogRootTemplate.ID } &&
+                x.EntryTemplateIds == new[] { entryTemplateId }
             );
 
             using (var db = new Db
@@ -565,12 +566,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 },
                 blogRootTemplate,
                 new DbItem("blog", ID.NewID, blogRootTemplate.ID)
-                {
-                    new DbField("Defined Entry Template")
-                    {
-                        Value = entryTemplateId.ToString()
-                    }
-                }
             })
             {
                 var blog = db.GetItem("/sitecore/content/blog");
@@ -602,7 +597,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             var date = DateTime.UtcNow.Date.AddMonths(1);
             var blogRootTemplate = CreateBlogRootTemplate();
             var settings = Mock.Of<IWeBlogSettings>(x => 
-                x.BlogTemplateIds == new[] { blogRootTemplate.ID }
+                x.BlogTemplateIds == new[] { blogRootTemplate.ID } &&
+                x.EntryTemplateIds == new[] { entryTemplateId }
             );
 
             using (var db = new Db
@@ -614,12 +610,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 },
                 blogRootTemplate,
                 new DbItem("blog", ID.NewID, blogRootTemplate.ID)
-                {
-                    new DbField("Defined Entry Template")
-                    {
-                        Value = entryTemplateId.ToString()
-                    }
-                }
             })
             {
                 var blog = db.GetItem("/sitecore/content/blog");
@@ -1052,13 +1042,20 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             BaseLinkManager linkManager = null
             )
         {
+            IBlogSettingsResolver settingsResolver = null;
+            if (settings != null)
+                settingsResolver = Mock.Of<IBlogSettingsResolver>(x =>
+                    x.Resolve(It.IsAny<BlogHomeItem>()) == new BlogSettings(settings)
+                );
+
             return new TestableMetaBlogApi(
                 blogManager,
                 categoryManager,
                 entryManager,
                 settings,
                 mediaManager,
-                linkManager
+                linkManager,
+                settingsResolver
                 )
             {
                 AuthenticateFunction = (u, p) => { }

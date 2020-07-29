@@ -1,4 +1,5 @@
-﻿using Sitecore.Modules.WeBlog.Data.Items;
+﻿using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Themes;
 using Sitecore.Mvc.Presentation;
 using System;
@@ -16,6 +17,8 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
 
         public Theme(IThemeFileResolver themeFileResolver)
         {
+            Assert.ArgumentNotNull(themeFileResolver, nameof(themeFileResolver));
+
             ThemeFileResolver = themeFileResolver;
         }
 

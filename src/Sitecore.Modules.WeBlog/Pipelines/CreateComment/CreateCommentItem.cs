@@ -1,6 +1,9 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Managers;
@@ -15,13 +18,18 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         /// <summary>
         /// Gets or sets the <see cref="IBlogManager"/> used to access the structure of the blog and other settings.
         /// </summary>
-	    protected IBlogManager BlogManager { get; set; }
+	    protected IBlogManager BlogManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
+        /// </summary>
+        protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         /// <summary>
         /// Create a new instance.
         /// </summary>
 	    public CreateCommentItem()
-            : this(null)
+            : this(null, null)
         {
         }
 
@@ -29,9 +37,21 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         /// Create a new instance.
         /// </summary>
         /// <param name="blogManager">The <see cref="IBlogManager"/> used to access the structure of the blog and other settings.</param>
+        [Obsolete("Use ctor(IBlogManager, IBlogSettingsResolver) instead.")]
 	    public CreateCommentItem(IBlogManager blogManager)
+            : this(blogManager, null)
         {
-            BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
+        }
+
+        /// <summary>
+        /// Create a new instance.
+        /// </summary>
+        /// <param name="blogManager">The <see cref="IBlogManager"/> used to access the structure of the blog and other settings.</param>
+        /// <param name="blogSettingsResolver">The <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.</param>
+	    public CreateCommentItem(IBlogManager blogManager, IBlogSettingsResolver blogSettingsResolver)
+        {
+            BlogManager = blogManager ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
         }
 
         public void Process(CreateCommentArgs args)
@@ -48,7 +68,9 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 var blogItem = BlogManager.GetCurrentBlog(entryItem);
                 if (blogItem != null)
                 {
-                    var template = args.Database.GetTemplate(blogItem.BlogSettings.CommentTemplateID);
+                    var settings = BlogSettingsResolver.Resolve(blogItem);
+
+                    var template = args.Database.GetTemplate(settings.CommentTemplateID);
                     var itemName =
                         ItemUtil.ProposeValidItemName(string.Format("Comment at {0} by {1}",
                             GetDateTime().ToString("yyyyMMdd HHmmss"), args.Comment.AuthorName));

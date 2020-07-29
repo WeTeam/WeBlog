@@ -19,6 +19,7 @@ using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Xdb.Reporting;
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -28,19 +29,24 @@ namespace Sitecore.Modules.WeBlog.Managers
     public class EntryManager : IEntryManager
     {
         /// <summary>
-        /// The settings to use.
+        /// Gets the settings to use.
         /// </summary>
-        protected IWeBlogSettings Settings = null;
+        protected IWeBlogSettings Settings { get; }
 
         /// <summary>
-        /// The cache used to store blog entries in.
+        /// Get the cache used to store blog entries in.
         /// </summary>
-        protected IEntrySearchCache EntryCache = null;
+        protected IEntrySearchCache EntryCache { get; }
 
         /// <summary>
-        /// The comment manager to use.
+        /// Gets the comment manager to use.
         /// </summary>
-        protected ICommentManager CommentManager = null;
+        protected ICommentManager CommentManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
+        /// </summary>
+        protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         protected ReportDataProviderBase ReportDataProvider = null;
@@ -55,7 +61,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
         }
 
-        [Obsolete("Use ctor(ReportDataProviderBase, IEntrySearchCache, IWeBlogSettings, ICommentManager, BaseTemplateManager) instead.")]
+        [Obsolete("Use ctor(ReportDataProviderBase, IEntrySearchCache, IWeBlogSettings, ICommentManager, BaseTemplateManager, IBlogSettingsResolver) instead.")]
         public EntryManager(
             ReportDataProviderBase reportDataProvider,
             IEntrySearchCache cache,
@@ -70,13 +76,15 @@ namespace Sitecore.Modules.WeBlog.Managers
             IEntrySearchCache cache,
             IWeBlogSettings settings = null,
             ICommentManager commentManager = null,
-            BaseTemplateManager templateManager = null)
+            BaseTemplateManager templateManager = null,
+            IBlogSettingsResolver blogSettingsResolver = null)
         {
             ReportDataProvider = reportDataProvider;
             Settings = settings ?? WeBlogSettings.Instance;
             EntryCache = cache ?? CacheManager.GetCache<IEntrySearchCache>(EntrySearchCache.CacheName);
-            CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
-            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager;
+            CommentManager = commentManager ?? ServiceLocator.ServiceProvider.GetRequiredService<ICommentManager>();
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
         }
 
         /// <summary>
@@ -144,10 +152,12 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (customBlogItem == null)
                 return SearchResults<Entry>.Empty;
 
+            var blogSettings = BlogSettingsResolver.Resolve(customBlogItem);
+
             using (var context = CreateSearchContext(blogRootItem))
             {
                 var builder = PredicateBuilder.Create<EntryResultItem>(searchItem =>
-                    searchItem.TemplateId == customBlogItem.BlogSettings.EntryTemplateID &&
+                    searchItem.TemplateId == blogSettings.EntryTemplateID &&
                     searchItem.Paths.Contains(customBlogItem.ID) &&
                     searchItem.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture)
                 );

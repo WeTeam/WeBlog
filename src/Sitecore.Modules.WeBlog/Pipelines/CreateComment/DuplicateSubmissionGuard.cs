@@ -1,5 +1,8 @@
 ﻿using System;
+using Microsoft.Extensions.DependencyInjection;
+using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Managers;
@@ -12,7 +15,12 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         /// <summary>
         /// Gets or sets the <see cref="IBlogManager"/> used to access the structure of the blog and other settings.
         /// </summary>
-        protected IBlogManager BlogManager { get; set; }
+        protected IBlogManager BlogManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
+        /// </summary>
+        protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         /// <summary>
         /// The TimeSpan to check for duplicate comments from the current time
@@ -20,14 +28,20 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         public TimeSpan TimeSpan { get; set; }
 
         public DuplicateSubmissionGuard()
+            : this(null, null)
         {
-            BlogManager = ManagerFactory.BlogManagerInstance;
-            TimeSpan = new TimeSpan(3, 0, 0, 0);
         }
 
+        [Obsolete("Use ctor(IBlogManager, IBlogSettingsResolver) instead.")]
         public DuplicateSubmissionGuard(IBlogManager blogManager = null)
+            : this(blogManager, null)
         {
-            BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
+        }
+
+        public DuplicateSubmissionGuard(IBlogManager blogManager = null, IBlogSettingsResolver blogSettingsResolver = null)
+        {
+            BlogManager = blogManager ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
             TimeSpan = new TimeSpan(3, 0, 0, 0);
         }
 
@@ -49,8 +63,10 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
                 var blog = BlogManager.GetCurrentBlog(entryItem);
                 if (blog != null)
                 {
+                    var settings = BlogSettingsResolver.Resolve(blog);
+
                     var query = "{0}//*[@@templateid='{1}' and @__created > '{2}' and @__created < '{3}']".FormatWith(
-                        ContentHelper.EscapePath(entryItem.Paths.FullPath), blog.BlogSettings.CommentTemplateID, DateUtil.ToIsoDate(dateStart), DateUtil.ToIsoDate(dateEnd));
+                        ContentHelper.EscapePath(entryItem.Paths.FullPath), settings.CommentTemplateID, DateUtil.ToIsoDate(dateStart), DateUtil.ToIsoDate(dateEnd));
 
                     var comments = args.Database.SelectItems(query);
 

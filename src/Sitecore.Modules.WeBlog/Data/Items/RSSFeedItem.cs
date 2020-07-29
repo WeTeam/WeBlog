@@ -1,7 +1,7 @@
 using Sitecore.Data.Items;
 using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Fields;
-using Sitecore.Syndication;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -71,12 +71,12 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             get { return new CustomGeneralLinkField(InnerItem, InnerItem.Fields["Link"]); }
         }
 
+        [Obsolete("No longer used. Use BaseLinkManager.GetItemUrl() with this item instead.")]
         public string Url
         {
             get
             {
-                var feed = FeedManager.GetFeed(InnerItem);
-                return feed.Render().BaseUri.ToString();
+                return LinkManager.GetItemUrl(InnerItem);
             }
         }
     }
