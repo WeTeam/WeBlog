@@ -10,7 +10,6 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Pipelines.CreateComment;
-using Sitecore.Sites;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
 {
@@ -20,14 +19,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullArgs()
         {
-            var processor = new CreateCommentItem();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
             Assert.That(() => processor.Process(null), Throws.ArgumentNullException);
         }
 
         [Test]
         public void NullDatabase()
         {
-            var processor = new CreateCommentItem();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
             using (var db = new Db
             {
                 new DbItem("entry")
@@ -48,7 +47,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullComment()
         {
-            var processor = new CreateCommentItem();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
             using (var db = new Db
             {
                 new DbItem("entry")
@@ -69,7 +68,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullEntryId()
         {
-            var processor = new CreateCommentItem();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
             using (var db = new Db
             {
                 new DbItem("entry")
@@ -90,7 +89,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullLanguage()
         {
-            var processor = new CreateCommentItem();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
             using (var db = new Db
             {
                 new DbItem("entry")
@@ -120,10 +119,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             {
                 var blog = db.GetItem("/sitecore/content/blog");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(It.IsAny<Item>()) == new BlogHomeItem(blog, null)
-                    );
-                var processor = new CreateCommentItem(blogManager);
+                var processor = CreateCreateCommentItem(null, blog, ID.NewID);
 
                 var args = new CreateCommentArgs
                 {
@@ -147,7 +143,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         public void NewComment()
         {
             var commentTemplate = CreateCommentTemplate();
-            var settings = CreateSettings(commentTemplate.ID);
 
             using (var db = new Db
             {
@@ -161,11 +156,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x => 
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-                var processor = new CreateCommentItem(blogManager);
-                
+                var processor = CreateCreateCommentItem(entry, blog, commentTemplate.ID);
+
                 var args = new CreateCommentArgs
                 {
                     Database = entry.Database,
@@ -189,8 +181,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void MultipleCommentsSameName()
         {
-            var commentTemplate = CreateCommentTemplate();
-            var settings = CreateSettings(commentTemplate.ID);
+            var commentTemplate = CreateCommentTemplate();            
 
             using (var db = new Db
             {
@@ -204,10 +195,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-                var processor = new TestableCreateCommentItemProcessor(blogManager);
+                var processor = CreateCreateCommentItem(entry, blog, commentTemplate.ID);
 
                 var args = new CreateCommentArgs
                 {
@@ -244,7 +232,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         public void DashesInPath()
         {
             var commentTemplate = CreateCommentTemplate();
-            var settings = CreateSettings(commentTemplate.ID);
 
             using (var db = new Db
             {
@@ -258,10 +245,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/my-blog");
                 var entry = db.GetItem("/sitecore/content/my-blog/the-entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-                var processor = new CreateCommentItem(blogManager);
+                var processor = CreateCreateCommentItem(entry, blog, commentTemplate.ID);
 
                 var args = new CreateCommentArgs
                 {
@@ -297,8 +281,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 new DbField("field2")
             };
 
-            var settings = CreateSettings(commentTemplate.ID);
-
             using (var db = new Db
             {
                 commentTemplate,
@@ -311,10 +293,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-                var processor = new CreateCommentItem(blogManager);
+                var processor = CreateCreateCommentItem(entry, blog, commentTemplate.ID);
 
                 var args = new CreateCommentArgs
                 {
@@ -355,11 +334,21 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             };
         }
 
-        private IWeBlogSettings CreateSettings(ID commentTemplateId)
+        private CreateCommentItem CreateCreateCommentItem(Item entry, Item blog, ID commentTemplateId)
         {
-            return Mock.Of<IWeBlogSettings>(x =>
-                x.CommentTemplateIds == new [] { commentTemplateId }
+            var settings = Mock.Of<IWeBlogSettings>(x =>
+                x.CommentTemplateIds == new[] { commentTemplateId }
             );
+
+            var blogManager = Mock.Of<IBlogManager>(x =>
+                x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+            );
+
+            var settingsResolver = Mock.Of<IBlogSettingsResolver>(x =>
+                x.Resolve(It.IsAny<BlogHomeItem>()) == new BlogSettings(settings)
+            );
+
+            return new CreateCommentItem(blogManager, settingsResolver);
         }
     }
 }

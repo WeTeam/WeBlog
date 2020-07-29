@@ -1,8 +1,10 @@
+using System;
 using System.Web.UI;
 using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Components;
+using Sitecore.Modules.WeBlog.Data;
 using Sitecore.Modules.WeBlog.Data.Items;
 
 namespace Sitecore.Modules.WeBlog.WebForms.WebControls
@@ -14,10 +16,18 @@ namespace Sitecore.Modules.WeBlog.WebForms.WebControls
 
         public Syndication(ISyndicationInclude sl, BaseLinkManager linkManager)
         {
-            SyndicationLink = sl ?? new SyndicationLink();
+            SyndicationLink = sl;
+
+            if (SyndicationLink == null)
+            {
+                var feedResolver = ServiceLocator.ServiceProvider.GetRequiredService<IFeedResolver>();
+                SyndicationLink = new SyndicationLink(feedResolver);
+            }
+
             LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
         }
 
+        [Obsolete("Use ctor(ISyndicationInclude, BaseLinkManager) instead.")]
         public Syndication(ISyndicationInclude sl = null)
             : this(sl, null)
         {

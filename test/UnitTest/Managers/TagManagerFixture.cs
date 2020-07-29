@@ -16,7 +16,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         [Test]
         public void GetTagsForBlog_NullItem()
         {
-            var manager = new TagManager();
+            var manager = new TagManager(Mock.Of<IEntryManager>());
             var tags = manager.GetTagsForBlog(null);
 
             Assert.That(tags, Is.Empty);
@@ -175,7 +175,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         [Test]
         public void GetTagsForEntry_NullEntryItem()
         {
-            var manager = new TagManager();
+            var manager = new TagManager(Mock.Of<IEntryManager>());
             var tags = manager.GetTagsForEntry((EntryItem)null);
             Assert.That(tags, Is.Empty);
         }
@@ -183,7 +183,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         [Test]
         public void GetTagsForEntry_NullEntry()
         {
-            var manager = new TagManager();
+            var manager = new TagManager(Mock.Of<IEntryManager>());
             var tags = manager.GetTagsForEntry((Entry)null);
             Assert.That(tags, Is.Empty);
         }
@@ -197,7 +197,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var entryItem = db.GetItem("/sitecore/content/entry");
-                var manager = new TagManager();
+                var manager = new TagManager(Mock.Of<IEntryManager>());
                 var tags = manager.GetTagsForEntry(entryItem);
                 Assert.That(tags, Is.Empty);
             }
@@ -222,7 +222,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var entryItem = db.GetItem("/sitecore/content/entry");
-                var manager = new TagManager();
+                var manager = new TagManager(Mock.Of<IEntryManager>());
                 var tags = manager.GetTagsForEntry(entryItem);
 
                 Assert.That(tags, Is.EqualTo(new[]
@@ -251,7 +251,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var entryItem = db.GetItem("/sitecore/content/entry");
-                var manager = new TagManager();
+                var manager = new TagManager(Mock.Of<IEntryManager>());
                 var tags = manager.GetTagsForEntry(entryItem);
 
                 Assert.That(tags, Is.EqualTo(new[]

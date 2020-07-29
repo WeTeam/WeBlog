@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using Sitecore.Abstractions;
 using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
 using Sitecore.DependencyInjection;
 using Sitecore.Links;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Modules.WeBlog.Managers;
 
 #if SC93
 using Sitecore.Links.UrlBuilders;
@@ -19,44 +18,31 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class BlogHomeItem : CustomItem
     {
+        [Obsolete("No longer used. If required, resolve this member from the service provider.")]
         protected IWeBlogSettings Settings { get; }
 
-        private BaseTemplateManager _templateManager = null;
-
-        public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
-            : this(
-                  innerItem,
-                  ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager,
-                  ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager,
-                  settings)
-        {
-        }
-
-        [Obsolete("Use ctor(Item, BaseLinkManager, BaseTemplateManager, IWeBlogSettings) instead.")]
-        public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
-            : this(
-                  innerItem,
-                  linkManager,
-                  ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager,
-                  settings)
-        {
-        }
-
-        public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, BaseTemplateManager templateManager, IWeBlogSettings settings = null)
+        public BlogHomeItem(Item innerItem)
             : base(innerItem)
         {
-            Assert.ArgumentNotNull(linkManager, nameof(linkManager));
-            Assert.ArgumentNotNull(templateManager, nameof(templateManager));
+        }
 
-            //_linkManager = linkManager;
-            _templateManager = templateManager;
-            Settings = settings ?? WeBlogSettings.Instance;
+        [Obsolete("Use ctor(Item) instead.")]
+        public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
+            : base(innerItem)
+        {
+            Settings = settings;
+        }
+
+        [Obsolete("Use ctor() instead.")]
+        public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
+            : base(innerItem)
+        {
+            Settings = settings;
         }
 
         public static implicit operator BlogHomeItem(Item innerItem)
         {
-            var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
-            return innerItem != null ? new BlogHomeItem(innerItem, linkManager) : null;
+            return innerItem != null ? new BlogHomeItem(innerItem) : null;
         }
 
         public static implicit operator Item(BlogHomeItem customItem)
@@ -245,6 +231,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// <summary>
         /// Gets the URL of the blog item
         /// </summary>
+        [Obsolete("Use the Sitecore LinkManager instead.")]
         public string Url
         {
             get
@@ -271,50 +258,34 @@ namespace Sitecore.Modules.WeBlog.Data.Items
                 return LinkManager.GetItemUrl(InnerItem, urlOptions);
             }
         }
-
+        
+        [Obsolete("Use Sitecore.Modules.WeBlog.Data.IFeedResolver instead.")]
         public IEnumerable<RssFeedItem> SyndicationFeeds
         {
             get
             {
-                if (EnableRss.Checked)
-                {
-                    var children = InnerItem.GetChildren();
-                    foreach(Item child in children)
-                    {
-                        if (child.TemplateIsOrBasedOn(_templateManager, Settings.RssFeedTemplateIds))
-                            yield return new RssFeedItem(child);
-                    }
-                }
+                var resolver = ServiceLocator.ServiceProvider.GetRequiredService<IFeedResolver>();
+                return resolver.Resolve(this);
             }
         }
 
+        [Obsolete("Use Sitecore.Modules.WeBlog.Managers.BlogManager.GetDictionaryItem() instead.")]
         public Item DictionaryItem
         {
             get
             {
-                if (CustomDictionaryFolder.Item != null)
-                {
-                    return CustomDictionaryFolder.Item;
-                }
-                return ItemManager.GetItem(Settings.DictionaryPath, Context.Language, Sitecore.Data.Version.Latest, Context.Database);
+                var manager = ServiceLocator.ServiceProvider.GetRequiredService<IBlogManager>();
+                return manager.GetDictionaryItem();
             }
         }
 
+        [Obsolete("Use Sitecore.Modules.WeBlog.Configuration.IBlogSettingsResolver instead.")]
         public BlogSettings BlogSettings
         {
             get
             {
-                if (!InnerItem.TemplateIsOrBasedOn(_templateManager, Settings.BlogTemplateIds))
-                {
-                    return new BlogSettings(Settings);
-                }
-
-                return new BlogSettings(Settings)
-                {
-                    CategoryTemplateID = DefinedCategoryTemplate.Field.TargetID,
-                    EntryTemplateID = DefinedEntryTemplate.Field.TargetID,
-                    CommentTemplateID = DefinedCommentTemplate.Field.TargetID
-                };
+                var resolver = ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
+                return resolver.Resolve(this);
             }
         }
     }

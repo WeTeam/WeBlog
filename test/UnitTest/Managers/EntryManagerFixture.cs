@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Buckets.Util;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
@@ -138,7 +139,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     var blogItem = db.GetItem("/sitecore/content/blog");
                     var entry1 = db.GetItem("/sitecore/content/blog/2016/entry1");
 
-                    MockIndex().IndexItems(new[] { MockEntryItem(entry1, blogItem).Object });
+                    MockIndex().IndexItems(new[] { MockEntryItem(entry1).Object });
 
                     // Act
                     var results = manager.GetBlogEntries(null, EntryCriteria.AllEntries, ListOrder.Descending);
@@ -1252,25 +1253,26 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             IndexItems(blogItem, settings.EntryTemplateIds.First(), MockEntryItem, index);
         }
 
-        private void IndexItems<T>(Item blogItem, ID template, Func<Item, Item, Mock<T>> mockFunc, Mock<ISearchIndex> index = null)
+        private void IndexItems<T>(Item blogItem, ID template, Func<Item, Mock<T>> mockFunc, Mock<ISearchIndex> index = null)
             where T : SearchResultItem
         {
             index = index ?? MockIndex();
             blogItem.Axes.GetDescendants()
                 .Where(item => item.TemplateID.Equals(template))
-                .Select(item => mockFunc(item, blogItem).Object)
+                .Select(item => mockFunc(item).Object)
                 .IndexItems(index);
         }
 
-        private Mock<EntryResultItem> MockEntryItem(Item entryItem, Item blogItem)
+        private Mock<EntryResultItem> MockEntryItem(Item entryItem)
         {
             var srItem = new Mock<EntryResultItem>();
+
             srItem.Setup(x => x.GetItem()).Returns(entryItem);
             srItem.Setup(x => x.Uri).Returns(entryItem.Uri);
-            srItem.Setup(x => x.TemplateId).Returns(new BlogHomeItem(blogItem).BlogSettings.EntryTemplateID);
+            srItem.Setup(x => x.TemplateId).Returns(entryItem.TemplateID);
             srItem.Setup(x => x.Paths).Returns(GetPaths(entryItem));
-            srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
-            srItem.Setup(x => x.DatabaseName).Returns(blogItem.Database.Name);
+            srItem.Setup(x => x.Language).Returns(entryItem.Language.ToString);
+            srItem.Setup(x => x.DatabaseName).Returns(entryItem.Database.Name);
             srItem.Setup(x => x.Name).Returns(entryItem.Name);
             srItem.Setup(x => x.Tags).Returns(GetTags(entryItem));
             srItem.Setup(x => x.Category).Returns(GetCategories(entryItem));
@@ -1282,14 +1284,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             return srItem;
         }
 
-        private Mock<CommentResultItem> MockCommentItem(Item commentItem, Item blogItem)
+        private Mock<CommentResultItem> MockCommentItem(Item commentItem)
         {
             var srItem = new Mock<CommentResultItem>();
             srItem.Setup(x => x.GetItem()).Returns(commentItem);
-            srItem.Setup(x => x.TemplateId).Returns(new BlogHomeItem(blogItem).BlogSettings.CommentTemplateID);
+            srItem.Setup(x => x.TemplateId).Returns(commentItem.TemplateID);
             srItem.Setup(x => x.Paths).Returns(GetPaths(commentItem));
-            srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
-            srItem.Setup(x => x.DatabaseName).Returns(blogItem.Database.Name);
+            srItem.Setup(x => x.Language).Returns(commentItem.Language.ToString);
+            srItem.Setup(x => x.DatabaseName).Returns(commentItem.Database.Name);
             return srItem;
         }
 
@@ -1456,7 +1458,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest
                     var srItem = new Mock<EntryResultItem>();
                     srItem.Setup(x => x.GetItem()).Returns(entry1);
                     srItem.Setup(x => x.Uri).Returns(entry1.Uri);
-                    srItem.Setup(x => x.TemplateId).Returns((new BlogHomeItem(blogItem)).BlogSettings.EntryTemplateID);
+                    srItem.Setup(x => x.TemplateId).Returns(settings.EntryTemplateIds.First());
                     srItem.Setup(x => x.Paths).Returns(new[] { blogItem.ID });
                     srItem.Setup(x => x.Language).Returns(blogItem.Language.ToString);
                     srItem.Setup(x => x.DatabaseName).Returns(blogItem.Database.Name);
@@ -1494,7 +1496,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
         private EntryManager CreateManager(IWeBlogSettings settings)
         {
-            return new EntryManager(null, null, settings, null, null);
+            return new EntryManager(null, null, settings, 
+                commentManager: Mock.Of<ICommentManager>(),
+                templateManager: TemplateFactory.CreateTemplateManager(settings.BlogTemplateIds.Concat(settings.EntryTemplateIds).ToArray()),
+                blogSettingsResolver: Mock.Of<IBlogSettingsResolver>(x => x.Resolve(It.IsAny<BlogHomeItem>()) == new BlogSettings(settings))
+                );
         }
     }
 
@@ -1503,7 +1509,11 @@ namespace Sitecore.Modules.WeBlog.UnitTest
         private long _viewCount = 0;
 
         public TestableEntryManager(IWeBlogSettings settings, long viewCount)
-            : base(null, null, settings, null, null)
+            : base(null, null, settings,
+                  commentManager: Mock.Of<ICommentManager>(),
+                  templateManager: TemplateFactory.CreateTemplateManager(settings.BlogTemplateIds.Concat(settings.EntryTemplateIds).ToArray()),
+                  blogSettingsResolver: Mock.Of<IBlogSettingsResolver>(x => x.Resolve(It.IsAny<BlogHomeItem>()) == new BlogSettings(settings))
+              )
         {
             _viewCount = viewCount;
         }

@@ -53,5 +53,23 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
             itemMock.Setup(x => x.Fields).Returns(fieldCollectionMock.Object);
         }
+
+        public static void AddChildItems(Mock<Item> itemMock, params Item[] childItems)
+        {
+            var itemList = new ItemList();
+            itemList.AddRange(childItems);
+
+            var childList = new ChildList(itemMock.Object, itemList);
+
+            itemMock.Setup(x => x.GetChildren()).Returns(childList);
+        }
+
+        public static void SetPath(Mock<Item> itemMock, string path)
+        {
+            var itemPath = new Mock<ItemPath>(itemMock.Object);
+            itemPath.Setup(x => x.Path).Returns(path);
+
+            itemMock.Setup(x => x.Paths).Returns(itemPath.Object);
+        }
     }
 }

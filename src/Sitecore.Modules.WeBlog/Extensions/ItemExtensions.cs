@@ -129,7 +129,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
 
             var currentItem = item;
 
-            while (currentItem != null && !TemplateIsOrBasedOn(currentItem, templateManager, templateId))
+            while (currentItem != null && !templateManager.TemplateIsOrBasedOn(currentItem, templateId))
             {
                 currentItem = currentItem.Parent;
             }
@@ -166,7 +166,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
 
             var currentItem = item;
 
-            while (currentItem != null && !TemplateIsOrBasedOn(currentItem, templateManager, templateIds))
+            while (currentItem != null && !templateManager.TemplateIsOrBasedOn(currentItem, templateIds))
             {
                 currentItem = currentItem.Parent;
             }

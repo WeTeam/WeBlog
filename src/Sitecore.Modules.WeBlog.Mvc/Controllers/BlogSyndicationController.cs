@@ -1,11 +1,12 @@
-﻿using System.Web.UI;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Abstractions;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Components;
+using Sitecore.Modules.WeBlog.Data;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Web.UI.HtmlControls;
+using System.Web.UI;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Controllers
 {
@@ -25,9 +26,13 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
             LinkManager = linkManager;
         }
 
+        public BlogSyndicationController(IFeedResolver feedResolver, ISyndicationInclude sl = null)
+            : this(sl ?? new SyndicationLink(feedResolver), ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>())
+        {
+        }
 
         public BlogSyndicationController(ISyndicationInclude sl = null)
-            : this(sl ?? new SyndicationLink(), ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>())
+            : this(ServiceLocator.ServiceProvider.GetRequiredService<IFeedResolver>(), sl)
         {
         }
 
