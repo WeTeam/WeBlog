@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Data.Items;
-using Sitecore.Modules.WeBlog.Managers;
+using Sitecore.DependencyInjection;
+using Sitecore.Modules.WeBlog.Text;
+using System;
 
 namespace Sitecore.Modules.WeBlog
 {
+    [Obsolete("Use either Sitecore.Modules.WeBlog.Text.IContextTokenReplacer or Sitecore.Modules.WeBlog.Text.ISettingsTokenReplacer.")]
     public class TokenReplacer
     {
         public static string Replace(string input, Item contextItem)
@@ -19,66 +18,20 @@ namespace Sitecore.Modules.WeBlog
 
         public static string ResolveSettingsTokens(string text, Item contextItem)
         {
-            if (text.Contains(Constants.Tokens.WeBlogSetting))
-            {                
-                foreach (var settingName in GetTokensArgs(text, Constants.Tokens.WeBlogSetting))
-                {
-                    var blogHomeItem = ManagerFactory.BlogManagerInstance.GetCurrentBlog(contextItem);
-                    var blogSettings = blogHomeItem.BlogSettings;
-                    string settingsValue = blogSettings.GetType().GetProperty(settingName).GetValue(blogSettings, null).ToString();
-                    if (!string.IsNullOrEmpty(settingsValue))
-                    {
-                        text = text.Replace($"{Constants.Tokens.WeBlogSetting}({settingName})", settingsValue);
-                    }
-                }
-            }
+            var replacer = ServiceLocator.ServiceProvider.GetRequiredService<ISettingsTokenReplacer>();
+            if (replacer.ContainsToken(text))
+                return replacer.Replace(text, contextItem);
+
             return text;
         }
 
         public static string ResolveContextTokens(string text, Item contextItem)
         {
-            if (text.Contains(Constants.Tokens.WeBlogContext))
-            {
-                foreach (var arg in GetTokensArgs(text, Constants.Tokens.WeBlogContext))
-                {
-                    var token = String.Format("{0}({1})", Constants.Tokens.WeBlogContext, arg);
-                    var itemDelegate = GetItemDelegate(arg, contextItem);
-                    text = ResolvePath(text, token, itemDelegate);
-                }
-            }
+            var replacer = ServiceLocator.ServiceProvider.GetRequiredService<IContextTokenReplacer>();
+            if (replacer.ContainsToken(text))
+                return replacer.Replace(text, contextItem);
+
             return text;
-        }
-
-        private static IEnumerable<string> GetTokensArgs(string text, string token)
-        {
-            var pattern = String.Format(@"(?<=\{0})\(([^)]*)\)", token);
-            var matches = Regex.Matches(text, pattern);
-            return matches.Cast<Match>().Select(m => m.Value.Trim('(', ')')).Distinct();
-        }
-
-        private static Func<Item> GetItemDelegate(string arg, Item contextItem)
-        {
-            switch (arg.ToLower())
-            {
-                case "categoryroot":
-                    {
-                        return () => ManagerFactory.CategoryManagerInstance.GetCategoryRoot(contextItem);
-                    }
-            }
-            return () => contextItem;
-        }
-
-        private static string ResolvePath(string text, string token, Func<Item> itemDelegate)
-        {
-            if (text.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                Item item = itemDelegate();
-                if (item != null)
-                {
-                    text = text.Replace(token, item.Paths.Path);
-                }
-            }
-            return text.Replace(token, string.Empty);
         }
     }
 }

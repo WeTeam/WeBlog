@@ -7,6 +7,7 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.DependencyInjection;
+using Sitecore.Links.UrlBuilders;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Web;
 
@@ -18,6 +19,9 @@ namespace Sitecore.Modules.WeBlog
     /// </summary>
     public class RsdHandler : IHttpHandler
     {
+        protected BaseLinkManager LinkManager { get; }
+
+        #region IHttpHandler Members
         /// <summary>
         /// IsReusable implmentation for IHttpHandler
         /// </summary>
@@ -26,16 +30,14 @@ namespace Sitecore.Modules.WeBlog
             get { return false; }
         }
 
-        protected BaseLinkManager LinkManager { get; }
+        public RsdHandler(BaseLinkManager linkManager)
+        {
+            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
+        }
 
         public RsdHandler()
             : this(null)
         {
-        }
-
-        public RsdHandler(BaseLinkManager linkManager)
-        {
-            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
         }
 
         /// <summary>
@@ -60,10 +62,19 @@ namespace Sitecore.Modules.WeBlog
                 rsd.WriteAttributeString("version", "1.0");
 
                 // Service 
+#if SC93
+                var urlOptions = new ItemUrlBuilderOptions();
+#else
+                var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
+                urlOptions.AlwaysIncludeServerUrl = true;
+                var url = LinkManager.GetItemUrl(currentBlog, urlOptions);
+
                 rsd.WriteStartElement("service");
                 rsd.WriteElementString("engineName", "Sitecore WeBlog Module");
                 rsd.WriteElementString("engineLink", WebUtil.GetServerUrl());
-                rsd.WriteElementString("homePageLink", LinkManager.GetItemUrl(currentBlog));
+                rsd.WriteElementString("homePageLink", url);
 
                 // APIs
                 rsd.WriteStartElement("apis");
@@ -89,5 +100,6 @@ namespace Sitecore.Modules.WeBlog
 
             }
         }
+        #endregion
     }
 }

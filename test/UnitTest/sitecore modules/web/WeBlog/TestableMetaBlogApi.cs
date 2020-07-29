@@ -1,4 +1,5 @@
 ﻿using System;
+using Moq;
 using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Configuration;
@@ -21,9 +22,18 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             IEntryManager entryManager = null,
             IWeBlogSettings settings = null,
             BaseMediaManager mediaManager = null,
-            BaseLinkManager linkManager = null
+            BaseLinkManager linkManager = null,
+            IBlogSettingsResolver blogSettingsResolver = null
         )
-            : base(blogManager, categoryManager, entryManager, settings, mediaManager, linkManager)
+            : base(
+                  blogManager ?? Mock.Of<IBlogManager>(),
+                  categoryManager ?? Mock.Of<ICategoryManager>(),
+                  entryManager ?? Mock.Of<IEntryManager>(),
+                  settings ?? Mock.Of<IWeBlogSettings>(),
+                  mediaManager ?? Mock.Of<BaseMediaManager>(),
+                  linkManager ?? Mock.Of<BaseLinkManager>(),
+                  blogSettingsResolver ?? Mock.Of<IBlogSettingsResolver>()
+                  )
         {
         }
 

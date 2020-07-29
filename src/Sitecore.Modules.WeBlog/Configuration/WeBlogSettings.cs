@@ -23,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
             }
         }
 
-        private WeBlogSettings()
+        public WeBlogSettings()
         {
         }
 

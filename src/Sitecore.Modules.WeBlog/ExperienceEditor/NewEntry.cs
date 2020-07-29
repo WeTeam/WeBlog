@@ -1,41 +1,45 @@
-﻿using Sitecore.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
+using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
+using Sitecore.DependencyInjection;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
-using Sitecore.ExperienceEditor.Speak.Server.Contexts;
-using Sitecore.ExperienceEditor.Speak.Server.Requests;
-using Sitecore.ExperienceEditor.Speak.Server.Responses;
-using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.ExperienceEditor
 {
-    public class NewEntry : PipelineProcessorRequest<ItemContext>
+    public class NewEntry : CreateItem
     {
-        public override PipelineProcessorResponseValue ProcessRequest()
-        {
-            var itemTitle = RequestContext.Argument;
-            if (ItemUtil.IsItemNameValid(itemTitle))
-            {
-                var currentItem = RequestContext.Item;
-                var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(currentItem);
-                if (currentBlog != null)
-                {
-                    var template = new TemplateID(currentBlog.BlogSettings.EntryTemplateID);
-                    Item newItem = ItemManager.AddFromTemplate(itemTitle, template, currentBlog);
+        protected IBlogSettingsResolver BlogSettingsResolver { get; set; }
 
-                    return new PipelineProcessorResponseValue
-                    {
-                        Value = new
-                        {
-                            itemId = newItem.ID.Guid
-                        }
-                    };
-                }
-            }
-            return new PipelineProcessorResponseValue
-            {
-                Value = null
-            };
+        public NewEntry()
+            : this(
+                  ServiceLocator.ServiceProvider.GetRequiredService<IBlogManager>(),
+                  ServiceLocator.ServiceProvider.GetRequiredService<BaseItemManager>(),
+                  ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>()
+                  )
+        {
+        }
+
+        public NewEntry(IBlogManager blogManager, BaseItemManager itemManager, IBlogSettingsResolver blogSettingsResolver)
+            : base(blogManager, itemManager)
+        {
+            Assert.ArgumentNotNull(blogSettingsResolver, nameof(blogSettingsResolver));
+
+            BlogSettingsResolver = blogSettingsResolver;
+        }
+
+        protected override ID GetTemplateId(BlogHomeItem blogItem)
+        {
+            var blogSettings = BlogSettingsResolver.Resolve(blogItem);
+            return blogSettings.EntryTemplateID;
+        }
+
+        protected override Item GetParentItem(BlogHomeItem blogItem)
+        {
+            return blogItem;
         }
     }
 }

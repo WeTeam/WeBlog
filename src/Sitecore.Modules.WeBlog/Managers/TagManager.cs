@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
@@ -21,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
         public TagManager(IEntryManager entryManager = null)
         {
-            EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
+            EntryManager = entryManager ?? ServiceLocator.ServiceProvider.GetRequiredService<IEntryManager>();
         }
 		
 		/// <summary>
