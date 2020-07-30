@@ -22,6 +22,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// <param name="templateManager">The template manager to use to locate templates.</param>
         /// <param name="templateId">The ID of the template which the item's template should be or inherit from</param>
         /// <returns>True if the item's template is based on the given template, otherwise false</returns>
+        [Obsolete("Use Sitecore.Modules.WeBlog.Extensions.BaseTemplateManagerExtensions.TemplateIsOrBasedOn() instead.")]
         public static bool TemplateIsOrBasedOn(this Item item, BaseTemplateManager templateManager, ID templateId)
         {
             return TemplateIsOrBasedOn(item, templateManager, new[] { templateId });
@@ -34,6 +35,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// <param name="templateManager">The template manager to use to locate templates.</param>
         /// <param name="templateIds">The IDs of the templates which the item's template should be or inherit from</param>
         /// <returns>True if the item's template is based on the given templates, otherwise false</returns>
+        [Obsolete("Use Sitecore.Modules.WeBlog.Extensions.BaseTemplateManagerExtensions.TemplateIsOrBasedOn() instead.")]
         public static bool TemplateIsOrBasedOn(this Item item, BaseTemplateManager templateManager, IEnumerable<ID> templateIds)
         {
             if (item == null || templateIds == null || !templateIds.Any())
@@ -91,6 +93,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// <param name="item">The item to search from</param>
         /// <param name="template">The template the target item must be based on or derived from</param>
         /// <returns>The target item if found, otherwise null</returns>
+        [Obsolete("Use FindAncestorByTemplate(Item, ID, BaseTemplateManager) instead.")]
         public static Item FindAncestorByTemplate(this Item item, string template)
         {
             if (item == null)

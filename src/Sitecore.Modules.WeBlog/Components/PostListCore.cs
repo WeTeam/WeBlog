@@ -130,7 +130,7 @@ namespace Sitecore.Modules.WeBlog.Components
 
                 results = new SearchResults<Entry>(authorEntries, false);
             }
-            else if (Context.Item.TemplateIsOrBasedOn(TemplateManager, Settings.CategoryTemplateIds))
+            else if (TemplateManager.TemplateIsOrBasedOn(Context.Item, Settings.CategoryTemplateIds))
             {
                 criteria.Category = Context.Item.Name;
                 results = EntryManager.GetBlogEntries(CurrentBlog, criteria, ListOrder.Descending);

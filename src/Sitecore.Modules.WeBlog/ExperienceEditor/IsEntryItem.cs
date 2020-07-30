@@ -38,7 +38,7 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
         {
             return new PipelineProcessorResponseValue
             {
-                Value = RequestContext.Item.TemplateIsOrBasedOn(_templateManager, _settings.EntryTemplateIds)
+                Value = _templateManager.TemplateIsOrBasedOn(RequestContext.Item, _settings.EntryTemplateIds)
             };
         }
 

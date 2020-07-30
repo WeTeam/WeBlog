@@ -41,9 +41,11 @@ namespace Sitecore.Modules.WeBlog.Pipelines.PopulateScribanMailActionModel
             EntryItem entryItem = null;
             CommentItem commentItem = null;
 
-            if (args.WorkflowPipelineArgs.DataItem.TemplateIsOrBasedOn(_templateManager, _settings.EntryTemplateIds))
+            var dataItem = args.WorkflowPipelineArgs.DataItem;
+
+            if (_templateManager.TemplateIsOrBasedOn(dataItem, _settings.EntryTemplateIds))
                 entryItem = new EntryItem(args.WorkflowPipelineArgs.DataItem);
-            else if(args.WorkflowPipelineArgs.DataItem.TemplateIsOrBasedOn(_templateManager, _settings.CommentTemplateIds))
+            else if(_templateManager.TemplateIsOrBasedOn(dataItem, _settings.CommentTemplateIds))
             {
                 commentItem = new CommentItem(args.WorkflowPipelineArgs.DataItem);
                 entryItem = _entryManager.GetBlogEntryItemByCommentUri(commentItem.InnerItem.Uri);

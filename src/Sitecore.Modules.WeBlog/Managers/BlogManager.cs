@@ -1,4 +1,5 @@
-﻿using Sitecore.Abstractions;
+﻿using DocumentFormat.OpenXml.ExtendedProperties;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
@@ -59,7 +60,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
 
             if (blogItem != null)
-                return new BlogHomeItem(blogItem, LinkManager);
+                return new BlogHomeItem(blogItem);
             else
                 return null;
         }

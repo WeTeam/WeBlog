@@ -138,7 +138,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return cachedEntries;
 
             var customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  where blogRootItem.TemplateIsOrBasedOn(TemplateManager, templateId)
+                                  where TemplateManager.TemplateIsOrBasedOn(blogRootItem, templateId)
                                   select (BlogHomeItem)blogRootItem).FirstOrDefault();
 
             if (customBlogItem == null)

@@ -71,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 var children = categoryRoot.GetChildren();
                 return (from childItem in children
-                        where childItem.TemplateIsOrBasedOn(TemplateManager, Settings.CategoryTemplateIds)
+                        where TemplateManager.TemplateIsOrBasedOn(childItem, Settings.CategoryTemplateIds)
                         && childItem.Versions.Count > 0
                         select new CategoryItem(childItem)).ToArray();
             }

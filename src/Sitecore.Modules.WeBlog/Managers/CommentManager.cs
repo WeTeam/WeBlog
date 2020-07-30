@@ -160,7 +160,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (entryItem != null)
             {
-                if(entryItem.TemplateIsOrBasedOn(TemplateManager, Settings.EntryTemplateIds))
+                if(TemplateManager.TemplateIsOrBasedOn(entryItem, Settings.EntryTemplateIds))
                 { 
                     return GetCommentsFor(entryItem, maximumCount);
                 }

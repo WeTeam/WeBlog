@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using NUnit.Framework;
@@ -16,6 +17,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
     public class ItemExtensionsFixture
     {
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_ItemIsNull_ReturnsFalse()
         {
             // arrange
@@ -30,6 +32,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_TemplatesIsNull_ReturnsFalse()
         {
             // arrange
@@ -45,6 +48,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_TemplatesIsEmpty_ReturnsFalse()
         {
             // arrange
@@ -60,6 +64,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_InvalidTemplate_ReturnsFalse()
         {
             // arrange
@@ -75,6 +80,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_TemplateMatches_ReturnsTrue()
         {
             // arrange
@@ -90,6 +96,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_TemplateDoesNotMatch_ReturnsFalse()
         {
             // arrange
@@ -106,6 +113,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_DerivedTemplateMatches_ReturnsTrue()
         {
             // arrange
@@ -127,6 +135,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
+        [Obsolete("API has been deprecated.")]
         public void TemplateIsOrBasedOn_DerivedTemplateChainMatches_ReturnsTrue()
         {
             // arrange
