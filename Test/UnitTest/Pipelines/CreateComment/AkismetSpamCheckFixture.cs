@@ -155,7 +155,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             var blogItem = ItemFactory.CreateItem().Object;
 
             var blogManager = Mock.Of<IBlogManager>(x =>
-                x.GetCurrentBlog() == new BlogHomeItem(blogItem, settings)
+                x.GetCurrentBlog() == new BlogHomeItem(blogItem)
             );
 
             var akismetApiMock = new Mock<IAkismet>();

@@ -33,7 +33,9 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         }
 
         [Obsolete("Use CommentorName property instead.")]
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public CustomTextField Name
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
         {
             get { return new CustomTextField(InnerItem, InnerItem.Fields["Name"]); }
         }

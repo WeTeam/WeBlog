@@ -7,7 +7,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
     internal class TestableCreateCommentItemProcessor : CreateCommentItem
     {
         public TestableCreateCommentItemProcessor(IBlogManager blogManager)
-            : base(blogManager)
+            : base(blogManager, null)
         { }
 
         protected override DateTime GetDateTime()

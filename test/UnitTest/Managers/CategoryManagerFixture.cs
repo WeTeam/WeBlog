@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Configuration;
@@ -13,14 +14,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
     [TestFixture]
     public class CategoryManagerFixture
     {
-        [TestCase(null, false, TestName = "Null Item")]
-        [TestCase("/sitecore/content", false, TestName = "Outside blog")]
-        [TestCase("/sitecore/content/blog", true, TestName = "On blog")]
-        [TestCase("/sitecore/content/blog/a folder/entry1", true, TestName = "Below blog")]
+        [TestCase(null, false, TestName = "GetCategoryRoot_Null Item")]
+        [TestCase("/sitecore/content", false, TestName = "GetCategoryRoot_Outside blog")]
+        [TestCase("/sitecore/content/blog", true, TestName = "GetCategoryRoot_On blog")]
+        [TestCase("/sitecore/content/blog/a folder/entry1", true, TestName = "GetCategoryRoot_Below blog")]
         public void GetCategoryRoot(string startItemPath, bool expectCategoryRoot)
         {
-            var settings = MockSettings(ID.NewID);
-            var manager = new CategoryManager(settings);
+            var categoryTemplateId = ID.NewID;
+            var settings = MockSettings(categoryTemplateId);
+            var templateManager = TemplateFactory.CreateTemplateManager(categoryTemplateId, settings.BlogTemplateIds.First());
+
+            var manager = new CategoryManager(settings, templateManager);
 
             using (var db = new Db
             {
@@ -52,14 +56,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             }
         }
 
-        [TestCase(null, false, TestName = "Null Item")]
-        [TestCase("/sitecore/content", false, TestName = "Outside blog")]
-        [TestCase("/sitecore/content/blog", true, TestName = "On blog")]
-        [TestCase("/sitecore/content/blog/a folder/entry1", true, TestName = "Below blog")]
+        [TestCase(null, false, TestName = "GetCategories_Null Item")]
+        [TestCase("/sitecore/content", false, TestName = "GetCategories_Outside blog")]
+        [TestCase("/sitecore/content/blog", true, TestName = "GetCategories_On blog")]
+        [TestCase("/sitecore/content/blog/a folder/entry1", true, TestName = "GetCategories_Below blog")]
         public void GetCategories(string startItemPath, bool expectCategories)
         {
-            var settings = MockSettings(ID.NewID);
-            var manager = new CategoryManager(settings);
+            var categoryTemplateId = ID.NewID;
+            var settings = MockSettings(categoryTemplateId);
+            var templateManager = TemplateFactory.CreateTemplateManager(categoryTemplateId, settings.BlogTemplateIds.First());
+
+            var manager = new CategoryManager(settings, templateManager);
 
             using (var db = new Db
             {
@@ -93,7 +100,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategories_NoCategories()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new CategoryManager(settings);
+            var manager = new CategoryManager(settings, Mock.Of<BaseTemplateManager>());
 
             using (var db = new Db
             {
@@ -118,7 +125,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategories_MixedTemplates()
         {
             var settings = MockSettings(ID.NewID, ID.NewID, ID.NewID);
-            var manager = new CategoryManager(settings);
+            var templateManager = TemplateFactory.CreateTemplateManager(settings.CategoryTemplateIds.Concat(settings.BlogTemplateIds).ToArray());
+
+            var manager = new CategoryManager(settings, templateManager);
 
             using (var db = new Db
             {
@@ -153,7 +162,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             var categoryTemplateId = ID.NewID;
             
             var settings = MockSettings(baseBaseTemplateId, baseTemplateId, categoryTemplateId);
-            var manager = new CategoryManager(settings);
+            var templateManager = TemplateFactory.CreateTemplateManager(new[] { baseBaseTemplateId, baseTemplateId, categoryTemplateId, settings.BlogTemplateIds.First() });
+
+            var manager = new CategoryManager(settings, templateManager);
 
             using (var db = new Db
             {
@@ -189,14 +200,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             }
         }
 
-        [TestCase("/sitecore/content", "alpha", false, TestName = "Outside blog")]
-        [TestCase("/sitecore/content/blog", "beta", true, TestName = "On blog")]
-        [TestCase("/sitecore/content/blog/entries/entry1", "gamma", true, TestName = "Below blog")]
-        [TestCase("/sitecore/content/blog/entries/entry1", "lorem", false, TestName = "Unknown category")]
+        [TestCase("/sitecore/content", "alpha", false, TestName = "GetCategory_Outside blog")]
+        [TestCase("/sitecore/content/blog", "beta", true, TestName = "GetCategory_On blog")]
+        [TestCase("/sitecore/content/blog/entries/entry1", "gamma", true, TestName = "GetCategory_Below blog")]
+        [TestCase("/sitecore/content/blog/entries/entry1", "lorem", false, TestName = "GetCategory_Unknown category")]
         public void GetCategory(string startItemPath, string categoryName, bool shouldFindCategory)
         {
-            var settings = MockSettings(ID.NewID);
-            var manager = new CategoryManager(settings);
+            var categoryTemplateId = ID.NewID;
+            var settings = MockSettings(categoryTemplateId);
+            var templateManager = TemplateFactory.CreateTemplateManager(categoryTemplateId, settings.BlogTemplateIds.First());
+
+            var manager = new CategoryManager(settings, templateManager);
 
             using (var db = new Db
             {
@@ -232,7 +246,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategory_NoCategories()
         {
             var settings = MockSettings(ID.NewID);
-            var manager = new CategoryManager(settings);
+            var manager = new CategoryManager(settings, Mock.Of<BaseTemplateManager>());
 
             using (var db = new Db
             {
@@ -253,16 +267,18 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             }
         }
 
-        [TestCase(null, "lorem", false, TestName = "Null Item")]
-        [TestCase("/sitecore/content", "lorem", false, TestName = "Outside blog")]
-        [TestCase("/sitecore/content/blog", "lorem", true, TestName = "On blog new")]
-        [TestCase("/sitecore/content/blog", "alpha", true, TestName = "On blog existing")]
-        [TestCase("/sitecore/content/blog/entries/entry1", "alpha", true, TestName = "On entry new")]
-        [TestCase("/sitecore/content/blog/entries/entry1", "lorem", true, TestName = "On entry existing")]
+        [TestCase(null, "lorem", false, TestName = "Add_Null Item")]
+        [TestCase("/sitecore/content", "lorem", false, TestName = "Add_Outside blog")]
+        [TestCase("/sitecore/content/blog", "lorem", true, TestName = "Add_On blog new")]
+        [TestCase("/sitecore/content/blog", "alpha", true, TestName = "Add_On blog existing")]
+        [TestCase("/sitecore/content/blog/entries/entry1", "alpha", true, TestName = "Add_On entry new")]
+        [TestCase("/sitecore/content/blog/entries/entry1", "lorem", true, TestName = "Add_On entry existing")]
         public void Add(string contextItemPath, string name, bool expectCategory)
         {
             var settings = MockSettings(ID.NewID, ID.NewID);
-            var manager = new CategoryManager(settings);
+            var templateManager = TemplateFactory.CreateTemplateManager(settings.CategoryTemplateIds.Concat(settings.BlogTemplateIds).ToArray());
+
+            var manager = new CategoryManager(settings, templateManager);
 
             using (var db = new Db
             {
@@ -311,7 +327,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategoriesForEntry_NullItem()
         {
             var settings = MockSettings(ID.NewID, ID.NewID);
-            var manager = new CategoryManager(settings);
+            var manager = new CategoryManager(settings, Mock.Of<BaseTemplateManager>());
 
             var categories = manager.GetCategoriesForEntry(null);
             Assert.That(categories, Is.Empty);
@@ -321,7 +337,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategoriesForEntry_NotAnEntryItem()
         {
             var settings = MockSettings(ID.NewID, ID.NewID);
-            var manager = new CategoryManager(settings);
+            var manager = new CategoryManager(settings, Mock.Of<BaseTemplateManager>());
 
             using (var db = new Db
             {
@@ -350,7 +366,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategoriesForEntry_NoCategoriesOnEntry()
         {
             var settings = MockSettings(ID.NewID, ID.NewID);
-            var manager = new CategoryManager(settings);
+            var manager = new CategoryManager(settings, Mock.Of<BaseTemplateManager>());
 
             using (var db = new Db
             {
@@ -379,7 +395,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCategoriesForEntry_WithCategories()
         {
             var settings = MockSettings(ID.NewID, ID.NewID);
-            var manager = new CategoryManager(settings);
+            var manager = new CategoryManager(settings, Mock.Of<BaseTemplateManager>());
 
             var categoryFieldId = ID.NewID;
             var cat1Id = ID.NewID;

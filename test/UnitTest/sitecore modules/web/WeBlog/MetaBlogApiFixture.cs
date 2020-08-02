@@ -79,7 +79,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blogManager = Mock.Of<IBlogManager>(x =>
                     x.GetUserBlogs(username) == new BlogHomeItem[]
                     {
-                        new BlogHomeItem(blog1, linkManager, null)
+                        new BlogHomeItem(blog1)
                     }
                 );
 
@@ -135,8 +135,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blogManager = Mock.Of<IBlogManager>(x =>
                     x.GetUserBlogs(username) == new BlogHomeItem[]
                     {
-                        new BlogHomeItem(blog1, linkManager, null),
-                        new BlogHomeItem(blog2, linkManager, null)
+                        new BlogHomeItem(blog1),
+                        new BlogHomeItem(blog2)
                     }
                 );
 

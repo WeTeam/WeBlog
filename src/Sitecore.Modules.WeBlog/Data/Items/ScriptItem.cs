@@ -44,7 +44,9 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         }
 
         [Obsolete("Use ScriptItemFields instead.")]
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
         public static class Fields
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         {
             public const string FallbackUrl = "Fallback Url";
             public const string VerificationObject = "Verification Object";

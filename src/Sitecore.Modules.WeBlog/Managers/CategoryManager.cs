@@ -115,7 +115,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The category folder if found, otherwise null</returns>
         public virtual Item GetCategoryRoot(Item item)
         {
-            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
+            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds, TemplateManager);
 
             if (blogItem != null)
                 return blogItem.Axes.GetChild("Categories");

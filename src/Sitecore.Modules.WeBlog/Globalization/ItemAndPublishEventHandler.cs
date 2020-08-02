@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Abstractions;
 using Sitecore.Data.Events;
 using Sitecore.Data.Items;
@@ -9,6 +9,7 @@ using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Globalization
 {
@@ -19,7 +20,7 @@ namespace Sitecore.Modules.WeBlog.Globalization
         private BaseTemplateManager _templateManager = null;
 
         public ItemAndPublishEventHandler()
-            : this(WeBlogSettings.Instance)
+            : this(null, null)
         {
         }
 
@@ -31,11 +32,8 @@ namespace Sitecore.Modules.WeBlog.Globalization
 
         public ItemAndPublishEventHandler(IWeBlogSettings settings, BaseTemplateManager templateManager)
         {
-            Assert.ArgumentNotNull(settings, nameof(settings));
-            Assert.ArgumentNotNull(templateManager, nameof(templateManager));
-
-            _settings = settings;
-            _templateManager = templateManager;
+            _settings = settings ?? WeBlogSettings.Instance;
+            _templateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService< BaseTemplateManager>();
         }
 
 

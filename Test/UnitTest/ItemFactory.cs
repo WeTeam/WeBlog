@@ -71,5 +71,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest
 
             itemMock.Setup(x => x.Paths).Returns(itemPath.Object);
         }
+
+        public static void SetParent(Mock<Item> itemMock, Item parentItem)
+        {
+            itemMock.Setup(x => x.Parent).Returns(parentItem);
+        }
     }
 }

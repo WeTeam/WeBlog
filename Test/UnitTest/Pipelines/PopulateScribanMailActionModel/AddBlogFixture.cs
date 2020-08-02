@@ -36,7 +36,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.PopulateScribanMailActionMo
             var settings = Mock.Of<IWeBlogSettings>();
 
             var blogManager = Mock.Of<IBlogManager>(x =>
-                x.GetCurrentBlog(It.IsAny<Item>()) == new BlogHomeItem(blogItem.Object, settings)
+                x.GetCurrentBlog(It.IsAny<Item>()) == new BlogHomeItem(blogItem.Object)
             );
 
             var sut = new AddBlog(blogManager);

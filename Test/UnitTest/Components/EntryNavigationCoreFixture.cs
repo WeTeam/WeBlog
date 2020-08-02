@@ -302,7 +302,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Components
             }
 
             var blogItem = ItemFactory.CreateItem();
-            var blogHomeItem = new BlogHomeItem(blogItem.Object, null);
+            var blogHomeItem = new BlogHomeItem(blogItem.Object);
 
             var blogManager = Mock.Of<IBlogManager>(x =>
                 x.GetCurrentBlog(It.IsAny<Item>()) == (returnBlogItem ? blogHomeItem : null)

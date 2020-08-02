@@ -1,8 +1,9 @@
-﻿using DocumentFormat.OpenXml.ExtendedProperties;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Extensions;
@@ -24,20 +25,43 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IWeBlogSettings Settings = null;
 
         /// <summary>
-        /// The <see cref="BaseLinkManager"/> used to generate links.
+        /// Gets the <see cref="BaseLinkManager"/> used to generate links.
         /// </summary>
-        protected BaseLinkManager LinkManager { get; set; }
+        protected BaseLinkManager LinkManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; }
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use. If null, the default settings are used.</param>
-        public BlogManager(BaseLinkManager linkManager, IWeBlogSettings settings = null)
+        [Obsolete("Use ctor(BaseLinkManager, BaseTemplateManager, IWeBlogSettings) instead.")]
+        public BlogManager(IWeBlogSettings settings = null)
+            : this(null, null, settings)
         {
-            if (linkManager == null)
-                throw new ArgumentNullException(nameof(linkManager));
+        }
 
-            LinkManager = linkManager;
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        [Obsolete("Use ctor(BaseLinkManager, BaseTemplateManager, IWeBlogSettings) instead.")]
+        public BlogManager(BaseLinkManager linkManager, IWeBlogSettings settings = null)
+            : this(linkManager, null, settings)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        public BlogManager(BaseLinkManager linkManager, BaseTemplateManager templateManager, IWeBlogSettings settings = null)
+        {
+            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
             Settings = settings ?? WeBlogSettings.Instance;
         }
 
@@ -57,7 +81,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public BlogHomeItem GetCurrentBlog(Item item)
         {
-            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
+            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds, TemplateManager);
 
             if (blogItem != null)
                 return new BlogHomeItem(blogItem);

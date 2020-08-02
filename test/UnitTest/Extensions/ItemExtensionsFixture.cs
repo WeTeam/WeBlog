@@ -161,124 +161,119 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Extensions
         }
 
         [Test]
-        public void FindAncestorByAnyTemplate_NullItem()
+        public void FindAncestorByAnyTemplate_NullItem_ReturnsNull()
         {
+            // arrange
             var templateId = ID.NewID;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
 
-            using (var db = new Db()
-            {
-                new DbTemplate("dummy", templateId)
-            })
-            {
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(null, new[] { templateId });
-                Assert.That(result, Is.Null);
-            }
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(null, new[] { templateId }, templateManager);
+
+            // assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void FindAncestorByAnyTemplate_NullTemplates()
+        public void FindAncestorByAnyTemplate_NullTemplates_ReturnsNull()
         {
-            var itemId = ID.NewID;
-
-            using (var db = new Db()
-            {
-                new DbItem("theitem", itemId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, null);
-                Assert.That(result, Is.Null);
-            }
-        }
-
-        [Test]
-        public void FindAncestorByAnyTemplate_NoTemplates()
-        {
-            var itemId = ID.NewID;
-
-            using (var db = new Db()
-            {
-                new DbItem("theitem", itemId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, Enumerable.Empty<ID>());
-                Assert.That(result, Is.Null);
-            }
-        }
-
-        [Test]
-        public void FindAncestorByAnyTemplate_Exists_Item()
-        {
+            // arrange
             var templateId = ID.NewID;
+            var item = ItemFactory.CreateItem(templateId: templateId).Object;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
 
-            using (var db = new Db()
-            {
-                new DbItem("theitem", ID.NewID, templateId)
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
-                Assert.That(result, Is.Not.Null);
-            }
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, null, templateManager);
+
+            // assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void FindAncestorByAnyTemplate_Exists_Parent()
+        public void FindAncestorByAnyTemplate_NoTemplates_ReturnsNull()
         {
+            // arrange
             var templateId = ID.NewID;
+            var item = ItemFactory.CreateItem(templateId: templateId).Object;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
 
-            using (var db = new Db()
-            {
-                new DbItem("parent", ID.NewID, templateId)
-                {
-                    new DbItem("theitem")
-                }
-            })
-            {
-                var item = db.GetItem("/sitecore/content/parent/theitem");
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
-                Assert.That(result, Is.Not.Null);
-            }
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, Enumerable.Empty<ID>(), templateManager);
+
+            // assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]
-        public void FindAncestorByAnyTemplate_Exists_GrandGrandParent()
+        public void FindAncestorByAnyTemplate_ItemBasedOnTemplate_ReturnsItem()
         {
+            // arrange
             var templateId = ID.NewID;
+            var item = ItemFactory.CreateItem(templateId: templateId).Object;
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
 
-            using (var db = new Db()
-            {
-                new DbItem("ggp", ID.NewID, templateId)
-                {
-                    new DbItem("gp")
-                    {
-                        new DbItem("parent")
-                        {
-                            new DbItem("theitem")
-                        }
-                    }
-                }
-            })
-            {
-                var item = db.GetItem("/sitecore/content/ggp/gp/parent/theitem");
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId });
-                Assert.That(result, Is.Not.Null);
-            }
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { templateId }, templateManager);
+
+            // assert
+            Assert.That(result.ID, Is.EqualTo(item.ID));
         }
 
         [Test]
-        public void FindAncestorByAnyTemplate_NotExists()
+        public void FindAncestorByAnyTemplate_ParentBasedOnTemplate_ReturnsParent()
         {
-            using (var db = new Db()
-            {
-                new DbItem("theitem")
-            })
-            {
-                var item = db.GetItem("/sitecore/content/theitem");
-                var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(item, new[] { ID.NewID });
-                Assert.That(result, Is.Null);
-            }
+            // arrange
+            var templateId = ID.NewID;
+            var itemMock = ItemFactory.CreateItem();
+            var parentItem = ItemFactory.CreateItem(templateId: templateId).Object;
+            ItemFactory.SetParent(itemMock, parentItem);
+
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(itemMock.Object, new[] { templateId }, templateManager);
+
+            // assert
+            Assert.That(result.ID, Is.EqualTo(parentItem.ID));
+        }
+
+        [Test]
+        public void FindAncestorByAnyTemplate_AncestorBasedOnTemplate_ReturnsAncestor()
+        {
+            // arrange
+            var templateId = ID.NewID;
+            var itemMock = ItemFactory.CreateItem();
+            var parentItemMock = ItemFactory.CreateItem();
+            var grantParentItemMock = ItemFactory.CreateItem(templateId: templateId).Object;
+            
+            ItemFactory.SetParent(itemMock, parentItemMock.Object);
+            ItemFactory.SetParent(parentItemMock, grantParentItemMock);
+
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(itemMock.Object, new[] { templateId }, templateManager);
+
+            // assert
+            Assert.That(result.ID, Is.EqualTo(grantParentItemMock.ID));
+        }
+
+        [Test]
+        public void FindAncestorByAnyTemplate_NoAncestorsBasedOnTemplate_ReturnsNull()
+        {
+            // arrange
+            var templateId = ID.NewID;
+            var itemMock = ItemFactory.CreateItem();
+            var parentItem = ItemFactory.CreateItem().Object;
+            ItemFactory.SetParent(itemMock, parentItem);
+
+            var templateManager = TemplateFactory.CreateTemplateManager(templateId);
+
+            // act
+            var result = Sitecore.Modules.WeBlog.Extensions.ItemExtensions.FindAncestorByAnyTemplate(itemMock.Object, new[] { templateId }, templateManager);
+
+            // assert
+            Assert.That(result, Is.Null);
         }
 
         [Test]

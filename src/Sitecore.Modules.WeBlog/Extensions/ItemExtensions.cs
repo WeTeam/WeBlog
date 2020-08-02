@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Sitecore.Abstractions;
+﻿using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Data.Managers;
 using Sitecore.DependencyInjection;
 using Sitecore.Links;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Extensions
 {

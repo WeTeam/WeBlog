@@ -26,7 +26,9 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         {
             base.Initialize(rendering);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             ThemeItem = CurrentBlog.Theme.Item;
+#pragma warning restore CS0618 // Type or member is obsolete
             ThemeFiles = ThemeFileResolver.Resolve(CurrentBlog.Theme.Item);
         }
     }

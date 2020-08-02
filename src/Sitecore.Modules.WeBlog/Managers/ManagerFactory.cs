@@ -1,9 +1,7 @@
-﻿using System;
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-using Sitecore.Modules.WeBlog.Configuration;
+﻿using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.StringExtensions;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -21,10 +19,8 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 if (m_blogManager == null)
                 {
-                    var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
-
                     m_blogManager = CreateInstance<IBlogManager>(WeBlogSettings.Instance.BlogManagerClass, () => {
-                        return new BlogManager(linkManager);
+                        return new BlogManager(null, null, WeBlogSettings.Instance);
                     });
                 }
 
