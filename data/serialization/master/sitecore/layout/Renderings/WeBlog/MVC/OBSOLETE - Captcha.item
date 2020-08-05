@@ -1,40 +1,33 @@
 ----item----
 version: 1
-id: {E252152A-83E8-4423-9661-6E7CB1727E4C}
+id: {25C05A79-B811-4E1D-A501-A1F5B9DB11BB}
 database: master
-path: /sitecore/layout/Renderings/WeBlog/MVC/Recaptcha
+path: /sitecore/layout/Renderings/WeBlog/MVC/OBSOLETE - Captcha
 parent: {8B102FCF-A4DD-417D-86C0-260CFC23923E}
-name: Recaptcha
+name: OBSOLETE - Captcha
 master: {00000000-0000-0000-0000-000000000000}
-template: {99F8905D-4A87-4EB8-9F8B-A9BEBFB3ADD6}
-templatekey: View rendering
+template: {2A3E91A0-7987-44B5-AB34-35C2D9DE83B9}
+templatekey: Controller rendering
 
 ----field----
-field: {51B435BC-F7B9-478A-9C51-52916AF96FF5}
-name: Path
-key: path
-content-length: 30
+field: {E64AD073-DFCC-4D20-8C0B-FE5AA6226CD7}
+name: Controller
+key: controller
+content-length: 7
 
-/Views/WeBlog/Recaptcha.cshtml
-----field----
-field: {DDAB263E-B42E-419A-AA6F-081B7393CA38}
-name: Model
-key: model
-content-length: 0
-
-
+Captcha
 ----version----
 language: en
 version: 1
-revision: 88edcd6f-16b8-4dff-9667-8e1724121553
+revision: bcd7b970-9989-4806-ba64-c4a22caff976
 
 ----field----
 field: {B5E02AD9-D56F-4C41-A065-A133DB87BDEB}
 name: __Display name
 key: __display name
-content-length: 15
+content-length: 24
 
-Recaptcha - MVC
+OBSOLETE - Captcha - MVC
 ----field----
 field: {25BED78C-4957-4165-998A-CA1B52F67497}
 name: __Created
@@ -48,18 +41,18 @@ name: __Revision
 key: __revision
 content-length: 36
 
-88edcd6f-16b8-4dff-9667-8e1724121553
+bcd7b970-9989-4806-ba64-c4a22caff976
 ----field----
 field: {D9CF14B1-FA16-4BA6-9288-E8A174D4D522}
 name: __Updated
 key: __updated
 content-length: 16
 
-20160811T180517Z
+20200805T104248Z
 ----field----
 field: {BADD9CF9-53E0-4D0C-BCC0-2D784C282F6A}
 name: __Updated by
 key: __updated by
 content-length: 14
 
-sitecore\admin
+sitecore\Admin

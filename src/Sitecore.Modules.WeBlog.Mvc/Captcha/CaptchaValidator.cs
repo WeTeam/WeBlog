@@ -2,6 +2,7 @@ using System;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Captcha
 {
+    [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
     public class CaptchaValidator
     {
         public string ChallengeValue { get; set; }

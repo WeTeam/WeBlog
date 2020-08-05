@@ -8,7 +8,7 @@
 
     @using (Html.BeginForm())
     {
-        @Html.ValidationSummary(true, Translator.Text("REQUIRED_FIELDS"), new { @class = "wb-error" })
+        @Html.ValidationSummary(true, Translator.Text("COMMENT_DATA_INVALID"), new { @class = "wb-error" })
 
         { Html.RenderPartial("~/Views/WeBlog/SubmitComment/MessagePanel.cshtml"); }
 

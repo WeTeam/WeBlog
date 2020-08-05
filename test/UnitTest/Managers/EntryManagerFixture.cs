@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sitecore.Modules.WeBlog.UnitTest
+namespace Sitecore.Modules.WeBlog.UnitTest.Managers
 {
     [TestFixture]
     public class EntryManagerFixture

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.UI.WebControls;
 using Sitecore.Data;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Components;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Globalization;
@@ -10,29 +11,43 @@ using Sitecore.Modules.WeBlog.Model;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
+    [AllowDependencyInjection]
     public partial class BlogSubmitComment : BaseEntrySublayout
     {
         /// <summary>
         /// Gets or sets the CSS class to set on the message panel for error messages
         /// </summary>
-        public string ErrorCssClass { get; set; }
+        protected string ErrorCssClass { get; set; }
 
         /// <summary>
-        /// Gets or sets the CSS class to set on the message panel for success messages
+        /// Gets the CSS class to set on the message panel for success messages
         /// </summary>
-        public string SuccessCssClass { get; set; }
-
-        public ISubmitCommentCore SubmitCommentCore { get; set; }
+        protected string SuccessCssClass { get; set; }
 
         /// <summary>
-        /// Gets or sets the comment manager used to work with comments.
+        /// Gets the <see cref="ISubmitCommentCore"/> to use to submit a comment.
         /// </summary>
-        public ICommentManager CommentManager { get; set; }
+        protected ISubmitCommentCore SubmitCommentCore { get; }
 
-        public BlogSubmitComment(ISubmitCommentCore submitCommentCore = null, ICommentManager commentManager = null)
+        /// <summary>
+        /// Gets the comment manager used to work with comments.
+        /// </summary>
+        protected ICommentManager CommentManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IValidateCommentCore"/> to use to validate submitted comments.
+        /// </summary>
+        protected IValidateCommentCore ValidateCommentCore { get; }
+
+        public BlogSubmitComment(ISubmitCommentCore submitCommentCore, ICommentManager commentManager, IValidateCommentCore validateCommentCore)
         {
-            SubmitCommentCore = submitCommentCore ?? new SubmitCommentCore();
-            CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
+            SubmitCommentCore = submitCommentCore;
+            CommentManager = commentManager;
+            ValidateCommentCore = validateCommentCore;
+        }
+
+        public BlogSubmitComment()
+        {
         }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -52,11 +67,34 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
             }
             else
             {
+                var fieldErrorPhrase = Translator.Text(Constants.TranslationPhrases.RequiredField);
+
                 if (ValidationSummaryComments != null)
-                    ValidationSummaryComments.HeaderText = Translator.Text("REQUIRED_FIELDS");
+                    ValidationSummaryComments.HeaderText = Translator.Text("COMMENT_DATA_INVALID");
 
                 if (buttonSaveComment != null)
                     buttonSaveComment.Text = Translator.Text("POST");
+
+                if (rfvCommentName != null)
+                {
+                    var field = Translator.Text(Constants.TranslationPhrases.Name);
+                    var text = string.Format(fieldErrorPhrase, field);
+                    rfvCommentName.ErrorMessage = text;
+                }
+
+                if(rfvCommentEmail != null)
+                {
+                    var field = Translator.Text(Constants.TranslationPhrases.Email);
+                    var text = string.Format(fieldErrorPhrase, field);
+                    rfvCommentEmail.ErrorMessage = text;
+                }
+
+                if(rfvCommentText != null)
+                {
+                    var field = Translator.Text(Constants.TranslationPhrases.Comment);
+                    var text = string.Format(fieldErrorPhrase, field);
+                    rfvCommentText.ErrorMessage = text;
+                }
             }
         }
 
@@ -77,15 +115,27 @@ namespace Sitecore.Modules.WeBlog.WebForms.Layouts
                 comment.Fields.Add(Constants.Fields.Website, GetFormValue(txtCommentWebsite));
                 comment.Fields.Add(Constants.Fields.IpAddress, Context.Request.UserHostAddress);
 
-                var submissionResult = SubmitCommentCore.Submit(comment);
-                if (submissionResult.IsNull)
+                var result = ValidateCommentCore.Validate(comment, Request.Form);
+
+                ID submissionResult = null;
+
+                if (result.Success)
                 {
-                    SetErrorMessage(Translator.Text("COMMENT_SUBMIT_ERROR"));
+                    submissionResult = SubmitCommentCore.Submit(comment);
+                    if (submissionResult.IsNull)
+                    {
+                        SetErrorMessage(Translator.Text("COMMENT_SUBMIT_ERROR"));
+                    }
+                    else
+                    {
+                        SetSuccessMessage(Translator.Text("COMMENT_SUBMIT_SUCCESS"));
+                        ResetCommentFields();
+                    }
                 }
                 else
                 {
-                    SetSuccessMessage(Translator.Text("COMMENT_SUBMIT_SUCCESS"));
-                    ResetCommentFields();
+                    var text = string.Join(", ", result.Errors);
+                    SetErrorMessage(text);
                 }
 
                 //check if added comment is available. if so, send it along with the event

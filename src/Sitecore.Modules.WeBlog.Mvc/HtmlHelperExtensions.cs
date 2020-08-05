@@ -36,6 +36,7 @@ namespace Sitecore.Modules.WeBlog.Mvc
             return new HtmlString(value);
         }
 
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         public static string GenerateReCaptcha(this HtmlHelper helper, string id, string theme)
         {
             if (string.IsNullOrEmpty(WeBlogSettings.Instance.ReCaptchaPublicKey) || string.IsNullOrEmpty(WeBlogSettings.Instance.ReCaptchaPrivateKey))

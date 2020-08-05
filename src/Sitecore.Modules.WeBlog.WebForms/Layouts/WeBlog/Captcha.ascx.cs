@@ -6,6 +6,7 @@ using Sitecore.Modules.WeBlog.Globalization;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
+    [Obsolete("Use IValidateCommentCore.Validate() instead.")]
     public partial class Captcha : UserControl
     {
         protected IWeBlogSettings Settings { get; }

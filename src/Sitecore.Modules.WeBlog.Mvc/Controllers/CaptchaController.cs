@@ -1,14 +1,14 @@
-﻿using System;
+﻿using MSCaptcha;
+using Sitecore.Modules.WeBlog.Mvc.Model;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Web.Mvc;
-using MSCaptcha;
-using Sitecore.Modules.WeBlog.Model;
-using Sitecore.Modules.WeBlog.Mvc.Model;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Controllers
 {
+    [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
     public class CaptchaController : Controller
     {
         protected CaptchaImage CaptchaImage { get; set; }

@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Captcha
 {
+    [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
     public class CaptchaValidatorAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
