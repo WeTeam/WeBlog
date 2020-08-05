@@ -2,13 +2,14 @@
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.CaptchaRenderingModel
 
+<!-- Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead. -->
 <div class="wb-captcha">
     <p>
         <div class="wb-captchaLabel">@Translator.Render("CAPTCHA").ToHtmlString()</div>
         <div class="blog-captcha-image">
-            <img src="@Model.ImageSource"/>
-    <input type="hidden" name="captcha_challenge_field" value="@Model.ChallengeValue" />
+            <img src="@Model.ImageSource" />
+            <input type="hidden" name="captcha_challenge_field" value="@Model.ChallengeValue" />
         </div>
-    <input type="text" name="captcha_response_field" value="" class="wb-captchaInput" />
+        <input type="text" name="captcha_response_field" value="" class="wb-captchaInput" />
     </p>
 </div>

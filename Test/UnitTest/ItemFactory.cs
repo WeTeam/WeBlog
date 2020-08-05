@@ -49,6 +49,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest
             {
                 fieldCollectionMock.Setup(x => x[field.ID]).Returns(field);
                 fieldCollectionMock.Setup(x => x[field.Name]).Returns(field);
+
+                itemMock.Setup(x => x[field.Name]).Returns(field.Value);
             }
 
             itemMock.Setup(x => x.Fields).Returns(fieldCollectionMock.Object);

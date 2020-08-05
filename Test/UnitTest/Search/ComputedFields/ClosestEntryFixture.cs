@@ -6,6 +6,7 @@ using Sitecore.Data;
 using Sitecore.FakeDb;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Search.ComputedFields;
+using Sitecore.Modules.WeBlog.UnitTest.Managers;
 using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Search.ComputedFields

@@ -57,11 +57,13 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the reCAPTCHA private key.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         string ReCaptchaPrivateKey { get; }
 
         /// <summary>
         /// Gets the reCAPTCHA public key.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         string ReCaptchaPublicKey { get; }
 
         /// <summary>
@@ -102,11 +104,13 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the maximum timeout period for the captcha control.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         TimeSpan CaptchaMaximumTimeout { get; }
 
         /// <summary>
         /// Gets the minimum timeout period for the captcha control.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         TimeSpan CaptchaMinimumTimeout { get; }
 
         /// <summary>

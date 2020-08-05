@@ -64,5 +64,14 @@ namespace Sitecore.Modules.WeBlog
             [Obsolete("Use Sitecore.Modules.WeBlog.Text.IContextTokenReplacer.ContainsToken(string) instead.")]
             public static string WeBlogContext = "$weblogcontext";
         }
+
+        public static class TranslationPhrases
+        {
+            public static readonly string RequiredField = "REQUIRED_FIELD";
+            public static readonly string Name = "NAME";
+            public static readonly string Email = "EMAIL";
+            public static readonly string Comment = "COMMENT";
+            public static readonly string ErrorOccurredTryAgain = "ERROR_OCCURRED_TRY_AGAIN";
+        }
     }
 }

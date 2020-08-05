@@ -3,6 +3,7 @@ using Sitecore.Modules.WeBlog.Configuration;
 
 namespace Sitecore.Modules.WeBlog.WebForms.Layouts
 {
+    [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
     public partial class ReCaptcha : System.Web.UI.UserControl
     {
         protected IWeBlogSettings Settings { get; }
