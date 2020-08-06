@@ -15,6 +15,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
 	<ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc10.0'))">
+    <PackageReference Include="Sitecore.Analytics" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Mvc" Version="10.0.0" />
+  </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc9.3'))">
     <PackageReference Include="Sitecore.Analytics" Version="9.3.0" />
     <PackageReference Include="Sitecore.Mvc" Version="9.3.0" />

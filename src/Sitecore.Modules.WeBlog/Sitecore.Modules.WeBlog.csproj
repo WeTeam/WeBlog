@@ -17,6 +17,17 @@
     </Reference>
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc10.0'))">
+    <PackageReference Include="Sitecore.Analytics" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Buckets" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Client" Version="10.0.0" />
+    <PackageReference Include="Sitecore.ExperienceEditor" Version="10.0.0" />
+    <PackageReference Include="Sitecore.ExperienceEditor.Speak" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Kernel" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Services.Core" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Services.Infrastructure" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Xdb.Reporting" Version="10.0.0" />
+  </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc9.3'))">
     <PackageReference Include="Sitecore.Analytics" Version="9.3.0" />
     <PackageReference Include="Sitecore.Buckets" Version="9.3.0" />

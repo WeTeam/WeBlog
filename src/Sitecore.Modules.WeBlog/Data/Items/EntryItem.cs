@@ -9,7 +9,7 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Security.Accounts;
 
-#if SC93
+#if FEATURE_URL_BUILDERS
 using Sitecore.Links.UrlBuilders;
 #endif
 
@@ -125,7 +125,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get
             {
-#if SC93
+#if FEATURE_URL_BUILDERS
                 var urlOptions = new ItemUrlBuilderOptions();
 #else
                 var urlOptions = UrlOptions.DefaultOptions;

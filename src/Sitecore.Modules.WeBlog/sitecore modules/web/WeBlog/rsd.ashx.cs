@@ -7,9 +7,14 @@ using Sitecore.Configuration;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.DependencyInjection;
-using Sitecore.Links.UrlBuilders;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Web;
+
+#if FEATURE_URL_BUILDERS
+using Sitecore.Links.UrlBuilders;
+#else
+using Sitecore.Links;
+#endif
 
 namespace Sitecore.Modules.WeBlog
 {
@@ -21,7 +26,7 @@ namespace Sitecore.Modules.WeBlog
     {
         protected BaseLinkManager LinkManager { get; }
 
-        #region IHttpHandler Members
+#region IHttpHandler Members
         /// <summary>
         /// IsReusable implmentation for IHttpHandler
         /// </summary>
@@ -62,7 +67,7 @@ namespace Sitecore.Modules.WeBlog
                 rsd.WriteAttributeString("version", "1.0");
 
                 // Service 
-#if SC93
+#if FEATURE_URL_BUILDERS
                 var urlOptions = new ItemUrlBuilderOptions();
 #else
                 var urlOptions = UrlOptions.DefaultOptions;
@@ -100,6 +105,6 @@ namespace Sitecore.Modules.WeBlog
 
             }
         }
-        #endregion
+#endregion
     }
 }

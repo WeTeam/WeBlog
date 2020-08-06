@@ -13,7 +13,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Include="Scriban" Version="2.1.1" />
     <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1')) or $(Configuration.Contains('sc9.2'))" />
-    <PackageReference Include="Sitecore.FakeDb" Version="3.0.0-alpha1" Condition="$(Configuration.Contains('sc9.3'))" />
+    <PackageReference Include="Sitecore.FakeDb" Version="3.0.0-alpha1" Condition="$(Configuration.Contains('sc9.3')) or $(Configuration.Contains('sc10.0'))" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" Condition="'$(TargetFrameworkVersion)' == 'v4.6.2' or '$(TargetFrameworkVersion)' == 'v4.5.2' or '$(TargetFrameworkVersion)' == 'v4.5'" />
   <ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 using Sitecore.Data.Items;
 using Sitecore.Links;
 
-#if SC93
+#if FEATURE_URL_BUILDERS
 using Sitecore.Links.UrlBuilders;
 #endif
 
@@ -12,7 +12,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
     {
         public static string GetAbsoluteItemUrl(this BaseLinkManager linkManager, Item item)
         {
-#if SC93
+#if FEATURE_URL_BUILDERS
             var options = new ItemUrlBuilderOptions
 #else
             var options = new UrlOptions
