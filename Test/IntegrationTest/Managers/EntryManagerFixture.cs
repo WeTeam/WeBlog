@@ -1,14 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Data;
-using System;
-using System.Linq;
+﻿using Moq;
 using NUnit.Framework;
-using Sitecore.Data.Items;
-using Moq;
 using Sitecore.Data;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Xdb.Reporting;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
 {
@@ -35,7 +34,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
         }
 
         [Test]
-        public void GetBlogEntries_WithEntries()
+        public void GetBlogEntries_EntriesExist_ReturnsEntries()
         {
             var blog = TestUtil.CreateNewBlog(TestContentRoot);
             var entryLuna = TestUtil.CreateNewEntry(blog, "Luna", entryDate: new DateTime(2012, 3, 1));
@@ -48,6 +47,33 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             var ids = from result in results.Results select result.Uri.ItemID;
 
             Assert.That(ids, Is.EqualTo(new[] { entryPhobos.ID, entryDeimos.ID, entryLuna.ID }));
+        }
+
+        [Test]
+        public void GetBlogEntries_EntriesExist_FieldsRehydratedProperly()
+        {
+            // arrange
+            var entryDate = new DateTime(2012, 3, 1, 13, 42, 10, DateTimeKind.Utc);
+            var blog = TestUtil.CreateNewBlog(TestContentRoot);
+            var entryLuna = TestUtil.CreateNewEntry(
+                blog,
+                name: "Luna",
+                tags: "tag",
+                entryDate: entryDate);
+            
+            TestUtil.UpdateIndex();
+
+            var manager = new EntryManager();
+
+            // act
+            var results = manager.GetBlogEntries(blog, EntryCriteria.AllEntries, ListOrder.Descending);
+
+            // assert
+            var ids = from result in results.Results select result.Uri.ItemID;
+
+            Assert.That(results.Results[0].Title, Is.EqualTo("Luna"));
+            Assert.That(results.Results[0].Tags, Is.EquivalentTo(new[] { "tag" }));
+            Assert.That(results.Results[0].EntryDate, Is.EqualTo(entryDate));
         }
 
         [Test]
@@ -591,6 +617,8 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             Assert.That(entries, Is.Empty);
         }
 
+
+
         // TODO: Write tests for methods accepting language
 
         private void VerifyAnalyticsSetup()
@@ -614,7 +642,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Managers
             var visitCount = ids.Count();
             foreach (var id in ids)
             {
-                var dataTable = new DataTable();
+                var dataTable = new System.Data.DataTable();
                 dataTable.Columns.AddRange(new[]
                 {
                     new DataColumn("Visits", typeof(long))
