@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office.CustomUI;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Text;

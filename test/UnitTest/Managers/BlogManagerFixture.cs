@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Presentation;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Abstractions;
 using Sitecore.Data;
