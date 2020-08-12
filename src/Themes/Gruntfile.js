@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         }
     });
 
-    var version = grunt.option("scversion") || "sc9.3";
+    var version = grunt.option("scversion") || "sc10.0";
 
     grunt.registerTask("default", ["less", "deploy:" + version]);
 

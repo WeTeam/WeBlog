@@ -19,8 +19,10 @@ using Sitecore.Resources.Media;
 using Sitecore.Security.Authentication;
 using Microsoft.Extensions.DependencyInjection;
 
-#if SC93
+#if FEATURE_URL_BUILDERS
 using Sitecore.Links.UrlBuilders;
+#else
+using Sitecore.Links;
 #endif
 
 namespace Sitecore.Modules.WeBlog
@@ -118,7 +120,7 @@ namespace Sitecore.Modules.WeBlog
             //Create structure for blog list
             var blogs = new List<XmlRpcStruct>();
 
-#if SC93
+#if FEATURE_URL_BUILDERS
             var urlOptions = new ItemUrlBuilderOptions();
 #else
             var urlOptions = UrlOptions.DefaultOptions;
@@ -528,7 +530,7 @@ namespace Sitecore.Modules.WeBlog
             // Get the mediaitem url and return it
             var rstruct = new XmlRpcStruct();
 
-#if SC93
+#if FEATURE_URL_BUILDERS
             var options = new MediaUrlBuilderOptions()
 #else
             var options = new MediaUrlOptions()
@@ -691,7 +693,7 @@ namespace Sitecore.Modules.WeBlog
         /// <returns>The item URL.</returns>
         protected string GetItemAbsoluteUrl(Item item)
         {
-#if SC93
+#if FEATURE_URL_BUILDERS
             var urlOptions = new ItemUrlBuilderOptions();
 #else
             var urlOptions = UrlOptions.DefaultOptions;

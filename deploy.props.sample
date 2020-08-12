@@ -1,22 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<PropertyGroup Condition="$(Configuration.Contains('sc9.0'))">
-		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.0\cm\Website</SitecorePath>
-		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.0\cd\Website</SitecoreCDPath>
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.0\cm</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.0\cd</SitecoreCDPath>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="$(Configuration.Contains('sc9.1'))">
-		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.1\cm\Website</SitecorePath>
-		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.1\cd\Website</SitecoreCDPath>
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.1\cm</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.1\cd</SitecoreCDPath>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="$(Configuration.Contains('sc9.2'))">
-		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.2\cm\Website</SitecorePath>
-		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.2\cd\Website</SitecoreCDPath>
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.2\cm</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.2\cd</SitecoreCDPath>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="$(Configuration.Contains('sc9.3'))">
-		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.3\cm\Website</SitecorePath>
-		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.3\cd\Website</SitecoreCDPath>
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 9.3\cm</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 9.3\cd</SitecoreCDPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="$(Configuration.Contains('sc10.0'))">
+		<SitecorePath>C:\inetpub\WeBlog\Sitecore 10.0\cm</SitecorePath>
+		<SitecoreCDPath>C:\inetpub\WeBlog\Sitecore 10.0\cd</SitecoreCDPath>
 	</PropertyGroup>
 </Project>

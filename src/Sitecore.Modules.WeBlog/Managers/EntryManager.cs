@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Sitecore.Data;
-using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Data.Items;
-using Sitecore.Modules.WeBlog.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Analytics.Reporting;
+using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
-using Sitecore.Modules.WeBlog.Caching;
-using Sitecore.Modules.WeBlog.Analytics.Reporting;
 using Sitecore.Xdb.Reporting;
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -204,7 +204,18 @@ namespace Sitecore.Modules.WeBlog.Managers
                 indexresults = indexresults.Skip(criteria.PageSize * (criteria.PageNumber - 1))
                     .Take(criteria.PageSize < int.MaxValue ? criteria.PageSize + 1 : criteria.PageSize);
 
-                var entries = indexresults.Select(x => CreateEntry(x)).ToList();
+                var entries = indexresults.Select(resultItem =>
+                    // Keep field access inline so the query analyzer can see which fields will be used.
+                    new Entry
+                    {
+                        Uri = resultItem.Uri,
+                        Title = string.IsNullOrWhiteSpace(resultItem.Title) ? resultItem.Name : resultItem.Title,
+                        Tags = resultItem.Tags != null ? resultItem.Tags : Enumerable.Empty<string>(),
+                        EntryDate = resultItem.EntryDate
+                    }
+                ).ToList();
+
+                
                 var hasMore = entries.Count > criteria.PageSize;
 
                 var entriesPage = entries.Take(criteria.PageSize).ToList();
@@ -216,6 +227,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
         }
 
+        [Obsolete("No longer used. Index field access must be inline so the query analyzer can see the fields used.")]
         protected virtual Entry CreateEntry(EntryResultItem resultItem)
         {
             return new Entry

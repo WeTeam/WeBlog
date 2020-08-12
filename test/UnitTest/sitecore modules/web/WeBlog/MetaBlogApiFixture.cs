@@ -18,7 +18,7 @@ using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Links;
 
-#if SC93
+#if FEATURE_URL_BUILDERS
 using Sitecore.Links.UrlBuilders;
 #endif
 
@@ -66,7 +66,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
             {
                 var blog1 = db.GetItem("/sitecore/content/blog1");
 
-#if SC93
+#if FEATURE_URL_BUILDERS
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "link"
                 );
@@ -120,7 +120,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
                 var blog1 = db.GetItem("/sitecore/content/blog1");
                 var blog2 = db.GetItem("/sitecore/content/blog2");
 
-#if SC93
+#if FEATURE_URL_BUILDERS
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "blog1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "blog2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
@@ -364,7 +364,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var entryManager = MockEntryManager(entry1, entry2);
 
-#if SC93
+#if FEATURE_URL_BUILDERS
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "entry1"), It.IsAny<ItemUrlBuilderOptions>()) == "link1" &&
                     x.GetItemUrl(It.Is<Item>(y => y.Name == "entry2"), It.IsAny<ItemUrlBuilderOptions>()) == "link2"
@@ -819,7 +819,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var entryManager = MockEntryManager(entry1);
 
-#if SC93
+#if FEATURE_URL_BUILDERS
                 var linkManager = Mock.Of<BaseLinkManager>(x =>
                     x.GetItemUrl(It.IsAny<Item>(), It.IsAny<ItemUrlBuilderOptions>()) == "the-link"
                 );
@@ -997,7 +997,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.sitecore_modules.web.WeBlog
 
                 var mediaManager = Mock.Of<BaseMediaManager>(x => 
                     x.Creator == mediaCreator.Object &&
-#if SC93
+#if FEATURE_URL_BUILDERS
                     x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlBuilderOptions>()) == "fake-url"
 #else
                     x.GetMediaUrl(It.IsAny<MediaItem>(), It.IsAny<MediaUrlOptions>()) == "fake-url"
