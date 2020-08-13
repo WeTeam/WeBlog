@@ -270,9 +270,6 @@ namespace Sitecore.Modules.WeBlog.Managers
             using (var context = index.CreateSearchContext())
             {
                 var queryable = CreateQueryable(context, item, blog);
-
-                var a = queryable.ToList();
-
                 return projection(queryable);
             }
         }
