@@ -3,7 +3,7 @@
     <metadata>
       <PackageName>WeBlog</PackageName>
       <Author>WeTeam Community</Author>
-      <Version>4.0.1</Version>
+      <Version>4.1.0</Version>
       <Revision />
       <License>&lt;p&gt;&lt;strong&gt;The MIT License (MIT)&lt;/strong&gt;&lt;br/&gt;
 Copyright (c) 2011 - 2020 WeTeam Community
@@ -15,17 +15,19 @@ Copyright (c) 2011 - 2020 WeTeam Community
       <Attributes />
       <Readme>Configure SOLR
 ===============
-Create the SOLR cores weblog-master and weblog-web. If 
+Create the SOLR cores 'weblog-master' and 'weblog-web'. If 
 you use different names for the cores, update the
-core names in the config files WeBlog.ContentSearch.Solr.Master.config 
-and WeBlog.ContentSearch.Solr.Web.config.
+core names in the following config files:
+
+* WeBlog.ContentSearch.Solr.Master.config 
+* WeBlog.ContentSearch.Solr.Web.config.
 	  
 Post Install Steps
 ==================
 * Perform an incremental publish to all publishing targets
 * Delete any old WeBlog Content Search config files from
     previous versions.
-* Rebuild the WeBlog search index
+* Rebuild the WeBlog search indexes
 
 Create a Blog
 =============

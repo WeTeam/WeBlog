@@ -112,7 +112,7 @@
       XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.0-9.1.xslt"
       XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config"
       OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config"
-      Condition="$(SitecorePath) != '' AND ($(DefineConstants.Contains('SC90')) OR $(DefineConstants.Contains('SC91')))" />
+      Condition="$(SitecorePath) != '' AND ($(Configuration.Contains('sc9.0')) OR $(Configuration.Contains('sc9.1')))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
     <XslTransformation
