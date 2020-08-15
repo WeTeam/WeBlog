@@ -118,6 +118,46 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Workflow
         }
 
         [Test]
+        public void Process_ToFieldEvaluatesToEmpty_LogsError()
+        {
+            // arrange
+            var sutDependencies = CreateSutDependencies(new Dictionary<string, object>
+            {
+                {"token", "user@mail.com" }
+            });
+            var logMock = sutDependencies.LogMock;
+
+            var sut = CreateScribanMailAction(sutDependencies);
+            var smtpClientMock = sutDependencies.SmtpClientMock;
+            var args = CreateWorkflowPipelineArgs(to: "{{invalidtoken}}");
+
+            // act
+            sut.Process(args);
+
+            // assert
+            logMock.Verify(x => x.Error("Exception while sending workflow email", It.IsAny<Exception>(), sut));
+        }
+
+        [Test]
+        public void Process_ToFieldEvaluatesToEmpty_AbortsPipeline()
+        {
+            // arrange
+            var sutDependencies = CreateSutDependencies(new Dictionary<string, object>
+            {
+                {"token", "user@mail.com" }
+            });
+
+            var sut = CreateScribanMailAction(sutDependencies);
+            var args = CreateWorkflowPipelineArgs(to: "{{invalidtoken}}");
+
+            // act
+            sut.Process(args);
+
+            // assert
+            Assert.That(args.Aborted, Is.True);
+        }
+
+        [Test]
         public void Process_LiteralFromField_SendsMailWithFieldValue()
         {
             // arrange

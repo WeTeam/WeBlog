@@ -102,11 +102,11 @@ namespace Sitecore.Modules.WeBlog.Workflow
                 return;
             }
 
-            var message = new MailMessage(mailFrom, mailTo, mailSubject, mailBody);
-            message.IsBodyHtml = true;
-
             try
             {
+                var message = new MailMessage(mailFrom, mailTo, mailSubject, mailBody);
+                message.IsBodyHtml = true;
+
                 using (var smtpClient = SmtpClientFactory.Invoke())
                 {
                     smtpClient.Send(message);
@@ -115,6 +115,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             catch (Exception ex)
             {
                 Log.Error("Exception while sending workflow email", ex, this);
+                args.AbortPipeline();
             }
         }
 
