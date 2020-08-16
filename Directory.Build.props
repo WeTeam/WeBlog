@@ -16,12 +16,12 @@
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('sc9.0'))">
-	<TargetFramework>net462</TargetFramework>
+	  <TargetFramework>net462</TargetFramework>
     <DefineConstants>$(DefineConstants)</DefineConstants>
     <OutputPath>bin\sc90\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('sc9.1'))">
-	<TargetFramework>net471</TargetFramework>
+	  <TargetFramework>net471</TargetFramework>
     <DefineConstants>$(DefineConstants);SC91</DefineConstants>
     <OutputPath>bin\sc91\</OutputPath>
   </PropertyGroup>
