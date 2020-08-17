@@ -17,6 +17,9 @@ using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -31,12 +34,35 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IWeBlogSettings Settings = null;
 
         /// <summary>
+        /// Gets the <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
+        /// </summary>
+        protected IBlogSettingsResolver BlogSettingsResolver { get; }
+
+        /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
+        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
         public CommentManager(IWeBlogSettings settings = null)
+            : this(settings, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
+        /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
+        public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
         }
 
         /// <summary>
@@ -62,12 +88,13 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return ID.Null;
         }
 
+        [Obsolete("Use AddCommentToEntry(ID, Comment, Language) instead.")]
         protected virtual void AddComment(EntryItem entryItem, WpComment wpComment)
         {
             // todo: Wizard to ask user which language to import into
             string itemName = ItemUtil.ProposeValidItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
 
-            CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID(CommentItem.TemplateId)));
+            CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID("{70949D4E-35D8-4581-A7A2-52928AA119D5}")));
             commentItem.BeginEdit();
             commentItem.Comment.Field.Value = wpComment.Content;
             commentItem.Email.Field.Value = wpComment.Email;
@@ -133,7 +160,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             if (entryItem != null)
             {
-                if(entryItem.TemplateIsOrBasedOn(Settings.EntryTemplateIds))
+                if(TemplateManager.TemplateIsOrBasedOn(entryItem, Settings.EntryTemplateIds))
                 { 
                     return GetCommentsFor(entryItem, maximumCount);
                 }
@@ -243,18 +270,17 @@ namespace Sitecore.Modules.WeBlog.Managers
             using (var context = index.CreateSearchContext())
             {
                 var queryable = CreateQueryable(context, item, blog);
-
-                var a = queryable.ToList();
-
                 return projection(queryable);
             }
         }
 
         protected virtual IQueryable<CommentResultItem> CreateQueryable(IProviderSearchContext context, Item rootItem, BlogHomeItem blogItem)
         {
+            var settings = BlogSettingsResolver.Resolve(blogItem);
+
             return context.GetQueryable<CommentResultItem>().Where(x =>
                 x.Paths.Contains(rootItem.ID) &&
-                x.TemplateId == blogItem.BlogSettings.CommentTemplateID &&
+                x.TemplateId == settings.CommentTemplateID &&
                 x.Language == rootItem.Language.Name
             );
         }

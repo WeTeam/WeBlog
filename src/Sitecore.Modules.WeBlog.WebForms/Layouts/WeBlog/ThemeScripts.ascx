@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ThemeScripts.ascx.cs" Inherits="Sitecore.Modules.WeBlog.WebForms.Layouts.ThemeScripts" %>
 
-<% if (ThemeItem != null)
+<% if (ThemeFiles != null)
    {
-       foreach(var script in ThemeItem.Scripts) { %>
+       foreach(var script in ThemeFiles.Scripts) { %>
             <script type="text/javascript" src="<%= script.Url %>"></script>
             <% if (!string.IsNullOrEmpty(script.FallbackUrl) && !string.IsNullOrEmpty(script.VerificationObject))
                 { %>

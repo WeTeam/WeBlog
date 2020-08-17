@@ -54,7 +54,7 @@ namespace Sitecore.Modules.WeBlog.Caching
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns></returns>
-        public Item FindEntry(string key)
+        public virtual Item FindEntry(string key)
         {
             Assert.ArgumentNotNull(key, "key");
             var dictionary = FindCache();

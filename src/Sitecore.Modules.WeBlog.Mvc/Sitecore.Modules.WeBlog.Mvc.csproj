@@ -1,47 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <Import Project="..\..\build configurations.targets" />
-  <Import Project="..\..\deploy.targets" Condition="Exists('..\..\deploy.targets')" />
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion />
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CB784291-5299-42FB-98CD-413979DD25A7}</ProjectGuid>
-    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sitecore.Modules.WeBlog.Mvc</RootNamespace>
     <AssemblyName>Sitecore.Modules.WeBlog.Mvc</AssemblyName>
-    <TargetFrameworkProfile />
-    <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Title>WeBlog MVC</Title>
   </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisLogFile>bin\Sitecore.Modules.WeBlog.Mvc.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
-    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
-    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <Import Project="..\..\sc version properties.targets" />
   <ItemGroup>
     <Reference Include="MSCaptcha">
       <HintPath>..\..\lib\MSCaptcha\MSCaptcha.dll</HintPath>
@@ -49,222 +12,69 @@
     <Reference Include="Recaptcha">
       <HintPath>..\..\lib\Recaptcha.dll</HintPath>
     </Reference>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Sitecore.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\Sitecore.Mvc.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Web.Http">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\System.Web.Http.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Web.Mvc">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\System.Web.Mvc.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
-    <Reference Include="System.Web.Mobile" />
-    <Reference Include="System.Xml.Linq" />
+	<ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc10.0'))">
+    <PackageReference Include="Sitecore.Analytics" Version="10.0.0" />
+    <PackageReference Include="Sitecore.Mvc" Version="10.0.0" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc9.3'))">
+    <PackageReference Include="Sitecore.Analytics" Version="9.3.0" />
+    <PackageReference Include="Sitecore.Mvc" Version="9.3.0" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc9.2'))">
+    <PackageReference Include="Sitecore.Analytics" Version="9.2.0" />
+    <PackageReference Include="Sitecore.Mvc" Version="9.2.0" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc9.1'))">
+    <PackageReference Include="Sitecore.Analytics" Version="9.1.1" />
+    <PackageReference Include="Sitecore.Mvc" Version="9.1.1" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc9.0'))">
+    <PackageReference Include="Sitecore.Analytics" Version="9.0.180604" />
+    <PackageReference Include="Sitecore.Mvc" Version="9.0.180604" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
-    <Compile Include="Captcha\CaptchaValidator.cs" />
-    <Compile Include="Captcha\CaptchaValidatorAttribute.cs" />
-    <Compile Include="Components\Parameters\RenderingParameterHelper.cs" />
-    <Compile Include="Controllers\BlogBaseController.cs" />
-    <Compile Include="Controllers\BlogRecentCommentsController.cs" />
-    <Compile Include="Controllers\BlogSubmitCommentController.cs" />
-    <Compile Include="Controllers\BlogSyndicationController.cs" />
-    <Compile Include="Controllers\BlogTagCloudController.cs" />
-    <Compile Include="Controllers\CaptchaController.cs" />
-    <Compile Include="Controllers\LinkIncludeController.cs" />
-    <Compile Include="Controllers\RsdIncludesController.cs" />
-    <Compile Include="Controllers\ThemeIncludesController.cs" />
-    <Compile Include="HtmlHelperExtensions.cs" />
-    <Compile Include="Model\Archive.cs" />
-    <Compile Include="Model\Blog.cs" />
-    <Compile Include="Model\BlogRenderingModelBase.cs" />
-    <Compile Include="Model\Captcha.cs" />
-    <Compile Include="Model\Categories.cs" />
-    <Compile Include="Model\CommentsList.cs" />
-    <Compile Include="Model\Entry.cs" />
-    <Compile Include="Model\EntryCategories.cs" />
-    <Compile Include="Model\EntryTags.cs" />
-    <Compile Include="Model\FacebookComments.cs" />
-    <Compile Include="Model\FacebookLike.cs" />
-    <Compile Include="Model\Feeds.cs" />
-    <Compile Include="Model\InterestingEntries.cs" />
-    <Compile Include="Model\Authors.cs" />
-    <Compile Include="Model\PostList.cs" />
-    <Compile Include="Model\EntryNavigation.cs" />
-    <Compile Include="Model\PostListEntry.cs" />
-    <Compile Include="Model\RecentCommentsRenderingModel.cs" />
-    <Compile Include="Model\ShareEntryAddThis.cs" />
-    <Compile Include="Model\ShareEntryShareThis.cs" />
-    <Compile Include="Model\SubmitCommentRenderingModel.cs" />
-    <Compile Include="Model\TagCloudRenderingModel.cs" />
-    <Compile Include="Model\TagRenderingModel.cs" />
-    <Compile Include="Model\Theme.cs" />
-    <Compile Include="Model\Twitter.cs" />
-    <Compile Include="Pipelines\RenderRendering\AppendVaryByBlogParameter.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj">
-      <Project>{26fe5f3a-f140-40c4-85a0-c1866da26f16}</Project>
-      <Name>Sitecore.Modules.WeBlog</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Config\Include\WeBlog.Mvc.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="App_Config\Include\WeBlog.Mvc.config" />
     <Content Include="Views\WeBlog\web.config" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Archive.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Blog.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Captcha.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Categories.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\CommentsList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Entry.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\EntryCategories.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\EntryTags.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\FacebookComments.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\FacebookLike.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Feeds.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\InterestingEntries.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\MvcLayout.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\MvcLayoutAjax.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\PostList.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\PostListEntry.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\Recaptcha.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\RecentComments.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\ShareEntry-AddThis.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\ShareEntry-ShareThis.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\SubmitComment\CommentScroll.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\SubmitComment\MessagePanel.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\SubmitComment.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\TagCloud.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\ThemeScripts.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\ThemeStylesheets.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\TwitterTimeline.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\WeBlog\EntryNavigation.cshtml" />
     <Content Include="Views\WeBlog\Authors.cshtml" />
-    <None Include="Views\WeBlog\SubmitComment\web.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
-        <WebProjectProperties>
-          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
-        </WebProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.-->
-  <Target Name="BeforeBuild">
-    <Message Text="Configuration: $(Configuration)" />
-    <Message Text="Platform: $(Platform)" />
-    <Message Text="SitecorePath: $(SitecorePath)" />
-    <Message Text="SitecoreCDPath: $(SitecoreCDPath)" />
-    <Message Text="Constants: $(DefineConstants)" />
-  </Target>
-  <Target Name="AfterBuild">
+  <Target Name="Deploy" AfterTargets="PostBuildEvent">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
   </Target>
   <Target Name="DeployToWeb">
-    <CreateItem Include="@(Content)" Exclude="**\*.SC*.*;App_Config\Include\*.xslt">
-      <Output ItemName="DeployFiles" TaskParameter="Include" />
-    </CreateItem>
-    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
-    <Copy SourceFiles="@(DeployFiles)" DestinationFiles="@(DeployFiles->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
-    <CreateItem Include="$(OutDir)\*.dll">
+    <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
+    <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
+    <CreateItem Include="$(OutDir)$(AssemblyName).dll;$(OutDir)Recaptcha.dll">
       <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />

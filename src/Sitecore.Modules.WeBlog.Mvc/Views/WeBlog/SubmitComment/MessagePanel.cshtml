@@ -5,14 +5,16 @@
 {
     bool submitted = (bool)TempData["Submitted"];
     <div class="@(submitted ? "wb-successtext" : "wb-errortext")">
-        @if (submitted)
-                {
-            @Translator.Text("COMMENT_SUBMIT_SUCCESS").ToHtmlString()
-        }
-        else
-        {
-            @Translator.Text("COMMENT_SUBMIT_ERROR").ToHtmlString()
-        }
+        <p>
+            @if (submitted)
+            {
+                @Translator.Text("COMMENT_SUBMIT_SUCCESS").ToHtmlString()
+            }
+            else
+            {
+                @Translator.Text("COMMENT_SUBMIT_ERROR").ToHtmlString()
+            }
+        </p>
     </div>
 }
 

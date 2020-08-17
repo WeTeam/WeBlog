@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Sitecore.ContentSearch;
-using Sitecore.ContentSearch.Converters;
+﻿using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.SearchTypes;
 using Sitecore.Data;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Search.SearchTypes
 {

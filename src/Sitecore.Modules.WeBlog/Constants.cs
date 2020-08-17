@@ -7,6 +7,7 @@ namespace Sitecore.Modules.WeBlog
     {
         public const string CookieName = "weblog-comment-submissions";
 
+        [Obsolete("No longer used. Use Content Search instead.")]
         public static class Index
         {
             public static class Fields
@@ -58,8 +59,19 @@ namespace Sitecore.Modules.WeBlog
 
         public class Tokens
         {
+            [Obsolete("Use Sitecore.Modules.WeBlog.Text.ISettingsTokenReplacer.ContainsToken(string) instead.")]
             public static string WeBlogSetting = "$weblogsetting";
+            [Obsolete("Use Sitecore.Modules.WeBlog.Text.IContextTokenReplacer.ContainsToken(string) instead.")]
             public static string WeBlogContext = "$weblogcontext";
+        }
+
+        public static class TranslationPhrases
+        {
+            public static readonly string RequiredField = "REQUIRED_FIELD";
+            public static readonly string Name = "NAME";
+            public static readonly string Email = "EMAIL";
+            public static readonly string Comment = "COMMENT";
+            public static readonly string ErrorOccurredTryAgain = "ERROR_OCCURRED_TRY_AGAIN";
         }
     }
 }

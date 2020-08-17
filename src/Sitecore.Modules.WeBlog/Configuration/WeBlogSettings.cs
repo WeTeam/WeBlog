@@ -23,7 +23,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
             }
         }
 
-        private WeBlogSettings()
+        public WeBlogSettings()
         {
         }
 
@@ -139,6 +139,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the reCAPTCHA private key.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         public string ReCaptchaPrivateKey
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.reCAPTCHA.PrivateKey"); }
@@ -147,6 +148,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the reCAPTCHA public key.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         public string ReCaptchaPublicKey
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.reCAPTCHA.PublicKey"); }
@@ -215,6 +217,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the maximum timeout period for the captcha control.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         public TimeSpan CaptchaMaximumTimeout
         {
             get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MaxTimeout", "00:01:00"); }
@@ -223,6 +226,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the minimum timeout period for the captcha control.
         /// </summary>
+        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
         public TimeSpan CaptchaMinimumTimeout
         {
             get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MinTimeout", "00:00:03"); }

@@ -1,112 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\build configurations.targets" />
-  <Import Project="..\..\deploy.targets" Condition="Exists('..\..\deploy.targets')" />
-  <Import Project="..\..\sc version properties.targets" />
-  <PropertyGroup>
-    <TargetFramework>net471</TargetFramework>
-    <!--<Version>0.1.6-dev</Version>-->
-  </PropertyGroup>
   <PropertyGroup>
     <RootNamespace>Sitecore.Modules.WeBlog.UnitTest</RootNamespace>
     <AssemblyName>Sitecore.Modules.WeBlog.UnitTest</AssemblyName>
-    <OutputType>Library</OutputType>
-    <Authors>WeBlog Community</Authors>
-    <ApplicationIcon />
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CookComputing.XmlRpcV2, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\CookComputing.XmlRpcV2.dll</HintPath>
-    </Reference>
-    <Reference Include="Lucene.Net">
-      <HintPath>$(SitecorePath)\bin\Lucene.Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-	<Reference Include="Sitecore.Analytics">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Sitecore.Analytics.Core">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Analytics.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-	<Reference Include="Sitecore.Xdb.Reporting" Condition="$(DefineConstants.Contains('FEATURE_XCONNECT'))">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Xdb.Reporting.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-	<Reference Include="Sitecore.Buckets">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Buckets.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ContentSearch">
-      <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ContentSearch.Linq, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.ContentSearch.LuceneProvider">
-      <HintPath>$(SitecorePath)\bin\Sitecore.ContentSearch.LuceneProvider.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Kernel">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Kernel.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Logging">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Sitecore.Nexus">
-      <HintPath>$(SitecorePath)\bin\Sitecore.Nexus.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
     <PackageReference Include="Moq" Version="4.13.1" />
     <PackageReference Include="NUnit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
-    <PackageReference Include="Scriban" Version="2.1.1" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))" />
-    <PackageReference Include="Sitecore.FakeDb" Version="1.7.4" Condition="$(Configuration.Contains('sc8.0')) or $(Configuration.Contains('sc8.1')) or $(Configuration.Contains('sc8.2'))" />
-    <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" Condition="$(Configuration.Contains('sc9.0')) or $(Configuration.Contains('sc9.1')) or $(Configuration.Contains('sc9.2'))" />
-    <PackageReference Include="Sitecore.FakeDb" Version="3.0.0-alpha1" Condition="$(Configuration.Contains('sc9.3'))" />
+    <PackageReference Include="Scriban" Version="2.1.1" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" Condition="'$(TargetFrameworkVersion)' == 'v4.6.2' or '$(TargetFrameworkVersion)' == 'v4.5.2' or '$(TargetFrameworkVersion)' == 'v4.5'" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="Caching\EntrySearchCacheLegacyFixture.cs" />
-    <Compile Remove="Caching\EntrySearchCacheFixture.cs" />
-    <Compile Include="Caching\EntrySearchCacheFixture.cs" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS'))" />
-    <Compile Include="Caching\EntrySearchCacheLegacyFixture.cs" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
+  <ItemGroup Condition="$(Configuration.Contains('sc10.0'))">
+    <PackageReference Include="Sitecore.Nexus" Version="10.0.0" />
+    <PackageReference Include="Sitecore.FakeDb" Version="3.0.0-alpha1"/>
   </ItemGroup>
-  <ItemGroup Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true">
-    <Compile Remove="Data\Items\ScribanMailActionItemFixture.cs" />
-    <Compile Remove="Pipelines\PopulateScribanMailActionModel\*.cs" />
-    <Compile Remove="Workflow\ScribanMailActionFixture.cs" />
-    <Compile Remove="ItemFactory.cs" />
-    <Compile Remove="WorkflowPipelineArgsFactory.cs" />
+  <ItemGroup Condition="$(Configuration.Contains('sc9.3'))">
+    <PackageReference Include="Sitecore.Nexus" Version="9.3.0" />
+    <PackageReference Include="Sitecore.FakeDb" Version="3.0.0-alpha1"/>
   </ItemGroup>
-  <!--<ItemGroup >
-    <Compile Include="Caching\EntrySearchCacheFixture.cs" />
+  <ItemGroup Condition="$(Configuration.Contains('sc9.2'))">
+    <PackageReference Include="Sitecore.Nexus" Version="9.2.0" />
+    <PackageReference Include="Sitecore.FakeDb" Version="2.0.1"/>
   </ItemGroup>
-  <ItemGroup >
-    <Compile Include="Caching\EntrySearchCacheLegacyFixture.cs" />
-  </ItemGroup>-->
-  <Target BeforeTargets="Clean" Name="OutputProps">
-    <Message Text="Deploy targets is found" Condition="Exists('..\..\deploy.targets')" />
-    <Message Text="Configuration: $(Configuration)" />
-    <Message Text="Platform: $(Platform)" />
-    <Message Text="SitecorePath: $(SitecorePath)" />
-    <Message Text="SitecoreCDPath: $(SitecoreCDPath)" />
-    <Message Text="Constants: $(DefineConstants)" />
-  </Target>
-  <Target AfterTargets="Build" Name="Configure">
-    <CallTarget Targets="ConfigureFakeDBLegacy" Condition="$(DefineConstants.Contains('FEATURE_ABSTRACTIONS')) != true" />
-  </Target>
-  <Target Name="ConfigureFakeDBLegacy">
-    <PropertyGroup>
-      <ConfigFile>$(OutDir)\$(AssemblyName).dll.config</ConfigFile>
-    </PropertyGroup>
-    <XslTransformation XmlInputPaths="$(ConfigFile)" XslInputPath="App.config.FakeDBLegacy.xslt" OutputPaths="$(ConfigFile).updated" />
-    <Move SourceFiles="$(ConfigFile).updated" DestinationFiles="$(ConfigFile)" />
-  </Target>
+  <ItemGroup Condition="$(Configuration.Contains('sc9.1'))">
+    <PackageReference Include="Sitecore.Nexus" Version="9.1.1" />
+    <PackageReference Include="Sitecore.FakeDb" Version="2.0.1"/>
+  </ItemGroup>
+  <ItemGroup Condition="$(Configuration.Contains('sc9.0'))">
+    <PackageReference Include="Sitecore.Nexus" Version="9.0.180604" />
+    <PackageReference Include="Sitecore.FakeDb" Version="2.0.1"/>
+  </ItemGroup>
 </Project>

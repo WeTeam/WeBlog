@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using CookComputing.XmlRpc;
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
@@ -15,10 +17,12 @@ using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Resources.Media;
 using Sitecore.Security.Authentication;
+using Microsoft.Extensions.DependencyInjection;
 
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
+#if FEATURE_URL_BUILDERS
+using Sitecore.Links.UrlBuilders;
+#else
+using Sitecore.Links;
 #endif
 
 namespace Sitecore.Modules.WeBlog
@@ -49,7 +53,11 @@ namespace Sitecore.Modules.WeBlog
         /// </summary>
         protected IWeBlogSettings Settings { get; set; }
 
-#if FEATURE_ABSTRACTIONS
+        /// <summary>
+        /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
+        /// </summary>
+        protected IBlogSettingsResolver BlogSettingsResolver { get; }
+
         /// <summary>
         /// The <see cref="BaseMediaManager"/> to use for media operations.
         /// </summary>
@@ -59,34 +67,42 @@ namespace Sitecore.Modules.WeBlog
         /// The <see cref="BaseLinkManager"/> to use to generate item links.
         /// </summary>
         protected BaseLinkManager LinkManager { get; set; }
-#endif
 
         public MetaBlogApi()
-            : this(null, null, null, null
-#if FEATURE_ABSTRACTIONS
-                , null, null
-#endif
-                )
+            : this(null, null, null, null, null, null, null)
         {
         }
 
-        public MetaBlogApi(IBlogManager blogManager, ICategoryManager categoryManager, IEntryManager entryManager, IWeBlogSettings settings
-#if FEATURE_ABSTRACTIONS
-            , BaseMediaManager mediaManager, BaseLinkManager linkManager
-#endif
-        )
+        [Obsolete("Use ctor() instead.")]
+        public MetaBlogApi(
+			IBlogManager blogManager,
+			ICategoryManager categoryManager,
+			IEntryManager entryManager,
+			IWeBlogSettings settings,
+			BaseMediaManager mediaManager,
+			BaseLinkManager linkManager)
         {
-            BlogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
-            CategoryManager = categoryManager ?? ManagerFactory.CategoryManagerInstance;
-            EntryManager = entryManager ?? ManagerFactory.EntryManagerInstance;
-            Settings = settings ?? WeBlogSettings.Instance;
-#if FEATURE_ABSTRACTIONS
-            MediaManager = mediaManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseMediaManager)) as BaseMediaManager;
-            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
-#endif
         }
 
-#region blogger.getUsersBlogs
+        public MetaBlogApi(
+            IBlogManager blogManager,
+            ICategoryManager categoryManager,
+            IEntryManager entryManager,
+            IWeBlogSettings settings,
+            BaseMediaManager mediaManager,
+            BaseLinkManager linkManager,
+            IBlogSettingsResolver blogSettingsResolver)
+        {
+            BlogManager = blogManager ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogManager>();
+            CategoryManager = categoryManager ?? ServiceLocator.ServiceProvider.GetRequiredService<ICategoryManager>();
+            EntryManager = entryManager ?? ServiceLocator.ServiceProvider.GetRequiredService<IEntryManager>();
+            Settings = settings ?? ServiceLocator.ServiceProvider.GetRequiredService<IWeBlogSettings>();
+            MediaManager = mediaManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseMediaManager>();
+            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
+        }
+
+        #region blogger.getUsersBlogs
         /// <summary>
         /// Returns user's blogs
         /// </summary>
@@ -104,13 +120,23 @@ namespace Sitecore.Modules.WeBlog
             //Create structure for blog list
             var blogs = new List<XmlRpcStruct>();
 
+#if FEATURE_URL_BUILDERS
+            var urlOptions = new ItemUrlBuilderOptions();
+#else
+            var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
+            urlOptions.AlwaysIncludeServerUrl = true;
+
             foreach (var blog in blogList)
             {
+                var url = LinkManager.GetItemUrl(blog, urlOptions);
+
                 var rpcstruct = new XmlRpcStruct
                 {
                     {"blogid", blog.ID.ToString()}, // Blog Id
                     {"blogName", blog.Title.Raw}, // Blog Name
-                    {"url", blog.AbsoluteUrl}
+                    {"url", url}
                 };
 
                 blogs.Add(rpcstruct);
@@ -216,16 +242,12 @@ namespace Sitecore.Modules.WeBlog
                     if(item == null)
                         continue;
 
-                    var entryItem = new EntryItem(item
-#if FEATURE_ABSTRACTIONS
-                        , LinkManager
-#endif
-                    );
+                    var entryItem = new EntryItem(item);
 
                     var rpcstruct = new XmlRpcStruct
                     {
                         {"title", entryItem.Title.Raw},
-                        {"link", entryItem.AbsoluteUrl},
+                        {"link", GetItemAbsoluteUrl(entryItem)},
                         {"description", entryItem.Content.Text},
                         {"pubDate", entryItem.EntryDate.DateTime},
                         {"guid", entryItem.ID.ToString()},
@@ -316,8 +338,9 @@ namespace Sitecore.Modules.WeBlog
 
             if (currentBlog != null)
             {
-                var blogItem = new BlogHomeItem(currentBlog, Settings);
-                var template = new TemplateID(blogItem.BlogSettings.EntryTemplateID);
+                var blogItem = new BlogHomeItem(currentBlog);
+                var settings = BlogSettingsResolver.Resolve(blogItem);
+                var template = new TemplateID(settings.EntryTemplateID);
                 var newItem = ItemManager.AddFromTemplate(entryTitle, template, currentBlog);
 
                 SetItemData(newItem, rpcstruct);
@@ -375,11 +398,7 @@ namespace Sitecore.Modules.WeBlog
         {
             if (item != null)
             {
-                var entry = new EntryItem(item
-#if FEATURE_ABSTRACTIONS
-                    , LinkManager
-#endif
-                );
+                var entry = new EntryItem(item);
 
                 entry.BeginEdit();
 
@@ -421,14 +440,10 @@ namespace Sitecore.Modules.WeBlog
             var entryItem = GetContentDatabase().GetItem(postid);
             if (entryItem != null)
             {
-                var entry = new EntryItem(entryItem
-#if FEATURE_ABSTRACTIONS
-                    , LinkManager
-#endif
-                );
+                var entry = new EntryItem(entryItem);
 
                 rpcstruct.Add("title", entry.Title.Raw);
-                rpcstruct.Add("link", entry.AbsoluteUrl);
+                rpcstruct.Add("link", GetItemAbsoluteUrl(entry));
                 rpcstruct.Add("description", entry.Content.Raw);
                 rpcstruct.Add("pubDate", entry.EntryDate.DateTime);
                 rpcstruct.Add("guid", entry.ID.ToString());
@@ -515,7 +530,11 @@ namespace Sitecore.Modules.WeBlog
             // Get the mediaitem url and return it
             var rstruct = new XmlRpcStruct();
 
+#if FEATURE_URL_BUILDERS
+            var options = new MediaUrlBuilderOptions()
+#else
             var options = new MediaUrlOptions()
+#endif
             {
                 AbsolutePath = false,
                 UseItemPath = false
@@ -665,6 +684,24 @@ namespace Sitecore.Modules.WeBlog
                 }
             }
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the absolute URL of the item including the server.
+        /// </summary>
+        /// <param name="item">The item to get the URL for.</param>
+        /// <returns>The item URL.</returns>
+        protected string GetItemAbsoluteUrl(Item item)
+        {
+#if FEATURE_URL_BUILDERS
+            var urlOptions = new ItemUrlBuilderOptions();
+#else
+            var urlOptions = UrlOptions.DefaultOptions;
+#endif
+
+            urlOptions.AlwaysIncludeServerUrl = true;
+
+            return LinkManager.GetItemUrl(item, urlOptions);
         }
     }
 }

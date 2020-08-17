@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using Sitecore.Data;
+using Sitecore.Data.Items;
 using Sitecore.FakeDb;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Configuration;
@@ -18,14 +19,14 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullArgs()
         {
-            var processor = new DuplicateSubmissionGuard();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
             Assert.That(() => processor.Process(null), Throws.ArgumentNullException);
         }
 
         [Test]
         public void NullDatabase()
         {
-            var processor = new DuplicateSubmissionGuard();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
 
             using (var db = new Db
             {
@@ -55,7 +56,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullEntryId()
         {
-            var processor = new DuplicateSubmissionGuard();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
 
             using (var db = new Db
             {
@@ -85,7 +86,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullLanguage()
         {
-            var processor = new DuplicateSubmissionGuard();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
 
             using (var db = new Db
             {
@@ -115,7 +116,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NullComment()
         {
-            var processor = new DuplicateSubmissionGuard();
+            var processor = new CreateCommentItem(Mock.Of<IBlogManager>(), Mock.Of<IBlogSettingsResolver>());
 
             using (var db = new Db
             {
@@ -140,8 +141,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void InvalidEntryId()
         {
-            var processor = new DuplicateSubmissionGuard();
-
             using (var db = new Db
             {
                 new DbItem("blog")
@@ -150,7 +149,10 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 }
             })
             {
+                var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
+
+                var processor = CreateDuplicateSubmissionGuard(entry, blog, ID.NewID);
                 var args = new CreateCommentArgs
                 {
                     Database = entry.Database,
@@ -173,8 +175,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         [Test]
         public void NoDuplicateComment()
         {
-            var commentTemplate = CreateCommentTemplate();
-            var settings = CreateSettings(commentTemplate.ID);
+            var commentTemplate = CreateCommentTemplate();            
 
             using (var db = new Db
             {
@@ -188,11 +189,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-
-                var processor = new DuplicateSubmissionGuard(blogManager);
+                var processor = CreateDuplicateSubmissionGuard(entry, blog, commentTemplate.ID);
 
                 var args = new CreateCommentArgs
                 {
@@ -217,7 +214,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         public void CommentExists()
         {
             var commentTemplate = CreateCommentTemplate();
-            var settings = CreateSettings(commentTemplate.ID);
 
             using (var db = new Db
             {
@@ -248,11 +244,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-
-                var processor = new DuplicateSubmissionGuard(blogManager);
+                var processor = CreateDuplicateSubmissionGuard(entry, blog, commentTemplate.ID);
 
                 var args = new CreateCommentArgs
                 {
@@ -277,7 +269,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         public void DifferentText()
         {
             var commentTemplate = CreateCommentTemplate();
-            var settings = CreateSettings(commentTemplate.ID);
 
             using (var db = new Db
             {
@@ -308,11 +299,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
                 var blog = db.GetItem("/sitecore/content/blog");
                 var entry = db.GetItem("/sitecore/content/blog/entry");
 
-                var blogManager = Mock.Of<IBlogManager>(x =>
-                    x.GetCurrentBlog(entry) == new BlogHomeItem(blog, settings)
-                    );
-
-                var processor = new DuplicateSubmissionGuard(blogManager);
+                var processor = CreateDuplicateSubmissionGuard(entry, blog, commentTemplate.ID);                
 
                 var args = new CreateCommentArgs
                 {
@@ -345,11 +332,21 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             };
         }
 
-        private IWeBlogSettings CreateSettings(ID commentTemplateId)
+        private DuplicateSubmissionGuard CreateDuplicateSubmissionGuard(Item entry, Item blog, ID commentTemplateId)
         {
-            return Mock.Of<IWeBlogSettings>(x =>
+            var settings = Mock.Of<IWeBlogSettings>(x =>
                 x.CommentTemplateIds == new[] { commentTemplateId }
             );
+
+            var blogManager = Mock.Of<IBlogManager>(x =>
+                x.GetCurrentBlog(entry) == new BlogHomeItem(blog)
+            );
+
+            var settingsResolver = Mock.Of<IBlogSettingsResolver>(x =>
+                x.Resolve(It.IsAny<BlogHomeItem>()) == new BlogSettings(settings)
+            );
+
+            return new DuplicateSubmissionGuard(blogManager, settingsResolver);
         }
     }
 }

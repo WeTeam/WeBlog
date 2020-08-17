@@ -1,5 +1,6 @@
 ﻿using Scriban;
 using Sitecore.Abstractions;
+using Sitecore.Analytics.Core;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -8,12 +9,6 @@ using Sitecore.Workflows.Simple;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
-
-#if SC82
-using Sitecore.Analytics.Commons;
-#else
-using Sitecore.Analytics.Core;
-#endif
 
 namespace Sitecore.Modules.WeBlog.Workflow
 {
@@ -107,16 +102,12 @@ namespace Sitecore.Modules.WeBlog.Workflow
                 return;
             }
 
-            var message = new MailMessage(mailFrom, mailTo, mailSubject, mailBody);
-            message.IsBodyHtml = true;
-
             try
             {
-#if SC82
-                var smtpClient = SmtpClientFactory.Invoke();
-#else
+                var message = new MailMessage(mailFrom, mailTo, mailSubject, mailBody);
+                message.IsBodyHtml = true;
+
                 using (var smtpClient = SmtpClientFactory.Invoke())
-#endif
                 {
                     smtpClient.Send(message);
                 }
@@ -124,6 +115,7 @@ namespace Sitecore.Modules.WeBlog.Workflow
             catch (Exception ex)
             {
                 Log.Error("Exception while sending workflow email", ex, this);
+                args.AbortPipeline();
             }
         }
 

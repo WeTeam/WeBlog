@@ -15,10 +15,6 @@ using Sitecore.Services.Core;
 using Sitecore.Services.Infrastructure.Web.Http;
 using Sitecore.StringExtensions;
 
-#if FEATURE_NVELOCITY
-using NVelocity.App;
-#endif
-
 namespace Sitecore.Modules.WeBlog.Controllers
 {
     [ServicesController]
@@ -35,11 +31,6 @@ namespace Sitecore.Modules.WeBlog.Controllers
                 JobOptions(
 #endif
                 "Creating and importing blog", "WeBlog", Context.Site.Name, this, "ImportBlog", new[] { data });
-
-#if FEATURE_NVELOCITY
-            // Init NVelocity before starting the job, in case something in the job uses it (creates items with a workflow that uses the Extended Email Action)
-            Velocity.Init();
-#endif
 
             var job = JobManager.Start(options);
             job.Status.Total = 0;

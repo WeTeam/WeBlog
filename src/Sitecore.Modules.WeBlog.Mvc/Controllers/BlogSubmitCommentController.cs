@@ -1,21 +1,30 @@
-﻿using System.Web.Mvc;
-using Recaptcha;
-using Sitecore.Modules.WeBlog.Components;
+﻿using Sitecore.Modules.WeBlog.Components;
+using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Model;
-using Sitecore.Modules.WeBlog.Mvc.Captcha;
+using Sitecore.Modules.WeBlog.Mvc.Components.Parameters;
 using Sitecore.Modules.WeBlog.Mvc.Model;
+using System;
+using System.Web.Mvc;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Controllers
 {
     public class BlogSubmitCommentController : BlogBaseController
     {
-        protected ISubmitCommentCore SubmitCommentCore { get; set; }
+        /// <summary>
+        /// Gets the <see cref="ISubmitCommentCore"/> to use to submit a comment.
+        /// </summary>
+        protected ISubmitCommentCore SubmitCommentCore { get;  }
 
-        public BlogSubmitCommentController() : this(null) { }
+        /// <summary>
+        /// Gets the <see cref="IValidateCommentCore"/> to use to validate submitted comments.
+        /// </summary>
+        protected IValidateCommentCore ValidateCommentCore { get; }
 
-        public BlogSubmitCommentController(ISubmitCommentCore submitCommentCore)
+        public BlogSubmitCommentController(ISubmitCommentCore submitCommentCore, IValidateCommentCore validateCommentCore)
         {
-            SubmitCommentCore = submitCommentCore ?? new SubmitCommentCore();
+            SubmitCommentCore = submitCommentCore;
+            ValidateCommentCore = validateCommentCore;
+            new RenderingParameterHelper<Controller>(this, true);
         }
 
         public ActionResult Index()
@@ -30,13 +39,13 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
         }
 
         [HttpPost]
-        [RecaptchaControlMvc.CaptchaValidator]
-        [CaptchaValidator]
-        public ActionResult Index(SubmitCommentRenderingModel model, bool captchaValid, string captchaErrorMessage)
+        public ActionResult Index(SubmitCommentRenderingModel model)
         {
-            if (ModelState.IsValid && captchaValid)
+            var comment = BuildComment(model);
+            var result = ValidateCommentCore.Validate(comment, HttpContext.Request.Form);
+
+            if (ModelState.IsValid && result.Success)
             {
-                var comment = BuildComment(model);
                 var submissionResult = SubmitCommentCore.Submit(comment);
                 if (submissionResult.IsNull)
                 {
@@ -48,11 +57,12 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
                 }
                 return Redirect(HttpContext.Request.Url.AbsoluteUri);
             }
-            ValidateModelState(model);
-            if (!captchaValid)
+
+            foreach (var error in result.Errors)
             {
-                ModelState.AddModelError("", "The text you typed does not match the text in the image.");
+                ModelState.AddModelError(string.Empty, error);
             }
+
             TempData["ScrollTo"] = true;
             return View("~/Views/WeBlog/SubmitComment.cshtml");
         }
@@ -79,19 +89,20 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
             return comment;
         }
 
+        [Obsolete("Use IValidateCommentCore.Validate() instead.")]
         protected virtual void ValidateModelState(SubmitCommentRenderingModel model)
         {
             if (model.UserName == null)
             {
-                ModelState.AddModelError("", "UserName");
+                ModelState.AddModelError("", string.Format(Translator.Text("REQUIRED_FIELD"), "Name"));
             }
             if (model.Email == null)
             {
-                ModelState.AddModelError("", "Email");
+                ModelState.AddModelError("", string.Format(Translator.Text("REQUIRED_FIELD"), "Email"));
             }
             if (model.Comment == null)
             {
-                ModelState.AddModelError("", "Comment");
+                ModelState.AddModelError("", string.Format(Translator.Text("REQUIRED_FIELD"), "Comment"));
             }
         }
     }

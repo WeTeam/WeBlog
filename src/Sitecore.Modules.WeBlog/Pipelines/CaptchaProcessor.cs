@@ -1,9 +1,11 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Sitecore.Pipelines.PreprocessRequest;
 
 namespace Sitecore.Modules.WeBlog.Pipelines
 {
-  public class CaptchaProcessor : PreprocessRequestProcessor
+  [Obsolete]
+    public class CaptchaProcessor : PreprocessRequestProcessor
   {
     public override void Process(PreprocessRequestArgs args)
     {

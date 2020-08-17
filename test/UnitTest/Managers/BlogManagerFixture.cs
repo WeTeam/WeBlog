@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Web.Security;
-using Moq;
+﻿using Moq;
 using NUnit.Framework;
+using Sitecore.Abstractions;
 using Sitecore.Data;
+using Sitecore.Data.Templates;
 using Sitecore.FakeDb;
 using Sitecore.FakeDb.Links;
 using Sitecore.FakeDb.Security.Accounts;
@@ -12,10 +11,8 @@ using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Security.AccessControl;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-#endif
+using System.Linq;
+using System.Web.Security;
 
 namespace Sitecore.Modules.WeBlog.UnitTest.Managers
 {
@@ -23,20 +20,6 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
     public class BlogManagerFixture
     {
         private const string _validUsername = "sitecore\\alfred";
-
-        #if FEATURE_ABSTRACTIONS
-        [Test]
-        public void Ctor_LinkManagerIsNull_ThrowsException()
-        {
-            // arrange
-            var settings = Mock.Of<IWeBlogSettings>();
-            Action sutAction = () => new BlogManager(null, settings);
-
-            // act, assert
-            var ex = Assert.Throws<ArgumentNullException>(new TestDelegate(sutAction));
-            Assert.That(ex.ParamName, Is.EqualTo("linkManager"));
-        }
-#endif
 
         [Test]
         public void GetCurrentBlog_NullItem()
@@ -64,6 +47,8 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.EntryTemplateIds == new[] { entryTemplateId }
             );
 
+            var templateManager = TemplateFactory.CreateTemplateManager(blogTemplateId, entryTemplateId);
+
             using (var db = new Db
             {
                 new DbItem("blog", ID.NewID, blogTemplateId)
@@ -76,7 +61,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var startItem = db.GetItem(startPath);
-                var manager = CreateBlogManager(settings: settings);
+                var manager = CreateBlogManager(settings: settings, templateManager: templateManager);
                 var resultItem = manager.GetCurrentBlog(startItem);
 
                 if(expectedPath == null)
@@ -95,7 +80,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
         public void GetCurrentBlog_CustomTemplates(string startPath, string expectedPath)
         {
             var blogTemplateId = ID.NewID;
-            var customBlogtemplateId = ID.NewID;
+            var customBlogTemplateId = ID.NewID;
             var entryTemplateId = ID.NewID;
             var customEntryTemplateId = ID.NewID;
 
@@ -104,19 +89,17 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
                 x.EntryTemplateIds == new[] { ID.NewID, entryTemplateId, ID.NewID }
             );
 
+            var templates = new TemplateCollection();
+            var blogTemplate = TemplateFactory.CreateTemplate(blogTemplateId, null, templates);
+            var customBlogTemplate = TemplateFactory.CreateTemplate(customBlogTemplateId, blogTemplateId, templates);
+            var entryTemplate = TemplateFactory.CreateTemplate(entryTemplateId, null, templates);
+            var customEntryTemplate = TemplateFactory.CreateTemplate(customEntryTemplateId, entryTemplateId, templates);
+
+            var templateManager = TemplateFactory.CreateTemplateManager(new[] { blogTemplate, customBlogTemplate, entryTemplate, customEntryTemplate });
+
             using (var db = new Db
             {
-                new DbTemplate(blogTemplateId),
-                new DbTemplate(entryTemplateId),
-                new DbTemplate(customBlogtemplateId)
-                {
-                    BaseIDs = new [] { blogTemplateId }
-                },
-                new DbTemplate(customEntryTemplateId)
-                {
-                    BaseIDs = new [] { entryTemplateId }
-                },
-                new DbItem("blog", ID.NewID, customBlogtemplateId)
+                new DbItem("blog", ID.NewID, customBlogTemplateId)
                 {
                     new DbItem("entries")
                     {
@@ -126,7 +109,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             })
             {
                 var startItem = db.GetItem(startPath);
-                var manager = CreateBlogManager(settings: settings);
+                var manager = CreateBlogManager(settings: settings, templateManager: templateManager);
                 var resultItem = manager.GetCurrentBlog(startItem);
 
                 Assert.That(resultItem.ID, Is.EqualTo(resultItem.ID));
@@ -513,18 +496,12 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Managers
             Assert.That(result, Is.False);
         }
 
-        private BlogManager CreateBlogManager(
-#if FEATURE_ABSTRACTIONS
-            BaseLinkManager linkManager = null,
-#endif
-            IWeBlogSettings settings = null)
+        private BlogManager CreateBlogManager(BaseLinkManager linkManager = null, IWeBlogSettings settings = null, BaseTemplateManager templateManager = null)
         {
             return new BlogManager(
-#if FEATURE_ABSTRACTIONS
                 linkManager ?? Mock.Of<BaseLinkManager>(),
-#endif
-                settings ?? Mock.Of<IWeBlogSettings>()
-            );
+                templateManager ?? Mock.Of<BaseTemplateManager>(),
+                settings ?? Mock.Of<IWeBlogSettings>());
         }
     }
 }

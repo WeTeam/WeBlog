@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         }
     });
 
-    var version = grunt.option("scversion") || "sc9.1";
+    var version = grunt.option("scversion") || "sc10.0";
 
     grunt.registerTask("default", ["less", "deploy:" + version]);
 
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
     });
 
     function resolveSitecorePath(version) {
-        var file = grunt.file.read("../../deploy.targets").toLowerCase();
+        var file = grunt.file.read("../../deploy.props").toLowerCase();
         var doc = new dom().parseFromString(file);
 
         var select = xpath.useNamespaces({

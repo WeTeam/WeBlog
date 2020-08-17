@@ -8,6 +8,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public partial class CommentItem : CustomItem
     {
+        [Obsolete("Comment is defined per blog. Use Sitecore.Modules.WeBlog.BlogSettings.CommentTemplateID instead.")]
         public static readonly string TemplateId = "{70949D4E-35D8-4581-A7A2-52928AA119D5}";
 
         public CommentItem(Item innerItem)
@@ -26,7 +27,15 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             return customItem != null ? customItem.InnerItem : null;
         }
 
+        public CustomTextField CommentorName
+        {
+            get { return new CustomTextField(InnerItem, InnerItem.Fields["Name"]); }
+        }
+
+        [Obsolete("Use CommentorName property instead.")]
+#pragma warning disable CS0114 // Member hides inherited member; missing override keyword
         public CustomTextField Name
+#pragma warning restore CS0114 // Member hides inherited member; missing override keyword
         {
             get { return new CustomTextField(InnerItem, InnerItem.Fields["Name"]); }
         }
@@ -71,7 +80,7 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         /// </summary>
         public string AuthorName
         {
-            get { return Name.Raw; }
+            get { return CommentorName.Raw; }
         }
 
         /// <summary>

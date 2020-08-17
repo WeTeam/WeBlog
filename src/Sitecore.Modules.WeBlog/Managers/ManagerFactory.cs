@@ -1,12 +1,7 @@
-﻿using System;
-using Sitecore.Modules.WeBlog.Configuration;
+﻿using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.StringExtensions;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-#endif
+using System;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -24,16 +19,8 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 if (m_blogManager == null)
                 {
-#if FEATURE_ABSTRACTIONS
-                    var linkManager = ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
-#endif
-
                     m_blogManager = CreateInstance<IBlogManager>(WeBlogSettings.Instance.BlogManagerClass, () => {
-                        return new BlogManager(
-#if FEATURE_ABSTRACTIONS
-                            linkManager
-#endif
-                        );
+                        return new BlogManager(null, null, WeBlogSettings.Instance);
                     });
                 }
 
@@ -46,7 +33,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_categoryManager == null)
-                    m_categoryManager = CreateInstance<ICategoryManager>(WeBlogSettings.Instance.CategoryManagerClass, () => { return new CategoryManager(); });
+                    m_categoryManager = CreateInstance<ICategoryManager>(WeBlogSettings.Instance.CategoryManagerClass, () => { return new CategoryManager(null, null); });
 
                 return m_categoryManager;
             }
@@ -57,7 +44,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_commentManager == null)
-                    m_commentManager = CreateInstance<ICommentManager>(WeBlogSettings.Instance.CommentManagerClass, () => { return new CommentManager(); });
+                    m_commentManager = CreateInstance<ICommentManager>(WeBlogSettings.Instance.CommentManagerClass, () => { return new CommentManager(null, null); });
 
                 return m_commentManager;
             }

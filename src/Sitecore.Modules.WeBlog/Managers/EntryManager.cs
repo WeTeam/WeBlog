@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Sitecore.Data;
-using Sitecore.Data.Items;
-using Sitecore.Diagnostics;
-using Sitecore.Modules.WeBlog.Data.Items;
-using Sitecore.Modules.WeBlog.Extensions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq.Utilities;
 using Sitecore.ContentSearch.Security;
+using Sitecore.Data;
+using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
+using Sitecore.Diagnostics;
+using Sitecore.Modules.WeBlog.Analytics.Reporting;
+using Sitecore.Modules.WeBlog.Caching;
 using Sitecore.Modules.WeBlog.Configuration;
+using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
-using Sitecore.Modules.WeBlog.Caching;
-using Sitecore.Modules.WeBlog.Analytics.Reporting;
-
-#if FEATURE_XCONNECT
 using Sitecore.Xdb.Reporting;
-#else
-using Sitecore.Analytics.Reporting;
-#endif
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -31,25 +29,45 @@ namespace Sitecore.Modules.WeBlog.Managers
     public class EntryManager : IEntryManager
     {
         /// <summary>
-        /// The settings to use.
+        /// Gets the settings to use.
         /// </summary>
-        protected IWeBlogSettings Settings = null;
+        protected IWeBlogSettings Settings { get; }
 
         /// <summary>
-        /// The cache used to store blog entries in.
+        /// Get the cache used to store blog entries in.
         /// </summary>
-        protected IEntrySearchCache EntryCache = null;
+        protected IEntrySearchCache EntryCache { get; }
 
         /// <summary>
-        /// The comment manager to use.
+        /// Gets the comment manager to use.
         /// </summary>
-        protected ICommentManager CommentManager = null;
+        protected ICommentManager CommentManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
+        /// </summary>
+        protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         /// <summary>The <see cref="ReportDataProviderBase"/> to read reporting data from.</summary>
         protected ReportDataProviderBase ReportDataProvider = null;
 
+        /// <summary>
+        /// The <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; set; }
+
         public EntryManager()
-            : this(null, null)
+            : this(null, null, null, null, null)
+        {
+        }
+
+        [Obsolete("Use ctor(ReportDataProviderBase, IEntrySearchCache, IWeBlogSettings, ICommentManager, BaseTemplateManager, IBlogSettingsResolver) instead.")]
+        public EntryManager(
+            ReportDataProviderBase reportDataProvider,
+            IEntrySearchCache cache,
+            IWeBlogSettings settings = null,
+            ICommentManager commentManager = null)
+            : this(reportDataProvider, cache, settings, commentManager, null)
         {
         }
 
@@ -57,12 +75,16 @@ namespace Sitecore.Modules.WeBlog.Managers
             ReportDataProviderBase reportDataProvider,
             IEntrySearchCache cache,
             IWeBlogSettings settings = null,
-            ICommentManager commentManager = null)
+            ICommentManager commentManager = null,
+            BaseTemplateManager templateManager = null,
+            IBlogSettingsResolver blogSettingsResolver = null)
         {
             ReportDataProvider = reportDataProvider;
             Settings = settings ?? WeBlogSettings.Instance;
             EntryCache = cache ?? CacheManager.GetCache<IEntrySearchCache>(EntrySearchCache.CacheName);
-            CommentManager = commentManager ?? ManagerFactory.CommentManagerInstance;
+            CommentManager = commentManager ?? ServiceLocator.ServiceProvider.GetRequiredService<ICommentManager>();
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
         }
 
         /// <summary>
@@ -116,13 +138,13 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return cachedEntries;
 
             var customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  where blogRootItem.TemplateIsOrBasedOn(templateId)
+                                  where TemplateManager.TemplateIsOrBasedOn(blogRootItem, templateId)
                                   select (BlogHomeItem)blogRootItem).FirstOrDefault();
 
             if (customBlogItem == null)
             {
                 customBlogItem = (from templateId in Settings.BlogTemplateIds
-                                  let item = blogRootItem.FindAncestorByTemplate(templateId)
+                                  let item = blogRootItem.FindAncestorByTemplate(templateId, TemplateManager)
                                   where item != null
                                   select (BlogHomeItem)item).FirstOrDefault();
             }
@@ -130,10 +152,12 @@ namespace Sitecore.Modules.WeBlog.Managers
             if (customBlogItem == null)
                 return SearchResults<Entry>.Empty;
 
+            var blogSettings = BlogSettingsResolver.Resolve(customBlogItem);
+
             using (var context = CreateSearchContext(blogRootItem))
             {
                 var builder = PredicateBuilder.Create<EntryResultItem>(searchItem =>
-                    searchItem.TemplateId == customBlogItem.BlogSettings.EntryTemplateID &&
+                    searchItem.TemplateId == blogSettings.EntryTemplateID &&
                     searchItem.Paths.Contains(customBlogItem.ID) &&
                     searchItem.Language.Equals(customBlogItem.InnerItem.Language.Name, StringComparison.InvariantCulture)
                 );
@@ -180,7 +204,18 @@ namespace Sitecore.Modules.WeBlog.Managers
                 indexresults = indexresults.Skip(criteria.PageSize * (criteria.PageNumber - 1))
                     .Take(criteria.PageSize < int.MaxValue ? criteria.PageSize + 1 : criteria.PageSize);
 
-                var entries = indexresults.Select(x => CreateEntry(x)).ToList();
+                var entries = indexresults.Select(resultItem =>
+                    // Keep field access inline so the query analyzer can see which fields will be used.
+                    new Entry
+                    {
+                        Uri = resultItem.Uri,
+                        Title = string.IsNullOrWhiteSpace(resultItem.Title) ? resultItem.Name : resultItem.Title,
+                        Tags = resultItem.Tags != null ? resultItem.Tags : Enumerable.Empty<string>(),
+                        EntryDate = resultItem.EntryDate
+                    }
+                ).ToList();
+
+                
                 var hasMore = entries.Count > criteria.PageSize;
 
                 var entriesPage = entries.Take(criteria.PageSize).ToList();
@@ -192,6 +227,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             }
         }
 
+        [Obsolete("No longer used. Index field access must be inline so the query analyzer can see the fields used.")]
         protected virtual Entry CreateEntry(EntryResultItem resultItem)
         {
             return new Entry
@@ -248,7 +284,7 @@ namespace Sitecore.Modules.WeBlog.Managers
 
             var commentItem = Database.GetItem(commentUri);
 
-            return commentItem?.FindAncestorByAnyTemplate(Settings.EntryTemplateIds);
+            return commentItem?.FindAncestorByAnyTemplate(Settings.EntryTemplateIds, TemplateManager);
         }
 
         protected static bool IsAnalyticsEnabled()

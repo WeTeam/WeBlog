@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -22,12 +24,29 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IWeBlogSettings Settings = null;
 
         /// <summary>
+        /// The <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; set; }
+
+        /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
         public CategoryManager(IWeBlogSettings settings = null)
+            : this(settings, null)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
+        public CategoryManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager;
         }
 
         /// <summary>
@@ -52,7 +71,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             {
                 var children = categoryRoot.GetChildren();
                 return (from childItem in children
-                        where childItem.TemplateIsOrBasedOn(Settings.CategoryTemplateIds)
+                        where TemplateManager.TemplateIsOrBasedOn(childItem, Settings.CategoryTemplateIds)
                         && childItem.Versions.Count > 0
                         select new CategoryItem(childItem)).ToArray();
             }
@@ -96,7 +115,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The category folder if found, otherwise null</returns>
         public virtual Item GetCategoryRoot(Item item)
         {
-            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
+            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds, TemplateManager);
 
             if (blogItem != null)
                 return blogItem.Axes.GetChild("Categories");

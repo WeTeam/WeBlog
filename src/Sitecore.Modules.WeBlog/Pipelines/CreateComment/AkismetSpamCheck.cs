@@ -1,18 +1,13 @@
-﻿using System;
-using System.Diagnostics;
-using System.Reflection;
-using Joel.Net;
+﻿using Joel.Net;
+using Sitecore.Abstractions;
+using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
-using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Sites;
-
-#if FEATURE_ABSTRACTIONS
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-#endif
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -21,44 +16,19 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         private IWeBlogSettings _settings = null;
         private IAkismet _akismetApi = null;
         private IBlogManager _blogManager = null;
-
-#if FEATURE_ABSTRACTIONS
         private BaseLinkManager _linkManager = null;
-#endif
 
         public AkismetSpamCheck()
-            : this(null, null, null
-#if FEATURE_ABSTRACTIONS
-                  , null
-#endif
-                  )
+            : this(null, null, null, null)
         {
         }
 
-        [Obsolete("Use ctor(IWeBlogSettings, BaseLinkManager, IBlogManager, IAkismet) instead.")]
-        public AkismetSpamCheck(IWeBlogSettings settings)
-            : this(settings, null, null
-#if FEATURE_ABSTRACTIONS
-                  , null
-#endif
-                  )
-        {
-        }
-
-        public AkismetSpamCheck(IWeBlogSettings settings, IBlogManager blogManager, IAkismet akismetApi
-#if FEATURE_ABSTRACTIONS
-            , BaseLinkManager linkManager
-#endif
-
-            )
+        public AkismetSpamCheck(IWeBlogSettings settings, IBlogManager blogManager, IAkismet akismetApi, BaseLinkManager linkManager)
         {
             _settings = settings ?? WeBlogSettings.Instance;
             _blogManager = blogManager ?? ManagerFactory.BlogManagerInstance;
             _akismetApi = akismetApi;
-
-#if FEATURE_ABSTRACTIONS
             _linkManager = linkManager ?? ServiceLocator.ServiceProvider.GetService(typeof(BaseLinkManager)) as BaseLinkManager;
-#endif
         }
 
         public void Process(CreateCommentArgs args)
@@ -77,14 +47,7 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                     var version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
-                    var urlOptions = UrlOptions.DefaultOptions;
-                    urlOptions.AlwaysIncludeServerUrl = true;
-
-#if FEATURE_ABSTRACTIONS
-                    var url = _linkManager.GetItemUrl(_blogManager.GetCurrentBlog(), urlOptions);
-#else
-                    var url = LinkManager.GetItemUrl(_blogManager.GetCurrentBlog(), urlOptions);
-#endif
+                    var url = _linkManager.GetAbsoluteItemUrl(_blogManager.GetCurrentBlog());
 
                     api.Init(_settings.AkismetAPIKey, url, "WeBlog/" + version);
 

@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Data.Items;
-using Sitecore.Security.Accounts;
+using Sitecore.Data.Managers;
+using Sitecore.DependencyInjection;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Abstractions;
+using Sitecore.Modules.WeBlog.Data.Items;
+using Sitecore.Modules.WeBlog.Extensions;
+using Sitecore.Security.Accounts;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -21,35 +24,46 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         protected IWeBlogSettings Settings = null;
 
-#if FEATURE_ABSTRACTIONS
         /// <summary>
-        /// The <see cref="BaseLinkManager"/> used to generate links.
+        /// Gets the <see cref="BaseLinkManager"/> used to generate links.
         /// </summary>
-        protected BaseLinkManager LinkManager { get; set; }
+        protected BaseLinkManager LinkManager { get; }
+
+        /// <summary>
+        /// Gets the <see cref="BaseTemplateManager"/> used to access templates.
+        /// </summary>
+        protected BaseTemplateManager TemplateManager { get; }
 
         /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use. If null, the default settings are used.</param>
-        public BlogManager(BaseLinkManager linkManager, IWeBlogSettings settings = null)
-        {
-            if (linkManager == null)
-                throw new ArgumentNullException(nameof(linkManager));
-
-            LinkManager = linkManager;
-            Settings = settings ?? WeBlogSettings.Instance;
-        }
-#else
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        [Obsolete("Use ctor(BaseLinkManager, BaseTemplateManager, IWeBlogSettings) instead.")]
         public BlogManager(IWeBlogSettings settings = null)
+            : this(null, null, settings)
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        [Obsolete("Use ctor(BaseLinkManager, BaseTemplateManager, IWeBlogSettings) instead.")]
+        public BlogManager(BaseLinkManager linkManager, IWeBlogSettings settings = null)
+            : this(linkManager, null, settings)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
+        public BlogManager(BaseLinkManager linkManager, BaseTemplateManager templateManager, IWeBlogSettings settings = null)
+        {
+            LinkManager = linkManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseLinkManager>();
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
             Settings = settings ?? WeBlogSettings.Instance;
         }
-#endif
 
         /// <summary>
         /// Gets the current blog for the context item
@@ -67,14 +81,10 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <returns>The current blog if found, otherwise null</returns>
         public BlogHomeItem GetCurrentBlog(Item item)
         {
-            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds);
+            var blogItem = item.FindAncestorByAnyTemplate(Settings.BlogTemplateIds, TemplateManager);
 
             if (blogItem != null)
-#if FEATURE_ABSTRACTIONS
-                return new BlogHomeItem(blogItem, LinkManager);
-#else
                 return new BlogHomeItem(blogItem);
-#endif
             else
                 return null;
         }
@@ -118,11 +128,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                    from item in blogItems
                    where item != null
                     select new
-#if FEATURE_ABSTRACTIONS
-                    BlogHomeItem(item, LinkManager)
-#else
                     BlogHomeItem(item)
-#endif
                     ).ToArray();
         }
 
@@ -180,7 +186,16 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
             BlogHomeItem currentBlog = GetCurrentBlog();
             if (currentBlog != null)
-                return currentBlog.DictionaryItem;
+            {
+                var dictionaryFolder = currentBlog.CustomDictionaryFolder;
+
+                if (dictionaryFolder.Item != null)
+                {
+                    return dictionaryFolder.Item;
+                }
+
+                return ItemManager.GetItem(Settings.DictionaryPath, Context.Language, Sitecore.Data.Version.Latest, Context.Database);
+            }
             else
                 return null;
         }
