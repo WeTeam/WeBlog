@@ -6,12 +6,6 @@
     <Title>WeBlog MVC</Title>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MSCaptcha">
-      <HintPath>..\..\lib\MSCaptcha\MSCaptcha.dll</HintPath>
-    </Reference>
-    <Reference Include="Recaptcha">
-      <HintPath>..\..\lib\Recaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
 	<ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>
@@ -40,7 +34,6 @@
     <Content Include="Views\WeBlog\web.config" />
     <Content Include="Views\WeBlog\Archive.cshtml" />
     <Content Include="Views\WeBlog\Blog.cshtml" />
-    <Content Include="Views\WeBlog\Captcha.cshtml" />
     <Content Include="Views\WeBlog\Categories.cshtml" />
     <Content Include="Views\WeBlog\CommentsList.cshtml" />
     <Content Include="Views\WeBlog\Entry.cshtml" />
@@ -54,7 +47,6 @@
     <Content Include="Views\WeBlog\MvcLayoutAjax.cshtml" />
     <Content Include="Views\WeBlog\PostList.cshtml" />
     <Content Include="Views\WeBlog\PostListEntry.cshtml" />
-    <Content Include="Views\WeBlog\Recaptcha.cshtml" />
     <Content Include="Views\WeBlog\RecentComments.cshtml" />
     <Content Include="Views\WeBlog\ShareEntry-AddThis.cshtml" />
     <Content Include="Views\WeBlog\ShareEntry-ShareThis.cshtml" />
@@ -74,7 +66,7 @@
   <Target Name="DeployToWeb">
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
-    <CreateItem Include="$(OutDir)$(AssemblyName).dll;$(OutDir)Recaptcha.dll">
+    <CreateItem Include="$(OutDir)$(AssemblyName).dll">
       <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />

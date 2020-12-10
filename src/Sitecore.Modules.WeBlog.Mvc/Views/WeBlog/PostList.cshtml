@@ -1,13 +1,12 @@
 ﻿@using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
-@using Sitecore.Modules.WeBlog.Model
 @using Sitecore.Modules.WeBlog.Mvc.Model
 @model Sitecore.Modules.WeBlog.Mvc.Model.PostList
 
 <div class="wb-entry-list">
     @foreach (var entry in Model.Entries)
     {
-        Html.RenderPartial(Model.PostTemplate, new PostListEntry(entry));
+        Html.RenderPartial(Model.PostTemplate, new PostListEntry(entry, Model.CommentManager));
     }
     @if (Model.ShowViewMoreLink)
     {

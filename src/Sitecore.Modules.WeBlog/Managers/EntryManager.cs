@@ -61,16 +61,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         {
         }
 
-        [Obsolete("Use ctor(ReportDataProviderBase, IEntrySearchCache, IWeBlogSettings, ICommentManager, BaseTemplateManager, IBlogSettingsResolver) instead.")]
-        public EntryManager(
-            ReportDataProviderBase reportDataProvider,
-            IEntrySearchCache cache,
-            IWeBlogSettings settings = null,
-            ICommentManager commentManager = null)
-            : this(reportDataProvider, cache, settings, commentManager, null)
-        {
-        }
-
         public EntryManager(
             ReportDataProviderBase reportDataProvider,
             IEntrySearchCache cache,
@@ -225,18 +215,6 @@ namespace Sitecore.Modules.WeBlog.Managers
 
                 return results;
             }
-        }
-
-        [Obsolete("No longer used. Index field access must be inline so the query analyzer can see the fields used.")]
-        protected virtual Entry CreateEntry(EntryResultItem resultItem)
-        {
-            return new Entry
-            {
-                Uri = resultItem.Uri,
-                Title = string.IsNullOrWhiteSpace(resultItem.Title) ? resultItem.Name : resultItem.Title,
-                Tags = resultItem.Tags != null ? resultItem.Tags : Enumerable.Empty<string>(),
-                EntryDate = resultItem.EntryDate
-            };
         }
 
         /// <summary>

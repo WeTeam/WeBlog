@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Sitecore.Data;
 using System.Collections.Generic;
-using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Configuration
 {
@@ -55,18 +54,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
         string GravatarImageServiceUrl { get; }
 
         /// <summary>
-        /// Gets the reCAPTCHA private key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        string ReCaptchaPrivateKey { get; }
-
-        /// <summary>
-        /// Gets the reCAPTCHA public key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        string ReCaptchaPublicKey { get; }
-
-        /// <summary>
         /// Gets the AddThis account name.
         /// </summary>
         string AddThisAccountName { get; }
@@ -100,18 +87,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// Gets the dictionary entry template id.
         /// </summary>
         ID DictionaryEntryTemplateId { get; }
-
-        /// <summary>
-        /// Gets the maximum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        TimeSpan CaptchaMaximumTimeout { get; }
-
-        /// <summary>
-        /// Gets the minimum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        TimeSpan CaptchaMinimumTimeout { get; }
 
         /// <summary>
         /// Gets the ID of the workflow command to execute after creating a comment.

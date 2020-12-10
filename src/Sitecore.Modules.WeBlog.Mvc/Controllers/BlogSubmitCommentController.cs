@@ -1,9 +1,7 @@
 ﻿using Sitecore.Modules.WeBlog.Components;
-using Sitecore.Modules.WeBlog.Globalization;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Mvc.Components.Parameters;
 using Sitecore.Modules.WeBlog.Mvc.Model;
-using System;
 using System.Web.Mvc;
 
 namespace Sitecore.Modules.WeBlog.Mvc.Controllers
@@ -87,23 +85,6 @@ namespace Sitecore.Modules.WeBlog.Mvc.Controllers
             comment.Fields.Add(Constants.Fields.Website, model.Website);
             comment.Fields.Add(Constants.Fields.IpAddress, HttpContext.Request.UserHostAddress);
             return comment;
-        }
-
-        [Obsolete("Use IValidateCommentCore.Validate() instead.")]
-        protected virtual void ValidateModelState(SubmitCommentRenderingModel model)
-        {
-            if (model.UserName == null)
-            {
-                ModelState.AddModelError("", string.Format(Translator.Text("REQUIRED_FIELD"), "Name"));
-            }
-            if (model.Email == null)
-            {
-                ModelState.AddModelError("", string.Format(Translator.Text("REQUIRED_FIELD"), "Email"));
-            }
-            if (model.Comment == null)
-            {
-                ModelState.AddModelError("", string.Format(Translator.Text("REQUIRED_FIELD"), "Comment"));
-            }
         }
     }
 }

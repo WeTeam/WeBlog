@@ -73,17 +73,6 @@ namespace Sitecore.Modules.WeBlog
         {
         }
 
-        [Obsolete("Use ctor() instead.")]
-        public MetaBlogApi(
-			IBlogManager blogManager,
-			ICategoryManager categoryManager,
-			IEntryManager entryManager,
-			IWeBlogSettings settings,
-			BaseMediaManager mediaManager,
-			BaseLinkManager linkManager)
-        {
-        }
-
         public MetaBlogApi(
             IBlogManager blogManager,
             ICategoryManager categoryManager,

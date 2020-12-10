@@ -1,17 +1,10 @@
-using System;
-using System.Linq;
-using Sitecore.Abstractions;
 using Sitecore.Data.Items;
-using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Fields;
 using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Security.Accounts;
-
-#if FEATURE_URL_BUILDERS
-using Sitecore.Links.UrlBuilders;
-#endif
+using System;
+using System.Linq;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -19,11 +12,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
     {
         public EntryItem(Item innerItem)
              : base(innerItem)
-        {
-        }
-
-        [Obsolete("Use ctor(Item) instead.")]
-        public EntryItem(Item innerItem, BaseLinkManager linkManager) : base(innerItem)
         {
         }
 
@@ -106,43 +94,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         {
             get { return ExtractTags(false); }
             set { Tags.Field.Value = FormTags(value); }
-        }
-
-        /// <summary>
-        /// Gets the URL of the entry
-        /// </summary>
-        [Obsolete("Use BaseLinkManager.GetItemUrl() with this item instead.")]
-        public string Url
-        {
-            get { return LinkManager.GetItemUrl(InnerItem); }
-        }
-
-        /// <summary>
-        /// Gets the absolute URL of the entry including the server
-        /// </summary>
-        [Obsolete("Use BaseLinkManager.GetItemUrl() with this item instead.")]
-        public string AbsoluteUrl
-        {
-            get
-            {
-#if FEATURE_URL_BUILDERS
-                var urlOptions = new ItemUrlBuilderOptions();
-#else
-                var urlOptions = UrlOptions.DefaultOptions;
-#endif
-
-                urlOptions.AlwaysIncludeServerUrl = true;
-                return LinkManager.GetItemUrl(InnerItem, urlOptions);
-            }
-        }
-
-        /// <summary>
-        /// Gets the count of comments for this blog entry.
-        /// </summary>
-        [Obsolete("Use Sitecore.Modules.WeBlog.Managers.ICommentManager from ServiceProvider instead.")]
-        public int CommentCount
-        {
-            get { return ManagerFactory.CommentManagerInstance.GetCommentsCount(this); }
         }
 
         /// <summary>

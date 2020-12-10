@@ -12,9 +12,6 @@
     <PackageReference Include="AntiXSS" Version="4.3.0" />
     <PackageReference Include="CookComputing.XmlRPCv2" Version="2.5.0" />
     <PackageReference Include="Scriban" Version="2.1.1" />
-    <Reference Include="MSCaptcha">
-      <HintPath>..\..\lib\MSCaptcha\MSCaptcha.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup Condition="$(Configuration.Contains('sc10.0'))">
@@ -102,28 +99,17 @@
   <Target Name="DeployToWeb">
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecoreCDPath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" Condition="$(SitecoreCDPath) != ''" />
-    <CreateItem Include="$(OutDir)$(AssemblyName)*.dll;$(OutDir)AntiXssLibrary.dll;$(OutDir)MSCaptcha.dll;$(OutDir)CookComputing.XmlRPCv2.dll;$(OutDir)Scriban.dll">
+    <CreateItem Include="$(OutDir)$(AssemblyName)*.dll;$(OutDir)AntiXssLibrary.dll;$(OutDir)CookComputing.XmlRPCv2.dll;$(OutDir)Scriban.dll">
       <Output ItemName="BinFiles" TaskParameter="Include" />
     </CreateItem>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
     <!-- Transform content search config for specific Sitecore versions -->
-    <XslTransformation
-      XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.0-9.1.xslt"
-      XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config"
-      OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config"
-      Condition="$(SitecorePath) != '' AND ($(Configuration.Contains('sc9.0')) OR $(Configuration.Contains('sc9.1')))" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.0-9.1.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config" Condition="$(SitecorePath) != '' AND ($(Configuration.Contains('sc9.0')) OR $(Configuration.Contains('sc9.1')))" />
   </Target>
   <Target Name="ContentDeliveryConfig">
-    <XslTransformation
-      XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt"
-      XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config"
-      OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled"
-      Condition="$(SitecorePath) != ''" />
-    <Copy 
-      SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled"
-      DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" 
-      Condition="$(SitecoreCDPath) != ''" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />
+    <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
     <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
 </Project>

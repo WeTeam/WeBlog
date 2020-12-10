@@ -1,4 +1,5 @@
-﻿@using Sitecore.Modules.WeBlog.Extensions
+﻿@using Sitecore.Links
+@using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.Feeds
 
@@ -10,7 +11,7 @@
             @foreach (var feed in Model.FeedItems)
             {
                 <li>
-                    <a id="feedText" class="wb-feed-text" href="@feed.Url">@feed.Title.Text.ToHtmlString()</a>
+                    <a id="feedText" class="wb-feed-text" href="@LinkManager.GetItemUrl(feed)">@feed.Title.Text.ToHtmlString()</a>
                 </li>
             }
         </ul>

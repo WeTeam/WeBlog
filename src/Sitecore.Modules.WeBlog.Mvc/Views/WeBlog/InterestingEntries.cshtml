@@ -13,7 +13,7 @@
             @foreach (var entry in Model.Entries)
             {
                 <li>
-                    <a href="@entry.Url">@entry.Title.Rendered.ToHtmlString()</a>
+                    <a href="@LinkManager.GetItemUrl(entry)">@entry.Title.Rendered.ToHtmlString()</a>
                 </li>
             }
         </ul>

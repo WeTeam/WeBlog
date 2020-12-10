@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -42,16 +41,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// Gets the <see cref="IBlogSettingsResolver"/> used to resolve the settings for a given blog item.
         /// </summary>
         protected IBlogSettingsResolver BlogSettingsResolver { get; }
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
-        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
-        public CommentManager(IWeBlogSettings settings = null)
-            : this(settings, null)
-        {
-        }
 
         /// <summary>
         /// Creates a new instance.
@@ -86,22 +75,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return args.CommentItem.ID;
             else
                 return ID.Null;
-        }
-
-        [Obsolete("Use AddCommentToEntry(ID, Comment, Language) instead.")]
-        protected virtual void AddComment(EntryItem entryItem, WpComment wpComment)
-        {
-            // todo: Wizard to ask user which language to import into
-            string itemName = ItemUtil.ProposeValidItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
-
-            CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID("{70949D4E-35D8-4581-A7A2-52928AA119D5}")));
-            commentItem.BeginEdit();
-            commentItem.Comment.Field.Value = wpComment.Content;
-            commentItem.Email.Field.Value = wpComment.Email;
-            commentItem.IpAddress.Field.Value = wpComment.IP;
-            commentItem.Website.Field.Value = wpComment.Url;
-            commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
-            commentItem.EndEdit();
         }
 
         /// <summary>

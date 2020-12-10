@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.Data.Items;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
@@ -9,7 +8,7 @@ using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.SecurityModel;
 using Sitecore.Sites;
-using Sitecore.StringExtensions;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -30,16 +29,6 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
         /// </summary>
 	    public CreateCommentItem()
             : this(null, null)
-        {
-        }
-
-        /// <summary>
-        /// Create a new instance.
-        /// </summary>
-        /// <param name="blogManager">The <see cref="IBlogManager"/> used to access the structure of the blog and other settings.</param>
-        [Obsolete("Use ctor(IBlogManager, IBlogSettingsResolver) instead.")]
-	    public CreateCommentItem(IBlogManager blogManager)
-            : this(blogManager, null)
         {
         }
 

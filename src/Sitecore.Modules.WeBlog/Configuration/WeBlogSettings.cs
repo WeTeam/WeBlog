@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Sitecore.Data;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Configuration
 {
@@ -137,24 +136,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
         }
 
         /// <summary>
-        /// Gets the reCAPTCHA private key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public string ReCaptchaPrivateKey
-        {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.reCAPTCHA.PrivateKey"); }
-        }
-
-        /// <summary>
-        /// Gets the reCAPTCHA public key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public string ReCaptchaPublicKey
-        {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.reCAPTCHA.PublicKey"); }
-        }
-
-        /// <summary>
         /// Gets the AddThis account name.
         /// </summary>
         public string AddThisAccountName
@@ -212,24 +193,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
                 var id = Sitecore.Configuration.Settings.GetSetting("WeBlog.Globalization.DictonaryEntryTemplateId");
                 return ID.Parse(id);
             }
-        }
-
-        /// <summary>
-        /// Gets the maximum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public TimeSpan CaptchaMaximumTimeout
-        {
-            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MaxTimeout", "00:01:00"); }
-        }
-
-        /// <summary>
-        /// Gets the minimum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public TimeSpan CaptchaMinimumTimeout
-        {
-            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MinTimeout", "00:00:03"); }
         }
 
         /// <summary>
