@@ -1,5 +1,4 @@
 ﻿using System;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Mvc.Pipelines.Response.RenderRendering;
 using Sitecore.Sites;
@@ -25,7 +24,7 @@ namespace Sitecore.Modules.WeBlog.Mvc.Pipelines.RenderRendering
             var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog();
             if (args.Rendering.Caching.Cacheable && site != null && site.CacheHtml && currentBlog != null)
             {
-                var key = "CacheVaryByBlogKey=" + currentBlog.SafeGet(x => x.ID).SafeGet(x => x.ToShortID()).SafeGet(x => x.ToString());
+                var key = "CacheVaryByBlogKey=" + currentBlog?.ID?.ToShortID()?.ToString();
                 args.CacheKey +=  String.Format("&{0}", key);
             }
         }
