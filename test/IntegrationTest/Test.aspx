@@ -6,75 +6,21 @@
 <head runat="server">
     <title>codeflood Test Runner</title>
     <style type="text/css">
-body {
-    font-family: Tahoma, Arial, Sans-Serif;
-    font-size: 10pt;
-    color: #333333;
-}
-
-h1 {
-    font-size: 1.5em;
-}
-
-h2 {
-    font-size: 1.3em;
-}
-
-h3 {
-    font-size: 1.2em;
-}
-
-.filters ul {
-    padding: 0;
-}
-
-.filters li {
-    list-style: none;
-}
-
-.pass {
-    width: 1em;
-    height: 1em;
-    background-color: #5eb95e;
-}
-
-.fail {
-    width: 1em;
-    height: 1em;
-    background-color: #dd514c;
-}
-
-.notRun {
-    width: 1em;
-    height: 1em;
-    background-color: #fad232;
-}
-
-.passLabel {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: #5eb95e;
-}
-
-.failLabel {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: #dd514c;
-}
-
-.hide {
-    display: none;
-}
-
-.show {
-    display: block;
-}
-
-#filterCategory, #filterMethod {
-    margin-left: 1em;
-    padding-left: 1em;
-    border-left: solid 3px #999999;
-}
+body { font-family: Tahoma, Arial, Sans-Serif; font-size: 10pt; color: #333333; }
+h1 { font-size: 1.5em; }
+h2 { font-size: 1.3em; }
+h3 { font-size: 1.2em; }
+.inlineHeading { display: inline-block; margin-right: 0.5em; }
+.filters ul { padding: 0; }
+.filters li { list-style: none; }
+.pass { width: 1em; height: 1em; background-color: #5eb95e; }
+.fail { width: 1em; height: 1em; background-color: #dd514c; }
+.notRun { width: 1em; height: 1em; background-color: #fad232; }
+.passLabel { font-size: 1.3em; font-weight: bold; color: #5eb95e; }
+.failLabel { font-size: 1.3em; font-weight: bold; color: #dd514c; }
+.hide { display: none; }
+.show { display: block; }
+#filterCategory, #filterMethod { margin-left: 1em; padding-left: 1em; border-left: solid 3px #999999; }
     </style>
     <script type="text/javascript">
 function checkAll(checked, containerId) {
@@ -133,7 +79,8 @@ function toggle() {
             <div class="filters">
                 <h2>Filters</h2>
                 <p>If no filters are selected the entire test suite will run.</p>
-                <h3>Category</h3>
+                <h3 class="inlineHeading">Category</h3>
+                <span>(<%= cblCategories.Items.Count %>)</span>
                 <p>
                     <a id="hideCategoryFilter" class="hide" href="javascript:void(0)" onclick="toggle('filterCategory', 'hideCategoryFilter', 'showCategoryFilter')">hide</a>
                     <a id="showCategoryFilter" class="show" href="javascript:void(0)" onclick="toggle('filterCategory', 'showCategoryFilter', 'hideCategoryFilter')">show</a>
@@ -145,7 +92,8 @@ function toggle() {
                     </p>
                     <asp:CheckBoxList runat="server" ID="cblCategories" RepeatLayout="UnorderedList" ClientIDMode="Static" />
                 </div>
-                <h3>Test Methods</h3>
+                <h3 class="inlineHeading">Test Methods</h3>
+                <span>(<%= cblMethods.Items.Count %>)</span>
                 <p>
                     <a id="hideMethodFilter" class="hide" href="javascript:void(0)" onclick="toggle('filterMethod', 'hideMethodFilter', 'showMethodFilter')">hide</a>
                     <a id="showMethodFilter" class="show" href="javascript:void(0)" onclick="toggle('filterMethod', 'showMethodFilter', 'hideMethodFilter')">show</a>

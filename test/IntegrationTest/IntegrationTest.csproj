@@ -8,11 +8,9 @@
     <None Remove="App_Config\Include\zWeBlog.Test.ContentSearch.Solr.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="codeflood.nunit.aspnet.testrunner" Version="1.1.0" />
+    <PackageReference Include="codeflood.nunit.aspnet.testrunner" Version="1.2.0" />
     <PackageReference Include="CookComputing.XmlRPCv2" Version="2.5.0" />
     <PackageReference Include="Moq" Version="4.2.1507.0118" />
-    <PackageReference Include="NUnit" Version="2.6.4" />
-    <PackageReference Include="NUnit.Runners" Version="2.6.4" />
     <ProjectReference Include="..\..\src\Sitecore.Modules.WeBlog\Sitecore.Modules.WeBlog.csproj" />
   </ItemGroup>
   <ItemGroup>
