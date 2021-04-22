@@ -1,4 +1,5 @@
 ﻿using Sitecore.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -282,14 +283,26 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Indicates whether to use the comment service or not.
         /// </summary>
+        [Obsolete("Use the EventQueue for comment submission instead.")]
         public bool CommentServiceEnabled
         {
             get { return Sitecore.Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false); }
         }
 
+        /// <summary>
+        /// Maximum number of proposed tags returned in WeBlog Tags field
+        /// </summary>
         public int TagFieldMaxItemCount
         {
             get { return System.Convert.ToInt32(Sitecore.Configuration.Settings.GetSetting("WeBlog.TagsField.MaxItemsCount", "20")); }
+        }
+
+        /// <summary>
+        /// Indicates whether submitted comments should be handled locally.
+        /// </summary>
+        public bool HandleSubmittedCommentsLocally
+        {
+            get { return Sitecore.Configuration.Settings.GetBoolSetting("WeBlog.CommentSubmitted.HandleLocally", false); }
         }
     }
 }

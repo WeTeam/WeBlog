@@ -6,6 +6,7 @@
     <Title>WeBlog Core</Title>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="App_Config\Include\WeBlog.Comments.Handler.config" />
     <None Remove="App_Config\Include\WeBlog.config" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +71,7 @@
     <PackageReference Include="Sitecore.Xdb.Reporting" Version="9.0.180604" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.Comments.Handler.config" />
     <Content Include="App_Config\Include\WeBlog.config" />
     <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.config" />
     <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.Master.config" />

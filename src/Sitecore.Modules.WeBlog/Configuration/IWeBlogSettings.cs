@@ -1,4 +1,5 @@
 ﻿using Sitecore.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Sitecore.Modules.WeBlog.Configuration
@@ -141,11 +142,17 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Indicates whether to use the comment service or not.
         /// </summary>
+        [Obsolete("Use the EventQueue for comment submission instead.")]
         bool CommentServiceEnabled { get;  }
 
         /// <summary>
         /// Maximum number of proposed tags returned in WeBlog Tags field
         /// </summary>
         int TagFieldMaxItemCount { get; }
+
+        /// <summary>
+        /// Indicates whether submitted comments should be handled locally.
+        /// </summary>
+        bool HandleSubmittedCommentsLocally { get; }
     }
 }

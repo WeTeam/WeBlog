@@ -5,6 +5,7 @@ using Sitecore.ContentSearch.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.DependencyInjection;
+using Sitecore.Eventing;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
@@ -43,15 +44,37 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         /// <summary>
+        /// Gets the <see cref="IEventQueue"/> which new comments are submitted to.
+        /// </summary>
+        protected IEventQueue EventQueue { get; }
+
+        /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
         /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
+        /// <param name="blogSettingsResolver">The resolver used to resolve settings for specific blogs.</param>
+        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager, IBlogSettingsResolver, BaseEventQueueProvider) instead.")]
         public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
             TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
             BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
+        }
+
+        /// <summary>
+        /// Creates a new instance.
+        /// </summary>
+        /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
+        /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
+        /// <param name="blogSettingsResolver">The resolver used to resolve settings for specific blogs.</param>
+        /// <param name="eventQueue">The event queue to submit new comments to.</param>
+        public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null, BaseEventQueueProvider eventQueue = null)
+        {
+            Settings = settings ?? WeBlogSettings.Instance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
+            EventQueue = eventQueue ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseEventQueueProvider>();
         }
 
         /// <summary>
@@ -99,7 +122,19 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return result;
             }
             else
-                return AddCommentToEntry(Context.Item.ID, comment, language);
+            {
+                var commentEvent = new CommentSubmitted
+                {
+                    EntryId = entryId,
+                    RequestedCommentId = ID.NewID,
+                    Language = language ?? Context.Language,
+                    Comment = comment
+                };
+
+                EventQueue.QueueEvent(commentEvent, true, Settings.HandleSubmittedCommentsLocally);
+
+                return commentEvent.RequestedCommentId;
+            }
         }
 
         /// <summary>

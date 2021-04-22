@@ -9,7 +9,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest
     {
         protected Item TestContentRoot = null;
 
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void SwitchToMaster()
         {
             Sitecore.Context.Database = Database.GetDatabase(Constants.UnitTestDatabase);
@@ -22,7 +22,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest
             }
         }
 
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void TestFixtureTearDown()
         {
           using (new SecurityDisabler())
