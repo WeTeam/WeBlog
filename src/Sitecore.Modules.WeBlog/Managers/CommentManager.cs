@@ -34,6 +34,11 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IWeBlogSettings Settings = null;
 
         /// <summary>
+        /// The comment settings to use.
+        /// </summary>
+        protected IWeBlogCommentSettings CommentSettings = null;
+
+        /// <summary>
         /// Gets the <see cref="BaseTemplateManager"/> used to access templates.
         /// </summary>
         protected BaseTemplateManager TemplateManager { get; }
@@ -54,7 +59,7 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
         /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
         /// <param name="blogSettingsResolver">The resolver used to resolve settings for specific blogs.</param>
-        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager, IBlogSettingsResolver, BaseEventQueueProvider) instead.")]
+        [Obsolete("Use ctor(IWeBlogSettings, IWeBlogCommentSettings, BaseTemplateManager, IBlogSettingsResolver, BaseEventQueueProvider) instead.")]
         public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
@@ -69,9 +74,15 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
         /// <param name="blogSettingsResolver">The resolver used to resolve settings for specific blogs.</param>
         /// <param name="eventQueue">The event queue to submit new comments to.</param>
-        public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null, BaseEventQueueProvider eventQueue = null)
+        public CommentManager(
+            IWeBlogSettings settings = null,
+            IWeBlogCommentSettings commentSettings = null,
+            BaseTemplateManager templateManager = null,
+            IBlogSettingsResolver blogSettingsResolver = null,
+            BaseEventQueueProvider eventQueue = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
+            CommentSettings = commentSettings ?? ServiceLocator.ServiceProvider.GetRequiredService<IWeBlogCommentSettings>();
             TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
             BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
             EventQueue = eventQueue ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseEventQueueProvider>();
@@ -131,7 +142,7 @@ namespace Sitecore.Modules.WeBlog.Managers
                     Comment = comment
                 };
 
-                EventQueue.QueueEvent(commentEvent, true, Settings.HandleSubmittedCommentsLocally);
+                EventQueue.QueueEvent(commentEvent, true, CommentSettings.HandleSubmittedCommentsLocally);
 
                 return commentEvent.RequestedCommentId;
             }

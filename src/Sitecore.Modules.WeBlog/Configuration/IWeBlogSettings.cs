@@ -67,6 +67,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the Akismet API key.
         /// </summary>
+        [Obsolete("Use IWeBlogCommentSettings.AkismetAPIKey instead.")]
         string AkismetAPIKey { get; }
 
         /// <summary>
@@ -92,11 +93,13 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the ID of the workflow command to execute after creating a comment.
         /// </summary>
+        [Obsolete("Use IWeBlogCommentSettings.CommentWorkflowCommandCreated instead.")]
         string CommentWorkflowCommandCreated { get; }
 
         /// <summary>
         /// Gets the ID of the workflow command to execute after a comment is classified as spam.
         /// </summary>
+        [Obsolete("Use IWeBlogCommentSettings.CommentWorkflowCommandSpam instead.")]
         string CommentWorkflowCommandSpam { get; }
 
         /// <summary>
@@ -149,10 +152,5 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// Maximum number of proposed tags returned in WeBlog Tags field
         /// </summary>
         int TagFieldMaxItemCount { get; }
-
-        /// <summary>
-        /// Indicates whether submitted comments should be handled locally.
-        /// </summary>
-        bool HandleSubmittedCommentsLocally { get; }
     }
 }

@@ -155,6 +155,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the Akismet API key.
         /// </summary>
+        [Obsolete("Use WeBlogCommentSettings.AkismetAPIKey instead.")]
         public string AkismetAPIKey
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Akismet.APIKey"); }
@@ -199,6 +200,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the ID of the workflow command to execute after creating a comment.
         /// </summary>
+        [Obsolete("Use WeBlogCommentSettings.CommentWorkflowCommandCreated instead.")]
         public string CommentWorkflowCommandCreated
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created", ""); }
@@ -207,6 +209,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the ID of the workflow command to execute after a comment is classified as spam.
         /// </summary>
+        [Obsolete("Use WeBlogCommentSettings.CommentWorkflowCommandSpam instead.")]
         public string CommentWorkflowCommandSpam
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Spam"); }
@@ -295,14 +298,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
         public int TagFieldMaxItemCount
         {
             get { return System.Convert.ToInt32(Sitecore.Configuration.Settings.GetSetting("WeBlog.TagsField.MaxItemsCount", "20")); }
-        }
-
-        /// <summary>
-        /// Indicates whether submitted comments should be handled locally.
-        /// </summary>
-        public bool HandleSubmittedCommentsLocally
-        {
-            get { return Sitecore.Configuration.Settings.GetBoolSetting("WeBlog.CommentSubmitted.HandleLocally", false); }
         }
     }
 }
