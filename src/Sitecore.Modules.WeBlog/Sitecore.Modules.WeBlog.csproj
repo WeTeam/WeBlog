@@ -6,6 +6,7 @@
     <Title>WeBlog Core</Title>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="App_Config\Include\WeBlog.Client.config" />
     <None Remove="App_Config\Include\WeBlog.Comments.Handler.config" />
     <None Remove="App_Config\Include\WeBlog.config" />
   </ItemGroup>
@@ -71,6 +72,7 @@
     <PackageReference Include="Sitecore.Xdb.Reporting" Version="9.0.180604" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Config\Include\WeBlog.Client.config" />
     <Content Include="App_Config\Include\WeBlog.Comments.Handler.config" />
     <Content Include="App_Config\Include\WeBlog.config" />
     <Content Include="App_Config\Include\WeBlog.ContentSearch.Solr.config" />
@@ -96,7 +98,6 @@
   </ItemGroup>
   <Target Name="Deploy" AfterTargets="PostBuildEvent">
     <CallTarget Targets="DeployToWeb" Condition="$(SitecorePath) != ''" />
-    <CallTarget Targets="ContentDeliveryConfig" />
   </Target>
   <Target Name="DeployToWeb">
     <Copy SourceFiles="@(Content)" DestinationFiles="@(Content->'$(SitecorePath)\%(RelativeDir)%(Filename)%(Extension)')" SkipUnchangedFiles="false" />
@@ -108,10 +109,5 @@
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
     <!-- Transform content search config for specific Sitecore versions -->
     <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.0-9.1.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config" Condition="$(SitecorePath) != '' AND ($(Configuration.Contains('sc9.0')) OR $(Configuration.Contains('sc9.1')))" />
-  </Target>
-  <Target Name="ContentDeliveryConfig">
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.config.delivery.xslt" XmlInputPaths="$(SitecorePath)\App_Config\Include\WeBlog.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" Condition="$(SitecorePath) != ''" />
-    <Copy SourceFiles="$(SitecorePath)\App_Config\Include\WeBlog.delivery.config.disabled" DestinationFiles="$(SitecoreCDPath)\App_Config\Include\WeBlog.delivery.config" Condition="$(SitecoreCDPath) != ''" />
-    <Delete Files="$(SitecoreCDPath)\App_Config\Include\WeBlog.config" Condition="$(SitecoreCDPath) != ''" />
   </Target>
 </Project>

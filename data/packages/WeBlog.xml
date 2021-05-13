@@ -164,15 +164,15 @@ file.
     </items>
     <xfiles>
       <Entries>
+	    <x-item>/App_Config/Include/WeBlog.Client.config</x-item>
+		<x-item>/App_Config/Include/WeBlog.Comments.Handler.config</x-item>
         <x-item>/App_Config/Include/WeBlog.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.Master.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.Web.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
+		<x-item>/App_Config/Include/WeBlog.ExperienceEditor.config</x-item>
         <x-item>/App_Config/Include/WeBlog.Mvc.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.WebForms.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.ExperienceEditor.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.ScribanMailAction.config</x-item>
+		<x-item>/App_Config/Include/WeBlog.ScribanMailAction.config</x-item>
       </Entries>
       <Converter>
         <FileToEntryConverter>
