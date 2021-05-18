@@ -41,7 +41,7 @@ The WeBlog themes use Grunt as a toolchain and are not included in the Visual St
 
 1. Execute `npm install` in the `src/Themes` directory to restore the node packages.
 1. Execute `bower install` in the `src/Themes` directory to restore the bower packages.
-1. Execute `grunt` in the `src/Themes` directory to build the themes and deploy to the default (Sitecore 10.0) Sitecore instance.
+1. Execute `grunt` in the `src/Themes` directory to build the themes and deploy to the default (Sitecore 10.1) Sitecore instance.
 	1. Paths for Sitecore instaces are read from the `deploy.props` file above.
 	1. To deploy the themes to a different target instance, pass the `--scversion` parameter to `grunt`:
 	
@@ -58,10 +58,10 @@ Cores must be created in Solr for the WeBlog content search indexes.
 	solr create -c weblog-master
 	solr create -c weblog-web
 
+1. Copy the `managed-schema` file from the `conf` folder of an existing Sitecore core to the folders of the cores created above.
 1. Update the `WeBlog.ContentSearch.Solr.Master.config` and `WeBlog.ContentSearch.Solr.Web.config` files in the  `src/Sitecore.Modules.WeBlog/App_Config/Include/` folder to match the names of the cores created above.
 1. Deploy weblog code (rebuild the solution in VS) to ensure index configs are available.
 1. Use the indexing manager in the Sitecore control panel to populate the managed schema.
-	* If that doesn't work, copy the `managed-schema` file from the `conf` folder of an existing Sitecore core.
 1. Rebuild the indexes.
 
 ## Packaging ##

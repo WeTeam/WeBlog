@@ -5,9 +5,9 @@
     <Authors>WeBlog Community</Authors>
     <Company>WeTeam Community</Company>
     <Product>WeBlog</Product>
-    <Copyright>Copyright ©  2011 - 2020</Copyright>
+    <Copyright>Copyright ©  2011 - 2021</Copyright>
     <Version>4.1.0</Version>
-    <Configurations>Debug sc9.0;Debug sc9.1;Debug sc9.2;Debug sc9.3;Debug sc10.0;Release sc9.0;Release sc9.1;Release sc9.2;Release sc9.3;Release sc10.0</Configurations>
+    <Configurations>Debug sc9.0;Debug sc9.1;Debug sc9.2;Debug sc9.3;Debug sc10.0;Debug sc10.1;Release sc9.0;Release sc9.1;Release sc9.2;Release sc9.3;Release sc10.0;Release sc10.1</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
@@ -39,5 +39,10 @@
     <TargetFramework>net48</TargetFramework>
     <DefineConstants>$(DefineConstants);FEATURE_JOB_ABSTRACTIONS;FEATURE_URL_BUILDERS</DefineConstants>
     <OutputPath>bin\sc100\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('sc10.1'))">
+    <TargetFramework>net48</TargetFramework>
+    <DefineConstants>$(DefineConstants);FEATURE_JOB_ABSTRACTIONS;FEATURE_URL_BUILDERS</DefineConstants>
+    <OutputPath>bin\sc101\</OutputPath>
   </PropertyGroup>
 </Project>
