@@ -71,17 +71,6 @@
     <PackageReference Include="Sitecore.Services.Infrastructure" Version="9.1.1" />
     <PackageReference Include="Sitecore.Xdb.Reporting" Version="9.1.1" />
   </ItemGroup>
-  <ItemGroup Condition="$(Configuration.Contains('sc9.0'))">
-    <PackageReference Include="Sitecore.Analytics" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.Buckets" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.Client" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.ExperienceEditor" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.ExperienceEditor.Speak" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.Kernel" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.Services.Core" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.Services.Infrastructure" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.Xdb.Reporting" Version="9.0.180604" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="App_Config\Include\WeBlog.Client.config" />
     <Content Include="App_Config\Include\WeBlog.Comments.Handler.config" />
@@ -119,6 +108,6 @@
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecorePath)\bin" />
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(SitecoreCDPath)\bin" Condition="$(SitecoreCDPath) != ''" />
     <!-- Transform content search config for specific Sitecore versions -->
-    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.0-9.1.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config" Condition="$(SitecorePath) != '' AND ($(Configuration.Contains('sc9.0')) OR $(Configuration.Contains('sc9.1')))" />
+    <XslTransformation XslInputPath="App_Config\Include\WeBlog.ContentSearch.Solr.config.9.1.xslt" XmlInputPaths="App_Config\Include\WeBlog.ContentSearch.Solr.config" OutputPaths="$(SitecorePath)\App_Config\Include\WeBlog.ContentSearch.Solr.config" Condition="$(SitecorePath) != '' AND $(Configuration.Contains('sc9.1'))" />
   </Target>
 </Project>

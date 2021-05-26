@@ -13,33 +13,33 @@ Copyright (c) 2011 - 2020 WeTeam Community
 &lt;p&gt;THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</License>
       <Comment />
       <Attributes />
-      <Readme>Configure SOLR
-===============
+      <Readme>Post Install Steps
+==================
+
+After the installation wizard is complete, follow these
+steps:
+
+* Delete any old WeBlog config files from previous versions.
+* Create the SOLR cores (see below for detail)
+* Perform a full publish to all publishing targets
+* Rebuild the WeBlog search indexes
+
+Configure SOLR
+--------------
 Create the SOLR cores 'weblog-master' and 'weblog-web'. If 
 you use different names for the cores, update the
 core names in the following config files:
 
 * WeBlog.ContentSearch.Solr.Master.config 
 * WeBlog.ContentSearch.Solr.Web.config.
-	  
-Post Install Steps
-==================
-* Perform an incremental publish to all publishing targets
-* Delete any old WeBlog Content Search config files from
-    previous versions.
-* Rebuild the WeBlog search indexes
+
+After you've created the cores, populate the managed schema
+using the Control Panel.
 
 Create a Blog
-=============
-* Create a new blog using one of the following branches:
-    - 'Modules/WeBlog/Blog WebForms' for WebForms
-    - 'Modules/WeBlog/Blog MVC' for MVC
-
-Content Delivery Servers
-========================
-If deploying in a staged environment to a content delivery
-server, enable the App_Config\Include\WeBlog.delivery.config
-file.
+-------------
+* Create a new blog using the 'Modules/WeBlog/Blog MVC'
+    branch
 
 </Readme>
       <Publisher>WeTeam Community</Publisher>

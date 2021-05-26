@@ -5,12 +5,11 @@ A blog module for Sitecore.
 ## Features ##
 
 - Windows Live Writer integration (MetaWeblog API)
-- Page Editor support and custom WebEdit ribbon
+- Experience Editor support and custom WebEdit ribbon
 - Wordpress Import
 - CSS-based themes, with custom themes possible
 - Various blog navigation components
 - Comments with author notification and optional approval workflow
-- Comment CAPTCHA through MSCaptcha or reCAPTCHA
 - Gravatar Support
 - Social sharing through ShareThis or AddThis, and other Facebook and Twitter widgets
 - Tagging and tagcloud

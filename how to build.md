@@ -61,7 +61,7 @@ Cores must be created in Solr for the WeBlog content search indexes.
 1. Copy the `managed-schema` file from the `conf` folder of an existing Sitecore core to the folders of the cores created above.
 1. Update the `WeBlog.ContentSearch.Solr.Master.config` and `WeBlog.ContentSearch.Solr.Web.config` files in the  `src/Sitecore.Modules.WeBlog/App_Config/Include/` folder to match the names of the cores created above.
 1. Deploy weblog code (rebuild the solution in VS) to ensure index configs are available.
-1. Use the indexing manager in the Sitecore control panel to populate the managed schema.
+1. Use the Sitecore control panel to populate the managed schema.
 1. Rebuild the indexes.
 
 ## Packaging ##

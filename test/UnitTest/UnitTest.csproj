@@ -35,8 +35,4 @@
     <PackageReference Include="Sitecore.Nexus" Version="9.1.1" />
     <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" />
   </ItemGroup>
-  <ItemGroup Condition="$(Configuration.Contains('sc9.0'))">
-    <PackageReference Include="Sitecore.Nexus" Version="9.0.180604" />
-    <PackageReference Include="Sitecore.FakeDb" Version="2.0.1" />
-  </ItemGroup>
 </Project>
