@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Sitecore.DependencyInjection;
 using Sitecore.Diagnostics;
 using Sitecore.Modules.WeBlog.Configuration;
@@ -7,6 +6,7 @@ using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.StringExtensions;
+using System;
 
 namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 {
@@ -29,12 +29,6 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
         public DuplicateSubmissionGuard()
             : this(null, null)
-        {
-        }
-
-        [Obsolete("Use ctor(IBlogManager, IBlogSettingsResolver) instead.")]
-        public DuplicateSubmissionGuard(IBlogManager blogManager = null)
-            : this(blogManager, null)
         {
         }
 

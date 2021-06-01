@@ -25,7 +25,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         public void Process_MissingApiKey_AkismetApiNotCalled()
         {
             // arrange
-            var settings = Mock.Of<IWeBlogSettings>(x =>
+            var settings = Mock.Of<IWeBlogCommentSettings>(x =>
                 x.CommentWorkflowCommandSpam == "spamcommand"
             );
             var workflowProvider = CreateWorkflowProvider();
@@ -42,7 +42,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
         public void Process_MissingWorkflowCommand_AkismetApiNotCalled()
         {
             // arrange
-            var settings = Mock.Of<IWeBlogSettings>(x =>
+            var settings = Mock.Of<IWeBlogCommentSettings>(x =>
                 x.AkismetAPIKey == "apikey"
             );
             var workflowProvider = CreateWorkflowProvider();
@@ -82,7 +82,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             sut.Process(args);
 
             // assert
-            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.1.0.0"));
+            akismetApiMock.Verify(x => x.Init("apikey", "link", "WeBlog/4.2.0.0"));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             Assert.That(args.Aborted, Is.True);
         }
 
-        private (AkismetSpamCheck processor, CreateCommentArgs args, Mock<IAkismet> akismetApiMock) CreateAkismetSpamCheck(IWeBlogSettings settings, IWorkflowProvider workflowProvider)
+        private (AkismetSpamCheck processor, CreateCommentArgs args, Mock<IAkismet> akismetApiMock) CreateAkismetSpamCheck(IWeBlogCommentSettings settings, IWorkflowProvider workflowProvider)
         {
             var linkManager = Mock.Of<BaseLinkManager>(x =>
 #if FEATURE_URL_BUILDERS
@@ -174,9 +174,9 @@ namespace Sitecore.Modules.WeBlog.UnitTest.Pipelines.CreateComment
             return (processor, args, akismetApiMock);
         }
 
-        private IWeBlogSettings CreateSettings()
+        private IWeBlogCommentSettings CreateSettings()
         {
-            return Mock.Of<IWeBlogSettings>(x =>
+            return Mock.Of<IWeBlogCommentSettings>(x =>
                 x.AkismetAPIKey == "apikey" &&
                 x.CommentWorkflowCommandSpam == "spamcommand"
             );

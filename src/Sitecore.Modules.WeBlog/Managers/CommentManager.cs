@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Sitecore.Abstractions;
 using Sitecore.ContentSearch;
 using Sitecore.ContentSearch.Linq;
 using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.DependencyInjection;
+using Sitecore.Eventing;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
-using Sitecore.Modules.WeBlog.Import;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
+using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Pipelines;
 using Sitecore.Modules.WeBlog.Search.SearchTypes;
 using Sitecore.Modules.WeBlog.Services;
 using Sitecore.Pipelines;
-using Sitecore.Abstractions;
-using Sitecore.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.ServiceModel;
 
 namespace Sitecore.Modules.WeBlog.Managers
 {
@@ -34,6 +34,11 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IWeBlogSettings Settings = null;
 
         /// <summary>
+        /// The comment settings to use.
+        /// </summary>
+        protected IWeBlogCommentSettings CommentSettings = null;
+
+        /// <summary>
         /// Gets the <see cref="BaseTemplateManager"/> used to access templates.
         /// </summary>
         protected BaseTemplateManager TemplateManager { get; }
@@ -44,13 +49,22 @@ namespace Sitecore.Modules.WeBlog.Managers
         protected IBlogSettingsResolver BlogSettingsResolver { get; }
 
         /// <summary>
+        /// Gets the <see cref="IEventQueue"/> which new comments are submitted to.
+        /// </summary>
+        protected IEventQueue EventQueue { get; }
+
+        /// <summary>
         /// Creates a new instance.
         /// </summary>
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
-        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
-        public CommentManager(IWeBlogSettings settings = null)
-            : this(settings, null)
+        /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
+        /// <param name="blogSettingsResolver">The resolver used to resolve settings for specific blogs.</param>
+        [Obsolete("Use ctor(IWeBlogSettings, IWeBlogCommentSettings, BaseTemplateManager, IBlogSettingsResolver, BaseEventQueueProvider) instead.")]
+        public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null)
         {
+            Settings = settings ?? WeBlogSettings.Instance;
+            TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
+            BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
         }
 
         /// <summary>
@@ -58,11 +72,20 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// </summary>
         /// <param name="settings">The settings to use, or pass null to use the default settings.</param>
         /// <param name="templateManager">The <see cref="BaseTemplateManager"/> used to access templates.</param>
-        public CommentManager(IWeBlogSettings settings = null, BaseTemplateManager templateManager = null, IBlogSettingsResolver blogSettingsResolver = null)
+        /// <param name="blogSettingsResolver">The resolver used to resolve settings for specific blogs.</param>
+        /// <param name="eventQueue">The event queue to submit new comments to.</param>
+        public CommentManager(
+            IWeBlogSettings settings = null,
+            IWeBlogCommentSettings commentSettings = null,
+            BaseTemplateManager templateManager = null,
+            IBlogSettingsResolver blogSettingsResolver = null,
+            BaseEventQueueProvider eventQueue = null)
         {
             Settings = settings ?? WeBlogSettings.Instance;
+            CommentSettings = commentSettings ?? ServiceLocator.ServiceProvider.GetRequiredService<IWeBlogCommentSettings>();
             TemplateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
             BlogSettingsResolver = blogSettingsResolver ?? ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
+            EventQueue = eventQueue ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseEventQueueProvider>();
         }
 
         /// <summary>
@@ -88,22 +111,6 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return ID.Null;
         }
 
-        [Obsolete("Use AddCommentToEntry(ID, Comment, Language) instead.")]
-        protected virtual void AddComment(EntryItem entryItem, WpComment wpComment)
-        {
-            // todo: Wizard to ask user which language to import into
-            string itemName = ItemUtil.ProposeValidItemName("Comment by " + wpComment.Author + " at " + wpComment.Date.ToString("d"));
-
-            CommentItem commentItem = entryItem.InnerItem.Add(itemName, new TemplateID(new ID("{70949D4E-35D8-4581-A7A2-52928AA119D5}")));
-            commentItem.BeginEdit();
-            commentItem.Comment.Field.Value = wpComment.Content;
-            commentItem.Email.Field.Value = wpComment.Email;
-            commentItem.IpAddress.Field.Value = wpComment.IP;
-            commentItem.Website.Field.Value = wpComment.Url;
-            commentItem.InnerItem.Fields[Sitecore.FieldIDs.Created].Value = Sitecore.DateUtil.ToIsoDate(wpComment.Date);
-            commentItem.EndEdit();
-        }
-
         /// <summary>
         /// Submit a comment for inclusion on a post. This method will either update Sitecore or submit the comment through the comment service, depending on settings
         /// </summary>
@@ -126,7 +133,19 @@ namespace Sitecore.Modules.WeBlog.Managers
                 return result;
             }
             else
-                return AddCommentToEntry(Context.Item.ID, comment, language);
+            {
+                var commentEvent = new CommentSubmitted
+                {
+                    EntryId = entryId,
+                    RequestedCommentId = ID.NewID,
+                    Language = language ?? Context.Language,
+                    Comment = comment
+                };
+
+                EventQueue.QueueEvent(commentEvent, true, CommentSettings.HandleSubmittedCommentsLocally);
+
+                return commentEvent.RequestedCommentId;
+            }
         }
 
         /// <summary>

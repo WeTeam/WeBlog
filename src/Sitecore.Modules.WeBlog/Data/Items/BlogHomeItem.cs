@@ -1,43 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using Sitecore.Abstractions;
 using Sitecore.Data.Items;
-using Sitecore.DependencyInjection;
-using Sitecore.Links;
 using Sitecore.Modules.WeBlog.Data.Fields;
-using Sitecore.Modules.WeBlog.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Sitecore.Modules.WeBlog.Managers;
-
-#if FEATURE_URL_BUILDERS
-using Sitecore.Links.UrlBuilders;
-#endif
+using System;
+using System.Drawing;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
     public class BlogHomeItem : CustomItem
     {
-        [Obsolete("No longer used. If required, resolve this member from the service provider.")]
-        protected IWeBlogSettings Settings { get; }
-
         public BlogHomeItem(Item innerItem)
             : base(innerItem)
         {
-        }
-
-        [Obsolete("Use ctor(Item) instead.")]
-        public BlogHomeItem(Item innerItem, IWeBlogSettings settings = null)
-            : base(innerItem)
-        {
-            Settings = settings;
-        }
-
-        [Obsolete("Use ctor() instead.")]
-        public BlogHomeItem(Item innerItem, BaseLinkManager linkManager, IWeBlogSettings settings = null)
-            : base(innerItem)
-        {
-            Settings = settings;
         }
 
         public static implicit operator BlogHomeItem(Item innerItem)
@@ -226,67 +198,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
             int.TryParse(numbers[1], out height);
 
             return new Size(width, height);
-        }
-
-        /// <summary>
-        /// Gets the URL of the blog item
-        /// </summary>
-        [Obsolete("Use the Sitecore LinkManager instead.")]
-        public string Url
-        {
-            get
-            {
-                return LinkManager.GetItemUrl(InnerItem);
-            }
-        }
-
-        /// <summary>
-        /// Gets the absolute URL of the blog item including the server
-        /// </summary>
-        [Obsolete("Use BaseLinkManager.GetItemUrl() with this item instead.")]
-        public string AbsoluteUrl
-        {
-            get
-            {
-#if FEATURE_URL_BUILDERS
-                var urlOptions = new ItemUrlBuilderOptions();
-#else
-                var urlOptions = UrlOptions.DefaultOptions;
-#endif
-
-                urlOptions.AlwaysIncludeServerUrl = true;
-                return LinkManager.GetItemUrl(InnerItem, urlOptions);
-            }
-        }
-        
-        [Obsolete("Use Sitecore.Modules.WeBlog.Data.IFeedResolver instead.")]
-        public IEnumerable<RssFeedItem> SyndicationFeeds
-        {
-            get
-            {
-                var resolver = ServiceLocator.ServiceProvider.GetRequiredService<IFeedResolver>();
-                return resolver.Resolve(this);
-            }
-        }
-
-        [Obsolete("Use Sitecore.Modules.WeBlog.Managers.BlogManager.GetDictionaryItem() instead.")]
-        public Item DictionaryItem
-        {
-            get
-            {
-                var manager = ServiceLocator.ServiceProvider.GetRequiredService<IBlogManager>();
-                return manager.GetDictionaryItem();
-            }
-        }
-
-        [Obsolete("Use Sitecore.Modules.WeBlog.Configuration.IBlogSettingsResolver instead.")]
-        public BlogSettings BlogSettings
-        {
-            get
-            {
-                var resolver = ServiceLocator.ServiceProvider.GetRequiredService<IBlogSettingsResolver>();
-                return resolver.Resolve(this);
-            }
         }
     }
 }

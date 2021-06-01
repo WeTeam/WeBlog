@@ -11,7 +11,6 @@ using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Extensions.StringExtensions;
 using Sitecore.Modules.WeBlog.Configuration;
-using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Search;
@@ -70,17 +69,6 @@ namespace Sitecore.Modules.WeBlog
 
         public MetaBlogApi()
             : this(null, null, null, null, null, null, null)
-        {
-        }
-
-        [Obsolete("Use ctor() instead.")]
-        public MetaBlogApi(
-			IBlogManager blogManager,
-			ICategoryManager categoryManager,
-			IEntryManager entryManager,
-			IWeBlogSettings settings,
-			BaseMediaManager mediaManager,
-			BaseLinkManager linkManager)
         {
         }
 
@@ -652,7 +640,7 @@ namespace Sitecore.Modules.WeBlog
         /// <returns></returns>
         protected virtual string GetCategoriesAsString(Item postItem, XmlRpcStruct rpcstruct)
         {
-            var blog = BlogManager.GetCurrentBlog(postItem).SafeGet(x => x.InnerItem);
+            var blog = BlogManager.GetCurrentBlog(postItem)?.InnerItem;
             var categoryList = CategoryManager.GetCategories(blog);
 
             if (categoryList.Length != 0)

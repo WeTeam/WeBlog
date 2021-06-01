@@ -44,7 +44,7 @@ namespace Sitecore.Modules.WeBlog.Managers
             get
             {
                 if (m_commentManager == null)
-                    m_commentManager = CreateInstance<ICommentManager>(WeBlogSettings.Instance.CommentManagerClass, () => { return new CommentManager(null, null); });
+                    m_commentManager = CreateInstance<ICommentManager>(WeBlogSettings.Instance.CommentManagerClass, () => { return new CommentManager(null, null, null, null); });
 
                 return m_commentManager;
             }

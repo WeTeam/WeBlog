@@ -3,43 +3,44 @@
     <metadata>
       <PackageName>WeBlog</PackageName>
       <Author>WeTeam Community</Author>
-      <Version>4.1.0</Version>
+      <Version>4.2.0</Version>
       <Revision />
       <License>&lt;p&gt;&lt;strong&gt;The MIT License (MIT)&lt;/strong&gt;&lt;br/&gt;
-Copyright (c) 2011 - 2020 WeTeam Community
+Copyright (c) 2011 - 2021 WeTeam Community
 &lt;/p&gt;
 &lt;p&gt;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:&lt;/p&gt;
 &lt;p&gt;The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.&lt;/p&gt;
 &lt;p&gt;THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&lt;/p&gt;</License>
       <Comment />
       <Attributes />
-      <Readme>Configure SOLR
-===============
+      <Readme>Post Install Steps
+==================
+
+After the installation wizard is complete, follow these
+steps:
+
+* Delete any old WeBlog config files from previous versions.
+* Create the SOLR cores (see below for detail)
+* Perform a full publish to all publishing targets
+* Rebuild the WeBlog search indexes
+* Rebuild the Links database for master and web
+
+Configure SOLR
+--------------
 Create the SOLR cores 'weblog-master' and 'weblog-web'. If 
 you use different names for the cores, update the
 core names in the following config files:
 
 * WeBlog.ContentSearch.Solr.Master.config 
 * WeBlog.ContentSearch.Solr.Web.config.
-	  
-Post Install Steps
-==================
-* Perform an incremental publish to all publishing targets
-* Delete any old WeBlog Content Search config files from
-    previous versions.
-* Rebuild the WeBlog search indexes
+
+After you've created the cores, populate the managed schema
+using the Control Panel.
 
 Create a Blog
-=============
-* Create a new blog using one of the following branches:
-    - 'Modules/WeBlog/Blog WebForms' for WebForms
-    - 'Modules/WeBlog/Blog MVC' for MVC
-
-Content Delivery Servers
-========================
-If deploying in a staged environment to a content delivery
-server, enable the App_Config\Include\WeBlog.delivery.config
-file.
+-------------
+* Create a new blog using the 'Modules/WeBlog/Blog MVC'
+    branch
 
 </Readme>
       <Publisher>WeTeam Community</Publisher>
@@ -53,11 +54,8 @@ file.
       <Entries>
         <x-item>/bin/AntiXSSLibrary.dll</x-item>
         <x-item>/bin/CookComputing.XmlRpcV2.dll</x-item>
-        <x-item>/bin/MSCaptcha.dll</x-item>
         <x-item>/bin/Sitecore.Modules.WeBlog.dll</x-item>
         <x-item>/bin/Sitecore.Modules.WeBlog.Mvc.dll</x-item>
-        <x-item>/bin/Sitecore.Modules.WeBlog.WebForms.dll</x-item>
-        <x-item>/bin/Recaptcha.dll</x-item>
         <x-item>/bin/Scriban.dll</x-item>
       </Entries>
       <Converter>
@@ -164,14 +162,14 @@ file.
     </items>
     <xfiles>
       <Entries>
+        <x-item>/App_Config/Include/WeBlog.Client.config</x-item>
+        <x-item>/App_Config/Include/WeBlog.Comments.Handler.config</x-item>
         <x-item>/App_Config/Include/WeBlog.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.Master.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ContentSearch.Solr.Web.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.delivery.config.disabled</x-item>
-        <x-item>/App_Config/Include/WeBlog.Mvc.config</x-item>
-        <x-item>/App_Config/Include/WeBlog.WebForms.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ExperienceEditor.config</x-item>
+        <x-item>/App_Config/Include/WeBlog.Mvc.config</x-item>
         <x-item>/App_Config/Include/WeBlog.ScribanMailAction.config</x-item>
       </Entries>
       <Converter>
@@ -330,44 +328,6 @@ file.
       <Exclude />
       <Name>Devices</Name>
     </xitems>
-    <files>
-      <Root>/layouts/WeBlog</Root>
-      <Converter>
-        <FileToEntryConverter>
-          <Root>/</Root>
-          <Transforms>
-            <InstallerConfigurationTransform>
-              <Options>
-                <BehaviourOptions>
-                  <ItemMode>Undefined</ItemMode>
-                  <ItemMergeMode>Undefined</ItemMergeMode>
-                </BehaviourOptions>
-              </Options>
-            </InstallerConfigurationTransform>
-          </Transforms>
-        </FileToEntryConverter>
-      </Converter>
-      <Include>
-        <FileNameFilter>
-          <Pattern />
-          <AcceptDirectories>False</AcceptDirectories>
-        </FileNameFilter>
-        <FileDateFilter>
-          <FilterType>CreatedFilter</FilterType>
-          <ActionDateTo />
-          <ActionDateFrom />
-          <NotOlderThan />
-        </FileDateFilter>
-        <FileDateFilter>
-          <FilterType>ModifiedFilter</FilterType>
-          <ActionDateTo />
-          <ActionDateFrom />
-          <NotOlderThan />
-        </FileDateFilter>
-      </Include>
-      <Exclude />
-      <Name>Layout files</Name>
-    </files>
     <files>
       <Root>/sitecore modules/Web/WeBlog</Root>
       <Converter>
@@ -640,7 +600,16 @@ file.
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include>
@@ -688,7 +657,16 @@ file.
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include>
@@ -736,7 +714,16 @@ file.
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include>
@@ -783,7 +770,16 @@ file.
       <Converter>
         <FileToEntryConverter>
           <Root>/</Root>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </FileToEntryConverter>
       </Converter>
       <Include>
@@ -813,7 +809,16 @@ file.
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include>
@@ -860,7 +865,16 @@ file.
       <Converter>
         <FileToEntryConverter>
           <Root>/</Root>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </FileToEntryConverter>
       </Converter>
       <Include>
@@ -890,7 +904,16 @@ file.
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include>
@@ -932,60 +955,21 @@ file.
       <Exclude />
       <Name>Layout Definitions</Name>
     </items>
-    <items>
-      <Database>master</Database>
-      <Root>{2068AD29-9223-480A-8E98-B1B85EC9470B}</Root>
-      <SkipVersions>False</SkipVersions>
-      <Converter>
-        <ItemToEntryConverter>
-          <Transforms />
-        </ItemToEntryConverter>
-      </Converter>
-      <Include>
-        <ItemNameFilter>
-          <Pattern />
-          <FilterSearchType>Simple</FilterSearchType>
-        </ItemNameFilter>
-        <ItemDateFilter>
-          <FilterType>CreatedFilter</FilterType>
-          <NotOlderThan />
-          <ActionDateTo />
-          <ActionDateFrom />
-        </ItemDateFilter>
-        <ItemDateFilter>
-          <FilterType>ModifiedFilter</FilterType>
-          <NotOlderThan />
-          <ActionDateTo />
-          <ActionDateFrom />
-        </ItemDateFilter>
-        <ItemPublishFilter>
-          <PublishDate />
-          <CheckWorkflow>True</CheckWorkflow>
-        </ItemPublishFilter>
-        <ItemTemplateFilter>
-          <Templates />
-        </ItemTemplateFilter>
-        <ItemUserFilter>
-          <FilterType>Created</FilterType>
-          <Accounts />
-        </ItemUserFilter>
-        <ItemUserFilter>
-          <FilterType>Modified</FilterType>
-          <Accounts />
-        </ItemUserFilter>
-        <ItemLanguageFilter>
-          <Languages />
-        </ItemLanguageFilter>
-      </Include>
-      <Exclude />
-      <Name>Sublayout Definitions</Name>
-    </items>
     <files>
       <Root>/sitecore/shell/client/WeBlog</Root>
       <Converter>
         <FileToEntryConverter>
           <Root>/</Root>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </FileToEntryConverter>
       </Converter>
       <Include>
@@ -1016,7 +1000,16 @@ file.
       <SkipVersions>False</SkipVersions>
       <Converter>
         <ItemToEntryConverter>
-          <Transforms />
+          <Transforms>
+            <InstallerConfigurationTransform>
+              <Options>
+                <BehaviourOptions>
+                  <ItemMode>Undefined</ItemMode>
+                  <ItemMergeMode>Undefined</ItemMergeMode>
+                </BehaviourOptions>
+              </Options>
+            </InstallerConfigurationTransform>
+          </Transforms>
         </ItemToEntryConverter>
       </Converter>
       <Include />

@@ -1,4 +1,5 @@
-﻿using System.ServiceModel.Activation;
+﻿using System;
+using System.ServiceModel.Activation;
 using Sitecore.Data;
 using Sitecore.Globalization;
 using Sitecore.Modules.WeBlog.Managers;
@@ -8,6 +9,7 @@ namespace Sitecore.Modules.WeBlog.Services
 {
     // Require ASP.NET so we get HttpContext or Sitecore.NVelocity assembly might not work properly
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
+    [Obsolete("Use the EventQueue for comment submission instead.")]
     public class CommentService : ICommentService
     {
         public ID SubmitComment(ID EntryId, Model.Comment comment, Language language)

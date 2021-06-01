@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Sitecore.Data;
+using System;
 using System.Collections.Generic;
-using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Configuration
 {
@@ -55,18 +55,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
         string GravatarImageServiceUrl { get; }
 
         /// <summary>
-        /// Gets the reCAPTCHA private key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        string ReCaptchaPrivateKey { get; }
-
-        /// <summary>
-        /// Gets the reCAPTCHA public key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        string ReCaptchaPublicKey { get; }
-
-        /// <summary>
         /// Gets the AddThis account name.
         /// </summary>
         string AddThisAccountName { get; }
@@ -79,6 +67,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the Akismet API key.
         /// </summary>
+        [Obsolete("Use IWeBlogCommentSettings.AkismetAPIKey instead.")]
         string AkismetAPIKey { get; }
 
         /// <summary>
@@ -102,25 +91,15 @@ namespace Sitecore.Modules.WeBlog.Configuration
         ID DictionaryEntryTemplateId { get; }
 
         /// <summary>
-        /// Gets the maximum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        TimeSpan CaptchaMaximumTimeout { get; }
-
-        /// <summary>
-        /// Gets the minimum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        TimeSpan CaptchaMinimumTimeout { get; }
-
-        /// <summary>
         /// Gets the ID of the workflow command to execute after creating a comment.
         /// </summary>
+        [Obsolete("Use IWeBlogCommentSettings.CommentWorkflowCommandCreated instead.")]
         string CommentWorkflowCommandCreated { get; }
 
         /// <summary>
         /// Gets the ID of the workflow command to execute after a comment is classified as spam.
         /// </summary>
+        [Obsolete("Use IWeBlogCommentSettings.CommentWorkflowCommandSpam instead.")]
         string CommentWorkflowCommandSpam { get; }
 
         /// <summary>
@@ -166,6 +145,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Indicates whether to use the comment service or not.
         /// </summary>
+        [Obsolete("Use the EventQueue for comment submission instead.")]
         bool CommentServiceEnabled { get;  }
 
         /// <summary>

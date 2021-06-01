@@ -7,7 +7,6 @@ using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Data.Items;
 using Sitecore.Modules.WeBlog.Diagnostics;
 using Sitecore.Modules.WeBlog.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,16 +26,6 @@ namespace Sitecore.Modules.WeBlog.Managers
         /// The <see cref="BaseTemplateManager"/> used to access templates.
         /// </summary>
         protected BaseTemplateManager TemplateManager { get; set; }
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        /// <param name="settings">The settings to use. If null, the default settings are used.</param>
-        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
-        public CategoryManager(IWeBlogSettings settings = null)
-            : this(settings, null)
-        {
-        }
 
         /// <summary>
         /// Creates a new instance.

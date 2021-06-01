@@ -1,4 +1,5 @@
-﻿@using Sitecore.Modules.WeBlog.Extensions
+﻿@using Sitecore.Links
+@using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
 @model Sitecore.Modules.WeBlog.Mvc.Model.Categories
 
@@ -10,7 +11,7 @@
             @foreach (var categoryItem in Model.CategoryItems)
             {
                 <li>
-                    <a href="@categoryItem.GetUrl()">@categoryItem.DisplayTitle.ToHtmlString()</a>
+                    <a href="@LinkManager.GetItemUrl(categoryItem)">@categoryItem.DisplayTitle.ToHtmlString()</a>
                 </li>
             }
         </ul>

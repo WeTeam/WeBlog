@@ -24,19 +24,11 @@ namespace Sitecore.Modules.WeBlog.Globalization
         {
         }
 
-        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
-        public ItemAndPublishEventHandler(IWeBlogSettings settings)
-            : this(settings, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager)
-        {
-        }
-
         public ItemAndPublishEventHandler(IWeBlogSettings settings, BaseTemplateManager templateManager)
         {
             _settings = settings ?? WeBlogSettings.Instance;
-            _templateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService< BaseTemplateManager>();
+            _templateManager = templateManager ?? ServiceLocator.ServiceProvider.GetRequiredService<BaseTemplateManager>();
         }
-
-
 
         public void OnItemSaved(object sender, EventArgs args)
         {

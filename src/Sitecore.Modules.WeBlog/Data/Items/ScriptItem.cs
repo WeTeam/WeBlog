@@ -1,7 +1,5 @@
 ﻿using Sitecore.Data;
-using Sitecore.Data.Fields;
 using Sitecore.Data.Items;
-using System;
 
 namespace Sitecore.Modules.WeBlog.Data.Items
 {
@@ -38,15 +36,6 @@ namespace Sitecore.Modules.WeBlog.Data.Items
         }
 
         public static class ScriptItemFields
-        {
-            public const string FallbackUrl = "Fallback Url";
-            public const string VerificationObject = "Verification Object";
-        }
-
-        [Obsolete("Use ScriptItemFields instead.")]
-#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
-        public static class Fields
-#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
         {
             public const string FallbackUrl = "Fallback Url";
             public const string VerificationObject = "Verification Object";

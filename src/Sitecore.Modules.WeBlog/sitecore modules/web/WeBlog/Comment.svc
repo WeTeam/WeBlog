@@ -1,1 +1,2 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Sitecore.Modules.WeBlog.Services.CommentService" CodeBehind="Comment.svc.cs" %>
+﻿<%-- Obsolete. Use the EventQueue for comment submission instead. --%>
+<%@ ServiceHost Language="C#" Debug="true" Service="Sitecore.Modules.WeBlog.Services.CommentService" CodeBehind="Comment.svc.cs" %>

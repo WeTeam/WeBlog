@@ -43,9 +43,7 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Testing
             if (!IsPostBack)
             {
                 var testSuite = new TestSuiteBuilder().Build(_testPackage);
-
-                LoadCategories(testSuite);
-                LoadTestMethodNames(testSuite);
+                LoadFilters(testSuite);
             }
 
             // Select filters from query string
@@ -57,21 +55,17 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Testing
                 Run();
         }
 
-        protected void LoadTestMethodNames(ITest test)
+        protected void LoadFilters(ITest test)
         {
-            var names = new List<string>();
-            FindTestMethodNames(test, names);
+            var methodNames = new List<string>();
+            var categoryNames = new HashSet<string>();
 
-            cblMethods.DataSource = names;
+            InspectTests(test, methodNames, categoryNames);
+
+            cblMethods.DataSource = methodNames;
             cblMethods.DataBind();
-        }
 
-        protected void LoadCategories(ITest test)
-        {
-            var categoryManager = new CategoryManager();
-            categoryManager.AddAllCategories(test);
-
-            cblCategories.DataSource = (from string cat in categoryManager.Categories select cat).OrderBy(x => x);
+            cblCategories.DataSource = (from string cat in categoryNames select cat).OrderBy(x => x);
             cblCategories.DataBind();
         }
 
@@ -115,18 +109,27 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Testing
             return new OrFilter(categoryFilter, methodFilter);
         }
 
-        protected void FindTestMethodNames(ITest test, List<string> list)
+        protected void InspectTests(ITest test, List<string> methodNames, HashSet<string> categoryNames)
         {
             foreach (ITest t in test.Tests)
             {
                 if (t is NUnitTestMethod)
                 {
-                    list.Add(t.TestName.FullName);
+                    methodNames.Add(t.TestName.FullName);
+                }
+
+                if(t.Categories != null)
+                {
+                    foreach(string category in t.Categories)
+                    {
+                        if (NUnitFramework.IsValidCategoryName(category) && !categoryNames.Contains(category))
+                            categoryNames.Add(category);
+                    }
                 }
 
                 if (t.Tests != null)
                 {
-                    FindTestMethodNames(t, list);
+                    InspectTests(t, methodNames, categoryNames);
                 }
             }
         }
@@ -157,7 +160,9 @@ namespace Sitecore.Modules.WeBlog.IntegrationTest.Testing
         protected void OutputXml(TestResult result)
         {
             var builder = new StringBuilder();
-            new XmlResultWriter(new StringWriter(builder)).SaveTestResult(result);
+            var writer = new StringWriter(builder);
+            var resultWriter = new XmlResultWriter(writer);
+            resultWriter.SaveTestResult(result);
 
             Response.ContentType = "text/xml";
             Response.Write(builder.ToString());

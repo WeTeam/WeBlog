@@ -1,4 +1,4 @@
-﻿@using Sitecore.Modules.WeBlog
+﻿@using Sitecore.Links 
 @using Sitecore.Modules.WeBlog.Configuration
 @using Sitecore.Modules.WeBlog.Extensions
 @using Sitecore.Modules.WeBlog.Globalization
@@ -7,7 +7,7 @@
 <section>
     <header>
         <h2>
-            <a href="@Model.EntryItem.Url">@Model.EntryItem.DisplayTitle.ToHtmlString()</a>
+            <a href="@LinkManager.GetItemUrl(Model.EntryItem)">@Model.EntryItem.DisplayTitle.ToHtmlString()</a>
         </h2>
         <div class="thumbnail">
             @Html.Sitecore().Field("Thumbnail Image", Model.EntryItem, new { @class = "wb-image", mw = Model.MaxWidth, mh = Model.MaxHeight })
@@ -24,9 +24,9 @@
         @if (Model.ShowCommentsCount)
         {
             <span class="wb-comment-count">
-                @Translator.Render("COMMENTS").ToHtmlString() (@Model.EntryItem.CommentCount)
+                @Translator.Render("COMMENTS").ToHtmlString() (@Model.CommentCount)
             </span>
         }
-        <a class="wb-read-more" href="@Model.EntryItem.Url">@Translator.Text("READ_MORE").ToHtmlString()</a>
+        <a class="wb-read-more" href="@LinkManager.GetItemUrl(Model.EntryItem)">@Translator.Text("READ_MORE").ToHtmlString()</a>
     </div>
 </section>

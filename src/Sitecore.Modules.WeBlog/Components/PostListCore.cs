@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Web;
 using Sitecore.Abstractions;
 using Sitecore.Data;
 using Sitecore.DependencyInjection;
@@ -13,6 +8,10 @@ using Sitecore.Modules.WeBlog.Extensions;
 using Sitecore.Modules.WeBlog.Managers;
 using Sitecore.Modules.WeBlog.Model;
 using Sitecore.Modules.WeBlog.Search;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Web;
 
 namespace Sitecore.Modules.WeBlog.Components
 {
@@ -60,19 +59,6 @@ namespace Sitecore.Modules.WeBlog.Components
         }
 
         public string ViewMoreHref => BuildViewMoreHref();
-
-        /// <summary>
-        /// Creates a new instance.
-        /// </summary>
-        /// <param name="currentBlog">The blog being listed.</param>
-        /// <param name="settings">The settings to use. If null, the default settings will be used.</param>
-        /// <param name="authorsCore">The <see cref="IAuthorsCore"/> component to use to retrieve author information.</param>
-        /// <param name="entryManager">The <see cref="IEntryManager"/> to use to access entries.</param>
-        [Obsolete("Use ctor(BlogHomeItem, IWeBlogSettings, IAuthorsCore, IEntryManager, BaseTemplateManager) instead.")]
-        public PostListCore(BlogHomeItem currentBlog, IWeBlogSettings settings = null, IAuthorsCore authorsCore = null, IEntryManager entryManager = null)
-            : this(currentBlog, settings, authorsCore, entryManager, null)
-        {
-        }
 
         /// <summary>
         /// Creates a new instance.

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Sitecore.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Sitecore.Data;
 
 namespace Sitecore.Modules.WeBlog.Configuration
 {
@@ -137,24 +137,6 @@ namespace Sitecore.Modules.WeBlog.Configuration
         }
 
         /// <summary>
-        /// Gets the reCAPTCHA private key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public string ReCaptchaPrivateKey
-        {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.reCAPTCHA.PrivateKey"); }
-        }
-
-        /// <summary>
-        /// Gets the reCAPTCHA public key.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public string ReCaptchaPublicKey
-        {
-            get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.reCAPTCHA.PublicKey"); }
-        }
-
-        /// <summary>
         /// Gets the AddThis account name.
         /// </summary>
         public string AddThisAccountName
@@ -173,6 +155,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the Akismet API key.
         /// </summary>
+        [Obsolete("Use WeBlogCommentSettings.AkismetAPIKey instead.")]
         public string AkismetAPIKey
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Akismet.APIKey"); }
@@ -215,26 +198,9 @@ namespace Sitecore.Modules.WeBlog.Configuration
         }
 
         /// <summary>
-        /// Gets the maximum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public TimeSpan CaptchaMaximumTimeout
-        {
-            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MaxTimeout", "00:01:00"); }
-        }
-
-        /// <summary>
-        /// Gets the minimum timeout period for the captcha control.
-        /// </summary>
-        [Obsolete("Captcha is deprecated. Use IValidateCommentCore.Validate() from the service provider instead.")]
-        public TimeSpan CaptchaMinimumTimeout
-        {
-            get { return Sitecore.Configuration.Settings.GetTimeSpanSetting("WeBlog.Captcha.MinTimeout", "00:00:03"); }
-        }
-
-        /// <summary>
         /// Gets the ID of the workflow command to execute after creating a comment.
         /// </summary>
+        [Obsolete("Use WeBlogCommentSettings.CommentWorkflowCommandCreated instead.")]
         public string CommentWorkflowCommandCreated
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Created", ""); }
@@ -243,6 +209,7 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Gets the ID of the workflow command to execute after a comment is classified as spam.
         /// </summary>
+        [Obsolete("Use WeBlogCommentSettings.CommentWorkflowCommandSpam instead.")]
         public string CommentWorkflowCommandSpam
         {
             get { return Sitecore.Configuration.Settings.GetSetting("WeBlog.Comments.Workflow.Command.Spam"); }
@@ -319,11 +286,15 @@ namespace Sitecore.Modules.WeBlog.Configuration
         /// <summary>
         /// Indicates whether to use the comment service or not.
         /// </summary>
+        [Obsolete("Use the EventQueue for comment submission instead.")]
         public bool CommentServiceEnabled
         {
             get { return Sitecore.Configuration.Settings.GetBoolSetting("WeBlog.CommentService.Enable", false); }
         }
 
+        /// <summary>
+        /// Maximum number of proposed tags returned in WeBlog Tags field
+        /// </summary>
         public int TagFieldMaxItemCount
         {
             get { return System.Convert.ToInt32(Sitecore.Configuration.Settings.GetSetting("WeBlog.TagsField.MaxItemsCount", "20")); }

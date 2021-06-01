@@ -6,7 +6,6 @@ using Sitecore.ExperienceEditor.Speak.Server.Requests;
 using Sitecore.ExperienceEditor.Speak.Server.Responses;
 using Sitecore.Modules.WeBlog.Configuration;
 using Sitecore.Modules.WeBlog.Extensions;
-using System;
 
 namespace Sitecore.Modules.WeBlog.ExperienceEditor
 {
@@ -18,12 +17,6 @@ namespace Sitecore.Modules.WeBlog.ExperienceEditor
 
         public IsEntryItem()
             : this(WeBlogSettings.Instance, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager)
-        {
-        }
-        
-        [Obsolete("Use ctor(IWeBlogSettings, BaseTemplateManager) instead.")]
-        public IsEntryItem(IWeBlogSettings settings)
-            : this(settings, ServiceLocator.ServiceProvider.GetService(typeof(BaseTemplateManager)) as BaseTemplateManager)
         {
         }
 

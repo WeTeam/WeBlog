@@ -11,6 +11,7 @@ namespace Sitecore.Modules.WeBlog.Extensions
         /// <param name="ob">The object to call the expression on</param>
         /// <param name="func">The expression to evaluate</param>
         /// <returns>The outcome of the expression if the object is not null, otherwise the default value of the return type</returns>
+        [Obsolete("Use null-conditional member access instead (x?.member).")]
         public static T SafeGet<T, Y>(this Y ob, Func<Y, T> func)
         {
             if (ob != null)

@@ -13,8 +13,9 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
         public int MaxWidth { get; set; }
         public int MaxHeight { get; set; }
         public bool ShowCommentsCount { get; set; }
+        public int CommentCount { get; protected set; }
 
-        public PostListEntry(EntryItem entry)
+        public PostListEntry(EntryItem entry, ICommentManager commentManager)
         {
             EntryItem = entry;
             var currentBlog = ManagerFactory.BlogManagerInstance.GetCurrentBlog(entry);
@@ -27,6 +28,8 @@ namespace Sitecore.Modules.WeBlog.Mvc.Model
             Summary = GetSummary(EntryItem);
 
             ShowCommentsCount = currentBlog.EnableComments.Checked && !EntryItem.DisableComments.Checked;
+
+            CommentCount = commentManager.GetCommentsCount(EntryItem);
         }
 
         protected string GetSummary(EntryItem entry)
