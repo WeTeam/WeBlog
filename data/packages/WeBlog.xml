@@ -23,6 +23,7 @@ steps:
 * Create the SOLR cores (see below for detail)
 * Perform a full publish to all publishing targets
 * Rebuild the WeBlog search indexes
+* Rebuild the Links database for master and web
 
 Configure SOLR
 --------------
