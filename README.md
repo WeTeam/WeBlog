@@ -10,6 +10,7 @@ A blog module for Sitecore.
 - CSS-based themes, with custom themes possible
 - Various blog navigation components
 - Comments with author notification and optional approval workflow
+- Leverage Sitecore's robot detection for comment submission (no CAPTCHA necessary)
 - Gravatar Support
 - Social sharing through ShareThis or AddThis, and other Facebook and Twitter widgets
 - Tagging and tagcloud
