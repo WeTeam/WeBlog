@@ -56,7 +56,8 @@ namespace Sitecore.Modules.WeBlog.Pipelines.CreateComment
 
                     var version = FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location).FileVersion;
 
-                    var url = _linkManager.GetAbsoluteItemUrl(_blogManager.GetCurrentBlog());
+                    var blogItem = _blogManager.GetCurrentBlog(args.CommentItem);
+                    var url = _linkManager.GetAbsoluteItemUrl(blogItem);
 
                     api.Init(_commentSettings.AkismetAPIKey, url, "WeBlog/" + version);
 
