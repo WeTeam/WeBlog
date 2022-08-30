@@ -2,6 +2,8 @@
 
 A blog module for Sitecore.
 
+> :warning: WeBlog is no longer being developed or maintained.
+
 ## Features ##
 
 - Windows Live Writer integration (MetaWeblog API)
